@@ -1,0 +1,25 @@
+button {
+  border: transparent;
+  background: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 700;
+  height: 40px;
+  padding: 0;
+  @include flexCenter;
+
+  &.btn {
+    &--red {
+      background-color: $color-red;
+      color: $color-white;
+    }
+
+    &--full {
+      width: 100%;
+    }
+
+    &--gray {
+    }
+  }
+}

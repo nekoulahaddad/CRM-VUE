@@ -1,0 +1,21 @@
+{
+  "title": "ЦСК",
+  "menu": {
+    "monitor": "Дашборд",
+    "education": "Обучение",
+    "employees": "Сотрудники",
+    "calendar": "Календарь",
+    "tasks": "Задачи",
+    "reports": "Отчеты",
+    "clients": "Клиенты",
+    "orders": "Заказы",
+    "mails": "Заявки",
+    "goods": "Товары",
+    "seo": "SEO",
+    "mango": "Mango",
+    "storage": "Склад",
+    "delivery": "Поставщики",
+    "callbacks": "Обращения",
+    "buying": "Закупка"
+  }
+}

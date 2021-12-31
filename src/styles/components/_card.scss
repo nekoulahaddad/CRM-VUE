@@ -1,0 +1,17 @@
+.card {
+  border-radius: $border-radius;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
+  padding: 10px 20px 20px;
+
+  &--white {
+    background-color: $color-white;
+  }
+
+  &__title {
+    font-size: 18px;
+    line-height: 30px;
+    color: $color-black;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
