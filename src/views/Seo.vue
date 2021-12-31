@@ -14,7 +14,7 @@
           </div>
           <div class="filter__body">
             <div class="filter__group group">
-              <div class="group__title">Регион:</div>
+              <div class="group__title">Регионы:</div>
               <div class="group__content">
                 <select class="form-select">
                   <option value="Все задачи">Все регионы</option>
