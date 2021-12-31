@@ -2,7 +2,9 @@
   <div class="sidebar">
     <div class="sidebar__inner">
       <div class="sidebar__logo">
-        <img src="/icons/logo.svg" alt="" />
+        <router-link to="/">
+          <img src="/icons/logo.svg" alt="" />
+        </router-link>
       </div>
       <div class="sidebar__toggle">
         <button class="btn btn--red">
