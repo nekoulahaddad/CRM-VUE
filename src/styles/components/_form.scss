@@ -1,4 +1,4 @@
-.form-control {
+@mixin form-element {
   background-color: $color-white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: $border-radius;
@@ -9,12 +9,24 @@
   padding: 8px 10px;
   font-weight: 700;
 
-  &::placeholder {
-    color: rgba(0, 0, 0, 0.3);
-  }
-
   &:focus,
   &:hover {
     outline: none;
   }
+}
+
+.form-control {
+  @include form-element;
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.form-select {
+  @include form-element;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url("/icons/arrow_down.svg") no-repeat right 10px center;
 }
