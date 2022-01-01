@@ -63,6 +63,54 @@
             <button class="btn btn--red filter__btn">Очистить</button>
           </div>
         </template>
+
+        <template v-else-if="type === 'callbacks'">
+          <div class="filter__group group">
+            <div class="group__title">Период:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все время</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все регионы</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Статус заказа:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все статусы</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Тип заявки:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все типы</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Менеджеры:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите менеджера"
+              />
+            </div>
+          </div>
+          <div class="filter__actions">
+            <button class="btn btn--red filter__btn">Очистить</button>
+          </div>
+        </template>
       </div>
     </div>
     <div v-if="type === 'clients'" class="filter__footer filter-footer">
