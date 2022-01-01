@@ -1,0 +1,12 @@
+@media (max-width: 767px) {
+  .filter,
+  .sidebar {
+    display: none;
+  }
+  .page__body {
+    display: block;
+  }
+  .main {
+    padding: 20px;
+  }
+}

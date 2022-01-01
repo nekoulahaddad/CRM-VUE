@@ -1,0 +1,55 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: scroll;
+  padding: 0 4px;
+
+  thead {
+    background-color: $color-white;
+
+    td {
+      font-size: 12px;
+      font-weight: 700;
+
+      &:first-child {
+        padding-left: 15px;
+      }
+      &:last-child {
+        padding-right: 15px;
+      }
+    }
+  }
+
+  tbody:before {
+    content: "@";
+    display: block;
+    line-height: 10px;
+    text-indent: -99999px;
+  }
+
+  tbody {
+    td {
+      background-color: $color-white;
+      font-weight: 700;
+      height: 48px;
+      line-height: 48px;
+
+      &:first-child {
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+        padding-left: 15px;
+      }
+
+      &:last-child {
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        padding-right: 15px;
+      }
+    }
+
+    tr {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      border-radius: $border-radius;
+    }
+  }
+}
