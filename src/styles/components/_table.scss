@@ -3,6 +3,10 @@
   border-collapse: collapse;
   overflow-x: scroll;
 
+  td:first-child {
+    min-width: 50px;
+  }
+
   &__title {
     font-size: 16px;
     font-weight: 700;
@@ -38,13 +42,6 @@
     }
   }
 
-  tbody:before {
-    content: "@";
-    display: block;
-    line-height: 10px;
-    text-indent: -99999px;
-  }
-
   tbody {
     td {
       background-color: $color-white;
@@ -66,8 +63,8 @@
     }
 
     tr {
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       border-radius: $border-radius;
+      position: relative;
     }
   }
 }

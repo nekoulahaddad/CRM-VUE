@@ -1,0 +1,291 @@
+<template>
+  <div class="filter">
+    <div class="filter__inner">
+      <div class="filter__header">
+        <div class="filter__title">Фильтр</div>
+      </div>
+      <div class="filter__body">
+        <template v-if="type === 'clients'">
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <select @change="selectOptions" class="form-select">
+                <option value="all" selected>Все регионы</option>
+                <option
+                  v-for="region in regions"
+                  :key="region.id"
+                  @change="selectOptions($event, null, 'region', null)"
+                  class="form-select"
+                  :value="region.value"
+                >
+                  {{ region.title }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Сортировка:</div>
+            <div class="group__content">
+              <select
+                @change="selectOptions($event, 0, 'orders', null)"
+                class="form-select"
+              >
+                <option selected value="clients">Интернет-магазин</option>
+                <option value="corporates">Корпоративные</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__actions">
+            <button class="btn btn--red filter__btn">Очистить</button>
+          </div>
+        </template>
+      </div>
+    </div>
+    <div v-if="type === 'clients'" class="filter__footer filter-footer">
+      <div class="filter-footer__group">
+        <div class="filter-footer__title">Кол-во клиентов:</div>
+        <div class="filter-footer__value">{{ countClients }}</div>
+      </div>
+      <div class="filter-footer__group">
+        <div class="filter-footer__title">Сумма покупок:</div>
+        <div class="filter-footer__value">
+          {{ vueNumberFormat(cost.toString().split(".")[0]) }}
+        </div>
+      </div>
+      <div class="filter-footer__group">
+        <div class="filter-footer__title">Отгружено:</div>
+        <div class="filter-footer__value">
+          {{ vueNumberFormat(shippedSum.toString().split(".")[0]) }}
+        </div>
+      </div>
+      <div class="filter-footer__group">
+        <div class="filter-footer__title">Прибыль:</div>
+        <div class="filter-footer__value">
+          {{ vueNumberFormat(profit.toString().split(".")[0]) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "@/api/axios";
+
+export default {
+  props: {
+    type: {
+      type: String,
+      required: false,
+      default: () => "group",
+    },
+    user: {
+      type: Object,
+      required: false,
+      default: () => {},
+    },
+    isLoading: {
+      type: Boolean,
+    },
+    countClients: {
+      type: Number,
+    },
+    totalCost: {
+      type: Number,
+    },
+    totalProfit: {
+      type: Number,
+    },
+    totalShippedSum: {
+      type: Number,
+    },
+    totalDeliverySum: {
+      type: Number,
+    },
+  },
+  beforeMount() {
+    this.filterOptions = this.defaultOptions;
+    axios({
+      url: "/regions/get",
+    }).then(async ({ data }) => {
+      this.regions = data.regions;
+    });
+  },
+  computed: {
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
+    count: {
+      get: function () {
+        return this.countClients;
+      },
+    },
+    cost: {
+      get: function () {
+        return this.totalCost;
+      },
+    },
+    profit: {
+      get: function () {
+        return this.totalProfit;
+      },
+    },
+    shippedSum: {
+      get: function () {
+        return this.totalShippedSum;
+      },
+    },
+  },
+  data() {
+    return {
+      filter: false,
+      sameDateFormat: {
+        from: "DD.MM.YYYY, HH:mm",
+        to: "HH:mm",
+      },
+      dateInput: {
+        inputClass: "grid__container--filters-btn",
+        placeholder: "Выберите дату",
+        format: "DD.MM.YYYY",
+        id: "dateInput",
+      },
+      calendarDateInput: {
+        labelStarts: "Начало",
+        labelEnds: "Конец",
+      },
+      dashBoard: [
+        { title: "Интернет-магазин", value: "online" },
+        { title: "Логистика", value: "logistics" },
+      ],
+      activeIndex: 0,
+      info: [],
+      showSlider: false,
+      regions: [],
+      regionsPool: [],
+      dates: [
+        {
+          title: "За сегодня",
+          value: "today",
+        },
+        {
+          title: "За неделю",
+          value: "week",
+        },
+        {
+          title: "За месяц",
+          value: "month",
+        },
+        {
+          title: "За год",
+          value: "year",
+        },
+      ],
+      author: "",
+      authors: [],
+      fio: "",
+      users: [],
+      filterOptions: {},
+      defaultOptions: {
+        department: "all",
+        status: "all",
+        region: "all",
+        regionValue: null,
+        executor: null,
+        initiator: "all",
+        dates: "all",
+        type: null,
+        parent_value: null,
+        nesting: null,
+      },
+      phone: "all",
+      phones: [],
+    };
+  },
+  methods: {
+    selectOptions(e, index, type, value) {
+      this.$parent.isLoading = false;
+      switch (type) {
+        case "department":
+          this.filterOptions.department = value || e.target.value;
+          this.activeIndex = index;
+          break;
+        case "orders":
+          this.filterOptions.type = e.target.value;
+          this.activeIndex = index;
+          this.$forceUpdate();
+          break;
+        case "providers":
+          this.filterOptions.type = value;
+          this.activeIndex = index;
+          this.$forceUpdate();
+          break;
+        case "education":
+          this.$parent.type = value;
+          this.activeIndex = index;
+          this.$forceUpdate();
+          break;
+        case "monitor":
+          this.$parent.type = e.target.value;
+          this.activeIndex = this.dashBoard.indexOf(e.target.value);
+          this.$forceUpdate();
+          break;
+        case "status":
+          this.filterOptions.status = e.target.value;
+          break;
+        case "region":
+          this.filterOptions.region = e.target.value;
+          break;
+        case "regionStats":
+          this.filtersOptions.region = e.target.value;
+          break;
+        case "dates":
+          this.filterOptions.dates = e.target.value;
+
+          //this.activeIndex = this.dates.indexOf(e.target.value)
+          break;
+        case "regionButtons":
+          if (e.target.value != null) {
+            const region = this.regions.find((r) => r._id == e.target.value);
+            this.filterOptions.region = region._id;
+            this.filterOptions.regionValue = region.value;
+            this.setRegion(region._id);
+            this.$emit("updatebyfilter");
+            this.activeIndex = 0;
+            this.$parent.changeOrder = false;
+            this.$parent.downloadExcelFile = true;
+          }
+          break;
+        case "phone":
+          this.filterOptions.phone = value || e.target.value;
+          break;
+        default:
+          break;
+      }
+      this.$parent.filtersOptions = this.filterOptions;
+      if (
+        this.$route.fullPath !== `/${this.$route.name}/1` &&
+        this.$route.fullPath !== "/monitor"
+      ) {
+        this.$router.push(`/dashboard/${this.$route.name}/1`);
+      }
+      this.$parent.isLoading = true;
+    },
+    selectRegion(id) {
+      let value = id.target.value;
+      if (value == "all") {
+        this.setAllRegions();
+      } else {
+        let region = this.regions.find((r) => r.value == value);
+        this.regionsPool = [region._id];
+        console.log(region._id);
+        this.setRegions(this.regionsPool);
+      }
+    },
+    setRegions(pool) {
+      this.$emit("setRegionsPool", pool);
+    },
+  },
+};
+</script>

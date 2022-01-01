@@ -1,11 +1,14 @@
 .filter {
+  width: 267px;
+  background-color: $color-white;
+  border-radius: $border-radius;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
   &__inner {
-    width: 267px;
-    background-color: $color-white;
-    border-radius: $border-radius;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    margin-right: 20px;
     padding: 10px;
+  }
+
+  &__footer {
   }
 
   &__title {
@@ -54,5 +57,31 @@
   &__title {
     font-weight: 700;
     margin-bottom: 10px;
+  }
+}
+
+.filter-footer {
+  padding-bottom: 10px;
+
+  &__group {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 33px;
+    font-weight: 700;
+
+    & + .filter-footer__group {
+      margin-top: 10px;
+    }
+  }
+
+  &__title {
+  }
+
+  &__value {
+    color: $color-viking;
   }
 }
