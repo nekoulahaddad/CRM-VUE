@@ -37,11 +37,13 @@
       </div>
       <div class="flex-1">
         <table class="table">
-          <thead>
-            <tr>
-              <td colspan="8">Клиенты</td>
+          <thead class="thead">
+            <tr class="thead__top">
+              <td colspan="8">
+                <div class="table__title">Клиенты</div>
+              </td>
             </tr>
-            <tr>
+            <tr class="thead__bottom">
               <td>№:</td>
               <td>Клиент</td>
               <td>Почта:</td>

@@ -53,6 +53,8 @@ ul {
 }
 
 .page {
+  overflow-x: hidden;
+
   &__header {
     display: flex;
     align-items: center;
