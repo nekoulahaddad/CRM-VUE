@@ -8,6 +8,7 @@
     </div>
     <div class="page__body d-flex">
       <div class="page__left">
+        <!-- Фильтр -->
         <v-filter
           type="clients"
           :countClients="countClients"

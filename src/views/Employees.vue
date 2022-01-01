@@ -8,33 +8,8 @@
     </div>
     <div class="page__body d-flex">
       <!-- Фильтр -->
-      <div class="filter">
-        <div class="filter__inner">
-          <div class="filter__header">
-            <div class="filter__title">Фильтр</div>
-          </div>
-          <div class="filter__body">
-            <div class="filter__group group">
-              <div class="group__title">Регионы:</div>
-              <div class="group__content">
-                <select class="form-select">
-                  <option value="Все задачи">Все регионы</option>
-                </select>
-              </div>
-            </div>
-            <div class="filter__group group">
-              <div class="group__title">Отделы:</div>
-              <div class="group__content">
-                <select class="form-select">
-                  <option value="Все задачи">Все отделы</option>
-                </select>
-              </div>
-            </div>
-            <div class="filter__actions">
-              <button class="btn btn--red filter__btn">Очистить</button>
-            </div>
-          </div>
-        </div>
+      <div class="page__left">
+        <v-filter type="group" />
       </div>
 
       <!-- Контент -->
@@ -197,5 +172,52 @@
 </template>
 
 <script>
-export default {};
+import VFilter from "@/components/VFilter";
+import getDataFromPage from "../api/getDataFromPage";
+
+export default {
+  components: { VFilter },
+  data() {
+    return {
+      // open: false,
+      openEdit: false,
+      openDelete: false,
+      open: {
+        create: false,
+        view: false,
+        edit: false,
+        delete: false,
+        childrenExport: false,
+      },
+      dataset: [],
+      addedItem: {},
+      deletedItem: {},
+      updatedItem: {},
+      infoItem: {},
+      isLoading: false,
+      count: 0,
+      filtersOptions: {},
+      user: "",
+    };
+  },
+  async mounted() {
+    await this.getData();
+  },
+  methods: {
+    async getData() {
+      this.updateData(await getDataFromPage("/user/get", this.filtersOptions));
+    },
+    updateData(res) {
+      this.isLoading = false;
+      this.dataset = res.data.users;
+      this.count = res.data.count ? res.data.count : 0;
+      this.isLoading = true;
+    },
+    resetFilters() {
+      this.$refs.filters.filterOptions = {};
+      this.$refs.filters.activeIndex = 0;
+      this.filtersOptions = {};
+    },
+  },
+};
 </script>

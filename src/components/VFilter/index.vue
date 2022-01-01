@@ -5,7 +5,31 @@
         <div class="filter__title">Фильтр</div>
       </div>
       <div class="filter__body">
-        <template v-if="type === 'clients'">
+        <template v-if="type === 'group'">
+          <div class="filter__body">
+            <div class="filter__group group">
+              <div class="group__title">Регионы:</div>
+              <div class="group__content">
+                <select class="form-select">
+                  <option value="Все задачи">Все регионы</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter__group group">
+              <div class="group__title">Отделы:</div>
+              <div class="group__content">
+                <select class="form-select">
+                  <option value="Все задачи">Все отделы</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter__actions">
+              <button class="btn btn--red filter__btn">Очистить</button>
+            </div>
+          </div>
+        </template>
+
+        <template v-else-if="type === 'clients'">
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
