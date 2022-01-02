@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    sidebar: !!localStorage.getItem("sidebar"),
     status: {
       reg: "",
       auth: "",
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     file: {},
   },
   mutations: {
+    toggleSidebar(state) {
+      state.sidebar = !state.sidebar;
+    },
     auth_request(state) {
       state.status.auth = "loading";
     },
@@ -157,6 +161,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    toggleSidebar({ commit }) {
+      commit("toggleSidebar");
+    },
     login({ commit }, user) {
       return new Promise((resolve) => {
         commit("auth_request");
@@ -384,6 +391,7 @@ export default new Vuex.Store({
   },
   getters: {
     file: (state) => state.file,
+    sidebar: (state) => state.sidebar,
     isLoggedIn: (state) => !!state.token,
     loaded: (state) => state.loaded,
     authStatus: (state) => state.status.auth,

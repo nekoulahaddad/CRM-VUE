@@ -41,7 +41,7 @@ ul {
 }
 
 .main {
-  padding: 20px 20px 20px 222px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -50,6 +50,10 @@ ul {
 }
 .flex-1 {
   flex: 1;
+}
+
+.wrapper {
+  display: flex;
 }
 
 .page {
