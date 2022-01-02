@@ -11,7 +11,8 @@
         <v-filter type="mango" />
       </div>
       <div class="flex-1">
-        <table class="table">
+        <v-spinner v-if="!isLoading" />
+        <table v-else class="table">
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="5">
@@ -47,13 +48,14 @@
 
 <script>
 import VFilter from "@/components/VFilter";
+import VSpinner from "@/components/VSpinner";
 import getDataFromPage from "@/api/getDataFromPage";
 import dateMixins from "@/mixins/date";
 import phoneMixins from "@/mixins/phone";
 
 export default {
   mixins: [dateMixins, phoneMixins],
-  components: { VFilter },
+  components: { VFilter, VSpinner },
   data() {
     return {
       dataset: [],
@@ -67,16 +69,18 @@ export default {
   methods: {
     async fetchData() {
       try {
+        this.isLoading = false;
         const { data } = await getDataFromPage(
           "/calls/get",
           this.filtersOptions
         );
 
-        this.isLoading = false;
         this.dataset = data.calls;
         this.count = data.count;
+      } catch (e) {
+      } finally {
         this.isLoading = true;
-      } catch (e) {}
+      }
     },
   },
   mounted() {

@@ -68,5 +68,9 @@
 </template>
 
 <script>
-export default {};
+import VSpinner from "@/components/VSpinner";
+
+export default {
+  computed: { VSpinner },
+};
 </script>

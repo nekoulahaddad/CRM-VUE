@@ -8,17 +8,17 @@
       <v-filter type="education" />
     </div>
     <div class="page__body">
-      <div class="card card--white">
-        <v-spinner v-if="!isLoading" />
-        <table v-else-if="educations.length" class="table">
+      <v-spinner v-if="!isLoading" />
+      <div v-else-if="educations.length" class="card card--white">
+        <table class="table">
           <tbody>
             <tr v-for="item in educations" :key="item.id">
               <td>{{ item.title }}</td>
             </tr>
           </tbody>
         </table>
-        <div v-else>Данных нет</div>
       </div>
+      <div v-else>Данных нет</div>
     </div>
   </div>
 </template>
