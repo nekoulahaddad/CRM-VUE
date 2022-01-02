@@ -65,6 +65,10 @@
                         </tr>
                       </table>
                     </div>
+
+                    <!-- Форма добавления документа -->
+                    <v-add-document />
+
                     <div class="table-inner__actions">
                       <v-button red>Добавить документ</v-button>
                     </div>
@@ -84,12 +88,13 @@
 import VButton from "@/components/VButton";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
+import VAddDocument from "./components/VAddDocument";
 import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 
 export default {
   mixins: [roleMixins],
-  components: { VButton, VFilter, VSpinner },
+  components: { VButton, VAddDocument, VFilter, VSpinner },
   data() {
     return {
       typeE: "crm",
