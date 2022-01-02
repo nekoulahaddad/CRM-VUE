@@ -19,6 +19,12 @@ button {
       width: 100%;
     }
 
+    &--white {
+      background-color: $color-white;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      color: #979797;
+    }
+
     &--gray {
     }
   }

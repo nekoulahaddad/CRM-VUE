@@ -5,6 +5,7 @@
         <img src="/icons/education_title.svg" alt="" />
       </div>
       <h1 class="page__title">Обучение</h1>
+      <v-filter type="education" />
     </div>
     <div class="page__body">
       <div class="card card--white">
@@ -21,9 +22,11 @@
 </template>
 
 <script>
+import VFilter from "@/components/VFilter";
 import axios from "@/api/axios";
 
 export default {
+  components: { VFilter },
   data() {
     return {
       typeE: "crm",
@@ -62,6 +65,15 @@ export default {
           };
         });
       },
+    },
+  },
+  watch: {
+    typeE: {
+      handler: function () {
+        this.activeIndex = -1;
+        this.fetchData();
+      },
+      deep: true,
     },
   },
   beforeMount() {

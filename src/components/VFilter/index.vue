@@ -1,5 +1,19 @@
 <template>
-  <div class="filter">
+  <div class="page__buttons" v-if="type === 'education'">
+    <v-button @click="selectOptions($event, 0, 'education', 'crm')" red>
+      CRM
+    </v-button>
+    <v-button @click="selectOptions($event, 1, 'education', 'shop')" white>
+      Интернет-магазин
+    </v-button>
+    <v-button @click="selectOptions($event, 2, 'education', 'lna')" white>
+      ЛНА
+    </v-button>
+    <v-button @click="selectOptions($event, 3, 'education', 'price')" white>
+      Прайс-лист
+    </v-button>
+  </div>
+  <div v-else class="filter">
     <div class="filter__inner">
       <div class="filter__header">
         <div class="filter__title">Фильтр</div>
@@ -127,6 +141,7 @@
         </template>
       </div>
     </div>
+
     <div v-if="type === 'clients'" class="filter__footer filter-footer">
       <div class="filter-footer__group">
         <div class="filter-footer__title">Кол-во клиентов:</div>
@@ -155,6 +170,7 @@
 </template>
 
 <script>
+import VButton from "@/components/VButton";
 import axios from "@/api/axios";
 
 export default {
@@ -187,6 +203,9 @@ export default {
     totalDeliverySum: {
       type: Number,
     },
+  },
+  components: {
+    VButton,
   },
   beforeMount() {
     this.filterOptions = this.defaultOptions;
@@ -329,7 +348,6 @@ export default {
         case "dates":
           this.filterOptions.dates = e.target.value;
 
-          //this.activeIndex = this.dates.indexOf(e.target.value)
           break;
         case "regionButtons":
           if (e.target.value != null) {
