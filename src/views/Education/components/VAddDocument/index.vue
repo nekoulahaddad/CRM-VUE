@@ -1,6 +1,9 @@
 <template>
   <div class="card card--white card--small">
-    <div class="card__title card__title--small">Добавить документ</div>
+    <div class="card__title card__title--small">
+      Добавить документ
+      <img class="card__close" src="/icons/close_icon.svg" alt="" />
+    </div>
     <div class="card__group group">
       <div class="group__title">Название документа:</div>
       <div class="group__content">
@@ -35,6 +38,13 @@ export default {
 .card {
   margin-bottom: 10px;
   padding-bottom: 10px;
+
+  &__close {
+    position: absolute;
+    right: 0;
+    top: 6px;
+    cursor: pointer;
+  }
 
   &__title {
     position: relative;

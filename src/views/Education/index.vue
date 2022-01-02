@@ -67,10 +67,12 @@
                     </div>
 
                     <!-- Форма добавления документа -->
-                    <v-add-document />
+                    <v-add-document v-if="addDocumentItem === item" />
 
-                    <div class="table-inner__actions">
-                      <v-button red>Добавить документ</v-button>
+                    <div v-else class="table-inner__actions">
+                      <v-button @click="toggleAddDocument(item)" red
+                        >Добавить документ</v-button
+                      >
                     </div>
                   </div>
                 </td>
@@ -107,6 +109,7 @@ export default {
       deleteDocument: false,
       upload: false,
       editedItem: {},
+      addDocumentItem: {},
       deletedItem: {},
       educationsArr: [],
       uploadedItem: {},
@@ -215,6 +218,13 @@ export default {
         this.editedItem = null;
       } else {
         this.editedItem = item;
+      }
+    },
+    toggleAddDocument(item) {
+      if (this.addDocumentItem === item) {
+        this.addDocumentItem = null;
+      } else {
+        this.addDocumentItem = item;
       }
     },
   },
