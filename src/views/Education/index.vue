@@ -67,7 +67,10 @@
                     </div>
 
                     <!-- Форма добавления документа -->
-                    <v-add-document v-if="addDocumentItem === item" />
+                    <v-add-document
+                      @toggleAddDocument="toggleAddDocument"
+                      v-if="addDocumentItem === item"
+                    />
 
                     <div v-else class="table-inner__actions">
                       <v-button @click="toggleAddDocument(item)" red
