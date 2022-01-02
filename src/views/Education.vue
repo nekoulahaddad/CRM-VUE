@@ -9,7 +9,8 @@
     </div>
     <div class="page__body">
       <div class="card card--white">
-        <table v-if="educations.length" class="table">
+        <v-spinner v-if="!isLoading" />
+        <table v-else-if="educations.length" class="table">
           <tbody>
             <tr v-for="item in educations" :key="item.id">
               <td>{{ item.title }}</td>
@@ -24,15 +25,17 @@
 
 <script>
 import VFilter from "@/components/VFilter";
+import VSpinner from "@/components/VSpinner";
 import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 
 export default {
   mixins: [roleMixins],
-  components: { VFilter },
+  components: { VFilter, VSpinner },
   data() {
     return {
       typeE: "crm",
+      isLoading: false,
       filtersOptions: {},
       activeIndex: -1,
       add: false,
@@ -129,6 +132,8 @@ export default {
         data.department = this.department;
       }
 
+      this.isLoading = false;
+
       try {
         const response = await axios({
           url: `/educations/get/`,
@@ -137,7 +142,10 @@ export default {
         });
 
         this.educations = response.data.educations;
-      } catch (e) {}
+      } catch (e) {
+      } finally {
+        this.isLoading = true;
+      }
     },
   },
 };
