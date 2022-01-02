@@ -11,7 +11,8 @@
         <v-filter type="callbacks" />
       </div>
       <div class="flex-1">
-        <table class="table">
+        <v-spinner v-if="!isLoading" />
+        <table v-else-if="dataset.length" class="table">
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="11">
@@ -60,6 +61,7 @@
             </tr>
           </tbody>
         </table>
+        <v-not-found-query v-else />
       </div>
     </div>
   </div>
@@ -68,13 +70,15 @@
 <script>
 import VFilter from "@/components/VFilter";
 import getDataFromPage from "@/api/getDataFromPage";
+import VSpinner from "@/components/VSpinner";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
 import dateMixins from "@/mixins/date";
 import nameMixins from "@/mixins/name";
 import fioMixins from "@/mixins/fio";
 
 export default {
   mixins: [dateMixins, fioMixins, nameMixins],
-  components: { VFilter },
+  components: { VFilter, VSpinner, VNotFoundQuery },
   data() {
     return {
       count: 0,
@@ -104,14 +108,33 @@ export default {
   methods: {
     async getData() {
       try {
+        this.isLoading = false;
+
         const { data } = await getDataFromPage(
-          `/${this.filtersOptions.type}/get`,
+          "/callbacks/get",
           this.filtersOptions
         );
 
         this.dataset = data.callbacks;
-        console.log(this.dataset);
-      } catch (e) {}
+      } catch (e) {
+      } finally {
+        this.isLoading = true;
+      }
+    },
+  },
+  watch: {
+    $route: function () {
+      this.getData();
+    },
+    filtersOptions: {
+      handler: function () {
+        this.getData();
+      },
+      deep: true,
+    },
+    callbacks: {
+      handler: function () {},
+      deep: true,
     },
   },
 };

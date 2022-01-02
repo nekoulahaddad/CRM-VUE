@@ -136,8 +136,14 @@
           <div class="filter__group group">
             <div class="group__title">Период:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все время</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'dates', null)"
+              >
+                <option selected value="Все задачи">Все время</option>
+                <option v-for="item in dates" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
@@ -159,8 +165,14 @@
           <div class="filter__group group">
             <div class="group__title">Статус заказа:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все статусы</option>
+              <select
+                class="form-select"
+                :value="filterOptions.status ? filterOptions.status : 'all'"
+                @change="selectOptions($event, null, 'status', null)"
+              >
+                <option selected value="all">Все статусы</option>
+                <option value="true">Обработана</option>
+                <option value="false">Не обработана</option>
               </select>
             </div>
           </div>
@@ -278,8 +290,14 @@
           <div class="filter__group group">
             <div class="group__title">Дата:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">За все время</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'dates', null)"
+              >
+                <option selected value="Все задачи">Все время</option>
+                <option v-for="item in dates" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
@@ -345,8 +363,14 @@
           <div class="filter__group group">
             <div class="group__title">Период:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все время</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'dates', null)"
+              >
+                <option selected value="Все задачи">Все время</option>
+                <option v-for="item in dates" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
@@ -368,8 +392,14 @@
           <div class="filter__group group">
             <div class="group__title">Статус заказа:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все статусы</option>
+              <select
+                class="form-select"
+                :value="filterOptions.status ? filterOptions.status : 'all'"
+                @change="selectOptions($event, null, 'status', null)"
+              >
+                <option selected value="all">Все статусы</option>
+                <option value="true">Обработана</option>
+                <option value="false">Не обработана</option>
               </select>
             </div>
           </div>
@@ -448,9 +478,11 @@
 
 <script>
 import VButton from "@/components/VButton";
+import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 
 export default {
+  mixins: [roleMixins],
   props: {
     type: {
       type: String,
