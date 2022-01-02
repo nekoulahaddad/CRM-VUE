@@ -66,6 +66,30 @@
       position: relative;
     }
   }
+
+  &__actions {
+    display: flex;
+  }
+
+  &__icon {
+    position: relative;
+
+    & + .table__icon {
+      margin-left: 25px;
+      position: relative;
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: -50%;
+        transform: translateY(-50%);
+        height: 38px;
+        width: 2px;
+        background-color: #f6f6f6;
+      }
+    }
+  }
 }
 
 .thead {
