@@ -137,4 +137,21 @@
 }
 
 .table-inner {
+  &__title {
+    padding-bottom: 10px;
+    position: relative;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: $color-white;
+      border-radius: $border-radius;
+      width: 100%;
+    }
+  }
 }

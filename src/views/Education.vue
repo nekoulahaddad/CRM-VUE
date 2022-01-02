@@ -28,7 +28,9 @@
               </tr>
               <tr class="shadow" v-if="index === 0">
                 <td class="inner" colspan="2">
-                  <div class="table-inner"></div>
+                  <div class="table-inner">
+                    <div class="table-inner__title">{{ item.title }}</div>
+                  </div>
                 </td>
               </tr>
             </template>
