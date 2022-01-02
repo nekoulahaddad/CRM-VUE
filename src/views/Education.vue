@@ -8,47 +8,88 @@
     </div>
     <div class="page__body">
       <div class="card card--white">
-        <div class="card__title">CRM</div>
-        <div class="list">
-          <div class="list__item item">
-            <div class="item__column">Обучение по ЦРМ для менеджеров</div>
-            <div class="item__actions">
-              <div class="item__icon">
-                <img src="/icons/write_icon.svg" alt="" />
-              </div>
-              <div class="item__icon">
-                <img src="/icons/trash_icon.svg" alt="" />
-              </div>
-            </div>
-          </div>
-          <div class="list__item item">
-            <div class="item__column">Обучение по ЦРМ для менеджеров</div>
-            <div class="item__actions">
-              <div class="item__icon">
-                <img src="/icons/write_icon.svg" alt="" />
-              </div>
-              <div class="item__icon">
-                <img src="/icons/trash_icon.svg" alt="" />
-              </div>
-            </div>
-          </div>
-          <div class="list__item item">
-            <div class="item__column">Обучение по ЦРМ для менеджеров</div>
-            <div class="item__actions">
-              <div class="item__icon">
-                <img src="/icons/write_icon.svg" alt="" />
-              </div>
-              <div class="item__icon">
-                <img src="/icons/trash_icon.svg" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
+        <table class="table">
+          <tbody>
+            <tr v-for="item in educations" :key="item.id">
+              <td>{{ item.title }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from "@/api/axios";
+
+export default {
+  data() {
+    return {
+      typeE: "crm",
+      filtersOptions: {},
+      activeIndex: -1,
+      add: false,
+      edit: false,
+      deleteEducationForm: false,
+      deleteDocument: false,
+      upload: false,
+      editedItem: {},
+      deletedItem: {},
+      educationsArr: [],
+      uploadedItem: {},
+      deletedDocument: {},
+      whoCanDoChanges: ["Якубовский", "Евдокимова", "Аракелов", "Марценюк"],
+    };
+  },
+  computed: {
+    educations: {
+      cache: false,
+      get: function () {
+        return this.educationsArr;
+      },
+      set: function (educations) {
+        this.educationsArr = educations.map((item) => {
+          return {
+            _id: item._id,
+            type: item.type,
+            title: item.title,
+            description: item.description,
+            documents: item.documents,
+            role: item.role,
+            department: item.department,
+            content: item.description,
+          };
+        });
+      },
+    },
+  },
+  beforeMount() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      let data = {
+        type: this.typeE,
+      };
+
+      data.role = this.role;
+      data.department = this.department;
+
+      if (this.typeE === "employee") {
+        data.department = this.department;
+      }
+
+      try {
+        const response = await axios({
+          url: `/educations/get/`,
+          params: data,
+          method: "GET",
+        });
+
+        this.educations = response.data.educations;
+      } catch (e) {}
+    },
+  },
+};
 </script>
