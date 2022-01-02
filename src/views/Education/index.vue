@@ -216,19 +216,29 @@ export default {
         this.isLoading = true;
       }
     },
-    toggleEdit(item) {
-      if (this.editedItem === item) {
-        this.editedItem = null;
-      } else {
-        this.editedItem = item;
-      }
-    },
     toggleAddDocument(item) {
       if (this.addDocumentItem === item) {
         this.addDocumentItem = null;
       } else {
         this.addDocumentItem = item;
       }
+    },
+    toggleEdit(item) {
+      this.addDocumentItem = null;
+
+      if (this.editedItem === item) {
+        this.editedItem = null;
+      } else {
+        this.editedItem = item;
+      }
+    },
+    toggleDelete(item) {
+      if (!this.deleteEducationForm) {
+        this.deletedItem = item;
+      } else {
+        this.deletedItem = {};
+      }
+      this.deleteEducationForm = !this.deleteEducationForm;
     },
   },
 };

@@ -21,7 +21,10 @@
     </div>
     <div class="card__group group">
       <div class="group__title">Загрузить документ:</div>
-      <div class="group__content"></div>
+      <div class="group__content">
+        <input type="file" id="document-file" hidden />
+        <label for="document-file">Выбрать файл</label>
+      </div>
     </div>
     <div class="group__actions">
       <v-button red>Сохранить</v-button>
@@ -87,6 +90,20 @@ export default {
 
   .group__title {
     font-weight: 600;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 230px;
+    height: 37px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    background-color: $color-white;
+    border-radius: $border-radius;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
   }
 }
 </style>
