@@ -14,7 +14,8 @@
 
       <!-- Контент -->
       <div class="flex-1">
-        <table class="table">
+        <v-spinner v-if="!isLoading" />
+        <table v-else class="table">
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="7">
@@ -62,11 +63,12 @@
 
 <script>
 import VFilter from "@/components/VFilter";
+import VSpinner from "@/components/VSpinner";
 import getDataFromPage from "../api/getDataFromPage";
 import ratingMixins from "@/mixins/rating";
 
 export default {
-  components: { VFilter },
+  components: { VFilter, VSpinner },
   mixins: [ratingMixins],
   data() {
     return {

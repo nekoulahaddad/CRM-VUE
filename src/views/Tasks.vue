@@ -14,7 +14,8 @@
 
       <!-- Контент -->
       <div class="flex-1">
-        <table class="table">
+        <v-spinner v-if="!isLoading" />
+        <table v-else class="table">
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="8">
@@ -109,6 +110,7 @@
 
 <script>
 import VFilter from "@/components/VFilter";
+import VSpinner from "@/components/VSpinner";
 import dateMixins from "@/mixins/date";
 import roleMixins from "@/mixins/role";
 import statusMixins from "@/mixins/status";
@@ -117,7 +119,7 @@ import getDataFromPage from "@/api/getDataFromPage";
 import axios from "@/api/axios";
 
 export default {
-  components: { VFilter },
+  components: { VFilter, VSpinner },
   mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
     user: {

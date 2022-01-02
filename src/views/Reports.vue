@@ -14,7 +14,8 @@
 
       <!-- Контент -->
       <div class="flex-1">
-        <table class="table">
+        <v-spinner v-if="!isLoading" />
+        <table v-else class="table">
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="9">
@@ -62,6 +63,7 @@
 
 <script>
 import VFilter from "@/components/VFilter";
+import VSpinner from "@/components/VSpinner";
 import getDataFromPage from "@/api/getDataFromPage";
 import dateMixins from "@/mixins/date";
 import fioMixins from "@/mixins/fio";
@@ -70,7 +72,7 @@ import statusMixins from "@/mixins/status";
 
 export default {
   mixins: [dateMixins, fioMixins, markMixins, statusMixins],
-  components: { VFilter },
+  components: { VFilter, VSpinner },
   data() {
     return {
       infoForm: false,
@@ -87,7 +89,6 @@ export default {
     role: {
       get: function () {
         let role = this.getUserRole();
-
         return role.role;
       },
     },
