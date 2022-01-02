@@ -14,6 +14,16 @@
           <tbody>
             <tr v-for="item in educations" :key="item.id">
               <td>{{ item.title }}</td>
+              <td>
+                <div class="table__actions">
+                  <div class="table__icon">
+                    <img src="/icons/write_icon.svg" alt="" />
+                  </div>
+                  <div class="table__icon">
+                    <img src="/icons/trash_icon.svg" alt="" />
+                  </div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
