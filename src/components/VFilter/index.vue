@@ -201,6 +201,47 @@
             <button class="btn btn--red filter__btn">Очистить</button>
           </div>
         </template>
+
+        <template v-else-if="type === 'reports'">
+          <div class="filter__group group">
+            <div class="group__title">Дата:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">За все время</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все регионы</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Отделы:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все отделы</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Исполнитель:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите исполнителя задачи..."
+              />
+            </div>
+          </div>
+
+          <div class="filter__actions">
+            <button class="btn btn--red filter__btn">Очистить</button>
+          </div>
+        </template>
       </div>
     </div>
 
