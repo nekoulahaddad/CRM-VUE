@@ -242,6 +242,82 @@
             <button class="btn btn--red filter__btn">Очистить</button>
           </div>
         </template>
+
+        <!-- Заказы -->
+        <template v-else-if="type === 'orders'">
+          <div class="filter__group group">
+            <div class="group__title">Форма продажи:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">B2B</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Период:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все время</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все регионы</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Статус заказа:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все статусы</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Менеджеры:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите менеджера"
+              />
+            </div>
+          </div>
+          <div class="filter__actions">
+            <button class="btn btn--red filter__btn">Очистить</button>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div v-if="type === 'orders'" class="filter__footer filter-footer">
+      <div class="filter-footer__group">
+        <div class="filter-footer__title">Заказы:</div>
+        <div class="filter-footer__value">
+          {{ vueNumberFormat(cost.toString().split(".")[0]) }}
+        </div>
+      </div>
+      <div class="filter-footer__group">
+        <div class="filter-footer__title">Доставка:</div>
+        <div class="filter-footer__value">
+          {{ vueNumberFormat(totalDeliverySum.toString().split(".")[0]) }}
+        </div>
+      </div>
+      <div class="filter-footer__group">
+        <div class="filter-footer__title">Отгружено:</div>
+        <div class="filter-footer__value">
+          {{ vueNumberFormat(shippedSum.toString().split(".")[0]) }}
+        </div>
+      </div>
+      <div class="filter-footer__group">
+        <div class="filter-footer__title">Прибыль:</div>
+        <div class="filter-footer__value">
+          {{ vueNumberFormat(profit.toString().split(".")[0]) }}
+        </div>
       </div>
     </div>
 

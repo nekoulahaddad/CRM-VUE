@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
+import axios from "@/api/axios";
 import jwt from "jsonwebtoken";
 
 Vue.use(Vuex);
@@ -276,8 +276,6 @@ export default new Vuex.Store({
     },
     getOrdersFromPage({ commit }, { page, filtersOptions }) {
       return new Promise((resolve) => {
-        // commit('start_update_orders')
-
         axios({
           url: process.env.VUE_APP_DEVELOP_URL + `/orders/get/?page=${+page}`,
           data: {
