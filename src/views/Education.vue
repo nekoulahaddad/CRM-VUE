@@ -42,7 +42,29 @@
                         alt=""
                       />
                     </div>
-                    <div class="table-inner__description"></div>
+                    <div class="table-inner__description description">
+                      <div class="description__title">Описание</div>
+                      <div class="description__content">
+                        {{ item.description }}
+                      </div>
+                    </div>
+                    <div class="table-inner__table">
+                      <table class="table">
+                        <tr class="shadow">
+                          <td>Тест</td>
+                          <td>
+                            <div class="table__actions">
+                              <div class="table__icon">
+                                <img src="/icons/download_icon.svg" alt="" />
+                              </div>
+                              <div class="table__icon">
+                                <img src="/icons/trash_icon.svg" alt="" />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
                     <div class="table-inner__actions">
                       <v-button red>Добавить документ</v-button>
                     </div>
