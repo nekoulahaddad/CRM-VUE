@@ -55,7 +55,7 @@
                           <td>
                             <div class="table__actions">
                               <div class="table__icon">
-                                <img src="/icons/download_icon.svg" alt="" />
+                                <img src="/icons/file_icon.svg" alt="" />
                               </div>
                               <div class="table__icon">
                                 <img src="/icons/trash_icon.svg" alt="" />
