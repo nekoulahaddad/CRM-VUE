@@ -97,7 +97,15 @@ export default {
   },
   methods: {
     async getData() {
-      this.updateData(await getDataFromPage("/user/get", this.filtersOptions));
+      try {
+        this.isLoading = false;
+        this.updateData(
+          await getDataFromPage("/user/get", this.filtersOptions)
+        );
+      } catch (e) {
+      } finally {
+        this.isLoading = true;
+      }
     },
     updateData(res) {
       this.isLoading = false;

@@ -15,7 +15,7 @@
       <!-- Контент -->
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
-        <table v-else class="table">
+        <table v-else-if="dataset.length" class="table">
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="8">
@@ -103,6 +103,10 @@
             </tr>
           </tbody>
         </table>
+        <div v-else>
+          Извините, по вашему запросу ничего не найдено. Попробуйте расширить
+          диапазон, или указать другие параметры
+        </div>
       </div>
     </div>
   </div>
@@ -188,17 +192,20 @@ export default {
   methods: {
     async fetchData() {
       try {
+        this.isLoading = false;
+
         const { data } = await getDataFromPage(
           "/tasks/get",
           this.filtersOptions
         );
 
         this.activeIndex = -1;
-        this.isLoading = false;
         this.dataset = data.tasks;
         this.count = data.count;
+      } catch (e) {
+      } finally {
         this.isLoading = true;
-      } catch (e) {}
+      }
     },
     toggleOpen() {
       this.open = !this.open;
@@ -366,6 +373,17 @@ export default {
       }).then(() => {
         this.$toast.success("Оценка изменена!");
       });
+    },
+  },
+  watch: {
+    $route: function () {
+      this.fetchData();
+    },
+    filtersOptions: {
+      handler: function () {
+        this.fetchData();
+      },
+      deep: true,
     },
   },
 };

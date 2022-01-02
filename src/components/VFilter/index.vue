@@ -528,8 +528,8 @@ export default {
       axios({
         url: "/departments/get",
         method: "POST",
-      }).then(async (response) => {
-        let departments = response.data;
+      }).then(({ data }) => {
+        let departments = data.departments;
 
         departments.unshift({
           title: "Все отделы",
