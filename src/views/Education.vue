@@ -13,12 +13,16 @@
         <table class="table">
           <tbody>
             <template v-for="(item, index) in educations">
-              <tr class="shadow" :key="item.id">
+              <tr v-if="editedItem !== item" class="shadow" :key="item.id">
                 <td>{{ item.title }}</td>
                 <td>
                   <div class="table__actions">
                     <div class="table__icon">
-                      <img src="/icons/write_icon.svg" alt="" />
+                      <img
+                        @click="toggleEdit(item)"
+                        src="/icons/write_icon.svg"
+                        alt=""
+                      />
                     </div>
                     <div class="table__icon">
                       <img src="/icons/trash_icon.svg" alt="" />
@@ -26,12 +30,13 @@
                   </div>
                 </td>
               </tr>
-              <tr class="shadow" v-if="index === 0">
+              <tr class="shadow" v-else>
                 <td class="inner" colspan="2">
                   <div class="table-inner">
                     <div class="table-inner__title">
                       {{ item.title }}
                       <img
+                        @click="toggleEdit(item)"
                         class="table-inner__close"
                         src="/icons/close_icon.svg"
                         alt=""
@@ -176,6 +181,13 @@ export default {
       } catch (e) {
       } finally {
         this.isLoading = true;
+      }
+    },
+    toggleEdit(item) {
+      if (this.editedItem === item) {
+        this.editedItem = null;
+      } else {
+        this.editedItem = item;
       }
     },
   },
