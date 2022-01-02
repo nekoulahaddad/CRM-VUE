@@ -137,9 +137,13 @@
 }
 
 .table-inner {
+  padding-top: 14px;
+  padding-bottom: 14px;
+
   &__title {
     padding-bottom: 10px;
     position: relative;
+    margin-bottom: 10px;
 
     &::after {
       content: "";
@@ -152,6 +156,14 @@
       background-color: $color-white;
       border-radius: $border-radius;
       width: 100%;
+    }
+  }
+
+  &__actions {
+    .btn {
+      height: 27px;
+      width: 230px;
+      font-size: 16px;
     }
   }
 }

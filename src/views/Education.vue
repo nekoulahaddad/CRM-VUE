@@ -30,6 +30,10 @@
                 <td class="inner" colspan="2">
                   <div class="table-inner">
                     <div class="table-inner__title">{{ item.title }}</div>
+                    <div class="table-inner__description"></div>
+                    <div class="table-inner__actions">
+                      <v-button red>Добавить документ</v-button>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -43,6 +47,7 @@
 </template>
 
 <script>
+import VButton from "@/components/VButton";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import roleMixins from "@/mixins/role";
@@ -50,7 +55,7 @@ import axios from "@/api/axios";
 
 export default {
   mixins: [roleMixins],
-  components: { VFilter, VSpinner },
+  components: { VButton, VFilter, VSpinner },
   data() {
     return {
       typeE: "crm",
