@@ -182,6 +182,10 @@
 }
 
 .description {
+  &__title {
+    font-weight: 700;
+  }
+
   &__content {
     font-weight: 500;
   }

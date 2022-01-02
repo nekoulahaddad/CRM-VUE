@@ -1,31 +1,22 @@
 <template>
-  <div class="table-add-document">
-    <div class="table-inner">
-      <div class="table-inner__title">Добавить документ</div>
-      <div class="table-inner__description description">
-        <div class="description__title">Описание</div>
-        <div class="description__content"></div>
+  <div class="card card--white card--small">
+    <div class="card__title card__title--small">Добавить документ</div>
+    <div class="card__group group">
+      <div class="group__title">Название документа:</div>
+      <div class="group__content">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Введите название документа..."
+        />
       </div>
-      <div class="table-inner__table">
-        <table class="table">
-          <tr class="shadow">
-            <td>Тест</td>
-            <td>
-              <div class="table__actions">
-                <div class="table__icon">
-                  <img src="/icons/file_icon.svg" alt="" />
-                </div>
-                <div class="table__icon">
-                  <img src="/icons/trash_icon.svg" alt="" />
-                </div>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="table-inner__actions">
-        <v-button red>Сохранить</v-button>
-      </div>
+    </div>
+    <div class="card__group group">
+      <div class="group__title">Загрузить документ:</div>
+      <div class="group__content"></div>
+    </div>
+    <div class="group__actions">
+      <v-button red>Сохранить</v-button>
     </div>
   </div>
 </template>
@@ -37,3 +28,50 @@ export default {
   components: { VButton },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.card {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+
+  &__title {
+    position: relative;
+    padding-bottom: 10px;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #f6f6f6;
+      border-radius: $border-radius;
+      width: 100%;
+    }
+  }
+
+  .group {
+    & + * {
+      margin-top: 10px;
+    }
+  }
+
+  .group__actions {
+    margin-top: 10px;
+
+    .btn {
+      width: 230px;
+      font-size: 16px;
+      height: 37px;
+    }
+  }
+
+  .group__title {
+    font-weight: 600;
+  }
+}
+</style>
