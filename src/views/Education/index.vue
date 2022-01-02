@@ -84,13 +84,14 @@
           </tbody>
         </table>
       </div>
-      <div v-else>Данных нет</div>
+      <v-not-found-query v-else />
     </div>
   </div>
 </template>
 
 <script>
 import VButton from "@/components/VButton";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VAddDocument from "./components/VAddDocument";
@@ -99,7 +100,7 @@ import axios from "@/api/axios";
 
 export default {
   mixins: [roleMixins],
-  components: { VButton, VAddDocument, VFilter, VSpinner },
+  components: { VButton, VAddDocument, VFilter, VSpinner, VNotFoundQuery },
   data() {
     return {
       typeE: "crm",

@@ -102,8 +102,9 @@ export default {
     async fetchData() {
       try {
         this.isLoading = false;
+
         const { data } = await getDataFromPage(
-          `/${this.filtersOptions.type}/get`,
+          `/clients/get`,
           this.filtersOptions
         );
 
@@ -113,8 +114,10 @@ export default {
         this.totalCost = data.totalCost;
         this.profit = data.profit;
         this.shippedSum = data.shippedSum;
+      } catch (e) {
+      } finally {
         this.isLoading = true;
-      } catch (e) {}
+      }
     },
   },
   watch: {

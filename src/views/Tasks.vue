@@ -103,10 +103,7 @@
             </tr>
           </tbody>
         </table>
-        <div v-else>
-          Извините, по вашему запросу ничего не найдено. Попробуйте расширить
-          диапазон, или указать другие параметры
-        </div>
+        <v-not-found-query v-else />
       </div>
     </div>
   </div>
@@ -116,6 +113,7 @@
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import dateMixins from "@/mixins/date";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
 import roleMixins from "@/mixins/role";
 import statusMixins from "@/mixins/status";
 import fioMixins from "@/mixins/fio";
@@ -123,7 +121,7 @@ import getDataFromPage from "@/api/getDataFromPage";
 import axios from "@/api/axios";
 
 export default {
-  components: { VFilter, VSpinner },
+  components: { VFilter, VSpinner, VNotFoundQuery },
   mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
     user: {

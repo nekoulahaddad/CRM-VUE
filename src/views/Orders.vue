@@ -19,7 +19,8 @@
         />
       </div>
       <div class="flex-1">
-        <table class="table">
+        <v-spinner v-if="!isLoading" />
+        <table v-else-if="orders.length" class="table">
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="12">
@@ -68,6 +69,7 @@
             </tr>
           </tbody>
         </table>
+        <v-not-found-query v-else />
       </div>
     </div>
   </div>
@@ -75,17 +77,19 @@
 
 <script>
 import axios from "@/api/axios";
-import { mapActions, mapGetters, mapMutations } from "vuex";
 import VFilter from "@/components/VFilter";
+import VSpinner from "@/components/VSpinner";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
 import dateMixins from "@/mixins/date";
 import nameMixins from "@/mixins/name";
 import roleMixins from "@/mixins/role";
 import statusMixins from "@/mixins/status";
 import fioMixins from "@/mixins/fio";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   mixins: [dateMixins, fioMixins, nameMixins, roleMixins, statusMixins],
-  components: { VFilter },
+  components: { VFilter, VSpinner, VNotFoundQuery },
   data() {
     return {
       startDate: null,
@@ -172,9 +176,7 @@ export default {
     },
     filtersOptions: {
       handler: async function () {
-        this.isLoading = false;
-        this.getData();
-        this.isLoading = true;
+        await this.fetchData();
         if (
           this.filtersOptions.region &&
           this.filtersOptions.region !== "all"
@@ -188,11 +190,9 @@ export default {
     },
   },
   mounted() {
-    this.isLoading = false;
     this.filtersOptions.executor =
       this.role === "manager" ? this.$store.state._id : null;
-    this.getData();
-    this.isLoading = true;
+    this.fetchData();
   },
   methods: {
     ...mapActions({
@@ -233,7 +233,7 @@ export default {
       this.isLoading = false;
       this.filtersOptions.startDate = startDate;
       this.filtersOptions.endDate = endDate;
-      this.getData();
+      this.fetchData();
       this.isLoading = true;
     },
     sort(type) {
@@ -345,11 +345,15 @@ export default {
         filtersOptions: this.filtersOptions,
       });
     },
-    async getData() {
+    async fetchData() {
       this.downloadExcelFile = true;
+      this.isLoading = false;
+
       await this.getOrdersFromPage({
         page: +this.$route.params.page,
         filtersOptions: this.filtersOptions,
+      }).finally(() => {
+        this.isLoading = true;
       });
     },
     async downloadExcel() {
