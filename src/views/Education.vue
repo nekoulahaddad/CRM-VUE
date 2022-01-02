@@ -12,7 +12,7 @@
       <div v-else-if="educations.length" class="card card--white">
         <table class="table">
           <tbody>
-            <template v-for="item in educations">
+            <template v-for="(item, index) in educations">
               <tr class="shadow" :key="item.id">
                 <td>{{ item.title }}</td>
                 <td>
@@ -24,6 +24,11 @@
                       <img src="/icons/trash_icon.svg" alt="" />
                     </div>
                   </div>
+                </td>
+              </tr>
+              <tr class="shadow" v-if="index === 0">
+                <td class="inner" colspan="2">
+                  <div class="table-inner"></div>
                 </td>
               </tr>
             </template>
