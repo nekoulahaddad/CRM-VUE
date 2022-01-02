@@ -29,7 +29,7 @@
           <tbody>
             <tr v-for="(item, index) in dataset" :key="item.id">
               <td>
-                {{ index + 1 + ($route.params.page - 1) }}
+                {{ index + 1 + ($route.params.page - 1) * 15 }}
               </td>
               <td class="text--blue">{{ transformPhone(item.from.number) }}</td>
               <td>{{ transformPhone(item.to.number) }}</td>
