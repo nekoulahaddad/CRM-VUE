@@ -48,7 +48,7 @@
                         {{ item.description }}
                       </div>
                     </div>
-                    <div class="table-inner__table">
+                    <div v-if="false" class="table-inner__table">
                       <table class="table">
                         <tr class="shadow">
                           <td>Тест</td>
