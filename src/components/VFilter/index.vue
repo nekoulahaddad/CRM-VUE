@@ -1,15 +1,31 @@
 <template>
   <div class="page__buttons" v-if="type === 'education'">
-    <v-button @click="selectOptions($event, 0, 'education', 'crm')" red>
+    <v-button
+      :red="activeIndex === 0"
+      :white="activeIndex !== 0"
+      @click="selectOptions($event, 0, 'education', 'crm')"
+    >
       CRM
     </v-button>
-    <v-button @click="selectOptions($event, 1, 'education', 'shop')" white>
+    <v-button
+      :red="activeIndex === 1"
+      :white="activeIndex !== 1"
+      @click="selectOptions($event, 1, 'education', 'shop')"
+    >
       Интернет-магазин
     </v-button>
-    <v-button @click="selectOptions($event, 2, 'education', 'lna')" white>
+    <v-button
+      :red="activeIndex === 2"
+      :white="activeIndex !== 2"
+      @click="selectOptions($event, 2, 'education', 'lpa')"
+    >
       ЛНА
     </v-button>
-    <v-button @click="selectOptions($event, 3, 'education', 'price')" white>
+    <v-button
+      :red="activeIndex === 3"
+      :white="activeIndex !== 3"
+      @click="selectOptions($event, 3, 'education', 'price')"
+    >
       Прайс-лист
     </v-button>
   </div>
@@ -368,8 +384,9 @@ export default {
           break;
       }
       this.$parent.filtersOptions = this.filterOptions;
+
       if (
-        this.$route.fullPath !== `/${this.$route.name}/1` &&
+        !this.$route.fullPath.includes(`/${this.$route.name}/1`) &&
         this.$route.fullPath !== "/monitor"
       ) {
         this.$router.push(`/dashboard/${this.$route.name}/1`);

@@ -9,13 +9,14 @@
     </div>
     <div class="page__body">
       <div class="card card--white">
-        <table class="table">
+        <table v-if="educations.length" class="table">
           <tbody>
             <tr v-for="item in educations" :key="item.id">
               <td>{{ item.title }}</td>
             </tr>
           </tbody>
         </table>
+        <div v-else>Данных нет</div>
       </div>
     </div>
   </div>
@@ -23,9 +24,11 @@
 
 <script>
 import VFilter from "@/components/VFilter";
+import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 
 export default {
+  mixins: [roleMixins],
   components: { VFilter },
   data() {
     return {
@@ -64,6 +67,40 @@ export default {
             content: item.description,
           };
         });
+      },
+    },
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        console.log(role);
+        return role.role;
+      },
+    },
+    userLastName: {
+      get: function () {
+        let user = this.getUserRole();
+        return user.surname;
+      },
+    },
+    department: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.department;
+      },
+    },
+    type: {
+      cache: false,
+      get: function () {
+        return this.typeE;
+      },
+      set: function (type) {
+        this.typeE = type;
+        return this.typeE;
+      },
+    },
+    canChanges: {
+      get: function () {
+        return this.whoCanDoChanges.some((v) => v === this.userLastName.trim());
       },
     },
   },
