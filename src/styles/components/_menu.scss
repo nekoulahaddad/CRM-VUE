@@ -58,6 +58,7 @@
   &__title {
     font-weight: bold;
     margin-left: 10px;
+    transition: opacity 0.2s 0.2s;
 
     .sidebar--collapse & {
       display: none;

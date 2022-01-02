@@ -2,12 +2,13 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "@/api/axios";
 import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    sidebar: !!localStorage.getItem("sidebar"),
+    sidebar: !!Cookies.get("sidebar"),
     status: {
       reg: "",
       auth: "",
@@ -32,6 +33,9 @@ export default new Vuex.Store({
   mutations: {
     toggleSidebar(state) {
       state.sidebar = !state.sidebar;
+      state.sidebar
+        ? Cookies.set("sidebar", !state.sidebar)
+        : Cookies.remove("sidebar");
     },
     auth_request(state) {
       state.status.auth = "loading";
