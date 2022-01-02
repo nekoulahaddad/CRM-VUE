@@ -202,6 +202,22 @@
           </div>
         </template>
 
+        <!-- Поставщики -->
+        <template v-else-if="type === 'providers'">
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <select class="form-select">
+                <option value="Все задачи">Все регионы</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__actions">
+            <button class="btn btn--red filter__btn">Очистить</button>
+          </div>
+        </template>
+
+        <!-- Отчеты -->
         <template v-else-if="type === 'reports'">
           <div class="filter__group group">
             <div class="group__title">Дата:</div>
