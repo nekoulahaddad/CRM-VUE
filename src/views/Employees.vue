@@ -111,5 +111,16 @@ export default {
       this.filtersOptions = {};
     },
   },
+  watch: {
+    $route: async function () {
+      await this.getData();
+    },
+    filtersOptions: {
+      handler: async function () {
+        await this.getData();
+      },
+      deep: true,
+    },
+  },
 };
 </script>

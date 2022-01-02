@@ -40,21 +40,38 @@
             <div class="filter__group group">
               <div class="group__title">Регионы:</div>
               <div class="group__content">
-                <select class="form-select">
-                  <option value="Все задачи">Все регионы</option>
+                <select
+                  class="form-select"
+                  @change="selectOptions($event, null, 'region', null)"
+                  :value="filterOptions.region"
+                >
+                  <option selected value="all">Все регионы</option>
+                  <option v-for="item in regions" :value="item.value">
+                    {{ item.title }}
+                  </option>
                 </select>
               </div>
             </div>
             <div class="filter__group group">
               <div class="group__title">Отделы:</div>
               <div class="group__content">
-                <select class="form-select">
-                  <option value="Все задачи">Все отделы</option>
+                <select
+                  class="form-select"
+                  @change="selectOptions($event, null, 'department')"
+                  :value="
+                    filterOptions.department ? filterOptions.department : 'all'
+                  "
+                >
+                  <option v-for="item in info" :value="item.value">
+                    {{ item.title }}
+                  </option>
                 </select>
               </div>
             </div>
             <div class="filter__actions">
-              <button class="btn btn--red filter__btn">Очистить</button>
+              <button @click="clearOptions" class="btn btn--red filter__btn">
+                Очистить
+              </button>
             </div>
           </div>
         </template>
@@ -91,7 +108,9 @@
             </div>
           </div>
           <div class="filter__actions">
-            <button class="btn btn--red filter__btn">Очистить</button>
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
           </div>
         </template>
 
@@ -106,7 +125,9 @@
             </div>
           </div>
           <div class="filter__actions">
-            <button class="btn btn--red filter__btn">Очистить</button>
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
           </div>
         </template>
 
@@ -123,8 +144,15 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все регионы</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
+                <option selected value="all">Все регионы</option>
+                <option v-for="item in regions" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
@@ -155,7 +183,9 @@
             </div>
           </div>
           <div class="filter__actions">
-            <button class="btn btn--red filter__btn">Очистить</button>
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
           </div>
         </template>
 
@@ -164,16 +194,31 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все регионы</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
+                <option selected value="all">Все регионы</option>
+                <option v-for="item in regions" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
           <div class="filter__group group">
             <div class="group__title">Отделы:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все отделы</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'department')"
+                :value="
+                  filterOptions.department ? filterOptions.department : 'all'
+                "
+              >
+                <option v-for="item in info" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
@@ -198,7 +243,9 @@
             </div>
           </div>
           <div class="filter__actions">
-            <button class="btn btn--red filter__btn">Очистить</button>
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
           </div>
         </template>
 
@@ -207,13 +254,22 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все регионы</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
+                <option selected value="all">Все регионы</option>
+                <option v-for="item in regions" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
           <div class="filter__actions">
-            <button class="btn btn--red filter__btn">Очистить</button>
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
           </div>
         </template>
 
@@ -230,16 +286,31 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все регионы</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
+                <option selected value="all">Все регионы</option>
+                <option v-for="item in regions" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
           <div class="filter__group group">
             <div class="group__title">Отделы:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все отделы</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'department')"
+                :value="
+                  filterOptions.department ? filterOptions.department : 'all'
+                "
+              >
+                <option v-for="item in info" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
@@ -255,7 +326,9 @@
           </div>
 
           <div class="filter__actions">
-            <button class="btn btn--red filter__btn">Очистить</button>
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
           </div>
         </template>
 
@@ -280,8 +353,15 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Все регионы</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
+                <option selected value="all">Все регионы</option>
+                <option v-for="item in regions" :value="item.value">
+                  {{ item.title }}
+                </option>
               </select>
             </div>
           </div>
@@ -304,7 +384,9 @@
             </div>
           </div>
           <div class="filter__actions">
-            <button class="btn btn--red filter__btn">Очистить</button>
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
           </div>
         </template>
       </div>
@@ -408,7 +490,71 @@ export default {
       url: "/regions/get",
     }).then(async ({ data }) => {
       this.regions = data.regions;
+      for (let r of this.regions) {
+        this.regionsPool.push(r._id);
+      }
+      this.setRegions(this.regionsPool);
     });
+
+    if (this.type === "group" || this.type === "reports") {
+      axios({
+        url: "/user/getdepartments",
+      }).then(async ({ data }) => {
+        let departments = data.departments;
+
+        let allCount = 0;
+        departments.forEach((element) => {
+          allCount += element.count;
+        });
+        departments.unshift({
+          count: allCount,
+          title: "Все отделы",
+          value: "all",
+          _id: 1,
+        });
+        this.info = departments;
+      });
+      return;
+    } else if (this.type === "goods") {
+      this.activeIndex = null;
+      this.filterOptions.nesting = +this.$route.params.nesting - 1;
+      this.filterOptions.parent_id = this.$route.params.parent_id;
+    }
+    if (
+      this.type === "orders" ||
+      this.type === "tasks" ||
+      this.type === "vacancies"
+    ) {
+      axios({
+        url: "/departments/get",
+        method: "POST",
+      }).then(async (response) => {
+        let departments = response.data;
+
+        departments.unshift({
+          title: "Все отделы",
+          value: "all",
+        });
+        this.info = departments;
+      });
+    }
+    if (this.type === "tasks") {
+      if (this.user) {
+        this.filterOptions.executor = this.user._id;
+        this.selectUser(this.user);
+      }
+    }
+    if (this.type === "mango") {
+      axios({
+        url: "/calls/getnumbers",
+      }).then(async ({ data }) => {
+        this.phones = data.numbers;
+      });
+      this.dates.unshift({
+        title: "За все время",
+        value: "all",
+      });
+    }
   },
   computed: {
     role: {
@@ -504,6 +650,161 @@ export default {
     };
   },
   methods: {
+    clearOptions() {
+      if (this.type === "tasks") {
+        this.fio = "";
+        this.author = "";
+        this.filterOptions.region = "all";
+        this.filterOptions.initiator = "all";
+        this.filterOptions.department = "all";
+        this.filterOptions.status = "all";
+        this.filterOptions.executor = null;
+        this.$parent.filtersOptions = {};
+        this.activeIndex = 0;
+      }
+      if (this.type === "monitor") {
+        this.$parent.startDate = null;
+        this.$parent.endDate = null;
+        let input = document.getElementById("dateInput");
+        input.value = "Выберите дату";
+        this.$emit("refreshDates", false, false, this.regionsPool);
+      }
+      if (this.type === "reports") {
+        this.fio = "";
+        this.filterOptions.region = "all";
+        this.filterOptions.departments = "all";
+        this.filterOptions.executor = null;
+        this.$parent.filtersOptions = {};
+        this.activeIndex = 0;
+      }
+      if (this.type === "mango") {
+        this.$parent.startDate = null;
+        this.$parent.endDate = null;
+        this.filterOptions.phone = "all";
+        let input = document.getElementById("dateInput");
+        input.value = "Выберите дату";
+        this.$parent.filtersOptions = {};
+        this.activeIndex = 0;
+      }
+      if (this.type === "group") {
+        this.fio = "";
+        this.filterOptions.region = "all";
+        this.filterOptions.departments = "all";
+        this.$parent.filtersOptions = {};
+        this.activeIndex = 0;
+      }
+      if (this.type === "vacancies") {
+        this.filterOptions.region = "all";
+        this.filterOptions.departments = "all";
+        this.$parent.filtersOptions = {};
+        this.activeIndex = 1;
+      }
+      if (this.type === "goods") {
+        this.filterOptions.parent_value = null;
+        this.filterOptions.nesting = null;
+        this.filterOptions.region = "all";
+        this.$parent.filtersOptions = {};
+        this.resetRegion();
+        this.activeIndex = -1;
+      }
+      if (this.type === "orders") {
+        this.fio = "";
+        this.filterOptions.region = "all";
+        this.filterOptions.status = "all";
+        this.filterOptions.dates = "all";
+        this.filterOptions.executor = null;
+        this.$parent.filtersOptions = {
+          dates: "all",
+          created: null,
+          deliver: null,
+          buyed: null,
+          number: 1,
+          status: null,
+          region: null,
+          executor: this.role === "manager" ? this.$store.state._id : null,
+          search: "",
+        };
+        this.$parent.startDate = null;
+        this.$parent.endDate = null;
+        let input = document.getElementById("dateInput");
+        input.value = "Выберите дату";
+        this.$parent.searchStr = "";
+        this.activeIndex = 0;
+      }
+      if (this.type === "callbacks") {
+        this.fio = "";
+        this.filterOptions.region = "all";
+        this.filterOptions.status = "all";
+        this.filterOptions.executor = null;
+        this.filterOptions.dates = "all";
+        this.$parent.filtersOptions = {
+          dates: "all",
+          created: null,
+          deliver: null,
+          buyed: null,
+          number: 1,
+          status: null,
+          region: null,
+          executor: this.role === "manager" ? this.$store.state._id : null,
+          search: "",
+        };
+        this.$parent.startDate = null;
+        this.$parent.endDate = null;
+        let input = document.getElementById("dateInput");
+        input.value = "Выберите дату";
+        this.$parent.searchStr = "";
+        this.activeIndex = 0;
+      }
+      if (this.type === "clients") {
+        this.fio = "";
+        this.filterOptions.region = "all";
+        this.filterOptions.dates = "all";
+        this.$parent.filtersOptions = {
+          dates: "all",
+          region: "all",
+          search: "",
+        };
+        this.$parent.startDate = null;
+        this.$parent.endDate = null;
+        let input = document.getElementById("dateInput");
+        input.value = "Выберите дату";
+        this.$parent.searchStr = "";
+        this.$parent.activeElement = -1;
+      }
+      if (this.type === "providers") {
+        this.filterOptions.region = "all";
+        this.$parent.filtersOptions = {};
+        this.$parent.search = "";
+        this.$parent.isSearch = false;
+        this.resetRegion();
+        this.activeIndex = -1;
+      }
+      if (this.type === "callCenterIssues" || this.type === "purchase") {
+        this.fio = "";
+        this.filterOptions.region = "all";
+        this.filterOptions.status = "all";
+        this.filterOptions.executor = null;
+        this.filterOptions.initiator = null;
+        this.author = "";
+        this.filterOptions.dates = "all";
+        this.$parent.filtersOptions = {
+          dates: "all",
+          created: null,
+          status: null,
+          region: null,
+          executor: this.role === "manager" ? this.$store.state._id : null,
+          search: "",
+        };
+        this.$parent.searchStr = "";
+        this.activeIndex = 0;
+      }
+      if (
+        this.$route.fullPath !== `/dashboard/${this.$route.name}/1` &&
+        this.$route.fullPath !== "/dashboard/monitor"
+      ) {
+        this.$router.push(`/dashboard/${this.$route.name}/1`);
+      }
+    },
     selectOptions(e, index, type, value) {
       this.$parent.isLoading = false;
       switch (type) {
@@ -579,7 +880,6 @@ export default {
       } else {
         let region = this.regions.find((r) => r.value == value);
         this.regionsPool = [region._id];
-        console.log(region._id);
         this.setRegions(this.regionsPool);
       }
     },
