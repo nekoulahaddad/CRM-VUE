@@ -29,7 +29,14 @@
               <tr class="shadow" v-if="index === 0">
                 <td class="inner" colspan="2">
                   <div class="table-inner">
-                    <div class="table-inner__title">{{ item.title }}</div>
+                    <div class="table-inner__title">
+                      {{ item.title }}
+                      <img
+                        class="table-inner__close"
+                        src="/icons/close_icon.svg"
+                        alt=""
+                      />
+                    </div>
                     <div class="table-inner__description"></div>
                     <div class="table-inner__actions">
                       <v-button red>Добавить документ</v-button>

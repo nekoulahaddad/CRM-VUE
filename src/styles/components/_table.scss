@@ -159,9 +159,16 @@
     }
   }
 
+  &__close {
+    position: absolute;
+    right: 0;
+    top: 7px;
+    transform: translateY(-50%);
+  }
+
   &__actions {
     .btn {
-      height: 27px;
+      height: 37px;
       width: 230px;
       font-size: 16px;
     }
