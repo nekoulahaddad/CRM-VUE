@@ -9,8 +9,9 @@
     </div>
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
-      <div v-else-if="educations.length" class="card card--white">
-        <table class="table">
+      <div v-else class="card card--white">
+        <div class="card__title">{{ type }}</div>
+        <table v-if="educations.length" class="table">
           <tbody>
             <template v-for="(item, index) in educations">
               <tr v-if="editedItem !== item" class="shadow" :key="item.id">
@@ -83,8 +84,8 @@
             </template>
           </tbody>
         </table>
+        <v-not-found-query v-else />
       </div>
-      <v-not-found-query v-else />
     </div>
   </div>
 </template>
@@ -151,7 +152,6 @@ export default {
     role: {
       get: function () {
         let role = this.getUserRole();
-        console.log(role);
         return role.role;
       },
     },
@@ -200,9 +200,6 @@ export default {
     this.fetchData();
   },
   methods: {
-    paginateHandler(page) {
-      this.$router.push({ name: "education", params: { page } });
-    },
     async fetchData() {
       let data = {
         type: this.typeE,
