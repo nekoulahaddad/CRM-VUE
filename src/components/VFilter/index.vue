@@ -422,7 +422,7 @@
                 :value="filterOptions.region"
               >
                 <option selected value="all">Все регионы</option>
-                <option v-for="item in regions" :value="item.value">
+                <option v-for="item in regions" :value="item._id">
                   {{ item.title }}
                 </option>
               </select>

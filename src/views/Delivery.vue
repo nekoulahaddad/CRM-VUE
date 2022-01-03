@@ -12,51 +12,55 @@
       </div>
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
-        <table v-else class="table">
-          <thead class="thead">
-            <tr class="thead__top">
-              <td colspan="7">
-                <div class="table__title">Поставщики</div>
-              </td>
-            </tr>
-            <tr class="thead__bottom">
-              <td>№:</td>
-              <td>Компания:</td>
-              <td>ФИО:</td>
-              <td>Дата создания:</td>
-              <td>Email:</td>
-              <td>Адрес:</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in dataset" :key="item.id">
-              <td>{{ index + 1 + ($route.params.page - 1) * 15 }}</td>
-              <td>{{ item.name }}</td>
-              <td class="text--blue">
-                {{ item.specialist ? item.specialist.name : "" }}
-              </td>
-              <td class="text--green">
-                {{ item.specialist ? item.specialist.phone : "" }}
-              </td>
-              <td>{{ item.specialist ? item.specialist.email : "" }}</td>
-              <td class="text--sapphire">{{ item.office_address }}</td>
-              <td>
-                <div class="table__actions">
-                  <div class="table__icon">
-                    <img src="/icons/info_icon.svg" alt="" />
+        <template v-else-if="dataset.length">
+          <table class="table">
+            <thead class="thead">
+              <tr class="thead__top">
+                <td colspan="7">
+                  <div class="table__title">Поставщики</div>
+                </td>
+              </tr>
+              <tr class="thead__bottom">
+                <td>№:</td>
+                <td>Компания:</td>
+                <td>ФИО:</td>
+                <td>Дата создания:</td>
+                <td>Email:</td>
+                <td>Адрес:</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in dataset" :key="item.id">
+                <td>{{ index + 1 + ($route.params.page - 1) * 15 }}</td>
+                <td>{{ item.name }}</td>
+                <td class="text--blue">
+                  {{ item.specialist ? item.specialist.name : "" }}
+                </td>
+                <td class="text--green">
+                  {{ item.specialist ? item.specialist.phone : "" }}
+                </td>
+                <td>{{ item.specialist ? item.specialist.email : "" }}</td>
+                <td class="text--sapphire">{{ item.office_address }}</td>
+                <td>
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img src="/icons/info_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="/icons/write_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="/icons/trash_icon.svg" alt="" />
+                    </div>
                   </div>
-                  <div class="table__icon">
-                    <img src="/icons/write_icon.svg" alt="" />
-                  </div>
-                  <div class="table__icon">
-                    <img src="/icons/trash_icon.svg" alt="" />
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <v-pagination :count="count" />
+        </template>
+        <v-not-found-query v-else />
       </div>
     </div>
   </div>
@@ -65,12 +69,14 @@
 <script>
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
+import VPagination from "@/components/VPagination";
 import getDataFromPage from "@/api/getDataFromPage";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
 export default {
-  components: { VFilter, VSpinner },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
   data() {
     return {
       isLoading: false,

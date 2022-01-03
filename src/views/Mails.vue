@@ -73,9 +73,9 @@
 <script>
 import VFilter from "@/components/VFilter";
 import getDataFromPage from "@/api/getDataFromPage";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
-import VNotFoundQuery from "@/components/VNotFoundQuery";
 import dateMixins from "@/mixins/date";
 import nameMixins from "@/mixins/name";
 import fioMixins from "@/mixins/fio";
