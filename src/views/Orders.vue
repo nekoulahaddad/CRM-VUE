@@ -24,7 +24,7 @@
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="12">
-                <div class="table__title">Клиенты</div>
+                <div class="table__title">Заказы</div>
               </td>
             </tr>
             <tr class="thead__bottom">

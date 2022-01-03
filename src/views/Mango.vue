@@ -17,7 +17,7 @@
             <thead class="thead">
               <tr class="thead__top">
                 <td colspan="5">
-                  <div class="table__title">Заявки</div>
+                  <div class="table__title">Mango</div>
                 </td>
               </tr>
               <tr class="thead__bottom">

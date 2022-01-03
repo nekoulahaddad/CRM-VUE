@@ -16,7 +16,7 @@ const routes = [
       {
         path: "buying/:page",
         name: "buying",
-        component: () => import("../views/Buying.vue"),
+        component: () => import("../views/Purchase.vue"),
       },
       {
         path: "calendar",

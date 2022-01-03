@@ -2,13 +2,13 @@
   <div class="page">
     <div class="page__header">
       <div class="page__icon">
-        <img src="/icons/callbacks_title.svg" alt="" />
+        <img src="/icons/buying_title.svg" alt="" />
       </div>
-      <h1 class="page__title">Обращения</h1>
+      <h1 class="page__title">Закупка</h1>
     </div>
     <div class="page__body d-flex">
       <div class="page__left">
-        <v-filter type="callCenterIssues" />
+        <v-filter type="purchase" />
       </div>
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
@@ -17,7 +17,7 @@
             <thead class="thead">
               <tr class="thead__top">
                 <td colspan="12">
-                  <div class="table__title">Обращения</div>
+                  <div class="table__title">Закупка</div>
                 </td>
               </tr>
               <tr class="thead__bottom">
@@ -70,13 +70,11 @@ import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "../api/getDataFromPage";
 import dateMixins from "@/mixins/date";
 import fioMixins from "@/mixins/fio";
+import roleMixins from "@/mixins/role";
 
 export default {
-  mixins: [dateMixins, fioMixins],
+  mixins: [dateMixins, fioMixins, roleMixins],
   components: { VFilter, VNotFoundQuery, VPagination, VSpinner },
-  mounted() {
-    this.fetchData();
-  },
   data() {
     return {
       isLoading: false,
@@ -97,6 +95,9 @@ export default {
       isSearch: false,
     };
   },
+  mounted() {
+    this.fetchData();
+  },
   methods: {
     async fetchData() {
       try {
@@ -104,11 +105,11 @@ export default {
         this.filtersOptions.page = this.$route.params.page;
 
         const { data } = await getDataFromPage(
-          `/callcenterissues/get`,
+          `/purchase/get`,
           this.filtersOptions
         );
 
-        this.dataset = data.callCenterIssues;
+        this.dataset = data.dataList;
         this.count = data.count;
       } catch (e) {
       } finally {
@@ -118,13 +119,15 @@ export default {
   },
   watch: {
     $route: function () {
-      this.fetchData();
+      let result = this.getDataFromPage("/purchase/get", this.filtersOptions);
+      this.updateData(result);
     },
     filtersOptions: {
       handler: function () {
         this.isSearch = false;
         this.search = "";
-        this.fetchData();
+        let result = this.getDataFromPage("/purchase/get", this.filtersOptions);
+        this.updateData(result);
       },
       deep: true,
     },

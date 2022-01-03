@@ -20,7 +20,7 @@
             <thead class="thead">
               <tr class="thead__top">
                 <td colspan="9">
-                  <div class="table__title">Клиенты</div>
+                  <div class="table__title">Отчеты</div>
                 </td>
               </tr>
               <tr class="thead__bottom">
