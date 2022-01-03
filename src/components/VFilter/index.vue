@@ -36,43 +36,41 @@
       </div>
       <div class="filter__body">
         <template v-if="type === 'group'">
-          <div class="filter__body">
-            <div class="filter__group group">
-              <div class="group__title">Регионы:</div>
-              <div class="group__content">
-                <select
-                  class="form-select"
-                  @change="selectOptions($event, null, 'region', null)"
-                  :value="filterOptions.region"
-                >
-                  <option selected value="all">Все регионы</option>
-                  <option v-for="item in regions" :value="item.value">
-                    {{ item.title }}
-                  </option>
-                </select>
-              </div>
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
+                <option selected value="all">Все регионы</option>
+                <option v-for="item in regions" :value="item.value">
+                  {{ item.title }}
+                </option>
+              </select>
             </div>
-            <div class="filter__group group">
-              <div class="group__title">Отделы:</div>
-              <div class="group__content">
-                <select
-                  class="form-select"
-                  @change="selectOptions($event, null, 'department')"
-                  :value="
-                    filterOptions.department ? filterOptions.department : 'all'
-                  "
-                >
-                  <option v-for="item in info" :value="item.value">
-                    {{ item.title }} ({{ item.count }})
-                  </option>
-                </select>
-              </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Отделы:</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'department')"
+                :value="
+                  filterOptions.department ? filterOptions.department : 'all'
+                "
+              >
+                <option v-for="item in info" :value="item.value">
+                  {{ item.title }} ({{ item.count }})
+                </option>
+              </select>
             </div>
-            <div class="filter__actions">
-              <button @click="clearOptions" class="btn btn--red filter__btn">
-                Очистить
-              </button>
-            </div>
+          </div>
+          <div class="filter__actions">
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
           </div>
         </template>
 
