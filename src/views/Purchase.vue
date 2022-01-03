@@ -16,39 +16,35 @@
           <table class="table">
             <thead class="thead">
               <tr class="thead__top">
-                <td colspan="12">
+                <td colspan="10">
                   <div class="table__title">Закупка</div>
                 </td>
               </tr>
               <tr class="thead__bottom">
                 <td>№:</td>
-                <td>№ заказа:</td>
                 <td>Дата создания:</td>
-                <td>Клиент:</td>
-                <td>Телефон:</td>
                 <td>Регион:</td>
                 <td>Категория:</td>
                 <td>Автор:</td>
                 <td>Исполнитель:</td>
                 <td>Описание:</td>
                 <td>Статус:</td>
+                <td>Дата поставки:</td>
                 <td></td>
               </tr>
             </thead>
             <tbody>
               <tr v-for="item in dataset" :key="item.id">
                 <td>{{ item.number }}</td>
-                <td>{{ item.orderNumber ? item.orderNumber : "-" }}</td>
                 <td>{{ transformDate(item.createdAt) }}</td>
-                <td>{{ transformFIO(item.client) }}</td>
-                <td>{{ item.phone }}</td>
                 <td>{{ item.region.title && item.region.title }}</td>
                 <td>
                   {{ item.category && item.category.category.categoryName }}
                 </td>
-                <td>{{ transformFIO(item.issuedBy) }}</td>
-                <td>{{ transformFIO(item.issuedTo) }}</td>
+                <td>{{ transformFIO(item.initiator) }}</td>
+                <td>{{ transformFIO(item.executor) }}</td>
                 <td>{{ item.message }}</td>
+                <td>{{ item.status ? item.status : "-" }}</td>
                 <td></td>
                 <td></td>
               </tr>
