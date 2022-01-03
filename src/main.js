@@ -3,6 +3,7 @@ import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import VueNumberFormat from "vue-number-format";
+import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
 import Toast from "vue-toastification";
 import VueMoment from "vue-moment";
@@ -13,6 +14,12 @@ import "./styles/index.scss";
 
 Vue.config.productionTip = false;
 Vue.use(VueMoment);
+Vue.use(VueScrollTo, {
+  container: "body",
+  duration: 0,
+  offset: 0,
+  force: true,
+});
 Vue.use(VueNumberFormat, {
   prefix: "",
   suffix: " ₽",

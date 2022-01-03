@@ -105,19 +105,20 @@ export default {
     async getData() {
       try {
         this.isLoading = false;
-        this.updateData(
-          await getDataFromPage("/user/get", this.filtersOptions)
+        this.filtersOptions.page = this.$route.params.page;
+
+        const { data } = await getDataFromPage(
+          "/user/get",
+          this.filtersOptions
         );
+
+        this.dataset = data.users;
+        this.count = data.count;
       } catch (e) {
       } finally {
         this.isLoading = true;
+        this.$scrollTo("body", 300, {});
       }
-    },
-    updateData(res) {
-      this.isLoading = false;
-      this.dataset = res.data.users;
-      this.count = res.data.count ? res.data.count : 0;
-      this.isLoading = true;
     },
     resetFilters() {
       this.$refs.filters.filterOptions = {};

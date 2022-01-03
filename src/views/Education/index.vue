@@ -10,7 +10,7 @@
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
       <div v-else class="card card--white">
-        <div class="card__title">{{ type }}</div>
+        <div class="card__title card__title--underline">{{ type }}</div>
         <table v-if="educations.length" class="table">
           <tbody>
             <template v-for="(item, index) in educations">
@@ -254,3 +254,10 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.card {
+  &__title {
+  }
+}
+</style>

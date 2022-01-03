@@ -123,6 +123,8 @@ export default {
       this.downloadExcelFile = true;
       if (this.$route.params.type !== "search") {
         try {
+          this.filtersOptions.page = this.$route.params.page;
+
           this.updateGoods(
             await getDataFromPage(
               `/${this.$route.params.type || "categories"}/get`,
@@ -132,6 +134,7 @@ export default {
         } catch (e) {
         } finally {
           this.isLoading = true;
+          this.$scrollTo("body", 300, {});
         }
       }
     },

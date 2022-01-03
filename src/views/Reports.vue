@@ -120,6 +120,7 @@ export default {
     async fetchData() {
       try {
         this.isLoading = false;
+        this.filtersOptions.page = this.$route.params.page;
 
         const { data } = await getDataFromPage(
           "/reports/get",
@@ -131,6 +132,7 @@ export default {
       } catch (e) {
       } finally {
         this.isLoading = true;
+        this.$scrollTo("body", 300, {});
       }
     },
   },

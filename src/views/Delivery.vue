@@ -171,16 +171,21 @@ export default {
     },
     async fetchData() {
       try {
+        this.isLoading = false;
+        this.filtersOptions.page = this.$route.params.page;
+
         const { data } = await getDataFromPage(
           "/providers/get",
           this.filtersOptions
         );
 
-        this.isLoading = false;
         this.dataset = data.providers;
         this.count = data.count;
+      } catch (e) {
+      } finally {
         this.isLoading = true;
-      } catch (e) {}
+        this.$scrollTo("body", 300, {});
+      }
     },
     getSearchData() {
       this.changeStatus(false);

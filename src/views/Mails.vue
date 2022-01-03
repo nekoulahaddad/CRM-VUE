@@ -127,6 +127,7 @@ export default {
       } catch (e) {
       } finally {
         this.isLoading = true;
+        this.$scrollTo("body", 300, {});
       }
     },
   },

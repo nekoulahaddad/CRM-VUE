@@ -354,6 +354,7 @@ export default {
         filtersOptions: this.filtersOptions,
       }).finally(() => {
         this.isLoading = true;
+        this.$scrollTo("body", 300, {});
       });
     },
     async downloadExcel() {
