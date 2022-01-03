@@ -3,6 +3,8 @@ import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import VueNumberFormat from "vue-number-format";
+import VueSocketIOExt from "vue-socket.io-extended";
+import io from "socket.io-client";
 import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
 import Toast from "vue-toastification";
@@ -11,6 +13,24 @@ import i18n from "./i18n";
 import "moment/locale/ru";
 import "vue-toastification/dist/index.css";
 import "./styles/index.scss";
+
+const token = localStorage.getItem("token");
+
+const socket = io(process.env.VUE_APP_DEVELOP_URL, {
+  query: { token },
+  autoConnect: true,
+  reconnection: true,
+  transports: ["websocket"],
+  maxReconnectionAttempts: Infinity,
+});
+
+socket.on("disconnect", () => {
+  socket.open();
+});
+
+if (token) {
+  Vue.use(VueSocketIOExt, socket, { store });
+}
 
 Vue.config.productionTip = false;
 Vue.use(VueMoment);
