@@ -508,8 +508,12 @@
           <div class="filter__group group">
             <div class="group__title">Форма продажи:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">B2B</option>
+              <select
+                class="form-select"
+                @change="selectOptions($event, 0, 'orders', null)"
+              >
+                <option selected value="all">B2С</option>
+                <option value="corporat">B2B</option>
               </select>
             </div>
           </div>
