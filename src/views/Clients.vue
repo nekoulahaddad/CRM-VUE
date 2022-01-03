@@ -2,7 +2,7 @@
   <div class="page">
     <div class="page__header">
       <div class="page__icon">
-        <img src="/icons/clients_title.svg" alt="" />
+        <img :src="require('@/assets/icons/clients_title.svg')" alt="" />
       </div>
       <h1 class="page__title">Клиенты</h1>
     </div>

@@ -2,7 +2,7 @@
   <div class="page">
     <div class="page__header">
       <div class="page__icon">
-        <img src="/icons/callbacks_title.svg" alt="" />
+        <img :src="require('@/assets/icons/callbacks_title.svg')" alt="" />
       </div>
       <h1 class="page__title">Обращения</h1>
     </div>
