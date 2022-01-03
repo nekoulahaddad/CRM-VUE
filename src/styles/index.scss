@@ -105,4 +105,19 @@ ul {
   }
 }
 
+.bg {
+  border-radius: $border-radius;
+  text-align: center;
+  padding: 8px;
+
+  &--blue-light {
+    background-color: $color-blue-light;
+    color: $color-blue;
+  }
+  &--green-light {
+    background-color: $color-green-light;
+    color: $color-green;
+  }
+}
+
 @import "media";

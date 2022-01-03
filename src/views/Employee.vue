@@ -49,10 +49,16 @@
                       : employee.region.title
                   }}
                 </td>
-                <td>{{ employee.position }}</td>
+                <td>
+                  <div class="bg bg--blue-light">{{ employee.position }}</div>
+                </td>
                 <td v-html="transformRating(employee.rating)"></td>
                 <td>{{ employee.tasks.length }}</td>
-                <td>{{ employee.department.title }}</td>
+                <td>
+                  <div class="bg bg--green-light">
+                    {{ employee.department.title }}
+                  </div>
+                </td>
                 <td></td>
               </tr>
             </tbody>
