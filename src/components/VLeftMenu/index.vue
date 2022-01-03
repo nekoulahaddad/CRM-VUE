@@ -47,7 +47,8 @@ export default {
       return require(`@/assets/icons/${key}.svg`);
     },
     getPageUrl(key) {
-      return `/dashboard/${key}/1`;
+      let url = `/dashboard/${key}`;
+      return key.includes("monitor") ? url : `${url}/1`;
     },
   },
 };
