@@ -98,8 +98,8 @@ export default {
       user: "",
     };
   },
-  async mounted() {
-    await this.getData();
+  mounted() {
+    this.getData();
   },
   methods: {
     async getData() {
