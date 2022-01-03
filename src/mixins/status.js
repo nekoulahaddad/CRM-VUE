@@ -21,7 +21,7 @@ export default {
         case "processing":
           return `<span class="awaiting">${status.title}</span>`;
         case "assigned":
-          return `<span class="assigned">${status.title}</span>`;
+          return `<span class="text--blue-delos">${status.title}</span>`;
         case "accepted":
           return `<span class="text--blue">${status.title}</span>`;
         case "not accepted":
