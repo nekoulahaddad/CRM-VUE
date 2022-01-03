@@ -63,7 +63,7 @@
                   "
                 >
                   <option v-for="item in info" :value="item.value">
-                    {{ item.title }}
+                    {{ item.title }} ({{ item.count }})
                   </option>
                 </select>
               </div>
@@ -371,7 +371,7 @@
                 "
               >
                 <option v-for="item in info" :value="item.value">
-                  {{ item.title }}
+                  {{ item.title }} ({{ item.count }})
                 </option>
               </select>
             </div>
@@ -473,7 +473,7 @@
                 "
               >
                 <option v-for="item in info" :value="item.value">
-                  {{ item.title }}
+                  {{ item.title }} ({{ item.count }})
                 </option>
               </select>
             </div>
