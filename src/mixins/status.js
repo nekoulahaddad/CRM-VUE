@@ -7,7 +7,7 @@ export default {
         case "completed":
           return `<span class="bg bg--green-light">${status.title}</span>`;
         case "declained":
-          return `<span class="text--red">${status.title}</span>`;
+          return `<span class="text--gray-light">${status.title}</span>`;
         case "failed":
           return `<span class="text--red">${status.title}</span>`;
         case "process":
@@ -17,9 +17,9 @@ export default {
         case "nocall":
           return `<span class="nocall">${status.title}</span>`;
         case "awaiting":
-          return `<span class="awaiting">${status.title}</span>`;
+          return `<span class="text--blue-delos">${status.title}</span>`;
         case "processing":
-          return `<span class="awaiting">${status.title}</span>`;
+          return `<span class="text--blue-delos">${status.title}</span>`;
         case "assigned":
           return `<span class="text--blue-delos">${status.title}</span>`;
         case "accepted":
@@ -29,7 +29,7 @@ export default {
         case "under revision":
           return `<span class="under_revision">${status.title}</span>`;
         case "delivered":
-          return `<span class="delivered">${status.title}</span>`;
+          return `<span class="text--green-dark">${status.title}</span>`;
         case "partially delivered":
           return `<span class="partially_delivered">${status.title}</span>`;
         default:
