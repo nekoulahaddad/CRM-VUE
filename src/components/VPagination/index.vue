@@ -25,10 +25,6 @@ export default {
       type: Number,
       default: 15,
     },
-    clickHandler: {
-      type: Function,
-      default: () => {},
-    },
   },
   data() {
     return {
@@ -37,6 +33,11 @@ export default {
   },
   mounted() {
     this.page = parseInt(this.$route.params.page) || 1;
+  },
+  methods: {
+    clickHandler(page) {
+      this.$router.push({ params: { page } });
+    },
   },
 };
 </script>
