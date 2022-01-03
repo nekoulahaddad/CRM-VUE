@@ -115,15 +115,13 @@ export default {
   },
   watch: {
     $route: function () {
-      let result = this.getDataFromPage("/purchase/get", this.filtersOptions);
-      this.updateData(result);
+      this.fetchData();
     },
     filtersOptions: {
       handler: function () {
         this.isSearch = false;
         this.search = "";
-        let result = this.getDataFromPage("/purchase/get", this.filtersOptions);
-        this.updateData(result);
+        this.fetchData();
       },
       deep: true,
     },
