@@ -44,8 +44,7 @@ export default {
 @import "@/styles/_variables";
 
 .card {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  padding-top: 10px;
 
   &__close {
     position: absolute;
@@ -56,20 +55,7 @@ export default {
 
   &__title {
     position: relative;
-    padding-bottom: 10px;
-
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background-color: #f6f6f6;
-      border-radius: $border-radius;
-      width: 100%;
-    }
+    padding-bottom: 0;
   }
 
   .group {
