@@ -12,55 +12,58 @@
       </div>
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
-        <table v-else-if="dataset.length" class="table">
-          <thead class="thead">
-            <tr class="thead__top">
-              <td colspan="11">
-                <div class="table__title">Заявки</div>
-              </td>
-            </tr>
-            <tr class="thead__bottom">
-              <td>№:</td>
-              <td>Клиент</td>
-              <td>Регион:</td>
-              <td>Дата создания:</td>
-              <td>Тип:</td>
-              <td>Менеджер:</td>
-              <td>Номер заказа:</td>
-              <td>Комментарий:</td>
-              <td>Статус</td>
-              <td>Файл</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in dataset" :key="item.id">
-              <td>{{ item.number }}</td>
-              <td class="text--blue">
-                {{
-                  item.client && item.client[0]
-                    ? transformName(item.client[0])
-                    : item.name
-                }}
-              </td>
-              <td>{{ item.regionTitle }}</td>
-              <td class="text--green">{{ transformTime(item.createdAt) }}</td>
-              <td>{{ item.formType }}</td>
-              <td>
-                {{
-                  item.manager && item.manager[0]
-                    ? transformFIO(item.manager[0])
-                    : ""
-                }}
-              </td>
-              <td>{{ item.orderNumber }}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <template v-else-if="dataset.length">
+          <table class="table">
+            <thead class="thead">
+              <tr class="thead__top">
+                <td colspan="11">
+                  <div class="table__title">Заявки</div>
+                </td>
+              </tr>
+              <tr class="thead__bottom">
+                <td>№:</td>
+                <td>Клиент</td>
+                <td>Регион:</td>
+                <td>Дата создания:</td>
+                <td>Тип:</td>
+                <td>Менеджер:</td>
+                <td>Номер заказа:</td>
+                <td>Комментарий:</td>
+                <td>Статус</td>
+                <td>Файл</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in dataset" :key="item.id">
+                <td>{{ item.number }}</td>
+                <td class="text--blue">
+                  {{
+                    item.client && item.client[0]
+                      ? transformName(item.client[0])
+                      : item.name
+                  }}
+                </td>
+                <td>{{ item.regionTitle }}</td>
+                <td class="text--green">{{ transformTime(item.createdAt) }}</td>
+                <td>{{ item.formType }}</td>
+                <td>
+                  {{
+                    item.manager && item.manager[0]
+                      ? transformFIO(item.manager[0])
+                      : ""
+                  }}
+                </td>
+                <td>{{ item.orderNumber }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <v-pagination :count="count" />
+        </template>
         <v-not-found-query v-else />
       </div>
     </div>
@@ -70,6 +73,7 @@
 <script>
 import VFilter from "@/components/VFilter";
 import getDataFromPage from "@/api/getDataFromPage";
+import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import dateMixins from "@/mixins/date";
@@ -78,7 +82,7 @@ import fioMixins from "@/mixins/fio";
 
 export default {
   mixins: [dateMixins, fioMixins, nameMixins],
-  components: { VFilter, VSpinner, VNotFoundQuery },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
   data() {
     return {
       count: 0,
@@ -109,6 +113,7 @@ export default {
     async getData() {
       try {
         this.isLoading = false;
+        this.filtersOptions.page = this.$route.params.page;
 
         const { data } = await getDataFromPage(
           "/callbacks/get",
@@ -116,6 +121,9 @@ export default {
         );
 
         this.dataset = data.callbacks;
+        this.count = data.count;
+        localStorage.setItem("callbacks", data.callbacks);
+        localStorage.setItem("callbaksCount", +data.count);
       } catch (e) {
       } finally {
         this.isLoading = true;
