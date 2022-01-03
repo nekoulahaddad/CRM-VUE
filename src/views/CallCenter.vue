@@ -73,7 +73,7 @@ import fioMixins from "@/mixins/fio";
 
 export default {
   mixins: [dateMixins, fioMixins],
-  computed: { VFilter, VNotFoundQuery, VPagination, VSpinner },
+  components: { VFilter, VNotFoundQuery, VPagination, VSpinner },
   mounted() {
     this.fetchData();
   },
