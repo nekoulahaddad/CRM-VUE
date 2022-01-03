@@ -79,3 +79,7 @@
     border-bottom-right-radius: $border-radius;
   }
 }
+
+.ps {
+  height: calc(100vh - 200px);
+}
