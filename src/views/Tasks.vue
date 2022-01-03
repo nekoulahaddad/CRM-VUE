@@ -107,10 +107,7 @@
               </tr>
             </tbody>
           </table>
-          <v-pagination
-            :count="dataset.length"
-            :clickHandler="paginationHandler"
-          />
+          <v-pagination :count="count" :clickHandler="paginationHandler" />
         </template>
         <v-not-found-query v-else />
       </div>
@@ -199,7 +196,7 @@ export default {
   },
   methods: {
     paginationHandler(page) {
-      this.$router.push({ name: "tasks", params: { page } });
+      this.$router.push({ params: { page } });
     },
     async fetchData() {
       try {

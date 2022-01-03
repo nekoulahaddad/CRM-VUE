@@ -23,11 +23,11 @@ export default {
     },
     perPage: {
       type: Number,
-      default: 12,
+      default: 15,
     },
     clickHandler: {
       type: Function,
-      default: () => true,
+      default: () => {},
     },
   },
   data() {
@@ -35,13 +35,8 @@ export default {
       page: 1,
     };
   },
-  watch: {
-    $route: function () {
-      this.page = this.$route.params.page;
-    },
-  },
-  beforeMount() {
-    this.page = this.$route.params.page;
+  mounted() {
+    this.page = parseInt(this.$route.params.page) || 1;
   },
 };
 </script>
