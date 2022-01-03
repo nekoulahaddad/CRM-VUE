@@ -5,6 +5,8 @@ import router from "./router";
 import vuescroll from "vuescroll";
 import VueNumberFormat from "vue-number-format";
 import VueSocketIOExt from "vue-socket.io-extended";
+import VueCustomTooltip from "@adamdehaven/vue-custom-tooltip";
+import Popover from "vue-js-popover";
 import io from "socket.io-client";
 import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
@@ -35,6 +37,15 @@ if (token) {
 }
 
 Vue.config.productionTip = false;
+
+Vue.use(VueCustomTooltip, {
+  name: "VueCustomTooltip",
+  color: "#1a1a25",
+  background: "#E8F9EF",
+  borderRadius: 16,
+  fontWeight: 400,
+});
+Vue.use(Popover);
 Vue.use(VueMoment);
 Vue.use(VueScrollTo, {
   container: "body",

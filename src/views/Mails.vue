@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <popover name="foo"> 123 </popover>
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/mails_title.svg')" alt="" />
@@ -35,7 +36,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in dataset" :key="item.id">
+              <tr v-for="(item, index) in dataset" :key="item.id">
                 <td>{{ item.number }}</td>
                 <td class="text--blue">
                   {{
@@ -47,7 +48,7 @@
                 <td>{{ item.regionTitle }}</td>
                 <td class="text--green">{{ transformTime(item.createdAt) }}</td>
                 <td>{{ item.formType }}</td>
-                <td>
+                <td class="text--blue">
                   {{
                     item.manager && item.manager[0]
                       ? transformFIO(item.manager[0])
@@ -55,7 +56,13 @@
                   }}
                 </td>
                 <td>{{ item.orderNumber }}</td>
-                <td></td>
+                <td>
+                  <div v-if="item.comment">
+                    <VueCustomTooltip :multiline="true" :label="item.comment">
+                      Комментарий
+                    </VueCustomTooltip>
+                  </div>
+                </td>
                 <td></td>
                 <td></td>
                 <td></td>
