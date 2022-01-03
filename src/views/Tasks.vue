@@ -37,8 +37,7 @@
             <tbody>
               <tr v-for="(item, index) in dataset" :key="item.id">
                 <td>{{ index + 1 + ($route.params.page - 1) * 15 }}</td>
-                <td class="text--blue">{{ item.title }}</td>
-                <td>{{ transformFIO(item.initiator) }}</td>
+                <td class="text--blue">{{ transformFIO(item.initiator) }}</td>
                 <td>
                   {{
                     item &&
@@ -57,6 +56,11 @@
                         })
                       : transformFIO(userData)
                   }}
+                </td>
+                <td class="text--blue">
+                  <div class="bg bg--blue-light">
+                    {{ item.title }}
+                  </div>
                 </td>
                 <td class="text--green">
                   {{ transformDate(item.creation_date) }}
