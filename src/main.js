@@ -4,6 +4,7 @@ import store from "./store";
 import router from "./router";
 import VueNumberFormat from "vue-number-format";
 import VueSocketIOExt from "vue-socket.io-extended";
+import VueAutosuggest from "vue-autosuggest";
 import io from "socket.io-client";
 import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
@@ -33,6 +34,7 @@ if (token) {
 }
 
 Vue.config.productionTip = false;
+Vue.use(VueAutosuggest);
 Vue.use(VueMoment);
 Vue.use(VueScrollTo, {
   container: "body",

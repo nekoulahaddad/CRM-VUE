@@ -383,6 +383,9 @@
                 class="form-control"
                 type="text"
                 placeholder="Введите исполнителя задачи..."
+                v-model="fio"
+                @input="getUsersByFIO"
+                @change="selectOptions($event, null, 'executor', null)"
               />
             </div>
           </div>
@@ -435,8 +438,9 @@
               <select
                 class="form-select"
                 @change="selectOptions($event, null, 'dates', null)"
+                :value="defaultOptions.dates"
               >
-                <option selected value="Все задачи">Все время</option>
+                <option selected value="all">Все время</option>
                 <option v-for="item in dates" :value="item.value">
                   {{ item.title }}
                 </option>
@@ -855,6 +859,33 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    selectUser(user) {
+      this.filterOptions.executor = user._id;
+      this.fio = `${user.surname} ${user.name.charAt(0)}.${
+        user.lastname ? user.lastname.charAt(0) + "." : ""
+      }`;
+      this.users = [];
+    },
+    async getUsersByFIO($event) {
+      if (this.fio === "") {
+        this.filterOptions.executor = null;
+        this.filterOptions.manager = null;
+        return;
+      }
+
+      axios(
+        `/user/${
+          this.type === "orders" ||
+          this.type === "callbacks" ||
+          this.type === "callCenterIssues"
+            ? "getmanagers"
+            : "getsearch"
+        }/${this.fio}`
+      ).then(async (result) => {
+        this.users = result.data;
+        this.selectOptions($event, null, "executor", null);
+      });
+    },
     clearOptions() {
       if (this.type === "tasks") {
         this.fio = "";
@@ -878,6 +909,8 @@ export default {
         this.fio = "";
         this.filterOptions.region = "all";
         this.filterOptions.departments = "all";
+        this.defaultOptions.department = "all";
+        this.defaultOptions.dates = "all";
         this.filterOptions.executor = null;
         this.$parent.filtersOptions = {};
         this.activeIndex = 0;
