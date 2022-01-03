@@ -735,7 +735,12 @@ export default {
       }).then(({ data }) => {
         let departments = data.departments;
 
+        let allCount = 0;
+        departments.forEach((element) => {
+          allCount += element.count;
+        });
         departments.unshift({
+          count: allCount,
           title: "Все отделы",
           value: "all",
         });
