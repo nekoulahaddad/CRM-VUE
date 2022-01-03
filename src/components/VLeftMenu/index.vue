@@ -11,7 +11,7 @@
           <div class="menu__icon">
             <img :src="getIconUrl(key)" alt="" />
           </div>
-          <div class="menu__title">{{ item.title }}</div>
+          <div class="menu__title">{{ item }}</div>
         </router-link>
       </li>
     </ul>
