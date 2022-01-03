@@ -10,7 +10,7 @@ const routes = [
   },
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "dashboard",
     component: () => import("../views/Container.vue"),
     children: [
       {
