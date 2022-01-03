@@ -27,7 +27,7 @@ export default function getDataFromPage(url, options) {
   };
 
   return axios({
-    url: `${process.env.VUE_APP_DEVELOP_URL}${url}/?page=1`,
+    url: `${url}/?page=${options.page}`,
     data: {
       options: getOptions,
     },

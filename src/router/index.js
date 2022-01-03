@@ -39,7 +39,7 @@ const routes = [
         component: () => import("../views/Delivery.vue"),
       },
       {
-        path: "education/1",
+        path: "education/:page",
         name: "education",
         component: () => import("../views/Education"),
       },

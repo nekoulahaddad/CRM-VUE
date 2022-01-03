@@ -100,7 +100,13 @@ import axios from "@/api/axios";
 
 export default {
   mixins: [roleMixins],
-  components: { VButton, VAddDocument, VFilter, VSpinner, VNotFoundQuery },
+  components: {
+    VButton,
+    VAddDocument,
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+  },
   data() {
     return {
       typeE: "crm",
@@ -178,6 +184,10 @@ export default {
     },
   },
   watch: {
+    $route: function () {
+      this.activeIndex = -1;
+      this.fetchData();
+    },
     typeE: {
       handler: function () {
         this.activeIndex = -1;
@@ -190,6 +200,9 @@ export default {
     this.fetchData();
   },
   methods: {
+    paginateHandler(page) {
+      this.$router.push({ name: "education", params: { page } });
+    },
     async fetchData() {
       let data = {
         type: this.typeE,
@@ -206,7 +219,7 @@ export default {
 
       try {
         const response = await axios({
-          url: `/educations/get/`,
+          url: `/educations/get/?page=${this.$route.params.page}`,
           params: data,
           method: "GET",
         });

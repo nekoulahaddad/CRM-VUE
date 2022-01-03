@@ -15,94 +15,103 @@
       <!-- Контент -->
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
-        <table v-else-if="dataset.length" class="table">
-          <thead class="thead">
-            <tr class="thead__top">
-              <td colspan="8">
-                <div class="table__title">Клиенты</div>
-              </td>
-            </tr>
-            <tr class="thead__bottom">
-              <td>№:</td>
-              <td>Автор</td>
-              <td>Исполнитель:</td>
-              <td>Задача:</td>
-              <td>Дата создания:</td>
-              <td>Дедлайн:</td>
-              <td>Статус:</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in dataset" :key="item.id">
-              <td>{{ index + 1 + ($route.params.page - 1) * 15 }}</td>
-              <td class="text--blue">{{ item.title }}</td>
-              <td>{{ transformFIO(item.initiator) }}</td>
-              <td>
-                {{
-                  item &&
-                  item.responsible &&
-                  typeof item.responsible._id !== "undefined"
-                    ? `Ответственный - ${transformFIO(item.responsible)}`
-                    : item && item.executor && !Array.isArray(item.executor._id)
-                    ? transformFIO(item.executor)
-                    : item && item.executor && item.executor._id[0]
-                    ? transformFIO({
-                        name: item.executor.name[0],
-                        surname: item.executor.surname[0],
-                        lastname: item.executor.lastname[0],
-                      })
-                    : transformFIO(userData)
-                }}
-              </td>
-              <td class="text--green">
-                {{ transformDate(item.creation_date) }}
-              </td>
-              <td class="text--sapphire">
-                {{ transformDate(item.deadline_date) }}
-              </td>
-              <td
-                v-html="
-                  item && item.status
-                    ? transformStatus(item.status)
-                    : item.status
-                "
-              ></td>
-              <td>
-                <div class="table__actions">
-                  <div class="table__icon">
-                    <img
-                      v-if="
-                        id === item.initiator._id ||
-                        id === item.responsible._id ||
-                        (item && id === item.executor._id) ||
-                        item.executor._id[0]
-                      "
-                      src="/icons/info_icon.svg"
-                      alt=""
-                    />
+        <template v-else-if="dataset.length">
+          <table class="table">
+            <thead class="thead">
+              <tr class="thead__top">
+                <td colspan="8">
+                  <div class="table__title">Клиенты</div>
+                </td>
+              </tr>
+              <tr class="thead__bottom">
+                <td>№:</td>
+                <td>Автор</td>
+                <td>Исполнитель:</td>
+                <td>Задача:</td>
+                <td>Дата создания:</td>
+                <td>Дедлайн:</td>
+                <td>Статус:</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in dataset" :key="item.id">
+                <td>{{ index + 1 + ($route.params.page - 1) * 15 }}</td>
+                <td class="text--blue">{{ item.title }}</td>
+                <td>{{ transformFIO(item.initiator) }}</td>
+                <td>
+                  {{
+                    item &&
+                    item.responsible &&
+                    typeof item.responsible._id !== "undefined"
+                      ? `Ответственный - ${transformFIO(item.responsible)}`
+                      : item &&
+                        item.executor &&
+                        !Array.isArray(item.executor._id)
+                      ? transformFIO(item.executor)
+                      : item && item.executor && item.executor._id[0]
+                      ? transformFIO({
+                          name: item.executor.name[0],
+                          surname: item.executor.surname[0],
+                          lastname: item.executor.lastname[0],
+                        })
+                      : transformFIO(userData)
+                  }}
+                </td>
+                <td class="text--green">
+                  {{ transformDate(item.creation_date) }}
+                </td>
+                <td class="text--sapphire">
+                  {{ transformDate(item.deadline_date) }}
+                </td>
+                <td
+                  v-html="
+                    item && item.status
+                      ? transformStatus(item.status)
+                      : item.status
+                  "
+                ></td>
+                <td>
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img
+                        v-if="
+                          id === item.initiator._id ||
+                          id === item.responsible._id ||
+                          (item && id === item.executor._id) ||
+                          item.executor._id[0]
+                        "
+                        src="/icons/info_icon.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="table__icon">
+                      <img
+                        v-if="
+                          id === item.initiator._id ||
+                          id === item.responsible._id
+                        "
+                        src="/icons/document_icon.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="table__icon">
+                      <img
+                        v-if="id === item.initiator._id"
+                        src="/icons/trash_icon.svg"
+                        alt=""
+                      />
+                    </div>
                   </div>
-                  <div class="table__icon">
-                    <img
-                      v-if="
-                        id === item.initiator._id || id === item.responsible._id
-                      "
-                      src="/icons/document_icon.svg"
-                      alt=""
-                    />
-                  </div>
-                  <div class="table__icon">
-                    <img
-                      v-if="id === item.initiator._id"
-                      src="/icons/trash_icon.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <v-pagination
+            :count="dataset.length"
+            :clickHandler="paginationHandler"
+          />
+        </template>
         <v-not-found-query v-else />
       </div>
     </div>
@@ -111,6 +120,7 @@
 
 <script>
 import VFilter from "@/components/VFilter";
+import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import dateMixins from "@/mixins/date";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -121,7 +131,7 @@ import getDataFromPage from "@/api/getDataFromPage";
 import axios from "@/api/axios";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
   mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
     user: {
@@ -188,12 +198,16 @@ export default {
     this.fetchData();
   },
   methods: {
+    paginationHandler(page) {
+      this.$router.push({ name: "tasks", params: { page } });
+    },
     async fetchData() {
       try {
         this.isLoading = false;
+        this.filtersOptions.page = this.$route.params.page;
 
         const { data } = await getDataFromPage(
-          "/tasks/get",
+          `/tasks/get`,
           this.filtersOptions
         );
 

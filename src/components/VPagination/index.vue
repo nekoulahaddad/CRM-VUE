@@ -1,5 +1,6 @@
 <template>
   <paginate
+    v-model="page"
     :page-count="Math.ceil(count / perPage)"
     :click-handler="clickHandler"
     :page-range="5"
@@ -22,18 +23,32 @@ export default {
     },
     perPage: {
       type: Number,
-      default: 10,
+      default: 12,
     },
     clickHandler: {
       type: Function,
-      required: true,
+      default: () => true,
     },
+  },
+  data() {
+    return {
+      page: 1,
+    };
+  },
+  watch: {
+    $route: function () {
+      this.page = this.$route.params.page;
+    },
+  },
+  beforeMount() {
+    this.page = this.$route.params.page;
   },
 };
 </script>
 
 <style lang="scss">
-@import "@/styles/variables";
+@import "@/styles/_variables";
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -50,11 +65,11 @@ export default {
       font-weight: bold;
       width: 32px;
       height: 32px;
-      background-color: $white;
+      background-color: $color-white;
     }
     &.active a {
-      border-color: $red;
-      color: $red;
+      border-color: $color-red;
+      color: $color-red;
     }
     & + .pagination__item {
       margin-left: 8px;
