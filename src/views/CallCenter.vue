@@ -117,5 +117,18 @@ export default {
       }
     },
   },
+  watch: {
+    $route: function () {
+      this.fetchData();
+    },
+    filtersOptions: {
+      handler: function () {
+        this.isSearch = false;
+        this.search = "";
+        this.fetchData();
+      },
+      deep: true,
+    },
+  },
 };
 </script>
