@@ -419,6 +419,29 @@
             </button>
           </div>
         </template>
+
+        <!-- Товары -->
+        <template v-else-if="type === 'goods'">
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'regionButtons', null)"
+              >
+                <option selected value="all">Все регионы</option>
+                <option v-for="item in regions" :value="item._id">
+                  {{ item.title }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__actions">
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
+          </div>
+        </template>
       </div>
     </div>
 
@@ -480,6 +503,7 @@
 import VButton from "@/components/VButton";
 import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   mixins: [roleMixins],
@@ -682,6 +706,11 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({
+      setRegion: "set_region",
+      resetRegion: "reset_region",
+      resetParentValue: "reset_parent_value",
+    }),
     clearOptions() {
       if (this.type === "tasks") {
         this.fio = "";

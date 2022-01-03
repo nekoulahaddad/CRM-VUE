@@ -79,12 +79,12 @@ const routes = [
         component: () => import("../views/Reports.vue"),
       },
       {
-        path: "seo/:page",
+        path: "seo/:nesting/:type?/:parent_value?/:page?",
         name: "seo",
         component: () => import("../views/Seo.vue"),
       },
       {
-        path: "storage/:page",
+        path: "storage/:nesting/:type?/:parent_value?/:page?",
         name: "storage",
         component: () => import("../views/Storage.vue"),
       },

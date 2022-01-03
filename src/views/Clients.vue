@@ -20,7 +20,7 @@
       </div>
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
-        <table v-else class="table">
+        <table v-else-if="dataset.length" class="table">
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="9">
@@ -55,6 +55,7 @@
             </tr>
           </tbody>
         </table>
+        <v-not-found-query v-else />
       </div>
     </div>
   </div>
@@ -63,10 +64,11 @@
 <script>
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "@/api/getDataFromPage";
 
 export default {
-  components: { VFilter, VSpinner },
+  components: { VFilter, VSpinner, VNotFoundQuery },
   mounted() {
     this.fetchData();
   },
