@@ -34,6 +34,7 @@
     img {
       position: relative;
       top: -1px;
+      left: -1px;
       width: 30px;
       height: 30px;
     }
@@ -78,8 +79,4 @@
     border-top-right-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
   }
-}
-
-.ps {
-  height: calc(100vh - 200px);
 }
