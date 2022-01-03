@@ -131,7 +131,77 @@
           </div>
         </template>
 
-        <!-- Обращения -->
+        <template v-else-if="type === 'callCenterIssues'">
+          <div class="filter__group group">
+            <div class="group__title">Период:</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'dates', null)"
+              >
+                <option selected value="Все задачи">Все время</option>
+                <option v-for="item in dates" :value="item.value">
+                  {{ item.title }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
+                <option selected value="all">Все регионы</option>
+                <option v-for="item in regions" :value="item.value">
+                  {{ item.title }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Автор:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите автора задачи..."
+              />
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Исполнитель:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите исполнителя задачи..."
+              />
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">Статусы:</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                :value="filterOptions.status ? filterOptions.status : 'all'"
+                @change="selectOptions($event, null, 'status', null)"
+              >
+                <option selected value="all">Все статусы</option>
+                <option value="true">Обработана</option>
+                <option value="false">Не обработана</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__actions">
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
+          </div>
+        </template>
+
         <template v-else-if="type === 'callbacks'">
           <div class="filter__group group">
             <div class="group__title">Период:</div>
@@ -419,6 +489,8 @@
             </button>
           </div>
         </template>
+
+        <!--  -->
 
         <!-- Товары -->
         <template v-else-if="type === 'goods'">

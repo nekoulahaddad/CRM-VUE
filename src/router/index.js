@@ -26,7 +26,7 @@ const routes = [
       {
         path: "callbacks/:page",
         name: "callbacks",
-        component: () => import("../views/Callbacks.vue"),
+        component: () => import("../views/CallCenter.vue"),
       },
       {
         path: "clients/:page",

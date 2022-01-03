@@ -123,7 +123,7 @@ export default {
         this.dataset = data.callbacks;
         this.count = data.count;
         localStorage.setItem("callbacks", data.callbacks);
-        localStorage.setItem("callbaksCount", +data.count);
+        localStorage.setItem("callbaksCount", data.count);
       } catch (e) {
       } finally {
         this.isLoading = true;
