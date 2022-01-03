@@ -15,47 +15,50 @@
       <!-- Контент -->
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
-        <table v-else-if="dataset.length" class="table">
-          <thead class="thead">
-            <tr class="thead__top">
-              <td colspan="7">
-                <div class="table__title">Сотрудники</div>
-              </td>
-            </tr>
-            <tr class="thead__bottom">
-              <td>ФИО:</td>
-              <td>Регион</td>
-              <td>Должность:</td>
-              <td>Рейтинг:</td>
-              <td>Задачи:</td>
-              <td>Отдел:</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="employee in dataset" :key="employee.id">
-              <td class="text--blue">
-                {{
-                  `${employee.surname} ${employee.name.charAt(0)}.${
-                    employee.lastname ? employee.lastname.charAt(0) + "." : ""
-                  }`
-                }}
-              </td>
-              <td>
-                {{
-                  employee.region.title.length > 15
-                    ? employee.region.title.slice(0, -14) + "..."
-                    : employee.region.title
-                }}
-              </td>
-              <td>{{ employee.position }}</td>
-              <td v-html="transformRating(employee.rating)"></td>
-              <td>{{ employee.tasks.length }}</td>
-              <td>{{ employee.department.title }}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <template v-else-if="dataset.length">
+          <table class="table">
+            <thead class="thead">
+              <tr class="thead__top">
+                <td colspan="7">
+                  <div class="table__title">Сотрудники</div>
+                </td>
+              </tr>
+              <tr class="thead__bottom">
+                <td>ФИО:</td>
+                <td>Регион</td>
+                <td>Должность:</td>
+                <td>Рейтинг:</td>
+                <td>Задачи:</td>
+                <td>Отдел:</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="employee in dataset" :key="employee.id">
+                <td class="text--blue">
+                  {{
+                    `${employee.surname} ${employee.name.charAt(0)}.${
+                      employee.lastname ? employee.lastname.charAt(0) + "." : ""
+                    }`
+                  }}
+                </td>
+                <td>
+                  {{
+                    employee.region.title.length > 15
+                      ? employee.region.title.slice(0, -14) + "..."
+                      : employee.region.title
+                  }}
+                </td>
+                <td>{{ employee.position }}</td>
+                <td v-html="transformRating(employee.rating)"></td>
+                <td>{{ employee.tasks.length }}</td>
+                <td>{{ employee.department.title }}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <v-pagination :count="count" />
+        </template>
         <v-not-found-query v-else />
       </div>
     </div>
@@ -65,12 +68,13 @@
 <script>
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
+import VPagination from "@/components/VPagination";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "../api/getDataFromPage";
 import ratingMixins from "@/mixins/rating";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
   mixins: [ratingMixins],
   data() {
     return {
