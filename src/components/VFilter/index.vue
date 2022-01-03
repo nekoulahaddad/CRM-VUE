@@ -81,7 +81,11 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select @change="selectOptions" class="form-select">
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
                 <option value="all" selected>Все регионы</option>
                 <option
                   v-for="region in regions"
@@ -576,6 +580,7 @@
               <select
                 class="form-select"
                 @change="selectOptions($event, null, 'regionButtons', null)"
+                :value="filterOptions.region"
               >
                 <option selected value="all">Все регионы</option>
                 <option v-for="item in regions" :value="item._id">
