@@ -3,12 +3,13 @@
     <ul class="menu__list">
       <li class="menu__item" v-for="(item, key) in $t('menu')" :key="key">
         <router-link
+          :class="{ 'menu__link--active': key === activeEl }"
           active-class="menu__link--active"
-          :to="{ name: key, params: { page: 1 } }"
+          :to="getPageUrl(key)"
           class="menu__link"
         >
           <div class="menu__icon">
-            <img :src="getUrl(key)" alt="" />
+            <img :src="getIconUrl(key)" alt="" />
           </div>
           <div class="menu__title">{{ item }}</div>
         </router-link>
@@ -19,9 +20,28 @@
 
 <script>
 export default {
+  data() {
+    return {
+      el: this.$route.name,
+    };
+  },
+  computed: {
+    activeEl: {
+      get: function () {
+        return this.el;
+      },
+      set: function (name) {
+        this.el = name;
+        return this.el;
+      },
+    },
+  },
   methods: {
-    getUrl(key) {
+    getIconUrl(key) {
       return `/icons/${key}.svg`;
+    },
+    getPageUrl(key) {
+      return `/dashboard/${key}/1`;
     },
   },
 };
