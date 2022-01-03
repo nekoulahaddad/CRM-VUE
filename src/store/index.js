@@ -288,7 +288,7 @@ export default new Vuex.Store({
     getOrdersFromPage({ commit }, { page, filtersOptions }) {
       return new Promise((resolve) => {
         axios({
-          url: process.env.VUE_APP_DEVELOP_URL + `/orders/get/?page=${+page}`,
+          url: `/orders/get/?page=${+page}`,
           data: {
             options: filtersOptions,
           },

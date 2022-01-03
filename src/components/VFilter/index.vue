@@ -143,8 +143,9 @@
               <select
                 class="form-select"
                 @change="selectOptions($event, null, 'dates', null)"
+                :value="defaultOptions.dates"
               >
-                <option selected value="Все задачи">Все время</option>
+                <option selected value="all">Все время</option>
                 <option v-for="item in dates" :value="item.value">
                   {{ item.title }}
                 </option>
@@ -214,8 +215,9 @@
               <select
                 class="form-select"
                 @change="selectOptions($event, null, 'dates', null)"
+                :value="defaultOptions.dates"
               >
-                <option selected value="Все задачи">Все время</option>
+                <option selected value="all">Все время</option>
                 <option v-for="item in dates" :value="item.value">
                   {{ item.title }}
                 </option>
@@ -285,8 +287,9 @@
               <select
                 class="form-select"
                 @change="selectOptions($event, null, 'dates', null)"
+                :value="defaultOptions.dates"
               >
-                <option selected value="Все задачи">Все время</option>
+                <option selected value="all">Все время</option>
                 <option v-for="item in dates" :value="item.value">
                   {{ item.title }}
                 </option>
@@ -516,8 +519,9 @@
               <select
                 class="form-select"
                 @change="selectOptions($event, null, 'dates', null)"
+                :value="defaultOptions.dates"
               >
-                <option selected value="Все задачи">Все время</option>
+                <option selected value="all">Все время</option>
                 <option v-for="item in dates" :value="item.value">
                   {{ item.title }}
                 </option>
@@ -961,6 +965,7 @@ export default {
         this.filterOptions.status = "all";
         this.filterOptions.dates = "all";
         this.filterOptions.executor = null;
+        this.defaultOptions.dates = "all";
         this.$parent.filtersOptions = {
           dates: "all",
           created: null,
@@ -974,8 +979,6 @@ export default {
         };
         this.$parent.startDate = null;
         this.$parent.endDate = null;
-        let input = document.getElementById("dateInput");
-        input.value = "Выберите дату";
         this.$parent.searchStr = "";
         this.activeIndex = 0;
       }

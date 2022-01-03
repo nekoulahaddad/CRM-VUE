@@ -20,55 +20,60 @@
       </div>
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
-        <table v-else-if="orders.length" class="table">
-          <thead class="thead">
-            <tr class="thead__top">
-              <td colspan="12">
-                <div class="table__title">Заказы</div>
-              </td>
-            </tr>
-            <tr class="thead__bottom">
-              <td>№:</td>
-              <td>Клиент</td>
-              <td>Почта:</td>
-              <td>Телефон:</td>
-              <td>Регион:</td>
-              <td>Дата:</td>
-              <td>Сумма:</td>
-              <td>Клубная карта:</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in orders.slice(0, 15)" :key="item.id">
-              <td>{{ item.number }}</td>
-              <td class="text--blue">{{ transformName(item.client) }}</td>
-              <td>{{ item.region.title }}</td>
-              <td class="text--green">{{ transformDate(item.createdAt) }}</td>
-              <td class="text--sapphire">
-                {{ item && item.buyed ? transformDate(item.buyed) : "" }}
-              </td>
-              <td class="text--sapphire">
-                {{ item.deliver ? transformDate(item.deliver) : "" }}
-              </td>
-              <td>{{ item.sum.toFixed(2) + " " + item.region.valute.icon }}</td>
-              <td>
-                {{
-                  (item.deliverySum ? item.deliverySum.toFixed(2) : "0.00") +
-                  " " +
-                  item.region.valute.icon
-                }}
-              </td>
-              <td class="text--blue">{{ transformFIO(item.manager[0]) }}</td>
-              <td v-html="transformStatus(item.status)"></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <template v-else-if="orders.length">
+          <table class="table">
+            <thead class="thead">
+              <tr class="thead__top">
+                <td colspan="12">
+                  <div class="table__title">Заказы</div>
+                </td>
+              </tr>
+              <tr class="thead__bottom">
+                <td>№:</td>
+                <td>Клиент</td>
+                <td>Почта:</td>
+                <td>Телефон:</td>
+                <td>Регион:</td>
+                <td>Дата:</td>
+                <td>Сумма:</td>
+                <td>Клубная карта:</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in orders.slice(0, 15)" :key="item.id">
+                <td>{{ item.number }}</td>
+                <td class="text--blue">{{ transformName(item.client) }}</td>
+                <td>{{ item.region.title }}</td>
+                <td class="text--green">{{ transformDate(item.createdAt) }}</td>
+                <td class="text--sapphire">
+                  {{ item && item.buyed ? transformDate(item.buyed) : "" }}
+                </td>
+                <td class="text--sapphire">
+                  {{ item.deliver ? transformDate(item.deliver) : "" }}
+                </td>
+                <td>
+                  {{ item.sum.toFixed(2) + " " + item.region.valute.icon }}
+                </td>
+                <td>
+                  {{
+                    (item.deliverySum ? item.deliverySum.toFixed(2) : "0.00") +
+                    " " +
+                    item.region.valute.icon
+                  }}
+                </td>
+                <td class="text--blue">{{ transformFIO(item.manager[0]) }}</td>
+                <td v-html="transformStatus(item.status)"></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <v-pagination :count="getOrdersCount" />
+        </template>
         <v-not-found-query v-else />
       </div>
     </div>
@@ -78,6 +83,7 @@
 <script>
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
+import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import dateMixins from "@/mixins/date";
@@ -89,7 +95,7 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   mixins: [dateMixins, fioMixins, nameMixins, roleMixins, statusMixins],
-  components: { VFilter, VSpinner, VNotFoundQuery },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
   data() {
     return {
       startDate: null,
@@ -166,13 +172,8 @@ export default {
     },
   },
   watch: {
-    $route: async function () {
-      this.isLoading = false;
-      await this.getOrdersFromPage({
-        page: +this.$route.params.page,
-        filtersOptions: this.filtersOptions,
-      });
-      this.isLoading = true;
+    $route: function () {
+      this.fetchData();
     },
     filtersOptions: {
       handler: async function () {
