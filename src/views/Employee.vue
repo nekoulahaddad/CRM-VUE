@@ -59,7 +59,19 @@
                     {{ employee.department.title }}
                   </div>
                 </td>
-                <td></td>
+                <td>
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/write_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/trash_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
