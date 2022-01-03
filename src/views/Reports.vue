@@ -40,8 +40,10 @@
                 <td>
                   {{ item.number || index + 1 + ($route.params.page - 1) * 15 }}
                 </td>
-                <td>{{ item.title }}</td>
-                <td>{{ transformDate(item.created) }}</td>
+                <td>
+                  <div class="bg bg--blue-light">{{ item.title }}</div>
+                </td>
+                <td class="text--green">{{ transformDate(item.created) }}</td>
                 <td class="text--blue">{{ transformFIO(item.initiator) }}</td>
                 <td>{{ transformFIO(item.executor) }}</td>
                 <td class="text--sapphire">
@@ -53,7 +55,13 @@
                 </td>
                 <td v-html="transformStatus(item.status)"></td>
                 <td v-html="transformMark(item.mark)"></td>
-                <td></td>
+                <td>
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
