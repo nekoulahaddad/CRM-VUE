@@ -254,10 +254,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-.card {
-  &__title {
-  }
-}
-</style>

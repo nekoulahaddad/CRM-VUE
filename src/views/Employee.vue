@@ -157,15 +157,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.table {
-  .thead {
-    &__bottom {
-      td {
-        text-align: center;
-      }
-    }
-  }
-}
-</style>

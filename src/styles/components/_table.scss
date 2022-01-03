@@ -29,7 +29,7 @@
     }
   }
 
-  thead {
+  .thead {
     background-color: $color-white;
 
     td {
@@ -46,7 +46,7 @@
       }
     }
 
-    .thead__bottom {
+    &__bottom {
       td {
         text-align: center;
       }
