@@ -32,7 +32,6 @@
                 <td>Комментарий:</td>
                 <td>Статус</td>
                 <td>Файл</td>
-                <td></td>
               </tr>
             </thead>
             <tbody>
@@ -63,9 +62,29 @@
                     </VueCustomTooltip>
                   </div>
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>
+                  <div
+                    :class="{
+                      'text--red': !item.status,
+                      'bg bg--green-light': item.status,
+                    }"
+                  >
+                    {{ item.status ? "Обработана" : "Не обработана" }}
+                  </div>
+                </td>
+                <td>
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/download_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/write_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -163,5 +182,12 @@ span[role="tooltip"] {
 .vue-custom-tooltip:after {
   box-shadow: none !important;
   text-align: left !important;
+}
+.table {
+  .thead__bottom {
+    td:last-child {
+      text-align: left;
+    }
+  }
 }
 </style>
