@@ -38,19 +38,55 @@
             <tbody>
               <tr v-for="item in dataset" :key="item.id">
                 <td>{{ item.number }}</td>
-                <td>{{ item.orderNumber ? item.orderNumber : "-" }}</td>
-                <td>{{ transformDate(item.createdAt) }}</td>
-                <td>{{ transformFIO(item.client) }}</td>
+                <td>
+                  {{ item.orderNumber ? item.orderNumber : "-" }}
+                </td>
+                <td class="text--green">{{ transformDate(item.createdAt) }}</td>
+                <td class="text--blue">{{ transformFIO(item.client) }}</td>
                 <td>{{ item.phone }}</td>
                 <td>{{ item.region.title && item.region.title }}</td>
                 <td>
-                  {{ item.category && item.category.category.categoryName }}
+                  <div class="bg bg--blue-light">
+                    {{ item.category && item.category.category.categoryName }}
+                  </div>
                 </td>
-                <td>{{ transformFIO(item.issuedBy) }}</td>
-                <td>{{ transformFIO(item.issuedTo) }}</td>
-                <td>{{ item.message }}</td>
-                <td></td>
-                <td></td>
+                <td class="text--blue">{{ transformFIO(item.issuedBy) }}</td>
+                <td class="text--blue">{{ transformFIO(item.issuedTo) }}</td>
+                <td>
+                  <VueCustomTooltip
+                    v-if="item.message"
+                    :multiline="true"
+                    :label="item.message"
+                  >
+                    Описание
+                  </VueCustomTooltip>
+                </td>
+                <td
+                  :class="
+                    item.status === 'отказ'
+                      ? 'text--red'
+                      : item.status === 'подтвержденный'
+                      ? 'text--green'
+                      : !item.confirmedAt
+                      ? 'text--orange'
+                      : 'text--blue-delos'
+                  "
+                >
+                  {{ item.status ? item.status : "не подтвержденный" }}
+                </td>
+                <td>
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/write_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/trash_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
