@@ -115,6 +115,9 @@ ul {
   &--gray-light {
     color: $color-gray-light;
   }
+  &--underline {
+    text-decoration: underline;
+  }
 }
 
 .bg {

@@ -155,3 +155,9 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+span[role="tooltip"] {
+  text-decoration: underline !important;
+}
+</style>
