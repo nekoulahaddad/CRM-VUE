@@ -3,7 +3,7 @@
     <a-player
       v-if="this.status"
       @focus="togglePlay()"
-      autoplay
+      :autoplay="true"
       :volume="0.3"
       :music="{
         title: this.play.client ? transformName(this.play.client) : '',
@@ -11,6 +11,7 @@
           ? this.play.client.phone
           : transformPhone(this.play.to.number),
         src: this.play.recording_url,
+        pic: '',
       }"
     />
     <div class="page__header">
@@ -64,8 +65,17 @@
                     <div class="table__icon">
                       <img
                         @click="togglePlay(item)"
-                        src="/icons/play_icon.svg"
-                        alt=""
+                        v-if="status && play._id === item._id"
+                        src="@/assets/icons/pause_icon.svg"
+                        title="Пауза"
+                        alt="Пауза"
+                      />
+                      <img
+                        v-else
+                        @click="togglePlay(item)"
+                        src="@/assets/icons/play_icon.svg"
+                        title="Воспроизвести"
+                        alt="Воспроизвести"
                       />
                     </div>
                   </div>
@@ -158,5 +168,13 @@ export default {
       text-align: left;
     }
   }
+}
+.aplayer {
+  position: fixed;
+  bottom: 25px;
+  width: 500px;
+  z-index: 1000;
+  left: 50%;
+  transform: translateX(-50%) !important;
 }
 </style>
