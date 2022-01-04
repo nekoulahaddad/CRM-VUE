@@ -64,7 +64,7 @@ Vue.use(vuescroll, {
   ops: {
     bar: {
       background: "#db1f35",
-      keepShow: false,
+      keepShow: true,
     },
     scrollPanel: {
       maxHeight: 600,
