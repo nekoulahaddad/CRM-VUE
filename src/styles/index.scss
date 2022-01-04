@@ -135,4 +135,13 @@ ul {
   }
 }
 
+.vue-custom-tooltip[role="tooltip"] {
+  text-decoration: underline !important;
+
+  &:after {
+    box-shadow: none !important;
+    text-align: left !important;
+  }
+}
+
 @import "media";

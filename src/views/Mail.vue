@@ -56,11 +56,13 @@
                 </td>
                 <td>{{ item.orderNumber }}</td>
                 <td>
-                  <div v-if="item.comment">
-                    <VueCustomTooltip :multiline="true" :label="item.comment">
-                      Комментарий
-                    </VueCustomTooltip>
-                  </div>
+                  <VueCustomTooltip
+                    v-if="item.comment"
+                    :multiline="true"
+                    :label="item.comment"
+                  >
+                    Комментарий
+                  </VueCustomTooltip>
                 </td>
                 <td>
                   <div
@@ -176,13 +178,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-span[role="tooltip"] {
-  text-decoration: underline !important;
-}
-.vue-custom-tooltip:after {
-  box-shadow: none !important;
-  text-align: left !important;
-}
 .table {
   .thead__bottom {
     td:last-child {

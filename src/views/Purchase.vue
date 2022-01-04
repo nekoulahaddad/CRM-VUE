@@ -36,17 +36,49 @@
             <tbody>
               <tr v-for="item in dataset" :key="item.id">
                 <td>{{ item.number }}</td>
-                <td>{{ transformDate(item.createdAt) }}</td>
+                <td class="text--green">{{ transformDate(item.createdAt) }}</td>
                 <td>{{ item.region.title && item.region.title }}</td>
                 <td>
-                  {{ item.category && item.category.category.categoryName }}
+                  <div class="bg bg--blue-light">
+                    {{ item.category && item.category.category.categoryName }}
+                  </div>
                 </td>
-                <td>{{ transformFIO(item.initiator) }}</td>
-                <td>{{ transformFIO(item.executor) }}</td>
-                <td>{{ item.message }}</td>
-                <td>{{ item.status ? item.status : "-" }}</td>
-                <td></td>
-                <td></td>
+                <td class="text--blue">{{ transformFIO(item.initiator) }}</td>
+                <td class="text--blue">{{ transformFIO(item.executor) }}</td>
+                <td>
+                  <VueCustomTooltip
+                    v-if="item.message"
+                    :multiline="true"
+                    :label="item.message"
+                  >
+                    Описание
+                  </VueCustomTooltip>
+                </td>
+                <td>
+                  <div
+                    :class="
+                      item.status === 'отказ'
+                        ? 'text--red'
+                        : item.status === 'подтвержденный'
+                        ? 'text--green'
+                        : 'text--blue-delos'
+                    "
+                  >
+                    {{ item.status ? item.status : "-" }}
+                  </div>
+                </td>
+                <td class="text--green">
+                  {{
+                    item.deliveryDate ? transformDate(item.deliveryDate) : "-"
+                  }}
+                </td>
+                <td>
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
