@@ -22,7 +22,7 @@
     </div>
     <div class="page__body d-flex">
       <div class="page__left">
-        <v-filter type="mango" />
+        <v-filter type="mango" @refreshDates="refreshDates" />
       </div>
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
@@ -142,6 +142,11 @@ export default {
         this.item = {};
       }
       this.status = !this.status;
+    },
+    refreshDates(startDate, endDate) {
+      this.filtersOptions.startDate = startDate;
+      this.filtersOptions.endDate = endDate;
+      this.fetchData();
     },
   },
   mounted() {

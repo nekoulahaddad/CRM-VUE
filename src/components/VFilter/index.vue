@@ -121,9 +121,17 @@
           <div class="filter__group group">
             <div class="group__title">Дата:</div>
             <div class="group__content">
-              <select class="form-select">
-                <option value="Все задачи">Выберите дату</option>
-              </select>
+              <date-picker
+                format="DD.MM.YYYY"
+                language="ru"
+                :dateInput="dateInput"
+                :sameDateFormat="sameDateFormat"
+                :showHelperButtons="true"
+                :switchButtonInitial="true"
+                switchButtonLabel="Все время"
+                :calendarDateInput="calendarDateInput"
+                @date-applied="selectPeriodDate"
+              />
             </div>
           </div>
           <div class="filter__actions">
@@ -662,6 +670,9 @@
 import VButton from "@/components/VButton";
 import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
+import DatePicker, {
+  CalendarDialog,
+} from "vue-time-date-range-picker/dist/vdprDatePicker";
 import { mapMutations } from "vuex";
 
 export default {
@@ -698,6 +709,7 @@ export default {
   },
   components: {
     VButton,
+    DatePicker,
   },
   beforeMount() {
     this.filterOptions = this.defaultOptions;
@@ -875,6 +887,10 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    selectPeriodDate(startDate, endDate) {
+      this.$parent.isLoading = false;
+      this.$emit("refreshDates", startDate, endDate, this.regionsPool);
+    },
     selectUser(user) {
       this.filterOptions.executor = user._id;
       this.fio = `${user.surname} ${user.name.charAt(0)}.${
