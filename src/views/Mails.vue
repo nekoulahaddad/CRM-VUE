@@ -160,4 +160,8 @@ export default {
 span[role="tooltip"] {
   text-decoration: underline !important;
 }
+.vue-custom-tooltip:after {
+  box-shadow: none !important;
+  text-align: left !important;
+}
 </style>
