@@ -31,7 +31,7 @@
               </tr>
             </tbody>
           </table>
-          <v-pagination :count="count" />
+          <v-pagination v-if="count > 0" :count="count" />
         </template>
         <v-not-found-query v-else />
       </div>
