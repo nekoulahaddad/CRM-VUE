@@ -65,10 +65,22 @@
                       <img src="@/assets/icons/info_icon.svg" alt="" />
                     </div>
                     <div class="table__icon">
-                      <img src="@/assets/icons/write_icon.svg" alt="" />
+                      <img
+                        v-if="role === 'director' || options.userEditor"
+                        src="@/assets/icons/write_icon.svg"
+                        @click="toggleEdit(employee)"
+                        alt=""
+                      />
+                      <div class="table__hidden-icon" v-else></div>
                     </div>
                     <div class="table__icon">
-                      <img src="@/assets/icons/trash_icon.svg" alt="" />
+                      <img
+                        v-if="role === 'director'"
+                        src="@/assets/icons/trash_icon.svg"
+                        @click="toggleDelete(employee._id)"
+                        alt=""
+                      />
+                      <div class="table__hidden-icon" v-else></div>
                     </div>
                   </div>
                 </td>
@@ -90,10 +102,11 @@ import VPagination from "@/components/VPagination";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "../api/getDataFromPage";
 import ratingMixins from "@/mixins/rating";
+import roleMixins from "@/mixins/role";
 
 export default {
   components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
-  mixins: [ratingMixins],
+  mixins: [ratingMixins, roleMixins],
   data() {
     return {
       openEdit: false,
@@ -116,6 +129,20 @@ export default {
       user: "",
     };
   },
+  computed: {
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
+    options: {
+      get: function () {
+        let options = this.getUserRole();
+        return options.options;
+      },
+    },
+  },
   mounted() {
     this.getData();
   },
@@ -137,6 +164,24 @@ export default {
         this.isLoading = true;
         this.$scrollTo("body", 300, {});
       }
+    },
+    toggleEdit(item) {
+      if (!this.open.edit) {
+        this.infoItem = item;
+      } else {
+        setTimeout(() => {
+          this.infoItem = {};
+        }, 500);
+      }
+      this.open.edit = !this.open.edit;
+    },
+    toggleDelete(id) {
+      if (!this.open.delete) {
+        this.deletedItem._id = id;
+      } else {
+        this.deletedItem = {};
+      }
+      this.open.delete = !this.open.delete;
     },
     resetFilters() {
       this.$refs.filters.filterOptions = {};
