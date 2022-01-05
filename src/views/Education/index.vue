@@ -11,7 +11,7 @@
       <v-spinner v-if="!isLoading" />
       <div v-else class="card card--white">
         <div class="card__title card__title--underline">{{ type }}</div>
-        <table v-if="educations.length" class="table">
+        <table v-if="educations.length" class="table table--separate">
           <tbody>
             <template v-for="(item, index) in educations">
               <tr v-if="editedItem !== item" class="shadow" :key="item.id">
