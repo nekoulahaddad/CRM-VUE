@@ -2,7 +2,20 @@
   width: 100%;
   border-collapse: collapse;
   overflow-x: scroll;
-  //border-spacing: 0 10px;
+  border-spacing: 0 10px;
+
+  td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 350px;
+  }
+
+  .bg {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 
   td:first-child {
     min-width: 50px;
