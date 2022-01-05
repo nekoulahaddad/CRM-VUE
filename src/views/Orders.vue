@@ -74,6 +74,7 @@
                           none: !item.oneC.requested,
                           req: item.oneC.requested && !item.oneC.accepted,
                         }"
+                        :title="getOneCStatus(item.oneC)"
                         src="@/assets/icons/1c_icon.svg"
                         alt=""
                       />
@@ -105,13 +106,21 @@ import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import dateMixins from "@/mixins/date";
 import nameMixins from "@/mixins/name";
+import oneCMixins from "@/mixins/oneC";
 import roleMixins from "@/mixins/role";
 import statusMixins from "@/mixins/status";
 import fioMixins from "@/mixins/fio";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
-  mixins: [dateMixins, fioMixins, nameMixins, roleMixins, statusMixins],
+  mixins: [
+    dateMixins,
+    fioMixins,
+    oneCMixins,
+    nameMixins,
+    roleMixins,
+    statusMixins,
+  ],
   components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
   data() {
     return {
