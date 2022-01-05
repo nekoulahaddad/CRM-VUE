@@ -88,6 +88,7 @@
                         src="/icons/info_icon.svg"
                         alt=""
                       />
+                      <div class="table__hidden-icon" v-else></div>
                     </div>
                     <div class="table__icon">
                       <img
@@ -98,6 +99,7 @@
                         src="/icons/document_icon.svg"
                         alt=""
                       />
+                      <div class="table__hidden-icon" v-else></div>
                     </div>
                     <div class="table__icon">
                       <img
@@ -105,6 +107,7 @@
                         src="/icons/trash_icon.svg"
                         alt=""
                       />
+                      <div class="table__hidden-icon" v-else></div>
                     </div>
                   </div>
                 </td>
