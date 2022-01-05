@@ -1,11 +1,17 @@
 <template>
   <footer class="footer">
-    <div class="footer__inner"></div>
+    <div class="footer__inner">
+      <v-user-info />
+    </div>
   </footer>
 </template>
 
 <script>
-export default {};
+import VUserInfo from "@/components/VUserInfo";
+
+export default {
+  components: { VUserInfo },
+};
 </script>
 
 <style lang="scss">
@@ -21,6 +27,14 @@ export default {};
   left: 0;
   right: 0;
   z-index: 999;
-  display: flex;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 </style>
