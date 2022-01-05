@@ -48,7 +48,8 @@ export default {
 .pagination {
   display: flex;
   justify-content: center;
-  margin: 20px 0 10px;
+  margin-bottom: 10px;
+
   &__arrow,
   &__item {
     a {
