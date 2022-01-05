@@ -14,7 +14,7 @@
         <div v-if="!filtersOptions.region">Выберите регион</div>
         <v-spinner v-else-if="!isLoading" />
         <template v-else-if="dataset.categories.length">
-          <table class="table">
+          <table class="table table--separate">
             <thead class="thead">
               <tr class="thead__top">
                 <td colspan="12">
