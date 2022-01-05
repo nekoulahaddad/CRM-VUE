@@ -40,7 +40,6 @@
                 <td>Менеджер:</td>
                 <td>Статус:</td>
                 <td>1С:</td>
-                <td></td>
               </tr>
             </thead>
             <tbody>
@@ -67,8 +66,26 @@
                 </td>
                 <td class="text--blue">{{ transformFIO(item.manager[0]) }}</td>
                 <td v-html="transformStatus(item.status)"></td>
-                <td></td>
-                <td></td>
+                <td>
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img
+                        :class="{
+                          none: !item.oneC.requested,
+                          req: item.oneC.requested && !item.oneC.accepted,
+                        }"
+                        src="@/assets/icons/1c_icon.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/write_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -385,3 +402,23 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.table {
+  .thead__bottom {
+    td {
+      &:last-child {
+        text-align: left;
+      }
+    }
+  }
+  td {
+    .table__icon {
+      .none {
+        opacity: 0.3;
+        filter: grayscale(100%);
+      }
+    }
+  }
+}
+</style>
