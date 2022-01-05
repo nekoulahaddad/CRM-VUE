@@ -87,14 +87,14 @@ export default {
     },
   },
   mounted() {
-    const body = document.getElementsByTagName("body")[0],
-      sidebar = document.querySelector(".menu");
+    const body = document.querySelector("body");
+    const menu = document.querySelector(".menu");
 
-    sidebar.onmouseover = function () {
+    menu.onmouseover = function () {
       body.style.overflow = "hidden";
     };
 
-    sidebar.onmouseout = function () {
+    menu.onmouseout = function () {
       body.style.overflow = "auto";
     };
   },
