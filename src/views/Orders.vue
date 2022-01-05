@@ -21,7 +21,7 @@
       <div class="flex-1">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="orders.length">
-          <table class="table">
+          <table class="table table--separate">
             <thead class="thead">
               <tr class="thead__top">
                 <td colspan="12">

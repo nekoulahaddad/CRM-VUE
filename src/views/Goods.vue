@@ -18,7 +18,10 @@
       <div class="flex-1">
         <div v-if="!region">Выберите регион</div>
         <v-spinner v-else-if="isLoading" />
-        <table class="table" v-else-if="dataset.categories.length">
+        <table
+          class="table table--separate"
+          v-else-if="dataset.categories.length"
+        >
           <thead class="thead">
             <tr class="thead__top">
               <td colspan="2">
