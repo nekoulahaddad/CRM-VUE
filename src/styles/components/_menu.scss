@@ -54,6 +54,10 @@
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08),
         0 4px 8px rgba(50, 50, 71, 0.006);
       border-color: #f2f2f7;
+
+      .menu__title {
+        color: $color-red;
+      }
     }
   }
 
