@@ -4,17 +4,20 @@
     <main class="main">
       <router-view />
     </main>
+    <v-footer />
   </div>
 </template>
 
 <script>
 import VSidebar from "@/components/VSidebar";
+import VFooter from "@/components/VFooter";
 import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 
 export default {
   mixins: [roleMixins],
   components: {
+    VFooter,
     VSidebar,
   },
   sockets: {
