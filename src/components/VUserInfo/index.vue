@@ -17,16 +17,19 @@ export default {};
 .user-info {
   display: flex;
   align-items: center;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
   border-radius: $border-radius;
   height: 44px;
   padding: 7px 9px;
-  border: 1px solid #f2f2f7;
 
   &__name {
     margin-left: 5px;
     font-size: 12px;
     font-weight: 600;
+  }
+
+  &--active {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(50, 50, 71, 0.006);
+    border: 1px solid #f2f2f7;
   }
 }
 </style>
