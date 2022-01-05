@@ -34,7 +34,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="employee in dataset" :key="employee.id">
+              <tr class="shadow" v-for="employee in dataset" :key="employee.id">
                 <td class="text--blue">
                   {{
                     `${employee.surname} ${employee.name.charAt(0)}.${
