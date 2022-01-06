@@ -1,5 +1,5 @@
 <template>
-  <tr :key="item.id">
+  <tr :class="classes" :key="item.id">
     <td>{{ item.number }}</td>
     <td class="text--blue">{{ transformName(item.client) }}</td>
     <td>{{ item.region.title }}</td>
@@ -53,10 +53,21 @@
 <script>
 export default {
   props: {
+    gray: {
+      type: Boolean,
+      default: false,
+    },
     item: {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      classes: {
+        gray: this.$props.gray,
+      },
+    };
   },
 };
 </script>
