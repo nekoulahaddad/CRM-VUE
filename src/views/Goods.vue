@@ -15,7 +15,7 @@
           @updatebyfilter="updateByFilter"
         />
       </div>
-      <div class="flex-1">
+      <div class="page__right">
         <div v-if="!region">Выберите регион</div>
         <v-spinner v-else-if="isLoading" />
         <table

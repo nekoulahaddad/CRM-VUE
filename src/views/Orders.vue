@@ -18,22 +18,82 @@
           @refreshDates="refreshDates"
         />
       </div>
-      <div class="flex-1">
-        <!-- Индикатор загрузки -->
+      <div class="page__right">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="orders.length">
-          <!-- Таблица с данными -->
-          <v-table
-            title="Заказы"
-            :colspan="12"
-            :items="orders"
-            :fields="$t('pages.orders.fields')"
-          >
-            <template v-for="item in orders.slice(0, 15)">
-              <v-row :item="item" />
-            </template>
-          </v-table>
-          <!-- Постраничная навигация -->
+          <div class="list list-shadow">
+            <div class="list__columns list__columns-shadow list__columns-white">
+              <div
+                v-for="field in $t('pages.orders.fields')"
+                class="list__column"
+              >
+                {{ field }}
+              </div>
+            </div>
+            <div
+              v-for="item in orders.slice(0, 15)"
+              :key="item._id"
+              class="list__row list__row-white"
+            >
+              <div
+                class="list__columns list__columns-shadow list__columns-white"
+              >
+                <div class="list__column">{{ item.number }}</div>
+                <div class="list__column text--blue">
+                  {{ transformName(item.client) }}
+                </div>
+                <div class="list__column">{{ item.region.title }}</div>
+                <div class="list__column text-green">
+                  {{ transformDate(item.createdAt) }}
+                </div>
+                <div class="list__column text--sapphire">
+                  {{ item && item.buyed ? transformDate(item.buyed) : "" }}
+                </div>
+                <div class="list__column text--sapphire">
+                  {{ item.deliver ? transformDate(item.deliver) : "" }}
+                </div>
+                <div class="list__column">
+                  {{ item.sum.toFixed(2) + " " + item.region.valute.icon }}
+                </div>
+                <div class="list__column">
+                  {{
+                    (item.deliverySum ? item.deliverySum.toFixed(2) : "0.00") +
+                    " " +
+                    item.region.valute.icon
+                  }}
+                </div>
+                <div class="list__column text--blue">
+                  {{ transformFIO(item.manager[0]) }}
+                </div>
+                <div
+                  v-html="transformStatus(item.status)"
+                  class="list__column"
+                ></div>
+                <div class="list__column"></div>
+                <div class="list__column">
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <img
+                        :class="{
+                          none: !item.oneC.requested,
+                          req: item.oneC.requested && !item.oneC.accepted,
+                        }"
+                        :title="getOneCStatus(item.oneC)"
+                        src="@/assets/icons/1c_icon.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                    </div>
+                    <div class="table__icon">
+                      <img src="@/assets/icons/write_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <v-pagination :count="getOrdersCount" />
         </template>
         <v-not-found-query v-else />
@@ -46,15 +106,26 @@
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
-import VRow from "./components/VRow";
-import VTable from "@/components/VTable";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
+import dateMixins from "@/mixins/date";
+import nameMixins from "@/mixins/name";
+import oneCMixins from "@/mixins/oneC";
+import roleMixins from "@/mixins/role";
+import statusMixins from "@/mixins/status";
 import fioMixins from "@/mixins/fio";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VTable, VRow },
+  mixins: [
+    dateMixins,
+    fioMixins,
+    oneCMixins,
+    nameMixins,
+    roleMixins,
+    statusMixins,
+  ],
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
   data() {
     return {
       startDate: null,
@@ -346,21 +417,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.table {
-  .thead__bottom {
-    td {
-      &:last-child {
-        text-align: left;
-      }
-    }
-  }
-  td {
-    .table__icon {
-      .none {
-        opacity: 0.3;
-        filter: grayscale(100%);
-      }
-    }
-  }
+.list__columns {
+  grid-template-columns: 60px 140px repeat(10, minmax(140px, 1fr));
 }
 </style>

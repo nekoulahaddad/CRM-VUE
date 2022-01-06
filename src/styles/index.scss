@@ -43,6 +43,7 @@ ul {
 .main {
   flex: 1;
   padding-bottom: 50px;
+  overflow: hidden;
 }
 
 .d-flex {
@@ -81,6 +82,11 @@ ul {
 
   &__left {
     margin-right: 20px;
+  }
+
+  &__right {
+    flex: 1;
+    overflow-x: scroll;
   }
 
   &__icon {

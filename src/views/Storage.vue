@@ -10,7 +10,7 @@
       <div class="page__left">
         <v-filter type="goods" />
       </div>
-      <div class="flex-1">
+      <div class="page__right">
         <div v-if="!filtersOptions.region">Выберите регион</div>
         <v-spinner v-else-if="!isLoading" />
         <template v-else-if="dataset.categories.length">

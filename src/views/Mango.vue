@@ -24,7 +24,7 @@
       <div class="page__left">
         <v-filter type="mango" @refreshDates="refreshDates" />
       </div>
-      <div class="flex-1">
+      <div class="page__right">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <table class="table table--separate">
