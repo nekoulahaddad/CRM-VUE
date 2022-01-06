@@ -22,14 +22,18 @@
         <v-spinner v-if="!isLoading" />
         <template v-else-if="orders.length">
           <div class="list list-shadow">
-            <div class="list__columns list__columns-shadow list__columns-white">
-              <div
-                v-for="field in $t('pages.orders.fields')"
-                class="list__column"
-              >
-                {{ field }}
+            <div class="list__header">
+              <div class="list__title">Заказы</div>
+              <div class="list__columns">
+                <div
+                  v-for="field in $t('pages.orders.fields')"
+                  class="list__column"
+                >
+                  {{ field }}
+                </div>
               </div>
             </div>
+
             <div
               v-for="item in orders.slice(0, 15)"
               :key="item._id"
