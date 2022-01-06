@@ -19,77 +19,21 @@
         />
       </div>
       <div class="flex-1">
+        <!-- Индикатор загрузки -->
         <v-spinner v-if="!isLoading" />
         <template v-else-if="orders.length">
-          <table class="table table--separate">
-            <thead class="thead">
-              <tr class="thead__top">
-                <td colspan="12">
-                  <div class="table__title">Заказы</div>
-                </td>
-              </tr>
-              <tr class="thead__bottom">
-                <td>№:</td>
-                <td>Клиент</td>
-                <td>Регион:</td>
-                <td>Дата создания:</td>
-                <td>Оплачен:</td>
-                <td>Доставлен:</td>
-                <td>Сумма:</td>
-                <td>Доставка:</td>
-                <td>Менеджер:</td>
-                <td>Статус:</td>
-                <td>1С:</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in orders.slice(0, 15)" :key="item.id">
-                <td>{{ item.number }}</td>
-                <td class="text--blue">{{ transformName(item.client) }}</td>
-                <td>{{ item.region.title }}</td>
-                <td class="text--green">{{ transformDate(item.createdAt) }}</td>
-                <td class="text--sapphire">
-                  {{ item && item.buyed ? transformDate(item.buyed) : "" }}
-                </td>
-                <td class="text--sapphire">
-                  {{ item.deliver ? transformDate(item.deliver) : "" }}
-                </td>
-                <td>
-                  {{ item.sum.toFixed(2) + " " + item.region.valute.icon }}
-                </td>
-                <td>
-                  {{
-                    (item.deliverySum ? item.deliverySum.toFixed(2) : "0.00") +
-                    " " +
-                    item.region.valute.icon
-                  }}
-                </td>
-                <td class="text--blue">{{ transformFIO(item.manager[0]) }}</td>
-                <td v-html="transformStatus(item.status)"></td>
-                <td>
-                  <div class="table__actions">
-                    <div class="table__icon">
-                      <img
-                        :class="{
-                          none: !item.oneC.requested,
-                          req: item.oneC.requested && !item.oneC.accepted,
-                        }"
-                        :title="getOneCStatus(item.oneC)"
-                        src="@/assets/icons/1c_icon.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div class="table__icon">
-                      <img src="@/assets/icons/info_icon.svg" alt="" />
-                    </div>
-                    <div class="table__icon">
-                      <img src="@/assets/icons/write_icon.svg" alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <!-- Таблица с данными -->
+          <v-table
+            title="Заказы"
+            :colspan="12"
+            :items="orders"
+            :fields="$t('pages.orders.fields')"
+          >
+            <template v-for="item in orders.slice(0, 15)">
+              <v-row :item="item" />
+            </template>
+          </v-table>
+          <!-- Постраничная навигация -->
           <v-pagination :count="getOrdersCount" />
         </template>
         <v-not-found-query v-else />
@@ -102,26 +46,15 @@
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
+import VRow from "./components/VRow";
+import VTable from "@/components/VTable";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import dateMixins from "@/mixins/date";
-import nameMixins from "@/mixins/name";
-import oneCMixins from "@/mixins/oneC";
-import roleMixins from "@/mixins/role";
-import statusMixins from "@/mixins/status";
 import fioMixins from "@/mixins/fio";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
-  mixins: [
-    dateMixins,
-    fioMixins,
-    oneCMixins,
-    nameMixins,
-    roleMixins,
-    statusMixins,
-  ],
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VTable, VRow },
   data() {
     return {
       startDate: null,

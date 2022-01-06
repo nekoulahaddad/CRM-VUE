@@ -13,6 +13,12 @@ import Paginate from "vuejs-paginate";
 import Toast from "vue-toastification";
 import VueMoment from "vue-moment";
 import i18n from "./i18n";
+import dateMixins from "@/mixins/date";
+import fioMixins from "@/mixins/fio";
+import nameMixins from "@/mixins/name";
+import oneCMixins from "@/mixins/oneC";
+import roleMixins from "@/mixins/role";
+import statusMixins from "@/mixins/status";
 import "moment/locale/ru";
 import "vue-toastification/dist/index.css";
 import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
@@ -83,6 +89,13 @@ Vue.use(Toast, {
   timeout: 3500,
 });
 Vue.component("paginate", Paginate);
+
+Vue.mixin(dateMixins);
+Vue.mixin(oneCMixins);
+Vue.mixin(fioMixins);
+Vue.mixin(nameMixins);
+Vue.mixin(roleMixins);
+Vue.mixin(statusMixins);
 
 new Vue({
   i18n,

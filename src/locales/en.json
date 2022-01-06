@@ -1,3 +1,38 @@
 {
-
+  "title": "CSK",
+  "menu": {
+    "monitor": "Дашборд",
+    "education": "Обучение",
+    "employee": "Сотрудники",
+    "calendar": "Календарь",
+    "tasks": "Tasks",
+    "reports": "Reports",
+    "clients": "Clients",
+    "orders": "Orders",
+    "mail": "Заявки",
+    "goods": "Goods",
+    "seo": "SEO",
+    "mango": "Mango",
+    "storage": "Склад",
+    "delivery": "Delivery",
+    "callbacks": "Обращения",
+    "buying": "Закупка"
+  },
+  "pages": {
+    "orders": {
+      "fields": [
+        "№:",
+        "Client:",
+        "Region:",
+        "Дата создания:",
+        "Оплачен:",
+        "Доставлен:",
+        "Сумма:",
+        "Доставка:",
+        "Manager:",
+        "Status:",
+        "1С:"
+      ]
+    }
+  }
 }
