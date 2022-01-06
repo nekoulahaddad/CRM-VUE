@@ -97,7 +97,7 @@ body {
     ul {
       li {
         background: url("../assets/icons/success_red.svg") 0 4px no-repeat;
-        padding-left: 27px;
+        padding-left: 23px;
         font-weight: 600;
 
         & + li {

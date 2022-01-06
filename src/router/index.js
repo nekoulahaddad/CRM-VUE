@@ -7,7 +7,9 @@ const routes = [
   {
     path: "/dashboard",
     name: "dashboard",
-    redirect: {},
+    redirect: {
+      name: "monitor",
+    },
     component: () => import("../views/Container.vue"),
     children: [
       {

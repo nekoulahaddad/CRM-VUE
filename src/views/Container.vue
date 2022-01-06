@@ -1,7 +1,7 @@
 <template>
-  <div className="wrapper">
+  <div class="wrapper">
     <v-sidebar />
-    <main className="main">
+    <main class="main">
       <router-view />
     </main>
     <v-footer />
@@ -16,6 +16,18 @@ export default {
   components: {
     VFooter,
     VSidebar,
+  },
+  mounted() {
+    const body = document.querySelector("body");
+    const menu = document.querySelector(".menu");
+
+    menu.onmouseover = function () {
+      body.style.overflow = "hidden";
+    };
+
+    menu.onmouseout = function () {
+      body.style.overflow = "auto";
+    };
   },
 };
 </script>

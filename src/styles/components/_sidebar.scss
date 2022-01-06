@@ -1,6 +1,7 @@
 .sidebar {
   background-color: $color-white;
-  min-width: 202px;
+  max-width: 202px;
+  width: 100%;
   height: 100vh;
   position: sticky;
   top: 0;
@@ -54,7 +55,8 @@
   }
 
   &--collapse {
-    min-width: 88px;
+    max-width: 88px;
+    width: 100%;
 
     .sidebar__toggle {
       width: 68px;

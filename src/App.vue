@@ -72,18 +72,5 @@ export default {
       }
     },
   },
-  mounted() {
-    return;
-    const body = document.querySelector("body");
-    const menu = document.querySelector(".menu");
-
-    menu.onmouseover = function () {
-      body.style.overflow = "hidden";
-    };
-
-    menu.onmouseout = function () {
-      body.style.overflow = "auto";
-    };
-  },
 };
 </script>
