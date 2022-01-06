@@ -48,7 +48,8 @@ export default {
     },
     getPageUrl(key) {
       let url = `/dashboard/${key}`;
-      return key.includes("monitor") ? url : `${url}/1`;
+      const names = ["monitor", "calendar"];
+      return names.includes(key) ? url : `${url}/1`;
     },
   },
 };
