@@ -31,3 +31,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+body {
+  background-color: $color-gray;
+}
+</style>
