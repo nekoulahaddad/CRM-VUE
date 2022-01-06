@@ -21,77 +21,81 @@
       <div class="page__right">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="orders.length">
-          <div class="list list-shadow">
-            <div class="list__header">
-              <div class="list__title">Заказы</div>
-              <div class="list__columns">
-                <div
-                  v-for="field in $t('pages.orders.fields')"
-                  class="list__column"
-                >
-                  {{ field }}
+          <div class="scroll-horizontal">
+            <div class="list list-shadow">
+              <div class="list__header">
+                <div class="list__title">Заказы</div>
+                <div class="list__columns">
+                  <div
+                    v-for="field in $t('pages.orders.fields')"
+                    class="list__column"
+                  >
+                    {{ field }}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div
-              v-for="item in orders.slice(0, 15)"
-              :key="item._id"
-              class="list__row list__row-white"
-            >
               <div
-                class="list__columns list__columns-shadow list__columns-white"
+                v-for="item in orders.slice(0, 15)"
+                :key="item._id"
+                class="list__row list__row-white"
               >
-                <div class="list__column">{{ item.number }}</div>
-                <div class="list__column text--blue">
-                  {{ transformName(item.client) }}
-                </div>
-                <div class="list__column">{{ item.region.title }}</div>
-                <div class="list__column text-green">
-                  {{ transformDate(item.createdAt) }}
-                </div>
-                <div class="list__column text--sapphire">
-                  {{ item && item.buyed ? transformDate(item.buyed) : "" }}
-                </div>
-                <div class="list__column text--sapphire">
-                  {{ item.deliver ? transformDate(item.deliver) : "" }}
-                </div>
-                <div class="list__column">
-                  {{ item.sum.toFixed(2) + " " + item.region.valute.icon }}
-                </div>
-                <div class="list__column">
-                  {{
-                    (item.deliverySum ? item.deliverySum.toFixed(2) : "0.00") +
-                    " " +
-                    item.region.valute.icon
-                  }}
-                </div>
-                <div class="list__column text--blue">
-                  {{ transformFIO(item.manager[0]) }}
-                </div>
                 <div
-                  v-html="transformStatus(item.status)"
-                  class="list__column"
-                ></div>
-                <div class="list__column"></div>
-                <div class="list__column">
-                  <div class="table__actions">
-                    <div class="table__icon">
-                      <img
-                        :class="{
-                          none: !item.oneC.requested,
-                          req: item.oneC.requested && !item.oneC.accepted,
-                        }"
-                        :title="getOneCStatus(item.oneC)"
-                        src="@/assets/icons/1c_icon.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div class="table__icon">
-                      <img src="@/assets/icons/info_icon.svg" alt="" />
-                    </div>
-                    <div class="table__icon">
-                      <img src="@/assets/icons/write_icon.svg" alt="" />
+                  class="list__columns list__columns-shadow list__columns-white"
+                >
+                  <div class="list__column">{{ item.number }}</div>
+                  <div class="list__column text--blue">
+                    {{ transformName(item.client) }}
+                  </div>
+                  <div class="list__column">{{ item.region.title }}</div>
+                  <div class="list__column text-green">
+                    {{ transformDate(item.createdAt) }}
+                  </div>
+                  <div class="list__column text--sapphire">
+                    {{ item && item.buyed ? transformDate(item.buyed) : "" }}
+                  </div>
+                  <div class="list__column text--sapphire">
+                    {{ item.deliver ? transformDate(item.deliver) : "" }}
+                  </div>
+                  <div class="list__column">
+                    {{ item.sum.toFixed(2) + " " + item.region.valute.icon }}
+                  </div>
+                  <div class="list__column">
+                    {{
+                      (item.deliverySum
+                        ? item.deliverySum.toFixed(2)
+                        : "0.00") +
+                      " " +
+                      item.region.valute.icon
+                    }}
+                  </div>
+                  <div class="list__column text--blue">
+                    {{ transformFIO(item.manager[0]) }}
+                  </div>
+                  <div
+                    v-html="transformStatus(item.status)"
+                    class="list__column"
+                  ></div>
+                  <div class="list__column"></div>
+                  <div class="list__column">
+                    <div class="table__actions">
+                      <div class="table__icon">
+                        <img
+                          :class="{
+                            none: !item.oneC.requested,
+                            req: item.oneC.requested && !item.oneC.accepted,
+                          }"
+                          :title="getOneCStatus(item.oneC)"
+                          src="@/assets/icons/1c_icon.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div class="table__icon">
+                        <img src="@/assets/icons/info_icon.svg" alt="" />
+                      </div>
+                      <div class="table__icon">
+                        <img src="@/assets/icons/write_icon.svg" alt="" />
+                      </div>
                     </div>
                   </div>
                 </div>
