@@ -1,25 +1,11 @@
 <template>
-  <div class="wrapper">
-    <v-sidebar />
-    <main class="main">
-      <router-view />
-    </main>
-    <v-footer />
-  </div>
+  <router-view />
 </template>
 
 <script>
-import VSidebar from "@/components/VSidebar";
-import VFooter from "@/components/VFooter";
-import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 
 export default {
-  mixins: [roleMixins],
-  components: {
-    VFooter,
-    VSidebar,
-  },
   sockets: {
     connect() {
       if (
@@ -87,6 +73,7 @@ export default {
     },
   },
   mounted() {
+    return;
     const body = document.querySelector("body");
     const menu = document.querySelector(".menu");
 

@@ -5,12 +5,9 @@ Vue.use(Router);
 
 const routes = [
   {
-    path: "/",
-    component: () => import("../views/Dashboard.vue"),
-  },
-  {
     path: "/dashboard",
     name: "dashboard",
+    redirect: {},
     component: () => import("../views/Container.vue"),
     children: [
       {
@@ -94,6 +91,11 @@ const routes = [
         component: () => import("../views/Tasks.vue"),
       },
     ],
+  },
+  {
+    path: "/",
+    name: "login",
+    component: () => import("../views/Login.vue"),
   },
 ];
 
