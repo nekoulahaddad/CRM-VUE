@@ -4,7 +4,7 @@
       <div class="page__icon">
         <img :src="require('@/assets/icons/orders_title.svg')" alt="" />
       </div>
-      <h1 class="page__title">Заказы</h1>
+      <h1 class="page__title">{{ $t("pages.orders.pageTitle") }}</h1>
     </div>
     <div class="page__body d-flex">
       <!-- Фильтр -->
@@ -18,13 +18,17 @@
           @refreshDates="refreshDates"
         />
       </div>
+
+      <!-- Контент -->
       <div class="page__right">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="orders.length">
           <div class="scroll-horizontal">
             <div class="list list-shadow">
               <div class="list__header">
-                <div class="list__title">Заказы</div>
+                <div class="list__title">
+                  {{ $t("pages.orders.pageTitle") }}
+                </div>
                 <div class="list__columns">
                   <div
                     v-for="field in $t('pages.orders.fields')"

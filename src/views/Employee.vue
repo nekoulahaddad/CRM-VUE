@@ -4,7 +4,7 @@
       <div class="page__icon">
         <img :src="require('@/assets/icons/employees_title.svg')" alt="" />
       </div>
-      <h1 class="page__title">Сотрудники</h1>
+      <h1 class="page__title">{{ $t("pages.employee.pageTitle") }}</h1>
     </div>
     <div class="page__body d-flex">
       <!-- Фильтр -->
@@ -16,77 +16,85 @@
       <div class="page__right">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
-          <table class="table table--separate">
-            <thead class="thead">
-              <tr class="thead__top">
-                <td colspan="7">
-                  <div class="table__title">Сотрудники</div>
-                </td>
-              </tr>
-              <tr class="thead__bottom">
-                <td>ФИО:</td>
-                <td>Регион</td>
-                <td>Должность:</td>
-                <td>Рейтинг:</td>
-                <td>Задачи:</td>
-                <td>Отдел:</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="shadow" v-for="employee in dataset" :key="employee.id">
-                <td class="text--blue">
-                  {{
-                    `${employee.surname} ${employee.name.charAt(0)}.${
-                      employee.lastname ? employee.lastname.charAt(0) + "." : ""
-                    }`
-                  }}
-                </td>
-                <td>
-                  {{
-                    employee.region.title.length > 15
-                      ? employee.region.title.slice(0, -14) + "..."
-                      : employee.region.title
-                  }}
-                </td>
-                <td>
-                  <div class="bg bg--blue-light">{{ employee.position }}</div>
-                </td>
-                <td v-html="transformRating(employee.rating)"></td>
-                <td>{{ employee.tasks.length }}</td>
-                <td>
-                  <div class="bg bg--green-light">
+          <div class="scroll-horizontal">
+            <div class="list list-shadow">
+              <div class="list__header">
+                <div class="list__title">
+                  {{ $t("pages.employee.pageTitle") }}
+                </div>
+                <div class="list__columns">
+                  <div
+                    v-for="field in $t('pages.employee.fields')"
+                    class="list__column"
+                  >
+                    {{ field }}
+                  </div>
+                </div>
+              </div>
+              <div
+                v-for="employee in dataset"
+                :key="employee.id"
+                class="list__row list__row-white"
+              >
+                <div
+                  class="list__columns list__columns-shadow list__columns-white"
+                >
+                  <div class="list__column text--blue">
+                    {{
+                      `${employee.surname} ${employee.name.charAt(0)}.${
+                        employee.lastname
+                          ? employee.lastname.charAt(0) + "."
+                          : ""
+                      }`
+                    }}
+                  </div>
+                  <div class="list__column">
+                    {{
+                      employee.region.title.length > 15
+                        ? employee.region.title.slice(0, -14) + "..."
+                        : employee.region.title
+                    }}
+                  </div>
+                  <div class="list__column">
+                    {{ employee.position }}
+                  </div>
+                  <div
+                    v-html="transformRating(employee.rating)"
+                    class="list__column"
+                  ></div>
+                  <div class="list__column">{{ employee.tasks.length }}</div>
+                  <div class="list__column">
                     {{ employee.department.title }}
                   </div>
-                </td>
-                <td>
-                  <div class="table__actions">
-                    <div class="table__icon">
-                      <img src="@/assets/icons/info_icon.svg" alt="" />
-                    </div>
-                    <div class="table__icon">
-                      <img
-                        v-if="role === 'director' || options.userEditor"
-                        src="@/assets/icons/write_icon.svg"
-                        @click="toggleEdit(employee)"
-                        alt=""
-                      />
-                      <div class="table__hidden-icon" v-else></div>
-                    </div>
-                    <div class="table__icon">
-                      <img
-                        v-if="role === 'director'"
-                        src="@/assets/icons/trash_icon.svg"
-                        @click="toggleDelete(employee._id)"
-                        alt=""
-                      />
-                      <div class="table__hidden-icon" v-else></div>
+                  <div class="list__column">
+                    <div class="table__actions">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/info_icon.svg" alt="" />
+                      </div>
+                      <div class="table__icon">
+                        <img
+                          v-if="role === 'director' || options.userEditor"
+                          src="@/assets/icons/write_icon.svg"
+                          @click="toggleEdit(employee)"
+                          alt=""
+                        />
+                        <div class="table__hidden-icon" v-else></div>
+                      </div>
+                      <div class="table__icon">
+                        <img
+                          v-if="role === 'director'"
+                          src="@/assets/icons/trash_icon.svg"
+                          @click="toggleDelete(employee._id)"
+                          alt=""
+                        />
+                        <div class="table__hidden-icon" v-else></div>
+                      </div>
                     </div>
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </div>
+              </div>
+            </div>
+          </div>
           <v-pagination :count="count" />
         </template>
         <v-not-found-query v-else />
@@ -202,3 +210,9 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.list__columns {
+  grid-template-columns: 200px 140px 400px 100px 100px 200px 1fr;
+}
+</style>
