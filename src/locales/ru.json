@@ -64,6 +64,7 @@
       "taskNotAccepted": "Отказаться",
       "taskTested": "На проверку",
       "taskUnderRevision": "На доработку",
+      "taskSubtasks": "Подзадачи",
       "fields": [
         "№:",
         "Автор:",

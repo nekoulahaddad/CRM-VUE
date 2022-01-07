@@ -108,18 +108,21 @@
                             @click="toggleInfo(item)"
                           />
                         </template>
-
                         <div class="table__hidden-icon" v-else></div>
                       </div>
                       <div class="table__icon">
-                        <img
+                        <template
                           v-if="
                             id === item.initiator._id ||
                             id === item.responsible._id
                           "
-                          src="/icons/document_icon.svg"
-                          alt=""
-                        />
+                        >
+                          <img
+                            alt=""
+                            src="@/assets/icons/document_icon.svg"
+                            @click="getSubTasks(item._id, index)"
+                          />
+                        </template>
                         <div class="table__hidden-icon" v-else></div>
                       </div>
                       <div class="table__icon">
@@ -136,6 +139,8 @@
 
                 <!-- Блок с детальной информацией о задаче -->
                 <v-task-info v-if="infoItem._id === item._id" :task="item" />
+                <!-- Блок с подзадачаси -->
+                <v-sub-tasks />
               </div>
             </div>
           </div>
@@ -149,6 +154,7 @@
 
 <script>
 import VTaskInfo from "./components/VTaskInfo";
+import VSubTasks from "./components/VSubTasks";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -161,7 +167,14 @@ import getDataFromPage from "@/api/getDataFromPage";
 import axios from "@/api/axios";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VTaskInfo },
+  components: {
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+    VPagination,
+    VTaskInfo,
+    VSubTasks,
+  },
   mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
     user: {
@@ -372,16 +385,15 @@ export default {
 
       this.$toast.success("Получаю подзадачи!");
       axios({
-        url: process.env.VUE_APP_DEVELOP_URL + `/tasks/getsub`,
+        url: "/tasks/getsub",
         data: {
           taskId: id,
           page: 0,
         },
         method: "POST",
       }).then(async (res) => {
-        let result = await res;
         this.isLoadingSubTasks = false;
-        this.sub_tasks = result.data.tasks;
+        this.sub_tasks = res.data.tasks;
       });
     },
     changeTaskStatus(task, status) {
