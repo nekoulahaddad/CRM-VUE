@@ -123,7 +123,7 @@
                 </div>
 
                 <!-- Блок с детальной информацией о задаче -->
-                <v-task-info v-if="open" :task="item" />
+                <v-task-info v-if="infoItem._id === item._id" :task="item" />
               </div>
             </div>
           </div>
@@ -263,14 +263,11 @@ export default {
       this.deleteSubForm = !this.deleteSubForm;
     },
     toggleInfo(item) {
-      if (!this.infoForm) {
-        this.infoItem = item;
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
       } else {
-        setTimeout(() => {
-          this.infoItem = {};
-        }, 500);
+        this.infoItem = item;
       }
-      this.infoForm = !this.infoForm;
     },
     addToTasks(task) {
       console.log(task);
