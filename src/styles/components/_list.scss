@@ -111,3 +111,20 @@
     }
   }
 }
+
+.documents {
+  &__item {
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 236px;
+    height: 48px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    font-weight: bold;
+
+    & + * {
+      margin-top: 10px;
+    }
+  }
+}

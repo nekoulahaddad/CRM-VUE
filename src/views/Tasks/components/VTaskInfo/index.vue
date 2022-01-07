@@ -30,7 +30,26 @@
           <div class="group__item text--bold-700">
             {{ $t("pages.tasks.taskDocs") }}
           </div>
-          <div class="group__value">123</div>
+          <div class="group__value">
+            <div v-if="documents.length" class="list__documents documents">
+              <div
+                v-for="(photo, index) in documents"
+                class="documents__item"
+                @click.prevent="downloadItem(serverAddr + `${photo}`, photo)"
+              >
+                {{
+                  photo.name
+                    ? photo.name.length > 30
+                      ? photo.name.slice(0, -10) +
+                        " ... ." +
+                        photo.type.split("/")[1]
+                      : photo.name
+                    : `Документ ${index + 1}`
+                }}
+              </div>
+            </div>
+            <div v-else>Нет документов</div>
+          </div>
         </div>
         <div class="group__content">
           <div class="group__item text--bold-700">
@@ -177,6 +196,7 @@ export default {
     return {
       comment: this.task && this.task.comment ? this.task.comment : "",
       documents: this.task.documents || [],
+      serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
   },
   computed: {
