@@ -74,17 +74,111 @@
           </div>
           <div class="group__value">{{ task.initiator_comment }}</div>
         </div>
+        <div class="group__footer">
+          <v-button
+            v-if="
+              task.initiator &&
+              userId === task.initiator._id &&
+              task.executors >= 1
+            "
+            red
+          >
+            Выполнена
+          </v-button>
+          <v-button
+            v-if="
+              task.executor &&
+              (userId === task.executor._id ||
+                userId === task.executor._id[0]) &&
+              task.status.value === 'assigned'
+            "
+            red
+          >
+            Принять
+          </v-button>
+          <v-button
+            v-if="
+              task.executor &&
+              (userId === task.executor._id ||
+                userId === task.executor._id[0]) &&
+              task.status.value === 'assigned'
+            "
+          >
+            Отказаться
+          </v-button>
+
+          <v-button
+            v-if="
+              task.executor &&
+              (userId === task.executor._id ||
+                userId === task.executor._id[0]) &&
+              task.status.value === 'accepted'
+            "
+          >
+            На проверку
+          </v-button>
+          <v-button
+            v-if="
+              task.initiator &&
+              userId === task.initiator._id &&
+              task.status.value === 'tested'
+            "
+          >
+            Выполнена
+          </v-button>
+          <v-button
+            v-if="
+              task.initiator &&
+              userId === task.initiator._id &&
+              task.status.value === 'tested'
+            "
+          >
+            На доработку
+          </v-button>
+          <v-button
+            v-if="
+              task.executor &&
+              (userId === task.executor._id ||
+                userId === task.executor._id[0]) &&
+              task.status.value === 'under revision'
+            "
+          >
+            На проверку
+          </v-button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import VButton from "@/components/VButton";
+
 export default {
   props: {
     task: {
       type: Object,
     },
   },
+  computed: {
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
+    userId: {
+      get: function () {
+        let role = this.getUserRole();
+        return role._id;
+      },
+    },
+  },
+  components: { VButton },
 };
 </script>
+
+<style lang="scss">
+button {
+}
+</style>
