@@ -34,10 +34,10 @@
               <div
                 v-for="(item, index) in dataset"
                 :key="item.id"
-                class="list__row list__row-white"
+                class="list__row"
               >
                 <div
-                  class="list__columns list__columns-shadow list__columns-white"
+                  class="list__columns list__columns--shadow list__columns--white"
                 >
                   <div class="list__column list__column--number">
                     {{ index + 1 + ($route.params.page - 1) * 15 }}

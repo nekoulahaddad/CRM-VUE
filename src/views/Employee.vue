@@ -34,7 +34,7 @@
               <div
                 v-for="employee in dataset"
                 :key="employee.id"
-                class="list__row list__row-white"
+                class="list__row list__row--white"
               >
                 <div
                   class="list__columns list__columns-shadow list__columns-white"

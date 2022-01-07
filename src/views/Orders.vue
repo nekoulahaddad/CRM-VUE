@@ -42,7 +42,7 @@
               <div
                 v-for="item in orders.slice(0, 15)"
                 :key="item._id"
-                class="list__row list__row-white"
+                class="list__row list__row--white"
               >
                 <div
                   class="list__columns list__columns-shadow list__columns-white"

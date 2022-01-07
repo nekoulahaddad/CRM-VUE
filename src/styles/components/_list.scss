@@ -44,6 +44,13 @@
   &__row {
     display: grid;
     grid-template-rows: 1fr;
+
+    &--opened {
+      .list__columns {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
   }
 
   &__columns {
@@ -55,10 +62,10 @@
     padding-right: 15px;
     align-items: center;
 
-    &-white {
+    &--white {
       background-color: $color-white;
     }
-    &-shadow {
+    &--shadow {
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
   }
