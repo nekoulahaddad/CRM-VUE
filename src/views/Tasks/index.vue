@@ -122,7 +122,14 @@
                         >
                           <img
                             alt=""
+                            v-if="index !== activeIndex"
                             src="@/assets/icons/document_icon.svg"
+                            @click="getSubTasks(item._id, index)"
+                          />
+                          <img
+                            alt=""
+                            v-else
+                            src="@/assets/icons/arrow_top_icon.svg"
                             @click="getSubTasks(item._id, index)"
                           />
                         </template>
@@ -292,6 +299,8 @@ export default {
       this.deleteSubForm = !this.deleteSubForm;
     },
     toggleInfo(item) {
+      this.activeIndex = -1;
+
       if (this.infoItem._id === item._id) {
         this.infoItem = {};
       } else {
@@ -376,6 +385,8 @@ export default {
       this.filtersOptions = {};
     },
     getSubTasks(id, index) {
+      this.infoItem = {};
+
       if ((index || index === 0) && this.activeIndex === index) {
         this.activeIndex = -1;
         return;
