@@ -93,3 +93,12 @@
     text-overflow: ellipsis;
   }
 }
+
+.list-info {
+  &__header {
+  }
+
+  &__title {
+    font-weight: 700;
+  }
+}

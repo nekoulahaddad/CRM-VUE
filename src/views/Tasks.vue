@@ -34,7 +34,7 @@
               <div
                 v-for="(item, index) in dataset"
                 :key="item.id"
-                class="list__row list__row--shadow list__row--white"
+                class="list__row list__row--opened list__row--shadow list__row--white"
               >
                 <div
                   class="list__columns list__columns--shadow list__columns--white"
@@ -122,7 +122,13 @@
                 </div>
 
                 <!-- Блок с детальной информацией о задаче -->
-                <div class="list__info">123</div>
+                <div class="list__info list-info">
+                  <div class="list-info__header">
+                    <div class="list-info__title text--blue">
+                      {{ $t("pages.tasks.info") }}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
