@@ -93,8 +93,9 @@
                             (item && id === item.executor._id) ||
                             item.executor._id[0]
                           "
-                          src="/icons/info_icon.svg"
                           alt=""
+                          src="/icons/info_icon.svg"
+                          @click="toggleInfo(item)"
                         />
                         <div class="table__hidden-icon" v-else></div>
                       </div>
@@ -122,7 +123,7 @@
                 </div>
 
                 <!-- Блок с детальной информацией о задаче -->
-                <v-task-info :task="item" />
+                <v-task-info v-if="open" :task="item" />
               </div>
             </div>
           </div>
