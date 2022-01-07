@@ -65,6 +65,9 @@
     &--white {
       background-color: $color-white;
     }
+    &--gray {
+      background-color: $color-gray-secondary;
+    }
     &--shadow {
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
