@@ -86,17 +86,28 @@
                   <div class="list__column">
                     <div class="table__actions">
                       <div class="table__icon">
-                        <img
+                        <template
                           v-if="
                             id === item.initiator._id ||
                             id === item.responsible._id ||
                             (item && id === item.executor._id) ||
                             item.executor._id[0]
                           "
-                          alt=""
-                          src="/icons/info_icon.svg"
-                          @click="toggleInfo(item)"
-                        />
+                        >
+                          <img
+                            alt=""
+                            src="@/assets/icons/info_icon.svg"
+                            v-if="infoItem._id !== item._id"
+                            @click="toggleInfo(item)"
+                          />
+                          <img
+                            alt=""
+                            v-else
+                            src="@/assets/icons/arrow_top_icon.svg"
+                            @click="toggleInfo(item)"
+                          />
+                        </template>
+
                         <div class="table__hidden-icon" v-else></div>
                       </div>
                       <div class="table__icon">
