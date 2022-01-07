@@ -35,7 +35,10 @@
                 v-for="(item, index) in dataset"
                 :key="item.id"
                 class="list__row list__row--shadow list__row--white"
-                :class="{ 'list__row--opened': infoItem._id === item._id }"
+                :class="{
+                  'list__row--opened':
+                    infoItem._id === item._id || index === activeIndex,
+                }"
               >
                 <div
                   class="list__columns list__columns--shadow list__columns--white"
@@ -140,7 +143,7 @@
                 <!-- Блок с детальной информацией о задаче -->
                 <v-task-info v-if="infoItem._id === item._id" :task="item" />
                 <!-- Блок с подзадачаси -->
-                <v-sub-tasks />
+                <v-sub-tasks v-if="index === activeIndex" />
               </div>
             </div>
           </div>
