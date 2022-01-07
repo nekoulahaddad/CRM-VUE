@@ -171,6 +171,7 @@ export default {
   data() {
     return {
       comment: this.task && this.task.comment ? this.task.comment : "",
+      documents: this.task.documents || [],
     };
   },
   computed: {
@@ -222,7 +223,7 @@ export default {
         }
       }
       axios({
-        url: process.env.VUE_APP_DEVELOP_URL + `/tasks/status/`,
+        url: "/tasks/status/",
         data: taskData,
         method: "POST",
       }).then(async (res) => {
@@ -234,7 +235,7 @@ export default {
           status === "declained"
         ) {
           await axios({
-            url: process.env.VUE_APP_DEVELOP_URL + `/reports/post/`,
+            url: "/reports/post/",
             data: {
               taskId: task._id,
             },
