@@ -39,7 +39,7 @@
                 <div
                   class="list__columns list__columns-shadow list__columns-white"
                 >
-                  <div class="list__column">
+                  <div class="list__column list__column--number">
                     {{ index + 1 + ($route.params.page - 1) * 15 }}
                   </div>
                   <div class="list__column text--blue">
