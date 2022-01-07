@@ -31,127 +31,11 @@
                   </div>
                 </div>
               </div>
-              <div
-                v-for="(item, index) in dataset"
-                :key="item.id"
-                class="list__row list__row--shadow list__row--white"
-                :class="{
-                  'list__row--opened':
-                    infoItem._id === item._id || index === activeIndex,
-                }"
-              >
-                <div
-                  class="list__columns list__columns--shadow list__columns--white"
-                >
-                  <div class="list__column list__column--number">
-                    {{ index + 1 + ($route.params.page - 1) * 15 }}
-                  </div>
-                  <div class="list__column text--blue">
-                    {{ transformFIO(item.initiator) }}
-                  </div>
-                  <div class="list__column">
-                    {{
-                      item &&
-                      item.responsible &&
-                      typeof item.responsible._id !== "undefined"
-                        ? `Ответственный - ${transformFIO(item.responsible)}`
-                        : item &&
-                          item.executor &&
-                          !Array.isArray(item.executor._id)
-                        ? transformFIO(item.executor)
-                        : item && item.executor && item.executor._id[0]
-                        ? transformFIO({
-                            name: item.executor.name[0],
-                            surname: item.executor.surname[0],
-                            lastname: item.executor.lastname[0],
-                          })
-                        : transformFIO(userData)
-                    }}
-                  </div>
-                  <div class="list__column">
-                    <div class="bg bg--blue-light">
-                      {{ item.title }}
-                    </div>
-                  </div>
-                  <div class="list__column text--green">
-                    {{ transformDate(item.creation_date) }}
-                  </div>
-                  <div class="list__column text--sapphire">
-                    {{ transformDate(item.deadline_date) }}
-                  </div>
-                  <div
-                    class="list__column"
-                    v-html="
-                      item && item.status
-                        ? transformStatus(item.status)
-                        : item.status
-                    "
-                  ></div>
-                  <div class="list__column">
-                    <div class="table__actions">
-                      <div class="table__icon">
-                        <template
-                          v-if="
-                            id === item.initiator._id ||
-                            id === item.responsible._id ||
-                            (item && id === item.executor._id) ||
-                            item.executor._id[0]
-                          "
-                        >
-                          <img
-                            alt=""
-                            src="@/assets/icons/info_icon.svg"
-                            v-if="infoItem._id !== item._id"
-                            @click="toggleInfo(item)"
-                          />
-                          <img
-                            alt=""
-                            v-else
-                            src="@/assets/icons/arrow_top_icon.svg"
-                            @click="toggleInfo(item)"
-                          />
-                        </template>
-                        <div class="table__hidden-icon" v-else></div>
-                      </div>
-                      <div class="table__icon">
-                        <template
-                          v-if="
-                            id === item.initiator._id ||
-                            id === item.responsible._id
-                          "
-                        >
-                          <img
-                            alt=""
-                            v-if="index !== activeIndex"
-                            src="@/assets/icons/document_icon.svg"
-                            @click="getSubTasks(item._id, index)"
-                          />
-                          <img
-                            alt=""
-                            v-else
-                            src="@/assets/icons/arrow_top_icon.svg"
-                            @click="getSubTasks(item._id, index)"
-                          />
-                        </template>
-                        <div class="table__hidden-icon" v-else></div>
-                      </div>
-                      <div class="table__icon">
-                        <img
-                          v-if="id === item.initiator._id"
-                          src="/icons/trash_icon.svg"
-                          alt=""
-                        />
-                        <div class="table__hidden-icon" v-else></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Блок с детальной информацией о задаче -->
-                <v-task-info v-if="infoItem._id === item._id" :task="item" />
-                <!-- Блок с подзадачаси -->
-                <v-sub-tasks v-if="index === activeIndex" />
-              </div>
+              <v-tasks
+                :activeIndex="activeIndex"
+                :tasks="dataset"
+                :infoItem="infoItem"
+              />
             </div>
           </div>
           <v-pagination :count="count" />
@@ -163,8 +47,7 @@
 </template>
 
 <script>
-import VTaskInfo from "./components/VTaskInfo";
-import VSubTasks from "./components/VSubTasks";
+import VTasks from "./components/VTasks";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -182,8 +65,7 @@ export default {
     VSpinner,
     VNotFoundQuery,
     VPagination,
-    VTaskInfo,
-    VSubTasks,
+    VTasks,
   },
   mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
@@ -452,16 +334,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-.list__columns {
-  grid-template-columns: 50px 140px 140px 450px 120px 120px 120px 1fr;
-}
-.list__header {
-  .list__column {
-    &:first-child {
-      text-align: left;
-    }
-  }
-}
-</style>
