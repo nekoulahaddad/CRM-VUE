@@ -72,7 +72,7 @@
           <div class="group__item text--bold-700">
             {{ $t("pages.tasks.taskComment") }}
           </div>
-          <div class="group__value">{{ task.initiator_comment }}</div>
+          <div class="group__value">{{ comment }}</div>
         </div>
         <div class="group__footer">
           <v-button
@@ -82,6 +82,7 @@
               task.executors >= 1
             "
             red
+            @click.prevent="changeTaskStatus(task, 'completed')"
           >
             Выполнена
           </v-button>
@@ -92,6 +93,7 @@
                 userId === task.executor._id[0]) &&
               task.status.value === 'assigned'
             "
+            @click.prevent="changeTaskStatus(task, 'accepted')"
             red
           >
             Принять
@@ -103,6 +105,7 @@
                 userId === task.executor._id[0]) &&
               task.status.value === 'assigned'
             "
+            @click.prevent="changeTaskStatus(task, 'not accepted')"
           >
             Отказаться
           </v-button>
@@ -114,6 +117,7 @@
                 userId === task.executor._id[0]) &&
               task.status.value === 'accepted'
             "
+            @click.prevent="changeTaskStatus(task, 'tested')"
           >
             На проверку
           </v-button>
@@ -123,6 +127,7 @@
               userId === task.initiator._id &&
               task.status.value === 'tested'
             "
+            @click.prevent="changeTaskStatus(task, 'completed')"
           >
             Выполнена
           </v-button>
@@ -132,6 +137,7 @@
               userId === task.initiator._id &&
               task.status.value === 'tested'
             "
+            @click.prevent="changeTaskStatus(task, 'under revision')"
           >
             На доработку
           </v-button>
@@ -142,6 +148,7 @@
                 userId === task.executor._id[0]) &&
               task.status.value === 'under revision'
             "
+            @click.prevent="changeTaskStatus(task, 'tested')"
           >
             На проверку
           </v-button>
@@ -153,12 +160,18 @@
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
 
 export default {
   props: {
     task: {
       type: Object,
     },
+  },
+  data() {
+    return {
+      comment: this.task && this.task.comment ? this.task.comment : "",
+    };
   },
   computed: {
     role: {
@@ -175,6 +188,67 @@ export default {
     },
   },
   components: { VButton },
+  methods: {
+    fileUpload(e) {
+      const files = e.target.files;
+      this[e.target.name] = files;
+    },
+    downloadItem(url, filename) {
+      axios
+        .get(url, { responseType: "blob" })
+        .then((response) => {
+          const link = document.createElement("a");
+          const blob = new Blob([response.data]);
+          let urll = window.URL.createObjectURL(blob);
+          link.href = urll;
+          link.download = filename;
+          link.click();
+          setTimeout(() => {
+            window.URL.revokeObjectURL(urll);
+            document.body.removeChild(link);
+          }, 0);
+          URL.revokeObjectURL(link.href);
+        })
+        .catch(console.error);
+    },
+    changeTaskStatus(task, status) {
+      let taskData = new FormData();
+      taskData.append("taskId", task._id);
+      taskData.append("statusValue", status);
+      taskData.append("comment", this.comment);
+      if (this.documents[0] !== "Выбрать файлы") {
+        for (let i = 0; i < this.documents.length; i++) {
+          taskData.append("documents", this.documents[i]);
+        }
+      }
+      axios({
+        url: process.env.VUE_APP_DEVELOP_URL + `/tasks/status/`,
+        data: taskData,
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+
+        if (
+          status === "completed" ||
+          status === "failed" ||
+          status === "declained"
+        ) {
+          await axios({
+            url: process.env.VUE_APP_DEVELOP_URL + `/reports/post/`,
+            data: {
+              taskId: task._id,
+            },
+            method: "POST",
+          }).then(() => {
+            this.$toast.success("Задача добавлена в отчет!");
+          });
+        }
+        this.$toast.success("Статус задачи изменен!");
+        this.$emit("changeTaskStatus", result.data.task, result.data.status);
+        this.$emit("toggleInfo");
+      });
+    },
+  },
 };
 </script>
 
