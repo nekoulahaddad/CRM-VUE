@@ -59,6 +59,11 @@
       "taskCreated": "Создана:",
       "taskDeadline": "Дедлайн:",
       "taskComment": "Комментарий исполнителя:",
+      "taskExecute": "Выполнена",
+      "taskAccepted": "Принять",
+      "taskNotAccepted": "Отказаться",
+      "taskTested": "На проверку",
+      "taskUnderRevision": "На доработку",
       "fields": [
         "№:",
         "Автор:",

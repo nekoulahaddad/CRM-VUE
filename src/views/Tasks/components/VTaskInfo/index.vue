@@ -84,7 +84,7 @@
             @click.prevent="changeTaskStatus(task, 'completed')"
             red
           >
-            Выполнена
+            {{ $t("pages.tasks.taskExecute") }}
           </v-button>
           <v-button
             v-if="
@@ -96,7 +96,7 @@
             @click.prevent="changeTaskStatus(task, 'accepted')"
             red
           >
-            Принять
+            {{ $t("pages.tasks.taskAccepted") }}
           </v-button>
           <v-button
             v-if="
@@ -108,7 +108,7 @@
             white
             @click.prevent="changeTaskStatus(task, 'not accepted')"
           >
-            Отказаться
+            {{ $t("pages.tasks.taskNotAccepted") }}
           </v-button>
 
           <v-button
@@ -121,7 +121,7 @@
             @click.prevent="changeTaskStatus(task, 'tested')"
             white
           >
-            На проверку
+            {{ $t("pages.tasks.taskTested") }}
           </v-button>
           <v-button
             v-if="
@@ -132,7 +132,7 @@
             @click.prevent="changeTaskStatus(task, 'completed')"
             red
           >
-            Выполнена
+            {{ $t("pages.tasks.taskExecute") }}
           </v-button>
           <v-button
             v-if="
@@ -143,7 +143,7 @@
             @click.prevent="changeTaskStatus(task, 'under revision')"
             white
           >
-            На доработку
+            {{ $t("pages.tasks.taskUnderRevision") }}
           </v-button>
           <v-button
             v-if="
@@ -155,7 +155,7 @@
             @click.prevent="changeTaskStatus(task, 'tested')"
             white
           >
-            На проверку
+            {{ $t("pages.tasks.taskTested") }}
           </v-button>
         </div>
       </div>
