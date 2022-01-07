@@ -44,6 +44,8 @@
   &__row {
     display: grid;
     grid-template-rows: 1fr;
+    border-radius: $border-radius;
+    background-color: $color-white;
 
     &--opened {
       .list__columns {
@@ -51,25 +53,23 @@
         border-bottom-right-radius: 0;
       }
     }
+    &--shadow {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
   }
 
   &__columns {
-    border-radius: $border-radius;
     display: grid;
     align-content: center;
     height: 48px;
     padding-left: 15px;
     padding-right: 15px;
     align-items: center;
+    border-radius: $border-radius;
+    background-color: $color-white;
 
-    &--white {
-      background-color: $color-white;
-    }
-    &--gray {
+    .list__row--opened & {
       background-color: $color-gray-secondary;
-    }
-    &--shadow {
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
   }
 
@@ -78,6 +78,13 @@
     &:not(&--number) {
       text-align: center;
     }
+  }
+
+  &__info {
+    background-color: $color-white;
+    padding: 10px;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 
   .bg {

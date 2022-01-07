@@ -34,7 +34,7 @@
               <div
                 v-for="(item, index) in dataset"
                 :key="item.id"
-                class="list__row"
+                class="list__row list__row--shadow list__row--white"
               >
                 <div
                   class="list__columns list__columns--shadow list__columns--white"
@@ -120,6 +120,9 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Блок с детальной информацией о задаче -->
+                <div class="list__info">123</div>
               </div>
             </div>
           </div>
