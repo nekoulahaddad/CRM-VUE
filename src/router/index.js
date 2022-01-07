@@ -90,7 +90,7 @@ const routes = [
       {
         path: "tasks/:page",
         name: "tasks",
-        component: () => import("../views/Tasks.vue"),
+        component: () => import("../views/Tasks"),
       },
     ],
   },
