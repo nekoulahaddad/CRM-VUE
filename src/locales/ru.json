@@ -48,7 +48,17 @@
     },
     "tasks": {
       "pageTitle": "Задачи",
-      "info": "Информация о задаче:",
+      "taskInfo": "Информация о задаче:",
+      "taskName": "Наименование задачи:",
+      "taskAuthor": "ФИО автора:",
+      "taskDescription": "Описание задачи:",
+      "taskDocs": "Документы:",
+      "taskRegion": "Регион:",
+      "taskStatus": "Статус:",
+      "taskMark": "Оценка:",
+      "taskCreated": "Создана:",
+      "taskDeadline": "Дедлайн:",
+      "taskComment": "Комментарий исполнителя:",
       "fields": [
         "№:",
         "Автор:",
