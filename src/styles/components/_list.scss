@@ -11,6 +11,7 @@
 
     .list__columns {
       height: 33px;
+      text-align: center;
     }
   }
 
@@ -20,7 +21,6 @@
     margin-left: 10px;
     margin-right: 10px;
     position: relative;
-    line-height: 19.5px;
     height: 48px;
     line-height: 48px;
 
@@ -48,7 +48,7 @@
     height: 48px;
     padding-left: 15px;
     padding-right: 15px;
-    grid-template-columns: 50px 100px 100px 100px 100px;
+    align-items: center;
 
     &-white {
       background-color: $color-white;
@@ -60,5 +60,12 @@
 
   &__column {
     font-weight: bold;
+  }
+
+  .bg {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 15px;
   }
 }

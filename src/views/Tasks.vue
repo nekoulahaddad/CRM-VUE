@@ -4,7 +4,7 @@
       <div class="page__icon">
         <img :src="require('@/assets/icons/tasks_title.svg')" alt="" />
       </div>
-      <h1 class="page__title">Задачи</h1>
+      <h1 class="page__title">{{ $t("pages.tasks.pageTitle") }}</h1>
     </div>
     <div class="page__body d-flex">
       <!-- Фильтр -->
@@ -16,104 +16,113 @@
       <div class="page__right">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
-          <table class="table table--separate">
-            <thead class="thead">
-              <tr class="thead__top">
-                <td colspan="8">
-                  <div class="table__title">Задачи</div>
-                </td>
-              </tr>
-              <tr class="thead__bottom">
-                <td>№:</td>
-                <td>Автор</td>
-                <td>Исполнитель:</td>
-                <td>Задача:</td>
-                <td>Дата создания:</td>
-                <td>Дедлайн:</td>
-                <td>Статус:</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in dataset" :key="item.id">
-                <td>{{ index + 1 + ($route.params.page - 1) * 15 }}</td>
-                <td class="text--blue">{{ transformFIO(item.initiator) }}</td>
-                <td>
-                  {{
-                    item &&
-                    item.responsible &&
-                    typeof item.responsible._id !== "undefined"
-                      ? `Ответственный - ${transformFIO(item.responsible)}`
-                      : item &&
-                        item.executor &&
-                        !Array.isArray(item.executor._id)
-                      ? transformFIO(item.executor)
-                      : item && item.executor && item.executor._id[0]
-                      ? transformFIO({
-                          name: item.executor.name[0],
-                          surname: item.executor.surname[0],
-                          lastname: item.executor.lastname[0],
-                        })
-                      : transformFIO(userData)
-                  }}
-                </td>
-                <td class="text--blue">
-                  <div class="bg bg--blue-light">
-                    {{ item.title }}
+          <div class="scroll-horizontal">
+            <div class="list list-shadow">
+              <div class="list__header">
+                <div class="list__title">
+                  {{ $t("pages.tasks.pageTitle") }}
+                </div>
+                <div class="list__columns">
+                  <div
+                    v-for="field in $t('pages.tasks.fields')"
+                    class="list__column"
+                  >
+                    {{ field }}
                   </div>
-                </td>
-                <td class="text--green">
-                  {{ transformDate(item.creation_date) }}
-                </td>
-                <td class="text--sapphire">
-                  {{ transformDate(item.deadline_date) }}
-                </td>
-                <td
-                  v-html="
-                    item && item.status
-                      ? transformStatus(item.status)
-                      : item.status
-                  "
-                ></td>
-                <td>
-                  <div class="table__actions">
-                    <div class="table__icon">
-                      <img
-                        v-if="
-                          id === item.initiator._id ||
-                          id === item.responsible._id ||
-                          (item && id === item.executor._id) ||
-                          item.executor._id[0]
-                        "
-                        src="/icons/info_icon.svg"
-                        alt=""
-                      />
-                      <div class="table__hidden-icon" v-else></div>
-                    </div>
-                    <div class="table__icon">
-                      <img
-                        v-if="
-                          id === item.initiator._id ||
-                          id === item.responsible._id
-                        "
-                        src="/icons/document_icon.svg"
-                        alt=""
-                      />
-                      <div class="table__hidden-icon" v-else></div>
-                    </div>
-                    <div class="table__icon">
-                      <img
-                        v-if="id === item.initiator._id"
-                        src="/icons/trash_icon.svg"
-                        alt=""
-                      />
-                      <div class="table__hidden-icon" v-else></div>
+                </div>
+              </div>
+              <div
+                v-for="(item, index) in dataset"
+                :key="item.id"
+                class="list__row list__row-white"
+              >
+                <div
+                  class="list__columns list__columns-shadow list__columns-white"
+                >
+                  <div class="list__column">
+                    {{ index + 1 + ($route.params.page - 1) * 15 }}
+                  </div>
+                  <div class="list__column text--blue">
+                    {{ transformFIO(item.initiator) }}
+                  </div>
+                  <div class="list__column">
+                    {{
+                      item &&
+                      item.responsible &&
+                      typeof item.responsible._id !== "undefined"
+                        ? `Ответственный - ${transformFIO(item.responsible)}`
+                        : item &&
+                          item.executor &&
+                          !Array.isArray(item.executor._id)
+                        ? transformFIO(item.executor)
+                        : item && item.executor && item.executor._id[0]
+                        ? transformFIO({
+                            name: item.executor.name[0],
+                            surname: item.executor.surname[0],
+                            lastname: item.executor.lastname[0],
+                          })
+                        : transformFIO(userData)
+                    }}
+                  </div>
+                  <div class="list__column">
+                    <div class="bg bg--blue-light">
+                      {{ item.title }}
                     </div>
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <div class="list__column text--green">
+                    {{ transformDate(item.creation_date) }}
+                  </div>
+                  <div class="list__column text--sapphire">
+                    {{ transformDate(item.deadline_date) }}
+                  </div>
+                  <div
+                    class="list__column"
+                    v-html="
+                      item && item.status
+                        ? transformStatus(item.status)
+                        : item.status
+                    "
+                  ></div>
+                  <div class="list__column">
+                    <div class="table__actions">
+                      <div class="table__icon">
+                        <img
+                          v-if="
+                            id === item.initiator._id ||
+                            id === item.responsible._id ||
+                            (item && id === item.executor._id) ||
+                            item.executor._id[0]
+                          "
+                          src="/icons/info_icon.svg"
+                          alt=""
+                        />
+                        <div class="table__hidden-icon" v-else></div>
+                      </div>
+                      <div class="table__icon">
+                        <img
+                          v-if="
+                            id === item.initiator._id ||
+                            id === item.responsible._id
+                          "
+                          src="/icons/document_icon.svg"
+                          alt=""
+                        />
+                        <div class="table__hidden-icon" v-else></div>
+                      </div>
+                      <div class="table__icon">
+                        <img
+                          v-if="id === item.initiator._id"
+                          src="/icons/trash_icon.svg"
+                          alt=""
+                        />
+                        <div class="table__hidden-icon" v-else></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <v-pagination :count="count" />
         </template>
         <v-not-found-query v-else />
@@ -402,3 +411,9 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.list__columns {
+  grid-template-columns: 50px 140px 140px 450px 120px 120px 120px 1fr;
+}
+</style>
