@@ -81,8 +81,8 @@
               userId === task.initiator._id &&
               task.executors >= 1
             "
-            red
             @click.prevent="changeTaskStatus(task, 'completed')"
+            red
           >
             Выполнена
           </v-button>
@@ -105,6 +105,7 @@
                 userId === task.executor._id[0]) &&
               task.status.value === 'assigned'
             "
+            white
             @click.prevent="changeTaskStatus(task, 'not accepted')"
           >
             Отказаться
@@ -118,6 +119,7 @@
               task.status.value === 'accepted'
             "
             @click.prevent="changeTaskStatus(task, 'tested')"
+            white
           >
             На проверку
           </v-button>
@@ -128,6 +130,7 @@
               task.status.value === 'tested'
             "
             @click.prevent="changeTaskStatus(task, 'completed')"
+            red
           >
             Выполнена
           </v-button>
@@ -138,6 +141,7 @@
               task.status.value === 'tested'
             "
             @click.prevent="changeTaskStatus(task, 'under revision')"
+            white
           >
             На доработку
           </v-button>
@@ -149,6 +153,7 @@
               task.status.value === 'under revision'
             "
             @click.prevent="changeTaskStatus(task, 'tested')"
+            white
           >
             На проверку
           </v-button>

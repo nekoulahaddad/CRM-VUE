@@ -105,5 +105,9 @@
   button {
     width: 230px;
     height: 37px;
+
+    & + button {
+      margin-left: 20px;
+    }
   }
 }
