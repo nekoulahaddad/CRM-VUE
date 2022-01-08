@@ -86,6 +86,7 @@
 
 <script>
 import VButton from "@/components/VButton";
+import { maska } from "maska";
 
 export default {
   data() {
@@ -119,6 +120,7 @@ export default {
       this[e.target.name] = e.target.value;
     },
   },
+  directives: { maska },
 };
 </script>
 
@@ -247,6 +249,8 @@ body {
       color: rgba(0, 0, 0, 0.3);
       font-size: 12px;
       font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 38px;
 
       input[type="checkbox"] {
         appearance: none;
