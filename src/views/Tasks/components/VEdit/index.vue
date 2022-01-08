@@ -8,17 +8,19 @@
           <input
             class="form-control"
             type="text"
-            placeholder="Введите исполнителя задачи..."
+            v-model="task.title"
+            placeholder="Введите название задачи..."
           />
         </div>
       </div>
       <div class="filter__group group">
         <div class="group__title">Описание задачи:</div>
         <div class="group__content">
-          <input
-            class="form-control"
+          <textarea
             type="text"
-            placeholder="Введите исполнителя задачи..."
+            class="form-textarea"
+            v-model="task.description"
+            placeholder="Введите описание задачи..."
           />
         </div>
       </div>
@@ -27,7 +29,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    task: {
+      type: Object,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style lang="scss">

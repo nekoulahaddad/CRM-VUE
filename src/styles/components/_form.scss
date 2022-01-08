@@ -32,3 +32,9 @@ input[type="text"],
   -webkit-appearance: none;
   background: url("/icons/arrow_down.svg") no-repeat right 10px center;
 }
+
+.form-textarea {
+  @include form-element;
+  min-height: 120px;
+  resize: none;
+}

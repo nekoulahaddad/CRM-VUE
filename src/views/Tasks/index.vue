@@ -85,7 +85,10 @@
                     />
 
                     <!-- Блок редактирования задачи -->
-                    <v-edit v-if="editedItem._id === sub_task._id" />
+                    <v-edit
+                      :task="sub_task"
+                      v-if="editedItem._id === sub_task._id"
+                    />
                   </div>
                 </div>
               </div>
