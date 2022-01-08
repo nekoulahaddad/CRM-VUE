@@ -56,11 +56,18 @@
                 <!-- Блок с подзадачами -->
                 <div
                   v-if="index === activeIndex"
-                  v-for="(sub_task, sIndex) in sub_tasks"
-                  :key="sub_task._id"
-                  class="list__row list__row--white"
+                  class="list__subtasks sub-tasks"
                 >
-                  <v-sub-task :index="sIndex" :task="sub_task" />
+                  <div class="sub-tasks__title text--blue">
+                    {{ $t("pages.tasks.taskSubTasks") }}
+                  </div>
+                  <div
+                    v-for="(sub_task, sIndex) in sub_tasks"
+                    :key="sub_task._id"
+                    class="list__row list__row--white"
+                  >
+                    <v-sub-task :index="sIndex" :task="sub_task" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -375,6 +382,14 @@ export default {
   .list__column {
     &:first-child {
       text-align: left;
+    }
+  }
+}
+.sub-tasks {
+  .list__row {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    & + * {
+      margin-top: 10px;
     }
   }
 }

@@ -1,46 +1,39 @@
 <template>
-  <div class="list__subtasks sub-tasks">
-    <div class="sub-tasks__title text--blue">
-      {{ $t("pages.tasks.taskSubTasks") }}
+  <div class="list__columns list__columns--shadow list__columns--white">
+    <div class="list__column list__column--number">
+      {{ index + 1 }}
     </div>
-    <div class="list__columns list__columns--shadow list__columns--white">
-      <div class="list__column list__column--number">
-        {{ index + 1 }}
+    <div class="list__column text--blue">
+      {{ transformFIO(task.initiator) }}
+    </div>
+    <div class="list__column">
+      {{ transformFIO(task.executor) }}
+    </div>
+    <div class="list__column">
+      <div class="bg bg--blue-light">
+        {{ task.title }}
       </div>
-      <div class="list__column text--blue">
-        {{ transformFIO(task.initiator) }}
-      </div>
-      <div class="list__column">
-        {{ transformFIO(task.executor) }}
-      </div>
-      <div class="list__column">
-        <div class="bg bg--blue-light">
-          {{ task.title }}
+    </div>
+    <div class="list__column text--green">
+      {{ transformDate(task.creation_date) }}
+    </div>
+    <div class="list__column text--sapphire">
+      {{ transformDate(task.deadline_date) }}
+    </div>
+    <div
+      class="list__column"
+      v-html="task && task.status ? transformStatus(task.status) : task.status"
+    />
+    <div class="list__column">
+      <div class="table__actions">
+        <div class="table__icon">
+          <img src="@/assets/icons/info_icon.svg" alt="" />
         </div>
-      </div>
-      <div class="list__column text--green">
-        {{ transformDate(task.creation_date) }}
-      </div>
-      <div class="list__column text--sapphire">
-        {{ transformDate(task.deadline_date) }}
-      </div>
-      <div
-        class="list__column"
-        v-html="
-          task && task.status ? transformStatus(task.status) : task.status
-        "
-      />
-      <div class="list__column">
-        <div class="table__actions">
-          <div class="table__icon">
-            <img src="@/assets/icons/info_icon.svg" alt="" />
-          </div>
-          <div class="table__icon">
-            <img src="@/assets/icons/write_icon.svg" alt="" />
-          </div>
-          <div class="table__icon">
-            <img src="@/assets/icons/trash_icon.svg" alt="" />
-          </div>
+        <div class="table__icon">
+          <img src="@/assets/icons/write_icon.svg" alt="" />
+        </div>
+        <div class="table__icon">
+          <img src="@/assets/icons/trash_icon.svg" alt="" />
         </div>
       </div>
     </div>
