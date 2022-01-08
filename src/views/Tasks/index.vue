@@ -66,7 +66,18 @@
                     :key="sub_task._id"
                     class="list__row list__row--white"
                   >
-                    <v-sub-task :index="sIndex" :task="sub_task" />
+                    <v-sub-task
+                      :id="id"
+                      :index="sIndex"
+                      :task="sub_task"
+                      @toggleSubInfo="toggleSubInfo"
+                    />
+
+                    <!-- Блок с детальной информацией о задаче -->
+                    <v-task-info
+                      v-if="infoSubItem._id === sub_task._id"
+                      :task="sub_task"
+                    />
                   </div>
                 </div>
               </div>
@@ -125,6 +136,7 @@ export default {
       editedItem: {},
       deletedItem: {},
       infoItem: {},
+      infoSubItem: {},
       count: 0,
       filtersOptions: {
         status: "all",
@@ -225,6 +237,13 @@ export default {
         this.infoItem = {};
       } else {
         this.infoItem = item;
+      }
+    },
+    toggleSubInfo(item) {
+      if (this.infoSubItem._id === item._id) {
+        this.infoSubItem = {};
+      } else {
+        this.infoSubItem = item;
       }
     },
     addToTasks(task) {

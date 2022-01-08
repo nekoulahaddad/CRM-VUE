@@ -27,13 +27,22 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/info_icon.svg" alt="" />
+          <img
+            @click="$emit('toggleSubInfo', task)"
+            src="@/assets/icons/info_icon.svg"
+            alt=""
+          />
         </div>
         <div class="table__icon">
           <img src="@/assets/icons/write_icon.svg" alt="" />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/trash_icon.svg" alt="" />
+          <img
+            v-if="id === task.initiator._id"
+            src="/icons/trash_icon.svg"
+            alt=""
+          />
+          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>
