@@ -75,6 +75,7 @@
                       :infoItem="infoSubItem"
                       :task="sub_task"
                       @toggleSubInfo="toggleSubInfo"
+                      @toggleEdit="toggleEdit"
                     />
 
                     <!-- Блок с детальной информацией о задаче -->
@@ -82,6 +83,9 @@
                       v-if="infoSubItem._id === sub_task._id"
                       :task="sub_task"
                     />
+
+                    <!-- Блок редактирования задачи -->
+                    <v-edit v-if="editedItem._id === sub_task._id" />
                   </div>
                 </div>
               </div>
@@ -96,6 +100,7 @@
 </template>
 
 <script>
+import VEdit from "./components/VEdit";
 import VTask from "./components/VTask";
 import VSubTask from "./components/VSubTask";
 import VTaskInfo from "./components/VTaskInfo";
@@ -116,6 +121,7 @@ export default {
     VSpinner,
     VNotFoundQuery,
     VPagination,
+    VEdit,
     VTask,
     VTaskInfo,
     VSubTask,
@@ -220,12 +226,11 @@ export default {
       this.deleteForm = !this.deleteForm;
     },
     toggleEdit(item) {
-      if (!this.edit) {
-        this.editedItem = item;
-      } else {
+      if (this.editedItem._id === item._id) {
         this.editedItem = {};
+      } else {
+        this.editedItem = item;
       }
-      this.edit = !this.edit;
     },
     toggleSubDelete(id) {
       if (!this.deleteSubForm) {

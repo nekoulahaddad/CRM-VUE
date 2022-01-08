@@ -65,6 +65,7 @@
       "taskTested": "На проверку",
       "taskUnderRevision": "На доработку",
       "taskSubTasks": "Подзадачи",
+      "taskEdit": "Редактировать подзадачу",
       "fields": [
         "№:",
         "Автор:",

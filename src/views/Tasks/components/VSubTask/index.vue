@@ -41,7 +41,11 @@
           />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/write_icon.svg" alt="" />
+          <img
+            @click="$emit('toggleEdit', task)"
+            src="@/assets/icons/write_icon.svg"
+            alt=""
+          />
         </div>
         <div class="table__icon">
           <img
