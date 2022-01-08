@@ -1,5 +1,5 @@
 <template>
-  <div class="list__info list-info">
+  <div class="list__info list-info callback-list-info">
     <div class="group__title text--blue">
       {{ $t("pages.callbacks.callbackInfo") }}
     </div>
@@ -83,3 +83,27 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.callback-list-info {
+  .group__title {
+    position: relative;
+
+    &:not(:first-child) {
+      padding-top: 10px;
+      &::before {
+        display: block;
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        top: 0;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+      }
+    }
+  }
+}
+</style>
