@@ -37,14 +37,6 @@
       </div>
       <div class="group__content">
         <div class="group__item text--bold-700">
-          {{ $t("pages.reports.reportRegion") }}
-        </div>
-        <div class="group__value">
-          {{ report.executor.region.title }}
-        </div>
-      </div>
-      <div class="group__content">
-        <div class="group__item text--bold-700">
           {{ $t("pages.reports.reportDocs") }}
         </div>
         <div class="group__value">
@@ -66,6 +58,58 @@
             </div>
           </div>
           <div v-else>Нет документов</div>
+        </div>
+      </div>
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.reports.reportRegion") }}
+        </div>
+        <div class="group__value">
+          {{ report.executor.region.title }}
+        </div>
+      </div>
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.reports.reportStatus") }}
+        </div>
+        <div v-html="transformStatus(report.status)" class="group__value" />
+      </div>
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.reports.reportMark") }}
+        </div>
+        <div class="group__value" v-html="transformMark(report.mark)" />
+      </div>
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.reports.reportCreated") }}
+        </div>
+        <div class="group__value">
+          {{ transformDate(report.created) }}
+        </div>
+      </div>
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.reports.reportAccepted") }}
+        </div>
+        <div class="group__value">
+          {{ transformDate(report.closed) }}
+        </div>
+      </div>
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.reports.reportDeadline") }}
+        </div>
+        <div class="group__value">
+          {{ transformDate(report.deadline) }}
+        </div>
+      </div>
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.reports.reportComment") }}
+        </div>
+        <div class="group__value">
+          {{ transformDate(report.comment) }}
         </div>
       </div>
     </div>
