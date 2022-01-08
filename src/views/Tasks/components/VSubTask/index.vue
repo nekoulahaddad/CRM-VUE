@@ -42,9 +42,16 @@
         </div>
         <div class="table__icon">
           <img
+            v-if="editedItem._id !== task._id"
             @click="$emit('toggleEdit', task)"
             src="@/assets/icons/write_icon.svg"
             alt=""
+          />
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            v-else
+            @click="$emit('toggleEdit', task)"
           />
         </div>
         <div class="table__icon">
@@ -76,6 +83,10 @@ export default {
       required: true,
     },
     task: {
+      type: Object,
+      required: true,
+    },
+    editedItem: {
       type: Object,
       required: true,
     },

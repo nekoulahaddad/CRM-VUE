@@ -75,6 +75,7 @@
                       :id="id"
                       :index="sIndex"
                       :infoItem="infoSubItem"
+                      :editedItem="editedItem"
                       :task="sub_task"
                       @toggleSubInfo="toggleSubInfo"
                       @toggleEdit="toggleEdit"
