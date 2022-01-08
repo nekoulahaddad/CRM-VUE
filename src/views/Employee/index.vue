@@ -139,6 +139,7 @@ export default {
       } catch (e) {
       } finally {
         this.isLoading = true;
+        this.infoItem = {};
         this.$scrollTo("body", 300, {});
       }
     },
