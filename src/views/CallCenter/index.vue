@@ -32,12 +32,17 @@
                 v-for="(item, index) in dataset"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
-                :class="{ 'list__row--opened': infoItem._id === item._id }"
+                :class="{
+                  'list__row--opened':
+                    infoItem._id === item._id || editedItem._id === item._id,
+                }"
               >
                 <v-call-back
                   :item="item"
                   :infoItem="infoItem"
+                  :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
+                  @toggleEdit="toggleEdit"
                 />
 
                 <!-- Блок с детальной информацией об обращении -->
@@ -47,7 +52,7 @@
                 />
 
                 <!-- Блок с формой редактирования обращения -->
-                <v-edit-form />
+                <v-edit-form :item="item" v-if="editedItem._id === item._id" />
               </div>
             </div>
           </div>
@@ -121,14 +126,27 @@ export default {
         this.count = data.count;
       } catch (e) {
       } finally {
+        this.editedItem = {};
+        this.infoItem = {};
         this.isLoading = true;
       }
     },
     toggleInfo(item) {
+      this.editedItem = {};
+
       if (this.infoItem._id === item._id) {
         this.infoItem = {};
       } else {
         this.infoItem = item;
+      }
+    },
+    toggleEdit(item) {
+      this.infoItem = {};
+
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
+      } else {
+        this.editedItem = item;
       }
     },
   },

@@ -69,7 +69,18 @@
           />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/write_icon.svg" alt="" />
+          <img
+            alt=""
+            src="@/assets/icons/write_icon.svg"
+            v-if="item._id !== editedItem._id"
+            @click="$emit('toggleEdit', item)"
+          />
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleEdit', item)"
+            v-else
+          />
         </div>
         <div class="table__icon">
           <img src="@/assets/icons/trash_icon.svg" alt="" />
@@ -82,6 +93,10 @@
 <script>
 export default {
   props: {
+    editedItem: {
+      type: Object,
+      required: true,
+    },
     item: {
       type: Object,
       required: true,
