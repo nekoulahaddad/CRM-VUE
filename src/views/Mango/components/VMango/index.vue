@@ -49,6 +49,10 @@ export default {
     index: {
       type: Number,
     },
+    status: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <a-player
-      v-if="this.status"
+      v-if="status"
       @focus="togglePlay()"
       :autoplay="true"
       :volume="0.3"
@@ -47,7 +47,7 @@
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
               >
-                <v-mango :index="index" :item="item" />
+                <v-mango :index="index" :item="item" :status="status" />
               </div>
             </div>
           </div>
@@ -143,9 +143,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.table {
-  .thead__bottom {
-    td:first-child {
+.list__columns {
+  grid-template-columns: 30px 1fr 1fr 1fr 1fr;
+}
+.list__header {
+  .list__column {
+    &:first-child {
       text-align: left;
     }
   }
