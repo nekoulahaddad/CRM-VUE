@@ -27,11 +27,61 @@
         <div class="group__value">{{ employee.lastname }}</div>
       </div>
     </div>
+    <div class="list-info__group group">
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.employee.employeeMail") }}
+        </div>
+        <div class="group__value">{{ employee.email || "" }}</div>
+      </div>
+    </div>
+    <div class="list-info__group group">
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.employee.employeePhone") }}
+        </div>
+        <div class="group__value">{{ employee.phone || "" }}</div>
+      </div>
+    </div>
     <div class="group__title text--blue">
       {{ $t("pages.employee.employeeAddInfo") }}
     </div>
     <div class="group__title text--blue">
       {{ $t("pages.employee.employeePersonalInfo") }}
+    </div>
+    <div class="list-info__group group">
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.employee.employeeBirthDay") }}
+        </div>
+        <div class="group__value">
+          {{ transformDate(employee.date_of_birth) }}
+        </div>
+      </div>
+    </div>
+    <div class="list-info__group group">
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.employee.employeeZodiak") }}
+        </div>
+        <div class="group__value">{{ employee.zodiac_sign || "" }}</div>
+      </div>
+    </div>
+    <div class="list-info__group group">
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.employee.employeeElement") }}
+        </div>
+        <div class="group__value">{{ employee.element || "" }}</div>
+      </div>
+    </div>
+    <div class="list-info__group group">
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("pages.employee.employeeChineseYear") }}
+        </div>
+        <div class="group__value">{{ employee.chinese_year || "" }}</div>
+      </div>
     </div>
   </div>
 </template>
