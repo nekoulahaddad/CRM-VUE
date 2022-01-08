@@ -6,8 +6,10 @@
     <div class="list__column text--blue">{{ transformName(client) }}</div>
     <div class="list__column">{{ client.email }}</div>
     <div class="list__column">{{ client.phone }}</div>
-    <div class="list__column"></div>
-    <div class="list__column"></div>
+    <div class="list__column text--sapphire">{{ client.region.title }}</div>
+    <div class="list__column text--green">
+      {{ transformDate(client.createdAt) }}
+    </div>
     <div class="list__column">
       {{
         client.company
@@ -19,7 +21,11 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="/icons/info_icon.svg" alt="" />
+          <img
+            @click="$emit('toggleInfo', client)"
+            src="/icons/info_icon.svg"
+            alt=""
+          />
         </div>
       </div>
     </div>

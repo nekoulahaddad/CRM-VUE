@@ -44,7 +44,14 @@
                   'list__row--opened': infoItem._id === item._id,
                 }"
               >
-                <v-client :index="index" :client="item" />
+                <v-client
+                  :index="index"
+                  :client="item"
+                  @toggleInfo="toggleInfo"
+                />
+
+                <!-- Блок с детальной информацией о заказе -->
+                <v-client-info v-if="infoItem._id === item._id" />
               </div>
             </div>
           </div>
@@ -58,6 +65,7 @@
 
 <script>
 import VClient from "./components/VClient";
+import VClientInfo from "./components/VClientInfo";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -67,7 +75,14 @@ import nameMixins from "@/mixins/name";
 
 export default {
   mixins: [nameMixins],
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VClient },
+  components: {
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+    VPagination,
+    VClient,
+    VClientInfo,
+  },
   mounted() {
     this.fetchData();
   },
@@ -122,6 +137,13 @@ export default {
         this.$scrollTo("body", 300, {});
       }
     },
+    toggleInfo(item) {
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
+      } else {
+        this.infoItem = item;
+      }
+    },
   },
   watch: {
     $route: function () {
@@ -139,6 +161,6 @@ export default {
 
 <style lang="scss">
 .list__columns {
-  grid-template-columns: 30px 140px 140px 140px 120px 120px 120px 120px 120px;
+  grid-template-columns: 30px 250px 250px 140px 120px 120px 120px 120px 120px;
 }
 </style>

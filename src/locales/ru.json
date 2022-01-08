@@ -21,6 +21,7 @@
   "pages": {
     "clients": {
       "pageTitle": "Клиенты",
+      "clientInfo": "Общая информация о заказе:",
       "fields": [
         "№:",
         "Клиент",
