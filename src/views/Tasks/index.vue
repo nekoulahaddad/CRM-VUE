@@ -392,5 +392,9 @@ export default {
       margin-top: 10px;
     }
   }
+  .list__columns {
+    padding-left: 109px;
+    padding-right: 60px;
+  }
 }
 </style>
