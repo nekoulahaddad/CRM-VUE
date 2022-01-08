@@ -39,7 +39,10 @@
               <li>А так же мы постоянно улучшаем наш продукт :)</li>
             </ul>
           </div>
-          <div class="panel__right">
+          <div class="panel__right panel-right">
+            <div class="panel-right__logo">
+              <img src="@/assets/icons/logo_big.svg" alt="" />
+            </div>
             <form @submit.prevent="onSubmit">
               <input
                 type="text"
@@ -167,6 +170,14 @@ body {
     line-height: 21.94px;
     padding-top: 20px;
     padding-bottom: 28px;
+  }
+}
+
+.panel-right {
+  &__logo {
+    text-align: center;
+    padding-top: 17px;
+    padding-bottom: 10px;
   }
 }
 </style>
