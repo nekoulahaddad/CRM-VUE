@@ -46,6 +46,12 @@
                   :employee="employee"
                   @toggleInfo="toggleInfo"
                 />
+
+                <!-- Блок с детальной информацией о сотруднике -->
+                <v-employee-info
+                  v-if="infoItem._id === employee._id"
+                  :employee="employee"
+                />
               </div>
             </div>
           </div>
@@ -59,6 +65,7 @@
 
 <script>
 import VEmployee from "./components/VEmployee";
+import VEmployeeInfo from "./components/VEmployeeInfo";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
@@ -68,7 +75,14 @@ import ratingMixins from "@/mixins/rating";
 import roleMixins from "@/mixins/role";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VEmployee },
+  components: {
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+    VPagination,
+    VEmployee,
+    VEmployeeInfo,
+  },
   mixins: [ratingMixins, roleMixins],
   data() {
     return {

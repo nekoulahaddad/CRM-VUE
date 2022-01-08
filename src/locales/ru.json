@@ -21,6 +21,9 @@
   "pages": {
     "employee": {
       "pageTitle": "Сотрудники",
+      "employeeMainInfo": "Основная информация",
+      "employeeAddInfo": "Дополнительная информация",
+      "employeePersonalInfo": "Личная информация",
       "fields": [
         "ФИО:",
         "Регион",
