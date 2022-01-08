@@ -66,7 +66,9 @@
                     :key="sub_task._id"
                     class="list__row list__row--white"
                     :class="{
-                      'list__row--opened': infoSubItem._id === sub_task._id,
+                      'list__row--opened':
+                        infoSubItem._id === sub_task._id ||
+                        editedItem._id === sub_task._id,
                     }"
                   >
                     <v-sub-task
