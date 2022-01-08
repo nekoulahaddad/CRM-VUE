@@ -32,8 +32,13 @@
                 v-for="(item, index) in dataset"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
+                :class="{ 'list__row--opened': infoItem._id === item._id }"
               >
-                <v-call-back :item="item" />
+                <v-call-back :item="item" @toggleInfo="toggleInfo" />
+                <v-call-back-info
+                  :item="item"
+                  v-if="infoItem._id === item._id"
+                />
               </div>
             </div>
           </div>
@@ -47,6 +52,7 @@
 
 <script>
 import VCallBack from "./components/VCallBack";
+import VCallBackInfo from "./components/VCallBackInfo";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -57,7 +63,14 @@ import fioMixins from "@/mixins/fio";
 
 export default {
   mixins: [dateMixins, fioMixins],
-  components: { VFilter, VNotFoundQuery, VPagination, VSpinner, VCallBack },
+  components: {
+    VFilter,
+    VNotFoundQuery,
+    VPagination,
+    VSpinner,
+    VCallBack,
+    VCallBackInfo,
+  },
   mounted() {
     this.fetchData();
   },
@@ -78,6 +91,7 @@ export default {
       info: false,
       count: 0,
       search: "",
+      infoItem: {},
       isSearch: false,
     };
   },
@@ -97,6 +111,13 @@ export default {
       } catch (e) {
       } finally {
         this.isLoading = true;
+      }
+    },
+    toggleInfo(item) {
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
+      } else {
+        this.infoItem = item;
       }
     },
   },

@@ -55,7 +55,11 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/info_icon.svg" alt="" />
+          <img
+            alt=""
+            src="@/assets/icons/info_icon.svg"
+            @click="$emit('toggleInfo', item)"
+          />
         </div>
         <div class="table__icon">
           <img src="@/assets/icons/write_icon.svg" alt="" />
