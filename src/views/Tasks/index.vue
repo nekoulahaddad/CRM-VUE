@@ -31,11 +31,29 @@
                   </div>
                 </div>
               </div>
-              <v-tasks
-                :activeIndex="activeIndex"
-                :tasks="dataset"
-                :infoItem="infoItem"
-              />
+              <div
+                v-for="(task, index) in dataset"
+                :key="task._id"
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened':
+                    infoItem._id === task._id || index === activeIndex,
+                }"
+              >
+                <v-task
+                  :activeIndex="activeIndex"
+                  :id="id"
+                  :infoItem="infoItem"
+                  :index="index"
+                  :task="task"
+                  @toggleInfo="toggleInfo"
+                  @getSubTasks="getSubTasks"
+                />
+
+                <!-- Блок с детальной информацией о задаче -->
+                <v-task-info v-if="infoItem._id === task._id" :task="task" />
+                <!-- Блок с подзадачами -->
+              </div>
             </div>
           </div>
           <v-pagination :count="count" />
@@ -47,7 +65,8 @@
 </template>
 
 <script>
-import VTasks from "./components/VTasks";
+import VTask from "./components/VTask";
+import VTaskInfo from "./components/VTaskInfo";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -65,7 +84,8 @@ export default {
     VSpinner,
     VNotFoundQuery,
     VPagination,
-    VTasks,
+    VTask,
+    VTaskInfo,
   },
   mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
@@ -334,3 +354,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.list__columns {
+  grid-template-columns: 50px 140px 140px 450px 120px 120px 120px 1fr;
+}
+.list__header {
+  .list__column {
+    &:first-child {
+      text-align: left;
+    }
+  }
+}
+</style>

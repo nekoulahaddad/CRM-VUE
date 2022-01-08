@@ -108,14 +108,19 @@
       <!-- Блок с детальной информацией о задаче -->
       <v-task-info v-if="infoItem._id === task._id" :task="task" />
       <!-- Блок с подзадачами -->
-      <v-sub-tasks v-if="index === activeIndex" />
+      <v-tasks
+        v-if="sub_tasks"
+        :activeIndex="activeIndex"
+        :tasks="sub_tasks"
+        :infoItem="infoItem"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import VTasks from "../VTasks";
 import VTaskInfo from "../VTaskInfo";
-import VSubTasks from "../VSubTasks";
 
 export default {
   props: {
@@ -131,6 +136,9 @@ export default {
       type: Array,
       required: true,
     },
+    sub_tasks: {
+      type: Array,
+    },
   },
   data() {
     return {
@@ -140,21 +148,8 @@ export default {
     };
   },
   components: {
+    VTasks,
     VTaskInfo,
-    VSubTasks,
   },
 };
 </script>
-
-<style lang="scss">
-.list__columns {
-  grid-template-columns: 50px 140px 140px 450px 120px 120px 120px 1fr;
-}
-.list__header {
-  .list__column {
-    &:first-child {
-      text-align: left;
-    }
-  }
-}
-</style>
