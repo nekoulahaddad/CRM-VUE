@@ -72,7 +72,7 @@
                   пользования
                 </label>
               </div>
-              <v-button red>Войти</v-button>
+              <v-button :disabled="isFetch" red>Войти</v-button>
             </form>
           </div>
         </div>
@@ -100,7 +100,7 @@ export default {
   },
   components: { VButton },
   methods: {
-    onSubmit(e) {
+    onSubmit() {
       this.isFetch = true;
       this.$store
         .dispatch("login", {

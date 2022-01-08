@@ -1,0 +1,161 @@
+<template>
+  <div class="page">
+    <a-player
+      v-if="this.status"
+      @focus="togglePlay()"
+      :autoplay="true"
+      :volume="0.3"
+      :music="{
+        title: this.play.client ? transformName(this.play.client) : '',
+        artist: this.play.client
+          ? this.play.client.phone
+          : transformPhone(this.play.to.number),
+        src: this.play.recording_url,
+        pic: '',
+      }"
+    />
+    <div class="page__header">
+      <div class="page__icon">
+        <img :src="require('@/assets/icons/mango_title.svg')" alt="" />
+      </div>
+      <h1 class="page__title">{{ $t("pages.mango.pageTitle") }}</h1>
+    </div>
+    <div class="page__body d-flex">
+      <div class="page__left">
+        <v-filter type="mango" @refreshDates="refreshDates" />
+      </div>
+      <div class="page__right">
+        <v-spinner v-if="!isLoading" />
+        <template v-else-if="dataset.length">
+          <div class="scroll-horizontal">
+            <div class="list list-shadow">
+              <div class="list__header">
+                <div class="list__title">
+                  {{ $t("pages.mango.pageTitle") }}
+                </div>
+                <div class="list__columns">
+                  <div
+                    v-for="field in $t('pages.mango.fields')"
+                    class="list__column"
+                  >
+                    {{ field }}
+                  </div>
+                </div>
+              </div>
+              <div
+                v-for="(item, index) in dataset"
+                :key="item._id"
+                class="list__row list__row--shadow list__row--white"
+              >
+                <v-mango :index="index" :item="item" />
+              </div>
+            </div>
+          </div>
+          <v-pagination :count="count" />
+        </template>
+        <v-not-found-query v-else />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import VMango from "./components/VMango";
+import VFilter from "@/components/VFilter";
+import VSpinner from "@/components/VSpinner";
+import getDataFromPage from "@/api/getDataFromPage";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
+import VPagination from "@/components/VPagination";
+import nameMixins from "@/mixins/name";
+import dateMixins from "@/mixins/date";
+import phoneMixins from "@/mixins/phone";
+import APlayer from "vue-aplayer";
+APlayer.disableVersionBadge = true;
+
+export default {
+  mixins: [dateMixins, nameMixins, phoneMixins],
+  components: {
+    APlayer,
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+    VPagination,
+    VMango,
+  },
+  data() {
+    return {
+      dataset: [],
+      filtersOptions: {},
+      isLoading: false,
+      count: 0,
+      play: {},
+      status: false,
+    };
+  },
+  methods: {
+    async fetchData() {
+      try {
+        this.isLoading = false;
+        this.filtersOptions.page = this.$route.params.page;
+
+        const { data } = await getDataFromPage(
+          "/calls/get",
+          this.filtersOptions
+        );
+
+        this.dataset = data.calls;
+        this.count = data.count;
+      } catch (e) {
+      } finally {
+        this.isLoading = true;
+        this.$scrollTo("body", 300, {});
+      }
+    },
+    togglePlay(item) {
+      if (!this.status) {
+        this.play = item;
+      } else {
+        this.item = {};
+      }
+      this.status = !this.status;
+    },
+    refreshDates(startDate, endDate) {
+      this.filtersOptions.startDate = startDate;
+      this.filtersOptions.endDate = endDate;
+      this.fetchData();
+    },
+  },
+  mounted() {
+    this.fetchData();
+  },
+  watch: {
+    $route: function () {
+      this.fetchData();
+    },
+    filtersOptions: {
+      handler: function () {
+        this.fetchData();
+      },
+      deep: true,
+    },
+  },
+};
+</script>
+
+<style scoped lang="scss">
+.table {
+  .thead__bottom {
+    td:first-child {
+      text-align: left;
+    }
+  }
+}
+.aplayer {
+  position: fixed;
+  bottom: 25px;
+  width: 500px;
+  z-index: 1000;
+  left: 50%;
+  transform: translateX(-50%) !important;
+}
+</style>

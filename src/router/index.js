@@ -60,7 +60,7 @@ const routes = [
       {
         path: "mango/:page?",
         name: "mango",
-        component: () => import("../views/Mango.vue"),
+        component: () => import("../views/Mango"),
       },
       {
         path: "monitor",

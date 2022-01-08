@@ -1,5 +1,10 @@
 <template>
-  <button @click="$emit('click')" :class="classes" class="btn">
+  <button
+    :disabled="disabled"
+    @click="$emit('click')"
+    :class="classes"
+    class="btn"
+  >
     <slot />
   </button>
 </template>
@@ -7,6 +12,10 @@
 <script>
 export default {
   props: {
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     full: {
       type: Boolean,
       default: false,
