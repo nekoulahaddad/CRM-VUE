@@ -24,6 +24,9 @@
       "employeeMainInfo": "Основная информация",
       "employeeAddInfo": "Дополнительная информация",
       "employeePersonalInfo": "Личная информация",
+      "employeeName": "Имя",
+      "employeeSurName": "Фамилия",
+      "employeeLastName": "Отчество",
       "fields": [
         "ФИО:",
         "Регион",
