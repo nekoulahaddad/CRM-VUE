@@ -30,7 +30,7 @@ const routes = [
       {
         path: "clients/:page",
         name: "clients",
-        component: () => import("../views/Clients.vue"),
+        component: () => import("../views/Clients"),
       },
       {
         path: "delivery/:page",

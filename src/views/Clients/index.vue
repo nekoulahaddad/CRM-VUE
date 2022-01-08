@@ -21,47 +21,33 @@
       <div class="page__right">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
-          <table class="table table--separate">
-            <thead class="thead">
-              <tr class="thead__top">
-                <td colspan="9">
-                  <div class="table__title">Клиенты</div>
-                </td>
-              </tr>
-              <tr class="thead__bottom">
-                <td>№:</td>
-                <td>Клиент</td>
-                <td>Почта:</td>
-                <td>Телефон:</td>
-                <td>Регион:</td>
-                <td>Дата:</td>
-                <td>Сумма:</td>
-                <td>Клубная карта:</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in dataset" :key="item.id">
-                <td>{{ index + 1 + ($route.params.page - 1) * 15 }}</td>
-                <td class="text--blue">{{ transformName(item) }}</td>
-                <td>{{ item.email }}</td>
-                <td>{{ item.phone }}</td>
-                <td class="text--sapphire">Москва и М.О</td>
-                <td class="text--green">13.12.2021</td>
-                <td>
-                  {{
-                    item.company
-                      ? item.balance + " " + item.region.valute.icon
-                      : item.total.toFixed(2) + " " + item.region.valute.icon
-                  }}
-                </td>
-                <td>{{ item.clubCard }}</td>
-                <td>
-                  <img src="/icons/info_icon.svg" alt="" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="scroll-horizontal">
+            <div class="list list-shadow">
+              <div class="list__header">
+                <div class="list__title">
+                  {{ $t("pages.clients.pageTitle") }}
+                </div>
+                <div class="list__columns">
+                  <div
+                    v-for="field in $t('pages.clients.fields')"
+                    class="list__column"
+                  >
+                    {{ field }}
+                  </div>
+                </div>
+              </div>
+              <div
+                v-for="(item, index) in dataset"
+                :key="item._id"
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': infoItem._id === item._id,
+                }"
+              >
+                <v-client :index="index" :client="item" />
+              </div>
+            </div>
+          </div>
           <v-pagination :count="count" />
         </template>
         <v-not-found-query v-else />
@@ -71,6 +57,7 @@
 </template>
 
 <script>
+import VClient from "./components/VClient";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -80,7 +67,7 @@ import nameMixins from "@/mixins/name";
 
 export default {
   mixins: [nameMixins],
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VClient },
   mounted() {
     this.fetchData();
   },
@@ -149,3 +136,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.list__columns {
+  grid-template-columns: 30px 140px 140px 140px 120px 120px 120px 120px 120px;
+}
+</style>
