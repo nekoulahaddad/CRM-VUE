@@ -52,7 +52,10 @@
                 />
 
                 <!-- Блок с формой редактирования обращения -->
-                <v-edit-form :item="item" v-if="editedItem._id === item._id" />
+                <v-edit-form
+                  :editedItem="editedItem"
+                  v-if="editedItem._id === item._id"
+                />
               </div>
             </div>
           </div>
