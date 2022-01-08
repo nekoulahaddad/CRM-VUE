@@ -40,9 +40,9 @@
                 }"
               >
                 <v-employee
-                  :infoItem="infoItem"
                   :index="index"
                   :role="role"
+                  :infoItem="infoItem"
                   :employee="employee"
                   @toggleInfo="toggleInfo"
                 />

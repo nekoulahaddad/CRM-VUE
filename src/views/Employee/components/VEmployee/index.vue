@@ -30,9 +30,16 @@
       <div class="table__actions">
         <div class="table__icon">
           <img
-            @click="$emit('toggleInfo', employee)"
-            src="@/assets/icons/info_icon.svg"
             alt=""
+            src="@/assets/icons/info_icon.svg"
+            v-if="employee._id !== infoItem._id"
+            @click="$emit('toggleInfo', employee)"
+          />
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleInfo', employee)"
+            v-else
           />
         </div>
         <div class="table__icon">
@@ -60,6 +67,9 @@
 <script>
 export default {
   props: {
+    infoItem: {
+      type: Object,
+    },
     employee: {
       type: Object,
       required: true,
