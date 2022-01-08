@@ -43,7 +43,10 @@
                   :infoItem="infoItem"
                   @toggleInfo="toggleInfo"
                 />
-                <v-report-info v-if="item._id === infoItem._id" />
+                <v-report-info
+                  v-if="item._id === infoItem._id"
+                  :report="item"
+                />
               </div>
             </div>
           </div>

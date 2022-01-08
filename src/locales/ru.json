@@ -48,6 +48,18 @@
     },
     "reports": {
       "pageTitle": "Отчеты",
+      "reportInfo": "Информация о задаче:",
+      "reportName": "Наименование задачи:",
+      "reportDescription": "Описание задачи:",
+      "reportExecutor": "ФИО исполнителя:",
+      "reportDepartment": "Отдел:",
+      "reportDocs": "Документы:",
+      "reportRegion": "Регион:",
+      "reportStatus": "Статус:",
+      "reportMark": "Оценка:",
+      "reportCreated": "Создана:",
+      "reportDeadline": "Дедлайн:",
+      "reportComment": "Комментарий:",
       "fields": [
         "№:",
         "Задача:",
