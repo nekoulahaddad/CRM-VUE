@@ -229,6 +229,8 @@ export default {
       this.deleteForm = !this.deleteForm;
     },
     toggleEdit(item) {
+      this.infoSubItem = {};
+
       if (this.editedItem._id === item._id) {
         this.editedItem = {};
       } else {
@@ -256,6 +258,7 @@ export default {
     },
     toggleSubInfo(item) {
       this.activeSubIndex = -1;
+      this.editedItem = {};
 
       if (this.infoSubItem._id === item._id) {
         this.infoSubItem = {};
