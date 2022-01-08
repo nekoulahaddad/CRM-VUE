@@ -43,6 +43,9 @@
             <div class="panel-right__logo">
               <img src="@/assets/icons/logo_big.svg" alt="" />
             </div>
+            <div class="panel-right__slogan">
+              Вместе мы сможем стать <span class="text--red">лучше!</span>
+            </div>
             <form class="panel-right__form" @submit.prevent="onSubmit">
               <input
                 type="text"
@@ -50,6 +53,7 @@
                 v-model="login"
                 @change="onChange($event)"
                 v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+                :disabled="isFetch"
                 placeholder="Номер телефона"
               />
               <input
@@ -57,9 +61,10 @@
                 name="password"
                 v-model="password"
                 @change="onChange($event)"
+                :disabled="isFetch"
                 placeholder="Пароль"
               />
-              <button>Login</button>
+              <v-button red>Войти</v-button>
             </form>
           </div>
         </div>
@@ -72,6 +77,8 @@
 </template>
 
 <script>
+import VButton from "@/components/VButton";
+
 export default {
   data() {
     return {
@@ -79,20 +86,25 @@ export default {
       password: "",
       forgotLogin: "",
       isForget: false,
+      isFetch: false,
     };
   },
+  components: { VButton },
   methods: {
     onSubmit(e) {
+      this.isFetch = true;
       this.$store
         .dispatch("login", {
           login: this.login,
           password: this.password,
         })
         .then((res) => {
-          alert(res);
           if (res.status === 200) {
             this.$router.push({ name: "monitor" });
           }
+        })
+        .catch(() => {
+          this.isFetch = false;
         });
     },
     onChange(e) {
@@ -162,6 +174,13 @@ body {
     background-color: $color-white;
     border-radius: $border-radius;
     margin-right: 10px;
+
+    button {
+      width: 230px;
+      height: 37px;
+      box-shadow: -4px -4px 12px rgba(253, 255, 255, 0.8),
+        4px 4px 12px rgba(187, 195, 206, 0.6);
+    }
   }
 
   &__title {
@@ -182,9 +201,20 @@ body {
     padding-bottom: 10px;
   }
 
+  &__slogan {
+    letter-spacing: 1px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 29px;
+  }
+
   &__form {
     padding-left: 7px;
     padding-right: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     input[type="text"] {
       background: linear-gradient(0deg, #e6eef8, #e6eef8), #cfd8dc;

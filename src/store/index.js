@@ -169,7 +169,7 @@ export default new Vuex.Store({
       commit("toggleSidebar");
     },
     login({ commit }, user) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
           url: "/user/login",
@@ -208,7 +208,7 @@ export default new Vuex.Store({
           .catch((err) => {
             let res = err.response.data.message;
             commit("auth_error", res);
-            console.log(err);
+            return reject();
           });
       });
     },
