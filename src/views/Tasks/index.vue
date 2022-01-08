@@ -393,8 +393,6 @@ export default {
     }
   }
   .list__columns {
-    padding-left: 109px;
-    padding-right: 60px;
   }
 }
 </style>
