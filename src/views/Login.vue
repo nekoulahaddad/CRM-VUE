@@ -43,19 +43,21 @@
             <div class="panel-right__logo">
               <img src="@/assets/icons/logo_big.svg" alt="" />
             </div>
-            <form @submit.prevent="onSubmit">
+            <form class="panel-right__form" @submit.prevent="onSubmit">
               <input
                 type="text"
                 name="login"
                 v-model="login"
                 @change="onChange($event)"
                 v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+                placeholder="Номер телефона"
               />
               <input
                 type="text"
                 name="password"
                 v-model="password"
                 @change="onChange($event)"
+                placeholder="Пароль"
               />
               <button>Login</button>
             </form>
@@ -178,6 +180,30 @@ body {
     text-align: center;
     padding-top: 17px;
     padding-bottom: 10px;
+  }
+
+  &__form {
+    padding-left: 7px;
+    padding-right: 7px;
+
+    input[type="text"] {
+      background: linear-gradient(0deg, #e6eef8, #e6eef8), #cfd8dc;
+      border-radius: $border-radius;
+      border: none;
+      box-shadow: none;
+      height: 48px;
+      color: #90a4ae;
+      font-weight: 700;
+
+      &::placeholder {
+        color: #90a4ae;
+        font-weight: 700;
+      }
+
+      & + input {
+        margin-top: 8.52px;
+      }
+    }
   }
 }
 </style>
