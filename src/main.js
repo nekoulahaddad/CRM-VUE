@@ -17,6 +17,7 @@ import i18n from "./i18n";
 import dateMixins from "@/mixins/date";
 import fioMixins from "@/mixins/fio";
 import nameMixins from "@/mixins/name";
+import markMixins from "@/mixins/mark";
 import oneCMixins from "@/mixins/oneC";
 import roleMixins from "@/mixins/role";
 import statusMixins from "@/mixins/status";
@@ -97,6 +98,7 @@ Vue.mixin(dateMixins);
 Vue.mixin(oneCMixins);
 Vue.mixin(fioMixins);
 Vue.mixin(nameMixins);
+Vue.mixin(markMixins);
 Vue.mixin(roleMixins);
 Vue.mixin(statusMixins);
 

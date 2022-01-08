@@ -33,49 +33,17 @@
               </div>
               <div
                 v-for="(item, index) in dataset"
-                :key="item._id"
+                :key="index"
                 class="list__row list__row--shadow list__row--white"
+                :class="{ 'list__row--opened': item._id === infoItem._id }"
               >
-                <div
-                  class="list__columns list__columns--shadow list__columns--white"
-                >
-                  <div class="list__column list__column--number">
-                    {{
-                      item.number || index + 1 + ($route.params.page - 1) * 15
-                    }}
-                  </div>
-                  <div class="list__column">
-                    <div class="bg bg--blue-light">{{ item.title }}</div>
-                  </div>
-                  <div class="list__column text--green">
-                    {{ transformDate(item.created) }}
-                  </div>
-                  <div class="list__column text--blue">
-                    {{ transformFIO(item.initiator) }}
-                  </div>
-                  <div class="list__column">
-                    {{ transformFIO(item.executor) }}
-                  </div>
-                  <div class="list__column text text--sapphire">
-                    {{
-                      item.executor.region.title.length > 15
-                        ? item.executor.region.title.slice(0, -14) + "..."
-                        : item.executor.region.title
-                    }}
-                  </div>
-                  <div
-                    class="list__column"
-                    v-html="transformStatus(item.status)"
-                  />
-                  <div class="list__column" v-html="transformMark(item.mark)" />
-                  <div class="list__column">
-                    <div class="table__actions">
-                      <div class="table__icon">
-                        <img src="@/assets/icons/info_icon.svg" alt="" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <v-report
+                  :index="index"
+                  :report="item"
+                  :infoItem="infoItem"
+                  @toggleInfo="toggleInfo"
+                />
+                <v-report-info v-if="item._id === infoItem._id" />
               </div>
             </div>
           </div>
@@ -88,6 +56,8 @@
 </template>
 
 <script>
+import VReport from "./components/VReport";
+import VReportInfo from "./components/VReportInfo";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -100,7 +70,14 @@ import statusMixins from "@/mixins/status";
 
 export default {
   mixins: [dateMixins, fioMixins, markMixins, statusMixins],
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
+  components: {
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+    VPagination,
+    VReport,
+    VReportInfo,
+  },
   data() {
     return {
       infoForm: false,
@@ -158,14 +135,11 @@ export default {
       }
     },
     toggleInfo(item) {
-      if (!this.infoForm) {
-        this.infoItem = item;
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
       } else {
-        setTimeout(() => {
-          this.infoItem = {};
-        }, 500);
+        this.infoItem = item;
       }
-      this.infoForm = !this.infoForm;
     },
     resetFilters() {
       this.$refs.filters.filterOptions = {};
