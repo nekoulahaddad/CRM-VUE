@@ -9,6 +9,10 @@
   "executor": "Исполнитель:",
   "comment": "Комментарий:",
   "status": "Статус:",
+  "editCallback": "Редактировать обращение:",
+  "clientFirstName": "Имя клиента",
+  "clientLastName": "Фамилия клиента",
+  "clientMiddleName": "Отчество клиента",
   "menu": {
     "monitor": "Дашборд",
     "education": "Обучение",

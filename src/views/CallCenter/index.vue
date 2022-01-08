@@ -45,6 +45,9 @@
                   :item="item"
                   v-if="infoItem._id === item._id"
                 />
+
+                <!-- Блок с формой редактирования обращения -->
+                <v-edit-form />
               </div>
             </div>
           </div>
@@ -58,6 +61,7 @@
 
 <script>
 import VCallBack from "./components/VCallBack";
+import VEditForm from "./components/VEditForm";
 import VCallBackInfo from "./components/VCallBackInfo";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
@@ -75,6 +79,7 @@ export default {
     VPagination,
     VSpinner,
     VCallBack,
+    VEditForm,
     VCallBackInfo,
   },
   mounted() {
