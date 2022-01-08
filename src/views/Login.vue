@@ -64,6 +64,14 @@
                 :disabled="isFetch"
                 placeholder="Пароль"
               />
+              <div class="policy">
+                <input type="checkbox" id="policy" />
+                <label for="policy">
+                  Я даю своё согласие на обработку персональных даннных в
+                  соответсвиии с политикой конфиденциальности и условиями
+                  пользования
+                </label>
+              </div>
               <v-button red>Войти</v-button>
             </form>
           </div>
@@ -232,6 +240,27 @@ body {
 
       & + input {
         margin-top: 8.52px;
+      }
+    }
+
+    .policy {
+      color: rgba(0, 0, 0, 0.3);
+      font-size: 12px;
+      font-weight: 600;
+
+      input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 16px;
+        height: 16px;
+        background-color: #f5f5f5;
+        border-radius: 2px;
+        border: 1px solid #d9d9d9;
+      }
+
+      label {
+        cursor: pointer;
       }
     }
   }
