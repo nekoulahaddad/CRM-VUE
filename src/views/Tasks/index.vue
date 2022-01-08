@@ -237,6 +237,7 @@ export default {
     },
     toggleInfo(item) {
       this.activeIndex = -1;
+      this.infoSubItem = {};
 
       if (this.infoItem._id === item._id) {
         this.infoItem = {};
