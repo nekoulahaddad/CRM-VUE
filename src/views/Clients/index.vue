@@ -151,6 +151,7 @@ export default {
       } catch (e) {
       } finally {
         this.isLoading = true;
+        this.infoItem = {};
         this.$scrollTo("body", 300, {});
       }
     },
@@ -179,5 +180,12 @@ export default {
 <style lang="scss">
 .list__columns {
   grid-template-columns: 30px 250px 250px 140px 120px 120px 120px 120px 120px;
+}
+.list__header {
+  .list__column {
+    &:first-child {
+      text-align: left;
+    }
+  }
 }
 </style>
