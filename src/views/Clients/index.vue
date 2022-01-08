@@ -62,6 +62,7 @@
                     v-if="infoItem._id === item._id"
                     :order="order"
                     :infoItem="infoItem"
+                    :opened="infoSubItem._id === order._id"
                     @toggleSubInfo="toggleSubInfo"
                   />
 

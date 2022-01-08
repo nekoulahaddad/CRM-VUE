@@ -20,11 +20,16 @@
         <div class="table__icon">
           <img
             alt=""
-            v-if="infoItem._id !== order._id"
+            v-if="!opened"
             @click="$emit('toggleSubInfo', order)"
             src="@/assets/icons/info_icon.svg"
           />
-          <img v-else src="@/assets/icons/arrow_top_icon.svg" alt="" />
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleSubInfo', order)"
+          />
         </div>
       </div>
     </div>
@@ -34,6 +39,10 @@
 <script>
 export default {
   props: {
+    opened: {
+      type: Boolean,
+      default: false,
+    },
     infoItem: {
       type: Object,
     },
