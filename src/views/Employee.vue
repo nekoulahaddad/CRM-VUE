@@ -56,15 +56,19 @@
                     }}
                   </div>
                   <div class="list__column">
-                    {{ employee.position }}
+                    <div class="bg bg--blue-light">{{ employee.position }}</div>
                   </div>
                   <div
                     v-html="transformRating(employee.rating)"
                     class="list__column"
-                  ></div>
-                  <div class="list__column">{{ employee.tasks.length }}</div>
+                  />
+                  <div class="list__column text--sapphire">
+                    {{ employee.tasks.length }}
+                  </div>
                   <div class="list__column">
-                    {{ employee.department.title }}
+                    <div class="bg bg--green-light">
+                      {{ employee.department.title }}
+                    </div>
                   </div>
                   <div class="list__column">
                     <div class="table__actions">
@@ -213,6 +217,6 @@ export default {
 
 <style scoped lang="scss">
 .list__columns {
-  grid-template-columns: 200px 140px 400px 100px 100px 200px 1fr;
+  grid-template-columns: 140px 140px 400px 100px 100px 200px 140px;
 }
 </style>
