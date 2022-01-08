@@ -53,6 +53,7 @@
                 <!-- Блок с детальной информацией о задаче -->
                 <v-task-info v-if="infoItem._id === task._id" :task="task" />
                 <!-- Блок с подзадачами -->
+                <v-sub-tasks :tasks="sub_tasks" />
               </div>
             </div>
           </div>
@@ -67,6 +68,7 @@
 <script>
 import VTask from "./components/VTask";
 import VTaskInfo from "./components/VTaskInfo";
+import VSubTasks from "./components/VSubTasks";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -86,6 +88,7 @@ export default {
     VPagination,
     VTask,
     VTaskInfo,
+    VSubTasks,
   },
   mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
