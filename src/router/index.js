@@ -75,7 +75,7 @@ const routes = [
       {
         path: "reports/:page",
         name: "reports",
-        component: () => import("../views/Reports.vue"),
+        component: () => import("../views/Reports"),
       },
       {
         path: "seo/:nesting/:type?/:parent_value?/:page?",

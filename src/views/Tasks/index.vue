@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <v-modal name="deleteTaskModal">123</v-modal>
+    <v-modal name="deleteTaskModal">Удаление задачи</v-modal>
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/tasks_title.svg')" alt="" />
