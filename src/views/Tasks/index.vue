@@ -246,6 +246,7 @@ export default {
     toggleInfo(item) {
       this.activeIndex = -1;
       this.infoSubItem = {};
+      this.editedItem = {};
 
       if (this.infoItem._id === item._id) {
         this.infoItem = {};
@@ -344,6 +345,7 @@ export default {
     getSubTasks(id, index) {
       this.infoItem = {};
       this.infoSubItem = {};
+      this.editedItem = {};
 
       if ((index || index === 0) && this.activeIndex === index) {
         this.activeIndex = -1;
