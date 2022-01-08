@@ -180,4 +180,11 @@ export default {
 .list__columns {
   grid-template-columns: 30px 450px 140px 140px 140px 140px 140px 140px 1fr;
 }
+.list__header {
+  .list__column {
+    &:first-child {
+      text-align: left;
+    }
+  }
+}
 </style>
