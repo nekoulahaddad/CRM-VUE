@@ -118,7 +118,7 @@ export default {
 
 <style lang="scss">
 .list__columns {
-  grid-template-columns: 30px 120px 140px 140px 140px 140px 140px 140px 140px 140px 230px 1fr;
+  grid-template-columns: 30px 120px 140px 140px 140px 140px 230px 140px 140px 140px 230px 1fr;
 }
 .list__header {
   .list__column {
