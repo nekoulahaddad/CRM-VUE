@@ -11,12 +11,6 @@
 
     .list__columns {
       height: 33px;
-
-      &__column {
-        &:not(&--number) {
-          text-align: center;
-        }
-      }
     }
   }
 
