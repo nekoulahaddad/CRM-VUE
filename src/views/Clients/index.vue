@@ -47,6 +47,7 @@
                 <v-client
                   :index="index"
                   :client="item"
+                  :infoItem="infoItem"
                   @toggleInfo="toggleInfo"
                 />
 

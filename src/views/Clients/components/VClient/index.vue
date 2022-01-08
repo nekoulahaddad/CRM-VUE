@@ -22,9 +22,16 @@
       <div class="table__actions">
         <div class="table__icon">
           <img
-            @click="$emit('toggleInfo', client)"
-            src="/icons/info_icon.svg"
             alt=""
+            src="/icons/info_icon.svg"
+            v-if="infoItem._id !== client._id"
+            @click="$emit('toggleInfo', client)"
+          />
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleInfo', client)"
           />
         </div>
       </div>
@@ -38,6 +45,9 @@ export default {
     client: {
       type: Object,
       required: true,
+    },
+    infoItem: {
+      type: Object,
     },
     index: {
       type: Number,
