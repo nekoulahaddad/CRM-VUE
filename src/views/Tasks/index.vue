@@ -72,6 +72,7 @@
                     <v-sub-task
                       :id="id"
                       :index="sIndex"
+                      :infoItem="infoSubItem"
                       :task="sub_task"
                       @toggleSubInfo="toggleSubInfo"
                     />

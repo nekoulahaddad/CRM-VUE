@@ -28,9 +28,16 @@
       <div class="table__actions">
         <div class="table__icon">
           <img
-            @click="$emit('toggleSubInfo', task)"
-            src="@/assets/icons/info_icon.svg"
             alt=""
+            src="@/assets/icons/info_icon.svg"
+            v-if="infoItem._id !== task._id"
+            @click="$emit('toggleSubInfo', task)"
+          />
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            v-else
+            @click="$emit('toggleSubInfo', task)"
           />
         </div>
         <div class="table__icon">
@@ -58,6 +65,10 @@ export default {
     },
     index: {
       type: Number,
+      required: true,
+    },
+    infoItem: {
+      type: Object,
       required: true,
     },
     task: {
