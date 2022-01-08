@@ -7,6 +7,7 @@ import VueNumberFormat from "vue-number-format";
 import VueSocketIOExt from "vue-socket.io-extended";
 import VueCustomTooltip from "@adamdehaven/vue-custom-tooltip";
 import Popover from "vue-js-popover";
+import VueTheMask from "vue-the-mask";
 import io from "socket.io-client";
 import VModal from "vue-js-modal";
 import VueScrollTo from "vue-scrollto";
@@ -60,6 +61,7 @@ Vue.use(VueCustomTooltip, {
 Vue.use(VModal, { componentName: "v-modal" });
 Vue.use(Popover);
 Vue.use(VueMoment);
+Vue.use(VueTheMask);
 Vue.use(VueScrollTo, {
   container: "body",
   duration: 0,

@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
-  baseURL: process.env.VUE_APP_DEVELOP_URL,
-  headers: {
-    authorization:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5OTA5NjgsImRhdGEiOnsiX2lkIjoiNWZiZmE4MmVjZjczMDcwMWM0ZjRiNDhhIiwibG9naW4iOiIrNzkyNTEwNDc5OTEiLCJuYW1lIjoi0KHRgtCw0L3QuNGB0LvQsNCyIiwic3VybmFtZSI6ItCQ0YDQsNC60LXQu9C-0LIiLCJsYXN0bmFtZSI6ItCS0LvQsNC00LjRgdC70LDQstC-0LLQuNGHIiwicm9sZSI6ImRpcmVjdG9yIiwiZGVwYXJ0bWVudCI6ImxlYWRlcnMiLCJvcHRpb25zIjp7InVzZXJFZGl0b3IiOmZhbHNlfSwibnVtYmVyIjpudWxsLCJpbm5lcl9udW1iZXIiOm51bGx9LCJpYXQiOjE2NDA5ODc5Njh9.B3Q49J8rLlHE2vP93VgDefHCUvNRU4-2SwEowmTHFPg",
-  },
+axios.defaults.baseURL = process.env.VUE_APP_DEVELOP_URL;
+
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.authorization = token;
+  }
+  return config;
 });
 
-export default axiosInstance;
+export default axios;

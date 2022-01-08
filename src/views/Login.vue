@@ -39,7 +39,24 @@
               <li>А так же мы постоянно улучшаем наш продукт :)</li>
             </ul>
           </div>
-          <div class="panel__right"></div>
+          <div class="panel__right">
+            <form @submit.prevent="onSubmit">
+              <input
+                type="text"
+                name="login"
+                v-model="login"
+                @change="onChange($event)"
+                v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+              />
+              <input
+                type="text"
+                name="password"
+                v-model="password"
+                @change="onChange($event)"
+              />
+              <button>Login</button>
+            </form>
+          </div>
         </div>
         <div class="panel__footer">
           © 2021 - 2022 Все права защищены ООО Торговый дом “ЦСК”
@@ -50,7 +67,34 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      login: "",
+      password: "",
+      forgotLogin: "",
+      isForget: false,
+    };
+  },
+  methods: {
+    onSubmit(e) {
+      this.$store
+        .dispatch("login", {
+          login: this.login,
+          password: this.password,
+        })
+        .then((res) => {
+          alert(res);
+          if (res.status === 200) {
+            this.$router.push({ name: "monitor" });
+          }
+        });
+    },
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
