@@ -22,6 +22,9 @@
     "clients": {
       "pageTitle": "Клиенты",
       "clientInfo": "Общая информация о заказе:",
+      "orderNumber": "№ заказа:",
+      "orderProfile": "Профиль:",
+
       "fields": [
         "№:",
         "Клиент",

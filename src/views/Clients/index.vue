@@ -44,6 +44,7 @@
                   'list__row--opened': infoItem._id === item._id,
                 }"
               >
+                <!-- Блок с клиентом -->
                 <v-client
                   :index="index"
                   :client="item"
@@ -51,8 +52,20 @@
                   @toggleInfo="toggleInfo"
                 />
 
-                <!-- Блок с детальной информацией о заказе -->
-                <v-client-info v-if="infoItem._id === item._id" />
+                <div
+                  v-for="(order, index) in item.orders"
+                  :key="order._id"
+                  class="list__row list__row--shadow list__row--white"
+                >
+                  <!-- Блок с заказами клиента -->
+                  <v-order :order="order" :infoItem="infoItem" />
+
+                  <!-- Блок с детальной информацией о заказе -->
+                  <v-order-info
+                    v-if="infoItem._id === item._id"
+                    :order="item"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -66,7 +79,8 @@
 
 <script>
 import VClient from "./components/VClient";
-import VClientInfo from "./components/VClientInfo";
+import VOrder from "./components/VOrder";
+import VOrderInfo from "./components/VOrderInfo";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -82,7 +96,8 @@ export default {
     VNotFoundQuery,
     VPagination,
     VClient,
-    VClientInfo,
+    VOrderInfo,
+    VOrder,
   },
   mounted() {
     this.fetchData();
