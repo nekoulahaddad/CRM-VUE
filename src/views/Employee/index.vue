@@ -32,70 +32,20 @@
                 </div>
               </div>
               <div
-                v-for="employee in dataset"
-                :key="employee.id"
+                v-for="(employee, index) in dataset"
+                :key="employee._id"
                 class="list__row list__row--white"
+                :class="{
+                  'list__row--opened': infoItem._id === employee._id,
+                }"
               >
-                <div
-                  class="list__columns list__columns-shadow list__columns-white"
-                >
-                  <div class="list__column text--blue">
-                    {{
-                      `${employee.surname} ${employee.name.charAt(0)}.${
-                        employee.lastname
-                          ? employee.lastname.charAt(0) + "."
-                          : ""
-                      }`
-                    }}
-                  </div>
-                  <div class="list__column">
-                    {{
-                      employee.region.title.length > 15
-                        ? employee.region.title.slice(0, -14) + "..."
-                        : employee.region.title
-                    }}
-                  </div>
-                  <div class="list__column">
-                    <div class="bg bg--blue-light">{{ employee.position }}</div>
-                  </div>
-                  <div
-                    v-html="transformRating(employee.rating)"
-                    class="list__column"
-                  />
-                  <div class="list__column text--sapphire">
-                    {{ employee.tasks.length }}
-                  </div>
-                  <div class="list__column">
-                    <div class="bg bg--green-light">
-                      {{ employee.department.title }}
-                    </div>
-                  </div>
-                  <div class="list__column">
-                    <div class="table__actions">
-                      <div class="table__icon">
-                        <img src="@/assets/icons/info_icon.svg" alt="" />
-                      </div>
-                      <div class="table__icon">
-                        <img
-                          v-if="role === 'director' || options.userEditor"
-                          src="@/assets/icons/write_icon.svg"
-                          @click="toggleEdit(employee)"
-                          alt=""
-                        />
-                        <div class="table__hidden-icon" v-else></div>
-                      </div>
-                      <div class="table__icon">
-                        <img
-                          v-if="role === 'director'"
-                          src="@/assets/icons/trash_icon.svg"
-                          @click="toggleDelete(employee._id)"
-                          alt=""
-                        />
-                        <div class="table__hidden-icon" v-else></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <v-employee
+                  :infoItem="infoItem"
+                  :index="index"
+                  :role="role"
+                  :employee="employee"
+                  @toggleInfo="toggleInfo"
+                />
               </div>
             </div>
           </div>
@@ -108,16 +58,17 @@
 </template>
 
 <script>
+import VEmployee from "./components/VEmployee";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import getDataFromPage from "../api/getDataFromPage";
+import getDataFromPage from "@/api/getDataFromPage";
 import ratingMixins from "@/mixins/rating";
 import roleMixins from "@/mixins/role";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VEmployee },
   mixins: [ratingMixins, roleMixins],
   data() {
     return {
@@ -175,6 +126,13 @@ export default {
       } finally {
         this.isLoading = true;
         this.$scrollTo("body", 300, {});
+      }
+    },
+    toggleInfo(item) {
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
+      } else {
+        this.infoItem = item;
       }
     },
     toggleEdit(item) {

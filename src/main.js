@@ -19,6 +19,7 @@ import fioMixins from "@/mixins/fio";
 import nameMixins from "@/mixins/name";
 import markMixins from "@/mixins/mark";
 import oneCMixins from "@/mixins/oneC";
+import ratingMixins from "@/mixins/rating";
 import roleMixins from "@/mixins/role";
 import statusMixins from "@/mixins/status";
 import "moment/locale/ru";
@@ -99,6 +100,7 @@ Vue.mixin(oneCMixins);
 Vue.mixin(fioMixins);
 Vue.mixin(nameMixins);
 Vue.mixin(markMixins);
+Vue.mixin(ratingMixins);
 Vue.mixin(roleMixins);
 Vue.mixin(statusMixins);
 
