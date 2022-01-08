@@ -21,14 +21,14 @@
           <img
             alt=""
             v-if="!opened"
-            @click="$emit('toggleSubInfo', order)"
+            @click="$emit('toggleSubInfo', user, order)"
             src="@/assets/icons/info_icon.svg"
           />
           <img
             alt=""
             v-else
             src="@/assets/icons/arrow_top_icon.svg"
-            @click="$emit('toggleSubInfo', order)"
+            @click="$emit('toggleSubInfo', user, order)"
           />
         </div>
       </div>
@@ -45,6 +45,10 @@ export default {
     },
     infoItem: {
       type: Object,
+    },
+    user: {
+      type: Object,
+      required: true,
     },
     order: {
       type: Object,

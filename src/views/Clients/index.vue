@@ -63,12 +63,14 @@
                     :order="order"
                     :infoItem="infoItem"
                     :opened="infoSubItem._id === order._id"
+                    :user="item"
                     @toggleSubInfo="toggleSubInfo"
                   />
 
                   <!-- Блок с детальной информацией о заказе -->
                   <v-order-info
                     v-if="infoSubItem._id === order._id"
+                    :user="item"
                     :order="order"
                   />
                 </div>
@@ -171,10 +173,12 @@ export default {
         this.infoItem = item;
       }
     },
-    toggleSubInfo(item) {
+    toggleSubInfo(user, item) {
       if (this.infoSubItem._id === item._id) {
         this.infoSubItem = {};
+        this.user = user;
       } else {
+        this.user = user;
         this.infoSubItem = item;
       }
     },
