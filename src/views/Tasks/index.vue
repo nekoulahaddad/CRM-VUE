@@ -335,6 +335,7 @@ export default {
     },
     getSubTasks(id, index) {
       this.infoItem = {};
+      this.infoSubItem = {};
 
       if ((index || index === 0) && this.activeIndex === index) {
         this.activeIndex = -1;
