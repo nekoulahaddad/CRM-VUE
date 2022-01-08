@@ -62,10 +62,14 @@
                     v-if="infoItem._id === item._id"
                     :order="order"
                     :infoItem="infoItem"
+                    @toggleSubInfo="toggleSubInfo"
                   />
 
                   <!-- Блок с детальной информацией о заказе -->
-                  <v-order-info v-if="false" :order="item" />
+                  <v-order-info
+                    v-if="infoSubItem._id === order._id"
+                    :order="order"
+                  />
                 </div>
               </div>
             </div>
@@ -122,6 +126,7 @@ export default {
       shippedSum: 0,
       openForm: false,
       infoItem: {},
+      infoSubItem: {},
       searchStr: "",
       openFormAdd: false,
       openFormDelete: false,
@@ -152,14 +157,24 @@ export default {
       } finally {
         this.isLoading = true;
         this.infoItem = {};
+        this.infoSubItem = {};
         this.$scrollTo("body", 300, {});
       }
     },
     toggleInfo(item) {
+      this.infoSubItem = {};
+
       if (this.infoItem._id === item._id) {
         this.infoItem = {};
       } else {
         this.infoItem = item;
+      }
+    },
+    toggleSubInfo(item) {
+      if (this.infoSubItem._id === item._id) {
+        this.infoSubItem = {};
+      } else {
+        this.infoSubItem = item;
       }
     },
   },

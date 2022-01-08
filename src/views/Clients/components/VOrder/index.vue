@@ -19,9 +19,10 @@
       <div class="table__actions">
         <div class="table__icon">
           <img
-            v-if="infoItem._id !== order._id"
-            src="@/assets/icons/info_icon.svg"
             alt=""
+            v-if="infoItem._id !== order._id"
+            @click="$emit('toggleSubInfo', order)"
+            src="@/assets/icons/info_icon.svg"
           />
           <img v-else src="@/assets/icons/arrow_top_icon.svg" alt="" />
         </div>
