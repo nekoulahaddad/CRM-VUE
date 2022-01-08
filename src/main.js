@@ -8,6 +8,7 @@ import VueSocketIOExt from "vue-socket.io-extended";
 import VueCustomTooltip from "@adamdehaven/vue-custom-tooltip";
 import Popover from "vue-js-popover";
 import io from "socket.io-client";
+import VModal from "vue-js-modal";
 import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
 import Toast from "vue-toastification";
@@ -22,6 +23,7 @@ import statusMixins from "@/mixins/status";
 import "moment/locale/ru";
 import "vue-toastification/dist/index.css";
 import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
+import "vue-js-modal/dist/styles.css";
 import "./styles/index.scss";
 
 const token = localStorage.getItem("token");
@@ -51,6 +53,7 @@ Vue.use(VueCustomTooltip, {
   borderRadius: 16,
   fontWeight: 400,
 });
+Vue.use(VModal, { componentName: "v-modal" });
 Vue.use(Popover);
 Vue.use(VueMoment);
 Vue.use(VueScrollTo, {

@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <v-modal name="deleteTaskModal">123</v-modal>
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/tasks_title.svg')" alt="" />
@@ -48,6 +49,7 @@
                   :task="task"
                   @toggleInfo="toggleInfo"
                   @getSubTasks="getSubTasks"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией о задаче -->
@@ -79,6 +81,7 @@
                       :task="sub_task"
                       @toggleSubInfo="toggleSubInfo"
                       @toggleEdit="toggleEdit"
+                      @toggleDelete="toggleDelete"
                     />
 
                     <!-- Блок с детальной информацией о задаче -->
@@ -120,6 +123,7 @@ import statusMixins from "@/mixins/status";
 import fioMixins from "@/mixins/fio";
 import getDataFromPage from "@/api/getDataFromPage";
 import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   components: {
@@ -200,6 +204,9 @@ export default {
     this.fetchData();
   },
   methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
     async fetchData() {
       try {
         this.isLoading = false;
@@ -224,12 +231,8 @@ export default {
       this.open = !this.open;
     },
     toggleDelete(id) {
-      if (!this.deleteForm) {
-        this.deletedItem._id = id;
-      } else {
-        this.deletedItem = {};
-      }
-      this.deleteForm = !this.deleteForm;
+      this.$modal.show("deleteTaskModal");
+      //this.deletedItem._id = id;
     },
     toggleEdit(item) {
       this.infoSubItem = {};
@@ -405,6 +408,27 @@ export default {
       }).then(() => {
         this.$toast.success("Оценка изменена!");
       });
+    },
+    onTaskRemove() {
+      this.changeStatus(false);
+      axios({
+        url: "/tasks/delete/",
+        data: {
+          taskId: this.deletedItem._id,
+        },
+        method: "DELETE",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.$emit("removeFromTask", result.data.task);
+          this.$toast.success("Задача успешно удалена!");
+          this.$emit("toggleOpen");
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
     },
   },
   watch: {
