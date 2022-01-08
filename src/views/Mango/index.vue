@@ -2,7 +2,7 @@
   <div class="page">
     <a-player
       v-if="status"
-      @focus="togglePlay()"
+      @focus="togglePlay"
       :autoplay="true"
       :volume="0.3"
       :music="{
@@ -47,7 +47,13 @@
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
               >
-                <v-mango :index="index" :item="item" :status="status" />
+                <v-mango
+                  :index="index"
+                  :item="item"
+                  :play="play"
+                  :status="status"
+                  @togglePlay="togglePlay"
+                />
               </div>
             </div>
           </div>
@@ -144,7 +150,7 @@ export default {
 
 <style scoped lang="scss">
 .list__columns {
-  grid-template-columns: 30px 1fr 1fr 1fr 1fr;
+  grid-template-columns: minmax(30px, 70px) repeat(4, 1fr);
 }
 .list__header {
   .list__column {
