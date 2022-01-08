@@ -13,6 +13,7 @@
   "clientFirstName": "Имя клиента",
   "clientLastName": "Фамилия клиента",
   "clientMiddleName": "Отчество клиента",
+  "save": "Сохранить",
   "menu": {
     "monitor": "Дашборд",
     "education": "Обучение",

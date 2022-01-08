@@ -60,9 +60,14 @@
         ></textarea>
       </div>
     </div>
+    <v-button red>{{ $t("save") }}</v-button>
   </div>
 </template>
 
 <script>
-export default {};
+import VButton from "@/components/VButton";
+
+export default {
+  components: { VButton },
+};
 </script>
