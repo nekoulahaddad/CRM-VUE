@@ -93,6 +93,23 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &__subtasks {
+    margin-bottom: 10px;
+    .list__columns {
+      background-color: $color-white;
+    }
+
+    .list__row {
+      border-radius: 0;
+
+      &--opened {
+        .list__columns {
+          background-color: $color-gray-secondary;
+        }
+      }
+    }
+  }
 }
 
 .list-info {

@@ -65,6 +65,9 @@
                     v-for="(sub_task, sIndex) in sub_tasks"
                     :key="sub_task._id"
                     class="list__row list__row--white"
+                    :class="{
+                      'list__row--opened': infoSubItem._id === sub_task._id,
+                    }"
                   >
                     <v-sub-task
                       :id="id"
@@ -153,6 +156,7 @@ export default {
       },
       isLoadingSubTasks: false,
       activeIndex: -1,
+      activeSubIndex: -1,
       sub_tasks: [],
     };
   },
@@ -240,6 +244,8 @@ export default {
       }
     },
     toggleSubInfo(item) {
+      this.activeSubIndex = -1;
+
       if (this.infoSubItem._id === item._id) {
         this.infoSubItem = {};
       } else {
@@ -274,6 +280,7 @@ export default {
     },
     removeFromTask(task) {
       this.activeIndex = -1;
+      this.activeSubIndex = -1;
       this.deletedItem = task;
       let index = this.dataset.findIndex((item) => item._id === task._id);
       setTimeout(() => {
@@ -319,6 +326,7 @@ export default {
     },
     resetFilters() {
       this.activeIndex = -1;
+      this.activeSubIndex = -1;
       this.$refs.filters.filterOptions = {};
       this.$refs.filters.activeIndex = 0;
       this.filtersOptions = {};
@@ -328,6 +336,7 @@ export default {
 
       if ((index || index === 0) && this.activeIndex === index) {
         this.activeIndex = -1;
+        this.activeSubIndex = -1;
         return;
       }
 

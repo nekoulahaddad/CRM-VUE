@@ -52,6 +52,10 @@
 <script>
 export default {
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     index: {
       type: Number,
       required: true,
