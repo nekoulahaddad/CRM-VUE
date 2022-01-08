@@ -34,7 +34,13 @@
                 class="list__row list__row--shadow list__row--white"
                 :class="{ 'list__row--opened': infoItem._id === item._id }"
               >
-                <v-call-back :item="item" @toggleInfo="toggleInfo" />
+                <v-call-back
+                  :item="item"
+                  :infoItem="infoItem"
+                  @toggleInfo="toggleInfo"
+                />
+
+                <!-- Блок с детальной информацией об обращении -->
                 <v-call-back-info
                   :item="item"
                   v-if="infoItem._id === item._id"

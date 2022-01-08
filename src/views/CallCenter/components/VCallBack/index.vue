@@ -58,7 +58,14 @@
           <img
             alt=""
             src="@/assets/icons/info_icon.svg"
+            v-if="item._id !== infoItem._id"
             @click="$emit('toggleInfo', item)"
+          />
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleInfo', item)"
+            v-else
           />
         </div>
         <div class="table__icon">
@@ -76,6 +83,10 @@
 export default {
   props: {
     item: {
+      type: Object,
+      required: true,
+    },
+    infoItem: {
       type: Object,
       required: true,
     },
