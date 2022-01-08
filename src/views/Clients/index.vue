@@ -58,13 +58,14 @@
                   class="list__row list__row--shadow list__row--white"
                 >
                   <!-- Блок с заказами клиента -->
-                  <v-order :order="order" :infoItem="infoItem" />
+                  <v-order
+                    v-if="infoItem._id === item._id"
+                    :order="order"
+                    :infoItem="infoItem"
+                  />
 
                   <!-- Блок с детальной информацией о заказе -->
-                  <v-order-info
-                    v-if="infoItem._id === item._id"
-                    :order="item"
-                  />
+                  <v-order-info v-if="false" :order="item" />
                 </div>
               </div>
             </div>

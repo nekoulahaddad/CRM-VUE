@@ -21,18 +21,20 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            alt=""
-            src="/icons/info_icon.svg"
-            v-if="infoItem._id !== client._id"
-            @click="$emit('toggleInfo', client)"
-          />
-          <img
-            alt=""
-            v-else
-            src="@/assets/icons/arrow_top_icon.svg"
-            @click="$emit('toggleInfo', client)"
-          />
+          <template v-if="client.orders.length">
+            <img
+              alt=""
+              src="/icons/info_icon.svg"
+              v-if="infoItem._id !== client._id"
+              @click="$emit('toggleInfo', client)"
+            />
+            <img
+              alt=""
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleInfo', client)"
+            />
+          </template>
         </div>
       </div>
     </div>

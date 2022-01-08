@@ -37,8 +37,7 @@ export default {
       type: Object,
     },
     order: {
-      type: Array,
-      default: [],
+      type: Object,
       required: true,
     },
   },
