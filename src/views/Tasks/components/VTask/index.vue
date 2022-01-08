@@ -99,11 +99,9 @@ export default {
   props: {
     activeIndex: {
       type: Number,
-      required: true,
     },
     id: {
       type: String,
-      required: true,
     },
     index: {
       type: Number,

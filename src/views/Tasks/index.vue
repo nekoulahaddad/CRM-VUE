@@ -52,8 +52,16 @@
 
                 <!-- Блок с детальной информацией о задаче -->
                 <v-task-info v-if="infoItem._id === task._id" :task="task" />
+
                 <!-- Блок с подзадачами -->
-                <v-sub-tasks :tasks="sub_tasks" />
+                <div
+                  v-if="index === activeIndex"
+                  v-for="(sub_task, sIndex) in sub_tasks"
+                  :key="sub_task._id"
+                  class="list__row list__row--white"
+                >
+                  <v-sub-task :index="sIndex" :task="sub_task" />
+                </div>
               </div>
             </div>
           </div>
@@ -67,8 +75,8 @@
 
 <script>
 import VTask from "./components/VTask";
+import VSubTask from "./components/VSubTask";
 import VTaskInfo from "./components/VTaskInfo";
-import VSubTasks from "./components/VSubTasks";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -88,7 +96,7 @@ export default {
     VPagination,
     VTask,
     VTaskInfo,
-    VSubTasks,
+    VSubTask,
   },
   mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
@@ -313,6 +321,7 @@ export default {
       }).then(async (res) => {
         this.isLoadingSubTasks = false;
         this.sub_tasks = res.data.tasks;
+        console.log(this.sub_tasks);
       });
     },
     changeTaskStatus(task, status) {

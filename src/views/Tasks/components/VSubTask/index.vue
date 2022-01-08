@@ -1,0 +1,88 @@
+<template>
+  <div class="list__subtasks sub-tasks">
+    <div class="sub-tasks__title text--blue">
+      {{ $t("pages.tasks.taskSubTasks") }}
+    </div>
+    <div class="list__columns list__columns--shadow list__columns--white">
+      <div class="list__column list__column--number">
+        {{ index + 1 }}
+      </div>
+      <div class="list__column text--blue">
+        {{ transformFIO(task.initiator) }}
+      </div>
+      <div class="list__column">
+        {{ transformFIO(task.executor) }}
+      </div>
+      <div class="list__column">
+        <div class="bg bg--blue-light">
+          {{ task.title }}
+        </div>
+      </div>
+      <div class="list__column text--green">
+        {{ transformDate(task.creation_date) }}
+      </div>
+      <div class="list__column text--sapphire">
+        {{ transformDate(task.deadline_date) }}
+      </div>
+      <div
+        class="list__column"
+        v-html="
+          task && task.status ? transformStatus(task.status) : task.status
+        "
+      />
+      <div class="list__column">
+        <div class="table__actions">
+          <div class="table__icon">
+            <img src="@/assets/icons/info_icon.svg" alt="" />
+          </div>
+          <div class="table__icon">
+            <img src="@/assets/icons/write_icon.svg" alt="" />
+          </div>
+          <div class="table__icon">
+            <img src="@/assets/icons/trash_icon.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    index: {
+      type: Number,
+      required: true,
+    },
+    task: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.sub-tasks {
+  font-size: 12px;
+
+  &__title {
+    font-weight: 700;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .list__columns {
+    grid-template-columns: 50px 140px 140px 450px 120px 120px 120px 1fr;
+  }
+
+  .table__icon {
+    width: 20px;
+    height: 20px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+</style>
