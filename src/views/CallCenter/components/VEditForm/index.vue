@@ -1,5 +1,5 @@
 <template>
-  <div class="list__info list-info callback-list-info">
+  <div class="list__info list-info callback-edit-form">
     <form @submit.prevent="onProvidersAdd">
       <div class="group__title text--blue">
         {{ $t("editCallback") }}
@@ -224,3 +224,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.callback-edit-form {
+  .group {
+    max-width: 976px;
+  }
+}
+</style>
