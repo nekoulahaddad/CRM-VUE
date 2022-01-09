@@ -148,6 +148,11 @@ body {
     width: 791px;
     height: 631px;
   }
+
+  &__right {
+    position: relative;
+    left: 300px;
+  }
 }
 
 .panel {
