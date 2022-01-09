@@ -38,11 +38,14 @@
           />
         </div>
       </div>
+      <v-button red>Сохранить</v-button>
     </form>
   </div>
 </template>
 
 <script>
+import VButton from "@/components/VButton";
+
 export default {
   props: {
     item: {
@@ -50,5 +53,6 @@ export default {
       required: true,
     },
   },
+  components: { VButton },
 };
 </script>
