@@ -15,6 +15,7 @@ import Paginate from "vuejs-paginate";
 import Toast from "vue-toastification";
 import VueMoment from "vue-moment";
 import i18n from "./i18n";
+import dataMixins from "@/mixins/data";
 import dateMixins from "@/mixins/date";
 import fioMixins from "@/mixins/fio";
 import nameMixins from "@/mixins/name";
@@ -100,6 +101,7 @@ Vue.use(Toast, {
 });
 Vue.component("paginate", Paginate);
 
+Vue.mixin(dataMixins);
 Vue.mixin(dateMixins);
 Vue.mixin(oneCMixins);
 Vue.mixin(fioMixins);
