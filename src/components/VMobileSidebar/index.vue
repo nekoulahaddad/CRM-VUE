@@ -10,7 +10,7 @@ export default {};
 @import "@/styles/_variables";
 
 .mobile-sidebar {
-  display: block;
+  display: none;
   position: fixed;
   left: 0;
   top: 0;
@@ -24,6 +24,12 @@ export default {};
 
   &--opened {
     transform: translateX(0);
+  }
+
+  @media (max-width: 767px) {
+    & {
+      display: flex;
+    }
   }
 }
 </style>
