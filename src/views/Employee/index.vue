@@ -53,7 +53,7 @@
                 />
 
                 <!-- Блок с детальной информацией о сотруднике -->
-                <v-employee-info
+                <v-info
                   v-if="infoItem._id === employee._id"
                   :employee="employee"
                 />
@@ -70,7 +70,7 @@
 
 <script>
 import VEmployee from "./components/VEmployee";
-import VEmployeeInfo from "./components/VEmployeeInfo";
+import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
 import VSearch from "@/components/VSearch";
 import VSpinner from "@/components/VSpinner";
@@ -89,7 +89,7 @@ export default {
     VNotFoundQuery,
     VPagination,
     VEmployee,
-    VEmployeeInfo,
+    VInfo,
     VSearch,
   },
   mixins: [ratingMixins, roleMixins],

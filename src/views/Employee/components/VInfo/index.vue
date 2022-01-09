@@ -1,47 +1,64 @@
 <template>
   <div class="list__info list-info employee-list-info">
     <!-- Основная информация -->
-    <div class="group__title text--blue">
-      {{ $t("pages.employee.employeeMainInfo") }}
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeSurName") }}
+    <div class="d-flex justify-content-between">
+      <div>
+        <div class="group__title text--blue">
+          {{ $t("pages.employee.employeeMainInfo") }}
         </div>
-        <div class="group__value">{{ employee.surname }}</div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeSurName") }}
+            </div>
+            <div class="group__value">{{ employee.surname }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeName") }}
+            </div>
+            <div class="group__value">{{ employee.name }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeLastName") }}
+            </div>
+            <div class="group__value">{{ employee.lastname }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeMail") }}
+            </div>
+            <div class="group__value">{{ employee.email || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeePhone") }}
+            </div>
+            <div class="group__value">{{ employee.phone || "" }}</div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeName") }}
-        </div>
-        <div class="group__value">{{ employee.name }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeLastName") }}
-        </div>
-        <div class="group__value">{{ employee.lastname }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeMail") }}
-        </div>
-        <div class="group__value">{{ employee.email || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeePhone") }}
-        </div>
-        <div class="group__value">{{ employee.phone || "" }}</div>
+      <div>
+        <img
+          alt=""
+          @click="photoFull = !photoFull"
+          :src="
+            employee && employee.avatar === 'Выбрать файл'
+              ? `${serverAddr + '/avatars/default.svg'}`
+              : employee && avatar === 'Выбрать файл'
+              ? `${serverAddr + employee.avatar}`
+              : url
+          "
+        />
       </div>
     </div>
 
@@ -185,6 +202,25 @@ export default {
         worker: "Сотрудник",
         buyer: "Закупщик",
       },
+      date: new Date().toString(),
+      employment_date: new Date().toString(),
+      date_of_birth: new Date().toString(),
+      users: [],
+      regions: [],
+      department: null,
+      role: null,
+      photoFull: false,
+      education: null,
+      specialty: null,
+      zodiac_sign: null,
+      element: null,
+      chinese_year: null,
+      departments: [],
+      children: [],
+      avatar: "Выбрать файл",
+      passport_photo: ["Выбрать файлы"],
+      url: "@/assets/icons/preview.svg",
+      serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
   },
 };
