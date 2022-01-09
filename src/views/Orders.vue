@@ -26,6 +26,11 @@
           <div class="scroll-horizontal">
             <div class="list list-shadow">
               <div class="list__header">
+                <v-search
+                  @submit="getSearchData"
+                  v-model="searchStr"
+                  :placeholder="$t('pages.employee.searchPlaceholder')"
+                />
                 <div class="list__title">
                   {{ $t("pages.orders.pageTitle") }}
                 </div>
@@ -117,6 +122,7 @@
 <script>
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
+import VSearch from "@/components/VSearch";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -137,7 +143,7 @@ export default {
     roleMixins,
     statusMixins,
   ],
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VSearch },
   data() {
     return {
       startDate: null,

@@ -4,7 +4,7 @@
       <div class="page__icon">
         <img :src="require('@/assets/icons/delivery_title.svg')" alt="" />
       </div>
-      <h1 class="page__title">Поставщики</h1>
+      <h1 class="page__title">{{ $t("pages.delivery.pageTitle") }}</h1>
     </div>
     <div class="page__body d-flex">
       <div class="page__left">
@@ -13,51 +13,33 @@
       <div class="page__right">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
-          <table class="table table--separate">
-            <thead class="thead">
-              <tr class="thead__top">
-                <td colspan="7">
-                  <div class="table__title">Поставщики</div>
-                </td>
-              </tr>
-              <tr class="thead__bottom">
-                <td>№:</td>
-                <td>Компания:</td>
-                <td>ФИО:</td>
-                <td>Дата создания:</td>
-                <td>Email:</td>
-                <td>Адрес:</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in dataset" :key="item.id">
-                <td>{{ index + 1 + ($route.params.page - 1) * 15 }}</td>
-                <td>{{ item.name }}</td>
-                <td class="text--blue">
-                  {{ item.specialist ? item.specialist.name : "" }}
-                </td>
-                <td class="text--green">
-                  {{ item.specialist ? item.specialist.phone : "" }}
-                </td>
-                <td>{{ item.specialist ? item.specialist.email : "" }}</td>
-                <td class="text--sapphire">{{ item.office_address }}</td>
-                <td>
-                  <div class="table__actions">
-                    <div class="table__icon">
-                      <img src="/icons/info_icon.svg" alt="" />
-                    </div>
-                    <div class="table__icon">
-                      <img src="/icons/write_icon.svg" alt="" />
-                    </div>
-                    <div class="table__icon">
-                      <img src="/icons/trash_icon.svg" alt="" />
-                    </div>
+          <div class="scroll-horizontal">
+            <div class="list">
+              <div class="list__header">
+                <div class="list__title">
+                  {{ $t("pages.delivery.pageTitle") }}
+                </div>
+                <div class="list__columns">
+                  <div
+                    v-for="field in $t('pages.delivery.fields')"
+                    class="list__column"
+                  >
+                    {{ field }}
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </div>
+              </div>
+              <div
+                v-for="(item, index) in dataset"
+                :key="item._id"
+                class="list__row list__row--shadow list__row--white"
+              >
+                <v-item :index="index" :item="item" @toggleInfo="toggleInfo" />
+
+                <!-- Блок с детальной информацией о доставке -->
+                <v-info :item="item" />
+              </div>
+            </div>
+          </div>
           <v-pagination :count="count" />
         </template>
         <v-not-found-query v-else />
@@ -67,6 +49,8 @@
 </template>
 
 <script>
+import VItem from "./components/VItem";
+import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -76,7 +60,7 @@ import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination },
+  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VInfo, VItem },
   data() {
     return {
       isLoading: false,
@@ -227,5 +211,13 @@ export default {
 
 <style lang="scss">
 .delivery-page {
+  .list__columns {
+    grid-template-columns: 30px 350px 220px 160px 140px 260px 1fr;
+  }
+  .list__column {
+    &:first-child {
+      text-align: left;
+    }
+  }
 }
 </style>

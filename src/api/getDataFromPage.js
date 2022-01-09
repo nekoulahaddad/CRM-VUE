@@ -26,8 +26,14 @@ export default function getDataFromPage(url, options) {
     clubcard: options.clubcard || null,
   };
 
+  let apiUrl = url;
+
+  if (options.page) {
+    apiUrl += `/?page=${options.page}`;
+  }
+
   return axios({
-    url: `${url}/?page=${options.page}`,
+    url: apiUrl,
     data: {
       options: getOptions,
     },

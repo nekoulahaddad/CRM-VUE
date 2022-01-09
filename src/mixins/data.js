@@ -8,10 +8,10 @@ export default {
     };
   },
   mounted() {
-    this.page = parseInt(this.$route.params.page) || 1;
-    this.link = `${this.$route.fullPath.substring(
+    this.page = parseInt(this.$route?.params?.page) || 1;
+    this.link = `${this.$route?.fullPath?.substring(
       0,
-      this.$route.fullPath.lastIndexOf("/")
+      this.$route?.fullPath?.lastIndexOf("/")
     )}/`;
   },
   methods: {

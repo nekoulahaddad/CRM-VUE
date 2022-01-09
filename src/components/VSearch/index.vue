@@ -1,17 +1,21 @@
 <template>
   <div class="search">
-    <form>
-      <input class="search__input" type="text" :placeholder="placeholder" />
-    </form>
+    <input
+      class="search__input"
+      type="text"
+      :placeholder="placeholder"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
+      @keydown.enter.prevent="$emit('submit', $event.target.value)"
+    />
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    placeholder: {
-      type: String,
-    },
+    placeholder: String,
+    value: String,
   },
 };
 </script>

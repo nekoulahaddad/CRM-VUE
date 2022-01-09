@@ -20,6 +20,8 @@
             <div class="list">
               <div class="list__header">
                 <v-search
+                  @submit="getSearchData"
+                  v-model="user"
                   :placeholder="$t('pages.employee.searchPlaceholder')"
                 />
                 <div class="list__title">
@@ -77,6 +79,8 @@ import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "@/api/getDataFromPage";
 import ratingMixins from "@/mixins/rating";
 import roleMixins from "@/mixins/role";
+import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   components: {
@@ -129,6 +133,9 @@ export default {
     this.getData();
   },
   methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
     async getData() {
       try {
         this.isLoading = false;
@@ -172,6 +179,35 @@ export default {
         this.deletedItem = {};
       }
       this.open.delete = !this.open.delete;
+    },
+    getSearchData() {
+      this.changeStatus(false);
+
+      if (this.user.trim().length < 3) {
+        this.$toast.error("Запрос слишком короткий!");
+        this.changeStatus(true);
+      } else {
+        this.isLoading = false;
+
+        axios
+          .get(`/user/getsearchwithoutdirector/${this.user}`)
+          .then(async (res) => {
+            if (res.data.users.length) {
+              this.dataset = res.data.users;
+              this.count = res.data.count ? res.data.count : 0;
+              this.$toast.success("Результаты запросов!");
+            } else {
+              this.$toast.error("Результаты не найдены!");
+              this.user = "";
+            }
+
+            this.changeStatus(true);
+            this.$forceUpdate();
+          })
+          .finally(() => {
+            this.isLoading = true;
+          });
+      }
     },
     resetFilters() {
       this.$refs.filters.filterOptions = {};
