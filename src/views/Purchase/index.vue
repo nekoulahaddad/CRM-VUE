@@ -117,7 +117,7 @@ export default {
 <style lang="scss">
 .purchase-page {
   .list__columns {
-    grid-template-columns: 30px 140px 140px 140px 120px 120px 120px 140px 140px 1fr;
+    grid-template-columns: 30px 140px 160px 230px 140px 120px 140px 160px 140px 50px;
   }
   .list__header {
     .list__column {
