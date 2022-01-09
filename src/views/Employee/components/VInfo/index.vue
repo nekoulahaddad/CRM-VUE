@@ -254,5 +254,9 @@ export default {
     height: 123px;
     object-fit: contain;
   }
+
+  .d-flex {
+    margin-bottom: 10px;
+  }
 }
 </style>
