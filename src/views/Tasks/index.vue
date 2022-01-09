@@ -18,7 +18,7 @@
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
-            <div class="list list-shadow">
+            <div class="list">
               <div class="list__header">
                 <div class="list__title">
                   {{ $t("pages.tasks.pageTitle") }}
