@@ -13,7 +13,37 @@
       <div class="page__right">
         <div v-if="!filtersOptions.region">Выберите регион</div>
         <v-spinner v-else-if="!isLoading" />
-        <template v-else-if="dataset.length"> </template>
+        <template v-else-if="dataset.categories.length">
+          <div class="scroll-horizontal">
+            <div class="list list-shadow">
+              <div class="list__header">
+                <div class="list__title">
+                  {{ $t("pages.seo.pageTitle") }}
+                </div>
+                <div class="list__columns">
+                  <div
+                    v-for="field in $t('pages.seo.fields')"
+                    class="list__column"
+                  >
+                    {{ field }}
+                  </div>
+                </div>
+              </div>
+              <div
+                v-for="(item, index) in dataset.categories"
+                :key="item._id"
+                class="list__row list__row--shadow list__row--white"
+              >
+                <div
+                  class="list__columns list__columns--shadow list__columns--white"
+                >
+                  <div class="list__column">{{ item.categoryName }}</div>
+                  <div class="list__column"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
         <v-not-found-query v-else />
       </div>
     </div>
@@ -104,5 +134,14 @@ export default {
 
 <style lang="scss">
 .seo-page {
+  .list__columns {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .list__column {
+    &:first-child {
+      text-align: left;
+    }
+  }
 }
 </style>
