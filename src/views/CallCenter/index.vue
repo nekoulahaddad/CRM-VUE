@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page callbacks-page">
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/callbacks_title.svg')" alt="" />
@@ -170,13 +170,15 @@ export default {
 </script>
 
 <style lang="scss">
-.list__columns {
-  grid-template-columns: 30px 120px 140px 140px 140px 140px 230px 140px 140px 140px 230px 1fr;
-}
-.list__header {
-  .list__column {
-    &:first-child {
-      text-align: left;
+.callbacks-page {
+  .list__columns {
+    grid-template-columns: 30px 120px 140px 140px 140px 140px 230px 140px 140px 140px 230px 1fr;
+  }
+  .list__header {
+    .list__column {
+      &:first-child {
+        text-align: left;
+      }
     }
   }
 }

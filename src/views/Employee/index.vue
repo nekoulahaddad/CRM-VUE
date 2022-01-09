@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page employee-page">
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/employees_title.svg')" alt="" />

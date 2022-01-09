@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page tasks-page">
     <v-modal name="deleteTaskModal">Удаление задачи</v-modal>
     <div class="page__header">
       <div class="page__icon">
@@ -446,24 +446,26 @@ export default {
 </script>
 
 <style lang="scss">
-.list__columns {
-  grid-template-columns: 30px 140px 140px 450px 120px 120px 120px 1fr;
-}
-.list__header {
-  .list__column {
-    &:first-child {
-      text-align: left;
-    }
-  }
-}
-.sub-tasks {
-  .list__row {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    & + * {
-      margin-top: 10px;
-    }
-  }
+.tasks-page {
   .list__columns {
+    grid-template-columns: 30px 140px 140px 450px 120px 120px 120px 1fr;
+  }
+  .list__header {
+    .list__column {
+      &:first-child {
+        text-align: left;
+      }
+    }
+  }
+  .sub-tasks {
+    .list__row {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      & + * {
+        margin-top: 10px;
+      }
+    }
+    .list__columns {
+    }
   }
 }
 </style>

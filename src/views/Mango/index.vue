@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page mango-page">
     <a-player
       v-if="status"
       @focus="togglePlay"
@@ -149,22 +149,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.list__columns {
-  grid-template-columns: minmax(30px, 70px) repeat(4, 1fr);
-}
-.list__header {
-  .list__column {
-    &:first-child {
-      text-align: left;
+.mango-page {
+  .list__columns {
+    grid-template-columns: minmax(30px, 70px) repeat(4, 1fr);
+  }
+  .list__header {
+    .list__column {
+      &:first-child {
+        text-align: left;
+      }
     }
   }
-}
-.aplayer {
-  position: fixed;
-  bottom: 25px;
-  width: 500px;
-  z-index: 1000;
-  left: 50%;
-  transform: translateX(-50%) !important;
+  .aplayer {
+    position: fixed;
+    bottom: 25px;
+    width: 500px;
+    z-index: 1000;
+    left: 50%;
+    transform: translateX(-50%) !important;
+  }
 }
 </style>
