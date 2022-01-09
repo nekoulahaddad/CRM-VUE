@@ -83,6 +83,35 @@
           </textarea>
         </div>
       </div>
+      <div class="group__title text--blue">
+        {{ $t("executor") }}
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("fioExecutor") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('fioExecutor')"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("status") }}</div>
+        <div class="group__content"></div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("orderNumber") }}</div>
+        <div class="group__content"></div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("comment") }}</div>
+        <div class="group__content">
+          <textarea class="form-textarea" :placeholder="$t('comment')">
+            {{ comment }}
+          </textarea>
+        </div>
+      </div>
       <v-button red>{{ $t("save") }}</v-button>
     </form>
   </div>
@@ -226,12 +255,30 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .callback-edit-form {
   .group {
     max-width: 976px;
 
     &--region {
       max-width: 401px;
+    }
+  }
+
+  form > .group__title {
+    position: relative;
+    padding-top: 10px;
+
+    &::before {
+      display: block;
+      content: "";
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      top: 0;
+      background-color: $color-gray-secondary;
+      border-radius: $border-radius;
     }
   }
 }

@@ -199,6 +199,7 @@ export default {
 
     &:not(:first-child) {
       padding-top: 10px;
+
       &::before {
         display: block;
         content: "";
