@@ -4,6 +4,10 @@
   "name": "Наименование:",
   "article": "Артикул:",
   "goods": "Товары:",
+  "pageTitle": "Заголовок страницы:",
+  "pageDescription": "Описание страницы:",
+  "metaDescription": "Meta description:",
+  "keywords": "Ключевые слова",
   "phone": "Телефон:",
   "dateDelivery": "Дата поставки:",
   "fio": "ФИО:",
@@ -166,6 +170,7 @@
     },
     "seo": {
       "pageTitle": "SEO",
+      "editCategory": "Редактирование SEO категории:",
       "fields": [
         "Название категории:",
         ""

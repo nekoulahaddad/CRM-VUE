@@ -33,13 +33,12 @@
                 v-for="(item, index) in dataset.categories"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
+                :class="{ 'list__row--opened': editedItem._id === item._id }"
               >
-                <div
-                  class="list__columns list__columns--shadow list__columns--white"
-                >
-                  <div class="list__column">{{ item.categoryName }}</div>
-                  <div class="list__column"></div>
-                </div>
+                <v-item :item="item" @toggleEdit="toggleEdit" />
+
+                <!-- Блок с формой редактирования -->
+                <v-edit v-if="editedItem._id === item._id" :item="item" />
               </div>
             </div>
           </div>
@@ -51,6 +50,8 @@
 </template>
 
 <script>
+import VEdit from "./components/VEdit";
+import VItem from "./components/VItem";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -59,7 +60,7 @@ import { mapMutations } from "vuex";
 import getDataFromPage from "../../api/getDataFromPage";
 
 export default {
-  components: { VFilter, VNotFoundQuery, VPagination, VSpinner },
+  components: { VFilter, VEdit, VItem, VNotFoundQuery, VPagination, VSpinner },
   data() {
     return {
       isLoading: false,
@@ -126,6 +127,14 @@ export default {
       } catch (e) {
       } finally {
         this.isLoading = true;
+      }
+    },
+    toggleEdit(type, item) {
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
+      } else {
+        this.editedItem = item;
+        this.type = type;
       }
     },
   },
