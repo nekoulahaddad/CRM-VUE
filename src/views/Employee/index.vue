@@ -41,7 +41,9 @@
                 :key="employee._id"
                 class="list__row list__row--shadow list__row--white"
                 :class="{
-                  'list__row--opened': infoItem._id === employee._id,
+                  'list__row--opened':
+                    infoItem._id === employee._id ||
+                    editedItem._id === employee._id,
                 }"
               >
                 <v-employee
@@ -49,13 +51,22 @@
                   :role="role"
                   :infoItem="infoItem"
                   :employee="employee"
+                  :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
+                  @toggleEdit="toggleEdit"
                 />
 
                 <!-- Блок с детальной информацией о сотруднике -->
                 <v-info
                   v-if="infoItem._id === employee._id"
                   :employee="employee"
+                />
+
+                <!-- Блок с формой редактирования сотрудника -->
+                <v-edit
+                  v-if="editedItem._id === employee._id"
+                  :item="employee"
+                  :editedItem="editedItem"
                 />
               </div>
             </div>
@@ -70,6 +81,7 @@
 
 <script>
 import VEmployee from "./components/VEmployee";
+import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
 import VSearch from "@/components/VSearch";
@@ -91,6 +103,7 @@ export default {
     VEmployee,
     VInfo,
     VSearch,
+    VEdit,
   },
   mixins: [ratingMixins, roleMixins],
   data() {
@@ -109,6 +122,7 @@ export default {
       deletedItem: {},
       updatedItem: {},
       infoItem: {},
+      editedItem: {},
       isLoading: false,
       count: 0,
       filtersOptions: {},
@@ -156,6 +170,8 @@ export default {
       }
     },
     toggleInfo(item) {
+      this.editedItem = {};
+
       if (this.infoItem._id === item._id) {
         this.infoItem = {};
       } else {
@@ -163,14 +179,13 @@ export default {
       }
     },
     toggleEdit(item) {
-      if (!this.open.edit) {
-        this.infoItem = item;
+      this.infoItem = {};
+
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
       } else {
-        setTimeout(() => {
-          this.infoItem = {};
-        }, 500);
+        this.editedItem = item;
       }
-      this.open.edit = !this.open.edit;
     },
     toggleDelete(id) {
       if (!this.open.delete) {

@@ -43,12 +43,20 @@
           />
         </div>
         <div class="table__icon">
-          <img
-            v-if="role === 'director' || options.userEditor"
-            src="@/assets/icons/write_icon.svg"
-            @click="toggleEdit(employee)"
-            alt=""
-          />
+          <template v-if="role === 'director' || options.userEditor">
+            <img
+              alt=""
+              v-if="employee._id !== editedItem._id"
+              src="@/assets/icons/write_icon.svg"
+              @click="$emit('toggleEdit', employee)"
+            />
+            <img
+              alt=""
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleEdit', employee)"
+              v-else
+            />
+          </template>
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
@@ -70,6 +78,7 @@ export default {
     infoItem: {
       type: Object,
     },
+    editedItem: Object,
     employee: {
       type: Object,
       required: true,
