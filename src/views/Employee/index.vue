@@ -19,7 +19,9 @@
           <div class="scroll-horizontal">
             <div class="list">
               <div class="list__header">
-                <v-search />
+                <v-search
+                  :placeholder="$t('pages.employee.searchPlaceholder')"
+                />
                 <div class="list__title">
                   {{ $t("pages.employee.pageTitle") }}
                 </div>

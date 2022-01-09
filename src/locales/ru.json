@@ -134,6 +134,7 @@
       "employeeEmploymentDate": "Дата приема на работу:",
       "employeeRegion": "Регион:",
       "employeeChineseYear": "Год по китайскому календарю:",
+      "searchPlaceholder": "Поиск по фамилии или телефону",
       "fields": [
         "ФИО:",
         "Регион",

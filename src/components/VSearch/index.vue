@@ -1,13 +1,19 @@
 <template>
   <div class="search">
     <form>
-      <input class="search__input" type="text" placeholder="Поиск" />
+      <input class="search__input" type="text" :placeholder="placeholder" />
     </form>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    placeholder: {
+      type: String,
+    },
+  },
+};
 </script>
 
 <style lang="scss">
