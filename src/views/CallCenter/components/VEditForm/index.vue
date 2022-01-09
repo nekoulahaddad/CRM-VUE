@@ -48,7 +48,7 @@
           />
         </div>
       </div>
-      <div class="group">
+      <div class="group group--region">
         <div class="group__title">{{ $t("region") }}</div>
         <div class="group__content">
           <select class="form-select" name="region" v-model="region">
@@ -229,6 +229,10 @@ export default {
 .callback-edit-form {
   .group {
     max-width: 976px;
+
+    &--region {
+      max-width: 401px;
+    }
   }
 }
 </style>
