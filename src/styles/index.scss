@@ -86,7 +86,7 @@ ul {
 
   &__right {
     flex: 1;
-    overflow-x: scroll;
+    overflow: hidden;
   }
 
   &__icon {
@@ -159,6 +159,7 @@ ul {
 
 .scroll-horizontal {
   padding-left: 4px;
+  overflow-x: scroll;
 }
 
 @import "media";
