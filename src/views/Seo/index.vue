@@ -42,6 +42,7 @@
               </div>
             </div>
           </div>
+          <v-pagination :count="count" />
         </template>
         <v-not-found-query v-else />
       </div>
@@ -56,8 +57,8 @@ import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
-import { mapMutations } from "vuex";
 import getDataFromPage from "../../api/getDataFromPage";
+import { mapMutations } from "vuex";
 
 export default {
   components: { VFilter, VEdit, VItem, VNotFoundQuery, VPagination, VSpinner },
