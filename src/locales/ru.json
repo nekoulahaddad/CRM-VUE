@@ -1,9 +1,19 @@
 {
   "title": "ЦСК",
   "author": "Автор",
+  "companyName": "Название компании:",
+  "site": "Сайт",
   "name": "Наименование:",
   "article": "Артикул:",
   "goods": "Товары:",
+  "director": "Директор:",
+  "birthday": "Дата рождения:",
+  "specialist": "Специалист:",
+  "categories": "Категории:",
+  "email": "Email:",
+  "viber": "Viber:",
+  "whatsapp": "Whatsapp",
+  "telegram": "Telegram",
   "chooseRegion": "Выберите регион",
   "pageTitle": "Заголовок страницы:",
   "pageDescription": "Описание страницы:",
@@ -113,6 +123,7 @@
     },
     "delivery": {
       "pageTitle": "Поставщики",
+      "info": "Общая информация о поставщике:",
       "searchPlaceholder": "Поиск по компании, ФИО",
       "fields": [
         "№:",

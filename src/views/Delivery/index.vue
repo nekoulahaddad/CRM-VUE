@@ -37,11 +37,19 @@
                 v-for="(item, index) in dataset"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': infoItem._id === item._id,
+                }"
               >
-                <v-item :index="index" :item="item" @toggleInfo="toggleInfo" />
+                <v-item
+                  :index="index"
+                  :item="item"
+                  :infoItem="infoItem"
+                  @toggleInfo="toggleInfo"
+                />
 
                 <!-- Блок с детальной информацией о доставке -->
-                <v-info :item="item" />
+                <v-info v-if="infoItem._id === item._id" :item="item" />
               </div>
             </div>
           </div>
@@ -86,6 +94,7 @@ export default {
       addedItem: {},
       deleted: false,
       deletedItem: {},
+      infoItem: {},
       edit: false,
       editedItem: {},
       info: false,
@@ -115,14 +124,11 @@ export default {
       changeStatus: "change_load_status",
     }),
     toggleInfo(item) {
-      if (!this.info) {
-        this.editedItem = item;
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
       } else {
-        setTimeout(() => {
-          this.editedItem = {};
-        }, 500);
+        this.infoItem = item;
       }
-      this.info = !this.info;
     },
     toggleOpen() {
       this.open = !this.open;
