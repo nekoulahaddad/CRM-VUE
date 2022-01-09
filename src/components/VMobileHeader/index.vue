@@ -1,6 +1,8 @@
 <template>
   <header class="mobile-header">
-    <div></div>
+    <div>
+      <img src="@/assets/icons/burger.svg" />
+    </div>
     <router-link to="/monitor">
       <img src="@/assets/icons/logo.svg" />
     </router-link>
@@ -27,6 +29,9 @@ export default {};
   right: 0;
   z-index: 100;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 </style>
