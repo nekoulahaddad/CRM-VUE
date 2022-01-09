@@ -1,5 +1,11 @@
 <template>
-  <header class="mobile-header"></header>
+  <header class="mobile-header">
+    <div></div>
+    <router-link to="/monitor">
+      <img src="@/assets/icons/logo.svg" />
+    </router-link>
+    <div></div>
+  </header>
 </template>
 
 <script>
@@ -11,12 +17,16 @@ export default {};
 
 .mobile-header {
   width: 100%;
-  height: 60px;
+  height: 80px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: $color-white;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
