@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page mail-page">
     <popover name="foo"> 123 </popover>
     <div class="page__header">
       <div class="page__icon">
@@ -178,11 +178,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.table {
-  .thead__bottom {
-    td:last-child {
-      text-align: left;
-    }
-  }
+.mail-page {
 }
 </style>

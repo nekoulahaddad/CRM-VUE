@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page delivery-page">
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/delivery_title.svg')" alt="" />
@@ -224,3 +224,8 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.delivery-page {
+}
+</style>

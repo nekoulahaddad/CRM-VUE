@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page orders-page">
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/orders_title.svg')" alt="" />
@@ -429,7 +429,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.list__columns {
-  grid-template-columns: 60px 140px repeat(10, minmax(140px, 1fr));
+.orders-page {
+  .list__columns {
+    grid-template-columns: 60px 140px repeat(10, minmax(140px, 1fr));
+  }
 }
 </style>

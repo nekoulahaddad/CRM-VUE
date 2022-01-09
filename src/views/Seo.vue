@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page seo-page">
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/seo_title.svg')" alt="" />
@@ -38,3 +38,8 @@ export default {
   components: { VSpinner },
 };
 </script>
+
+<style lang="scss">
+.seo-page {
+}
+</style>
