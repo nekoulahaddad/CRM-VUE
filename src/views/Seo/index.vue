@@ -1,0 +1,108 @@
+<template>
+  <div class="page seo-page">
+    <div class="page__header">
+      <div class="page__icon">
+        <img :src="require('@/assets/icons/seo_title.svg')" alt="" />
+      </div>
+      <h1 class="page__title">{{ $t("pages.seo.pageTitle") }}</h1>
+    </div>
+    <div class="page__body d-flex">
+      <div class="page__left">
+        <v-filter type="goods" ref="filters" />
+      </div>
+      <div class="page__right">
+        <div v-if="!filtersOptions.region">Выберите регион</div>
+        <v-spinner v-else-if="!isLoading" />
+        <template v-else-if="dataset.length"> </template>
+        <v-not-found-query v-else />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import VFilter from "@/components/VFilter";
+import VSpinner from "@/components/VSpinner";
+import VNotFoundQuery from "@/components/VNotFoundQuery";
+import VPagination from "@/components/VPagination";
+import { mapMutations } from "vuex";
+import getDataFromPage from "../../api/getDataFromPage";
+
+export default {
+  components: { VFilter, VNotFoundQuery, VPagination, VSpinner },
+  data() {
+    return {
+      isLoading: false,
+      dataset: {
+        products: [],
+        categories: [],
+        brands: [],
+      },
+      type: "",
+      current: [],
+      filtersOptions: {},
+      count: 0,
+      editForm: false,
+      editedItem: {},
+      good: "",
+    };
+  },
+  watch: {
+    $route: function () {
+      this.filtersOptions.nesting = +this.$route.params.nesting - 1;
+      this.filtersOptions.parent_value = this.$route.params.parent_value;
+      this.filtersOptions.type = this.$route.params.type;
+      if (this.$route.params.type !== "search") {
+        this.fetchData();
+      }
+    },
+    filtersOptions: {
+      handler: function () {
+        if (this.$route.params.type !== "search") {
+          this.fetchData();
+        }
+      },
+      deep: true,
+    },
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.isLoading = false;
+    if (parseInt(to.params.nesting) < parseInt(from.params.nesting)) {
+      this.current.splice(to.params.nesting - 1, this.current.length);
+    }
+    if (parseInt(to.params.nesting) <= 1 || !to.params.nesting) {
+      this.current.splice(0, this.current.length);
+    }
+    this.isLoading = true;
+    next();
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    async fetchData() {
+      try {
+        this.isLoading = false;
+        this.filtersOptions.page = this.$route.params.page;
+
+        const result = await getDataFromPage(
+          `/${this.$route.params.type || "categories"}/get`,
+          this.filtersOptions
+        );
+
+        this.dataset.categories = result.data.categories;
+        this.dataset.products = result.data.products;
+        this.count = result.data.count;
+      } catch (e) {
+      } finally {
+        this.isLoading = true;
+      }
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.seo-page {
+}
+</style>

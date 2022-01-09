@@ -80,7 +80,7 @@ const routes = [
       {
         path: "seo/:nesting/:type?/:parent_value?/:page?",
         name: "seo",
-        component: () => import("../views/Seo.vue"),
+        component: () => import("../views/Seo"),
       },
       {
         path: "storage/:nesting/:type?/:parent_value?/:page?",
