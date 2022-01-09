@@ -1,6 +1,6 @@
 <template>
   <div class="list__info list-info seo-list-info">
-    <form @submit.prevent="">
+    <form @submit.prevent="onItemEdit">
       <div class="group__title text--blue">
         {{ $t("pages.seo.editCategory") }}
       </div>
@@ -48,6 +48,8 @@
 <script>
 import VButton from "@/components/VButton";
 import { VueEditor } from "vue2-editor";
+import { mapMutations } from "vuex";
+import axios from "@/api/axios";
 
 export default {
   props: {
@@ -108,6 +110,58 @@ export default {
         }
         this.item.meta.description = metadescription;
       },
+    },
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+    onItemEdit() {
+      this.changeStatus(false);
+
+      let infoData = {};
+      infoData.id = this.editedItem._id;
+      infoData.type = this.type;
+      infoData.region = this.region;
+
+      if (this.editedItem.meta.title || this.editedItem.meta.title === "") {
+        infoData.title = this.editedItem.meta.title;
+      }
+      if (this.editedItem.description || this.editedItem.description === "") {
+        infoData.description = this.editedItem.description.replace(
+          /$nbsp;/g,
+          " "
+        );
+      }
+      if (
+        this.editedItem.meta.keywords ||
+        this.editedItem.meta.keywords === ""
+      ) {
+        infoData.keywords = this.editedItem.meta.keywords;
+      }
+      if (
+        this.editedItem.meta.description ||
+        this.editedItem.meta.description === ""
+      ) {
+        infoData.metadescription = this.editedItem.meta.description;
+      }
+
+      axios
+        .post("/seo/update/", infoData)
+        .then(async (res) => {
+          let result = await res;
+          this.$emit("editItem", result.data);
+          this.$toast.success("Элемент успешно обновлен!");
+          this.$emit("toggleOpen");
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
     },
   },
 };
