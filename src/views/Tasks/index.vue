@@ -116,11 +116,7 @@ import VTaskInfo from "./components/VTaskInfo";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
-import dateMixins from "@/mixins/date";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import roleMixins from "@/mixins/role";
-import statusMixins from "@/mixins/status";
-import fioMixins from "@/mixins/fio";
 import getDataFromPage from "@/api/getDataFromPage";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
@@ -136,7 +132,6 @@ export default {
     VTaskInfo,
     VSubTask,
   },
-  mixins: [dateMixins, fioMixins, roleMixins, statusMixins],
   props: {
     user: {
       type: Object,
