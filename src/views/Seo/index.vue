@@ -11,7 +11,7 @@
         <v-filter type="goods" ref="filters" />
       </div>
       <div class="page__right">
-        <div v-if="!filtersOptions.region">Выберите регион</div>
+        <div v-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
         <v-spinner v-else-if="!isLoading" />
         <template v-else-if="dataset.categories.length">
           <div class="scroll-horizontal">
@@ -42,7 +42,7 @@
               </div>
             </div>
           </div>
-          <v-pagination :count="count" />
+          <v-pagination v-if="count > 15" :count="count" />
         </template>
         <v-not-found-query v-else />
       </div>

@@ -8,9 +8,17 @@
     background-color: $color-white;
     border-radius: $border-radius;
     height: 81px;
+    position: relative;
 
     .list__columns {
       height: 33px;
+    }
+
+    .search {
+      width: 519px;
+      position: absolute;
+      right: 10px;
+      top: 2px;
     }
   }
 

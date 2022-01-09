@@ -19,6 +19,7 @@
           <div class="scroll-horizontal">
             <div class="list">
               <div class="list__header">
+                <v-search />
                 <div class="list__title">
                   {{ $t("pages.employee.pageTitle") }}
                 </div>
@@ -67,6 +68,7 @@
 import VEmployee from "./components/VEmployee";
 import VEmployeeInfo from "./components/VEmployeeInfo";
 import VFilter from "@/components/VFilter";
+import VSearch from "@/components/VSearch";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -82,6 +84,7 @@ export default {
     VPagination,
     VEmployee,
     VEmployeeInfo,
+    VSearch,
   },
   mixins: [ratingMixins, roleMixins],
   data() {
