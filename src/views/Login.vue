@@ -1,83 +1,82 @@
 <template>
-  <div class="login-page">
-    <div class="login-page__left">
-      <img src="@/assets/icons/building.svg" alt="" />
-    </div>
-    <div class="login-page__right">
-      <div class="login-page__panel panel">
-        <div class="panel__header">
-          <div class="panel__title">
-            Работа в CRM системе ЦСК вам позволяет:
-          </div>
-        </div>
-        <div class="panel__body">
-          <div class="panel__left">
-            <ul>
-              <li>
-                Позволяет эффективно работать с заказами / заявками клиентов
-              </li>
-              <li>
-                Оперативно загружать и выгружать новый товар или редактировать
-                уже имеющийся
-              </li>
-              <li>Отслеживать историю заказов клиента</li>
-              <li>
-                Назначать задачи сотрудникам, а так же отслеживать их выполнение
-                Видеть аналитику компании
-              </li>
-              <li>
-                Отслеживать и создавать мероприятия Управлять интернет -
-                магазином
-              </li>
-              <li>
-                Создавать обучение для сотрудников Размещать и управлять
-                вакансиями
-              </li>
-              <li>
-                Управлять оптимизацией для поисковых систем Yandex и Google
-              </li>
-              <li>А так же мы постоянно улучшаем наш продукт :)</li>
-            </ul>
-          </div>
-          <div class="panel__right panel-right">
-            <div class="panel-right__logo">
-              <img src="@/assets/icons/logo_big.svg" alt="" />
+  <div class="wrapper">
+    <div class="login-page">
+      <div class="login-page__right">
+        <div class="login-page__panel panel">
+          <div class="panel__header">
+            <div class="panel__title">
+              Работа в CRM системе ЦСК вам позволяет:
             </div>
-            <div class="panel-right__slogan">
-              Вместе мы сможем стать <span class="text--red">лучше!</span>
+          </div>
+          <div class="panel__body">
+            <div class="panel__left">
+              <ul>
+                <li>
+                  Позволяет эффективно работать с заказами / заявками клиентов
+                </li>
+                <li>
+                  Оперативно загружать и выгружать новый товар или редактировать
+                  уже имеющийся
+                </li>
+                <li>Отслеживать историю заказов клиента</li>
+                <li>
+                  Назначать задачи сотрудникам, а так же отслеживать их
+                  выполнение Видеть аналитику компании
+                </li>
+                <li>
+                  Отслеживать и создавать мероприятия Управлять интернет -
+                  магазином
+                </li>
+                <li>
+                  Создавать обучение для сотрудников Размещать и управлять
+                  вакансиями
+                </li>
+                <li>
+                  Управлять оптимизацией для поисковых систем Yandex и Google
+                </li>
+                <li>А так же мы постоянно улучшаем наш продукт :)</li>
+              </ul>
             </div>
-            <form class="panel-right__form" @submit.prevent="onSubmit">
-              <input
-                type="text"
-                name="login"
-                v-model="login"
-                @change="onChange($event)"
-                v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
-                :disabled="isFetch"
-                placeholder="Номер телефона"
-              />
-              <input
-                type="text"
-                name="password"
-                v-model="password"
-                @change="onChange($event)"
-                :disabled="isFetch"
-                placeholder="Пароль"
-              />
-              <div class="policy">
-                <input type="checkbox" id="policy" />
-                <label for="policy">
-                  Я даю своё согласие на обработку персональных даннных в
-                  соответсвиии с политикой конфиденциальности и условиями
-                  пользования
-                </label>
+            <div class="panel__right panel-right">
+              <div class="panel-right__logo">
+                <img src="@/assets/icons/logo_big.svg" alt="" />
               </div>
-              <v-button :disabled="isFetch" red>Войти</v-button>
-            </form>
+              <div class="panel-right__slogan">
+                Вместе мы сможем стать <span class="text--red">лучше!</span>
+              </div>
+              <form class="panel-right__form" @submit.prevent="onSubmit">
+                <input
+                  type="text"
+                  name="login"
+                  v-model="login"
+                  @change="onChange($event)"
+                  v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+                  :disabled="isFetch"
+                  placeholder="Номер телефона"
+                />
+                <input
+                  type="text"
+                  name="password"
+                  v-model="password"
+                  @change="onChange($event)"
+                  :disabled="isFetch"
+                  placeholder="Пароль"
+                />
+                <div class="policy">
+                  <input type="checkbox" id="policy" />
+                  <label for="policy">
+                    Я даю своё согласие на обработку персональных даннных в
+                    соответсвиии с политикой конфиденциальности и условиями
+                    пользования
+                  </label>
+                </div>
+                <v-button :disabled="isFetch" red>Войти</v-button>
+              </form>
+            </div>
           </div>
-        </div>
-        <div class="panel__footer">
-          © 2021 - 2022 Все права защищены ООО Торговый дом “ЦСК”
+          <div class="panel__footer">
+            © 2021 - 2022 Все права защищены ООО Торговый дом “ЦСК”
+          </div>
         </div>
       </div>
     </div>
@@ -130,7 +129,7 @@ export default {
 body {
   background-color: #ecd9db;
 }
-.login-page {
+.wrapper {
   position: absolute;
   top: 0;
   left: 0;
@@ -139,7 +138,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: url("../assets/icons/building.svg") 20% no-repeat;
+}
 
+.login-page {
   &__panel {
     background-color: #e6eef8;
     border-radius: $border-radius;
