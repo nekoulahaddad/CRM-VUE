@@ -16,6 +16,11 @@
           <div class="scroll-horizontal">
             <div class="list">
               <div class="list__header">
+                <v-search
+                  @submit="getSearchData"
+                  v-model="search"
+                  :placeholder="$t('pages.delivery.searchPlaceholder')"
+                />
                 <div class="list__title">
                   {{ $t("pages.delivery.pageTitle") }}
                 </div>
@@ -52,6 +57,7 @@
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
+import VSearch from "@/components/VSearch";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
@@ -60,7 +66,15 @@ import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VInfo, VItem },
+  components: {
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+    VPagination,
+    VInfo,
+    VItem,
+    VSearch,
+  },
   data() {
     return {
       isLoading: false,
@@ -192,8 +206,7 @@ export default {
         data: { search },
         method: "POST",
       }).then(async (res) => {
-        let result = await res;
-        const providers = result.data.providers;
+        const providers = res.data.providers;
         if (providers.length) {
           this.$toast.success("Результаты запросов!");
         } else {
