@@ -1,10 +1,14 @@
 <template>
-  <a href="" class="user-info">
+  <router-link
+    active-class="user-info--active"
+    :to="{ name: 'personal' }"
+    class="user-info"
+  >
     <div class="user-info__icon">
       <img src="@/assets/icons/user.svg" alt="" />
     </div>
     <div class="user-info__name">Строганов Михаил</div>
-  </a>
+  </router-link>
 </template>
 
 <script>
@@ -20,6 +24,7 @@ export default {};
   border-radius: $border-radius;
   height: 44px;
   padding: 7px 9px;
+  border: 1px solid transparent;
 
   &__name {
     margin-left: 5px;
