@@ -98,7 +98,18 @@
       </div>
       <div class="group">
         <div class="group__title">{{ $t("status") }}</div>
-        <div class="group__content"></div>
+        <div class="group__content">
+          <select
+            class="form-select"
+            name="status"
+            v-model="status"
+            :disabled="!status"
+          >
+            <option v-for="(item, index) in statusList" :value="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
       </div>
       <div class="group">
         <div class="group__title">{{ $t("orderNumber") }}</div>
@@ -261,7 +272,7 @@ export default {
   .group {
     max-width: 976px;
 
-    &--region {
+    select {
       max-width: 401px;
     }
   }
