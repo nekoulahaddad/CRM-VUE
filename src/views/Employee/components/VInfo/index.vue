@@ -248,5 +248,11 @@ export default {
       }
     }
   }
+
+  img {
+    width: 123px;
+    height: 123px;
+    object-fit: contain;
+  }
 }
 </style>
