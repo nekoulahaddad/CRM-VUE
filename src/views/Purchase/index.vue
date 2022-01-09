@@ -67,6 +67,7 @@ export default {
       addedItem: {},
       deleted: false,
       deletedItem: {},
+      infoItem: {},
       edit: false,
       editedItem: {},
       info: false,
@@ -97,6 +98,15 @@ export default {
         this.$scrollTo("body", 300, {});
       }
     },
+    toggleInfo(item) {
+      this.editedItem = {};
+
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
+      } else {
+        this.infoItem = item;
+      }
+    },
   },
   watch: {
     $route: function () {
@@ -117,7 +127,7 @@ export default {
 <style lang="scss">
 .purchase-page {
   .list__columns {
-    grid-template-columns: 30px 140px 160px 230px 140px 120px 140px 160px 140px 50px;
+    grid-template-columns: 30px 160px 160px 230px 160px 160px 160px 160px 160px 1fr;
   }
   .list__header {
     .list__column {
