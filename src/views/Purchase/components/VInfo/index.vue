@@ -1,5 +1,5 @@
 <template>
-  <div class="list__info list-info">
+  <div class="list__info list-info purchase-list-info">
     <div class="group__title text--blue">
       {{ $t("pages.buying.info") }}
     </div>
@@ -58,7 +58,31 @@
         <div class="group__item text--bold-700">
           {{ $t("goods") }}
         </div>
-        <div class="group__value"></div>
+        <div class="group__value">
+          <div
+            v-for="product in item.products"
+            class="group__goods group-goods"
+          >
+            <div class="group-goods__item">
+              <div class="group-goods__title">{{ $t("name") }}</div>
+              <div class="group-goods__value">{{ product.title }}</div>
+            </div>
+            <div class="group-goods__item">
+              <div class="group-goods__title">{{ $t("article") }}</div>
+              <div class="group-goods__value">{{ product.article }}</div>
+            </div>
+            <div class="group-goods__item">
+              <div class="group-goods__title">{{ $t("quantity") }}</div>
+              <div class="group-goods__value">{{ product.quantity }}</div>
+            </div>
+            <div class="group-goods__item">
+              <div class="group-goods__title">{{ $t("total") }}</div>
+              <div class="group-goods__value">
+                {{ product.cost }} {{ product.valute }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="group__content">
         <div class="group__item text--bold-700">
@@ -86,3 +110,47 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.purchase-list-info {
+  .group-goods {
+    position: relative;
+
+    &:not(:first-child) {
+      padding-top: 10px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+      }
+    }
+
+    & + * {
+      margin-top: 10px;
+    }
+
+    &__item {
+      display: flex;
+
+      & + * {
+        margin-top: 5px;
+      }
+    }
+    &__title {
+      font-weight: 600;
+      margin-right: 5px;
+    }
+    &__value {
+    }
+  }
+}
+</style>
