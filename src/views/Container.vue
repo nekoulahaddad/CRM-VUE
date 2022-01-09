@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <v-mobile-header />
     <v-sidebar />
     <main class="main">
       <router-view />
@@ -10,10 +11,12 @@
 
 <script>
 import VSidebar from "@/components/VSidebar";
+import VMobileHeader from "@/components/VMobileHeader";
 import VFooter from "@/components/VFooter";
 
 export default {
   components: {
+    VMobileHeader,
     VFooter,
     VSidebar,
   },

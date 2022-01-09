@@ -1,6 +1,8 @@
 @media (max-width: 767px) {
+  .mobile-header {
+    display: block;
+  }
   .page {
-    padding: 0;
   }
   .footer,
   .filter,
@@ -11,7 +13,7 @@
     display: block;
   }
   .main {
-    padding: 20px;
+    margin-top: 50px;
   }
   .table {
     overflow-x: scroll;
