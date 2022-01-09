@@ -48,7 +48,18 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/info_icon.svg" alt="" />
+          <img
+            alt=""
+            src="@/assets/icons/info_icon.svg"
+            v-if="item._id !== infoItem._id"
+            @click="$emit('toggleInfo', item)"
+          />
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleInfo', item)"
+            v-else
+          />
         </div>
         <div class="table__icon">
           <img src="@/assets/icons/write_icon.svg" alt="" />
@@ -69,6 +80,12 @@ export default {
     item: {
       type: Object,
       required: true,
+    },
+    infoItem: {
+      type: Object,
+    },
+    editedItem: {
+      type: Object,
     },
   },
 };

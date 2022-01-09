@@ -32,8 +32,21 @@
                 v-for="(item, index) in dataset"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened':
+                    infoItem._id === item._id || editedItem._id === item._id,
+                }"
               >
-                <v-item :item="item" />
+                <v-item
+                  :item="item"
+                  :infoItem="infoItem"
+                  :editedItem="editedItem"
+                  @toggleInfo="toggleInfo"
+                  @toggleEdit="toggleEdit"
+                />
+
+                <!-- Блок с детальной информацией о закупке -->
+                <v-info :item="item" v-if="infoItem._id === item._id" />
               </div>
             </div>
           </div>
@@ -47,6 +60,7 @@
 
 <script>
 import VItem from "./components/VItem";
+import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -54,7 +68,7 @@ import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "../../api/getDataFromPage";
 
 export default {
-  components: { VFilter, VNotFoundQuery, VPagination, VSpinner, VItem },
+  components: { VFilter, VNotFoundQuery, VPagination, VSpinner, VItem, VInfo },
   data() {
     return {
       isLoading: false,
@@ -105,6 +119,15 @@ export default {
         this.infoItem = {};
       } else {
         this.infoItem = item;
+      }
+    },
+    toggleEdit(item) {
+      this.infoItem = {};
+
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
+      } else {
+        this.editedItem = item;
       }
     },
   },
