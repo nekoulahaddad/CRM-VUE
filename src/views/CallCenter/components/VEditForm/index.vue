@@ -131,6 +131,7 @@
 <script>
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   props: {
@@ -211,7 +212,110 @@ export default {
   },
   components: { VButton },
   methods: {
-    onProvidersAdd() {},
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onProvidersAdd() {
+      if (!this.region) {
+        this.$toast.error("Укажите регион!", "Ошибка");
+        return;
+      }
+      this.changeStatus(false);
+      let data = {
+        callissue: {
+          firstname: this.firstname,
+          lastname: this.lastname,
+          middlename: this.middlename,
+          issuedBy: this.issuedBy,
+          issuedTo: this.issuedTo,
+          status: this.status,
+          phone: this.phone,
+          orderNumber: this.orderNumber,
+          category: this.category,
+          region: this.region,
+          message: this.message,
+          comment: this.comment,
+        },
+      };
+      return;
+      if (this.editedItem) {
+        data.dataId = this.editedItem._id;
+        if (!this.orderNumber && this.issuedBy._id !== this.currentUser._id) {
+          this.changeStatus(true);
+          return this.$toast.warning("№ заказа обязательно для заполнения!");
+        }
+        axios({
+          url: "/callcenterissues/update/",
+          data: data,
+          method: "POST",
+        })
+          .then(async (res) => {
+            if (res.data.message === "ORDEREXISTS") {
+              this.changeStatus(true);
+              return this.$toast.warning("№ заказа существует!");
+            }
+            const transformedData = {
+              _id: data.dataId,
+              ...data.callissue,
+              category: {
+                category: {
+                  ...data.callissue.category,
+                },
+              },
+              client: {
+                name: data.callissue.firstname,
+                surname: data.callissue.lastname,
+                lastname: data.callissue.middlename,
+              },
+              createdAt: this.editedItem.createdAt,
+              confirmedAt: this.editedItem.confirmedAt,
+            };
+            this.$emit("editForm", transformedData);
+
+            this.$toast.success("Обращение успешно обновлено!");
+            this.$emit("toggleOpen");
+            this.changeStatus(true);
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+            this.changeStatus(true);
+          });
+      } else {
+        data.callissue.issuedBy = this.currentUser;
+        axios({
+          url: process.env.VUE_APP_DEVELOP_URL + `/callcenterissues/post/`,
+          data: data,
+          method: "POST",
+        })
+          .then(async (res) => {
+            const createdData = await res;
+            this.$emit("addCallIssue", {
+              ...data.callissue,
+              _id: createdData.data.data._id,
+              number: createdData.data.data.number,
+              issuedBy: this.currentUser,
+              category: {
+                category: {
+                  ...data.callissue.category,
+                },
+              },
+              client: {
+                name: data.callissue.firstname,
+                surname: data.callissue.lastname,
+                lastname: data.callissue.middlename,
+              },
+              createdAt: createdData.data.data.createdAt,
+            });
+            this.$toast.success("Обращения успешно добавлен!");
+            this.$emit("toggleOpen");
+            this.changeStatus(true);
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+            this.changeStatus(true);
+          });
+      }
+    },
   },
   watch: {
     currentInput: function () {
@@ -261,6 +365,13 @@ export default {
         this.tempViews = res.data.categories;
       });
     }
+  },
+  computed: {
+    currentUser: {
+      get: function () {
+        return this.getUserRole();
+      },
+    },
   },
 };
 </script>
