@@ -126,6 +126,20 @@
         </div>
       </div>
       <div class="group">
+        <div class="group__title">{{ $t("education") }}</div>
+        <div class="group__content">
+          <select
+            class="form-select"
+            :value="item ? item.education : education"
+            @change="onChange($event)"
+          >
+            <option v-for="education in $t('educations')" :value="education">
+              {{ education }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="group">
         <div class="group__title">{{ $t("employeeNumber") }}</div>
         <div class="group__content">
           <input
