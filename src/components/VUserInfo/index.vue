@@ -7,12 +7,20 @@
     <div class="user-info__icon">
       <img src="@/assets/icons/user.svg" alt="" />
     </div>
-    <div class="user-info__name">Строганов Михаил</div>
+    <div class="user-info__name">{{ transformFIO(user) }}</div>
   </router-link>
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    user: {
+      get: function () {
+        return this.getUserRole();
+      },
+    },
+  },
+};
 </script>
 
 <style lang="scss">
