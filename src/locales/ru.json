@@ -63,6 +63,8 @@
   "orderNumber": "№ заказа:",
   "description": "Описание:",
   "executor": "Исполнитель:",
+  "processed": "Обработана",
+  "notProcessed": "Не обработана",
   "comment": "Комментарий:",
   "status": "Статус:",
   "editCallback": "Редактировать обращение:",

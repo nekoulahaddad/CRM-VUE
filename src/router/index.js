@@ -55,7 +55,7 @@ const routes = [
       {
         path: "mail/:page",
         name: "mail",
-        component: () => import("../views/Mail.vue"),
+        component: () => import("../views/Mail"),
       },
       {
         path: "mango/:page?",
