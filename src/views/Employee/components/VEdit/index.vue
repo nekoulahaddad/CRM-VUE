@@ -99,6 +99,7 @@
           />
         </div>
       </div>
+
       <div class="group">
         <div class="group__title">{{ $t("position") }}</div>
         <div class="group__content">
@@ -107,6 +108,18 @@
             class="form-control"
             :placeholder="$t('position')"
             :value="item ? item.position : position"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("employeeNumber") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('employeeNumber')"
+            :value="item ? item.personal_number : personal_number"
             @input="onChange($event)"
           />
         </div>
@@ -139,15 +152,28 @@
           </select>
         </div>
       </div>
+
       <div class="group">
-        <div class="group__title">{{ $t("employeeNumber") }}</div>
+        <div class="group__title">{{ $t("speciality") }}</div>
         <div class="group__content">
           <input
             type="text"
             class="form-control"
-            :placeholder="$t('employeeNumber')"
-            :value="item ? item.personal_number : personal_number"
+            :placeholder="$t('speciality')"
+            :value="item ? item.specialty : specialty"
             @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("employmentDate") }}</div>
+        <div class="group__content">
+          <datetime
+            v-model="employment_date"
+            required
+            input-class="forms__container--input"
+            type="date"
+            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
           />
         </div>
       </div>
@@ -166,9 +192,60 @@
         </div>
       </div>
 
+      <!-- Личные данные -->
       <div class="group__title text--blue">
         {{ $t("pages.employee.employeePersonalInfo") }}
       </div>
+      <div class="group">
+        <div class="group__title">{{ $t("birthday") }}</div>
+        <div class="group__content">
+          <datetime
+            v-model="date_of_birth"
+            required
+            input-class="forms__container--input"
+            type="date"
+            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("zodiak") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('zodiak')"
+            :value="item ? item.zodiac_sign : zodiac_sign"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("element") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('element')"
+            :value="item ? item.element : element"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("chineseYear") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('chineseYear')"
+            :value="item ? item.chinese_year : chinese_year"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+
+      <!-- Дети -->
       <div class="group__title text--blue">
         {{ $t("childs") }}
       </div>
@@ -183,8 +260,10 @@
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
 import { maska } from "maska";
+import { Datetime } from "vue-datetime";
 
 export default {
+  components: { Datetime },
   directives: {
     maska,
   },
@@ -434,8 +513,12 @@ export default {
       }
     }
   }
+  select,
   input[type="text"] {
     font-weight: 500;
+  }
+  .vdatetime-popup__header {
+    background: $color-red;
   }
 }
 </style>
