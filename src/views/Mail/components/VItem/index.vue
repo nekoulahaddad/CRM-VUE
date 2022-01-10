@@ -44,10 +44,32 @@
           <img src="@/assets/icons/download_icon.svg" alt="" />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/info_icon.svg" alt="" />
+          <img
+            alt=""
+            src="@/assets/icons/info_icon.svg"
+            v-if="infoItem._id !== item._id"
+            @click="$emit('toggleInfo', item)"
+          />
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleInfo', item)"
+          />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/write_icon.svg" alt="" />
+          <img
+            alt=""
+            src="@/assets/icons/write_icon.svg"
+            v-if="editedItem._id !== item._id"
+            @click="$emit('toggleIEdit', item)"
+          />
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleIEdit', item)"
+          />
         </div>
       </div>
     </div>
@@ -57,6 +79,14 @@
 <script>
 export default {
   props: {
+    editedItem: {
+      type: Object,
+      required: true,
+    },
+    infoItem: {
+      type: Object,
+      required: true,
+    },
     item: {
       type: Object,
       required: true,
