@@ -248,7 +248,7 @@ export default {
 .employee-page {
   .list__columns {
     grid-template-columns: 140px 140px 400px 100px 100px 200px minmax(
-        100px,
+        140px,
         max-content
       );
   }
