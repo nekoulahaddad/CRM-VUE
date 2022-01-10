@@ -1,6 +1,10 @@
 <template>
   <div class="list__info list-info employee-edit-form">
-    <form @submit.prevent="">
+    <form
+      @submit.prevent="onUserAdd"
+      enctype="multipart/form-data"
+      accept="image/x-png,image/gif,image/jpeg"
+    >
       <div class="group__title text--blue">
         {{ $t("pages.employee.employeeMainInfo") }}
       </div>
@@ -249,9 +253,27 @@
       <div class="group__title text--blue">
         {{ $t("childs") }}
       </div>
+      <div class="group">
+        <div class="group__title">{{ $t("chineseYear") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('chineseYear')"
+            :value="item ? item.chinese_year : chinese_year"
+            @input="onChange($event)"
+          />
+        </div>
+        <div class="group__footer">
+          <v-button red>{{ $t("add") }}</v-button>
+        </div>
+      </div>
+
       <div class="group__title text--blue">
         {{ $t("another") }}
       </div>
+
+      <v-button red>{{ $t("save") }}</v-button>
     </form>
   </div>
 </template>
@@ -259,11 +281,12 @@
 <script>
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
+import VButton from "@/components/VButton";
 import { maska } from "maska";
 import { Datetime } from "vue-datetime";
 
 export default {
-  components: { Datetime },
+  components: { Datetime, VButton },
   directives: {
     maska,
   },
