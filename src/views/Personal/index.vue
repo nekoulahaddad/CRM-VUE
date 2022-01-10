@@ -11,7 +11,12 @@
         <div class="personal-area__header">
           {{ transformFIO(user) }}, {{ $t("welcome") }}
         </div>
-        <div class="personal-area__body">{{ transformRole(user.role) }}</div>
+        <div class="personal-area__body">
+          <div class="personal-area__role">
+            {{ $t("systemRole") }}
+            <strong>{{ transformRole(user.role) }}</strong>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,6 +55,10 @@ export default {
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
     padding: 20px;
+  }
+
+  &__role {
+    font-size: 18px;
   }
 }
 </style>
