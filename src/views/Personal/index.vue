@@ -21,21 +21,27 @@
               <label>Старый пароль:</label>
               <input
                 type="text"
+                required
                 class="form-control"
                 placeholder="Введите старый пароль"
+                name="oldPassword"
+                v-model="oldPassword"
               />
             </div>
             <div class="personal-area__col">
               <label>Новый пароль:</label>
               <input
                 type="text"
+                required
                 class="form-control"
                 placeholder="Введите новый пароль"
+                name="newPassword"
+                v-model="newPassword"
               />
             </div>
             <div class="personal-area__buttons">
               <v-button red>Изменить</v-button>
-              <v-button redWhite>Выйти</v-button>
+              <v-button @click="logout" redWhite>Выйти</v-button>
             </div>
           </form>
         </div>
@@ -46,6 +52,8 @@
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   components: { VButton },
@@ -54,6 +62,82 @@ export default {
       get: function () {
         return this.getUserRole();
       },
+    },
+  },
+  data() {
+    return {
+      oldPassword: "",
+      newPassword: "",
+      inner_number:
+        this.$store.state && this.$store.state.inner_number
+          ? this.$store.state.inner_number
+          : "",
+    };
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onPasswordRemind() {
+      this.changeStatus(false);
+      axios({
+        url: `/user/remind/`,
+        data: {
+          userId: this.$store.state.id,
+          oldPassword: this.oldPassword,
+          newPassword: this.newPassword,
+          inner_number: this.inner_number,
+        },
+        method: "POST",
+      })
+        .then(async () => {
+          this.$toast.success("Пароль успешно изменен!");
+          this.oldPassword = "";
+          this.newPassword = "";
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
+    },
+    resetInnerNumber() {
+      this.changeStatus(false);
+      axios({
+        url: `/user/number/`,
+        data: {
+          userId: this.$store.state.id,
+          inner_number: this.inner_number,
+        },
+        method: "POST",
+      })
+        .then(async () => {
+          this.$toast.success("Внутрненний успешно изменен!");
+          this.oldPassword = "";
+          this.newPassword = "";
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
+    },
+    logout() {
+      if (
+        this.role === "admin" ||
+        this.role === "director" ||
+        this.role === "manager"
+      ) {
+        this.$socket.client.emit("leftRoomOrders", {
+          userId: this.$store.state.id,
+        });
+        this.$socket.client.emit("leftRoomCallbacks", {
+          userId: this.$store.state.id,
+        });
+      }
+      this.$toast.success($t("goodbye"));
+      this.$store.dispatch("logout");
+      this.$router.push("/");
     },
   },
 };
