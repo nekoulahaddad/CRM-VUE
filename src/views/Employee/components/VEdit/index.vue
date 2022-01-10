@@ -254,16 +254,6 @@
         {{ $t("childs") }}
       </div>
       <div class="group">
-        <div class="group__title">{{ $t("chineseYear") }}</div>
-        <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            :placeholder="$t('chineseYear')"
-            :value="item ? item.chinese_year : chinese_year"
-            @input="onChange($event)"
-          />
-        </div>
         <div class="group__footer">
           <v-button red>{{ $t("add") }}</v-button>
         </div>
