@@ -127,7 +127,7 @@ export default {
 @import "@/styles/_variables";
 
 body {
-  background-color: #ecd9db;
+  //background-color: #ecd9db;
 }
 .wrapper {
   position: absolute;
