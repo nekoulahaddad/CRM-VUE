@@ -41,7 +41,14 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/download_icon.svg" alt="" />
+          <template v-if="item.zip">
+            <img
+              @click="$emit('downloadItem', item.zipPath + item.zip, item.zip)"
+              src="@/assets/icons/download_icon.svg"
+              alt=""
+            />
+          </template>
+          <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
           <img

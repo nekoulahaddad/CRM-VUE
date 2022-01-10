@@ -44,6 +44,7 @@
                   :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
+                  @downloadItem="downloadItem"
                 />
 
                 <!-- Блок с детальной информацией о сотруднике -->
@@ -78,6 +79,7 @@ import VSpinner from "@/components/VSpinner";
 import dateMixins from "@/mixins/date";
 import nameMixins from "@/mixins/name";
 import fioMixins from "@/mixins/fio";
+import axios from "@/api/axios";
 
 export default {
   mixins: [dateMixins, fioMixins, nameMixins],
@@ -156,6 +158,24 @@ export default {
       } else {
         this.editedItem = item;
       }
+    },
+    downloadItem(url, filename) {
+      axios
+        .get(url, { responseType: "blob" })
+        .then((response) => {
+          const link = document.createElement("a");
+          const blob = new Blob([response.data]);
+          let urll = window.URL.createObjectURL(blob);
+          link.href = urll;
+          link.download = filename;
+          link.click();
+          setTimeout(() => {
+            window.URL.revokeObjectURL(urll);
+            document.body.removeChild(link);
+          }, 0);
+          URL.revokeObjectURL(link.href);
+        })
+        .catch(console.error);
     },
   },
   watch: {
