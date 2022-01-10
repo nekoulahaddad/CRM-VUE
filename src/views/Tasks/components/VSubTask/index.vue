@@ -105,7 +105,7 @@ export default {
   }
 
   .list__columns {
-    grid-template-columns: 30px 140px 140px 450px 120px 120px 120px 1fr;
+    grid-template-columns: 30px 140px 140px 380px 120px 120px 120px 1fr;
   }
 
   .table__icon {
