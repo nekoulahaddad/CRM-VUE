@@ -126,9 +126,6 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
-body {
-  //background-color: #ecd9db;
-}
 .login-wrapper {
   position: absolute;
   top: 0;
