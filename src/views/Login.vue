@@ -45,23 +45,30 @@
                 Вместе мы сможем стать <span class="text--red">лучше!</span>
               </div>
               <form class="panel-right__form" @submit.prevent="onSubmit">
-                <input
-                  type="text"
-                  name="login"
-                  v-model="login"
-                  @change="onChange($event)"
-                  v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
-                  :disabled="isFetch"
-                  placeholder="Номер телефона"
-                />
-                <input
-                  type="password"
-                  name="password"
-                  v-model="password"
-                  @change="onChange($event)"
-                  :disabled="isFetch"
-                  placeholder="Пароль"
-                />
+                <div class="panel-right__col">
+                  <input
+                    type="text"
+                    name="login"
+                    v-model="login"
+                    class="input-login"
+                    @change="onChange($event)"
+                    v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+                    :disabled="isFetch"
+                    placeholder="Номер телефона"
+                  />
+                  <img src="@/assets/icons/phone.svg" alt="" />
+                </div>
+                <div class="panel-right__col">
+                  <input
+                    type="password"
+                    name="password"
+                    v-model="password"
+                    @change="onChange($event)"
+                    :disabled="isFetch"
+                    class="input-password"
+                    placeholder="Пароль"
+                  />
+                </div>
                 <div class="policy">
                   <input type="checkbox" id="policy" />
                   <label for="policy">
@@ -277,6 +284,22 @@ export default {
   input[type="text"]:disabled,
   input[type="password"]:disabled {
     opacity: 0.5;
+  }
+
+  &__col {
+    width: 100%;
+    position: relative;
+
+    & + div {
+      margin-top: 8.52px;
+    }
+
+    img {
+      position: absolute;
+      right: 9.94px;
+      top: 9.94px;
+      z-index: 1000;
+    }
   }
 }
 </style>
