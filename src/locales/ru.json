@@ -5,7 +5,11 @@
   "site": "Сайт",
   "firstName": "Имя:",
   "lastName": "Фамилия:",
+  "position": "Должность:",
+  "employeeNumber": "Номер сотрудника:",
   "department": "Отдел:",
+  "role": "Роль:",
+  "subDepartment": "Подотдел:",
   "childs": "Дети:",
   "another": "Прочее:",
   "middleName": "Отчество",
@@ -42,6 +46,16 @@
   "clientLastName": "Фамилия клиента",
   "clientMiddleName": "Отчество клиента",
   "save": "Сохранить",
+  "roles": {
+    "director": "Директор",
+    "admin": "Администратор",
+    "content": "Контент-менеджер",
+    "manager": "Менеджер по работе с клиентами",
+    "seo": "SEO-оптимизатор",
+    "call": "Сотрудник Call - центра",
+    "worker": "Сотрудник",
+    "buyer": "Закупщик"
+  },
   "menu": {
     "monitor": "Дашборд",
     "education": "Обучение",

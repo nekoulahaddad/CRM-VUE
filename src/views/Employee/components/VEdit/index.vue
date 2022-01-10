@@ -88,6 +88,56 @@
         </div>
       </div>
       <div class="group">
+        <div class="group__title">{{ $t("subDepartment") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('subDepartment')"
+            :value="item ? item.sub_department : sub_department"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("position") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('position')"
+            :value="item ? item.position : position"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("role") }}</div>
+        <div class="group__content">
+          <select
+            class="form-select"
+            :value="item ? item.role : role"
+            @change="onChange($event)"
+          >
+            <option v-for="(role, index) in $t('roles')" :value="index">
+              {{ role }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("employeeNumber") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('employeeNumber')"
+            :value="item ? item.personal_number : personal_number"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
         <div class="group__title">{{ $t("region") }}</div>
         <div class="group__content">
           <select
@@ -95,8 +145,8 @@
             :value="item ? item.region.value : region"
             @change="onChange($event)"
           >
-            <option v-for="(item, index) in regions" :value="item.value">
-              {{ item.title }}
+            <option v-for="(region, index) in regions" :value="region.value">
+              {{ region.title }}
             </option>
           </select>
         </div>
@@ -286,7 +336,6 @@ export default {
       }
 
       if (!this.item) {
-        console.log("update");
         axios({
           url: `/user/post/`,
           data: userData,
@@ -300,21 +349,17 @@ export default {
             this.changeStatus(true);
           })
           .catch(async (err) => {
-            console.log(await err);
             this.$toast.error(err.response.data.message);
             this.changeStatus(true);
           });
       } else {
-        console.log("update");
         axios({
           url: `/user/update/`,
           data: userData,
           method: "POST",
         })
-          .then(async (res) => {
-            let result = await res;
-
-            this.$emit("refresh", result.data.user);
+          .then(({ data }) => {
+            this.$emit("refresh", data.user);
             this.$emit("toggleOpen");
             this.$toast.success("Пользователь успешно обновлен!");
             this.changeStatus(true);
