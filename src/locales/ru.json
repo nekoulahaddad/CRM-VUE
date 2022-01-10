@@ -5,6 +5,7 @@
   "site": "Сайт",
   "firstName": "Имя:",
   "lastName": "Фамилия:",
+  "department": "Отдел:",
   "childs": "Дети:",
   "another": "Прочее:",
   "middleName": "Отчество",
