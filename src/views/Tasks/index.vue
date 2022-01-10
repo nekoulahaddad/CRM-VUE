@@ -459,8 +459,6 @@ export default {
         margin-top: 10px;
       }
     }
-    .list__columns {
-    }
   }
 }
 </style>

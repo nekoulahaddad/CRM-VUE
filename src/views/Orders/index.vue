@@ -48,66 +48,17 @@
                 v-for="item in orders.slice(0, 15)"
                 :key="item._id"
                 class="list__row list__row--white"
+                :class="{
+                  'list__row--opened':
+                    infoItem._id === item._id || editedItem._id === item._id,
+                }"
               >
-                <div
-                  class="list__columns list__columns-shadow list__columns-white"
-                >
-                  <div class="list__column">{{ item.number }}</div>
-                  <div class="list__column text--blue">
-                    {{ transformName(item.client) }}
-                  </div>
-                  <div class="list__column">{{ item.region.title }}</div>
-                  <div class="list__column text-green">
-                    {{ transformDate(item.createdAt) }}
-                  </div>
-                  <div class="list__column text--sapphire">
-                    {{ item && item.buyed ? transformDate(item.buyed) : "" }}
-                  </div>
-                  <div class="list__column text--sapphire">
-                    {{ item.deliver ? transformDate(item.deliver) : "" }}
-                  </div>
-                  <div class="list__column">
-                    {{ item.sum.toFixed(2) + " " + item.region.valute.icon }}
-                  </div>
-                  <div class="list__column">
-                    {{
-                      (item.deliverySum
-                        ? item.deliverySum.toFixed(2)
-                        : "0.00") +
-                      " " +
-                      item.region.valute.icon
-                    }}
-                  </div>
-                  <div class="list__column text--blue">
-                    {{ transformFIO(item.manager[0]) }}
-                  </div>
-                  <div
-                    v-html="transformStatus(item.status)"
-                    class="list__column"
-                  ></div>
-                  <div class="list__column"></div>
-                  <div class="list__column">
-                    <div class="table__actions">
-                      <div class="table__icon">
-                        <img
-                          :class="{
-                            none: !item.oneC.requested,
-                            req: item.oneC.requested && !item.oneC.accepted,
-                          }"
-                          :title="getOneCStatus(item.oneC)"
-                          src="@/assets/icons/1c_icon.svg"
-                          alt=""
-                        />
-                      </div>
-                      <div class="table__icon">
-                        <img src="@/assets/icons/info_icon.svg" alt="" />
-                      </div>
-                      <div class="table__icon">
-                        <img src="@/assets/icons/write_icon.svg" alt="" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <v-item
+                  :item="item"
+                  :infoItem="infoItem"
+                  @toggleInfo="toggleInfo"
+                  @toggleEdit="toggleEdit"
+                />
               </div>
             </div>
           </div>
@@ -120,6 +71,8 @@
 </template>
 
 <script>
+import VItem from "./components/VItem";
+import VInfo from "./components/VInfo";
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
 import VSearch from "@/components/VSearch";
@@ -143,7 +96,15 @@ export default {
     roleMixins,
     statusMixins,
   ],
-  components: { VFilter, VSpinner, VNotFoundQuery, VPagination, VSearch },
+  components: {
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+    VPagination,
+    VSearch,
+    VItem,
+    VInfo,
+  },
   data() {
     return {
       startDate: null,
@@ -368,15 +329,23 @@ export default {
       }
       this.open = !this.open;
     },
-    toggleEdit(item) {
-      if (!this.edit) {
-        this.editedItem = item;
+    toggleInfo(item) {
+      this.editedItem = {};
+
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
       } else {
-        setTimeout(() => {
-          this.editedItem = {};
-        });
+        this.infoItem = item;
       }
-      this.edit = !this.edit;
+    },
+    toggleEdit(item) {
+      this.infoItem = {};
+
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
+      } else {
+        this.editedItem = item;
+      }
     },
     async getSearchData() {
       if (this.searchStr.length) {
@@ -437,7 +406,12 @@ export default {
 <style scoped lang="scss">
 .orders-page {
   .list__columns {
-    grid-template-columns: 60px 140px repeat(10, minmax(140px, 1fr));
+    grid-template-columns: 50px 140px repeat(10, minmax(140px, 1fr));
+  }
+  .list__columns {
+    .list__column:first-child {
+      text-align: left;
+    }
   }
 }
 </style>

@@ -46,7 +46,7 @@
                     editedItem._id === employee._id,
                 }"
               >
-                <v-employee
+                <v-item
                   :index="index"
                   :role="role"
                   :infoItem="infoItem"
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import VEmployee from "./components/VEmployee";
+import VItem from "./components/VItem";
 import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
@@ -100,7 +100,7 @@ export default {
     VSpinner,
     VNotFoundQuery,
     VPagination,
-    VEmployee,
+    VItem,
     VInfo,
     VSearch,
     VEdit,
@@ -245,7 +245,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.list__columns {
-  grid-template-columns: 140px 140px 400px 100px 100px 200px 140px;
+.employee-page {
+  .list__columns {
+    grid-template-columns: 140px 140px 400px 100px 100px 200px 140px;
+  }
 }
 </style>
