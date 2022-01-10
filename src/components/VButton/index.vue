@@ -28,6 +28,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    redWhite: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     classes() {
@@ -35,6 +39,7 @@ export default {
         "btn--full": this.full,
         "btn--red": this.red,
         "btn--white": this.white,
+        "btn--red-white": this.redWhite,
       };
     },
   },

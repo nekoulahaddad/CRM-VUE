@@ -25,6 +25,12 @@ button {
       color: #979797;
     }
 
+    &--red-white {
+      background-color: $color-white;
+      color: $color-red;
+      border: 2px solid $color-red;
+    }
+
     &--gray {
     }
   }
