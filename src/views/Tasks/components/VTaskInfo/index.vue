@@ -272,7 +272,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-button {
-}
-</style>
+<style lang="scss"></style>

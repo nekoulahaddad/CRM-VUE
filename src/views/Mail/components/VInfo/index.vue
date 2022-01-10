@@ -64,6 +64,9 @@
         <div class="group__value">{{ item.comment }}</div>
       </div>
     </div>
+    <div class="group__title text--blue">
+      {{ $t("order") }}
+    </div>
   </div>
 </template>
 
@@ -77,3 +80,28 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.mail-list-info {
+  .group__title {
+    position: relative;
+
+    &:not(:first-child) {
+      padding-top: 10px;
+
+      &::before {
+        display: block;
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        top: 0;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+      }
+    }
+  }
+}
+</style>
