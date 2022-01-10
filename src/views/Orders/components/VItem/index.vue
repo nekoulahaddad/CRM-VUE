@@ -80,5 +80,9 @@ export default {
   .list__column:first-child {
     text-align: left;
   }
+  .none {
+    opacity: 0.3;
+    filter: grayscale(100%);
+  }
 }
 </style>
