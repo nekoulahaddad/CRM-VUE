@@ -74,6 +74,48 @@
           </div>
         </template>
 
+        <!-- Монитор -->
+        <template v-else-if="type === 'monitor'">
+          <div class="filter__group group">
+            <div class="group__title">Отделы:</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'monitor', null)"
+              >
+                <option
+                  v-for="(item, index) of dashBoard"
+                  :value="item.value"
+                  :selected="index === 0"
+                >
+                  {{ item.title }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
+            <div class="group__title">{{ $t("regions") }}</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                @change="selectOptions($event, null, 'region', null)"
+                :value="filterOptions.region"
+              >
+                <option value="all" selected>{{ $t("allRegions") }}</option>
+                <option
+                  v-for="region in regions"
+                  :key="region.id"
+                  @change="selectOptions($event, null, 'region', null)"
+                  class="form-select"
+                  :value="region.value"
+                >
+                  {{ region.title }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </template>
+
         <!-- Клиенты -->
         <template v-else-if="type === 'clients'">
           <div class="filter__group group">
@@ -1133,10 +1175,9 @@ export default {
           break;
       }
       this.$parent.filtersOptions = this.filterOptions;
-
       if (
-        !this.$route.fullPath.includes(`/${this.$route.name}/1`) &&
-        this.$route.fullPath !== "/monitor"
+        this.$route.fullPath !== `/dashboard/${this.$route.name}/1` &&
+        this.$route.fullPath !== "/dashboard/monitor"
       ) {
         this.$router.push(`/dashboard/${this.$route.name}/1`);
       }

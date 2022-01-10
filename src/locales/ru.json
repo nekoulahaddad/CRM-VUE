@@ -5,6 +5,8 @@
   "site": "Сайт",
   "firstName": "Имя:",
   "add": "Добавить",
+  "regions": "Регионы:",
+  "allRegions": "Все регионы:",
   "employmentDate": "Дата приема на работу:",
   "profile": "Профиль:",
   "manager": "Менеджер:",

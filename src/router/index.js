@@ -65,7 +65,7 @@ const routes = [
       {
         path: "monitor",
         name: "monitor",
-        component: () => import("../views/Monitor.vue"),
+        component: () => import("../views/Monitor"),
       },
       {
         path: "orders/:page",

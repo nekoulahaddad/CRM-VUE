@@ -6,10 +6,18 @@
       </div>
       <h1 class="page__title">Дашборд</h1>
     </div>
-    <div class="page__body"></div>
+    <div class="page__body">
+      <div class="page__left">
+        <v-filter type="monitor" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import VFilter from "@/components/VFilter";
+
+export default {
+  components: { VFilter },
+};
 </script>
