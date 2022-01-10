@@ -12,6 +12,7 @@
               class="form-control"
               type="text"
               :placeholder="$t('manager')"
+              v-model="fio"
             />
           </div>
         </div>
@@ -22,6 +23,7 @@
               class="form-control"
               type="text"
               :placeholder="$t('orderNumber')"
+              v-model="orderNumber"
             />
           </div>
         </div>
@@ -31,7 +33,8 @@
             <textarea
               class="form-textarea"
               :placeholder="$t('comment')"
-            ></textarea>
+              v-model="comment"
+            />
           </div>
         </div>
         <div class="group">
@@ -46,10 +49,85 @@
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
+  props: {
+    item: {
+      type: Object,
+      required: true,
+    },
+  },
   components: {
     VButton,
+  },
+  data() {
+    return {
+      users: [],
+      fio: "",
+      comment: null,
+      orderNumber: null,
+      isLoading: false,
+    };
+  },
+  computed: {
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    async getUsersByFIO() {
+      axios(`/user/getmanagers/${this.fio}/${this.item.region._id}`).then(
+        async (res) => {
+          let result = await res;
+          this.users = result.data;
+        }
+      );
+    },
+    selectUser(user) {
+      this.manager = user._id;
+      this.fio = `${user.surname} ${user.name.charAt(0)}.${
+        user.lastname ? user.lastname.charAt(0) + "." : ""
+      }`;
+      this.users = [];
+    },
+    onCallbackUpdate() {
+      this.changeStatus(false);
+      let callbackData = {
+        callbackId: this.item._id,
+        manager: this.manager,
+        comment: this.comment,
+        orderNumber: this.orderNumber,
+      };
+      axios({
+        url: `/callbacks/update/`,
+        data: callbackData,
+        method: "POST",
+      }).then(() => {
+        this.$emit("toggleOpen");
+        this.$emit("editCallback");
+        this.changeStatus(true);
+      });
+    },
+  },
+  created() {
+    this.orderNumber = this.item.orderNumber;
+    this.comment = this.item.comment;
+    this.fio = `${
+      this.item.manager[0].surname
+    } ${this.item.manager[0].name.charAt(0)}.${
+      this.item.manager[0].lastname
+        ? this.item.manager[0].lastname.charAt(0) + "."
+        : ""
+    }`;
+    this.manager = this.item.manager[0]._id;
   },
 };
 </script>
