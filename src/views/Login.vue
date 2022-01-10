@@ -273,5 +273,10 @@ export default {
       }
     }
   }
+
+  input[type="text"]:disabled,
+  input[type="password"]:disabled {
+    opacity: 0.5;
+  }
 }
 </style>
