@@ -406,7 +406,7 @@ export default {
 <style scoped lang="scss">
 .orders-page {
   .list__columns {
-    grid-template-columns: 50px 140px repeat(10, minmax(140px, 1fr));
+    grid-template-columns: 50px 220px 140px 120px 120px 120px 140px 140px 220px 180px 140px 1fr;
   }
   .list__columns {
     .list__column:first-child {
