@@ -11,8 +11,32 @@
             <input
               class="form-control"
               type="text"
-              placeholder="Введите название задачи..."
+              :placeholder="$t('manager')"
             />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("orderNumber") }}</div>
+          <div class="group__content">
+            <input
+              class="form-control"
+              type="text"
+              :placeholder="$t('orderNumber')"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("comment") }}</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              :placeholder="$t('comment')"
+            ></textarea>
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__content">
+            <v-button red>{{ $t("save") }}</v-button>
           </div>
         </div>
       </div>
@@ -21,5 +45,23 @@
 </template>
 
 <script>
-export default {};
+import VButton from "@/components/VButton";
+
+export default {
+  components: {
+    VButton,
+  },
+};
 </script>
+
+<style lang="scss">
+.mail-list-info {
+  .group {
+    max-width: 976px;
+
+    select {
+      max-width: 401px;
+    }
+  }
+}
+</style>
