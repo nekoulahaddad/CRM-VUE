@@ -46,11 +46,17 @@
         </div>
         <div class="table__icon">
           <img
-            v-if="infoItem._id !== item._id"
-            src="@/assets/icons/info_icon.svg"
             alt=""
+            src="@/assets/icons/info_icon.svg"
+            v-if="infoItem._id !== item._id"
+            @click="$emit('toggleInfo', item)"
           />
-          <img src="@/assets/icons/arrow_top_icon.svg" alt="" v-else />
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleInfo', item)"
+          />
         </div>
         <div class="table__icon">
           <img src="@/assets/icons/write_icon.svg" alt="" />

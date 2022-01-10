@@ -59,6 +59,13 @@
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                 />
+
+                <!-- Блок с детальной информацией о заказе -->
+                <v-info
+                  :item="item"
+                  :editedItem="editedItem"
+                  v-if="infoItem._id === item._id"
+                />
               </div>
             </div>
           </div>
