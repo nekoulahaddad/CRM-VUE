@@ -135,7 +135,7 @@ export default {
           userId: this.$store.state.id,
         });
       }
-      this.$toast.success($t("goodbye"));
+      this.$toast.success(this.$t("goodbye"));
       this.$store.dispatch("logout");
       this.$router.push("/");
     },

@@ -55,7 +55,7 @@
                   placeholder="Номер телефона"
                 />
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   v-model="password"
                   @change="onChange($event)"
@@ -233,6 +233,7 @@ body {
     flex-direction: column;
     align-items: center;
 
+    input[type="password"],
     input[type="text"] {
       background: linear-gradient(0deg, #e6eef8, #e6eef8), #cfd8dc;
       border-radius: $border-radius;
