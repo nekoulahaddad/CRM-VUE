@@ -1,6 +1,6 @@
 <template>
   <div class="list__info list-info mail-edit-form">
-    <form @submit.prevent="">
+    <form @submit.prevent="onCallbackUpdate">
       <div class="edit__inner">
         <div class="group__title text--blue">
           {{ $t("pages.mail.edit") }}
