@@ -11,7 +11,7 @@
         <div class="personal-area__header">
           {{ transformFIO(user) }}, {{ $t("welcome") }}
         </div>
-        <div class="personal-area__body">123</div>
+        <div class="personal-area__body">{{ transformRole(user.role) }}</div>
       </div>
     </div>
   </div>

@@ -27,6 +27,7 @@ import phoneMixins from "@/mixins/phone";
 import profileMixins from "@/mixins/profile";
 import ratingMixins from "@/mixins/rating";
 import roleMixins from "@/mixins/role";
+import transformRoleMixins from "@/mixins/transformRole";
 import statusMixins from "@/mixins/status";
 import "moment/locale/ru";
 Settings.defaultLocale = "RU";
@@ -116,6 +117,7 @@ Vue.mixin(profileMixins);
 Vue.mixin(ratingMixins);
 Vue.mixin(roleMixins);
 Vue.mixin(statusMixins);
+Vue.mixin(transformRoleMixins);
 
 new Vue({
   i18n,
