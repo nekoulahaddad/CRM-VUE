@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="login-wrapper">
     <div class="login-page">
       <div class="login-page__right">
         <div class="login-page__panel panel">
@@ -129,7 +129,7 @@ export default {
 body {
   //background-color: #ecd9db;
 }
-.wrapper {
+.login-wrapper {
   position: absolute;
   top: 0;
   left: 0;
@@ -138,7 +138,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("../assets/icons/building.svg") 20% no-repeat;
+  background: #ecd9db url("../assets/icons/building.svg") 20% no-repeat;
 }
 
 .login-page {
