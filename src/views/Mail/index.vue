@@ -107,10 +107,10 @@ export default {
         executor: this.role === "manager" ? this.$store.state._id : null,
       },
       infoItem: {},
+      editedItem: {},
       isLoading: false,
       edit: false,
       view: false,
-      editedItem: {},
       deleted: false,
       deletedItem: {},
     };
