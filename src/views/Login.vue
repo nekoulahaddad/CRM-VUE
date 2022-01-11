@@ -103,16 +103,20 @@
               <img src="@/assets/icons/logo_big.svg" alt="" />
             </div>
             <div class="panel-right__slogan">Отправим пароль по смс!</div>
+            <div class="panel-right__slogan-secondary">
+              Для получения инструкций по востановлению пароля, введите номер
+              телефона, указанный при регистрации
+            </div>
             <form class="panel-right__form" @submit="onSubmitForget($event)">
               <div class="panel-right__col">
                 <input
                   type="text"
-                  name="login"
-                  v-model="login"
+                  name="forgotLogin"
+                  v-model="forgotLogin"
+                  v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
                   class="input-login"
                   autofill="false"
                   @change="onChange($event)"
-                  v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
                   required
                   :disabled="isFetch"
                   placeholder="Номер телефона"
@@ -395,6 +399,12 @@ export default {
       background-color: $color-white;
       border-radius: $border-radius;
       padding-bottom: 40px;
+      padding-left: 21px;
+      padding-right: 20px;
+
+      form {
+        padding: 0;
+      }
     }
   }
 }
