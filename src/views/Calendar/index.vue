@@ -142,6 +142,7 @@ export default {
 }
 .cv-weeks {
   border: 0;
+  min-height: 800px;
 }
 .cv-header-days {
   border: 0;
@@ -190,8 +191,9 @@ export default {
   }
 }
 .cv-item {
-  background-color: $color-gray-secondary;
+  background-color: $color-gray-secondary !important;
   border-radius: $border-radius !important;
   border: 0;
+  border-left: 5px solid $color-red !important;
 }
 </style>
