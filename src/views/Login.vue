@@ -402,6 +402,16 @@ export default {
       padding-left: 21px;
       padding-right: 20px;
 
+      .panel-right__slogan {
+        margin-bottom: 10.74px;
+      }
+
+      .panel-right__slogan-secondary {
+        color: rgba(0, 0, 0, 0.3);
+        font-weight: 600;
+        margin-bottom: 20.26px;
+      }
+
       form {
         padding: 0;
       }
