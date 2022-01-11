@@ -20,7 +20,7 @@ const routes = [
       {
         path: "calendar",
         name: "calendar",
-        component: () => import("../views/Calendar.vue"),
+        component: () => import("../views/Calendar"),
       },
       {
         path: "callbacks/:page",
