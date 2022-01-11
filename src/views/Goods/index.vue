@@ -17,13 +17,7 @@
       </div>
       <div class="page__right">
         <template v-if="isLoading && filtersOptions.region">
-          <template
-            v-if="
-              filtersOptions.type === 'search'
-                ? filtersOptions.type === 'search' && dataset.categories.length
-                : filtersOptions.type !== 'brands' && filtersOptions.nesting < 3
-            "
-          >
+          <template v-if="dataset.categories.length">
             <div class="scroll-horizontal">
               <div class="list list-shadow">
                 <div class="list__header">
@@ -55,12 +49,7 @@
               </div>
             </div>
           </template>
-          <template
-            v-if="
-              filtersOptions.nesting > 1 ||
-              (filtersOptions.type === 'search' && dataset.products.length)
-            "
-          >
+          <template v-if="dataset.products.length">
             <div class="scroll-horizontal">
               <div class="list">
                 <div class="list__header">
@@ -76,6 +65,13 @@
                     </div>
                   </div>
                 </div>
+                <div
+                  v-for="(item, index) in dataset.products"
+                  :key="item._id"
+                  class="list__row list__row--shadow list__row--white"
+                >
+                  <v-product :item="item" />
+                </div>
               </div>
             </div>
           </template>
@@ -90,6 +86,7 @@
 <script>
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
+import VProduct from "./components/VProduct";
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
@@ -100,6 +97,7 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     VCategory,
+    VProduct,
     VFilter,
     VSpinner,
     VNotFoundQuery,
