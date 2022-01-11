@@ -42,13 +42,26 @@
               >
                 <Draggable v-for="item in dataset.categories" :key="item.id">
                   <div class="draggable-item">
-                    <img
-                      class="next handle left move"
-                      src="@/assets/icons/move.svg"
-                      alt=""
-                    />
-                    <div>
-                      {{ item.categoryName }}
+                    <div class="draggable-item__left">
+                      <img
+                        class="next handle left move"
+                        src="@/assets/icons/move.svg"
+                        alt=""
+                      />
+                      <div>
+                        {{ item.categoryName }}
+                      </div>
+                    </div>
+                    <div class="table__actions">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/view.svg" alt="" />
+                      </div>
+                      <div class="table__icon">
+                        <img src="@/assets/icons/option.svg" alt="" />
+                      </div>
+                      <div class="table__icon">
+                        <img src="@/assets/icons/trash_icon.svg" alt="" />
+                      </div>
                     </div>
                   </div>
                 </Draggable>
