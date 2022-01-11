@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page calendar-page">
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/calendar_title.svg')" alt="" />
@@ -7,6 +7,7 @@
       <h1 class="page__title">Календарь</h1>
     </div>
     <div class="page__body">
+      <vue-calendar :show-limit="3"></vue-calendar>
       <calendar-view
         :items="events"
         :show-date="showDate"
@@ -125,10 +126,12 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
-.page__body {
-  padding: 10px;
-  background-color: $color-white;
-  border-radius: $border-radius;
+.calendar-page {
+  .page__body {
+    padding: 10px;
+    background-color: $color-white;
+    border-radius: $border-radius;
+  }
 }
 .periodLabel {
   display: none !important;
@@ -139,6 +142,7 @@ export default {
 .cv-day {
   background-color: $color-white !important;
   border-color: $color-gray-secondary;
+  padding: 10px;
 }
 .cv-weeks {
   border: 0;
