@@ -189,4 +189,9 @@ export default {
     }
   }
 }
+.cv-item {
+  background-color: $color-gray-secondary;
+  border-radius: $border-radius;
+  border: 0;
+}
 </style>
