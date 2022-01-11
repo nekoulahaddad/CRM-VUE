@@ -2,93 +2,145 @@
   <div class="login-wrapper">
     <div class="login-page">
       <div class="login-page__right">
-        <div class="login-page__panel panel">
-          <div class="panel__header">
-            <div class="panel__title">
-              Работа в CRM системе ЦСК вам позволяет:
-            </div>
-          </div>
-          <div class="panel__body">
-            <div class="panel__left">
-              <ul>
-                <li>
-                  Позволяет эффективно работать с заказами / заявками клиентов
-                </li>
-                <li>
-                  Оперативно загружать и выгружать новый товар или редактировать
-                  уже имеющийся
-                </li>
-                <li>Отслеживать историю заказов клиента</li>
-                <li>
-                  Назначать задачи сотрудникам, а так же отслеживать их
-                  выполнение Видеть аналитику компании
-                </li>
-                <li>
-                  Отслеживать и создавать мероприятия Управлять интернет -
-                  магазином
-                </li>
-                <li>
-                  Создавать обучение для сотрудников Размещать и управлять
-                  вакансиями
-                </li>
-                <li>
-                  Управлять оптимизацией для поисковых систем Yandex и Google
-                </li>
-                <li>А так же мы постоянно улучшаем наш продукт :)</li>
-              </ul>
-            </div>
-            <div class="panel__right panel-right">
-              <div class="panel-right__logo">
-                <img src="@/assets/icons/logo_big.svg" alt="" />
+        <div v-if="!isForget" class="login-page__panel panel">
+          <div class="panel__inner">
+            <div class="panel__header">
+              <div class="panel__title">
+                Работа в CRM системе ЦСК вам позволяет:
               </div>
-              <div class="panel-right__slogan">
-                Вместе мы сможем стать <span class="text--red">лучше!</span>
+            </div>
+            <div class="panel__body">
+              <div class="panel__left">
+                <ul>
+                  <li>
+                    Позволяет эффективно работать с заказами / заявками клиентов
+                  </li>
+                  <li>
+                    Оперативно загружать и выгружать новый товар или
+                    редактировать уже имеющийся
+                  </li>
+                  <li>Отслеживать историю заказов клиента</li>
+                  <li>
+                    Назначать задачи сотрудникам, а так же отслеживать их
+                    выполнение Видеть аналитику компании
+                  </li>
+                  <li>
+                    Отслеживать и создавать мероприятия Управлять интернет -
+                    магазином
+                  </li>
+                  <li>
+                    Создавать обучение для сотрудников Размещать и управлять
+                    вакансиями
+                  </li>
+                  <li>
+                    Управлять оптимизацией для поисковых систем Yandex и Google
+                  </li>
+                  <li>А так же мы постоянно улучшаем наш продукт :)</li>
+                </ul>
               </div>
-              <form class="panel-right__form" @submit.prevent="onSubmit">
-                <div class="panel-right__col">
-                  <input
-                    type="text"
-                    name="login"
-                    v-model="login"
-                    class="input-login"
-                    autofill="false"
-                    @change="onChange($event)"
-                    v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
-                    required
-                    :disabled="isFetch"
-                    placeholder="Номер телефона"
-                  />
-                  <img src="@/assets/icons/phone.svg" alt="" />
+              <div class="panel__right panel-right">
+                <div class="panel-right__logo">
+                  <img src="@/assets/icons/logo_big.svg" alt="" />
                 </div>
-                <div class="panel-right__col">
-                  <input
-                    type="password"
-                    name="password"
-                    v-model="password"
-                    @change="onChange($event)"
-                    :disabled="isFetch"
-                    class="input-password"
-                    placeholder="Пароль"
-                  />
+                <div class="panel-right__slogan">
+                  Вместе мы сможем стать <span class="text--red">лучше!</span>
                 </div>
-                <div class="policy">
-                  <input type="checkbox" id="policy" />
-                  <label for="policy">
-                    Я даю своё согласие на обработку персональных даннных в
-                    соответсвиии с политикой конфиденциальности и условиями
-                    пользования
-                  </label>
-                </div>
-                <v-button :disabled="isFetch" red>Войти</v-button>
-                <span class="panel-right__forgot-password">
-                  Забыли пароль?
-                </span>
-              </form>
+                <form class="panel-right__form" @submit.prevent="onSubmit">
+                  <div class="panel-right__col">
+                    <input
+                      type="text"
+                      name="login"
+                      v-model="login"
+                      class="input-login"
+                      autofill="false"
+                      @change="onChange($event)"
+                      v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+                      required
+                      :disabled="isFetch"
+                      placeholder="Номер телефона"
+                    />
+                    <img src="@/assets/icons/phone.svg" alt="" />
+                  </div>
+                  <div class="panel-right__col">
+                    <input
+                      type="password"
+                      name="password"
+                      v-model="password"
+                      @change="onChange($event)"
+                      :disabled="isFetch"
+                      class="input-password"
+                      placeholder="Пароль"
+                    />
+                  </div>
+                  <div class="policy">
+                    <input type="checkbox" id="policy" />
+                    <label for="policy">
+                      Я даю своё согласие на обработку персональных даннных в
+                      соответсвиии с политикой конфиденциальности и условиями
+                      пользования
+                    </label>
+                  </div>
+                  <v-button :disabled="isFetch" red>Войти</v-button>
+                  <span
+                    @click="isForget = true"
+                    class="panel-right__forgot-password"
+                  >
+                    Забыли пароль?
+                  </span>
+                </form>
+              </div>
+            </div>
+            <div class="panel__footer">
+              © 2021 - 2022 Все права защищены ООО Торговый дом “ЦСК”
             </div>
           </div>
-          <div class="panel__footer">
-            © 2021 - 2022 Все права защищены ООО Торговый дом “ЦСК”
+        </div>
+
+        <div v-else class="panel__right panel-right">
+          <div class="panel-right__logo">
+            <img src="@/assets/icons/logo_big.svg" alt="" />
           </div>
+          <div class="panel-right__slogan">
+            Вместе мы сможем стать <span class="text--red">лучше!</span>
+          </div>
+          <form class="panel-right__form" @submit.prevent="onSubmit">
+            <div class="panel-right__col">
+              <input
+                type="text"
+                name="login"
+                v-model="login"
+                class="input-login"
+                autofill="false"
+                @change="onChange($event)"
+                v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+                required
+                :disabled="isFetch"
+                placeholder="Номер телефона"
+              />
+              <img src="@/assets/icons/phone.svg" alt="" />
+            </div>
+            <div class="panel-right__col">
+              <input
+                type="password"
+                name="password"
+                v-model="password"
+                @change="onChange($event)"
+                :disabled="isFetch"
+                class="input-password"
+                placeholder="Пароль"
+              />
+            </div>
+            <div class="policy">
+              <input type="checkbox" id="policy" />
+              <label for="policy">
+                Я даю своё согласие на обработку персональных даннных в
+                соответсвиии с политикой конфиденциальности и условиями
+                пользования
+              </label>
+            </div>
+            <v-button :disabled="isFetch" red>Войти</v-button>
+            <span class="panel-right__forgot-password"> Забыли пароль? </span>
+          </form>
         </div>
       </div>
     </div>
@@ -171,8 +223,6 @@ export default {
 
 .login-page {
   &__panel {
-    background-color: #e6eef8;
-    border-radius: $border-radius;
     width: 791px;
     height: 631px;
   }
@@ -187,6 +237,13 @@ export default {
   &__body {
     display: flex;
     justify-content: space-between;
+  }
+
+  &__inner {
+    background-color: #e6eef8;
+    border-radius: $border-radius;
+    padding-right: 10px;
+    padding-bottom: 10px;
   }
 
   &__footer {
@@ -218,7 +275,6 @@ export default {
     height: 496px;
     background-color: $color-white;
     border-radius: $border-radius;
-    margin-right: 10px;
 
     button {
       width: 230px;
@@ -248,6 +304,7 @@ export default {
 
   &__forgot-password {
     color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
     font-size: 12px;
     text-decoration: underline;
     margin-top: 10px;
