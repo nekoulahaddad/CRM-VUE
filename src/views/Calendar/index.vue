@@ -125,18 +125,28 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
+.page__body {
+  padding: 10px;
+  background-color: $color-white;
+}
+
 .cv-wrapper {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
   border-radius: $border-radius;
+}
+.cv-day {
+  background-color: $color-white;
+  border-color: $color-gray-secondary;
 }
 .cv-weeks {
   border-bottom-left-radius: $border-radius;
   border-bottom-right-radius: $border-radius;
+  border: 0;
 }
 .cv-header-days {
   .cv-header-day {
     background-color: $color-white;
     height: 40px;
+    border-color: $color-gray-secondary;
   }
 }
 .cv-header {
