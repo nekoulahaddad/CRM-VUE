@@ -129,7 +129,9 @@ export default {
   padding: 10px;
   background-color: $color-white;
 }
-
+.periodLabel {
+  display: none !important;
+}
 .cv-wrapper {
   border-radius: $border-radius;
 }
@@ -155,6 +157,7 @@ export default {
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
   height: 50px;
+  justify-content: center;
 
   &-nav {
     display: flex;
