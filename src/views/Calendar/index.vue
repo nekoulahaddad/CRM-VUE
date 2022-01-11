@@ -144,6 +144,8 @@ export default {
   border: 0;
 }
 .cv-header-days {
+  border: 0;
+
   .cv-header-day {
     background-color: $color-white;
     height: 40px;
