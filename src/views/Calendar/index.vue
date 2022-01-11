@@ -19,12 +19,12 @@
         :startingDayOfWeek="1"
         itemContentHeight="50px"
       >
-        <template #header="{ headerProps }">
-          <calendar-view-header
-            :header-props="headerProps"
-            @input="setShowDate"
-          />
-        </template>
+        <calendar-view-header
+          slot="header"
+          slot-scope="t"
+          :header-props="t.headerProps"
+          @input="setShowDate"
+        />
       </calendar-view>
     </div>
   </div>
@@ -121,3 +121,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.cv-header {
+  background-color: $color-white !important;
+
+  &-nav {
+    display: flex;
+  }
+}
+</style>
