@@ -73,12 +73,16 @@
                     />
                   </div>
                   <div class="policy">
-                    <input type="checkbox" id="policy" />
-                    <label for="policy">
-                      Я даю своё согласие на обработку персональных даннных в
-                      соответсвиии с политикой конфиденциальности и условиями
-                      пользования
-                    </label>
+                    <div class="policy__left">
+                      <input type="checkbox" id="policy" />
+                    </div>
+                    <div class="policy__right">
+                      <label for="policy">
+                        Я даю своё согласие на обработку персональных даннных в
+                        соответсвиии с политикой конфиденциальности и условиями
+                        пользования
+                      </label>
+                    </div>
                   </div>
                   <v-button :disabled="isFetch" red>Войти</v-button>
                   <span
@@ -124,12 +128,16 @@
                 <img src="@/assets/icons/phone.svg" alt="" />
               </div>
               <div class="policy">
-                <input type="checkbox" id="forgot-policy" />
-                <label for="forgot-policy">
-                  Я даю своё согласие на обработку персональных даннных в
-                  соответсвиии с политикой конфиденциальности и условиями
-                  пользования
-                </label>
+                <div class="policy__left">
+                  <input type="checkbox" id="policy" />
+                </div>
+                <div class="policy__right">
+                  <label for="policy">
+                    Я даю своё согласие на обработку персональных даннных в
+                    соответсвиии с политикой конфиденциальности и условиями
+                    пользования
+                  </label>
+                </div>
               </div>
               <v-button :disabled="isFetch" red>Отправить</v-button>
               <span
@@ -350,6 +358,14 @@ export default {
       font-weight: 600;
       margin-top: 20px;
       margin-bottom: 38px;
+      display: flex;
+
+      &__left {
+        margin-right: 10px;
+      }
+
+      &__right {
+      }
 
       input[type="checkbox"] {
         appearance: none;
@@ -360,10 +376,12 @@ export default {
         background-color: #f5f5f5;
         border-radius: 2px;
         border: 1px solid #d9d9d9;
+        cursor: pointer;
       }
 
       label {
         cursor: pointer;
+        line-height: 15px;
       }
     }
   }
@@ -410,6 +428,7 @@ export default {
         color: rgba(0, 0, 0, 0.3);
         font-weight: 600;
         margin-bottom: 20.26px;
+        line-height: 17px;
       }
 
       form {
