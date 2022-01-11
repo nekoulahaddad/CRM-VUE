@@ -224,7 +224,7 @@
       ]
     },
     "goods": {
-      "pageTitle": "Товары",
+      "pageTitle": "Категории",
       "fields": {
         "categories": [
           "Название категории:",

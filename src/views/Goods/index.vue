@@ -21,8 +21,30 @@
             <div class="scroll-horizontal">
               <div class="list list-shadow">
                 <div class="list__header">
-                  <div class="list__title">
-                    {{ $t("categories") }}
+                  <div class="list__title title">
+                    <div class="title__item">
+                      {{ $t("pages.goods.pageTitle") }}
+                    </div>
+                    <router-link
+                      class="title__item"
+                      v-for="item in current"
+                      :key="item._id"
+                      :to="`/dashboard/goods/${
+                        item.categoryName
+                          ? +item.nesting + 2
+                          : +$route.params.nesting + 1
+                      }/categories/${
+                        item.categoryName ? item._id : item._id
+                      }/1`"
+                    >
+                      {{
+                        item.categoryName
+                          ? item.categoryName || ""
+                          : item.name
+                          ? item.name
+                          : ""
+                      }}
+                    </router-link>
                   </div>
                   <div class="list__columns">
                     <div
@@ -315,6 +337,32 @@ export default {
   .list__column {
     &:first-child {
       text-align: left;
+    }
+  }
+  .title {
+    display: flex;
+
+    &__item {
+      color: rgba(0, 0, 0, 0.3);
+      position: relative;
+      margin-right: 10px;
+
+      &.router-link-active {
+        color: $color-black;
+      }
+
+      & + * {
+        padding-left: 15px;
+
+        &::before {
+          content: "/";
+          position: absolute;
+          color: rgba(0, 0, 0, 0.3);
+          left: 0;
+          top: 0;
+          bottom: 0;
+        }
+      }
     }
   }
 }
