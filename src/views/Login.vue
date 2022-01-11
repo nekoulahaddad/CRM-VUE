@@ -73,16 +73,14 @@
                     />
                   </div>
                   <div class="policy">
-                    <div class="policy__left">
-                      <input type="checkbox" id="policy" />
-                    </div>
-                    <div class="policy__right">
-                      <label for="policy">
+                    <label>
+                      <input type="checkbox" v-model="isPolicy" />
+                      <span>
                         Я даю своё согласие на обработку персональных даннных в
                         соответсвиии с политикой конфиденциальности и условиями
                         пользования
-                      </label>
-                    </div>
+                      </span>
+                    </label>
                   </div>
                   <v-button :disabled="isFetch" red>Войти</v-button>
                   <span
@@ -111,7 +109,7 @@
               Для получения инструкций по востановлению пароля, введите номер
               телефона, указанный при регистрации
             </div>
-            <form class="panel-right__form" @submit="onSubmitForget($event)">
+            <form class="panel-right__form" @submit.prevent="onSubmitForget">
               <div class="panel-right__col">
                 <input
                   type="text"
@@ -128,16 +126,14 @@
                 <img src="@/assets/icons/phone.svg" alt="" />
               </div>
               <div class="policy">
-                <div class="policy__left">
-                  <input type="checkbox" id="policy" />
-                </div>
-                <div class="policy__right">
-                  <label for="policy">
+                <label>
+                  <input type="checkbox" />
+                  <span>
                     Я даю своё согласие на обработку персональных даннных в
                     соответсвиии с политикой конфиденциальности и условиями
                     пользования
-                  </label>
-                </div>
+                  </span>
+                </label>
               </div>
               <v-button :disabled="isFetch" red>Отправить</v-button>
               <span
@@ -166,44 +162,65 @@ export default {
       password: "",
       forgotLogin: "",
       isForget: false,
+      isPolicy: false,
       isFetch: false,
     };
+  },
+  watch: {
+    isForget() {
+      this.isPolicy = false;
+    },
   },
   components: { VButton },
   methods: {
     onSubmit() {
-      this.isFetch = true;
-      this.$store
-        .dispatch("login", {
-          login: this.login,
-          password: this.password,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            this.$router.push({ name: "monitor" });
-          }
-        })
-        .catch(() => {
-          this.isFetch = false;
-        });
+      if (!this.isPolicy) {
+        this.$toast.error(
+          "Вы не дали согласие на обработку персональных данных"
+        );
+      } else {
+        this.isFetch = true;
+        this.$store
+          .dispatch("login", {
+            login: this.login,
+            password: this.password,
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              this.$router.push({ name: "monitor" });
+            }
+          })
+          .catch(() => {
+            this.isFetch = false;
+          });
+      }
     },
-    onSubmitForget(e) {
-      e.preventDefault();
-      axios
-        .post("/user/resetpass", {
-          login: this.forgotLogin,
-        })
-        .then(() => {
-          this.$toast.success("Новый пароль отправлен Вам по смс!");
-          this.isForget = false;
-          this.login = this.forgotLogin;
-          this.password = "";
-        })
-        .catch((err) => {
-          if (err.response.status === 404) {
-            this.$toast.error("Пользователь не найден!");
-          }
-        });
+    onSubmitForget() {
+      if (!this.isPolicy) {
+        this.$toast.error(
+          "Вы не дали согласие на обработку персональных данных"
+        );
+      } else {
+        this.isFetch = true;
+        axios
+          .post("/user/resetpass", {
+            login: this.forgotLogin,
+          })
+          .then(() => {
+            this.$toast.success("Новый пароль отправлен Вам по смс!");
+            this.isForget = false;
+            this.login = this.forgotLogin;
+            this.password = "";
+          })
+          .catch((err) => {
+            if (err.response.status === 404) {
+              this.$toast.error("Пользователь не найден!");
+            }
+          })
+          .finally(() => {
+            this.isFetch = false;
+          });
+      }
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
@@ -353,35 +370,42 @@ export default {
     }
 
     .policy {
-      color: rgba(0, 0, 0, 0.3);
       font-size: 12px;
       font-weight: 600;
       margin-top: 20px;
       margin-bottom: 38px;
-      display: flex;
-
-      &__left {
-        margin-right: 10px;
-      }
-
-      &__right {
-      }
 
       input[type="checkbox"] {
         appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
-        width: 16px;
+        min-width: 16px;
         height: 16px;
         background-color: #f5f5f5;
         border-radius: 2px;
         border: 1px solid #d9d9d9;
         cursor: pointer;
+        margin-right: 10px;
+        position: relative;
+
+        &:checked:after {
+          content: "";
+          position: absolute;
+          background: url("../assets/icons/check.svg") no-repeat 1px 2px;
+          z-index: 100;
+          width: 16px;
+          height: 16px;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
       }
 
       label {
         cursor: pointer;
-        line-height: 15px;
+        color: rgba(0, 0, 0, 0.3);
+        display: flex;
       }
     }
   }
