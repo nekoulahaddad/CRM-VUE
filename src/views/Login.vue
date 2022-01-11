@@ -51,6 +51,7 @@
                     name="login"
                     v-model="login"
                     class="input-login"
+                    autofill="false"
                     @change="onChange($event)"
                     v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
                     :disabled="isFetch"
