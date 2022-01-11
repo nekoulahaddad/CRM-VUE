@@ -128,6 +128,7 @@ export default {
 .page__body {
   padding: 10px;
   background-color: $color-white;
+  border-radius: $border-radius;
 }
 .periodLabel {
   display: none !important;
@@ -140,8 +141,6 @@ export default {
   border-color: $color-gray-secondary;
 }
 .cv-weeks {
-  border-bottom-left-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
   border: 0;
 }
 .cv-header-days {
@@ -154,8 +153,6 @@ export default {
 .cv-header {
   background-color: $color-white !important;
   border: 0;
-  border-top-left-radius: $border-radius;
-  border-top-right-radius: $border-radius;
   height: 50px;
   justify-content: center;
 
