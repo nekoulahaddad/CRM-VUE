@@ -191,7 +191,7 @@ export default {
 }
 .cv-item {
   background-color: $color-gray-secondary;
-  border-radius: $border-radius;
+  border-radius: $border-radius !important;
   border: 0;
 }
 </style>
