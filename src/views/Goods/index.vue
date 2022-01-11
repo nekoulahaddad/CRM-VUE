@@ -4,7 +4,7 @@
       <div class="page__icon">
         <img :src="require('@/assets/icons/goods_title.svg')" alt="" />
       </div>
-      <h1 class="page__title">Товары</h1>
+      <h1 class="page__title">{{ $t("pages.goods.pageTitle") }}</h1>
     </div>
     <div class="page__body d-flex">
       <div class="page__left">
@@ -16,7 +16,7 @@
         />
       </div>
       <div class="page__right">
-        <div v-if="!filtersOptions.region">Выберите регион</div>
+        <div v-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
         <v-spinner v-else-if="isLoading" />
 
         <template v-else-if="dataset.categories.length">
@@ -24,11 +24,11 @@
             <div class="list list-shadow">
               <div class="list__header">
                 <div class="list__title">
-                  {{ $t("pages.seo.pageTitle") }}
+                  {{ $t("pages.goods.pageTitle") }}
                 </div>
                 <div class="list__columns">
                   <div
-                    v-for="field in $t('pages.seo.fields')"
+                    v-for="field in $t('pages.goods.fields')"
                     class="list__column"
                   >
                     {{ field }}
@@ -218,11 +218,21 @@ export default {
 @import "@/styles/_variables";
 
 .goods-page {
+  .list__columns {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .smooth-dnd-draggable-wrapper {
     display: grid;
     grid-template-rows: 1fr;
     border-radius: $border-radius;
     background-color: $color-white;
+  }
+
+  .list__column {
+    &:first-child {
+      text-align: left;
+    }
   }
 }
 </style>
