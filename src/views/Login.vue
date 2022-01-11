@@ -103,7 +103,7 @@
               <img src="@/assets/icons/logo_big.svg" alt="" />
             </div>
             <div class="panel-right__slogan">Отправим пароль по смс!</div>
-            <form class="panel-right__form" @submit.prevent="onSubmit">
+            <form class="panel-right__form" @submit="onSubmitForget($event)">
               <div class="panel-right__col">
                 <input
                   type="text"
