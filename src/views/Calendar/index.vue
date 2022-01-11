@@ -18,13 +18,20 @@
         :selectionEnd="selectionEnd"
         :startingDayOfWeek="1"
         itemContentHeight="50px"
-      />
+      >
+        <template #header="{ headerProps }">
+          <calendar-view-header
+            :header-props="headerProps"
+            @input="setShowDate"
+          />
+        </template>
+      </calendar-view>
     </div>
   </div>
 </template>
 
 <script>
-import { CalendarView } from "vue-simple-calendar";
+import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
 import "vue-simple-calendar/static/css/default.css";
 
 export default {
@@ -44,6 +51,7 @@ export default {
   },
   components: {
     CalendarView,
+    CalendarViewHeader,
   },
   computed: {
     role: {
