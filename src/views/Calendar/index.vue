@@ -137,7 +137,7 @@ export default {
   border-radius: $border-radius;
 }
 .cv-day {
-  background-color: $color-white;
+  background-color: $color-white !important;
   border-color: $color-gray-secondary;
 }
 .cv-weeks {
