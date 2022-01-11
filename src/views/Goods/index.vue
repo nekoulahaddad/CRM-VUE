@@ -28,11 +28,11 @@
               <div class="list list-shadow">
                 <div class="list__header">
                   <div class="list__title">
-                    {{ $t("pages.goods.pageTitle") }}
+                    {{ $t("categories") }}
                   </div>
                   <div class="list__columns">
                     <div
-                      v-for="field in $t('pages.goods.fields')"
+                      v-for="field in $t('pages.goods.fields.categories')"
                       class="list__column"
                     >
                       {{ field }}
@@ -45,9 +45,37 @@
                   lock-axis="y"
                 >
                   <Draggable v-for="item in dataset.categories" :key="item.id">
-                    <v-category :item="item" :current="current" />
+                    <v-category
+                      @changeVisibility="changeCategoryVisibility"
+                      :item="item"
+                      :current="current"
+                    />
                   </Draggable>
                 </Container>
+              </div>
+            </div>
+          </template>
+          <template
+            v-if="
+              filtersOptions.nesting > 1 ||
+              (filtersOptions.type === 'search' && dataset.products.length)
+            "
+          >
+            <div class="scroll-horizontal">
+              <div class="list">
+                <div class="list__header">
+                  <div class="list__title">
+                    {{ $t("goods") }}
+                  </div>
+                  <div class="list__columns">
+                    <div
+                      v-for="field in $t('pages.goods.fields.products')"
+                      class="list__column"
+                    >
+                      {{ field }}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </template>
@@ -62,6 +90,7 @@
 <script>
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
+import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -229,6 +258,42 @@ export default {
         this.dataset.categories,
         dropResult
       );
+    },
+    async refreshGoods() {
+      let result = await this.getDataFromPage(
+        `/categories/get`,
+        this.filtersOptions
+      );
+      this.updateGoods(result);
+      this.clearSelectedProducts();
+    },
+    changeCategoryVisibility(id, visible) {
+      this.changeStatus(false);
+      let categoryData = {
+        region: this.filtersOptions.region,
+        categoryId: [id],
+        visible: !visible,
+      };
+      axios({
+        url: "/categories/updatevisibility/",
+        data: categoryData,
+        method: "POST",
+      })
+        .then(async (res) => {
+          this.refreshGoods();
+          this.$toast.success(
+            `Категория ${
+              res.data.visible ? "будет отображаться" : "не будет отображаться"
+            }`,
+            "Успех!"
+          );
+          this.$forceUpdate();
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
     },
   },
 };
