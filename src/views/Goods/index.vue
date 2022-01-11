@@ -16,37 +16,44 @@
         />
       </div>
       <div class="page__right">
-        <div v-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
-        <v-spinner v-else-if="!isLoading" />
-        <template v-else-if="dataset.categories.length">
-          <div class="scroll-horizontal">
-            <div class="list list-shadow">
-              <div class="list__header">
-                <div class="list__title">
-                  {{ $t("pages.goods.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.goods.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
+        <template v-if="isLoading && filtersOptions.region">
+          <template
+            v-if="
+              filtersOptions.type === 'search'
+                ? filtersOptions.type === 'search' && dataset.categories.length
+                : filtersOptions.type !== 'brands' && filtersOptions.nesting < 3
+            "
+          >
+            <div class="scroll-horizontal">
+              <div class="list list-shadow">
+                <div class="list__header">
+                  <div class="list__title">
+                    {{ $t("pages.goods.pageTitle") }}
+                  </div>
+                  <div class="list__columns">
+                    <div
+                      v-for="field in $t('pages.goods.fields')"
+                      class="list__column"
+                    >
+                      {{ field }}
+                    </div>
                   </div>
                 </div>
+                <Container
+                  @drop="onDrop"
+                  drag-handle-selector=".handle"
+                  lock-axis="y"
+                >
+                  <Draggable v-for="item in dataset.categories" :key="item.id">
+                    <v-category :item="item" :current="current" />
+                  </Draggable>
+                </Container>
               </div>
-              <Container
-                @drop="onDrop"
-                drag-handle-selector=".handle"
-                lock-axis="y"
-              >
-                <Draggable v-for="item in dataset.categories" :key="item.id">
-                  <v-category :item="item" :current="current" />
-                </Draggable>
-              </Container>
             </div>
-          </div>
+          </template>
         </template>
-        <v-not-found-query v-else />
+        <div v-else-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
+        <v-spinner v-else />
       </div>
     </div>
   </div>
@@ -177,7 +184,7 @@ export default {
       this.clearSelectedProducts();
       this.groupIndex = -1;
     }
-    this.isLoading = true;
+    //this.isLoading = true;
     next();
   },
   methods: {
@@ -191,7 +198,6 @@ export default {
         this.downloadExcelFile = true;
         if (this.$route.params.type !== "search") {
           try {
-            this.isLoading = false;
             this.updateGoods(
               await getDataFromPage(
                 `/${this.$route.params.type || "categories"}/get`,
@@ -200,8 +206,8 @@ export default {
             );
           } catch (e) {
           } finally {
-            this.isLoading = true;
             this.$scrollTo("body", 300, {});
+            this.isLoading = true;
           }
         }
       }
