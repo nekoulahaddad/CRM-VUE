@@ -171,6 +171,12 @@
   &__left {
     display: flex;
   }
+  .table__actions {
+    img {
+      position: relative;
+      top: 8px;
+    }
+  }
 }
 
 .handle {
