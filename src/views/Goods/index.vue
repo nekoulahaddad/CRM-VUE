@@ -16,30 +16,46 @@
         />
       </div>
       <div class="page__right">
-        <div v-if="!region">Выберите регион</div>
+        <div v-if="!filtersOptions.region">Выберите регион</div>
         <v-spinner v-else-if="isLoading" />
-        <table
-          class="table table--separate"
-          v-else-if="dataset.categories.length"
-        >
-          <thead class="thead">
-            <tr class="thead__top">
-              <td colspan="2">
-                <div class="table__title">Категории</div>
-              </td>
-            </tr>
-            <tr class="thead__bottom">
-              <td>Название категории:</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in dataset.categories" :key="item.id">
-              <td>{{ item.categoryName }}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+
+        <template v-else-if="dataset.categories.length">
+          <div class="scroll-horizontal">
+            <div class="list list-shadow">
+              <div class="list__header">
+                <div class="list__title">
+                  {{ $t("pages.seo.pageTitle") }}
+                </div>
+                <div class="list__columns">
+                  <div
+                    v-for="field in $t('pages.seo.fields')"
+                    class="list__column"
+                  >
+                    {{ field }}
+                  </div>
+                </div>
+              </div>
+              <Container
+                @drop="onDrop"
+                drag-handle-selector=".handle"
+                lock-axis="y"
+              >
+                <Draggable v-for="item in dataset.categories" :key="item.id">
+                  <div class="draggable-item">
+                    <img
+                      class="next handle left move"
+                      src="@/assets/icons/move.svg"
+                      alt=""
+                    />
+                    <div>
+                      {{ item.categoryName }}
+                    </div>
+                  </div>
+                </Draggable>
+              </Container>
+            </div>
+          </div>
+        </template>
         <v-not-found-query v-else />
       </div>
     </div>
@@ -47,14 +63,15 @@
 </template>
 
 <script>
+import { Container, Draggable } from "vue-smooth-dnd";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import getDataFromPage from "../api/getDataFromPage";
+import getDataFromPage from "@/api/getDataFromPage";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery },
+  components: { VFilter, VSpinner, VNotFoundQuery, Draggable, Container },
   data() {
     return {
       isLoading: false,
@@ -185,11 +202,27 @@ export default {
         });
       }
     },
+    onDrop(dropResult) {
+      this.changeOrder = true;
+      this.savedCategories = this.dataset.categories;
+      this.dataset.categories = this.applyDrag(
+        this.dataset.categories,
+        dropResult
+      );
+    },
   },
 };
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .goods-page {
+  .smooth-dnd-draggable-wrapper {
+    display: grid;
+    grid-template-rows: 1fr;
+    border-radius: $border-radius;
+    background-color: $color-white;
+  }
 }
 </style>
