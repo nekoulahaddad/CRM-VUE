@@ -17,8 +17,7 @@
       </div>
       <div class="page__right">
         <div v-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
-        <v-spinner v-else-if="isLoading" />
-
+        <v-spinner v-else-if="!isLoading" />
         <template v-else-if="dataset.categories.length">
           <div class="scroll-horizontal">
             <div class="list list-shadow">
@@ -41,29 +40,7 @@
                 lock-axis="y"
               >
                 <Draggable v-for="item in dataset.categories" :key="item.id">
-                  <div class="draggable-item">
-                    <div class="draggable-item__left">
-                      <img
-                        class="next handle left move"
-                        src="@/assets/icons/move.svg"
-                        alt=""
-                      />
-                      <div>
-                        {{ item.categoryName }}
-                      </div>
-                    </div>
-                    <div class="table__actions">
-                      <div class="table__icon">
-                        <img src="@/assets/icons/view.svg" alt="" />
-                      </div>
-                      <div class="table__icon">
-                        <img src="@/assets/icons/option.svg" alt="" />
-                      </div>
-                      <div class="table__icon">
-                        <img src="@/assets/icons/trash_icon.svg" alt="" />
-                      </div>
-                    </div>
-                  </div>
+                  <v-category :item="item" :current="current" />
                 </Draggable>
               </Container>
             </div>
@@ -77,6 +54,7 @@
 
 <script>
 import { Container, Draggable } from "vue-smooth-dnd";
+import VCategory from "./components/VCategory";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -84,7 +62,14 @@ import getDataFromPage from "@/api/getDataFromPage";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { VFilter, VSpinner, VNotFoundQuery, Draggable, Container },
+  components: {
+    VCategory,
+    VFilter,
+    VSpinner,
+    VNotFoundQuery,
+    Draggable,
+    Container,
+  },
   data() {
     return {
       isLoading: false,
@@ -177,6 +162,24 @@ export default {
     this.filtersOptions.parent_value = this.$route.params.parent_value;
     this.filtersOptions.nesting = +this.$route.params.nesting - 1;
   },
+  beforeRouteUpdate(to, from, next) {
+    this.isLoading = false;
+    if (parseInt(to.params.nesting) < parseInt(from.params.nesting)) {
+      this.current.splice(to.params.nesting - 1, this.current.length);
+    }
+    if (parseInt(to.params.nesting) <= 1 || !to.params.nesting) {
+      this.current.splice(0, this.current.length);
+    }
+    if (
+      to.params.parent_value !== from.params.parent_value ||
+      !to.params.parent_value
+    ) {
+      this.clearSelectedProducts();
+      this.groupIndex = -1;
+    }
+    this.isLoading = true;
+    next();
+  },
   methods: {
     async updateByFilter() {
       if (!this.isLoading) {
@@ -188,7 +191,7 @@ export default {
         this.downloadExcelFile = true;
         if (this.$route.params.type !== "search") {
           try {
-            this.isLoading = true;
+            this.isLoading = false;
             this.updateGoods(
               await getDataFromPage(
                 `/${this.$route.params.type || "categories"}/get`,
@@ -197,23 +200,21 @@ export default {
             );
           } catch (e) {
           } finally {
-            this.isLoading = false;
+            this.isLoading = true;
+            this.$scrollTo("body", 300, {});
           }
         }
       }
     },
+    clearSelectedProducts() {
+      this.selectedProducts = [];
+      this.cleared = true;
+    },
     updateGoods(res) {
-      this.isLoading = false;
       this.dataset.categories = res.data.categories;
       this.dataset.products = res.data.products;
       this.googleDoc = res.data.googleDoc;
       this.count = res.data.count;
-      this.isLoading = true;
-      if (+this.$route.params.page !== 1 && this.filtersOptions.nesting !== 3) {
-        setTimeout(() => {
-          this.$scrollTo("#pagionation", 500, {});
-        });
-      }
     },
     onDrop(dropResult) {
       this.changeOrder = true;

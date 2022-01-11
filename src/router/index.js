@@ -48,7 +48,8 @@ const routes = [
         component: () => import("../views/Employee"),
       },
       {
-        path: "goods/:page",
+        path: "goods/:nesting/:type?/:parent_value?/:page?",
+        alias: "goods/:nesting/:type?/:parent_value?/:page?",
         name: "goods",
         component: () => import("../views/Goods"),
       },
