@@ -54,6 +54,7 @@
                     autofill="false"
                     @change="onChange($event)"
                     v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+                    required
                     :disabled="isFetch"
                     placeholder="Номер телефона"
                   />
@@ -79,6 +80,9 @@
                   </label>
                 </div>
                 <v-button :disabled="isFetch" red>Войти</v-button>
+                <span class="panel-right__forgot-password">
+                  Забыли пароль?
+                </span>
               </form>
             </div>
           </div>
@@ -94,6 +98,7 @@
 <script>
 import VButton from "@/components/VButton";
 import { maska } from "maska";
+import axios from "@/api/axios";
 
 export default {
   data() {
@@ -121,6 +126,24 @@ export default {
         })
         .catch(() => {
           this.isFetch = false;
+        });
+    },
+    onSubmitForget(e) {
+      e.preventDefault();
+      axios
+        .post("/user/resetpass", {
+          login: this.forgotLogin,
+        })
+        .then(() => {
+          this.$toast.success("Новый пароль отправлен Вам по смс!");
+          this.isForget = false;
+          this.login = this.forgotLogin;
+          this.password = "";
+        })
+        .catch((err) => {
+          if (err.response.status === 404) {
+            this.$toast.error("Пользователь не найден!");
+          }
         });
     },
     onChange(e) {
@@ -221,6 +244,13 @@ export default {
     text-align: center;
     padding-top: 17px;
     padding-bottom: 10px;
+  }
+
+  &__forgot-password {
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    text-decoration: underline;
+    margin-top: 10px;
   }
 
   &__slogan {
