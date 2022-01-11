@@ -96,51 +96,46 @@
           </div>
         </div>
 
-        <div v-else class="panel__right panel-right">
-          <div class="panel-right__logo">
-            <img src="@/assets/icons/logo_big.svg" alt="" />
+        <!-- Забыли пароль -->
+        <div v-else class="panel__right panel-right panel-right--forgot">
+          <div class="panel-right__inner">
+            <div class="panel-right__logo">
+              <img src="@/assets/icons/logo_big.svg" alt="" />
+            </div>
+            <div class="panel-right__slogan">Отправим пароль по смс!</div>
+            <form class="panel-right__form" @submit.prevent="onSubmit">
+              <div class="panel-right__col">
+                <input
+                  type="text"
+                  name="login"
+                  v-model="login"
+                  class="input-login"
+                  autofill="false"
+                  @change="onChange($event)"
+                  v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
+                  required
+                  :disabled="isFetch"
+                  placeholder="Номер телефона"
+                />
+                <img src="@/assets/icons/phone.svg" alt="" />
+              </div>
+              <div class="policy">
+                <input type="checkbox" id="forgot-policy" />
+                <label for="forgot-policy">
+                  Я даю своё согласие на обработку персональных даннных в
+                  соответсвиии с политикой конфиденциальности и условиями
+                  пользования
+                </label>
+              </div>
+              <v-button :disabled="isFetch" red>Отправить</v-button>
+              <span
+                class="panel-right__forgot-password"
+                @click="isForget = false"
+              >
+                Войти
+              </span>
+            </form>
           </div>
-          <div class="panel-right__slogan">
-            Вместе мы сможем стать <span class="text--red">лучше!</span>
-          </div>
-          <form class="panel-right__form" @submit.prevent="onSubmit">
-            <div class="panel-right__col">
-              <input
-                type="text"
-                name="login"
-                v-model="login"
-                class="input-login"
-                autofill="false"
-                @change="onChange($event)"
-                v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
-                required
-                :disabled="isFetch"
-                placeholder="Номер телефона"
-              />
-              <img src="@/assets/icons/phone.svg" alt="" />
-            </div>
-            <div class="panel-right__col">
-              <input
-                type="password"
-                name="password"
-                v-model="password"
-                @change="onChange($event)"
-                :disabled="isFetch"
-                class="input-password"
-                placeholder="Пароль"
-              />
-            </div>
-            <div class="policy">
-              <input type="checkbox" id="policy" />
-              <label for="policy">
-                Я даю своё согласие на обработку персональных даннных в
-                соответсвиии с политикой конфиденциальности и условиями
-                пользования
-              </label>
-            </div>
-            <v-button :disabled="isFetch" red>Войти</v-button>
-            <span class="panel-right__forgot-password"> Забыли пароль? </span>
-          </form>
         </div>
       </div>
     </div>
@@ -387,6 +382,19 @@ export default {
       right: 9.94px;
       top: 9.94px;
       z-index: 1000;
+    }
+  }
+
+  &--forgot {
+    width: 464px;
+    padding: 37.78px 20px 40px 20px;
+    background-color: #e6eef8;
+    height: 100%;
+
+    .panel-right__inner {
+      background-color: $color-white;
+      border-radius: $border-radius;
+      padding-bottom: 40px;
     }
   }
 }
