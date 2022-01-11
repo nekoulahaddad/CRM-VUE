@@ -130,6 +130,7 @@ export default {
   border: 0;
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
+  height: 50px;
 
   &-nav {
     display: flex;
@@ -137,11 +138,18 @@ export default {
     button {
       border: 0;
       height: 30px;
+      border-radius: $border-radius;
+      min-width: 30px;
+
+      & + button {
+        margin-left: 10px;
+      }
 
       &.previousYear,
-      &.previousPeriod {
+      &.previousPeriod,
+      &.nextPeriod,
+      &.nextYear {
         background-color: rgba(0, 0, 0, 0.3);
-
         color: $color-white !important;
       }
     }
