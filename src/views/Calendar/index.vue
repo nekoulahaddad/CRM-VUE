@@ -127,9 +127,32 @@ export default {
 
 .cv-header {
   background-color: $color-white !important;
+  border: 0;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
 
   &-nav {
     display: flex;
+
+    button {
+      border: 0;
+      height: 30px;
+
+      &.previousYear,
+      &.previousPeriod {
+        background-color: rgba(0, 0, 0, 0.3);
+
+        color: $color-white !important;
+      }
+    }
+
+    .currentPeriod {
+      background-color: $color-red;
+      color: $color-white !important;
+      padding-left: 16px;
+      padding-right: 16px;
+      height: 30px;
+    }
   }
 }
 </style>
