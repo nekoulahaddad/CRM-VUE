@@ -63,7 +63,7 @@ export default {
       deleteEducationForm: false,
       deleteDocument: false,
       upload: false,
-      title: "",
+      title: "CRM",
       editedItem: {},
       addDocumentItem: {},
       deletedItem: {},
