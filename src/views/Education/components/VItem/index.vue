@@ -1,5 +1,7 @@
 <template>
-  <div class="list__columns list__columns--shadow list__columns--white">
+  <div
+    class="list__columns list__columns--shadow list__columns--white education-list-columns"
+  >
     <div class="list__column">
       {{ item.title }}
     </div>
@@ -35,3 +37,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.education-list-columns {
+  font-size: 16px;
+}
+</style>

@@ -206,7 +206,7 @@ export default {
 
 .education-page {
   .list__columns {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 100px;
   }
   .list__column {
     &:first-child {
@@ -214,7 +214,7 @@ export default {
     }
   }
   .page__content {
-    padding: 10px 17px 15px 20px;
+    padding: 10px 17px 15px 16px;
     background-color: $color-white;
     border-radius: $border-radius;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
@@ -224,6 +224,7 @@ export default {
     line-height: 30px;
     font-weight: bold;
     margin-bottom: 7px;
+    margin-left: 3px;
   }
   .list {
     margin-top: 3px;
