@@ -94,10 +94,8 @@ import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "@/api/getDataFromPage";
-import nameMixins from "@/mixins/name";
 
 export default {
-  mixins: [nameMixins],
   components: {
     VFilter,
     VSpinner,

@@ -17,6 +17,7 @@
               v-for="item in educations"
               :key="item._id"
               class="list__row list__row--shadow list__row--white"
+              :class="{ 'list__row--opened': editedItem._id === item._id }"
             >
               <v-item
                 :item="item"

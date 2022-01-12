@@ -12,6 +12,7 @@ import io from "socket.io-client";
 import VModal from "vue-js-modal";
 import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
+import VueSimpleSVG from "vue-simple-svg";
 import Toast from "vue-toastification";
 import VueMoment from "vue-moment";
 import { Settings } from "luxon";
@@ -64,6 +65,7 @@ Vue.use(VueCustomTooltip, {
   borderRadius: 16,
   fontWeight: 400,
 });
+Vue.use(VueSimpleSVG);
 Vue.use(VModal, { componentName: "v-modal" });
 Vue.use(Popover);
 Vue.use(VueMoment);

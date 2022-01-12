@@ -10,7 +10,7 @@
             :class="{ 'menu__link--active': key === el }"
           >
             <div class="menu__icon">
-              <img :src="getIconUrl(key)" alt="" />
+              <simple-svg :src="getIconUrl(key)" />
             </div>
             <div class="menu__title">{{ item }}</div>
           </router-link>
@@ -54,3 +54,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.menu__link--active {
+  svg path {
+    fill: $color-red;
+  }
+}
+</style>
