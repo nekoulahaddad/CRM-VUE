@@ -4,24 +4,26 @@
       <div class="page__icon">
         <img :src="require('@/assets/icons/education_title.svg')" alt="" />
       </div>
-      <h1 class="page__title">Обучение</h1>
+      <h1 class="page__title">{{ $t("pages.education.pageTitle") }}</h1>
       <v-filter type="education" />
     </div>
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
       <template v-else-if="educations.length">
-        <div class="scroll-horizontal">
-          <div class="list">
-            <div
-              v-for="(item, index) in educations"
-              :key="item._id"
-              class="list__row list__row--shadow list__row--white"
-            >
-              <v-item
-                :item="item"
-                :editedItem="editedItem"
-                @toggleEdit="toggleEdit"
-              />
+        <div class="page__content">
+          <div class="scroll-horizontal">
+            <div class="list">
+              <div
+                v-for="(item, index) in educations"
+                :key="item._id"
+                class="list__row list__row--shadow list__row--white"
+              >
+                <v-item
+                  :item="item"
+                  :editedItem="editedItem"
+                  @toggleEdit="toggleEdit"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -198,6 +200,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .education-page {
   .list__columns {
     grid-template-columns: 1fr 1fr;
@@ -206,6 +210,12 @@ export default {
     &:first-child {
       text-align: left;
     }
+  }
+  .page__content {
+    padding: 20px 20px 15px;
+    background-color: $color-white;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
   }
 }
 </style>

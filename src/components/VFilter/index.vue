@@ -1,32 +1,12 @@
 <template>
   <div class="page__buttons" v-if="type === 'education'">
     <v-button
-      :red="activeIndex === 0"
-      :white="activeIndex !== 0"
-      @click="selectOptions($event, 0, 'education', 'crm')"
+      v-for="(item, index) in $t('pages.education.buttons')"
+      :red="activeIndex === index"
+      :white="activeIndex !== index"
+      @click="selectOptions($event, index, 'education', item.id)"
     >
-      CRM
-    </v-button>
-    <v-button
-      :red="activeIndex === 1"
-      :white="activeIndex !== 1"
-      @click="selectOptions($event, 1, 'education', 'shop')"
-    >
-      Интернет-магазин
-    </v-button>
-    <v-button
-      :red="activeIndex === 2"
-      :white="activeIndex !== 2"
-      @click="selectOptions($event, 2, 'education', 'lpa')"
-    >
-      ЛНА
-    </v-button>
-    <v-button
-      :red="activeIndex === 3"
-      :white="activeIndex !== 3"
-      @click="selectOptions($event, 3, 'education', 'price')"
-    >
-      Прайс-лист
+      {{ item.title }}
     </v-button>
   </div>
   <div v-else class="filter">

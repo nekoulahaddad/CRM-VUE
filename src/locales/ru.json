@@ -190,6 +190,27 @@
         ""
       ]
     },
+    "education": {
+      "pageTitle": "Обучение",
+      "buttons": [
+        {
+          "id": "crm",
+          "title": "CRM"
+        },
+        {
+          "id": "shop",
+          "title": "Интернет-магазин"
+        },
+        {
+          "id": "lpa",
+          "title": "ЛНА"
+        },
+        {
+          "id": "price",
+          "title": "Прайс-лист"
+        }
+      ]
+    },
     "employee": {
       "pageTitle": "Сотрудники",
       "employeeMainInfo": "Основная информация:",
