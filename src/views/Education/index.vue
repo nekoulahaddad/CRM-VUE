@@ -10,7 +10,8 @@
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
       <template v-else-if="educations.length">
-        <div class="page__content">
+        <div class="page__content content">
+          <div class="content__title">123</div>
           <div class="scroll-horizontal">
             <div class="list">
               <div
@@ -216,6 +217,15 @@ export default {
     background-color: $color-white;
     border-radius: $border-radius;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
+  }
+  .content__title {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
+    margin-bottom: 7px;
+  }
+  .list {
+    margin-top: 3px;
   }
 }
 </style>
