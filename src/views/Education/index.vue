@@ -213,7 +213,7 @@ export default {
     }
   }
   .page__content {
-    padding: 20px 20px 15px;
+    padding: 20px 17px 15px 20px;
     background-color: $color-white;
     border-radius: $border-radius;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
@@ -226,6 +226,7 @@ export default {
   }
   .list {
     margin-top: 3px;
+    margin-right: 3px;
   }
 }
 </style>
