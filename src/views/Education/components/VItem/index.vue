@@ -3,6 +3,24 @@
     <div class="list__column">
       {{ item.title }}
     </div>
+    <div class="list__column">
+      <div class="table__actions">
+        <div class="table__icon">
+          <img
+            alt=""
+            :src="
+              editedItem._id !== item._id
+                ? require('@/assets/icons/write_icon.svg')
+                : require('@/assets/icons/arrow_top_icon.svg')
+            "
+            @click="$emit('toggleEdit', item)"
+          />
+        </div>
+        <div class="table__icon">
+          <img :src="require('@/assets/icons/trash_icon.svg')" alt="" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -13,6 +31,7 @@ export default {
       type: Object,
       required: true,
     },
+    editedItem: Object,
   },
 };
 </script>

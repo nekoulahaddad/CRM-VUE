@@ -17,7 +17,11 @@
               :key="item._id"
               class="list__row list__row--shadow list__row--white"
             >
-              <v-item :item="item" @toggleEdit="toggleEdit" />
+              <v-item
+                :item="item"
+                :editedItem="editedItem"
+                @toggleEdit="toggleEdit"
+              />
             </div>
           </div>
         </div>
@@ -175,8 +179,8 @@ export default {
     toggleEdit(item) {
       this.addDocumentItem = null;
 
-      if (this.editedItem === item) {
-        this.editedItem = null;
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
       } else {
         this.editedItem = item;
       }
