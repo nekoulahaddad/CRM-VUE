@@ -9,26 +9,25 @@
     </div>
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
-      <template v-else-if="educations.length">
-        <div class="page__content content">
-          <div class="content__title">{{ title }}</div>
-          <div class="scroll-horizontal">
-            <div class="list">
-              <div
-                v-for="item in educations"
-                :key="item._id"
-                class="list__row list__row--shadow list__row--white"
-              >
-                <v-item
-                  :item="item"
-                  :editedItem="editedItem"
-                  @toggleEdit="toggleEdit"
-                />
-              </div>
+      <div class="page__content content" v-else>
+        <div class="content__title">{{ title }}</div>
+        <div class="scroll-horizontal" v-if="educations.length">
+          <div class="list">
+            <div
+              v-for="item in educations"
+              :key="item._id"
+              class="list__row list__row--shadow list__row--white"
+            >
+              <v-item
+                :item="item"
+                :editedItem="editedItem"
+                @toggleEdit="toggleEdit"
+              />
             </div>
           </div>
         </div>
-      </template>
+        <v-not-found-query v-else />
+      </div>
     </div>
   </div>
 </template>
@@ -229,6 +228,9 @@ export default {
   .list {
     margin-top: 3px;
     margin-right: 3px;
+  }
+  .empty-data {
+    margin-left: 3px;
   }
 }
 </style>
