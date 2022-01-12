@@ -9,89 +9,26 @@
     </div>
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
-      <div v-else class="card card--white">
-        <div class="card__title card__title--underline">{{ type }}</div>
-        <table v-if="educations.length" class="table table--separate">
-          <tbody>
-            <template v-for="(item, index) in educations">
-              <tr v-if="editedItem !== item" class="shadow" :key="item.id">
-                <td>{{ item.title }}</td>
-                <td>
-                  <div class="table__actions">
-                    <div class="table__icon">
-                      <img
-                        @click="toggleEdit(item)"
-                        src="/icons/write_icon.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div class="table__icon">
-                      <img src="/icons/trash_icon.svg" alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr class="shadow" v-else>
-                <td class="inner" colspan="2">
-                  <div class="table-inner">
-                    <div class="table-inner__title">
-                      {{ item.title }}
-                      <img
-                        @click="toggleEdit(item)"
-                        class="table-inner__close"
-                        src="/icons/close_icon.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div class="table-inner__description description">
-                      <div class="description__title">Описание</div>
-                      <div class="description__content">
-                        {{ item.description }}
-                      </div>
-                    </div>
-                    <div v-if="false" class="table-inner__table">
-                      <table class="table">
-                        <tr class="shadow">
-                          <td>Тест</td>
-                          <td>
-                            <div class="table__actions">
-                              <div class="table__icon">
-                                <img src="/icons/file_icon.svg" alt="" />
-                              </div>
-                              <div class="table__icon">
-                                <img src="/icons/trash_icon.svg" alt="" />
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-
-                    <!-- Форма добавления документа -->
-                    <v-add-document
-                      @toggleAddDocument="toggleAddDocument"
-                      v-if="addDocumentItem === item"
-                    />
-
-                    <div v-else class="table-inner__actions">
-                      <v-button @click="toggleAddDocument(item)" red
-                        >Добавить документ</v-button
-                      >
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-        <v-not-found-query v-else />
-      </div>
+      <template v-else-if="educations.length">
+        <div class="scroll-horizontal">
+          <div class="list">
+            <div
+              v-for="(item, index) in educations"
+              :key="item._id"
+              class="list__row list__row--shadow list__row--white"
+            >
+              <v-item :item="item" @toggleEdit="toggleEdit" />
+            </div>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
 import VButton from "@/components/VButton";
+import VItem from "./components/VItem";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
@@ -107,6 +44,7 @@ export default {
     VFilter,
     VSpinner,
     VNotFoundQuery,
+    VItem,
   },
   data() {
     return {
@@ -257,5 +195,13 @@ export default {
 
 <style lang="scss">
 .education-page {
+  .list__columns {
+    grid-template-columns: 1fr 1fr;
+  }
+  .list__column {
+    &:first-child {
+      text-align: left;
+    }
+  }
 }
 </style>

@@ -15,24 +15,6 @@
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
             <div class="list">
-              <div class="list__header">
-                <v-search
-                  @submit="getSearchData"
-                  v-model="search"
-                  :placeholder="$t('pages.delivery.searchPlaceholder')"
-                />
-                <div class="list__title">
-                  {{ $t("pages.delivery.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.delivery.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
-                  </div>
-                </div>
-              </div>
               <div
                 v-for="(item, index) in dataset"
                 :key="item._id"

@@ -242,7 +242,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ecd9db url("../assets/icons/building.svg") 20% no-repeat;
+  background: #ecd9db url("../../assets/icons/building.svg") 20% no-repeat;
 }
 
 .login-page {
@@ -283,7 +283,7 @@ export default {
 
     ul {
       li {
-        background: url("../assets/icons/success_red.svg") 0 4px no-repeat;
+        background: url("../../assets/icons/success_red.svg") 0 4px no-repeat;
         padding-left: 23px;
         font-weight: 600;
 
@@ -391,7 +391,7 @@ export default {
         &:checked:after {
           content: "";
           position: absolute;
-          background: url("../assets/icons/check.svg") no-repeat 1px 2px;
+          background: url("../../assets/icons/check.svg") no-repeat 1px 2px;
           z-index: 100;
           width: 16px;
           height: 16px;
