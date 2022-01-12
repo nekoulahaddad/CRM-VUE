@@ -4,9 +4,9 @@
       v-for="(item, index) in $t('pages.education.buttons')"
       :red="activeIndex === index"
       :white="activeIndex !== index"
-      @click="selectOptions($event, index, 'education', item.id)"
+      @click="selectOptions($event, index, 'education', item.id, item.title)"
     >
-      {{ item.title }}
+      {{ item.value }}
     </v-button>
   </div>
   <div v-else class="filter">
@@ -1096,7 +1096,7 @@ export default {
         this.$router.push(`/dashboard/${this.$route.name}/1`);
       }
     },
-    selectOptions(e, index, type, value) {
+    selectOptions(e, index, type, value, title = null) {
       this.$parent.isLoading = false;
       switch (type) {
         case "department":
@@ -1115,6 +1115,7 @@ export default {
           break;
         case "education":
           this.$parent.type = value;
+          this.$parent.title = title;
           this.activeIndex = index;
           this.$forceUpdate();
           break;

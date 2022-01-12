@@ -11,11 +11,11 @@
       <v-spinner v-if="!isLoading" />
       <template v-else-if="educations.length">
         <div class="page__content content">
-          <div class="content__title">123</div>
+          <div class="content__title">{{ title }}</div>
           <div class="scroll-horizontal">
             <div class="list">
               <div
-                v-for="(item, index) in educations"
+                v-for="item in educations"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
               >
@@ -64,6 +64,7 @@ export default {
       deleteEducationForm: false,
       deleteDocument: false,
       upload: false,
+      title: "",
       editedItem: {},
       addDocumentItem: {},
       deletedItem: {},
