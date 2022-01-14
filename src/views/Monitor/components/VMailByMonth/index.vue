@@ -5,12 +5,17 @@
     </div>
 
     <div class="mail-by-month__body">
-      <div class="mail-by-month__managers managers">
-        <div class="managers__title">
-          {{ $t("managers") }}
+      <div class="mail-by-month__managers mail-by-month__column managers">
+        <div class="managers__inner">
+          <div class="managers__title">
+            {{ $t("managers") }}
+          </div>
+          <select class="managers__select form-select"></select>
         </div>
-        <select class="managers__select"></select>
       </div>
+      <div class="mail-by-month__column">1</div>
+      <div class="mail-by-month__column">2</div>
+      <div class="mail-by-month__column">3</div>
     </div>
   </section>
 </template>
@@ -36,15 +41,35 @@ export default {};
     background-color: $color-white;
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
+    position: relative;
+    z-index: 10;
+  }
+
+  &__column {
+    width: 216px;
+    background-color: $color-white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+
+    & + * {
+      margin-left: 10px;
+    }
   }
 
   &__body {
-    height: 100px;
+    height: 110px;
+    display: flex;
   }
 
   .managers {
     background-color: $color-white;
     height: 100%;
+    width: 250px;
+
+    &__inner {
+      padding: 10px;
+    }
 
     &__title {
       font-weight: 700;
