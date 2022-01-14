@@ -2,15 +2,19 @@
   <footer class="footer">
     <div class="footer__inner">
       <v-user-info />
+      <v-language-switcher />
+      <v-date-time />
     </div>
   </footer>
 </template>
 
 <script>
+import VDateTime from "@/components/VDateTime";
 import VUserInfo from "@/components/VUserInfo";
+import VLanguageSwitcher from "@/components/VLanguageSwitcher";
 
 export default {
-  components: { VUserInfo },
+  components: { VDateTime, VLanguageSwitcher, VUserInfo },
 };
 </script>
 

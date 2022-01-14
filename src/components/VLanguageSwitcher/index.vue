@@ -7,6 +7,9 @@ export default {};
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .language-switcher {
+  width: 37px;
 }
 </style>
