@@ -1,9 +1,13 @@
 <template>
   <footer class="footer">
     <div class="footer__inner">
-      <v-user-info />
-      <v-language-switcher />
-      <v-date-time />
+      <div class="footer__left">
+        <v-user-info />
+      </div>
+      <div class="footer__right">
+        <v-language-switcher />
+        <v-date-time />
+      </div>
     </div>
   </footer>
 </template>
