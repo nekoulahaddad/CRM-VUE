@@ -14,7 +14,10 @@
       <div class="page__right">
         <div class="scroll-horizontal">
           <v-top-blocks />
-          <v-mail-by-month />
+          <div class="d-flex">
+            <v-mail-by-month />
+            <v-clients />
+          </div>
         </div>
       </div>
     </div>
@@ -25,11 +28,12 @@
 import VFilter from "@/components/VFilter";
 import VRevs from "./components/VRevs";
 import VTopBlocks from "./components/VTopBlocks";
+import VClients from "./components/VClients";
 import VMailByMonth from "./components/VMailByMonth";
 import axios from "@/api/axios";
 
 export default {
-  components: { VFilter, VMailByMonth, VRevs, VTopBlocks },
+  components: { VClients, VFilter, VMailByMonth, VRevs, VTopBlocks },
   data() {
     return {
       startDate: null,
