@@ -18,6 +18,9 @@
             <v-mail-by-month />
             <v-clients />
           </div>
+          <div class="d-flex">
+            <v-top-products />
+          </div>
         </div>
       </div>
     </div>
@@ -30,10 +33,18 @@ import VRevs from "./components/VRevs";
 import VTopBlocks from "./components/VTopBlocks";
 import VClients from "./components/VClients";
 import VMailByMonth from "./components/VMailByMonth";
+import VTopProducts from "./components/VTopProducts";
 import axios from "@/api/axios";
 
 export default {
-  components: { VClients, VFilter, VMailByMonth, VRevs, VTopBlocks },
+  components: {
+    VClients,
+    VFilter,
+    VMailByMonth,
+    VRevs,
+    VTopBlocks,
+    VTopProducts,
+  },
   data() {
     return {
       startDate: null,
