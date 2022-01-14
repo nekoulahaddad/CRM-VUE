@@ -12,7 +12,9 @@
         <v-revs :rev="rev" />
       </div>
       <div class="page__right">
-        <v-top-blocks />
+        <div class="scroll-horizontal">
+          <v-top-blocks />
+        </div>
       </div>
     </div>
   </div>
