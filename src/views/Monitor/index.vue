@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page monitor-page">
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/monitor_title.svg')" alt="" />
@@ -105,3 +105,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.monitor-page {
+  .page__left {
+    margin-right: 6px;
+  }
+}
+</style>
