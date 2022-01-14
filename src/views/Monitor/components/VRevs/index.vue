@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <div>{{ title }}</div>
-    <div v-for="item of info">
-      {{ item.title }} {{ vueNumberFormat(item.count) }}
+  <div class="revs">
+    <div class="revs__inner">
+      <div class="revs__title">{{ title }}</div>
+      <div v-for="item of info">
+        {{ item.title }} {{ vueNumberFormat(item.count) }}
+      </div>
     </div>
   </div>
 </template>
@@ -91,3 +93,25 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.revs {
+  width: 267px;
+  height: 254px;
+  background-color: $color-white;
+  border-radius: $border-radius;
+  box-shadow: 0 3.5px 5.5px rgba(0, 0, 0, 0.02);
+  margin-top: 10px;
+
+  &__inner {
+    padding: 20px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+</style>
