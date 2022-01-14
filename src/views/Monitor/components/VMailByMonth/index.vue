@@ -51,6 +51,7 @@ export default {};
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
+    margin-bottom: 3px;
 
     & + * {
       margin-left: 10px;
@@ -58,13 +59,12 @@ export default {};
   }
 
   &__body {
-    height: 110px;
+    height: 113px;
     display: flex;
   }
 
   .managers {
     background-color: $color-white;
-    height: 100%;
     width: 250px;
 
     &__inner {
