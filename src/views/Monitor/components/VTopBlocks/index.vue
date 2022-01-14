@@ -15,7 +15,7 @@
         <div class="top-block__value">₽ 70.000</div>
       </div>
       <div class="top-block__right">
-        <img src="@/assets/icons/card.svg" alt="" />
+        <img src="@/assets/icons/world.svg" alt="" />
       </div>
     </div>
     <div class="top-blocks__item top-block">
@@ -24,7 +24,7 @@
         <div class="top-block__value">₽ 70.000</div>
       </div>
       <div class="top-block__right">
-        <img src="@/assets/icons/card.svg" alt="" />
+        <img src="@/assets/icons/doc.svg" alt="" />
       </div>
     </div>
     <div class="top-blocks__item top-block">
@@ -33,7 +33,7 @@
         <div class="top-block__value">₽ 70.000</div>
       </div>
       <div class="top-block__right">
-        <img src="@/assets/icons/card.svg" alt="" />
+        <img src="@/assets/icons/cart_big.svg" alt="" />
       </div>
     </div>
   </div>
