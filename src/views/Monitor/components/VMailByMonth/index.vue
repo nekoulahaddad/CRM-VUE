@@ -13,9 +13,9 @@
           <select class="managers__select form-select"></select>
         </div>
       </div>
-      <div class="mail-by-month__column">1</div>
-      <div class="mail-by-month__column">2</div>
-      <div class="mail-by-month__column">3</div>
+      <div class="mail-by-month__column"></div>
+      <div class="mail-by-month__column"></div>
+      <div class="mail-by-month__column"></div>
     </div>
   </section>
 </template>
