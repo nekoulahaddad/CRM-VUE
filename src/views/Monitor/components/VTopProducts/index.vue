@@ -1,6 +1,8 @@
 <template>
   <div class="top-products">
-    <div class="top-products__inner"></div>
+    <div class="top-products__inner">
+      <div class="top-products__title">{{ $t("topProducts") }}</div>
+    </div>
   </div>
 </template>
 
@@ -20,6 +22,13 @@ export default {};
     background-color: $color-white;
     border-radius: $border-radius;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
+    padding: 20px 10px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 21px;
   }
 }
 </style>
