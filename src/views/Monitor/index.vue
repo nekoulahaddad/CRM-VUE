@@ -14,6 +14,7 @@
       <div class="page__right">
         <div class="scroll-horizontal">
           <v-top-blocks />
+          <v-mail-by-month />
         </div>
       </div>
     </div>
@@ -24,10 +25,11 @@
 import VFilter from "@/components/VFilter";
 import VRevs from "./components/VRevs";
 import VTopBlocks from "./components/VTopBlocks";
+import VMailByMonth from "./components/VMailByMonth";
 import axios from "@/api/axios";
 
 export default {
-  components: { VFilter, VRevs, VTopBlocks },
+  components: { VFilter, VMailByMonth, VRevs, VTopBlocks },
   data() {
     return {
       startDate: null,
