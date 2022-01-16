@@ -26,6 +26,7 @@ export default {};
 
 .top-products {
   margin-top: 7px;
+  margin-bottom: 5px;
 
   &__inner {
     width: 493px;
