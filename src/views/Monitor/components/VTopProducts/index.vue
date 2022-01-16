@@ -2,6 +2,48 @@
   <div class="top-products">
     <div class="top-products__inner">
       <div class="top-products__title">{{ $t("topProducts") }}</div>
+      <div class="top-products__body">
+        <div class="top_products__item product">
+          <img
+            src="https://i.picsum.photos/id/529/131/83.jpg?hmac=ND-mojdfluwBJNlDA-FTYr_uMh2ZqHwT_rCIi8eWPaY"
+            alt=""
+            class="product__image"
+          />
+          <div class="product__title">Ламинат Kronostep АС4 Сосна Кантри</div>
+        </div>
+        <div class="top_products__item product">
+          <img
+            src="https://i.picsum.photos/id/529/131/83.jpg?hmac=ND-mojdfluwBJNlDA-FTYr_uMh2ZqHwT_rCIi8eWPaY"
+            alt=""
+            class="product__image"
+          />
+          <div class="product__title">Ламинат Kronostep АС4 Сосна Кантри</div>
+        </div>
+        <div class="top_products__item product">
+          <img
+            src="https://i.picsum.photos/id/529/131/83.jpg?hmac=ND-mojdfluwBJNlDA-FTYr_uMh2ZqHwT_rCIi8eWPaY"
+            alt=""
+            class="product__image"
+          />
+          <div class="product__title">Ламинат Kronostep АС4 Сосна Кантри</div>
+        </div>
+        <div class="top_products__item product">
+          <img
+            src="https://i.picsum.photos/id/529/131/83.jpg?hmac=ND-mojdfluwBJNlDA-FTYr_uMh2ZqHwT_rCIi8eWPaY"
+            alt=""
+            class="product__image"
+          />
+          <div class="product__title">Ламинат Kronostep АС4 Сосна Кантри</div>
+        </div>
+        <div class="top_products__item product">
+          <img
+            src="https://i.picsum.photos/id/529/131/83.jpg?hmac=ND-mojdfluwBJNlDA-FTYr_uMh2ZqHwT_rCIi8eWPaY"
+            alt=""
+            class="product__image"
+          />
+          <div class="product__title">Ламинат Kronostep АС4 Сосна Кантри</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,10 +67,46 @@ export default {};
     padding: 20px 10px;
   }
 
+  &__body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
   &__title {
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 21px;
+  }
+
+  .product {
+    width: 131px;
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+
+    &__image {
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    &__title {
+      font-weight: 500;
+      text-align: center;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      width: 100%;
+      background-color: $color-gray;
+      border-radius: $border-radius;
+    }
   }
 }
 </style>
