@@ -77,14 +77,14 @@ export default {
     let data = Array.apply(null, { length: 31 });
     for (let i = 0; i < data.length; i++) {
       let index = this.ordersForMonth.findIndex((item) => item.day === i + 1);
-      labels[i] = `    День ${i + 1 < 10 ? ` ${i + 1}` : i + 1}`;
+      labels[i] = `${i + 1 < 10 ? `0${i + 1}` : i + 1}`;
       data[i] = {
         x: i + 1,
         y: index > -1 ? this.ordersForMonth[index].count : 0,
       };
     }
     this.dataset = {
-      labels: labels,
+      labels,
       datasets: [
         {
           data: data,
