@@ -20,6 +20,7 @@
           </div>
           <div class="d-flex">
             <v-top-products />
+            <v-chart />
           </div>
         </div>
       </div>
@@ -28,8 +29,9 @@
 </template>
 
 <script>
-import VFilter from "@/components/VFilter";
 import VRevs from "./components/VRevs";
+import VChart from "./components/VChart";
+import VFilter from "@/components/VFilter";
 import VTopBlocks from "./components/VTopBlocks";
 import VClients from "./components/VClients";
 import VMailByMonth from "./components/VMailByMonth";
@@ -40,6 +42,7 @@ export default {
   components: {
     VClients,
     VFilter,
+    VChart,
     VMailByMonth,
     VRevs,
     VTopBlocks,
