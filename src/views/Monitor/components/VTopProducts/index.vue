@@ -32,7 +32,7 @@ export default {};
     background-color: $color-white;
     border-radius: $border-radius;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
-    padding: 20px 10px;
+    padding: 20px 10px 18px;
   }
 
   &__body {
@@ -60,11 +60,12 @@ export default {};
 
     &__image {
       border-radius: 5px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     &__title {
       font-weight: 500;
+      line-height: 17.07px;
     }
 
     &__price {

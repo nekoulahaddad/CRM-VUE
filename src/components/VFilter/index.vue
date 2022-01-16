@@ -94,6 +94,27 @@
               </select>
             </div>
           </div>
+          <div class="filter__group group">
+            <div class="group__title">Дата:</div>
+            <div class="group__content">
+              <date-picker
+                format="DD.MM.YYYY"
+                language="ru"
+                :dateInput="dateInput"
+                :sameDateFormat="sameDateFormat"
+                :showHelperButtons="true"
+                :switchButtonInitial="true"
+                switchButtonLabel="Все время"
+                :calendarDateInput="calendarDateInput"
+                @date-applied="selectPeriodDate"
+              />
+            </div>
+          </div>
+          <div class="filter__actions">
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
+          </div>
         </template>
 
         <!-- Клиенты -->
