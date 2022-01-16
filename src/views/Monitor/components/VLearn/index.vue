@@ -2,24 +2,39 @@
   <div class="learn">
     <div class="learn__inner">
       <div class="learn__title">Обучение:</div>
-      <div class="list">
-        <div
-          v-for="i in 3"
-          class="list__row list__row--shadow list__row--white"
-        >
-          <div class="list__columns">
-            <div class="list__column">
-              <div>Обучение для менеджера по онлайн продажам</div>
+      <vue-scroll>
+        <div class="list">
+          <div
+            v-for="i in 10"
+            class="list__row list__row--shadow list__row--white"
+          >
+            <div class="list__columns">
+              <div class="list__column">
+                <div>Обучение для менеджера по онлайн продажам</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </vue-scroll>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    const body = document.querySelector("body");
+    const learn = document.querySelector(".learn");
+
+    learn.onmouseover = function () {
+      body.style.overflow = "hidden";
+    };
+
+    learn.onmouseout = function () {
+      body.style.overflow = "auto";
+    };
+  },
+};
 </script>
 
 <style lang="scss">
@@ -42,6 +57,12 @@ export default {};
     margin-bottom: 16px;
   }
 
+  .list {
+    height: 137px;
+    margin-left: 2px;
+    margin-top: 3px;
+    margin-right: 15px;
+  }
   .list__row,
   .list__columns {
     height: 40px;
