@@ -15,12 +15,12 @@ export default {};
 
 .chart {
   background-color: $color-white;
-  max-width: 924px;
-  width: 100%;
+  width: 924px;
   box-shadow: 0 3.5px 5.5px rgba(0, 0, 0, 0.02);
   margin-top: 7px;
-  margin-left: 7px;
+  margin-left: 10px;
   border-radius: $border-radius;
+  flex: 1;
 
   &__inner {
     width: 100%;
