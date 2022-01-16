@@ -57,7 +57,7 @@ export default {};
     display: flex;
     align-items: center;
     padding-left: 13px;
-    padding-right: 13px;
+    padding-right: 7px;
     justify-content: space-between;
   }
 
