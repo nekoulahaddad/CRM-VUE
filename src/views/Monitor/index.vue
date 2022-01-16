@@ -21,7 +21,7 @@
           <div class="d-flex">
             <v-top-products />
             <div class="d-flex flex-column">
-              <v-chart />
+              <v-chart :sales="sales" :ordersForMonth="ordersForMonth" />
               <v-learn />
             </div>
           </div>
