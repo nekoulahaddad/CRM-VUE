@@ -12,38 +12,45 @@
           {{ transformFIO(user) }}, {{ $t("welcome") }}
         </div>
         <div class="personal-area__body">
-          <div class="personal-area__role">
-            {{ $t("systemRole") }}
-            <strong>{{ transformRole(user.role) }}</strong>
+          <div class="personal-area__column">
+            <div class="personal-area__role">
+              {{ $t("systemRole") }}
+              <strong>{{ transformRole(user.role) }}</strong>
+            </div>
+            <form action="" class="personal-area__form">
+              <div class="personal-area__col">
+                <label>Старый пароль:</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control"
+                  placeholder="Введите старый пароль"
+                  name="oldPassword"
+                  v-model="oldPassword"
+                />
+              </div>
+              <div class="personal-area__col">
+                <label>Новый пароль:</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control"
+                  placeholder="Введите новый пароль"
+                  name="newPassword"
+                  v-model="newPassword"
+                />
+              </div>
+              <div class="personal-area__buttons">
+                <v-button red>Изменить</v-button>
+                <v-button @click="logout" redWhite>Выйти</v-button>
+              </div>
+            </form>
           </div>
-          <form action="" class="personal-area__form">
-            <div class="personal-area__col">
-              <label>Старый пароль:</label>
-              <input
-                type="text"
-                required
-                class="form-control"
-                placeholder="Введите старый пароль"
-                name="oldPassword"
-                v-model="oldPassword"
-              />
+          <div class="personal-area__column">
+            <div class="personal-area__settings settings">
+              <div class="settings__title">{{ $t("customDesign") }}</div>
             </div>
-            <div class="personal-area__col">
-              <label>Новый пароль:</label>
-              <input
-                type="text"
-                required
-                class="form-control"
-                placeholder="Введите новый пароль"
-                name="newPassword"
-                v-model="newPassword"
-              />
-            </div>
-            <div class="personal-area__buttons">
-              <v-button red>Изменить</v-button>
-              <v-button @click="logout" redWhite>Выйти</v-button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -196,6 +203,31 @@ export default {
       & + button {
         margin-left: 19px;
       }
+    }
+  }
+
+  .settings {
+    margin-top: 20px;
+    width: 355px;
+    position: relative;
+    padding-bottom: 10px;
+
+    &__title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      border-radius: $border-radius;
+      background-color: $color-gray-secondary;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 2px;
+      position: absolute;
     }
   }
 }
