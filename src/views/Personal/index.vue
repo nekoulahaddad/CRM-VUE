@@ -49,6 +49,31 @@
           <div class="personal-area__column">
             <div class="personal-area__settings settings">
               <div class="settings__title">{{ $t("customDesign") }}</div>
+              <div class="settings__item settings-item">
+                <div class="settings-item__title">
+                  {{ $t("choiсeOfTheme") }}
+                </div>
+                <div class="settings-item__content">
+                  <label class="settings-item__label">
+                    <input
+                      name="theme-color"
+                      value="light"
+                      class="settings-item__radio"
+                      type="radio"
+                    />
+                    <span>Светлый цвет</span>
+                  </label>
+                  <label class="settings-item__label">
+                    <input
+                      name="theme-color"
+                      class="settings-item__radio"
+                      value="dark"
+                      type="radio"
+                    />
+                    <span>Темный цвет</span>
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -209,25 +234,74 @@ export default {
   .settings {
     margin-top: 20px;
     width: 355px;
-    position: relative;
-    padding-bottom: 10px;
 
     &__title {
       font-size: 18px;
       font-weight: 700;
+      padding-bottom: 10px;
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        border-radius: $border-radius;
+        background-color: $color-gray-secondary;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 2px;
+        position: absolute;
+      }
+    }
+  }
+
+  .settings-item {
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
     }
 
-    &::after {
-      content: "";
-      display: block;
-      border-radius: $border-radius;
-      background-color: $color-gray-secondary;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      height: 2px;
-      position: absolute;
+    &__title {
+      font-size: 16px;
+      padding: 10px;
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        border-radius: $border-radius;
+        background-color: $color-gray-secondary;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 2px;
+        position: absolute;
+      }
+    }
+
+    &__label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+    }
+
+    &__radio {
+      width: 24px;
+      height: 24px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      border: 2px solid #979797;
+      border-radius: 50%;
+      position: relative;
+
+      &:checked {
+        border: 6px solid $color-red;
+      }
     }
   }
 }
