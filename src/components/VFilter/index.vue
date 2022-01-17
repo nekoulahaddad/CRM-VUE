@@ -1201,3 +1201,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.filter {
+  &__actions {
+    margin-top: 20px;
+  }
+}
+</style>

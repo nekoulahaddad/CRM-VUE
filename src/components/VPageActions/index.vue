@@ -9,6 +9,16 @@
           <img src="@/assets/icons/education_add.svg" alt="" />
         </a>
       </template>
+      <template v-if="name === 'tasks'">
+        <a href="" class="page-actions__button">
+          <img src="@/assets/icons/tasks_add.svg" alt="" />
+        </a>
+      </template>
+      <template v-if="name === 'clients'">
+        <a href="" class="page-actions__button">
+          <img src="@/assets/icons/client_add.svg" alt="" />
+        </a>
+      </template>
     </div>
   </div>
 </template>
