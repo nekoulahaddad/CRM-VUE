@@ -3,6 +3,7 @@
     <div class="footer__inner">
       <div class="footer__left">
         <v-user-info />
+        <v-page-actions />
       </div>
       <div class="footer__right">
         <v-language-switcher />
@@ -14,11 +15,12 @@
 
 <script>
 import VDateTime from "@/components/VDateTime";
+import VPageActions from "@/components/VPageActions";
 import VUserInfo from "@/components/VUserInfo";
 import VLanguageSwitcher from "@/components/VLanguageSwitcher";
 
 export default {
-  components: { VDateTime, VLanguageSwitcher, VUserInfo },
+  components: { VDateTime, VLanguageSwitcher, VPageActions, VUserInfo },
 };
 </script>
 
@@ -35,6 +37,11 @@ export default {
   left: 0;
   right: 0;
   z-index: 999;
+
+  &__left {
+    display: flex;
+    align-items: center;
+  }
 
   &__inner {
     display: flex;

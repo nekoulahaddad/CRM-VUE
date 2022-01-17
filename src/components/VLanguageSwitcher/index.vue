@@ -14,15 +14,27 @@
 </template>
 
 <script>
+import Cookies from "js-cookie";
+
 export default {
   data() {
     return {
-      toggle: false,
+      currentLocale: "",
+      locales: {
+        en: "en-En",
+        ru: "ru-Ru",
+      },
     };
   },
   methods: {
     toggleSwitcher() {
-      this.toggle = !this.toggle;
+      Cookies.set("locale", this.toggle ? "en-En" : "ru-Ru");
+      this.$i18n.locale = this.toggle ? "en-En" : "ru-Ru";
+    },
+  },
+  computed: {
+    toggle() {
+      return Cookies.get("locale") === "en-En";
     },
   },
 };
