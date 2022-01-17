@@ -57,20 +57,20 @@
                   <label class="settings-item__label">
                     <input
                       name="theme-color"
-                      value="light"
+                      value="dark"
                       class="settings-item__radio"
                       type="radio"
                     />
-                    <span>Светлый цвет</span>
+                    <span>Тёмная тема</span>
                   </label>
                   <label class="settings-item__label">
                     <input
                       name="theme-color"
                       class="settings-item__radio"
-                      value="dark"
+                      value="light"
                       type="radio"
                     />
-                    <span>Темный цвет</span>
+                    <span>Светлая тема</span>
                   </label>
                 </div>
               </div>
@@ -298,6 +298,7 @@ export default {
       border: 2px solid #979797;
       border-radius: 50%;
       position: relative;
+      margin-right: 10px;
 
       &:checked {
         border: 6px solid $color-red;
