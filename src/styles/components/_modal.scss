@@ -5,6 +5,7 @@
 
   &__clarification {
     margin-bottom: 15px;
+    text-align: center;
   }
 
   &__title {
@@ -20,6 +21,7 @@
 
   &__buttons {
     display: flex;
+    justify-content: center;
 
     button {
       width: 230px;
