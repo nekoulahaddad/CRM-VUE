@@ -4,16 +4,29 @@
       <a href="" @click.prevent="clearCache" class="page-actions__button">
         <img src="@/assets/icons/clear_cache.svg" alt="" />
       </a>
+
+      <!-- Обучение -->
       <template v-if="name === 'education'">
         <a href="" class="page-actions__button">
           <img src="@/assets/icons/education_add.svg" alt="" />
         </a>
       </template>
+
+      <!-- Рабочий стол -->
+      <template v-if="name === 'desktop'">
+        <a href="" class="page-actions__button">
+          <img src="@/assets/icons/tasks_add.svg" alt="" />
+        </a>
+      </template>
+
+      <!-- Задачи -->
       <template v-if="name === 'tasks'">
         <a href="" class="page-actions__button">
           <img src="@/assets/icons/tasks_add.svg" alt="" />
         </a>
       </template>
+
+      <!-- Клиенты -->
       <template v-if="name === 'clients'">
         <a href="" class="page-actions__button">
           <img src="@/assets/icons/client_add.svg" alt="" />
