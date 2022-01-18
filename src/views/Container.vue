@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <v-mobile-header />
+    <v-delete-modal />
     <v-mobile-sidebar />
     <v-sidebar />
     <main class="main">
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import VDeleteModal from "../components/VModals/DeleteModal";
 import VSidebar from "../components/VSidebar";
 import VMobileHeader from "../components/VMobileHeader";
 import VMobileSidebar from "../components/VMobileSidebar";
@@ -18,6 +19,7 @@ import VFooter from "../components/VFooter";
 
 export default {
   components: {
+    VDeleteModal,
     VMobileHeader,
     VMobileSidebar,
     VFooter,
@@ -34,6 +36,8 @@ export default {
     menu.onmouseout = function () {
       body.style.overflow = "auto";
     };
+
+    this.$modal.show("deleteTaskModal");
   },
 };
 </script>

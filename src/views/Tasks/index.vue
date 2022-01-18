@@ -1,6 +1,5 @@
 <template>
   <div class="page tasks-page">
-    <v-modal name="deleteTaskModal">Удаление задачи</v-modal>
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/tasks_title.svg')" alt="" />
@@ -226,7 +225,6 @@ export default {
       this.open = !this.open;
     },
     toggleDelete(id) {
-      this.$modal.show("deleteTaskModal");
       //this.deletedItem._id = id;
     },
     toggleEdit(item) {

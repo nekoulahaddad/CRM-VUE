@@ -1,0 +1,33 @@
+.vm--modal {
+  &__inner {
+    padding: 15px 20px;
+  }
+
+  &__clarification {
+    margin-bottom: 15px;
+  }
+
+  &__title {
+    background-color: $color-gray-secondary;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  &__buttons {
+    display: flex;
+
+    button {
+      width: 230px;
+      height: 37px;
+
+      & + * {
+        margin-left: 10px;
+      }
+    }
+  }
+}
