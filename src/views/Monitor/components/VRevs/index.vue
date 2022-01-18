@@ -2,8 +2,16 @@
   <div class="revs">
     <div class="revs__inner">
       <div class="revs__title">{{ title }}</div>
-      <div v-for="item of info">
-        {{ item.title }} {{ vueNumberFormat(item.count) }}
+      <div class="revs__items">
+        <div class="revs__item rev">
+          <div class="rev__header">
+            <div class="rev__left">
+              <img src="@/assets/icons/bell.svg" alt="" />
+            </div>
+            <div class="rev__right"></div>
+          </div>
+          <div class="rev__body"></div>
+        </div>
       </div>
     </div>
   </div>

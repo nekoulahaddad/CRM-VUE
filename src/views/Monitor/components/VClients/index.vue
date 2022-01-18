@@ -85,16 +85,15 @@ export default {};
 
   &__title {
     font-weight: 600;
+    margin-bottom: 10px;
   }
 
   .column {
-    flex: 1;
     position: relative;
     padding-bottom: 10px;
     text-align: center;
 
     & + * {
-      margin-left: 10px;
     }
 
     &::after {
