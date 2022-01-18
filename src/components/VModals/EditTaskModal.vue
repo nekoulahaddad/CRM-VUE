@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minWidth="1130" name="editTask">
+  <v-modal :adaptive="true" :minWidth="1130" :minHeight="500" name="editTask">
     <div class="vm--modal__title">
       Необходимо обновить CRM систему, выполнив редизайн системы.
       <img class="close-icon" src="@/assets/icons/close_icon.svg" alt="" />
@@ -17,10 +17,20 @@
             <img src="@/assets/icons/attach_icon.svg" alt="" />
           </div>
         </div>
-        <div class="vm--modal__buttons">
-          <v-button red>Принять</v-button>
-          <v-button white>Отказаться</v-button>
-        </div>
+        <form class="vm--modal__form modal-form">
+          <div class="modal-form__row">
+            <label>Наименование задачи:</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="modal-form__row">
+            <label>Описание задачи: </label>
+            <textarea class="form-textarea"></textarea>
+          </div>
+          <div class="vm--modal__buttons">
+            <v-button red>Принять</v-button>
+            <v-button white>Отказаться</v-button>
+          </div>
+        </form>
       </div>
       <div class="vm--modal__right"></div>
     </div>
@@ -45,6 +55,8 @@ export default {
 
 .vm--modal {
   &__left {
+    flex: 1;
+    margin-right: 20px;
   }
 
   &__inner {
