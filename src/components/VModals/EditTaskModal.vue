@@ -1,5 +1,11 @@
 <template>
-  <v-modal :adaptive="true" :minWidth="1130" :minHeight="500" name="editTask">
+  <v-modal
+    :adaptive="true"
+    :minWidth="1130"
+    :minHeight="600"
+    :maxHeight="1200"
+    name="editTask"
+  >
     <div class="vm--modal__title">
       Необходимо обновить CRM систему, выполнив редизайн системы.
       <img class="close-icon" src="@/assets/icons/close_icon.svg" alt="" />
@@ -36,7 +42,45 @@
           </div>
         </form>
       </div>
-      <div class="vm--modal__right"></div>
+      <div class="vm--modal__right">
+        <form>
+          <!-- Приоритет -->
+          <div class="group">
+            <div class="group__title">Приоритет:</div>
+            <div class="group__content">
+              <input class="form-control" type="text" />
+            </div>
+          </div>
+          <!-- Исполнитель -->
+          <div class="group">
+            <div class="group__title">Исполнитель:</div>
+            <div class="group__content">
+              <input class="form-control" type="text" />
+            </div>
+          </div>
+          <!-- Комментарий -->
+          <div class="group">
+            <div class="group__title">Комментарий:</div>
+            <div class="group__content">
+              <textarea class="form-textarea"></textarea>
+            </div>
+          </div>
+          <!-- Автор -->
+          <div class="group">
+            <div class="group__title">Автор:</div>
+            <div class="group__content">
+              <input class="form-control" type="text" />
+            </div>
+          </div>
+          <!-- Дедлайн -->
+          <div class="group">
+            <div class="group__title">Дедлайн:</div>
+            <div class="group__content">
+              <input class="form-control" type="text" />
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </v-modal>
 </template>
@@ -78,6 +122,10 @@ export default {
   .table__actions {
     justify-content: left;
     margin-bottom: 20px;
+  }
+
+  .group__title {
+    font-size: 12px;
   }
 }
 </style>
