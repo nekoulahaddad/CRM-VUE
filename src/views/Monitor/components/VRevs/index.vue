@@ -169,7 +169,7 @@ export default {
   margin-top: 10px;
 
   &__inner {
-    padding: 20px;
+    padding: 10px 20px 5px 20px;
   }
 
   &__title {
@@ -180,7 +180,7 @@ export default {
 
   .rev {
     & + * {
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     &--row {
@@ -197,12 +197,12 @@ export default {
     }
 
     &__header {
-      margin-bottom: 5px;
+      margin-bottom: 3px;
     }
 
     &__line {
       width: 2px;
-      background-color: $color-gray-secondary;
+      background-color: #e2e8f0;
       height: 19px;
       margin-left: 7px;
       margin-right: 8px;
