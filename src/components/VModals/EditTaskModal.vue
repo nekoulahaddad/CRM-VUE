@@ -4,7 +4,19 @@
       Необходимо обновить CRM систему, выполнив редизайн системы.
     </div>
     <div class="d-flex justify-content-between vm--modal__inner">
-      <div class="vm--modal__left">123</div>
+      <div class="vm--modal__left">
+        <div class="vm--modal__action table__actions">
+          <div class="table__icon">
+            <img src="@/assets/icons/trash_icon.svg" alt="" />
+          </div>
+          <div class="table__icon">
+            <img src="@/assets/icons/trash_icon.svg" alt="" />
+          </div>
+          <div class="table__icon">
+            <img src="@/assets/icons/trash_icon.svg" alt="" />
+          </div>
+        </div>
+      </div>
       <div class="vm--modal__right"></div>
     </div>
   </v-modal>
