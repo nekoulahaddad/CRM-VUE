@@ -7,7 +7,11 @@
       <h1 class="page__title">Рабочий стол</h1>
     </div>
     <div class="page__body d-flex">
-      <div class="page__left">123</div>
+      <div class="page__left">
+        <div class="tasks">
+          <div class="tasks__title"></div>
+        </div>
+      </div>
       <div class="page__right">12</div>
     </div>
   </div>
@@ -18,6 +22,8 @@ export default {};
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .desktop-page {
   .page {
     &__left {
@@ -28,6 +34,13 @@ export default {};
       max-width: 300px;
       width: 100%;
     }
+  }
+
+  .tasks {
+    background-color: $color-white;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
+    padding: 10px;
   }
 }
 </style>
