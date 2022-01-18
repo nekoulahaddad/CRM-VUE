@@ -19,3 +19,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.vm--modal {
+  &__buttons {
+    justify-content: center;
+  }
+}
+</style>

@@ -16,6 +16,10 @@
             <img src="@/assets/icons/attach_icon.svg" alt="" />
           </div>
         </div>
+        <div class="vm--modal__buttons">
+          <v-button red>Принять</v-button>
+          <v-button white>Отказаться</v-button>
+        </div>
       </div>
       <div class="vm--modal__right"></div>
     </div>
@@ -23,12 +27,15 @@
 </template>
 
 <script>
+import VButton from "../../components/VButton";
+
 export default {
   props: {
     task: {
       type: Object,
     },
   },
+  components: { VButton },
 };
 </script>
 
@@ -49,6 +56,11 @@ export default {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 10px;
     width: 391px;
+  }
+
+  .table__actions {
+    justify-content: left;
+    margin-bottom: 20px;
   }
 }
 </style>
