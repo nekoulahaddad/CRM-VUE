@@ -50,7 +50,7 @@ export default {};
     background-color: $color-white;
     border-radius: $border-radius;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
-    padding: 10px;
+    padding: 10px 10px 0;
 
     &__title {
       font-size: 18px;
