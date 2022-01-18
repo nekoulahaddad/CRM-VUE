@@ -25,7 +25,7 @@
               <img src="@/assets/icons/bell.svg" alt="" />
             </div>
             <div class="rev__right">
-              <div class="rev__title">Сегодня</div>
+              <div class="rev__title">За неделю</div>
             </div>
           </div>
           <div class="rev__body rev--row">
@@ -41,7 +41,7 @@
               <img src="@/assets/icons/bell.svg" alt="" />
             </div>
             <div class="rev__right">
-              <div class="rev__title">Сегодня</div>
+              <div class="rev__title">За месяц</div>
             </div>
           </div>
           <div class="rev__body rev--row">
@@ -57,7 +57,7 @@
               <img src="@/assets/icons/bell.svg" alt="" />
             </div>
             <div class="rev__right">
-              <div class="rev__title">Сегодня</div>
+              <div class="rev__title">За год</div>
             </div>
           </div>
           <div class="rev__body rev--row">
