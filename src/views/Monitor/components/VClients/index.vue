@@ -87,6 +87,11 @@ export default {};
     &__top {
       display: flex;
     }
+
+    &__count {
+      font-weight: 600;
+      font-size: 16px;
+    }
   }
 }
 </style>
