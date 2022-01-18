@@ -11,10 +11,29 @@
         <div class="tasks">
           <div class="tasks__title">Доска задач</div>
           <div class="tasks__lists">
-            <div class="tasks__list"></div>
-            <div class="tasks__list"></div>
-            <div class="tasks__list"></div>
-            <div class="tasks__list"></div>
+            <div class="tasks__list list">
+              <div class="list__title">К выполнению: 8</div>
+              <div class="list__items">
+                <div class="list__item">
+                  Необходимо обновить CRM систему, выполнив редизайн системы.
+                </div>
+                <div class="list__item">
+                  Необходимо обновить CRM систему, выполнив редизайн системы.
+                </div>
+                <div class="list__item">
+                  Необходимо обновить CRM систему, выполнив редизайн системы.
+                </div>
+                <div class="list__item">
+                  Необходимо обновить CRM систему, выполнив редизайн системы.
+                </div>
+                <div class="list__item">
+                  Необходимо обновить CRM систему, выполнив редизайн системы.
+                </div>
+                <div class="list__item">
+                  Необходимо обновить CRM систему, выполнив редизайн системы.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -68,6 +87,24 @@ export default {};
       & + * {
         margin-left: 10px;
       }
+    }
+  }
+
+  .list {
+    &__item {
+      background-color: $color-white;
+      border-radius: $border-radius;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
+      padding: 10px;
+
+      & + * {
+        margin-top: 10px;
+      }
+    }
+
+    &__title {
+      height: auto;
+      line-height: normal;
     }
   }
 }
