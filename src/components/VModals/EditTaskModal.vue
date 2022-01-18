@@ -1,5 +1,5 @@
 <template>
-  <v-modal adaptive="true" name="editTask">
+  <v-modal name="editTask">
     <div class="vm--modal__title">{{ task.title }}</div>
   </v-modal>
 </template>

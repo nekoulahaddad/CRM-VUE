@@ -1,5 +1,6 @@
 <template>
   <div class="page desktop-page">
+    <v-edit-task-modal :task="{}" />
     <div class="page__header">
       <div class="page__icon">
         <img :src="require('@/assets/icons/desktop_title.svg')" alt="" />
@@ -22,7 +23,11 @@
                       системы.
                     </div>
                     <div class="list__actions">
-                      <img src="@/assets/icons/arrow_twin.svg" alt="" />
+                      <img
+                        @click="editTask()"
+                        src="@/assets/icons/arrow_twin.svg"
+                        alt=""
+                      />
                       <img src="@/assets/icons/dots_icon.svg" alt="" />
                     </div>
                   </div>
@@ -92,8 +97,35 @@
 </template>
 
 <script>
+import VEditTaskModal from "../../components/VModals/EditTaskModal";
+import getDataFromPage from "../../api/getDataFromPage";
+
 export default {
+  components: {
+    VEditTaskModal,
+  },
+  data() {
+    return {
+      dataset: [],
+    };
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const { data } = await getDataFromPage(`/tasks/get`, {});
+
+        this.dataset = data.tasks;
+      } catch (e) {
+      } finally {
+      }
+    },
+    editTask() {
+      this.$modal.show("editTask");
+    },
+  },
   mounted() {
+    this.fetchData();
+
     const body = document.querySelector("body");
     const lists = document.querySelectorAll(".list__items");
 
