@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="125" name="deleteConfirm">
+  <v-modal :adaptive="true" :maxHeight="130" name="deleteConfirm">
     <div class="vm--modal__title">Вы уверены? Подтвердите действие</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__buttons">
