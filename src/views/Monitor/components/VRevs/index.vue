@@ -175,6 +175,7 @@ export default {
   &__title {
     font-size: 16px;
     font-weight: bold;
+    margin-bottom: 10px;
   }
 
   .rev {
@@ -195,11 +196,16 @@ export default {
       font-weight: 600;
     }
 
+    &__header {
+      margin-bottom: 5px;
+    }
+
     &__line {
       width: 2px;
       background-color: $color-gray-secondary;
       height: 19px;
       margin-left: 7px;
+      margin-right: 8px;
       border-radius: $border-radius;
     }
   }
