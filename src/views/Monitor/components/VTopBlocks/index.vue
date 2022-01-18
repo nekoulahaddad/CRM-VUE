@@ -12,7 +12,7 @@
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
         <div class="top-block__title">Количество посетителей сегодня:</div>
-        <div class="top-block__value">₽ 70.000</div>
+        <div class="top-block__value">300</div>
       </div>
       <div class="top-block__right">
         <img src="@/assets/icons/world.svg" alt="" />
@@ -21,7 +21,7 @@
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
         <div class="top-block__title">Новых клиентов:</div>
-        <div class="top-block__value">₽ 70.000</div>
+        <div class="top-block__value">+52</div>
       </div>
       <div class="top-block__right">
         <img src="@/assets/icons/doc.svg" alt="" />
@@ -30,7 +30,7 @@
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
         <div class="top-block__title">Продажи за месяц:</div>
-        <div class="top-block__value">₽ 70.000</div>
+        <div class="top-block__value">₽ 1.173.000</div>
       </div>
       <div class="top-block__right">
         <img src="@/assets/icons/cart_big.svg" alt="" />
