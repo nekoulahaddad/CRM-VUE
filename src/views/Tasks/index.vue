@@ -225,6 +225,7 @@ export default {
       this.open = !this.open;
     },
     toggleDelete(id) {
+      this.$modal.show("deleteConfirm");
       //this.deletedItem._id = id;
     },
     toggleEdit(item) {
