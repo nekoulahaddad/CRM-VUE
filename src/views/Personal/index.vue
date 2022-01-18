@@ -73,6 +73,12 @@
                     <span>Светлая тема</span>
                   </label>
                 </div>
+                <toggle-button
+                  :value="false"
+                  color="#82C7EB"
+                  :sync="true"
+                  :labels="true"
+                />
               </div>
             </div>
           </div>

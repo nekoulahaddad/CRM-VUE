@@ -15,13 +15,17 @@
         <div class="scroll-horizontal">
           <v-top-blocks />
           <div class="d-flex">
+            <!-- Заявки за текущей месяц -->
             <v-mail-by-month />
+            <!-- Новые клиенты -->
             <v-clients />
           </div>
           <div class="d-flex">
+            <!-- Топ продаваемых продуктов -->
             <v-top-products />
             <div class="d-flex flex-column">
               <v-chart :sales="sales" :ordersForMonth="ordersForMonth" />
+              <!-- Обучение -->
               <v-learn />
             </div>
           </div>

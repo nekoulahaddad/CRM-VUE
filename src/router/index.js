@@ -86,7 +86,7 @@ const routes = [
       {
         path: "storage/:nesting/:type?/:parent_value?/:page?",
         name: "storage",
-        component: () => import("../views/Storage.vue"),
+        component: () => import("../views/Storage"),
       },
       {
         path: "tasks/:page",

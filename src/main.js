@@ -14,6 +14,7 @@ import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
 import VueSimpleSVG from "vue-simple-svg";
 import Toast from "vue-toastification";
+import ToggleButton from "vue-js-toggle-button";
 import VueMoment from "vue-moment";
 import { Settings } from "luxon";
 import i18n from "./i18n";
@@ -83,6 +84,7 @@ Vue.use(VueNumberFormat, {
   precision: 0,
   isInteger: true,
 });
+Vue.use(ToggleButton);
 Vue.use(vuescroll, {
   ops: {
     bar: {

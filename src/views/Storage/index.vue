@@ -45,7 +45,7 @@ import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import { mapMutations } from "vuex";
-import getDataFromPage from "../api/getDataFromPage";
+import getDataFromPage from "../../api/getDataFromPage";
 
 export default {
   components: { VFilter, VPagination, VSpinner, VNotFoundQuery },
