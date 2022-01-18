@@ -20,7 +20,7 @@
     </div>
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
-        <div class="top-block__title">{{ $t("sales_today") }}</div>
+        <div class="top-block__title">Новых клиентов:</div>
         <div class="top-block__value">₽ 70.000</div>
       </div>
       <div class="top-block__right">
@@ -29,7 +29,7 @@
     </div>
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
-        <div class="top-block__title">{{ $t("sales_today") }}</div>
+        <div class="top-block__title">Продажи за месяц:</div>
         <div class="top-block__value">₽ 70.000</div>
       </div>
       <div class="top-block__right">
