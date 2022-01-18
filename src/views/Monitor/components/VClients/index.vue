@@ -83,6 +83,22 @@ export default {};
 
   .column {
     flex: 1;
+    position: relative;
+    padding-bottom: 10px;
+
+    & + * {
+      margin-left: 10px;
+    }
+
+    &::after {
+      content: "";
+      height: 2px;
+      position: absolute;
+      background-color: $color-red;
+      border-radius: $border-radius;
+      width: 100%;
+      bottom: 0;
+    }
 
     &__top {
       display: flex;
