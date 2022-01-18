@@ -1,6 +1,8 @@
 <template>
   <div class="clients">
-    <div class="clients__inner">123</div>
+    <div class="clients__inner">
+      <div class="clients__title">Новых клиентов:</div>
+    </div>
   </div>
 </template>
 
@@ -21,6 +23,11 @@ export default {};
     width: 489px;
     height: 162px;
     border-radius: $border-radius;
+    padding: 17px 10px 18px;
+  }
+
+  &__title {
+    font-weight: 600;
   }
 }
 </style>
