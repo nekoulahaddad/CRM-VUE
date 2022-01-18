@@ -10,10 +10,10 @@
             <img src="@/assets/icons/trash_icon.svg" alt="" />
           </div>
           <div class="table__icon">
-            <img src="@/assets/icons/trash_icon.svg" alt="" />
+            <img src="@/assets/icons/task_add_icon.svg" alt="" />
           </div>
           <div class="table__icon">
-            <img src="@/assets/icons/trash_icon.svg" alt="" />
+            <img src="@/assets/icons/attach_icon.svg" alt="" />
           </div>
         </div>
       </div>
