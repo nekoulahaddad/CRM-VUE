@@ -74,6 +74,7 @@ export default {};
 
   &__columns {
     display: flex;
+    justify-content: space-between;
   }
 
   &__title {
@@ -81,6 +82,8 @@ export default {};
   }
 
   .column {
+    flex: 1;
+
     &__top {
       display: flex;
     }
