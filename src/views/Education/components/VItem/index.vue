@@ -19,7 +19,11 @@
           />
         </div>
         <div class="table__icon">
-          <img :src="require('@/assets/icons/trash_icon.svg')" alt="" />
+          <img
+            @click="deleteItem"
+            :src="require('@/assets/icons/trash_icon.svg')"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -34,6 +38,11 @@ export default {
       required: true,
     },
     editedItem: Object,
+  },
+  methods: {
+    deleteItem() {
+      this.$modal.show("deleteConfirm");
+    },
   },
 };
 </script>

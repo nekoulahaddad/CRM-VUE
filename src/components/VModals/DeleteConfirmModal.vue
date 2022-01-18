@@ -1,10 +1,7 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="160" name="deleteConfirm">
-    <div class="vm--modal__title">Удаление задачи</div>
+  <v-modal :adaptive="true" :maxHeight="130" name="deleteConfirm">
+    <div class="vm--modal__title">Вы уверены? Подтвердите действие</div>
     <div class="vm--modal__inner">
-      <div class="vm--modal__clarification">
-        Вы уверены? Подтвердите действие
-      </div>
       <div class="vm--modal__buttons">
         <v-button red>Удалить</v-button>
         <v-button white>Отмена</v-button>
