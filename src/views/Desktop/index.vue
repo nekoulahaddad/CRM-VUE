@@ -16,11 +16,11 @@
               <div class="list__items">
                 <div class="list__item" v-for="i in 6">
                   Необходимо обновить CRM систему, выполнив редизайн системы.
+                  <div class="list__actions">
+                    <img src="@/assets/icons/arrow_twin.svg" alt="" />
+                    <img src="@/assets/icons/dots_icon.svg" alt="" />
+                  </div>
                 </div>
-              </div>
-              <div class="list__actions">
-                <img src="@/assets/icons/arrow_twin.svg" alt="" />
-                <img src="@/assets/icons/dots_icon.svg" alt="" />
               </div>
             </div>
           </div>
@@ -101,6 +101,10 @@ export default {};
       align-items: center;
       display: flex;
       justify-content: end;
+
+      img {
+        cursor: pointer;
+      }
 
       img + img {
         margin-left: 10px;
