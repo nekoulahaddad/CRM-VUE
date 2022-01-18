@@ -4,13 +4,68 @@
       <div class="revs__title">{{ title }}</div>
       <div class="revs__items">
         <div class="revs__item rev">
-          <div class="rev__header">
+          <div class="rev__header rev--row">
             <div class="rev__left">
               <img src="@/assets/icons/bell.svg" alt="" />
             </div>
-            <div class="rev__right"></div>
+            <div class="rev__right">
+              <div class="rev__title">Сегодня</div>
+            </div>
           </div>
-          <div class="rev__body"></div>
+          <div class="rev__body rev--row">
+            <div class="rev__left">
+              <div class="rev__line"></div>
+            </div>
+            <div class="rev__right">70.734 ₽</div>
+          </div>
+        </div>
+        <div class="revs__item rev">
+          <div class="rev__header rev--row">
+            <div class="rev__left">
+              <img src="@/assets/icons/bell.svg" alt="" />
+            </div>
+            <div class="rev__right">
+              <div class="rev__title">Сегодня</div>
+            </div>
+          </div>
+          <div class="rev__body rev--row">
+            <div class="rev__left">
+              <div class="rev__line"></div>
+            </div>
+            <div class="rev__right">70.734 ₽</div>
+          </div>
+        </div>
+        <div class="revs__item rev">
+          <div class="rev__header rev--row">
+            <div class="rev__left">
+              <img src="@/assets/icons/bell.svg" alt="" />
+            </div>
+            <div class="rev__right">
+              <div class="rev__title">Сегодня</div>
+            </div>
+          </div>
+          <div class="rev__body rev--row">
+            <div class="rev__left">
+              <div class="rev__line"></div>
+            </div>
+            <div class="rev__right">70.734 ₽</div>
+          </div>
+        </div>
+        <div class="revs__item rev">
+          <div class="rev__header rev--row">
+            <div class="rev__left">
+              <img src="@/assets/icons/bell.svg" alt="" />
+            </div>
+            <div class="rev__right">
+              <div class="rev__title">Сегодня</div>
+            </div>
+          </div>
+          <div class="rev__body rev--row">
+            <div class="rev__left">
+              <div class="rev__line"></div>
+            </div>
+            <div class="rev__right">70.734 ₽</div>
+          </div>
         </div>
       </div>
     </div>
@@ -120,6 +175,33 @@ export default {
   &__title {
     font-size: 16px;
     font-weight: bold;
+  }
+
+  .rev {
+    & + * {
+      margin-top: 12px;
+    }
+
+    &--row {
+      display: flex;
+      align-items: center;
+    }
+
+    &__left {
+      margin-right: 20px;
+    }
+
+    &__title {
+      font-weight: 600;
+    }
+
+    &__line {
+      width: 2px;
+      background-color: $color-gray-secondary;
+      height: 19px;
+      margin-left: 7px;
+      border-radius: $border-radius;
+    }
   }
 }
 </style>
