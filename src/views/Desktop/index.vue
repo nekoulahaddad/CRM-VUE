@@ -18,10 +18,10 @@
               <vue-scroll>
                 <div class="list__items">
                   <div class="list__item" v-for="i in 8">
-                    <div class="list__content" @click="editTask">
+                    <a href="" class="list__content" @click.prevent="editTask">
                       Необходимо обновить CRM систему, выполнив редизайн
                       системы.
-                    </div>
+                    </a>
                     <div class="list__actions">
                       <img src="@/assets/icons/arrow_twin.svg" alt="" />
                       <img src="@/assets/icons/dots_icon.svg" alt="" />
