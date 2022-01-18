@@ -1,6 +1,8 @@
 <template>
-  <v-modal name="editTask">
-    <div class="vm--modal__title">{{ task.title }}</div>
+  <v-modal :adaptive="true" :minWidth="1130" name="editTask">
+    <div class="vm--modal__title">
+      Необходимо обновить CRM систему, выполнив редизайн системы.
+    </div>
   </v-modal>
 </template>
 
@@ -9,7 +11,6 @@ export default {
   props: {
     task: {
       type: Object,
-      required: true,
     },
   },
 };

@@ -24,7 +24,7 @@
                     </div>
                     <div class="list__actions">
                       <img
-                        @click="editTask()"
+                        @click="editTask"
                         src="@/assets/icons/arrow_twin.svg"
                         alt=""
                       />
