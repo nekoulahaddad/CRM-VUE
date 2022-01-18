@@ -11,25 +11,10 @@
         <div class="tasks">
           <div class="tasks__title">Доска задач</div>
           <div class="tasks__lists">
-            <div class="tasks__list list">
+            <div class="tasks__list list" v-for="i in 4">
               <div class="list__title">К выполнению: 8</div>
               <div class="list__items">
-                <div class="list__item">
-                  Необходимо обновить CRM систему, выполнив редизайн системы.
-                </div>
-                <div class="list__item">
-                  Необходимо обновить CRM систему, выполнив редизайн системы.
-                </div>
-                <div class="list__item">
-                  Необходимо обновить CRM систему, выполнив редизайн системы.
-                </div>
-                <div class="list__item">
-                  Необходимо обновить CRM систему, выполнив редизайн системы.
-                </div>
-                <div class="list__item">
-                  Необходимо обновить CRM систему, выполнив редизайн системы.
-                </div>
-                <div class="list__item">
+                <div class="list__item" v-for="i in 6">
                   Необходимо обновить CRM систему, выполнив редизайн системы.
                 </div>
               </div>
