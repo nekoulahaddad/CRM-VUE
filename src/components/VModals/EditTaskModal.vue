@@ -18,13 +18,17 @@
           </div>
         </div>
         <form class="vm--modal__form modal-form">
-          <div class="modal-form__row">
-            <label>Наименование задачи:</label>
-            <input type="text" class="form-control" />
+          <div class="group">
+            <div class="group__title">Наименование задачи:</div>
+            <div class="group__content">
+              <input class="form-control" type="text" />
+            </div>
           </div>
-          <div class="modal-form__row">
-            <label>Описание задачи: </label>
-            <textarea class="form-textarea"></textarea>
+          <div class="group">
+            <div class="group__title">Описание задачи:</div>
+            <div class="group__content">
+              <textarea class="form-textarea"></textarea>
+            </div>
           </div>
           <div class="vm--modal__buttons">
             <v-button red>Принять</v-button>
