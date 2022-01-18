@@ -13,17 +13,20 @@
           <div class="tasks__lists">
             <div class="tasks__list list" v-for="i in 4">
               <div class="list__title">К выполнению: 8</div>
-              <div class="list__items">
-                <div class="list__item" v-for="i in 6">
-                  <div class="list__content">
-                    Необходимо обновить CRM систему, выполнив редизайн системы.
-                  </div>
-                  <div class="list__actions">
-                    <img src="@/assets/icons/arrow_twin.svg" alt="" />
-                    <img src="@/assets/icons/dots_icon.svg" alt="" />
+              <vue-scroll>
+                <div class="list__items">
+                  <div class="list__item" v-for="i in 8">
+                    <div class="list__content">
+                      Необходимо обновить CRM систему, выполнив редизайн
+                      системы.
+                    </div>
+                    <div class="list__actions">
+                      <img src="@/assets/icons/arrow_twin.svg" alt="" />
+                      <img src="@/assets/icons/dots_icon.svg" alt="" />
+                    </div>
                   </div>
                 </div>
-              </div>
+              </vue-scroll>
             </div>
           </div>
         </div>
@@ -34,7 +37,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    const body = document.querySelector("body");
+    const lists = document.querySelectorAll(".list__items");
+
+    lists.forEach((list) => {
+      list.onmouseover = function () {
+        body.style.overflow = "hidden";
+      };
+    });
+
+    lists.forEach((list) => {
+      list.onmouseout = function () {
+        body.style.overflow = "auto";
+      };
+    });
+  },
+};
 </script>
 
 <style lang="scss">
