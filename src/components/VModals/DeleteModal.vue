@@ -1,5 +1,5 @@
 <template>
-  <v-modal adaptive="true" maxHeight="160" name="deleteTaskModal">
+  <v-modal adaptive="true" maxHeight="160" name="confirmDelete">
     <div class="vm--modal__title">Удаление задачи</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__clarification">

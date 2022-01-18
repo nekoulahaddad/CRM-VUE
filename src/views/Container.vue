@@ -36,8 +36,6 @@ export default {
     menu.onmouseout = function () {
       body.style.overflow = "auto";
     };
-
-    this.$modal.show("deleteTaskModal");
   },
 };
 </script>
