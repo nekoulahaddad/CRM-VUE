@@ -90,6 +90,7 @@ export default {};
     &__title {
       height: auto;
       line-height: normal;
+      margin-left: 0;
     }
   }
 }
