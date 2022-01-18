@@ -2,7 +2,7 @@
   <div class="sidebar" :class="{ 'sidebar--collapse': sidebar }">
     <div class="sidebar__inner">
       <div class="sidebar__logo">
-        <router-link to="/">
+        <router-link :to="{ name: 'desktop' }">
           <img :src="require('@/assets/icons/logo.svg')" alt="" />
         </router-link>
       </div>

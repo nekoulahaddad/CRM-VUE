@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import VSidebar from "@/components/VSidebar";
-import VMobileHeader from "@/components/VMobileHeader";
-import VMobileSidebar from "@/components/VMobileSidebar";
-import VFooter from "@/components/VFooter";
+import VSidebar from "../components/VSidebar";
+import VMobileHeader from "../components/VMobileHeader";
+import VMobileSidebar from "../components/VMobileSidebar";
+import VFooter from "../components/VFooter";
 
 export default {
   components: {
