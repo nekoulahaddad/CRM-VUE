@@ -6,7 +6,9 @@
         <div class="clients__column column">
           <div class="column__inner">
             <div class="column__top">
-              <div class="column__icon"></div>
+              <div class="column__icon">
+                <img src="@/assets/icons/clients_all.svg" alt="" />
+              </div>
               <div class="column__title">Клиенты:</div>
             </div>
             <div class="column__bottom">
@@ -17,7 +19,9 @@
         <div class="clients__column column">
           <div class="column__inner">
             <div class="column__top">
-              <div class="column__icon"></div>
+              <div class="column__icon">
+                <img src="@/assets/icons/employee_all.svg" alt="" />
+              </div>
               <div class="column__title">Сотрудники:</div>
             </div>
             <div class="column__bottom">
@@ -28,6 +32,7 @@
         <div class="clients__column column">
           <div class="column__inner">
             <div class="column__top">
+              <img src="@/assets/icons/cart_all.svg" alt="" />
               <div class="column__icon"></div>
               <div class="column__title">Количество дел:</div>
             </div>
@@ -39,6 +44,7 @@
         <div class="clients__column column">
           <div class="column__inner">
             <div class="column__top">
+              <img src="@/assets/icons/settings_small.svg" alt="" />
               <div class="column__icon"></div>
               <div class="column__title">Загруженность работников:</div>
             </div>
@@ -85,6 +91,7 @@ export default {};
     flex: 1;
     position: relative;
     padding-bottom: 10px;
+    text-align: center;
 
     & + * {
       margin-left: 10px;
@@ -98,6 +105,8 @@ export default {};
       border-radius: $border-radius;
       width: 100%;
       bottom: 0;
+      left: 0;
+      right: 0;
     }
 
     &__top {
