@@ -2,6 +2,7 @@
   <v-modal :adaptive="true" :minWidth="1130" name="editTask">
     <div class="vm--modal__title">
       Необходимо обновить CRM систему, выполнив редизайн системы.
+      <img class="close-icon" src="@/assets/icons/close_icon.svg" alt="" />
     </div>
     <div class="d-flex justify-content-between vm--modal__inner">
       <div class="vm--modal__left">

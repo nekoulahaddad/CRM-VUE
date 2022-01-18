@@ -5,13 +5,22 @@
 
   &__title {
     background-color: $color-gray-secondary;
-    height: 56px;
+    min-height: 56px;
     display: flex;
     align-items: center;
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 60px;
     font-size: 18px;
     font-weight: bold;
+    position: relative;
+
+    .close-icon {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
   }
 
   &__buttons {
