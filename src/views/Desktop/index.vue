@@ -15,7 +15,9 @@
               <div class="list__title">К выполнению: 8</div>
               <div class="list__items">
                 <div class="list__item" v-for="i in 6">
-                  Необходимо обновить CRM систему, выполнив редизайн системы.
+                  <div class="list__content">
+                    Необходимо обновить CRM систему, выполнив редизайн системы.
+                  </div>
                   <div class="list__actions">
                     <img src="@/assets/icons/arrow_twin.svg" alt="" />
                     <img src="@/assets/icons/dots_icon.svg" alt="" />
