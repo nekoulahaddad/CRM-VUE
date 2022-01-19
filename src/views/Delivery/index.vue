@@ -233,7 +233,7 @@ export default {
 <style lang="scss">
 .delivery-page {
   .list__columns {
-    grid-template-columns: 30px 350px 220px 160px 140px 260px 1fr;
+    grid-template-columns: 30px 318px 220px 160px 140px 260px 1fr;
   }
   .list__column {
     &:first-child {
