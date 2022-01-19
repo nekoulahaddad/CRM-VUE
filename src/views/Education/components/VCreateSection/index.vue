@@ -26,13 +26,32 @@
                 />
               </div>
             </div>
+            <!-- Для какой роли -->
             <div class="group">
-              <div class="group__title">Описание раздела::</div>
+              <div class="group__title">Для какой роли:</div>
+              <div class="group__content">
+                <select class="form-select">
+                  <option value="12">123</option>
+                </select>
+              </div>
+            </div>
+            <!-- Для какого отдела -->
+            <div class="group">
+              <div class="group__title">Для какого отдела:</div>
+              <div class="group__content">
+                <select class="form-select">
+                  <option value="12">123</option>
+                </select>
+              </div>
+            </div>
+            <!-- Описание раздела -->
+            <div class="group">
+              <div class="group__title">Описание раздела:</div>
               <div class="group__content">
                 <textarea
                   class="form-textarea"
                   placeholder="Введите описание раздела..."
-                ></textarea>
+                />
               </div>
             </div>
             <v-button red>{{ $t("Отправить") }}</v-button>
@@ -58,6 +77,10 @@ export default {
     right: 10px;
     top: 13px;
     position: absolute;
+  }
+
+  .form-select {
+    max-width: 371px;
   }
 }
 </style>
