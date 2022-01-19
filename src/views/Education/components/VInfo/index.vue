@@ -12,7 +12,7 @@
       v-if="editedItem.documents.length"
     />
 
-    <v-button @click="addDocument = true" v-if="!addDocument && canCga" red>
+    <v-button @click="addDocument = true" v-if="!addDocument && canChanges" red>
       Добавить документ
     </v-button>
     <v-add-document @close="addDocument = false" v-if="addDocument" />
@@ -43,7 +43,6 @@ export default {
       deleteEducationForm: false,
       deleteDocument: false,
       upload: false,
-      editedItem: {},
       deletedItem: {},
       educationsArr: [],
       uploadedItem: {},
