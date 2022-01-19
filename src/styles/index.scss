@@ -64,13 +64,26 @@ ul {
 }
 
 .page {
-  padding: 20px;
   box-sizing: border-box;
 
   &__header {
-    display: flex;
     align-items: center;
+    background-color: $color-gray;
+    display: flex;
     margin-bottom: 10px;
+    position: fixed;
+    padding-top: 20px;
+    top: 0;
+    width: 100%;
+    z-index: 980;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  &__body {
+    margin-top: 90px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   &__buttons {
