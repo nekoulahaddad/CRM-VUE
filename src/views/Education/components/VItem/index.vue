@@ -3,7 +3,7 @@
     class="list__columns list__columns--shadow list__columns--white education-list-columns"
   >
     <div class="list__column">
-      {{ item.title }}
+      <a href="" @click.prevent="$emit('toggleEdit', item)">{{ item.title }}</a>
     </div>
     <div class="list__column">
       <div class="table__actions">
