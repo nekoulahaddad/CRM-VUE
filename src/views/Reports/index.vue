@@ -156,7 +156,7 @@ export default {
 <style lang="scss">
 .reports-page {
   .list__columns {
-    grid-template-columns: 30px 450px 140px 140px 140px 140px 140px 140px 1fr;
+    grid-template-columns: 30px 318px 140px 140px 140px 140px 140px 140px 1fr;
   }
   .list__header {
     .list__column {
