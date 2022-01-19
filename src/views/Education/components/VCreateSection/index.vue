@@ -35,6 +35,7 @@
                 ></textarea>
               </div>
             </div>
+            <v-button red>{{ $t("Отправить") }}</v-button>
           </div>
         </form>
       </div>
@@ -43,7 +44,11 @@
 </template>
 
 <script>
-export default {};
+import VButton from "@/components/VButton";
+
+export default {
+  components: { VButton },
+};
 </script>
 
 <style lang="scss">
