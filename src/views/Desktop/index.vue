@@ -26,6 +26,9 @@
                       <img src="@/assets/icons/arrow_twin.svg" alt="" />
                       <img src="@/assets/icons/dots_icon.svg" alt="" />
                     </div>
+
+                    <!-- Контекстное меню -->
+                    <v-context-menu v-if="showContextMenu" />
                   </div>
                 </div>
               </vue-scroll>
@@ -95,14 +98,17 @@
 <script>
 import VEditTaskModal from "../../components/VModals/EditTaskModal";
 import getDataFromPage from "../../api/getDataFromPage";
+import VContextMenu from "./components/VContextMenu";
 
 export default {
   components: {
+    VContextMenu,
     VEditTaskModal,
   },
   data() {
     return {
       dataset: [],
+      showContextMenu: false,
     };
   },
   methods: {
