@@ -207,6 +207,8 @@ export default {
         return;
       }
 
+      this.isLoading = false;
+
       axios({
         url: "/providers/getfromsearch",
         data: { search },
