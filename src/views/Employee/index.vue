@@ -247,10 +247,7 @@ export default {
 <style lang="scss">
 .employee-page {
   .list__columns {
-    grid-template-columns: 140px 140px 400px 100px 100px 200px minmax(
-        140px,
-        max-content
-      );
+    grid-template-columns: 140px 140px 400px 100px 100px 200px 1fr;
   }
 }
 </style>
