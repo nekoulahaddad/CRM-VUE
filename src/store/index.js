@@ -29,8 +29,14 @@ export default new Vuex.Store({
     loaded: true,
     region: localStorage.getItem("region") || null,
     file: {},
+    actions: {
+      createEducationSection: false,
+    },
   },
   mutations: {
+    toggleActions(state, payload) {
+      state.actions[payload.key] = !state.actions[payload.key];
+    },
     toggleSidebar(state) {
       state.sidebar = !state.sidebar;
       state.sidebar

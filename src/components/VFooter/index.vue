@@ -15,7 +15,7 @@
 
 <script>
 import VDateTime from "@/components/VDateTime";
-import VPageActions from "@/components/VPageActions";
+import VPageActions from "../../components/VPageActions";
 import VUserInfo from "@/components/VUserInfo";
 import VLanguageSwitcher from "@/components/VLanguageSwitcher";
 

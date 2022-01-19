@@ -5,17 +5,25 @@
         <img src="@/assets/icons/clear_cache.svg" alt="" />
       </a>
 
-      <!-- Обучение -->
-      <template v-if="name === 'education'">
-        <a href="" class="page-actions__button">
-          <img src="@/assets/icons/education_add.svg" alt="" />
-        </a>
-      </template>
-
       <!-- Рабочий стол -->
       <template v-if="name === 'desktop'">
         <a href="" class="page-actions__button">
           <img src="@/assets/icons/tasks_add.svg" alt="" />
+        </a>
+      </template>
+
+      <!-- Обучение -->
+      <template v-if="name === 'education'">
+        <a
+          href=""
+          @click.prevent="
+            $store.commit('toggleActions', {
+              key: 'createEducationSection',
+            })
+          "
+          class="page-actions__button"
+        >
+          <img src="@/assets/icons/education_add.svg" alt="" />
         </a>
       </template>
 
@@ -38,6 +46,7 @@
 
 <script>
 import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   computed: {

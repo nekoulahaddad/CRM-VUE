@@ -13,7 +13,7 @@
         <div class="content__title">{{ title }}</div>
         <div class="scroll-horizontal">
           <!-- Блок для добавления нового раздела -->
-          <v-create-section v-if="!createSection" />
+          <v-create-section v-if="createSection" />
 
           <template v-if="educations.length">
             <div class="list">
@@ -50,11 +50,9 @@ import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VAddDocument from "./components/VAddDocument";
-import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 
 export default {
-  mixins: [roleMixins],
   components: {
     VButton,
     VAddDocument,
@@ -67,7 +65,6 @@ export default {
   },
   data() {
     return {
-      createSection: false,
       typeE: "crm",
       isLoading: false,
       filtersOptions: {},
@@ -107,6 +104,9 @@ export default {
           };
         });
       },
+    },
+    createSection() {
+      return this.$store.state.actions.createEducationSection;
     },
     role: {
       get: function () {
