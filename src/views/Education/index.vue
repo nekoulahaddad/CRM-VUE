@@ -11,26 +11,31 @@
       <v-spinner v-if="!isLoading" />
       <div class="page__content content" v-else>
         <div class="content__title">{{ title }}</div>
-        <div class="scroll-horizontal" v-if="educations.length">
-          <div class="list">
-            <div
-              v-for="item in educations"
-              :key="item._id"
-              class="list__row list__row--shadow list__row--white"
-              :class="{ 'list__row--opened': editedItem._id === item._id }"
-            >
-              <v-item
-                :item="item"
-                :editedItem="editedItem"
-                @toggleEdit="toggleEdit"
-              />
+        <div class="scroll-horizontal">
+          <!-- Блок для добавления нового раздела -->
+          <v-create-section v-if="!createSection" />
 
-              <!-- Блок с детальной информацией -->
-              <v-info v-if="editedItem._id === item._id" />
+          <template v-if="educations.length">
+            <div class="list">
+              <div
+                v-for="item in educations"
+                :key="item._id"
+                class="list__row list__row--shadow list__row--white"
+                :class="{ 'list__row--opened': editedItem._id === item._id }"
+              >
+                <v-item
+                  :item="item"
+                  :editedItem="editedItem"
+                  @toggleEdit="toggleEdit"
+                />
+
+                <!-- Блок с детальной информацией -->
+                <v-info v-if="editedItem._id === item._id" />
+              </div>
             </div>
-          </div>
+          </template>
+          <v-not-found-query v-else />
         </div>
-        <v-not-found-query v-else />
       </div>
     </div>
   </div>
@@ -40,6 +45,7 @@
 import VButton from "@/components/VButton";
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
+import VCreateSection from "./components/VCreateSection";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
@@ -57,9 +63,11 @@ export default {
     VNotFoundQuery,
     VItem,
     VInfo,
+    VCreateSection,
   },
   data() {
     return {
+      createSection: false,
       typeE: "crm",
       isLoading: false,
       filtersOptions: {},

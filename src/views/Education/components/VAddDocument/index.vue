@@ -43,7 +43,7 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
-.add-document-card {
+.card {
   padding-top: 10px;
   padding-bottom: 15px;
 
