@@ -30,7 +30,10 @@
                 />
 
                 <!-- Блок с детальной информацией -->
-                <v-info v-if="editedItem._id === item._id" />
+                <v-info
+                  :editedItem="editedItem"
+                  v-if="editedItem._id === item._id"
+                />
               </div>
             </div>
           </template>

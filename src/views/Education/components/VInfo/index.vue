@@ -1,10 +1,9 @@
 <template>
   <div class="list__info list-info education-list-info">
-    <div class="group__title text--blue">123</div>
-    <div class="list-info__group group">
+    <div class="group">
+      <div class="group__title">Описание:</div>
       <div class="group__content">
-        <div class="group__item text--bold-700">123</div>
-        <div class="group__value">223</div>
+        {{ editedItem.description }}
       </div>
     </div>
     <v-button @click="addDocument = true" v-if="!addDocument" red>
@@ -19,6 +18,12 @@ import VButton from "@/components/VButton";
 import VAddDocument from "../VAddDocument";
 
 export default {
+  props: {
+    editedItem: {
+      type: Object,
+      required: true,
+    },
+  },
   components: { VAddDocument, VButton },
   data() {
     return {
