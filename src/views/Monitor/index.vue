@@ -8,8 +8,12 @@
     </div>
     <div class="page__body d-flex">
       <div class="page__left">
-        <v-filter type="monitor" />
-        <v-revs :rev="rev" />
+        <v-filter
+          type="monitor"
+          @refreshDates="refreshDates"
+          @setRegionsPool="setRegionsPool"
+        />
+        <v-revs v-if="isLoading" :rev="rev" />
       </div>
       <div class="page__right">
         <div class="scroll-horizontal">
@@ -92,6 +96,8 @@ export default {
   },
   methods: {
     async getStats() {
+      this.isLoading = false;
+
       axios({
         url: "/stats/get/",
         data: {
@@ -100,19 +106,22 @@ export default {
           regionsPool: this.regionsPool,
         },
         method: "POST",
-      }).then(async (res) => {
-        let result = await res.data;
-        this.users = result.users;
-        this.clients = result.clients;
-        this.tasks = result.tasks;
-        this.workload = result.workload;
-        this.sales = result.sales;
-        this.orders = result.orders;
-        this.ordersForMonth = result.ordersForMonth;
-        this.rev = result.rev;
-        this.$toast.success("Статистика обновлена!");
-        this.isLoading = true;
-      });
+      })
+        .then(async (res) => {
+          let result = await res.data;
+          this.users = result.users;
+          this.clients = result.clients;
+          this.tasks = result.tasks;
+          this.workload = result.workload;
+          this.sales = result.sales;
+          this.orders = result.orders;
+          this.ordersForMonth = result.ordersForMonth;
+          this.rev = result.rev;
+          this.$toast.success("Статистика обновлена!");
+        })
+        .finally(() => {
+          this.isLoading = true;
+        });
     },
     setRegionsPool(pool) {
       this.regionsPool = pool;

@@ -3,68 +3,20 @@
     <div class="revs__inner">
       <div class="revs__title">{{ title }}</div>
       <div class="revs__items">
-        <div class="revs__item rev">
+        <div class="revs__item rev" v-for="item of info">
           <div class="rev__header rev--row">
             <div class="rev__left">
               <img src="@/assets/icons/bell.svg" alt="" />
             </div>
             <div class="rev__right">
-              <div class="rev__title">Сегодня</div>
+              <div class="rev__title">{{ item.title }}</div>
             </div>
           </div>
           <div class="rev__body rev--row">
             <div class="rev__left">
               <div class="rev__line"></div>
             </div>
-            <div class="rev__right">70.734 ₽</div>
-          </div>
-        </div>
-        <div class="revs__item rev">
-          <div class="rev__header rev--row">
-            <div class="rev__left">
-              <img src="@/assets/icons/bell.svg" alt="" />
-            </div>
-            <div class="rev__right">
-              <div class="rev__title">За неделю</div>
-            </div>
-          </div>
-          <div class="rev__body rev--row">
-            <div class="rev__left">
-              <div class="rev__line"></div>
-            </div>
-            <div class="rev__right">70.734 ₽</div>
-          </div>
-        </div>
-        <div class="revs__item rev">
-          <div class="rev__header rev--row">
-            <div class="rev__left">
-              <img src="@/assets/icons/bell.svg" alt="" />
-            </div>
-            <div class="rev__right">
-              <div class="rev__title">За месяц</div>
-            </div>
-          </div>
-          <div class="rev__body rev--row">
-            <div class="rev__left">
-              <div class="rev__line"></div>
-            </div>
-            <div class="rev__right">70.734 ₽</div>
-          </div>
-        </div>
-        <div class="revs__item rev">
-          <div class="rev__header rev--row">
-            <div class="rev__left">
-              <img src="@/assets/icons/bell.svg" alt="" />
-            </div>
-            <div class="rev__right">
-              <div class="rev__title">За год</div>
-            </div>
-          </div>
-          <div class="rev__body rev--row">
-            <div class="rev__left">
-              <div class="rev__line"></div>
-            </div>
-            <div class="rev__right">70.734 ₽</div>
+            <div class="rev__right">{{ vueNumberFormat(item.count) }}</div>
           </div>
         </div>
       </div>
