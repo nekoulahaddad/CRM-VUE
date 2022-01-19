@@ -14,7 +14,7 @@
       </div>
 
       <div class="list__info list-info education-list-info">
-        <form>
+        <form @submit.prevent="onSectionAdd">
           <div class="edit__inner">
             <!-- Наименование раздела -->
             <div class="group">
@@ -78,6 +78,7 @@
 <script>
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   components: { VButton },
@@ -94,8 +95,45 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
     onChange(e) {
       this[e.target.name] = e.target.value;
+    },
+    onSectionAdd() {
+      this.changeStatus(false);
+      let sectionData = {};
+      if (this.title) {
+        sectionData.title = this.title;
+      }
+      if (this.type) {
+        sectionData.type = this.type;
+      }
+      if (this.role) {
+        sectionData.role = this.role;
+      }
+      if (this.department) {
+        sectionData.department = this.department;
+      }
+      if (this.description) {
+        sectionData.description = this.description;
+      }
+      axios({
+        url: "/educations/post/",
+        data: sectionData,
+        method: "POST",
+      })
+        .then(async () => {
+          await this.$emit("refreshEducations");
+          this.$toast.success("Секция успешно добавлена!");
+          this.$emit("toggleOpen");
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
     },
   },
   mounted() {
