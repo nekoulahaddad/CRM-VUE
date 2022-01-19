@@ -3,7 +3,7 @@
     <div class="card__title card__title--small">
       Добавить документ
       <img
-        @click="$emit('toggleAddDocument')"
+        @click="$emit('close')"
         class="card__close"
         src="/icons/close_icon.svg"
         alt=""

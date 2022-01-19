@@ -7,11 +7,25 @@
         <div class="group__value">223</div>
       </div>
     </div>
+    <v-button @click="addDocument = true" v-if="!addDocument" red>
+      Добавить документ
+    </v-button>
+    <v-add-document @close="addDocument = false" v-if="addDocument" />
   </div>
 </template>
 
 <script>
-export default {};
+import VButton from "@/components/VButton";
+import VAddDocument from "../VAddDocument";
+
+export default {
+  components: { VAddDocument, VButton },
+  data() {
+    return {
+      addDocument: false,
+    };
+  },
+};
 </script>
 
 <style lang="scss">
