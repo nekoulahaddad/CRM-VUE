@@ -1,5 +1,5 @@
 <template>
-  <div class="card card--white card--small">
+  <div class="card card--white add-document-card card--small">
     <div class="card__title card__title--small">
       Добавить документ
       <img
@@ -43,8 +43,9 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
-.card {
+.add-document-card {
   padding-top: 10px;
+  padding-bottom: 15px;
 
   &__close {
     position: absolute;
