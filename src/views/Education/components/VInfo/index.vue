@@ -12,7 +12,7 @@
       v-if="editedItem.documents.length"
     />
 
-    <v-button @click="addDocument = true" v-if="!addDocument" red>
+    <v-button @click="addDocument = true" v-if="!addDocument && canCga" red>
       Добавить документ
     </v-button>
     <v-add-document @close="addDocument = false" v-if="addDocument" />
@@ -35,7 +35,33 @@ export default {
   data() {
     return {
       addDocument: false,
+      typeE: "crm",
+      filtersOptions: {},
+      activeIndex: -1,
+      add: false,
+      edit: false,
+      deleteEducationForm: false,
+      deleteDocument: false,
+      upload: false,
+      editedItem: {},
+      deletedItem: {},
+      educationsArr: [],
+      uploadedItem: {},
+      deletedDocument: {},
+      whoCanDoChanges: ["Якубовский", "Евдокимова", "Аракелов", "Марценюк"],
     };
+  },
+  computed: {
+    canChanges: {
+      get: function () {
+        return this.whoCanDoChanges.some((v) => v === this.userLastName.trim());
+      },
+    },
+    userLastName: {
+      get: function () {
+        return this.getUserRole().surname;
+      },
+    },
   },
 };
 </script>
