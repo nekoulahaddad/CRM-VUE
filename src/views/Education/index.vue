@@ -24,6 +24,9 @@
                 :editedItem="editedItem"
                 @toggleEdit="toggleEdit"
               />
+
+              <!-- Блок с детальной информацией -->
+              <v-info v-if="editedItem._id === item._id" />
             </div>
           </div>
         </div>
@@ -36,6 +39,7 @@
 <script>
 import VButton from "@/components/VButton";
 import VItem from "./components/VItem";
+import VInfo from "./components/VInfo";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
@@ -52,6 +56,7 @@ export default {
     VSpinner,
     VNotFoundQuery,
     VItem,
+    VInfo,
   },
   data() {
     return {
@@ -232,6 +237,18 @@ export default {
   }
   .empty-data {
     margin-left: 3px;
+  }
+
+  .list__row--opened .education-list-columns::after {
+    position: absolute;
+    content: "";
+    display: block;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background-color: $color-white;
+    border-radius: $border-radius;
   }
 }
 </style>
