@@ -249,5 +249,8 @@ export default {
   .list__columns {
     grid-template-columns: 140px 140px 350px 70px 70px 200px 1fr;
   }
+  .list__column:last-child {
+    padding-left: 20px;
+  }
 }
 </style>
