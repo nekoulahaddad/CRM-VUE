@@ -175,6 +175,8 @@ export default {
 
     &__lists {
       display: flex;
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
     &__list {
@@ -222,6 +224,10 @@ export default {
         margin-left: 10px;
       }
     }
+  }
+
+  .__bar-wrap-is-vertical {
+    background-color: $color-white;
   }
 }
 </style>
