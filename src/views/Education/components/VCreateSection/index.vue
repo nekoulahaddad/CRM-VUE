@@ -16,6 +16,7 @@
       <div class="list__info list-info education-list-info">
         <form>
           <div class="edit__inner">
+            <!-- Наименование раздела -->
             <div class="group">
               <div class="group__title">Наименование раздела:</div>
               <div class="group__content">
@@ -23,6 +24,9 @@
                   class="form-control"
                   placeholder="Введите название раздела..."
                   type="text"
+                  v-model="title"
+                  @change="onChange($event)"
+                  name="title"
                 />
               </div>
             </div>
@@ -31,7 +35,8 @@
               <div class="group__title">Для какой роли:</div>
               <div class="group__content">
                 <select class="form-select">
-                  <option value="12">123</option>
+                  <option value="all">Все роли</option>
+                  <option v-for="role in $t('roles')">{{ role }}</option>
                 </select>
               </div>
             </div>
@@ -40,7 +45,12 @@
               <div class="group__title">Для какого отдела:</div>
               <div class="group__content">
                 <select class="form-select">
-                  <option value="12">123</option>
+                  <option
+                    v-for="department in departments"
+                    :value="department.value"
+                  >
+                    {{ department.title }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -51,6 +61,9 @@
                 <textarea
                   class="form-textarea"
                   placeholder="Введите описание раздела..."
+                  name="description"
+                  v-model="description"
+                  @change="onChange($event)"
                 />
               </div>
             </div>
@@ -64,9 +77,47 @@
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
 
 export default {
   components: { VButton },
+  data() {
+    return {
+      date: new Date().toString(),
+      title: "",
+      role: "all",
+      department: "all",
+      description: "",
+      documents: ["Выбрать файлы"],
+      departments: [],
+      titleName: this.editedItem ? "Редактировать раздел" : "Добавить раздел",
+    };
+  },
+  methods: {
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+  },
+  mounted() {
+    if (this.editedItem) {
+      this.role = this.editedItem.role;
+      this.department = this.editedItem.department;
+      this.title = this.editedItem.title;
+      this.description = this.editedItem.description;
+    }
+
+    axios({
+      url: "/user/getdepartments",
+    }).then(async (res) => {
+      let result = await res;
+      let departments = result.data.departments;
+      departments.unshift({
+        title: "Все отделы",
+        value: "all",
+      });
+      this.departments = departments;
+    });
+  },
 };
 </script>
 
