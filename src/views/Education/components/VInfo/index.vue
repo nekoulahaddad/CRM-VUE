@@ -6,6 +6,12 @@
         {{ editedItem.description }}
       </div>
     </div>
+
+    <v-documents
+      :documents="editedItem.documents"
+      v-if="editedItem.documents.length"
+    />
+
     <v-button @click="addDocument = true" v-if="!addDocument" red>
       Добавить документ
     </v-button>
@@ -16,6 +22,7 @@
 <script>
 import VButton from "@/components/VButton";
 import VAddDocument from "../VAddDocument";
+import VDocuments from "../VDocuments";
 
 export default {
   props: {
@@ -24,7 +31,7 @@ export default {
       required: true,
     },
   },
-  components: { VAddDocument, VButton },
+  components: { VAddDocument, VButton, VDocuments },
   data() {
     return {
       addDocument: false,
