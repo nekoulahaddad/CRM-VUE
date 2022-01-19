@@ -238,17 +238,5 @@ export default {
   .empty-data {
     margin-left: 3px;
   }
-
-  .list__row--opened .education-list-columns::after {
-    position: absolute;
-    content: "";
-    display: block;
-    bottom: 0;
-    left: 10px;
-    right: 10px;
-    height: 2px;
-    background-color: $color-white;
-    border-radius: $border-radius;
-  }
 }
 </style>

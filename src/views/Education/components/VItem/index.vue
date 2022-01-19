@@ -48,7 +48,22 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .education-list-columns {
   font-size: 16px;
+  position: relative;
+
+  .list__row--opened &::after {
+    position: absolute;
+    content: "";
+    display: block;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background-color: $color-white;
+    border-radius: $border-radius;
+  }
 }
 </style>
