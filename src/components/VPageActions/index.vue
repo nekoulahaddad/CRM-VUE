@@ -17,7 +17,7 @@
         <a
           href=""
           @click.prevent="
-            $store.commit('toggleActions', {
+            $store.commit('toggleAction', {
               key: 'createEducationSection',
             })
           "

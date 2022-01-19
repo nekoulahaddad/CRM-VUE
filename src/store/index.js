@@ -34,7 +34,7 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    toggleActions(state, payload) {
+    toggleAction(state, payload) {
       state.actions[payload.key] = !state.actions[payload.key];
     },
     toggleSidebar(state) {
