@@ -22,6 +22,10 @@
             })
           "
           class="page-actions__button"
+          :class="{
+            'page-actions__button--active':
+              $store.state.actions.createEducationSection,
+          }"
         >
           <img src="@/assets/icons/education_add.svg" alt="" />
         </a>
@@ -46,7 +50,6 @@
 
 <script>
 import axios from "@/api/axios";
-import { mapMutations } from "vuex";
 
 export default {
   computed: {

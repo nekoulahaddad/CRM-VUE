@@ -13,7 +13,7 @@
         <div class="content__title">{{ title }}</div>
         <div class="scroll-horizontal">
           <!-- Блок для добавления нового раздела -->
-          <v-create-section v-if="createSection" />
+          <v-create-section @close="toggleCreateSection" v-if="createSection" />
 
           <template v-if="educations.length">
             <div class="list">
@@ -185,6 +185,9 @@ export default {
       } finally {
         this.isLoading = true;
       }
+    },
+    toggleCreateSection() {
+      this.$store.commit("toggleAction", { key: "createEducationSection" });
     },
     toggleAddDocument(item) {
       if (this.addDocumentItem === item) {
