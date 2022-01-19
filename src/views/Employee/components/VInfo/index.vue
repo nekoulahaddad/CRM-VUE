@@ -48,6 +48,7 @@
         </div>
       </div>
       <div>
+        <span class="text text--blue text--bold-700">Фото:</span>
         <img
           alt=""
           @click="photoFull = !photoFull"
@@ -253,6 +254,7 @@ export default {
     width: 123px;
     height: 123px;
     object-fit: contain;
+    margin-left: 10px;
   }
 
   .d-flex {
