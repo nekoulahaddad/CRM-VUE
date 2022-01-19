@@ -21,16 +21,23 @@
                 v-for="item in educations"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
-                :class="{ 'list__row--opened': editedItem._id === item._id }"
+                :class="{
+                  'list__row--opened':
+                    infoItem._id === item._id || editedItem._id === item._id,
+                }"
               >
                 <v-item
                   :item="item"
+                  :infoItem="infoItem"
                   :editedItem="editedItem"
+                  @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                 />
 
                 <!-- Блок с детальной информацией -->
-                <v-info
+                <v-info :infoItem="infoItem" v-if="infoItem._id === item._id" />
+
+                <v-edit
                   :editedItem="editedItem"
                   v-if="editedItem._id === item._id"
                 />
@@ -48,6 +55,7 @@
 import VButton from "@/components/VButton";
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
+import VEdit from "./components/VEdit";
 import VCreateSection from "./components/VCreateSection";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VFilter from "@/components/VFilter";
@@ -62,6 +70,7 @@ export default {
     VFilter,
     VSpinner,
     VNotFoundQuery,
+    VEdit,
     VItem,
     VInfo,
     VCreateSection,
@@ -78,6 +87,7 @@ export default {
       deleteDocument: false,
       upload: false,
       title: "CRM",
+      infoItem: {},
       editedItem: {},
       addDocumentItem: {},
       deletedItem: {},
@@ -192,14 +202,17 @@ export default {
     toggleCreateSection() {
       this.$store.commit("toggleAction", { key: "createEducationSection" });
     },
-    toggleAddDocument(item) {
-      if (this.addDocumentItem === item) {
-        this.addDocumentItem = null;
+    toggleInfo(item) {
+      this.editedItem = {};
+
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
       } else {
-        this.addDocumentItem = item;
+        this.infoItem = item;
       }
     },
     toggleEdit(item) {
+      this.infoItem = {};
       this.addDocumentItem = null;
 
       if (this.editedItem._id === item._id) {

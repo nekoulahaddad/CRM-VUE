@@ -3,13 +3,13 @@
     <div class="group">
       <div class="group__title">Описание:</div>
       <div class="group__content">
-        {{ editedItem.description }}
+        {{ infoItem.description }}
       </div>
     </div>
 
     <v-documents
-      :documents="editedItem.documents"
-      v-if="editedItem.documents.length"
+      :documents="infoItem.documents"
+      v-if="infoItem.documents.length"
     />
 
     <v-button @click="addDocument = true" v-if="!addDocument && canChanges" red>
@@ -26,7 +26,7 @@ import VDocuments from "../VDocuments";
 
 export default {
   props: {
-    editedItem: {
+    infoItem: {
       type: Object,
       required: true,
     },
