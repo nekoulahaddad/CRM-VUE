@@ -180,7 +180,7 @@ export default {
     &__list {
       background-color: $color-gray-secondary;
       border-radius: $border-radius;
-      padding: 10px;
+      padding: 10px 1px 10px 10px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       width: 328px;
 
