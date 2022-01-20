@@ -34,9 +34,16 @@
             <div class="group">
               <div class="group__title">Для какой роли:</div>
               <div class="group__content">
-                <select class="form-select">
+                <select
+                  class="form-select"
+                  v-model="role"
+                  name="role"
+                  @change="onChange($event)"
+                >
                   <option value="all">Все роли</option>
-                  <option v-for="role in $t('roles')">{{ role }}</option>
+                  <option :value="key" v-for="(role, key) in $t('roles')">
+                    {{ role }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -44,7 +51,12 @@
             <div class="group">
               <div class="group__title">Для какого отдела:</div>
               <div class="group__content">
-                <select class="form-select">
+                <select
+                  class="form-select"
+                  v-model="department"
+                  name="department"
+                  @change="onChange($event)"
+                >
                   <option
                     v-for="department in departments"
                     :value="department.value"
@@ -81,6 +93,9 @@ import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
 export default {
+  props: {
+    type: String,
+  },
   components: { VButton },
   data() {
     return {
@@ -119,20 +134,24 @@ export default {
       if (this.description) {
         sectionData.description = this.description;
       }
+      console.log(sectionData);
+
       axios({
         url: "/educations/post/",
         data: sectionData,
         method: "POST",
       })
         .then(async () => {
-          await this.$emit("refreshEducations");
-          this.$toast.success("Секция успешно добавлена!");
-          this.$emit("toggleOpen");
-          this.changeStatus(true);
+          alert();
+          //await this.$emit("refreshEducations");
+          //this.$toast.success("Секция успешно добавлена!");
+          //this.$emit("toggleOpen");
+          //this.changeStatus(true);
         })
         .catch((err) => {
-          this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
+          console.log(err);
+          //this.$toast.error(err.response.data.message);
+          //this.changeStatus(true);
         });
     },
   },

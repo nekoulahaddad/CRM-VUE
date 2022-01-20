@@ -2,7 +2,8 @@
   <div class="revs">
     <div class="revs__inner">
       <div class="revs__title">{{ title }}</div>
-      <div class="revs__items">
+      <v-spinner v-if="!isLoading" />
+      <div v-else class="revs__items">
         <div class="revs__item rev" v-for="item of info">
           <div class="rev__header rev--row">
             <div class="rev__left">
@@ -16,7 +17,14 @@
             <div class="rev__left">
               <div class="rev__line"></div>
             </div>
-            <div class="rev__right">{{ vueNumberFormat(item.count) }}</div>
+            <div class="rev__right">
+              {{ vueNumberFormat(item.count) }}
+              <img
+                class="rev__status"
+                src="@/assets/icons/positive.svg"
+                alt=""
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -25,11 +33,15 @@
 </template>
 
 <script>
+import VSpinner from "@/components/VSpinner";
+
 export default {
+  components: { VSpinner },
   props: {
     rev: {
       type: Object,
     },
+    isLoading: Boolean,
   },
   data() {
     return {
@@ -144,6 +156,10 @@ export default {
       margin-right: 20px;
     }
 
+    &__right {
+      position: relative;
+    }
+
     &__title {
       font-weight: 600;
     }
@@ -159,6 +175,14 @@ export default {
       margin-left: 7px;
       margin-right: 8px;
       border-radius: $border-radius;
+    }
+
+    &__status {
+      top: 50%;
+      right: -15px;
+      bottom: 0;
+      position: absolute;
+      transform: translateY(-50%);
     }
   }
 }

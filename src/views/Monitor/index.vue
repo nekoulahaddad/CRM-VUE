@@ -13,7 +13,7 @@
           @refreshDates="refreshDates"
           @setRegionsPool="setRegionsPool"
         />
-        <v-revs v-if="isLoading" :rev="rev" />
+        <v-revs :isLoading="isLoading" :rev="rev" />
       </div>
       <div class="page__right">
         <div class="scroll-horizontal">
@@ -129,7 +129,6 @@ export default {
       this.getStats();
     },
     refreshDates(startDate, endDate, pool) {
-      this.isLoading = false;
       this.startDate = startDate;
       this.endDate = endDate;
       this.regionsPool = pool;
