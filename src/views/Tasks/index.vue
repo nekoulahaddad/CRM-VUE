@@ -1,11 +1,6 @@
 <template>
   <div class="page tasks-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/tasks_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.tasks.pageTitle") }}</h1>
-    </div>
+    <v-page-header :title="$t('pages.tasks.pageTitle')" icon="tasks_title" />
     <div class="page__body d-flex">
       <!-- Фильтр -->
       <div class="page__left">
@@ -113,6 +108,7 @@ import VTask from "./components/VTask";
 import VSubTask from "./components/VSubTask";
 import VTaskInfo from "./components/VTaskInfo";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -130,6 +126,7 @@ export default {
     VTask,
     VTaskInfo,
     VSubTask,
+    VPageHeader,
   },
   props: {
     user: {

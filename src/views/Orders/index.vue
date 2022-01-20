@@ -1,11 +1,6 @@
 <template>
   <div class="page orders-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/orders_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.orders.pageTitle") }}</h1>
-    </div>
+    <v-page-header :title="$t('pages.orders.pageTitle')" icon="orders_title" />
     <div class="page__body d-flex">
       <!-- Фильтр -->
       <div class="page__left">
@@ -82,27 +77,14 @@ import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VSearch from "@/components/VSearch";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import dateMixins from "@/mixins/date";
-import nameMixins from "@/mixins/name";
-import oneCMixins from "@/mixins/oneC";
-import roleMixins from "@/mixins/role";
-import statusMixins from "@/mixins/status";
-import fioMixins from "@/mixins/fio";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
-  mixins: [
-    dateMixins,
-    fioMixins,
-    oneCMixins,
-    nameMixins,
-    roleMixins,
-    statusMixins,
-  ],
   components: {
     VFilter,
     VSpinner,
@@ -111,6 +93,7 @@ export default {
     VSearch,
     VItem,
     VInfo,
+    VPageHeader,
   },
   data() {
     return {

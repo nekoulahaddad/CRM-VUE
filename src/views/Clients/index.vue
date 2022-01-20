@@ -1,11 +1,6 @@
 <template>
   <div class="page clients-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/clients_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">Клиенты</h1>
-    </div>
+    <v-page-header title="Клиенты" icon="clients_title" />
     <div class="page__body d-flex">
       <div class="page__left">
         <!-- Фильтр -->
@@ -90,6 +85,7 @@ import VClient from "./components/VClient";
 import VOrder from "./components/VOrder";
 import VOrderInfo from "./components/VOrderInfo";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -104,6 +100,7 @@ export default {
     VClient,
     VOrderInfo,
     VOrder,
+    VPageHeader,
   },
   mounted() {
     this.fetchData();

@@ -1,11 +1,9 @@
 <template>
   <div class="page reports-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/reports_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.reports.pageTitle") }}</h1>
-    </div>
+    <v-page-header
+      :title="$t('pages.reports.pageTitle')"
+      icon="reports_title"
+    />
     <div class="page__body d-flex">
       <!-- Фильтр -->
       <div class="page__left">
@@ -62,17 +60,13 @@
 import VReport from "./components/VReport";
 import VReportInfo from "./components/VReportInfo";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import getDataFromPage from "@/api/getDataFromPage";
-import dateMixins from "@/mixins/date";
-import fioMixins from "@/mixins/fio";
-import markMixins from "@/mixins/mark";
-import statusMixins from "@/mixins/status";
 
 export default {
-  mixins: [dateMixins, fioMixins, markMixins, statusMixins],
   components: {
     VFilter,
     VSpinner,
@@ -80,6 +74,7 @@ export default {
     VPagination,
     VReport,
     VReportInfo,
+    VPageHeader,
   },
   data() {
     return {

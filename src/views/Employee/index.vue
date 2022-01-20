@@ -1,11 +1,9 @@
 <template>
   <div class="page employee-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/employees_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.employee.pageTitle") }}</h1>
-    </div>
+    <v-page-header
+      :title="$t('pages.employee.pageTitle')"
+      icon="employees_title"
+    />
     <div class="page__body d-flex">
       <!-- Фильтр -->
       <div class="page__left">
@@ -84,13 +82,12 @@ import VItem from "./components/VItem";
 import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VSearch from "@/components/VSearch";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "@/api/getDataFromPage";
-import ratingMixins from "@/mixins/rating";
-import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
@@ -104,8 +101,8 @@ export default {
     VInfo,
     VSearch,
     VEdit,
+    VPageHeader,
   },
-  mixins: [ratingMixins, roleMixins],
   data() {
     return {
       openEdit: false,
