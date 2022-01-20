@@ -1,11 +1,6 @@
 <template>
   <div class="page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/storage_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">Снабженец</h1>
-    </div>
+    <v-page-header title="Снабженец" icon="storage_title" />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter type="goods" />
@@ -41,6 +36,7 @@
 
 <script>
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -48,7 +44,7 @@ import { mapMutations } from "vuex";
 import getDataFromPage from "../../api/getDataFromPage";
 
 export default {
-  components: { VFilter, VPagination, VSpinner, VNotFoundQuery },
+  components: { VFilter, VPagination, VSpinner, VNotFoundQuery, VPageHeader },
   data() {
     return {
       isLoading: false,
