@@ -1,11 +1,9 @@
 <template>
   <div class="page delivery-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/delivery_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.delivery.pageTitle") }}</h1>
-    </div>
+    <v-page-header
+      :title="$t('pages.delivery.pageTitle')"
+      icon="delivery_title"
+    />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter type="providers" />
@@ -65,6 +63,7 @@
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VSearch from "@/components/VSearch";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -82,6 +81,7 @@ export default {
     VInfo,
     VItem,
     VSearch,
+    VPageHeader,
   },
   data() {
     return {
