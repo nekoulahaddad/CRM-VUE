@@ -1,6 +1,5 @@
 <template>
   <form @submit.prevent="$emit('submit', $event)">
-    {{ role }}
     <div class="edit__inner">
       <!-- Наименование раздела -->
       <div class="group">

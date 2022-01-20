@@ -37,35 +37,20 @@ export default {
     }),
     onSectionAdd() {
       this.changeStatus(false);
-      let sectionData = {};
-      if (this.formData.title) {
-        sectionData.title = this.formData.title;
-      }
-      if (this.formData.type) {
-        sectionData.type = this.formData.type;
-      }
-      if (this.formData.role) {
-        sectionData.role = this.formData.role;
-      }
-      if (this.formData.department) {
-        sectionData.department = this.formData.department;
-      }
-      if (this.formData.description) {
-        sectionData.description = this.formData.description;
-      }
-
-      sectionData.educationId = this.editedItem._id;
 
       axios({
         url: "/educations/update/",
-        data: sectionData,
+        data: {
+          ...this.formData,
+          educationId: this.editedItem._id,
+        },
         method: "POST",
       })
         .then(async () => {
           this.$emit("refreshEducations");
           this.$toast.success("Секция успешно Обновлена!");
-          this.$emit("toggleOpen");
           this.changeStatus(true);
+          this.$emit("toggleEdit", this.editedItem);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);

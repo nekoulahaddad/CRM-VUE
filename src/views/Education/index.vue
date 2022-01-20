@@ -44,6 +44,7 @@
                 <v-edit
                   :editedItem="editedItem"
                   v-if="editedItem._id === item._id"
+                  @toggleEdit="toggleEdit"
                   @refreshEducations="getEducations"
                 />
               </div>
