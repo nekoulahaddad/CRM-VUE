@@ -75,7 +75,6 @@
       <div class="group">
         <div class="group__title">{{ $t("department") }}</div>
         <div class="group__content">
-          {{ departments }}
           <select
             class="form-select"
             :value="item ? item.department.value : department"
