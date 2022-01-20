@@ -6,8 +6,8 @@
         Вы точно хотите удалить? Отменить это действие будет невозможно
       </div>
       <div class="vm--modal__buttons">
-        <v-button @click.prevent="remove" red>Да</v-button>
-        <v-button white>Нет</v-button>
+        <v-button @click="confirm" red>Да</v-button>
+        <v-button @click="cancel" white>Нет</v-button>
       </div>
     </div>
   </v-modal>
@@ -18,32 +18,31 @@ import axios from "../../api/axios";
 import VButton from "../../components/VButton";
 
 export default {
+  currentController: null,
   components: {
     VButton,
   },
   methods: {
-    remove() {
-      return;
-      this.changeStatus(false);
-
-      axios({
-        url: "/educations/delete",
-        data: {
-          educationId: this.deletedItem._id,
-        },
-        method: "POST",
-      })
-        .then(async () => {
-          await this.$emit("refreshEducations");
-          this.$toast.success("Раздел успешно удален!");
-          this.$emit("toggleOpen");
-          this.changeStatus(true);
-        })
-        .catch((err) => {
-          this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
-        });
+    cancel() {
+      this.$modal.hide("deleteConfirm");
+      this.$options.controller.reject();
     },
+    confirm() {
+      this.$options.controller.resolve();
+    },
+  },
+  created() {
+    let resolve;
+    let reject;
+
+    const promise = new Promise((ok, fail) => {
+      resolve = ok;
+      reject = fail;
+    });
+
+    this.$options.controller = { resolve, resolve };
+
+    return promise;
   },
 };
 </script>

@@ -74,6 +74,7 @@ export default {
     departments: Array,
     formData: Object,
     editedItem: Object,
+    isLoading: Boolean,
   },
   components: { VButton },
   methods: {

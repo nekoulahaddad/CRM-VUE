@@ -17,6 +17,7 @@
         <v-section-form
           :departments="departments"
           :formData="formData"
+          :isLoading="isLoading"
           @submit="onSectionAdd"
         />
       </div>
@@ -44,6 +45,7 @@ export default {
         description: "",
         type: "crm",
       },
+      isLoading: true,
       date: new Date().toString(),
       departments: [],
       titleName: this.editedItem ? "Редактировать раздел" : "Добавить раздел",
@@ -57,6 +59,8 @@ export default {
       this[e.target.name] = e.target.value;
     },
     onSectionAdd() {
+      this.isLoading = false;
+
       this.changeStatus(false);
       let sectionData = {};
       if (this.formData.title) {
@@ -90,9 +94,9 @@ export default {
           });
         })
         .catch((err) => {
-          console.log(err);
-          //this.$toast.error(err.response.data.message);
-          //this.changeStatus(true);
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+          this.isLoading = true;
         });
     },
   },

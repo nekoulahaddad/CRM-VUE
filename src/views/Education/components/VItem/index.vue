@@ -40,8 +40,10 @@ export default {
     editedItem: Object,
   },
   methods: {
-    deleteItem() {
-      this.$modal.show("deleteConfirm");
+    async deleteItem() {
+      const p = await this.$modal.show("deleteConfirm");
+
+      console.log(p);
     },
   },
 };

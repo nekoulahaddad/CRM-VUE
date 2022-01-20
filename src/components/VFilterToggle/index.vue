@@ -17,6 +17,8 @@ export default {};
 @import "@/styles/_variables";
 
 .filter-toggle {
+  cursor: pointer;
+
   &__inner {
     width: 124px;
     height: 40px;

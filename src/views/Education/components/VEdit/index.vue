@@ -26,6 +26,7 @@ export default {
         role: "all",
         ...this.editedItem,
       },
+      isLoading: true,
     };
   },
   components: {
@@ -36,6 +37,7 @@ export default {
       changeStatus: "change_load_status",
     }),
     onSectionAdd() {
+      this.isLoading = false;
       this.changeStatus(false);
 
       axios({
@@ -55,6 +57,7 @@ export default {
         .catch((err) => {
           this.$toast.error(err.response.data.message);
           this.changeStatus(true);
+          this.isLoading = true;
         });
     },
   },
