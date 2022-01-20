@@ -1,11 +1,6 @@
 <template>
   <div class="page monitor-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/monitor_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">Дашборд</h1>
-    </div>
+    <v-page-header title="Дашборд" icon="monitor_title" />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter
@@ -44,6 +39,7 @@ import VLearn from "./components/VLearn";
 import VRevs from "./components/VRevs";
 import VChart from "./components/VChart";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VTopBlocks from "./components/VTopBlocks";
 import VClients from "./components/VClients";
 import VMailByMonth from "./components/VMailByMonth";
@@ -60,6 +56,7 @@ export default {
     VRevs,
     VTopBlocks,
     VTopProducts,
+    VPageHeader,
   },
   data() {
     return {

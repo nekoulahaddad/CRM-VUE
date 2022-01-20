@@ -1,0 +1,39 @@
+<template>
+  <div class="filter-toggle">
+    <div class="filter-toggle__inner">
+      <div class="filter-toggle__icon">
+        <img src="@/assets/icons/filter.svg" alt="" />
+      </div>
+      <div class="filter-toggle__text">Фильтр</div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.filter-toggle {
+  &__inner {
+    width: 124px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: $border-radius;
+    border: 2px solid #db1f35;
+    background-color: $color-white;
+  }
+
+  &__text {
+    color: $color-red;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+</style>
