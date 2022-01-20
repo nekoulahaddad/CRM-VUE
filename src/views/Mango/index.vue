@@ -14,12 +14,7 @@
         pic: '',
       }"
     />
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/mango_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.mango.pageTitle") }}</h1>
-    </div>
+    <v-page-header :title="$t('pages.mango.pageTitle')" icon="mango_title" />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter type="mango" @refreshDates="refreshDates" />
@@ -68,6 +63,7 @@
 <script>
 import VMango from "./components/VMango";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import getDataFromPage from "@/api/getDataFromPage";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -87,6 +83,7 @@ export default {
     VNotFoundQuery,
     VPagination,
     VMango,
+    VPageHeader,
   },
   data() {
     return {
