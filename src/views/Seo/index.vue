@@ -1,11 +1,6 @@
 <template>
   <div class="page seo-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/seo_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.seo.pageTitle") }}</h1>
-    </div>
+    <v-page-header :title="$t('pages.seo.pageTitle')" icon="seo_title" />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter type="goods" ref="filters" />
@@ -54,6 +49,7 @@
 import VEdit from "./components/VEdit";
 import VItem from "./components/VItem";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
@@ -61,7 +57,15 @@ import getDataFromPage from "../../api/getDataFromPage";
 import { mapMutations } from "vuex";
 
 export default {
-  components: { VFilter, VEdit, VItem, VNotFoundQuery, VPagination, VSpinner },
+  components: {
+    VFilter,
+    VEdit,
+    VItem,
+    VNotFoundQuery,
+    VPagination,
+    VSpinner,
+    VPageHeader,
+  },
   data() {
     return {
       isLoading: false,
