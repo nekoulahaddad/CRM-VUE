@@ -1,6 +1,6 @@
 <template>
   <div class="page monitor-page">
-    <v-page-header title="Дашборд" icon="monitor_title" />
+    <v-page-header title="Дашборд" icon="monitor_title" :filterToggle="false" />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter

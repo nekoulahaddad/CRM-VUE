@@ -1,12 +1,9 @@
 <template>
   <div class="page education-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/education_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.education.pageTitle") }}</h1>
-      <v-filter type="education" />
-    </div>
+    <v-page-header
+      :title="$t('pages.education.pageTitle')"
+      icon="education_title"
+    />
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
       <div class="page__content content" v-else>
@@ -59,6 +56,7 @@
 
 <script>
 import VButton from "@/components/VButton";
+import VPageHeader from "@/components/VPageHeader";
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
@@ -79,6 +77,7 @@ export default {
     VEdit,
     VItem,
     VInfo,
+    VPageHeader,
     VCreateSection,
   },
   data() {

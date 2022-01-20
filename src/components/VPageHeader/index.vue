@@ -4,7 +4,7 @@
       <simple-svg :src="getIconUrl(icon)" />
     </div>
     <h1 class="page__title">{{ title }}</h1>
-    <v-filter-toggle />
+    <v-filter-toggle v-if="filterToggle" />
   </div>
 </template>
 
@@ -22,6 +22,10 @@ export default {
       type: String,
       required: true,
     },
+    filterToggle: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     getIconUrl(key) {
@@ -30,3 +34,8 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.page__header {
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-toggle">
+  <div class="filter-toggle" @click="toggleFilter">
     <div class="filter-toggle__inner">
       <div class="filter-toggle__icon">
         <img src="@/assets/icons/filter.svg" alt="" />
@@ -10,7 +10,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    toggleFilter() {
+      this.$store.dispatch("toggleFilter");
+    },
+  },
+};
 </script>
 
 <style lang="scss">

@@ -1,11 +1,9 @@
 <template>
   <div class="page callbacks-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/callbacks_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.callbacks.pageTitle") }}</h1>
-    </div>
+    <v-page-header
+      :title="$t('pages.callbacks.pageTitle')"
+      icon="callbacks_title"
+    />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter type="callCenterIssues" />
@@ -72,15 +70,13 @@ import VCallBack from "./components/VCallBack";
 import VEditForm from "./components/VEditForm";
 import VCallBackInfo from "./components/VCallBackInfo";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "@/api/getDataFromPage";
-import dateMixins from "@/mixins/date";
-import fioMixins from "@/mixins/fio";
 
 export default {
-  mixins: [dateMixins, fioMixins],
   components: {
     VFilter,
     VNotFoundQuery,
@@ -89,6 +85,7 @@ export default {
     VCallBack,
     VEditForm,
     VCallBackInfo,
+    VPageHeader,
   },
   mounted() {
     this.fetchData();

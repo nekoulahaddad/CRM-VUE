@@ -9,7 +9,7 @@
       {{ item.value }}
     </v-button>
   </div>
-  <div v-else class="filter">
+  <div v-else class="filter" :class="{ 'filter--collapse': filterCollapse }">
     <div class="filter__inner">
       <div class="filter__header">
         <div class="filter__title">Фильтр</div>
@@ -713,10 +713,8 @@
 import VButton from "@/components/VButton";
 import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
-import DatePicker, {
-  CalendarDialog,
-} from "vue-time-date-range-picker/dist/vdprDatePicker";
-import { mapMutations } from "vuex";
+import DatePicker from "vue-time-date-range-picker/dist/vdprDatePicker";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   mixins: [roleMixins],
@@ -832,6 +830,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      filterCollapse: "filter",
+    }),
     role: {
       get: function () {
         let role = this.getUserRole();
@@ -1206,6 +1207,11 @@ export default {
 .filter {
   &__actions {
     margin-top: 20px;
+  }
+
+  &--collapse {
+    width: 0;
+    visibility: hidden;
   }
 }
 </style>

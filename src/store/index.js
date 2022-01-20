@@ -9,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     sidebar: !!Cookies.get("sidebar"),
+    filter: !!Cookies.get("filter"),
     status: {
       reg: "",
       auth: "",
@@ -42,6 +43,12 @@ export default new Vuex.Store({
       state.sidebar
         ? Cookies.set("sidebar", !state.sidebar)
         : Cookies.remove("sidebar");
+    },
+    toggleFilter(state) {
+      state.filter = !state.filter;
+      state.filter
+        ? Cookies.set("filter", !state.filter)
+        : Cookies.remove("filter");
     },
     auth_request(state) {
       state.status.auth = "loading";
@@ -173,6 +180,9 @@ export default new Vuex.Store({
   actions: {
     toggleSidebar({ commit }) {
       commit("toggleSidebar");
+    },
+    toggleFilter({ commit }) {
+      commit("toggleFilter");
     },
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
@@ -402,6 +412,7 @@ export default new Vuex.Store({
   getters: {
     file: (state) => state.file,
     sidebar: (state) => state.sidebar,
+    filter: (state) => state.filter,
     isLoggedIn: (state) => !!state.token,
     loaded: (state) => state.loaded,
     authStatus: (state) => state.status.auth,
