@@ -65,5 +65,9 @@ export default {
     background-color: $color-white;
     border-radius: $border-radius;
   }
+
+  a {
+    display: block;
+  }
 }
 </style>

@@ -13,7 +13,7 @@
         <div class="content__title">{{ title }}</div>
         <div class="scroll-horizontal">
           <!-- Блок для добавления нового раздела -->
-          <v-create-section @close="toggleCreateSection" v-if="createSection" />
+          <v-section @close="toggleCreateSection" v-if="createSection" />
 
           <template v-if="educations.length">
             <div class="list">
@@ -37,7 +37,7 @@
                 <!-- Блок с детальной информацией -->
                 <v-info :infoItem="infoItem" v-if="infoItem._id === item._id" />
 
-                <v-edit
+                <v-section
                   :editedItem="editedItem"
                   v-if="editedItem._id === item._id"
                 />
@@ -56,7 +56,7 @@ import VButton from "@/components/VButton";
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
-import VCreateSection from "./components/VCreateSection";
+import VSection from "./components/VSection";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
@@ -73,7 +73,7 @@ export default {
     VEdit,
     VItem,
     VInfo,
-    VCreateSection,
+    VSection,
   },
   data() {
     return {
