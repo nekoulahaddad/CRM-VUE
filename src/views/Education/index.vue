@@ -13,7 +13,11 @@
         <div class="content__title">{{ title }}</div>
         <div class="scroll-horizontal">
           <!-- Блок для добавления нового раздела -->
-          <v-section @close="toggleCreateSection" v-if="createSection" />
+          <v-create-section
+            @refreshEducations="getEducations"
+            @close="toggleCreateSection"
+            v-if="createSection"
+          />
 
           <template v-if="educations.length">
             <div class="list">
@@ -37,9 +41,10 @@
                 <!-- Блок с детальной информацией -->
                 <v-info :infoItem="infoItem" v-if="infoItem._id === item._id" />
 
-                <v-section
+                <v-edit
                   :editedItem="editedItem"
                   v-if="editedItem._id === item._id"
+                  @refreshEducations="getEducations"
                 />
               </div>
             </div>
@@ -56,7 +61,7 @@ import VButton from "@/components/VButton";
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
-import VSection from "./components/VSection";
+import VCreateSection from "./components/VCreateSection";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
@@ -73,7 +78,7 @@ export default {
     VEdit,
     VItem,
     VInfo,
-    VSection,
+    VCreateSection,
   },
   data() {
     return {
@@ -228,6 +233,31 @@ export default {
         this.deletedItem = {};
       }
       this.deleteEducationForm = !this.deleteEducationForm;
+    },
+    async getEducations() {
+      let data = {
+        type: this.typeE,
+      };
+      data.role = this.role;
+      data.department = this.department;
+      if (this.typeE === "employee") {
+        data.department = this.department;
+      }
+      await axios({
+        url: "/educations/get/",
+        params: data,
+        method: "GET",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.educations = result.data.educations;
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
+      this.changeStatus(true);
     },
   },
 };
