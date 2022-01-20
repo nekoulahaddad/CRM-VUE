@@ -30,7 +30,6 @@
       {{ transformFIO(item.manager[0]) }}
     </div>
     <div v-html="transformStatus(item.status)" class="list__column"></div>
-    <div class="list__column"></div>
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">

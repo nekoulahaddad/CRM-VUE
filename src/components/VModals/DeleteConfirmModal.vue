@@ -14,24 +14,23 @@
 </template>
 
 <script>
-import axios from "../../api/axios";
 import VButton from "../../components/VButton";
 
 export default {
-  currentController: null,
+  controller: null,
   components: {
     VButton,
   },
   methods: {
     cancel() {
-      this.$modal.hide("deleteConfirm");
       this.$options.controller.reject();
+      this.$modal.hide("deleteConfirm");
     },
     confirm() {
       this.$options.controller.resolve();
     },
   },
-  created() {
+  mounted() {
     let resolve;
     let reject;
 
@@ -40,7 +39,7 @@ export default {
       reject = fail;
     });
 
-    this.$options.controller = { resolve, resolve };
+    this.$options.controller = { resolve, reject };
 
     return promise;
   },
