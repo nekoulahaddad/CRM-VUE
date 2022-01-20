@@ -1,11 +1,6 @@
 <template>
   <div class="page goods-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/goods_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.goods.pageTitle") }}</h1>
-    </div>
+    <v-page-header :title="$t('pages.goods.pageTitle')" icon="goods_title" />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter
@@ -111,6 +106,7 @@ import VCategory from "./components/VCategory";
 import VProduct from "./components/VProduct";
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "@/api/getDataFromPage";
@@ -124,6 +120,7 @@ export default {
     VSpinner,
     VNotFoundQuery,
     Draggable,
+    VPageHeader,
     Container,
   },
   data() {

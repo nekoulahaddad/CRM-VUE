@@ -1,12 +1,6 @@
 <template>
   <div class="page mail-page">
-    <popover name="foo"> 123 </popover>
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/mails_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("pages.mail.pageTitle") }}</h1>
-    </div>
+    <v-page-header :title="$t('pages.mail.pageTitle')" icon="mails_title" />
     <div class="page__body d-flex">
       <div class="page__left">
         <v-filter type="callbacks" />
@@ -72,22 +66,20 @@ import VItem from "./components/VItem";
 import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
+import VPageHeader from "@/components/VPageHeader";
 import getDataFromPage from "@/api/getDataFromPage";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
-import dateMixins from "@/mixins/date";
-import nameMixins from "@/mixins/name";
-import fioMixins from "@/mixins/fio";
 import axios from "@/api/axios";
 
 export default {
-  mixins: [dateMixins, fioMixins, nameMixins],
   components: {
     VFilter,
     VSpinner,
     VNotFoundQuery,
     VPagination,
+    VPageHeader,
     VItem,
     VInfo,
     VEdit,
