@@ -412,6 +412,9 @@ export default {
 
 <style scoped lang="scss">
 .orders-page {
+  .list__header .list__column:last-child {
+    text-align: left;
+  }
   .list__columns {
     grid-template-columns: 50px 120px 120px 120px 120px 120px 120px 120px 120px 240px 1fr;
   }
