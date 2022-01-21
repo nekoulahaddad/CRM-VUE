@@ -1,38 +1,41 @@
 <template>
   <div class="page calendar-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/calendar_title.svg')" alt="" />
+    <v-page-header
+      title="Календарь"
+      icon="calendar_title"
+      :filterToggle="false"
+    />
+    <div class="page__body d-flex">
+      <div class="page__left"></div>
+      <div class="page__right">
+        <vue-calendar :show-limit="3"></vue-calendar>
+        <calendar-view
+          :items="events"
+          :show-date="showDate"
+          class="theme-default holiday-us-traditional holiday-us-official page__calendar"
+          @click-date="clickItem"
+          @date-selection="dateSelection"
+          @date-selection-finish="dateSelectionFinish"
+          :selectionStart="selectionStart"
+          :selectionEnd="selectionEnd"
+          :startingDayOfWeek="1"
+          itemContentHeight="50px"
+        >
+          <calendar-view-header
+            slot="header"
+            slot-scope="t"
+            :header-props="t.headerProps"
+            @input="setShowDate"
+          />
+        </calendar-view>
       </div>
-      <h1 class="page__title">Календарь</h1>
-    </div>
-    <div class="page__body">
-      <vue-calendar :show-limit="3"></vue-calendar>
-      <calendar-view
-        :items="events"
-        :show-date="showDate"
-        class="theme-default holiday-us-traditional holiday-us-official page__calendar"
-        @click-date="clickItem"
-        @date-selection="dateSelection"
-        @date-selection-finish="dateSelectionFinish"
-        :selectionStart="selectionStart"
-        :selectionEnd="selectionEnd"
-        :startingDayOfWeek="1"
-        itemContentHeight="50px"
-      >
-        <calendar-view-header
-          slot="header"
-          slot-scope="t"
-          :header-props="t.headerProps"
-          @input="setShowDate"
-        />
-      </calendar-view>
     </div>
   </div>
 </template>
 
 <script>
 import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
+import VPageHeader from "@/components/VPageHeader";
 import "vue-simple-calendar/static/css/default.css";
 
 export default {
@@ -53,6 +56,7 @@ export default {
   components: {
     CalendarView,
     CalendarViewHeader,
+    VPageHeader,
   },
   computed: {
     role: {
@@ -129,7 +133,6 @@ export default {
 .calendar-page {
   .page__body {
     padding: 10px;
-    background-color: $color-white;
     border-radius: $border-radius;
   }
 }
