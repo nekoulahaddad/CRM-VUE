@@ -1,12 +1,11 @@
 <template>
   <div class="page desktop-page">
     <v-edit-task-modal :task="{}" />
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/desktop_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">Рабочий стол</h1>
-    </div>
+    <v-page-header
+      title="Рабочий стол"
+      icon="desktop_title"
+      :filterToggle="false"
+    />
     <div class="page__body d-flex">
       <div class="page__left">
         <div class="tasks">
@@ -96,6 +95,7 @@
 </template>
 
 <script>
+import VPageHeader from "@/components/VPageHeader";
 import VEditTaskModal from "../../components/VModals/EditTaskModal";
 import getDataFromPage from "../../api/getDataFromPage";
 import VContextMenu from "./components/VContextMenu";
@@ -104,6 +104,7 @@ export default {
   components: {
     VContextMenu,
     VEditTaskModal,
+    VPageHeader,
   },
   data() {
     return {
