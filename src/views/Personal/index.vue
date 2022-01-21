@@ -1,11 +1,10 @@
 <template>
   <div class="page personal-page">
-    <div class="page__header">
-      <div class="page__icon">
-        <img :src="require('@/assets/icons/personal_title.svg')" alt="" />
-      </div>
-      <h1 class="page__title">{{ $t("personalArea") }}</h1>
-    </div>
+    <v-page-header
+      :title="$t('personalArea')"
+      icon="personal_title"
+      :filterToggle="false"
+    />
     <div class="page__body">
       <div class="personal-area">
         <div class="personal-area__header">
@@ -46,7 +45,7 @@
               </div>
             </form>
           </div>
-          <div class="personal-area__column">
+          <div v-if="false" class="personal-area__column">
             <div class="personal-area__settings settings">
               <div class="settings__title">{{ $t("customDesign") }}</div>
               <div class="settings__item settings-item">
@@ -90,11 +89,12 @@
 
 <script>
 import VButton from "@/components/VButton";
+import VPageHeader from "@/components/VPageHeader";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
 export default {
-  components: { VButton },
+  components: { VButton, VPageHeader },
   computed: {
     user: {
       get: function () {
