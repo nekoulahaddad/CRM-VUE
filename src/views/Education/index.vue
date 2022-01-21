@@ -3,6 +3,7 @@
     <v-page-header
       :title="$t('pages.education.pageTitle')"
       icon="education_title"
+      :filterToggle="false"
     />
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
