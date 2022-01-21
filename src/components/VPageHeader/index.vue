@@ -1,10 +1,14 @@
 <template>
-  <div class="page__header">
-    <div class="page__icon">
-      <simple-svg :src="getIconUrl(icon)" />
+  <div class="page__header page-header">
+    <div class="page-header__inner">
+      <div class="page-header__left">
+        <div class="page__icon">
+          <simple-svg :src="getIconUrl(icon)" />
+        </div>
+        <h1 class="page__title">{{ title }}</h1>
+      </div>
+      <v-filter-toggle v-if="filterToggle" />
     </div>
-    <h1 class="page__title">{{ title }}</h1>
-    <v-filter-toggle v-if="filterToggle" />
   </div>
 </template>
 
@@ -36,6 +40,29 @@ export default {
 </script>
 
 <style lang="scss">
-.page__header {
+@import "@/styles/_variables";
+
+.page-header {
+  padding-left: 20px;
+  padding-right: 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 90px;
+  z-index: 980;
+  background-color: $color-gray;
+  padding-top: 20px;
+
+  &__left {
+    display: flex;
+    align-items: center;
+  }
+
+  &__inner {
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 10px;
+  }
 }
 </style>

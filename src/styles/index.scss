@@ -65,18 +65,7 @@ ul {
 
 .page {
   box-sizing: border-box;
-
-  &__header {
-    align-items: center;
-    background-color: $color-gray;
-    display: flex;
-    margin-bottom: 10px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 980;
-    padding: 20px 20px 10px;
-  }
+  max-width: 1417px;
 
   &__body {
     margin-top: 90px;
