@@ -46,12 +46,13 @@ export default {
   padding-left: 20px;
   padding-right: 20px;
   position: fixed;
+  left: 0;
   top: 0;
   right: 0;
-  left: 90px;
-  z-index: 980;
+  z-index: 777;
   background-color: $color-gray;
   padding-top: 20px;
+  transition: left 0.5s;
 
   &__left {
     display: flex;

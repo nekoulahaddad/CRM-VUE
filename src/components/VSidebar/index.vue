@@ -50,11 +50,11 @@ export default {
   width: 202px;
   height: 100vh;
   position: sticky;
-  z-index: 101;
   left: 0;
   top: 0;
   overflow: hidden;
   transition: width 0.5s;
+  z-index: 888;
 
   &__inner {
     display: flex;
