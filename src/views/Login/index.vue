@@ -73,13 +73,11 @@
                     />
                   </div>
                   <div class="policy">
+                    <input type="checkbox" v-model="isPolicy" />
                     <label>
-                      <input type="checkbox" v-model="isPolicy" />
-                      <span>
-                        Я даю своё согласие на обработку персональных даннных в
-                        соответсвиии с политикой конфиденциальности и условиями
-                        пользования
-                      </span>
+                      Я даю своё согласие на обработку персональных даннных в
+                      соответсвиии с политикой конфиденциальности и условиями
+                      пользования
                     </label>
                   </div>
                   <v-button :disabled="isFetch" red>Войти</v-button>
@@ -374,6 +372,7 @@ export default {
       font-weight: 600;
       margin-top: 20px;
       margin-bottom: 38px;
+      display: flex;
 
       input[type="checkbox"] {
         appearance: none;
@@ -407,7 +406,6 @@ export default {
       }
 
       label {
-        cursor: pointer;
         color: rgba(0, 0, 0, 0.3);
         display: flex;
       }
