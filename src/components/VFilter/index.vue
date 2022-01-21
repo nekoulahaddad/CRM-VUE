@@ -1205,13 +1205,14 @@ export default {
 
 <style lang="scss">
 .filter {
+  margin-right: 16px;
+
   &__actions {
     margin-top: 20px;
   }
 
   &--collapse {
-    width: 0;
-    visibility: hidden;
+    display: none;
   }
 }
 </style>
