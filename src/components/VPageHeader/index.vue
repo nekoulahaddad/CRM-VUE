@@ -1,5 +1,8 @@
 <template>
-  <div class="page__header page-header">
+  <div
+    class="page__header page-header"
+    :class="{ 'page-header--collapse': sidebar }"
+  >
     <div class="page-header__inner">
       <div class="page-header__left">
         <div class="page__icon">
@@ -14,6 +17,7 @@
 
 <script>
 import VFilterToggle from "../VFilterToggle";
+import { mapGetters } from "vuex";
 
 export default {
   components: { VFilterToggle },
@@ -31,6 +35,7 @@ export default {
       default: true,
     },
   },
+  computed: { ...mapGetters(["sidebar"]) },
   methods: {
     getIconUrl(key) {
       return require(`@/assets/icons/${key}.svg`);
@@ -63,7 +68,15 @@ export default {
     align-items: center;
     justify-content: space-between;
     display: flex;
+    padding-left: 202px;
     margin-bottom: 10px;
+    transition: padding 0.5s;
+  }
+
+  &--collapse {
+    .page-header__inner {
+      padding-left: 90px;
+    }
   }
 }
 </style>
