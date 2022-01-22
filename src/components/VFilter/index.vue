@@ -639,7 +639,7 @@
                 @change="selectOptions($event, null, 'regionButtons', null)"
                 :value="filterOptions.region"
               >
-                <option selected value="all">Все регионы</option>
+                <option value="all">Все регионы</option>
                 <option v-for="item in regions" :value="item._id">
                   {{ item.title }}
                 </option>
@@ -754,6 +754,7 @@ export default {
   },
   beforeMount() {
     this.filterOptions = this.defaultOptions;
+
     axios({
       url: "/regions/get",
     }).then(async ({ data }) => {
