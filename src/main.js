@@ -92,7 +92,7 @@ Vue.use(vuescroll, {
       keepShow: true,
     },
     scrollPanel: {
-      maxHeight: 600,
+      //maxHeight: 600,
     },
     rail: {
       background: "#db1f35",
