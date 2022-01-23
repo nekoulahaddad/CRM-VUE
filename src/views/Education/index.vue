@@ -19,6 +19,7 @@
       :title="$t('pages.education.pageTitle')"
       icon="education_title"
       :filterToggle="false"
+      page="education"
     />
     <div class="page__body">
       <v-spinner v-if="!isLoading" />

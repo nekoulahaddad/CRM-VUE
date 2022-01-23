@@ -9,6 +9,7 @@
           <simple-svg :src="getIconUrl(icon)" />
         </div>
         <h1 class="page__title">{{ title }}</h1>
+        <v-filter v-if="page === 'education'" :type="page" />
       </div>
       <v-filter-toggle v-if="filterToggle" />
     </div>
@@ -16,16 +17,19 @@
 </template>
 
 <script>
+import VFilter from "../VFilter";
 import VFilterToggle from "../VFilterToggle";
+
 import { mapGetters } from "vuex";
 
 export default {
-  components: { VFilterToggle },
+  components: { VFilter, VFilterToggle },
   props: {
     icon: {
       type: String,
       required: true,
     },
+    page: String,
     title: {
       type: String,
       required: true,
