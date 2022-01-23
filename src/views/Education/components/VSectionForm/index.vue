@@ -67,11 +67,11 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
 import VButton from "@/components/VButton";
 
 export default {
   props: {
-    departments: Array,
     formData: Object,
     editedItem: Object,
     isLoading: Boolean,
@@ -82,6 +82,11 @@ export default {
       this.formData[e.target.name] = e.target.value;
     },
   },
+  data() {
+    return {
+      departments: [],
+    };
+  },
   mounted() {
     if (this.editedItem) {
       this.formData.role = this.editedItem.role;
@@ -89,6 +94,17 @@ export default {
       this.formData.title = this.editedItem.title;
       this.formData.description = this.editedItem.description;
     }
+
+    axios({
+      url: "/user/getdepartments",
+    }).then((res) => {
+      let departments = res.data.departments;
+      departments.unshift({
+        title: "Все отделы",
+        value: "all",
+      });
+      this.departments = departments;
+    });
   },
 };
 </script>
