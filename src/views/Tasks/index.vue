@@ -1,5 +1,10 @@
 <template>
   <div class="page tasks-page">
+    <v-delete-item
+      :deletedItem="deletedItem"
+      @removeFromTask="removeFromTask"
+    />
+
     <v-page-header :title="$t('pages.tasks.pageTitle')" icon="tasks_title" />
     <div class="page__body d-flex">
       <!-- Фильтр -->
@@ -105,6 +110,7 @@
 <script>
 import VEdit from "./components/VEdit";
 import VTask from "./components/VTask";
+import VDeleteItem from "./components/VDeleteItem";
 import VSubTask from "./components/VSubTask";
 import VTaskInfo from "./components/VTaskInfo";
 import VFilter from "@/components/VFilter";
@@ -119,6 +125,7 @@ import { mapMutations } from "vuex";
 export default {
   components: {
     VFilter,
+    VDeleteItem,
     VSpinner,
     VNotFoundQuery,
     VPagination,
@@ -221,8 +228,9 @@ export default {
     toggleOpen() {
       this.open = !this.open;
     },
-    toggleDelete(id) {
-      this.$modal.show("deleteConfirm");
+    toggleDelete(deletedItem) {
+      this.deletedItem = deletedItem;
+      this.$modal.show("delete");
       //this.deletedItem._id = id;
     },
     toggleEdit(item) {
@@ -290,6 +298,7 @@ export default {
       }, 500);
     },
     removeFromTask(task) {
+      this.$modal.hide("delete");
       this.activeIndex = -1;
       this.activeSubIndex = -1;
       this.deletedItem = task;

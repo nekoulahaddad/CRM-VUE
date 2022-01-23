@@ -86,7 +86,7 @@
             alt=""
             v-if="id === task.initiator._id"
             src="/icons/trash_icon.svg"
-            @click="$emit('toggleDelete', task._id)"
+            @click="$emit('toggleDelete', task)"
           />
           <div class="table__hidden-icon" v-else></div>
         </div>

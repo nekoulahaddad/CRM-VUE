@@ -9,7 +9,6 @@
           <simple-svg :src="getIconUrl(icon)" />
         </div>
         <h1 class="page__title">{{ title }}</h1>
-        <v-filter v-if="type === 'education'" :type="type" />
       </div>
       <v-filter-toggle v-if="filterToggle" />
     </div>

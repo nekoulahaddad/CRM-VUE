@@ -22,6 +22,7 @@
       type="education"
     />
     <div class="page__body">
+      <v-filter type="education" />
       <v-spinner v-if="!isLoading" />
       <div class="page__content content" v-else>
         <div class="content__title">{{ title }}</div>
@@ -80,6 +81,7 @@
 
 <script>
 import VButton from "@/components/VButton";
+import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VItem from "./components/VItem";
 import VDeleteItem from "./components/VDeleteItem";
@@ -88,7 +90,6 @@ import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import VCreateSection from "./components/VCreateSection";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VAddDocument from "./components/VAddDocument";
 import axios from "@/api/axios";
@@ -100,11 +101,11 @@ export default {
     VDeleteDocument,
     VButton,
     VAddDocument,
-    VFilter,
     VSpinner,
     VNotFoundQuery,
     VEdit,
     VItem,
+    VFilter,
     VInfo,
     VPageHeader,
     VCreateSection,
