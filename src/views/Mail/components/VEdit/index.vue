@@ -111,8 +111,9 @@ export default {
         data: callbackData,
         method: "POST",
       }).then(() => {
-        this.$emit("toggleOpen");
+        this.$emit("toggleEdit", this.item);
         this.$emit("editCallback");
+        this.$toast.success("Заявка успешно изменена");
         this.changeStatus(true);
       });
     },

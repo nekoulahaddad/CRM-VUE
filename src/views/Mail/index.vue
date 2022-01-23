@@ -49,6 +49,8 @@
                   v-if="editedItem._id === item._id"
                   :item="item"
                   :editedItem="editedItem"
+                  @toggleEdit="toggleEdit"
+                  @editCallback="editCallback"
                 />
               </div>
             </div>
@@ -113,6 +115,9 @@ export default {
     this.getData();
   },
   methods: {
+    editCallback() {
+      this.getData();
+    },
     async getData() {
       try {
         this.isLoading = false;
