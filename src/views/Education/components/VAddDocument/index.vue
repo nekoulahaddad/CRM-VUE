@@ -90,8 +90,8 @@ export default {
         data: documentData,
         method: "POST",
       })
-        .then(async () => {
-          await this.$emit("refreshEducations");
+        .then(() => {
+          this.$emit("success");
           this.$toast.success("Документ успешно загружен!");
           this.changeStatus(true);
         })

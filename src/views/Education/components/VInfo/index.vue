@@ -21,6 +21,7 @@
       :education="infoItem"
       @close="addDocument = false"
       v-if="addDocument"
+      @success="successUpload"
     />
   </div>
 </template>
@@ -70,6 +71,10 @@ export default {
   methods: {
     deleteDocument(document) {
       this.$emit("toggleDeleteDocument", document);
+    },
+    successUpload() {
+      this.addDocument = false;
+      this.$emit("refreshEducations");
     },
   },
 };
