@@ -191,7 +191,7 @@ export default {
 <style scoped lang="scss">
 .mail-page {
   .list__columns {
-    grid-template-columns: minmax(50px, 70px) repeat(9, 160px) 1fr;
+    grid-template-columns: minmax(50px, 70px) repeat(8, 120px) 1fr;
   }
   .list__header {
     .list__column {
