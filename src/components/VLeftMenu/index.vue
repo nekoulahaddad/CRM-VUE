@@ -55,6 +55,10 @@ export default {
   },
   mounted() {
     this.height = `calc(${window.innerHeight}px - 220px)`;
+
+    window.addEventListener("resize", () => {
+      this.height = `calc(${window.innerHeight}px - 220px)`;
+    });
   },
 };
 </script>
