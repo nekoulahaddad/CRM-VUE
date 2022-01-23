@@ -7,6 +7,14 @@
       @refreshEducations="getEducations"
     />
 
+    <!-- Модальное окно для удаления документа -->
+    <v-delete-document
+      :infoItem="infoItem"
+      :deletedDocument="deletedDocument"
+      @refreshEducations="getEducations"
+      @deleteDocumentSuccess="deleteDocumentSuccess"
+    />
+
     <v-page-header
       :title="$t('pages.education.pageTitle')"
       icon="education_title"
@@ -51,6 +59,7 @@
                   @toggleDeleteDocument="toggleDeleteDocument"
                 />
 
+                <!-- Блок для редактирование элемента -->
                 <v-edit
                   :editedItem="editedItem"
                   v-if="editedItem._id === item._id"
@@ -72,7 +81,7 @@ import VButton from "@/components/VButton";
 import VPageHeader from "@/components/VPageHeader";
 import VItem from "./components/VItem";
 import VDeleteItem from "./components/VDeleteItem";
-
+import VDeleteDocument from "./components/VDeleteDocument";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import VCreateSection from "./components/VCreateSection";
@@ -85,6 +94,7 @@ import axios from "@/api/axios";
 export default {
   components: {
     VDeleteItem,
+    VDeleteDocument,
     VButton,
     VAddDocument,
     VFilter,
@@ -242,14 +252,17 @@ export default {
         this.editedItem = item;
       }
     },
-    toggleDeleteDocument(deletedItem, deletedDocument) {
-      this.deletedItem = deletedItem;
+    toggleDeleteDocument(deletedDocument) {
       this.deletedDocument = deletedDocument;
       this.$modal.show("deleteDocument");
     },
     deleteSuccess() {
       this.deletedItem = {};
       this.$modal.hide("delete");
+    },
+    deleteDocumentSuccess() {
+      this.deletedDocument = {};
+      this.$modal.hide("deleteDocument");
     },
     toggleDelete(item) {
       this.deletedItem = item;

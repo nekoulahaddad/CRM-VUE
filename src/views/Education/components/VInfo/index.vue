@@ -11,6 +11,7 @@
       :documents="infoItem.documents"
       v-if="infoItem.documents.length"
       :infoItem="infoItem"
+      @deleteDocument="deleteDocument"
     />
 
     <v-button @click="addDocument = true" v-if="!addDocument && canChanges" red>
@@ -42,7 +43,6 @@ export default {
       add: false,
       edit: false,
       deleteEducationForm: false,
-      deleteDocument: false,
       upload: false,
       deletedItem: {},
       educationsArr: [],
@@ -61,6 +61,11 @@ export default {
       get: function () {
         return this.getUserRole().surname;
       },
+    },
+  },
+  methods: {
+    deleteDocument(document) {
+      this.$emit("toggleDeleteDocument", document);
     },
   },
 };

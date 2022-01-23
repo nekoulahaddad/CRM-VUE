@@ -26,6 +26,7 @@
                 alt=""
                 v-if="role === 'director' && canChanges"
                 src="@/assets/icons/trash_icon.svg"
+                @click="$emit('deleteDocument', document)"
               />
             </div>
           </div>
