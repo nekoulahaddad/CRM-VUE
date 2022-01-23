@@ -19,7 +19,7 @@
       :title="$t('pages.education.pageTitle')"
       icon="education_title"
       :filterToggle="false"
-      page="education"
+      type="education"
     />
     <div class="page__body">
       <v-spinner v-if="!isLoading" />
@@ -267,6 +267,9 @@ export default {
       this.$modal.hide("delete");
     },
     deleteDocumentSuccess() {
+      this.infoItem.documents = this.infoItem.documents.filter(
+        (item) => item._id !== this.deletedDocument._id
+      );
       this.deletedDocument = {};
       this.$modal.hide("deleteDocument");
     },

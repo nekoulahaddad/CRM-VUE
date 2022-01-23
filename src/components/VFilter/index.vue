@@ -711,13 +711,11 @@
 
 <script>
 import VButton from "@/components/VButton";
-import roleMixins from "@/mixins/role";
 import axios from "@/api/axios";
 import DatePicker from "vue-time-date-range-picker/dist/vdprDatePicker";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
-  mixins: [roleMixins],
   props: {
     type: {
       type: String,

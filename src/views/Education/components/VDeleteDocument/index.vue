@@ -1,6 +1,5 @@
 <template>
   <v-modal :adaptive="true" :maxHeight="175" name="deleteDocument">
-    {{ infoItem._id }}
     <div class="vm--modal__title">Удаление</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
@@ -51,8 +50,8 @@ export default {
         },
         method: "POST",
       })
-        .then(async () => {
-          await this.$emit("refreshEducations");
+        .then(() => {
+          this.$emit("refreshEducations");
           this.$toast.success("Документ успешно удален!");
           this.$emit("deleteDocumentSuccess");
         })
@@ -66,3 +65,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.vm--modal {
+  &__text {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  &__buttons {
+    justify-content: center;
+  }
+}
+</style>

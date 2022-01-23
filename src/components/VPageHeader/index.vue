@@ -9,7 +9,7 @@
           <simple-svg :src="getIconUrl(icon)" />
         </div>
         <h1 class="page__title">{{ title }}</h1>
-        <v-filter v-if="page === 'education'" :type="page" />
+        <v-filter v-if="type === 'education'" :type="type" />
       </div>
       <v-filter-toggle v-if="filterToggle" />
     </div>
@@ -29,7 +29,7 @@ export default {
       type: String,
       required: true,
     },
-    page: String,
+    type: String,
     title: {
       type: String,
       required: true,
