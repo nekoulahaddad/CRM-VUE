@@ -1,42 +1,106 @@
 <template>
   <div class="card card--white add-document-card card--small">
-    <div class="card__title card__title--small">
-      Добавить документ
-      <img
-        @click="$emit('close')"
-        class="card__close"
-        src="/icons/close_icon.svg"
-        alt=""
-      />
-    </div>
-    <div class="card__group group">
-      <div class="group__title">Название документа:</div>
-      <div class="group__content">
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Введите название документа..."
+    <form @submit.prevent="onDocumentAdd">
+      <div class="card__title card__title--small">
+        Добавить документ
+        <img
+          @click="$emit('close')"
+          class="card__close"
+          src="/icons/close_icon.svg"
+          alt=""
         />
       </div>
-    </div>
-    <div class="card__group group">
-      <div class="group__title">Загрузить документ:</div>
-      <div class="group__content">
-        <input type="file" id="document-file" hidden />
-        <label for="document-file">Выбрать файл</label>
+      <div class="card__group group">
+        <div class="group__title">Название документа:</div>
+        <div class="group__content">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Введите название..."
+            name="title"
+            @input="onChange($event)"
+          />
+        </div>
       </div>
-    </div>
-    <div class="group__actions">
-      <v-button red>Сохранить</v-button>
-    </div>
+      <div class="card__group group">
+        <div class="group__title">Загрузить документ:</div>
+        <div class="group__content">
+          <input
+            type="file"
+            id="document-file"
+            hidden
+            name="document"
+            @change="fileUpload($event)"
+          />
+          <label for="document-file">Выбрать файл</label>
+        </div>
+      </div>
+      <div class="group__actions">
+        <v-button red>Сохранить</v-button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
+  props: {
+    education: {
+      type: Object,
+    },
+  },
   components: { VButton },
+  data() {
+    return {
+      document: "Выбрать файл",
+      serverAddr: process.env.VUE_APP_DEVELOP_URL,
+    };
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+    fileUpload(e) {
+      const files = e.target.files;
+      this[e.target.name] = files[0];
+      this[e.target.name + "Url"] = URL.createObjectURL(files[0]);
+    },
+    onDocumentAdd() {
+      this.changeStatus(false);
+      let documentData = new FormData();
+      documentData.append("educationId", this.education._id);
+      documentData.append("title", this.title);
+      if (this.document !== "Выбрать файл") {
+        documentData.append("document", this.document);
+      } else {
+        this.$toast.error("Необходимо добавить документ!");
+        this.changeStatus(true);
+        return;
+      }
+
+      axios({
+        url: "/educations/upload/",
+        data: documentData,
+        method: "POST",
+      })
+        .then(async () => {
+          await this.$emit("refreshEducations");
+          this.$toast.success("Документ успешно загружен!");
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
+    },
+  },
 };
 </script>
 

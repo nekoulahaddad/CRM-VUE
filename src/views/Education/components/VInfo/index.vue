@@ -17,7 +17,11 @@
     <v-button @click="addDocument = true" v-if="!addDocument && canChanges" red>
       Добавить документ
     </v-button>
-    <v-add-document @close="addDocument = false" v-if="addDocument" />
+    <v-add-document
+      :education="infoItem"
+      @close="addDocument = false"
+      v-if="addDocument"
+    />
   </div>
 </template>
 
