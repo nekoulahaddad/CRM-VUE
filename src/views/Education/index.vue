@@ -1,10 +1,12 @@
 <template>
   <div class="page education-page">
+    <!-- Модальное окно для удаления элементв -->
     <v-delete-item
       :deletedItem="deletedItem"
       @deleteSuccess="deleteSuccess"
       @refreshEducations="getEducations"
     />
+
     <v-page-header
       :title="$t('pages.education.pageTitle')"
       icon="education_title"
@@ -43,7 +45,11 @@
                 />
 
                 <!-- Блок с детальной информацией -->
-                <v-info :infoItem="infoItem" v-if="infoItem._id === item._id" />
+                <v-info
+                  :infoItem="infoItem"
+                  v-if="infoItem._id === item._id"
+                  @toggleDeleteDocument="toggleDeleteDocument"
+                />
 
                 <v-edit
                   :editedItem="editedItem"
@@ -66,6 +72,7 @@ import VButton from "@/components/VButton";
 import VPageHeader from "@/components/VPageHeader";
 import VItem from "./components/VItem";
 import VDeleteItem from "./components/VDeleteItem";
+
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import VCreateSection from "./components/VCreateSection";
@@ -234,6 +241,11 @@ export default {
       } else {
         this.editedItem = item;
       }
+    },
+    toggleDeleteDocument(deletedItem, deletedDocument) {
+      this.deletedItem = deletedItem;
+      this.deletedDocument = deletedDocument;
+      this.$modal.show("deleteDocument");
     },
     deleteSuccess() {
       this.deletedItem = {};

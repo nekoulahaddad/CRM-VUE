@@ -45,6 +45,10 @@ export default {
       type: Array,
       required: true,
     },
+    infoItem: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     role: {

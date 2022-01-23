@@ -10,6 +10,7 @@
     <v-documents
       :documents="infoItem.documents"
       v-if="infoItem.documents.length"
+      :infoItem="infoItem"
     />
 
     <v-button @click="addDocument = true" v-if="!addDocument && canChanges" red>
