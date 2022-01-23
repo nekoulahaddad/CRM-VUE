@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <v-delete-confirm-modal />
     <v-mobile-sidebar />
     <v-sidebar />
     <main class="main">
@@ -11,7 +10,6 @@
 </template>
 
 <script>
-import VDeleteConfirmModal from "../components/VModals/DeleteConfirmModal";
 import VSidebar from "../components/VSidebar";
 import VMobileHeader from "../components/VMobileHeader";
 import VMobileSidebar from "../components/VMobileSidebar";
@@ -19,7 +17,6 @@ import VFooter from "../components/VFooter";
 
 export default {
   components: {
-    VDeleteConfirmModal,
     VMobileHeader,
     VMobileSidebar,
     VFooter,

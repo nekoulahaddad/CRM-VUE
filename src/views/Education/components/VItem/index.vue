@@ -20,7 +20,7 @@
         </div>
         <div class="table__icon">
           <img
-            @click="deleteItem"
+            @click="$emit('toggleDelete', item)"
             :src="require('@/assets/icons/trash_icon.svg')"
             alt=""
           />
@@ -38,13 +38,6 @@ export default {
       required: true,
     },
     editedItem: Object,
-  },
-  methods: {
-    async deleteItem() {
-      const p = await this.$modal.show("deleteConfirm");
-
-      console.log(p);
-    },
   },
 };
 </script>

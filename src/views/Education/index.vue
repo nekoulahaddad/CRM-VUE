@@ -1,5 +1,10 @@
 <template>
   <div class="page education-page">
+    <v-delete-item
+      :deletedItem="deletedItem"
+      @deleteSuccess="deleteSuccess"
+      @refreshEducations="getEducations"
+    />
     <v-page-header
       :title="$t('pages.education.pageTitle')"
       icon="education_title"
@@ -34,6 +39,7 @@
                   :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией -->
@@ -59,6 +65,7 @@
 import VButton from "@/components/VButton";
 import VPageHeader from "@/components/VPageHeader";
 import VItem from "./components/VItem";
+import VDeleteItem from "./components/VDeleteItem";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import VCreateSection from "./components/VCreateSection";
@@ -70,6 +77,7 @@ import axios from "@/api/axios";
 
 export default {
   components: {
+    VDeleteItem,
     VButton,
     VAddDocument,
     VFilter,
@@ -227,13 +235,13 @@ export default {
         this.editedItem = item;
       }
     },
+    deleteSuccess() {
+      this.deletedItem = {};
+      this.$modal.hide("delete");
+    },
     toggleDelete(item) {
-      if (!this.deleteEducationForm) {
-        this.deletedItem = item;
-      } else {
-        this.deletedItem = {};
-      }
-      this.deleteEducationForm = !this.deleteEducationForm;
+      this.deletedItem = item;
+      this.$modal.show("delete");
     },
     async getEducations() {
       let data = {
