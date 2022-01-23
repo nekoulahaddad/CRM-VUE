@@ -1,5 +1,5 @@
 <template>
-  <nav class="sidebar__menu menu">
+  <nav class="sidebar__menu menu" :style="{ height }">
     <vue-scroll>
       <ul class="menu__list">
         <li class="menu__item" v-for="(item, key) in $t('menu')" :key="key">
@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       el: null,
+      height: "100%",
     };
   },
   computed: {
@@ -51,6 +52,9 @@ export default {
       const names = ["monitor", "calendar"];
       return names.includes(key) ? url : `${url}/1`;
     },
+  },
+  mounted() {
+    this.height = `calc(${window.innerHeight}px - 220px)`;
   },
 };
 </script>
