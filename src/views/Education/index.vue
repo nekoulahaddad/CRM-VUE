@@ -91,6 +91,7 @@ import VFilter from "@/components/VFilter";
 import VSpinner from "@/components/VSpinner";
 import VAddDocument from "./components/VAddDocument";
 import axios from "@/api/axios";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
@@ -204,6 +205,9 @@ export default {
     this.fetchData();
   },
   methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
     async fetchData() {
       let data = {
         type: this.typeE,
@@ -269,30 +273,32 @@ export default {
       this.deletedItem = item;
       this.$modal.show("delete");
     },
-    async getEducations() {
-      let data = {
+    getEducations() {
+      const params = {
         type: this.typeE,
       };
-      data.role = this.role;
-      data.department = this.department;
+      params.role = this.role;
+      params.department = this.department;
+
       if (this.typeE === "employee") {
-        data.department = this.department;
+        params.department = this.department;
       }
-      await axios({
+
+      axios({
         url: "/educations/get/",
-        params: data,
+        params: params,
         method: "GET",
       })
-        .then(async (res) => {
-          let result = await res;
-          this.educations = result.data.educations;
+        .then((res) => {
+          this.educations = res.data.educations;
           this.changeStatus(true);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
           this.changeStatus(true);
         });
-      this.changeStatus(true);
     },
   },
 };
