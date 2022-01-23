@@ -32,7 +32,9 @@
             name="document"
             @change="fileUpload($event)"
           />
-          <label for="document-file">Выбрать файл</label>
+          <label for="document-file">
+            {{ document.name ? document.name : document }}
+          </label>
         </div>
       </div>
       <div class="group__actions">
