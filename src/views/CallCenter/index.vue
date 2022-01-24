@@ -76,6 +76,7 @@ import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "@/api/getDataFromPage";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -114,6 +115,7 @@ export default {
     };
   },
   methods: {
+    ...mapGetters(["sidebar"]),
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },
