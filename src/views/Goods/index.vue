@@ -123,6 +123,7 @@ import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import getDataFromPage from "@/api/getDataFromPage";
 import { mapGetters } from "vuex";
+import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
   components: {
@@ -145,7 +146,7 @@ export default {
       },
       current: [],
       filtersOptions: {
-        region: this.region || null,
+        region: REGION_MOSCOW_ID,
         nesting: +this.$route.params.nesting - 1 || null,
       },
       googleDoc: null,
@@ -225,7 +226,6 @@ export default {
     },
   },
   beforeMount() {
-    this.filtersOptions.region = this.region;
     this.filtersOptions.parent_value = this.$route.params.parent_value;
     this.filtersOptions.nesting = +this.$route.params.nesting - 1;
   },
@@ -244,7 +244,6 @@ export default {
       this.clearSelectedProducts();
       this.groupIndex = -1;
     }
-    //this.isLoading = true;
     next();
   },
   methods: {
@@ -329,6 +328,20 @@ export default {
           this.changeStatus(true);
         });
     },
+  },
+  async created() {
+    try {
+      this.updateGoods(
+        await getDataFromPage(
+          `/${this.$route.params.type || "categories"}/get`,
+          this.filtersOptions
+        )
+      );
+    } catch (e) {
+    } finally {
+      this.$scrollTo("body", 300, {});
+      this.isLoading = true;
+    }
   },
 };
 </script>
