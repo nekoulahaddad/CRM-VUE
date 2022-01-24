@@ -914,7 +914,9 @@ export default {
       defaultOptions: {
         department: "all",
         status: "all",
-        region: "all",
+        region: this.$parent.filtersOptions.region
+          ? this.$parent.filtersOptions.region
+          : "all",
         regionValue: null,
         executor: null,
         initiator: "all",
