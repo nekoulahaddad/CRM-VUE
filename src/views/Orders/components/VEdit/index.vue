@@ -1,6 +1,6 @@
 <template>
   <div class="list__info list-info orders-edit-form">
-    <form>
+    <form @submit.prevent="editOrder">
       <div class="group__title text--blue">Редактировать заказ:</div>
       <div class="list-info__group group">
         <div class="group__content">
@@ -163,6 +163,8 @@
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   props: {
@@ -228,15 +230,62 @@ export default {
   },
   beforeMount() {
     this.fio =
-      this.infoItem && this.infoItem.manager && this.infoItem.manager[0]
-        ? this.transformFIO(this.infoItem.manager[0])
+      this.editedItem && this.editedItem.manager && this.editedItem.manager[0]
+        ? this.transformFIO(this.editedItem.manager[0])
         : "";
     this.editManager =
-      this.infoItem && this.infoItem.manager && this.infoItem.manager[0]
+      this.editedItem && this.editedItem.manager && this.editedItem.manager[0]
         ? false
         : true;
-    this.calculatedSum = this.infoItem.sum;
-    this.deliverySum = this.infoItem.deliverySum;
+    this.calculatedSum = this.editedItem.sum;
+    this.deliverySum = this.editedItem.deliverySum;
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    updateInfoItemProducts() {
+      let products = this.products;
+      let deleted = this.deletedItems;
+      products = products.filter((p) => !deleted.includes(p.product_id));
+      return products;
+    },
+    editOrder(status) {
+      const products = this.updateInfoItemProducts();
+      this.changeStatus(false);
+      let order = {
+        orderId: this.editedItem._id,
+        sum: this.calculatedSum,
+        manager: this.manager
+          ? this.manager
+          : this.editedItem.manager[0]
+          ? this.editedItem.manager[0]._id
+          : null,
+        buyed: this.editedItem.buyed,
+        deliver: this.editedItem.deliver,
+        deliverySum: this.deliverySum,
+        status: status ? status : null,
+        manager_comment: this.editedItem.manager_comment,
+        declainReason: this.editedItem.declainReason,
+        products: products,
+      };
+      console.log(order);
+      return;
+      axios({
+        url: `/orders/update/`,
+        data: order,
+        method: "POST",
+      })
+        .then(() => {
+          this.$emit("refreshDates");
+          this.changeStatus(true);
+          this.$toast.error("Заказ успешно изменен");
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
+    },
   },
 };
 </script>
