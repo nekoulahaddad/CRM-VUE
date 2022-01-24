@@ -23,7 +23,7 @@
           <div class="page__icon">
             <img :src="require(`@/assets/icons/education_title.svg`)" alt="" />
           </div>
-          <h1 class="page__title">Обучение</h1>
+          <h1 class="page__title">{{ $t("pages.education.pageTitle") }}</h1>
           <v-filter type="education" />
         </div>
       </div>
@@ -140,6 +140,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["sidebar"]),
     educations: {
       cache: false,
       get: function () {
@@ -214,7 +215,6 @@ export default {
     this.fetchData();
   },
   methods: {
-    ...mapGetters(["sidebar"]),
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
