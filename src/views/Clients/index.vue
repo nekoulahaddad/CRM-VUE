@@ -1,8 +1,12 @@
 <template>
   <div class="page clients-page">
-    <v-page-header title="Клиенты" icon="clients_title" />
+    <v-page-header
+      title="Клиенты"
+      icon="clients_title"
+      @toggleFilter="toggleFilter"
+    />
     <div class="page__body d-flex">
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <!-- Фильтр -->
         <v-filter
           type="clients"
@@ -13,7 +17,7 @@
           @refreshDates="refreshDates"
         />
       </div>
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -107,6 +111,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false
       openFormEdit: false,
       editedItem: {},
       isLoading: false,
@@ -134,6 +139,9 @@ export default {
   methods: {
     refreshDates(startDate, endDate) {
       this.fetchData();
+    },
+    toggleFilter() {
+      this.showFilter = !this.showFilter
     },
     async fetchData() {
       try {
