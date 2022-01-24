@@ -72,6 +72,10 @@ ul {
     padding-left: 20px;
     padding-right: 20px;
     width: 1703px;
+
+    &--fluid {
+      width: 1812px;
+    }
   }
 
   &__buttons {

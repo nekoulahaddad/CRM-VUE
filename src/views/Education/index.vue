@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="page__body">
+    <div class="page__body" :class="{ 'page__body--fluid': sidebar }">
       <v-spinner v-if="!isLoading" />
       <div class="page__content content" v-else>
         <div class="content__title">{{ title }}</div>
