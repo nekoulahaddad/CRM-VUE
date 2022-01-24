@@ -23,7 +23,14 @@
       <div class="page__left" v-if="showFilter">
         <v-filter type="mango" @refreshDates="refreshDates" />
       </div>
-      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -76,6 +83,7 @@ import nameMixins from "@/mixins/name";
 import dateMixins from "@/mixins/date";
 import phoneMixins from "@/mixins/phone";
 import APlayer from "vue-aplayer";
+import { mapGetters } from "vuex";
 APlayer.disableVersionBadge = true;
 
 export default {
@@ -88,6 +96,9 @@ export default {
     VPagination,
     VMango,
     VPageHeader,
+  },
+  computed: {
+    ...mapGetters(["sidebar"]),
   },
   data() {
     return {

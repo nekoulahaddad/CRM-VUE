@@ -19,7 +19,14 @@
       </div>
 
       <!-- Контент -->
-      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
         <v-spinner v-if="!isLoading" />
         <template v-else-if="orders.length">
           <div class="scroll-horizontal">
@@ -142,6 +149,7 @@ export default {
       getTotalProfit: "getTotalProfit",
       getTotalShippedSum: "getTotalShippedSum",
       getTotalDelivery: "getTotalDelivery",
+      sidebar: "sidebar",
     }),
     orders: {
       get: function () {

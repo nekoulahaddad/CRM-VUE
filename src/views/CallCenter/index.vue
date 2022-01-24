@@ -9,7 +9,14 @@
       <div class="page__left" v-if="showFilter">
         <v-filter type="callCenterIssues" />
       </div>
-      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -88,6 +95,9 @@ export default {
     VEditForm,
     VCallBackInfo,
     VPageHeader,
+  },
+  computed: {
+    ...mapGetters(["sidebar"]),
   },
   mounted() {
     this.fetchData();

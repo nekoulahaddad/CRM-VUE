@@ -9,7 +9,14 @@
       <div class="page__left" v-if="showFilter">
         <v-filter type="callbacks" />
       </div>
-      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -78,6 +85,7 @@ import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import axios from "@/api/axios";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -89,6 +97,9 @@ export default {
     VItem,
     VInfo,
     VEdit,
+  },
+  computed: {
+    ...mapGetters(["sidebar"]),
   },
   data() {
     return {

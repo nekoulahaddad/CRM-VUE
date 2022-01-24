@@ -14,7 +14,14 @@
           @updatebyfilter="updateByFilter"
         />
       </div>
-      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
         <template v-if="isLoading && filtersOptions.region">
           <template v-if="dataset.categories.length">
             <div class="scroll-horizontal">
@@ -187,6 +194,7 @@ export default {
   computed: {
     ...mapGetters({
       region: "region",
+      sidebar: "sidebar",
     }),
   },
   watch: {
