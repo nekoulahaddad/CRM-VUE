@@ -67,7 +67,7 @@ export default {
         sectionData.title = this.formData.title;
       }
       if (this.formData.type) {
-        sectionData.type = this.formData.type;
+        sectionData.type = this.type;
       }
       if (this.formData.role) {
         sectionData.role = this.formData.role;

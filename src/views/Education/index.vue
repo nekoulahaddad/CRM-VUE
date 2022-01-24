@@ -36,6 +36,7 @@
         <div class="scroll-horizontal">
           <!-- Блок для добавления нового раздела -->
           <v-create-section
+            :type="type"
             @refreshEducations="getEducations"
             @close="toggleCreateSection"
             v-if="createSection"
