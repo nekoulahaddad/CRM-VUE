@@ -94,6 +94,12 @@ ul {
     .list {
       width: 1417px;
     }
+
+    &--full {
+      .list {
+        width: 1703px;
+      }
+    }
   }
 
   &__icon {

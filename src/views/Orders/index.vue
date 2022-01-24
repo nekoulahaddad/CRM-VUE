@@ -19,7 +19,7 @@
       </div>
 
       <!-- Контент -->
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="orders.length">
           <div class="scroll-horizontal">
