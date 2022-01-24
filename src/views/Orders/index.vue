@@ -61,6 +61,7 @@
                 <v-edit
                   :editedItem="editedItem"
                   v-if="editedItem._id === item._id"
+                  @refreshDates="refreshDates"
                 />
               </div>
             </div>

@@ -276,11 +276,12 @@ export default {
       })
         .then(() => {
           this.$emit("refreshDates");
-          this.changeStatus(true);
           this.$toast.error("Заказ успешно изменен");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
           this.changeStatus(true);
         });
     },
