@@ -111,7 +111,7 @@ export default {
   },
   data() {
     return {
-      showFilter: false
+      showFilter: false,
       openFormEdit: false,
       editedItem: {},
       isLoading: false,
@@ -141,7 +141,7 @@ export default {
       this.fetchData();
     },
     toggleFilter() {
-      this.showFilter = !this.showFilter
+      this.showFilter = !this.showFilter;
     },
     async fetchData() {
       try {
