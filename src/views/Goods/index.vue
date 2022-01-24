@@ -1,8 +1,12 @@
 <template>
   <div class="page goods-page">
-    <v-page-header :title="$t('pages.goods.pageTitle')" icon="goods_title" />
+    <v-page-header
+      :title="$t('pages.goods.pageTitle')"
+      icon="goods_title"
+      @toggleFilter="toggleFilter"
+    />
     <div class="page__body d-flex">
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <v-filter
           type="goods"
           ref="filters"
@@ -10,7 +14,7 @@
           @updatebyfilter="updateByFilter"
         />
       </div>
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <template v-if="isLoading && filtersOptions.region">
           <template v-if="dataset.categories.length">
             <div class="scroll-horizontal">
@@ -125,6 +129,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false,
       isLoading: false,
       dataset: {
         products: [],
@@ -234,6 +239,9 @@ export default {
     next();
   },
   methods: {
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
     async updateByFilter() {
       if (!this.isLoading) {
         this.filtersOptions.nesting = +this.$route.params.nesting - 1;
