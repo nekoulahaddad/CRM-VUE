@@ -185,7 +185,7 @@ export default {
           })
           .then((res) => {
             if (res.status === 200) {
-              this.$router.push({ name: "monitor" });
+              this.$router.push({ name: "desktop" });
             }
           })
           .catch(() => {
