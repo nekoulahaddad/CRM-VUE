@@ -57,6 +57,11 @@
 
                 <!-- Блок с детальной информацией о заказе -->
                 <v-info :infoItem="infoItem" v-if="infoItem._id === item._id" />
+
+                <v-edit
+                  :editedItem="editedItem"
+                  v-if="editedItem._id === item._id"
+                />
               </div>
             </div>
           </div>
@@ -71,6 +76,7 @@
 <script>
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
+import VEdit from "./components/VEdit";
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
@@ -89,6 +95,7 @@ export default {
     VSearch,
     VItem,
     VInfo,
+    VEdit,
     VPageHeader,
   },
   data() {

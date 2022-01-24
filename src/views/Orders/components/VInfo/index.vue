@@ -243,11 +243,6 @@ export default {
         return this.infoItem.sum;
       },
     },
-    // deliverySum: {
-    //     get(){
-    //         return this.infoItem.deliverySum
-    //     }
-    // },
     deliveryRequest: {
       get() {
         return this.infoItem.deliveryRequest;
