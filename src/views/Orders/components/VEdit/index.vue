@@ -269,8 +269,6 @@ export default {
         declainReason: this.editedItem.declainReason,
         products: products,
       };
-      console.log(order);
-      return;
       axios({
         url: `/orders/update/`,
         data: order,
