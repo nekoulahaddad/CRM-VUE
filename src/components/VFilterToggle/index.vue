@@ -13,7 +13,7 @@
 export default {
   methods: {
     toggleFilter() {
-      this.$store.dispatch("toggleFilter");
+      this.$emit("toggleFilter");
     },
   },
 };

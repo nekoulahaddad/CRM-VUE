@@ -1,9 +1,13 @@
 <template>
   <div class="page orders-page">
-    <v-page-header :title="$t('pages.orders.pageTitle')" icon="orders_title" />
+    <v-page-header
+      :title="$t('pages.orders.pageTitle')"
+      icon="orders_title"
+      @toggleFilter="toggleFilter"
+    />
     <div class="page__body d-flex">
       <!-- Фильтр -->
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <v-filter
           type="orders"
           :totalCost="cost"
@@ -101,6 +105,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false,
       startDate: null,
       endDate: null,
       count: 0,
@@ -205,6 +210,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
     async getManagerOrders(executor) {
       this.isLoading = false;
       if (executor === this.filtersOptions.executor) {

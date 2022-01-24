@@ -10,7 +10,10 @@
         </div>
         <h1 class="page__title">{{ title }}</h1>
       </div>
-      <v-filter-toggle v-if="filterToggle" />
+      <v-filter-toggle
+        @toggleFilter="$emit('toggleFilter')"
+        v-if="filterToggle"
+      />
     </div>
   </div>
 </template>
