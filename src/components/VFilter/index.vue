@@ -635,9 +635,11 @@
             <div class="group__title">Регионы:</div>
             <div class="group__content">
               <select
+                ref="regionSelect"
                 class="form-select"
-                @change="selectOptions($event, null, 'regionButtons', null)"
                 :value="filterOptions.region"
+                v-model="filterOptions.region"
+                @change="selectOptions($event, null, 'regionButtons', null)"
               >
                 <option value="all">Все регионы</option>
                 <option v-for="item in regions" :value="item._id">
@@ -714,6 +716,7 @@ import VButton from "@/components/VButton";
 import axios from "@/api/axios";
 import DatePicker from "vue-time-date-range-picker/dist/vdprDatePicker";
 import { mapGetters, mapMutations } from "vuex";
+import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
   props: {
@@ -1164,7 +1167,7 @@ export default {
             this.filterOptions.region = region._id;
             this.filterOptions.regionValue = region.value;
             this.setRegion(region._id);
-            this.$emit("updatebyfilter");
+            //this.$emit("updatebyfilter");
             this.activeIndex = 0;
             this.$parent.changeOrder = false;
             this.$parent.downloadExcelFile = true;

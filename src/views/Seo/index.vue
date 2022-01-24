@@ -67,6 +67,7 @@ import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import getDataFromPage from "../../api/getDataFromPage";
 import { mapGetters, mapMutations } from "vuex";
+import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
   components: {
@@ -92,7 +93,9 @@ export default {
       },
       type: "",
       current: [],
-      filtersOptions: {},
+      filtersOptions: {
+        region: REGION_MOSCOW_ID,
+      },
       count: 0,
       editForm: false,
       editedItem: {},
@@ -161,6 +164,9 @@ export default {
         this.type = type;
       }
     },
+  },
+  created() {
+    this.fetchData();
   },
 };
 </script>

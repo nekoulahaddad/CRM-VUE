@@ -54,6 +54,7 @@ import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import { mapGetters, mapMutations } from "vuex";
 import getDataFromPage from "../../api/getDataFromPage";
+import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
   components: { VFilter, VPagination, VSpinner, VNotFoundQuery, VPageHeader },
@@ -71,7 +72,9 @@ export default {
       },
       type: "",
       current: [],
-      filtersOptions: {},
+      filtersOptions: {
+        region: REGION_MOSCOW_ID,
+      },
       count: 0,
       editForm: false,
       editedItem: {},
@@ -135,6 +138,9 @@ export default {
       },
       deep: true,
     },
+  },
+  created() {
+    this.fetchData();
   },
 };
 </script>
