@@ -14,12 +14,16 @@
         pic: '',
       }"
     />
-    <v-page-header :title="$t('pages.mango.pageTitle')" icon="mango_title" />
+    <v-page-header
+      :title="$t('pages.mango.pageTitle')"
+      icon="mango_title"
+      @toggleFilter="toggleFilter"
+    />
     <div class="page__body d-flex">
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <v-filter type="mango" @refreshDates="refreshDates" />
       </div>
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -87,6 +91,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false,
       dataset: [],
       filtersOptions: {},
       isLoading: false,
@@ -96,6 +101,9 @@ export default {
     };
   },
   methods: {
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
     async fetchData() {
       try {
         this.isLoading = false;
