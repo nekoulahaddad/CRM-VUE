@@ -12,6 +12,7 @@
             v-model="formData.title"
             @change="onChange($event)"
             name="title"
+            required
           />
         </div>
       </div>
@@ -58,6 +59,7 @@
             name="description"
             v-model="formData.description"
             @change="onChange($event)"
+            required
           />
         </div>
       </div>

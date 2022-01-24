@@ -23,11 +23,11 @@
           "
           class="page-actions__button"
           :class="{
-            'page-actions__button--active':
+            'page-actions__button--active2':
               $store.state.actions.createEducationSection,
           }"
         >
-          <img src="@/assets/icons/education_add.svg" alt="" />
+          <simple-svg :src="require('@/assets/icons/create_education.svg')" />
         </a>
       </template>
 
@@ -81,12 +81,27 @@ export default {
 @import "@/styles/_variables";
 
 .page-actions {
+  display: flex;
+
   &__inner {
+    display: flex;
   }
 
   &__button {
     position: relative;
     top: 2px;
+    width: 59px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $border-radius;
+    background-color: $color-red;
+
+    &--active {
+      background: none;
+      border: 3px solid $color-red;
+    }
 
     & + * {
       margin-left: 20px;
