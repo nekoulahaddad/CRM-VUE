@@ -89,8 +89,11 @@ ul {
 
   &__right {
     flex: 1;
-    overflow: hidden;
     width: 1417px;
+
+    .list {
+      width: 1417px;
+    }
   }
 
   &__icon {

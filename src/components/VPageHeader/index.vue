@@ -52,7 +52,6 @@ export default {
 
 .page-header {
   padding-left: 20px;
-  padding-right: 20px;
   position: fixed;
   left: 0;
   top: 0;
