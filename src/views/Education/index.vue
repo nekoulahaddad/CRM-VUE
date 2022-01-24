@@ -14,15 +14,22 @@
       @refreshEducations="getEducations"
       @deleteDocumentSuccess="deleteDocumentSuccess"
     />
+    <div
+      class="page__header page-header"
+      :class="{ 'page-header--collapse': sidebar }"
+    >
+      <div class="page-header__inner">
+        <div class="page-header__left">
+          <div class="page__icon">
+            <img :src="require(`@/assets/icons/education_title.svg`)" alt="" />
+          </div>
+          <h1 class="page__title">Обучение</h1>
+          <v-filter type="education" />
+        </div>
+      </div>
+    </div>
 
-    <v-page-header
-      :title="$t('pages.education.pageTitle')"
-      icon="education_title"
-      :filterToggle="false"
-      type="education"
-    />
     <div class="page__body">
-      <v-filter type="education" />
       <v-spinner v-if="!isLoading" />
       <div class="page__content content" v-else>
         <div class="content__title">{{ title }}</div>
@@ -93,7 +100,7 @@ import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VSpinner from "@/components/VSpinner";
 import VAddDocument from "./components/VAddDocument";
 import axios from "@/api/axios";
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   components: {
@@ -207,6 +214,7 @@ export default {
     this.fetchData();
   },
   methods: {
+    ...mapGetters(["sidebar"]),
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
