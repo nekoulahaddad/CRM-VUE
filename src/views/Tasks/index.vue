@@ -5,15 +5,19 @@
       @removeFromTask="removeFromTask"
     />
 
-    <v-page-header :title="$t('pages.tasks.pageTitle')" icon="tasks_title" />
+    <v-page-header
+      :title="$t('pages.tasks.pageTitle')"
+      icon="tasks_title"
+      @toggleFilter="toggleFilter"
+    />
     <div class="page__body d-flex">
       <!-- Фильтр -->
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <v-filter type="tasks" />
       </div>
 
       <!-- Контент -->
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -143,6 +147,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false,
       open: false,
       edit: false,
       deleteForm: false,
@@ -205,6 +210,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
     async fetchData() {
       try {
         this.isLoading = false;

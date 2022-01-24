@@ -1,11 +1,15 @@
 <template>
   <div class="page">
-    <v-page-header title="Снабженец" icon="storage_title" />
+    <v-page-header
+      title="Снабженец"
+      icon="storage_title"
+      @toggleFilter="toggleFilter"
+    />
     <div class="page__body d-flex">
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <v-filter type="goods" />
       </div>
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <div v-if="!filtersOptions.region">Выберите регион</div>
         <v-spinner v-else-if="!isLoading" />
         <template v-else-if="dataset.categories.length">
@@ -47,6 +51,7 @@ export default {
   components: { VFilter, VPagination, VSpinner, VNotFoundQuery, VPageHeader },
   data() {
     return {
+      showFilter: false,
       isLoading: false,
       dataset: {
         products: [],
@@ -66,6 +71,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
     updateGoods(res) {
       this.dataset.categories = res.data.categories;
       this.dataset.products = res.data.products;
