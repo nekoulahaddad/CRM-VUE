@@ -1,11 +1,15 @@
 <template>
   <div class="page mail-page">
-    <v-page-header :title="$t('pages.mail.pageTitle')" icon="mails_title" />
+    <v-page-header
+      :title="$t('pages.mail.pageTitle')"
+      icon="mails_title"
+      @toggleFilter="toggleFilter"
+    />
     <div class="page__body d-flex">
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <v-filter type="callbacks" />
       </div>
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -88,6 +92,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false,
       count: 0,
       dataset: [],
       search: "",
@@ -117,6 +122,9 @@ export default {
   methods: {
     editCallback() {
       this.getData();
+    },
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
     },
     async getData() {
       try {
