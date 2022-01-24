@@ -3,12 +3,13 @@
     <v-page-header
       :title="$t('pages.delivery.pageTitle')"
       icon="delivery_title"
+      @toggleFilter="toggleFilter"
     />
     <div class="page__body d-flex">
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <v-filter type="providers" />
       </div>
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -85,6 +86,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false,
       isLoading: false,
       dataset: [],
       filtersOptions: {
@@ -123,6 +125,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
     toggleInfo(item) {
       if (this.infoItem._id === item._id) {
         this.infoItem = {};
