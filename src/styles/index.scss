@@ -104,6 +104,18 @@ ul {
         width: 1699px;
       }
     }
+
+    &--fluid {
+      .list {
+        width: 1812px;
+      }
+    }
+
+    &--middle {
+      .list {
+        width: 1531px;
+      }
+    }
   }
 
   &__icon {
