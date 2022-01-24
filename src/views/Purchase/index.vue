@@ -4,6 +4,7 @@
       :title="$t('pages.buying.pageTitle')"
       icon="buying_title"
       @toggleFilter="toggleFilter"
+      :showFilter="showFilter"
     />
     <div class="page__body d-flex">
       <div class="page__left" v-if="showFilter">

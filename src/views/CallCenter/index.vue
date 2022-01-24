@@ -4,6 +4,7 @@
       :title="$t('pages.callbacks.pageTitle')"
       icon="callbacks_title"
       @toggleFilter="toggleFilter"
+      :showFilter="showFilter"
     />
     <div class="page__body d-flex">
       <div class="page__left" v-if="showFilter">

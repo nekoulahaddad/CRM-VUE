@@ -4,6 +4,7 @@
       :title="$t('pages.orders.pageTitle')"
       icon="orders_title"
       @toggleFilter="toggleFilter"
+      :showFilter="showFilter"
     />
     <div class="page__body d-flex">
       <!-- Фильтр -->

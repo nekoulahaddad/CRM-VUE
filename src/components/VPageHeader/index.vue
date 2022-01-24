@@ -13,6 +13,7 @@
       <v-filter-toggle
         @toggleFilter="$emit('toggleFilter')"
         v-if="filterToggle"
+        :active="showFilter"
       />
     </div>
   </div>
@@ -27,6 +28,7 @@ import { mapGetters } from "vuex";
 export default {
   components: { VFilter, VFilterToggle },
   props: {
+    showFilter: Boolean,
     icon: {
       type: String,
       required: true,

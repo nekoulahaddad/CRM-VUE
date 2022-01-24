@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-toggle" @click="toggleFilter">
+  <div v-if="!active" class="filter-toggle" @click="toggleFilter">
     <div class="filter-toggle__inner">
       <div class="filter-toggle__icon">
         <img src="@/assets/icons/filter.svg" alt="" />
@@ -7,10 +7,19 @@
       <div class="filter-toggle__text">Фильтр</div>
     </div>
   </div>
+  <img
+    v-else
+    src="@/assets/icons/filter_active.svg"
+    @click="toggleFilter"
+    alt=""
+  />
 </template>
 
 <script>
 export default {
+  props: {
+    active: Boolean,
+  },
   methods: {
     toggleFilter() {
       this.$emit("toggleFilter");
@@ -43,5 +52,9 @@ export default {
     font-size: 16px;
     font-weight: bold;
   }
+}
+
+img {
+  cursor: pointer;
 }
 </style>

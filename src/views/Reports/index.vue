@@ -4,6 +4,7 @@
       :title="$t('pages.reports.pageTitle')"
       icon="reports_title"
       @toggleFilter="toggleFilter"
+      :showFilter="showFilter"
     />
     <div class="page__body d-flex">
       <!-- Фильтр -->

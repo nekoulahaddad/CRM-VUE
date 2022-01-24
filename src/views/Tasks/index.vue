@@ -9,6 +9,7 @@
       :title="$t('pages.tasks.pageTitle')"
       icon="tasks_title"
       @toggleFilter="toggleFilter"
+      :showFilter="showFilter"
     />
     <div class="page__body d-flex">
       <!-- Фильтр -->
