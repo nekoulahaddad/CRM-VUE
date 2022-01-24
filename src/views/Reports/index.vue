@@ -3,15 +3,16 @@
     <v-page-header
       :title="$t('pages.reports.pageTitle')"
       icon="reports_title"
+      @toggleFilter="toggleFilter"
     />
     <div class="page__body d-flex">
       <!-- Фильтр -->
-      <div class="page__left">
+      <div class="page__left" v-if="showFilter">
         <v-filter type="reports" />
       </div>
 
       <!-- Контент -->
-      <div class="page__right">
+      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -78,6 +79,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false,
       infoForm: false,
       isLoading: false,
       dataset: [],
@@ -114,6 +116,9 @@ export default {
     this.fetchData();
   },
   methods: {
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
     async fetchData() {
       try {
         this.isLoading = false;
