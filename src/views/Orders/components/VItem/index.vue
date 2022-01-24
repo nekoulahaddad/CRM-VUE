@@ -58,7 +58,18 @@
           />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/write_icon.svg" alt="" />
+          <img
+            v-if="
+              role === 'call' ||
+              role === 'manager' ||
+              role === 'director' ||
+              role === 'admin' ||
+              role === 'superadmin'
+            "
+            src="@/assets/icons/write_icon.svg"
+            @click="$emit('toggleEdit', item)"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -75,6 +86,13 @@ export default {
     item: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    role: {
+      get: function () {
+        return this.getUserRole().role;
+      },
     },
   },
 };

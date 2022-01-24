@@ -56,11 +56,7 @@
                 />
 
                 <!-- Блок с детальной информацией о заказе -->
-                <v-info
-                  :item="item"
-                  :editedItem="editedItem"
-                  v-if="infoItem._id === item._id"
-                />
+                <v-info :infoItem="infoItem" v-if="infoItem._id === item._id" />
               </div>
             </div>
           </div>

@@ -29,6 +29,7 @@ import phoneMixins from "@/mixins/phone";
 import profileMixins from "@/mixins/profile";
 import ratingMixins from "@/mixins/rating";
 import roleMixins from "@/mixins/role";
+import deliveryMixins from "@/mixins/delivery";
 import transformRoleMixins from "@/mixins/transformRole";
 import statusMixins from "@/mixins/status";
 import "moment/locale/ru";
@@ -111,6 +112,7 @@ Vue.component("paginate", Paginate);
 
 Vue.mixin(dataMixins);
 Vue.mixin(dateMixins);
+Vue.mixin(deliveryMixins);
 Vue.mixin(oneCMixins);
 Vue.mixin(fioMixins);
 Vue.mixin(nameMixins);
