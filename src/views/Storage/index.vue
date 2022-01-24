@@ -9,7 +9,14 @@
       <div class="page__left" v-if="showFilter">
         <v-filter type="goods" />
       </div>
-      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
         <div v-if="!filtersOptions.region">Выберите регион</div>
         <v-spinner v-else-if="!isLoading" />
         <template v-else-if="dataset.categories.length">
@@ -44,11 +51,14 @@ import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import getDataFromPage from "../../api/getDataFromPage";
 
 export default {
   components: { VFilter, VPagination, VSpinner, VNotFoundQuery, VPageHeader },
+  computed: {
+    ...mapGetters(["sidebar"]),
+  },
   data() {
     return {
       showFilter: false,

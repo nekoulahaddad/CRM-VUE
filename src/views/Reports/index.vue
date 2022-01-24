@@ -12,7 +12,14 @@
       </div>
 
       <!-- Контент -->
-      <div class="page__right" :class="{ 'page__right--full': !showFilter }">
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
@@ -66,6 +73,7 @@ import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import getDataFromPage from "@/api/getDataFromPage";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -91,6 +99,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["sidebar"]),
     role: {
       get: function () {
         let role = this.getUserRole();
