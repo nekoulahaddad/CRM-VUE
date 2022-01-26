@@ -246,6 +246,10 @@ export default {
   align-items: center;
   justify-content: center;
 
+  &__left {
+    width: 1020px;
+  }
+
   &__panel {
     width: 791px;
     height: 631px;
