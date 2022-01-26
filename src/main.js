@@ -14,6 +14,7 @@ import VModal from "vue-js-modal";
 import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
 import VueSimpleSVG from "vue-simple-svg";
+import moment from "moment-timezone";
 import Toast from "vue-toastification";
 import ToggleButton from "vue-js-toggle-button";
 import VueMoment from "vue-moment";
@@ -41,6 +42,7 @@ import "vue-js-modal/dist/styles.css";
 import "vue-datetime/dist/vue-datetime.css";
 import "./styles/index.scss";
 
+moment.tz.guess();
 const token = localStorage.getItem("token");
 
 const socket = io(process.env.VUE_APP_DEVELOP_URL, {

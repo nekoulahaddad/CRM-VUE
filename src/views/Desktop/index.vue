@@ -91,9 +91,7 @@
         </div>
       </div>
       <div class="page__right">
-        <div class="desktop-calendar">
-          <vc-calendar />
-        </div>
+        <div class="desktop-calendar"></div>
       </div>
     </div>
   </div>
