@@ -1,6 +1,9 @@
 <template>
   <div class="login-wrapper">
     <div class="login-page">
+      <div class="login-page__left">
+        <img src="@/assets/icons/building.svg" alt="" />
+      </div>
       <div class="login-page__right">
         <div v-if="!isForget" class="login-page__panel panel">
           <div class="panel__inner">
@@ -237,13 +240,16 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ecd9db url("../../assets/icons/building.svg") 20% no-repeat;
+  background-color: #ecd9db;
+  width: 1920px;
 }
 
 .login-page {
+  display: flex;
+  align-items: center;
+
   &__panel {
     width: 791px;
     height: 631px;
@@ -251,7 +257,6 @@ export default {
 
   &__right {
     position: relative;
-    left: 300px;
   }
 }
 

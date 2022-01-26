@@ -59,7 +59,7 @@
             name="description"
             v-model="formData.description"
             @change="onChange($event)"
-            required
+            require
           />
         </div>
       </div>
