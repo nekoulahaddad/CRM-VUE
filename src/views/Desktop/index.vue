@@ -127,9 +127,18 @@ export default {
       showContextMenu: false,
       attrs: [
         {
+          key: "today",
+          highlight: {
+            style: {
+              backgroundColor: "#db1f35",
+            },
+          },
+          dates: new Date(),
+        },
+        {
           dot: {
             style: {
-              backgroundColor: "brown",
+              backgroundColor: "red",
             },
           },
         },
@@ -290,6 +299,7 @@ export default {
     font-size: 30px;
     font-weight: 500;
     margin-bottom: 20px;
+    position: relative;
 
     &:first-letter {
       text-transform: uppercase;
@@ -310,6 +320,9 @@ export default {
       justify-content: center;
       background-color: $color-red;
     }
+  }
+  .vc-highlights + .vc-focusable {
+    color: $color-white;
   }
 }
 </style>
