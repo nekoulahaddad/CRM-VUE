@@ -1,6 +1,6 @@
 <template>
   <div class="page desktop-page">
-    <v-add-task-modal />
+    <v-add-task-modal :departments="departments" />
     <v-edit-task-modal :task="{}" />
     <v-page-header
       title="Рабочий стол"
@@ -105,6 +105,7 @@ import VAddTaskModal from "./components/VAddTaskModal";
 import VEditTaskModal from "../../components/VModals/EditTaskModal";
 import getDataFromPage from "../../api/getDataFromPage";
 import VContextMenu from "./components/VContextMenu";
+import axios from "@/api/axios";
 
 export default {
   components: {
@@ -116,6 +117,7 @@ export default {
   data() {
     return {
       dataset: [],
+      departments: [],
       showContextMenu: false,
     };
   },
@@ -135,6 +137,18 @@ export default {
   },
   mounted() {
     this.fetchData();
+
+    axios({
+      url: "/user/getdepartments",
+    }).then(async (res) => {
+      let result = await res;
+      let departments = result.data.departments;
+      departments.unshift({
+        title: "Все отделы",
+        value: "all",
+      });
+      this.departments = departments;
+    });
 
     const body = document.querySelector("body");
     const lists = document.querySelectorAll(".list__items");
