@@ -112,27 +112,19 @@
             </div>
             <form class="panel-right__form" @submit.prevent="onSubmitForget">
               <div class="panel-right__col">
-                <input
-                  type="text"
-                  name="forgotLogin"
+                <phone-mask-input
+                  inputClass="input-login"
                   v-model="forgotLogin"
-                  class="input-login"
-                  autofill="false"
-                  @change="onChange($event)"
-                  required
-                  :disabled="isFetch"
                   placeholder="Номер телефона"
                 />
                 <img src="@/assets/icons/phone.svg" alt="" />
               </div>
               <div class="policy">
+                <input type="checkbox" v-model="isPolicy" />
                 <label>
-                  <input type="checkbox" />
-                  <span>
-                    Я даю своё согласие на обработку персональных даннных в
-                    соответсвиии с политикой конфиденциальности и условиями
-                    пользования
-                  </span>
+                  Я даю своё согласие на обработку персональных даннных в
+                  соответсвиии с политикой конфиденциальности и условиями
+                  пользования
                 </label>
               </div>
               <v-button :disabled="isFetch" red>Отправить</v-button>
