@@ -91,7 +91,9 @@
         </div>
       </div>
       <div class="page__right">
-        <div class="desktop-calendar"></div>
+        <div class="desktop-calendar">
+          <vc-calendar :attributes="attrs" />
+        </div>
       </div>
     </div>
   </div>
@@ -117,6 +119,15 @@ export default {
       dataset: [],
       departments: [],
       showContextMenu: false,
+      attrs: [
+        {
+          dot: {
+            style: {
+              backgroundColor: "brown",
+            },
+          },
+        },
+      ],
     };
   },
   methods: {
@@ -254,6 +265,26 @@ export default {
     border-radius: $border-radius;
     width: 300px;
     height: 100%;
+  }
+
+  .vc-pane-container {
+    width: 300px;
+  }
+  .vc-arrow {
+    display: none;
+  }
+  .vc-header {
+    justify-content: start;
+  }
+  .vc-title {
+    color: $color-red;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
   }
 }
 </style>
