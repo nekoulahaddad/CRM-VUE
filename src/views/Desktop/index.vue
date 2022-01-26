@@ -92,6 +92,12 @@
       </div>
       <div class="page__right">
         <div class="desktop-calendar">
+          <div class="add-new-event">
+            <a href="" @click.prevent="" class="add-new-event__link">
+              <img src="@/assets/icons/plus.svg" alt="" />
+            </a>
+          </div>
+
           <vc-calendar :attributes="attrs" />
         </div>
       </div>
@@ -284,6 +290,21 @@ export default {
 
     &:first-letter {
       text-transform: uppercase;
+    }
+  }
+
+  .add-new-event {
+    padding-top: 10px;
+    padding-left: 10px;
+
+    &__link {
+      width: 32px;
+      height: 28px;
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $color-red;
     }
   }
 }
