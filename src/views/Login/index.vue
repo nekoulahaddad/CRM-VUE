@@ -218,6 +218,9 @@ export default {
       this[e.target.name] = e.target.value;
     },
     getPhoneNumberFormat(str) {
+      if (!str.length) {
+        return null;
+      }
       let cleaned = ("" + str).replace(/\D/g, "");
 
       //Check if the input is of correct length
