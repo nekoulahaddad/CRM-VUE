@@ -5,7 +5,7 @@
       <VLineChart
         v-if="Object.keys(sales).length"
         :width="0"
-        :height="300"
+        :height="320"
         :labels="dataset.labels"
         :datasets="dataset.datasets"
         :options="options"
@@ -119,6 +119,7 @@ export default {
   &__title {
     font-size: 16px;
     font-weight: 700;
+    margin-bottom: 10px;
   }
 }
 </style>
