@@ -359,6 +359,7 @@ export default {
       color: #90a4ae;
       font-weight: 700;
       padding: 8px 10px;
+      outline: none;
 
       &::placeholder {
         color: #90a4ae;
@@ -431,7 +432,7 @@ export default {
     img {
       position: absolute;
       right: 9.94px;
-      top: 9.94px;
+      top: 4.94px;
       z-index: 1000;
     }
   }
