@@ -18,26 +18,33 @@
                   <li>
                     Позволяет эффективно работать с заказами / заявками клиентов
                   </li>
+
                   <li>
                     Оперативно загружать и выгружать новый товар или
                     редактировать уже имеющийся
                   </li>
+
                   <li>Отслеживать историю заказов клиента</li>
+
                   <li>
                     Назначать задачи сотрудникам, а так же отслеживать их
-                    выполнение Видеть аналитику компании
+                    выполнение
                   </li>
-                  <li>
-                    Отслеживать и создавать мероприятия Управлять интернет -
-                    магазином
-                  </li>
-                  <li>
-                    Создавать обучение для сотрудников Размещать и управлять
-                    вакансиями
-                  </li>
+
+                  <li>Видеть аналитику компании</li>
+
+                  <li>Отслеживать и создавать мероприятия</li>
+
+                  <li>Управлять интернет - магазином</li>
+
+                  <li>Создавать обучение для сотрудников</li>
+
+                  <li>Размещать и управлять вакансиями</li>
+
                   <li>
                     Управлять оптимизацией для поисковых систем Yandex и Google
                   </li>
+
                   <li>А так же мы постоянно улучшаем наш продукт :)</li>
                 </ul>
               </div>
@@ -109,7 +116,6 @@
                   type="text"
                   name="forgotLogin"
                   v-model="forgotLogin"
-                  v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
                   class="input-login"
                   autofill="false"
                   @change="onChange($event)"
@@ -146,7 +152,6 @@
 
 <script>
 import VButton from "@/components/VButton";
-import { maska } from "maska";
 import axios from "@/api/axios";
 import PhoneMaskInput from "vue-phone-mask-input";
 
@@ -157,7 +162,7 @@ export default {
       password: "",
       forgotLogin: "",
       isForget: false,
-      isPolicy: false,
+      isPolicy: true,
       isFetch: false,
     };
   },
@@ -221,12 +226,15 @@ export default {
       this[e.target.name] = e.target.value;
     },
   },
-  directives: { maska },
 };
 </script>
 
 <style lang="scss">
 @import "@/styles/_variables";
+
+body {
+  background-color: #ecd9db;
+}
 
 .login-wrapper {
   position: absolute;
@@ -283,6 +291,7 @@ export default {
   &__left {
     margin-left: 27px;
     margin-right: 20px;
+    flex: 1;
 
     ul {
       li {
@@ -298,7 +307,7 @@ export default {
   }
 
   &__right {
-    min-width: 386px;
+    width: 386px !important;
     height: 496px;
     background-color: $color-white;
     border-radius: $border-radius;
