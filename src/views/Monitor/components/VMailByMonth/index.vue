@@ -76,7 +76,6 @@ export default {
   },
   methods: {
     onChange(e) {
-      console.log(e.target.value);
       axios({
         url: process.env.VUE_APP_DEVELOP_URL + `/stats/getcallbacks/`,
         data: {

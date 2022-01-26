@@ -73,12 +73,12 @@
               </select>
             </div>
           </div>
-          <div class="filter__group group">
+          <div class="filter__group group" v-if="role === 'director'">
             <div class="group__title">{{ $t("regions") }}</div>
             <div class="group__content">
               <select
                 class="form-select"
-                @change="selectOptions($event, null, 'region', null)"
+                @change="selectRegion($event)"
                 :value="filterOptions.region"
               >
                 <option value="all" selected>{{ $t("allRegions") }}</option>
@@ -1202,6 +1202,13 @@ export default {
     },
     setRegions(pool) {
       this.$emit("setRegionsPool", pool);
+    },
+    setAllRegions() {
+      this.regionsPool = [];
+      for (let r of this.regions) {
+        this.regionsPool.push(r._id);
+      }
+      this.setRegions(this.regionsPool);
     },
   },
 };

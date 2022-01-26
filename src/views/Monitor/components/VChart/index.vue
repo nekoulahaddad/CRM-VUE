@@ -75,6 +75,7 @@ export default {
   },
   watch: {
     sales() {
+      this.dataset = {};
       let labels = Array.apply(null, { length: 31 });
       let data = Array.apply(null, { length: 31 });
       for (let i = 0; i < data.length; i++) {

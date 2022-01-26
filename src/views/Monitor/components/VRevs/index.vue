@@ -52,6 +52,7 @@ export default {
   },
   watch: {
     rev() {
+      this.info = [];
       let { rev } = this;
       rev.today = +rev.today.split(".")[0];
       rev.yesterday = +rev.yesterday.split(".")[0];
