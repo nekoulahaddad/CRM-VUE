@@ -57,7 +57,6 @@
                 </div>
                 <form class="panel-right__form" @submit.prevent="onSubmit">
                   <div class="panel-right__col">
-                    {{ getPhoneNumberFormat(login) }}
                     <phone-mask-input
                       inputClass="input-login"
                       v-model="login"
