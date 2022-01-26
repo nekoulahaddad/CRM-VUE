@@ -81,14 +81,7 @@ export default {
         declained: 0,
       },
       ordersForMonth: [],
-      rev: {
-        today: 0,
-        yesterday: 0,
-        week: 0,
-        weekAgo: 0,
-        month: 0,
-        monthAgo: 0,
-      },
+      rev: {},
     };
   },
   methods: {
