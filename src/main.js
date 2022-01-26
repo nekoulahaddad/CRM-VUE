@@ -32,6 +32,7 @@ import profileMixins from "@/mixins/profile";
 import ratingMixins from "@/mixins/rating";
 import roleMixins from "@/mixins/role";
 import deliveryMixins from "@/mixins/delivery";
+import VueInputDropdown from "vue-input-dropdown";
 import transformRoleMixins from "@/mixins/transformRole";
 import statusMixins from "@/mixins/status";
 import "moment/locale/ru";
@@ -76,6 +77,7 @@ Vue.use(VCalendar, {
 Vue.use(VueSimpleSVG);
 Vue.use(VModal, { componentName: "v-modal" });
 Vue.use(Popover);
+Vue.use(VueInputDropdown);
 Vue.use(VueMoment);
 Vue.use(VueTheMask);
 Vue.use(VueScrollTo, {
