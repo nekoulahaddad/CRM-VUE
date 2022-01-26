@@ -162,7 +162,7 @@ export default {
       password: "",
       forgotLogin: "",
       isForget: false,
-      isPolicy: true,
+      isPolicy: false,
       isFetch: false,
     };
   },
@@ -397,8 +397,7 @@ body {
         -moz-appearance: none;
         min-width: 16px;
         height: 16px;
-        background: #f5f5f5 url("../../assets/icons/check.svg") no-repeat 1px
-          2px;
+        background-color: #f5f5f5;
         border-radius: 2px;
         border: 1px solid #d9d9d9;
         cursor: pointer;
@@ -408,15 +407,13 @@ body {
         &:checked:after {
           content: "";
           position: absolute;
-          background: #1890ff url("../../assets/icons/check-white.svg")
-            no-repeat 1px 2px;
-          border: 1px solid #1890ff;
+          background: url("../../assets/icons/check.svg") no-repeat 1px 2px;
           border-radius: 2px;
           z-index: 100;
           width: 16px;
           height: 16px;
-          top: -1px;
-          left: -1px;
+          top: 0;
+          left: 0;
           right: 0;
           bottom: 0;
         }
