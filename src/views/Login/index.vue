@@ -57,6 +57,7 @@
                 </div>
                 <form class="panel-right__form" @submit.prevent="onSubmit">
                   <div class="panel-right__col">
+                    {{ getPhoneNumberFormat(login) }}
                     <phone-mask-input
                       inputClass="input-login"
                       v-model="login"
@@ -174,7 +175,7 @@ export default {
         this.isFetch = true;
         this.$store
           .dispatch("login", {
-            login: this.login,
+            login: this.getPhoneNumberFormat(this.login),
             password: this.password,
           })
           .then((res) => {
@@ -196,7 +197,7 @@ export default {
         this.isFetch = true;
         axios
           .post("/user/resetpass", {
-            login: this.forgotLogin,
+            login: this.getPhoneNumberFormat(this.forgotLogin),
           })
           .then(() => {
             this.$toast.success("Новый пароль отправлен Вам по смс!");
@@ -216,6 +217,29 @@ export default {
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
+    },
+    getPhoneNumberFormat(str) {
+      let cleaned = ("" + str).replace(/\D/g, "");
+
+      //Check if the input is of correct length
+      let match = cleaned.match(/^(\d)(\d{3})(\d{3})(\d{2})(\d{2})$/);
+
+      if (match) {
+        return (
+          "+" +
+          match[1] +
+          " " +
+          match[2] +
+          " " +
+          match[3] +
+          " " +
+          match[4] +
+          " " +
+          match[5]
+        );
+      }
+
+      return null;
     },
   },
 };
