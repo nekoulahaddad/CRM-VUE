@@ -3,6 +3,7 @@
     <div class="chart__inner">
       <div class="chart__title">Проданное количество товаров за декабрь:</div>
       <VLineChart
+        v-if="Object.keys(sales).length"
         :width="0"
         :height="300"
         :labels="dataset.labels"
@@ -72,26 +73,28 @@ export default {
       },
     };
   },
-  created() {
-    let labels = Array.apply(null, { length: 31 });
-    let data = Array.apply(null, { length: 31 });
-    for (let i = 0; i < data.length; i++) {
-      let index = this.ordersForMonth.findIndex((item) => item.day === i + 1);
-      labels[i] = `${i + 1 < 10 ? `0${i + 1}` : i + 1}`;
-      data[i] = {
-        x: i + 1,
-        y: index > -1 ? this.ordersForMonth[index].count : 0,
+  watch: {
+    sales() {
+      let labels = Array.apply(null, { length: 31 });
+      let data = Array.apply(null, { length: 31 });
+      for (let i = 0; i < data.length; i++) {
+        let index = this.ordersForMonth.findIndex((item) => item.day === i + 1);
+        labels[i] = `${i + 1 < 10 ? `0${i + 1}` : i + 1}`;
+        data[i] = {
+          x: i + 1,
+          y: index > -1 ? this.ordersForMonth[index].count : 0,
+        };
+      }
+      this.dataset = {
+        labels,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: "rgba(196, 24, 60, .8)",
+          },
+        ],
       };
-    }
-    this.dataset = {
-      labels,
-      datasets: [
-        {
-          data: data,
-          backgroundColor: "rgba(196, 24, 60, .8)",
-        },
-      ],
-    };
+    },
   },
 };
 </script>

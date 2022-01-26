@@ -69,12 +69,7 @@ export default {
       clients: 0,
       tasks: 0,
       workload: 0,
-      sales: {
-        today: 0,
-        yesterday: 0,
-        week: 0,
-        month: 0,
-      },
+      sales: {},
       orders: {
         all: 0,
         processed: 0,
