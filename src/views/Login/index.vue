@@ -50,16 +50,9 @@
                 </div>
                 <form class="panel-right__form" @submit.prevent="onSubmit">
                   <div class="panel-right__col">
-                    <input
-                      type="text"
-                      name="login"
+                    <phone-mask-input
+                      inputClass="input-login"
                       v-model="login"
-                      class="input-login"
-                      autofill="false"
-                      @change="onChange($event)"
-                      v-maska="['+# ### ### ## ##', '+### ### ## ## ##', 'a*']"
-                      required
-                      :disabled="isFetch"
                       placeholder="Номер телефона"
                     />
                     <img src="@/assets/icons/phone.svg" alt="" />
@@ -155,6 +148,7 @@
 import VButton from "@/components/VButton";
 import { maska } from "maska";
 import axios from "@/api/axios";
+import PhoneMaskInput from "vue-phone-mask-input";
 
 export default {
   data() {
@@ -172,7 +166,7 @@ export default {
       this.isPolicy = false;
     },
   },
-  components: { VButton },
+  components: { VButton, PhoneMaskInput },
   methods: {
     onSubmit() {
       if (!this.isPolicy) {
@@ -244,11 +238,13 @@ export default {
   display: flex;
   background-color: #ecd9db;
   width: 1920px;
+  margin: auto;
 }
 
 .login-page {
   display: flex;
   align-items: center;
+  justify-content: center;
 
   &__panel {
     width: 791px;
@@ -353,7 +349,8 @@ export default {
     align-items: center;
 
     input[type="password"],
-    input[type="text"] {
+    input[type="tel"] {
+      width: 100%;
       background: linear-gradient(0deg, #e6eef8, #e6eef8), #cfd8dc;
       border-radius: $border-radius;
       border: none;
@@ -361,6 +358,7 @@ export default {
       height: 48px;
       color: #90a4ae;
       font-weight: 700;
+      padding: 8px 10px;
 
       &::placeholder {
         color: #90a4ae;
