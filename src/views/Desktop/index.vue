@@ -273,6 +273,9 @@ export default {
     height: 100%;
   }
 
+  .vc-container {
+    border: none;
+  }
   .vc-pane-container {
     width: 300px;
   }
@@ -295,7 +298,8 @@ export default {
 
   .add-new-event {
     padding-top: 10px;
-    padding-left: 10px;
+    padding-left: 16px;
+    padding-bottom: 16px;
 
     &__link {
       width: 32px;
