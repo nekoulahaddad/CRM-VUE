@@ -60,6 +60,7 @@
                     <phone-mask-input
                       inputClass="input-login"
                       v-model="login"
+                      @onValidate="onValidate"
                       placeholder="Номер телефона"
                     />
                     <img src="@/assets/icons/phone.svg" alt="" />
@@ -116,6 +117,7 @@
                   inputClass="input-login"
                   v-model="forgotLogin"
                   placeholder="Номер телефона"
+                  @onValidate="onValidate"
                 />
                 <img src="@/assets/icons/phone.svg" alt="" />
               </div>
@@ -156,6 +158,7 @@ export default {
       isForget: false,
       isPolicy: false,
       isFetch: false,
+      isValidNumber: false,
     };
   },
   watch: {
@@ -166,7 +169,9 @@ export default {
   components: { VButton, PhoneMaskInput },
   methods: {
     onSubmit() {
-      if (!this.isPolicy) {
+      if (!this.isValidNumber) {
+        this.$toast.error("Неверный формат номера телефона");
+      } else if (!this.isPolicy) {
         this.$toast.error(
           "Вы не дали согласие на обработку персональных данных"
         );
@@ -217,8 +222,11 @@ export default {
     onChange(e) {
       this[e.target.name] = e.target.value;
     },
+    onValidate({ isValidByLibPhoneNumberJs }) {
+      this.isValidNumber = isValidByLibPhoneNumberJs;
+    },
     getPhoneNumberFormat(str) {
-      if (!str.length) {
+      if (!this.isValidNumber) {
         return null;
       }
       let cleaned = ("" + str).replace(/\D/g, "");
