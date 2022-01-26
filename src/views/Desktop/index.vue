@@ -1,5 +1,6 @@
 <template>
   <div class="page desktop-page">
+    <v-add-task-modal />
     <v-edit-task-modal :task="{}" />
     <v-page-header
       title="Рабочий стол"
@@ -89,13 +90,18 @@
           </div>
         </div>
       </div>
-      <div class="page__right">12</div>
+      <div class="page__right">
+        <div class="desktop-calendar">
+          <vc-calendar />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import VPageHeader from "@/components/VPageHeader";
+import VAddTaskModal from "./components/VAddTaskModal";
 import VEditTaskModal from "../../components/VModals/EditTaskModal";
 import getDataFromPage from "../../api/getDataFromPage";
 import VContextMenu from "./components/VContextMenu";
@@ -105,6 +111,7 @@ export default {
     VContextMenu,
     VEditTaskModal,
     VPageHeader,
+    VAddTaskModal,
   },
   data() {
     return {
@@ -157,8 +164,7 @@ export default {
     }
 
     &__right {
-      max-width: 300px;
-      width: 100%;
+      padding-left: 20px;
     }
   }
 
@@ -229,6 +235,13 @@ export default {
 
   .__bar-wrap-is-vertical {
     background-color: $color-white;
+  }
+
+  .desktop-calendar {
+    background-color: $color-white;
+    border-radius: $border-radius;
+    width: 300px;
+    height: 100%;
   }
 }
 </style>

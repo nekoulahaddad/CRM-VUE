@@ -3,6 +3,7 @@ import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import vuescroll from "vuescroll";
+import VCalendar from "v-calendar";
 import VueNumberFormat from "vue-number-format";
 import VueSocketIOExt from "vue-socket.io-extended";
 import VueCustomTooltip from "@adamdehaven/vue-custom-tooltip";
@@ -66,6 +67,9 @@ Vue.use(VueCustomTooltip, {
   background: "#E8F9EF",
   borderRadius: 16,
   fontWeight: 400,
+});
+Vue.use(VCalendar, {
+  componentPrefix: "vc",
 });
 Vue.use(VueSimpleSVG);
 Vue.use(VModal, { componentName: "v-modal" });

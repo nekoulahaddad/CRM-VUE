@@ -7,7 +7,7 @@
 
       <!-- Рабочий стол -->
       <template v-if="name === 'desktop'">
-        <a href="" class="page-actions__button">
+        <a href="" class="page-actions__button" @click.prevent="addTask">
           <img src="@/assets/icons/tasks_add.svg" alt="" />
         </a>
       </template>
@@ -58,6 +58,9 @@ export default {
     },
   },
   methods: {
+    addTask() {
+      this.$modal.show("addTask");
+    },
     clearCache() {
       axios
         .get("https://tdcsk.com/api/cache-clear", {

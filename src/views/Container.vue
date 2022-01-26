@@ -41,6 +41,6 @@ export default {
 @import "@/styles/_variables";
 
 body {
-  background-color: $color-gray;
+  background-color: $color-gray !important;
 }
 </style>
