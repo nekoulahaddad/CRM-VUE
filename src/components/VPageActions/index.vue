@@ -12,6 +12,21 @@
         </a>
       </template>
 
+      <!-- Сотрудники -->
+      <template v-if="name === 'employee'">
+        <a
+          href=""
+          class="page-actions__button"
+          @click.prevent="
+            $store.commit('toggleAction', {
+              key: 'addEmployee',
+            })
+          "
+        >
+          <img src="@/assets/icons/add_employee.svg" alt="" />
+        </a>
+      </template>
+
       <!-- Обучение -->
       <template v-if="name === 'education'">
         <a
