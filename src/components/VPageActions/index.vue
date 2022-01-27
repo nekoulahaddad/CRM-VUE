@@ -25,6 +25,25 @@
         >
           <img src="@/assets/icons/add_employee.svg" alt="" />
         </a>
+        <!-- Excel уволенных сотрудников -->
+        <a
+          href=""
+          @click.prevent="
+            $store.commit('toggleAction', {
+              key: 'firedUsers',
+            })
+          "
+          class="page-actions__button"
+        >
+          <img src="@/assets/icons/fired.svg" alt="" />
+        </a>
+        <a href="" class="page-actions__button">
+          <img src="@/assets/icons/birthday_cake.svg" alt="" />
+        </a>
+
+        <a href="" class="page-actions__button">
+          <img src="@/assets/icons/employees.svg" alt="" />
+        </a>
       </template>
 
       <!-- Обучение -->
@@ -65,6 +84,7 @@
 
 <script>
 import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   computed: {
@@ -76,6 +96,7 @@ export default {
     addTask() {
       this.$modal.show("addTask");
     },
+
     clearCache() {
       axios
         .get("https://tdcsk.com/api/cache-clear", {

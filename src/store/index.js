@@ -33,6 +33,7 @@ export default new Vuex.Store({
     actions: {
       addEmployee: false,
       createEducationSection: false,
+      firedUsers: false,
     },
   },
   mutations: {

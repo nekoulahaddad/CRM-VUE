@@ -154,6 +154,9 @@ export default {
     addEmployee() {
       return this.$store.state.actions.addEmployee;
     },
+    firedUsers() {
+      return this.$store.state.actions.firedUsers;
+    },
     options: {
       get: function () {
         let options = this.getUserRole();
@@ -263,6 +266,26 @@ export default {
       this.$refs.filters.activeIndex = 0;
       this.filtersOptions = {};
     },
+    async downloadUsers() {
+      this.changeStatus(false);
+      axios({
+        url: `/excel/users`,
+        data: {
+          region: this.filtersOptions.region ?? "all",
+        },
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.$toast.success(result.data.message);
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
+    },
   },
   watch: {
     $route: async function () {
@@ -273,6 +296,11 @@ export default {
         await this.getData();
       },
       deep: true,
+    },
+    firedUsers() {
+      if (this.firedUsers) {
+        this.downloadUsers();
+      }
     },
   },
 };
