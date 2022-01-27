@@ -14,7 +14,7 @@
           type="text"
           class="form-control"
           :placeholder="$t('lastName')"
-          :value.trim="item ? item.surname : surname"
+          :value.trim="infoItem ? infoItem.surname : surname"
           @input="onChange($event)"
         />
       </div>

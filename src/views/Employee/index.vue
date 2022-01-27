@@ -75,8 +75,7 @@
                 <!-- Блок с формой редактирования сотрудника -->
                 <v-edit
                   v-if="editedItem._id === employee._id"
-                  :item="employee"
-                  :editedItem="editedItem"
+                  :infoItem="editedItem"
                 />
               </div>
             </div>

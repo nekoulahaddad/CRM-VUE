@@ -1,6 +1,271 @@
 <template>
   <div class="list__info list-info employee-edit-form">
-    <v-employee-form @submit="onUserAdd" />
+    <form
+      @submit.prevent="$emit('submit')"
+      enctype="multipart/form-data"
+      accept="image/x-png,image/gif,image/jpeg"
+    >
+      <div class="group__title text--blue">
+        {{ $t("pages.employee.employeeMainInfo") }}
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("lastName") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('lastName')"
+            :value.trim="infoItem ? infoItem.surname : surname"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("firstName") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('firstName')"
+            :value.trim="infoItem ? infoItem.name : name"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("middleName") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('middleName')"
+            :value.trim="infoItem ? infoItem.lastname : lastname"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("mail") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('mail')"
+            :value="infoItem ? infoItem.email : email"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("phone") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('phone')"
+            :value="infoItem ? infoItem.phone : phone"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group__title text--blue">
+        {{ $t("pages.employee.employeeAddInfo") }}
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("department") }}</div>
+        <div class="group__content">
+          <select
+            class="form-select"
+            :value="infoItem ? infoItem.department.value : department"
+            @change="onChange($event)"
+          >
+            <option
+              v-for="(item, index) in departments"
+              :key="index"
+              :selected="
+                infoItem ? item.value === infoItem.department.value : false
+              "
+              :value="item.value"
+            >
+              {{ item.title }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("subDepartment") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('subDepartment')"
+            :value="infoItem ? infoItem.sub_department : sub_department"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">{{ $t("position") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('position')"
+            :value="infoItem ? infoItem.position : position"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("employeeNumber") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('employeeNumber')"
+            :value="infoItem ? infoItem.personal_number : personal_number"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("role") }}</div>
+        <div class="group__content">
+          <select
+            class="form-select"
+            :value="infoItem ? infoItem.role : role"
+            @change="onChange($event)"
+          >
+            <option v-for="(role, index) in $t('roles')" :value="index">
+              {{ role }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("education") }}</div>
+        <div class="group__content">
+          <select
+            class="form-select"
+            :value="infoItem ? infoItem.education : education"
+            @change="onChange($event)"
+          >
+            <option v-for="education in $t('educations')" :value="education">
+              {{ education }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">{{ $t("speciality") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('speciality')"
+            :value="infoItem ? infoItem.specialty : specialty"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("employmentDate") }}</div>
+        <div class="group__content">
+          <datetime
+            v-model="employment_date"
+            required
+            input-class="forms__container--input"
+            type="date"
+            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("region") }}</div>
+        <div class="group__content">
+          <select
+            class="form-select"
+            :value="infoItem ? infoItem.region.value : region"
+            @change="onChange($event)"
+          >
+            <option v-for="(region, index) in regions" :value="region.value">
+              {{ region.title }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Личные данные -->
+      <div class="group__title text--blue">
+        {{ $t("pages.employee.employeePersonalInfo") }}
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("birthday") }}</div>
+        <div class="group__content">
+          <datetime
+            v-model="date_of_birth"
+            required
+            input-class="forms__container--input"
+            type="date"
+            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("zodiak") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('zodiak')"
+            :value="infoItem ? infoItem.zodiac_sign : zodiac_sign"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("element") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('element')"
+            :value="infoItem ? infoItem.element : element"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">{{ $t("chineseYear") }}</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            :placeholder="$t('chineseYear')"
+            :value="infoItem ? infoItem.chinese_year : chinese_year"
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+
+      <!-- Дети -->
+      <div class="group__title text--blue">
+        {{ $t("childs") }}
+      </div>
+      <div class="group">
+        <div class="group__footer">
+          <v-button red>{{ $t("add") }}</v-button>
+        </div>
+      </div>
+
+      <div class="group__title text--blue">
+        {{ $t("another") }}
+      </div>
+
+      <v-button red>{{ $t("save") }}</v-button>
+    </form>
   </div>
 </template>
 
@@ -18,7 +283,7 @@ export default {
     maska,
   },
   props: {
-    item: {
+    infoItem: {
       type: Object,
       required: true,
     },
@@ -215,10 +480,10 @@ export default {
     },
   },
   mounted() {
-    if (this.item) {
-      this.employment_date = this.item.employment_date;
-      this.date_of_birth = this.item.date_of_birth;
-      this.children = this.item.children ? this.item.children : [];
+    if (this.infoItem) {
+      this.employment_date = this.infoItem.employment_date;
+      this.date_of_birth = this.infoItem.date_of_birth;
+      this.children = this.infoItem.children ? this.infoItem.children : [];
     }
     axios({
       url: "/regions/get",
