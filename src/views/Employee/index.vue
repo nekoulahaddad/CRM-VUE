@@ -275,7 +275,7 @@ export default {
 <style lang="scss">
 .employee-page {
   .list__columns {
-    grid-template-columns: 140px 140px 318px 70px 70px 200px 1fr;
+    grid-template-columns: 160px 160px 350px 120px 120px 250px 1fr;
   }
   .list__column:last-child {
     padding-left: 20px;
