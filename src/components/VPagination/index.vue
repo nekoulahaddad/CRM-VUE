@@ -79,5 +79,9 @@ export default {
       color: #c4cdd5;
     }
   }
+  .active {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 </style>
