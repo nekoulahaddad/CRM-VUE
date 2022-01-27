@@ -256,5 +256,23 @@ export default {
       text-align: left;
     }
   }
+
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: 30px 400px 350px 220px 220px 260px 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: 30px 350px 350px 200px 180px 300px 1fr;
+    }
+  }
+
+  .page__right--middle {
+    .list__columns {
+      grid-template-columns: 30px 350px 350px 180px 180px 260px 1fr;
+    }
+  }
 }
 </style>
