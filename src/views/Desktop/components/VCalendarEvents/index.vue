@@ -3,11 +3,26 @@
     <div class="calendar-events__inner">
       <div v-if="!items.length">Событий не найдено</div>
       <vue-scroll v-else>
-        <div class="calendar-events__item item" v-for="event in items">
+        <div
+          class="calendar-events__item item"
+          v-for="event in items"
+          :key="event._id"
+        >
           <span class="calendar-events__title">{{ event.title }}</span>
           <div class="calendar-events__start-date"></div>
           <div class="calendar-events__end-date"></div>
-          <div class="calendar-events__users"></div>
+          <div class="calendar-events__participants participants">
+            <div class="item__title">Участники:</div>
+            <div class="item__content">
+              <div
+                class="participants__item"
+                v-for="(participant, index) in event.participants"
+                :key="index"
+              >
+                {{ transformFIO(participant._id) }}
+              </div>
+            </div>
+          </div>
           <div class="calendar-events__desc">
             <div class="item__title">Описание:</div>
             <div class="item__content">{{ event.description }}</div>
@@ -54,7 +69,18 @@ export default {
       });
     },
   },
-  mounted() {},
+  mounted() {
+    const body = document.querySelector("body");
+    const events = document.querySelector(".calendar-events");
+
+    events.onmouseover = function () {
+      body.style.overflow = "hidden";
+    };
+
+    events.onmouseout = function () {
+      body.style.overflow = "auto";
+    };
+  },
 };
 </script>
 
@@ -74,8 +100,17 @@ export default {
     color: $color-white;
     border-radius: 6px;
     font-weight: 500;
-    margin-bottom: 16px;
     display: inline-block;
+  }
+
+  &__item {
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  &__item > * + * {
+    margin-top: 13px;
   }
 
   .item {
