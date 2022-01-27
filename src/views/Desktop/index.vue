@@ -99,6 +99,7 @@
           </div>
 
           <vc-calendar :attributes="attrs" />
+          <v-calendar-events :events="events" />
         </div>
       </div>
     </div>
@@ -108,6 +109,7 @@
 <script>
 import VPageHeader from "@/components/VPageHeader";
 import VAddTaskModal from "./components/VAddTaskModal";
+import VCalendarEvents from "./components/VCalendarEvents";
 import VEditTaskModal from "../../components/VModals/EditTaskModal";
 import getDataFromPage from "../../api/getDataFromPage";
 import VContextMenu from "./components/VContextMenu";
@@ -119,11 +121,13 @@ export default {
     VEditTaskModal,
     VPageHeader,
     VAddTaskModal,
+    VCalendarEvents,
   },
   data() {
     return {
       dataset: [],
       departments: [],
+      events: [],
       showContextMenu: false,
       attrs: [
         {
@@ -158,9 +162,31 @@ export default {
     editTask() {
       this.$modal.show("editTask");
     },
+    getData(url) {
+      let result = axios({
+        url: `${url}`,
+        method: "GET",
+      }).then(async (res) => {
+        let result = await res;
+        return result;
+      });
+      return result;
+    },
+    async updateEvents() {
+      let result = await this.getData("/events/get");
+      let res = await result;
+      for (let i = 0; i < res.data.length; i++) {
+        let event = res.data[i];
+        event.startDate = new Date(this.$moment(event.startDate));
+        event.endDate = new Date(this.$moment(event.endDate));
+        res.data[i] = event;
+      }
+      this.events = res.data;
+    },
   },
   mounted() {
     this.fetchData();
+    this.updateEvents();
 
     axios({
       url: "/user/getdepartments",

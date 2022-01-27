@@ -107,6 +107,16 @@ export default {
       }
       this.day = !this.day;
     },
+    getData(url) {
+      let result = axios({
+        url: `${url}`,
+        method: "GET",
+      }).then(async (res) => {
+        let result = await res;
+        return result;
+      });
+      return result;
+    },
     async updateEvents() {
       let result = await this.getData("/events/get");
       this.isLoading = false;
