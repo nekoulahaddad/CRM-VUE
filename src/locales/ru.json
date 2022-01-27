@@ -259,6 +259,7 @@
       "buttons": [
         {
           "id": "crm",
+          "url": "employee",
           "title": "Сотрудники",
           "value": "Сотрудники"
         },
@@ -268,7 +269,8 @@
           "value": "Вакансии"
         },
         {
-          "id": "lpa",
+          "id": "departments",
+          "url": "departments",
           "title": "Отделы",
           "value": "Отделы"
         },
@@ -292,6 +294,14 @@
           ""
         ]
       }
+    },
+    "departments": {
+      "fields": [
+        "Руководитель",
+        "Количество сотрудников",
+        "Отдел",
+        ""
+      ]
     },
     "mail": {
       "pageTitle": "Заявки",

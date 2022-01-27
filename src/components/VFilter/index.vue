@@ -1,15 +1,5 @@
 <template>
-  <div class="page__buttons" v-if="type === 'employee'">
-    <v-button
-      v-for="(item, index) in $t('pages.employee.buttons')"
-      :red="activeIndex === index"
-      :white="activeIndex !== index"
-      @click="selectOptions($event, index, 'education', item.id, item.title)"
-    >
-      {{ item.value }}
-    </v-button>
-  </div>
-  <div class="page__buttons" v-else-if="type === 'education'">
+  <div class="page__buttons" v-if="type === 'education'">
     <v-button
       v-for="(item, index) in $t('pages.education.buttons')"
       :red="activeIndex === index"

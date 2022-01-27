@@ -36,16 +36,33 @@ const routes = [
         path: "clients/:page",
         name: "clients",
         component: () => import("../views/Clients"),
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
         path: "delivery/:page",
         name: "delivery",
         component: () => import("../views/Delivery"),
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
         path: "education/:page",
         name: "education",
         component: () => import("../views/Education"),
+        meta: {
+          requiresAuth: true,
+        },
+      },
+      {
+        path: "departments/:page",
+        name: "departments",
+        component: () => import("../views/Departments"),
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
         path: "employee/:page",

@@ -1,7 +1,5 @@
 <template>
-  <div class="page employee-page">
-    <v-delete-item :deletedItem="deletedItem" @refresh="refresh" />
-
+  <div class="page departments-page">
     <div
       class="page__header page-header"
       :class="{ 'page-header--collapse': sidebar }"
@@ -13,8 +11,8 @@
           </div>
           <h1 class="page__title">{{ $t("pages.employee.pageTitle") }}</h1>
           <v-button
-            :red="index === 0"
-            :white="index !== 0"
+            :red="index === 2"
+            :white="index !== 2"
             v-for="(item, index) in $t('pages.employee.buttons')"
             @click="goToLink(item.url)"
           >
@@ -43,7 +41,6 @@
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
-            <v-add-item v-if="addEmployee" />
             <div class="list">
               <div class="list__header">
                 <v-search
@@ -51,12 +48,10 @@
                   v-model="user"
                   :placeholder="$t('pages.employee.searchPlaceholder')"
                 />
-                <div class="list__title">
-                  {{ $t("pages.employee.pageTitle") }}
-                </div>
+                <div class="list__title">Отделы</div>
                 <div class="list__columns">
                   <div
-                    v-for="field in $t('pages.employee.fields')"
+                    v-for="field in $t('pages.departments.fields')"
                     class="list__column"
                   >
                     {{ field }}
@@ -64,37 +59,16 @@
                 </div>
               </div>
               <div
-                v-for="(employee, index) in dataset"
-                :key="employee._id"
+                v-for="(department, index) in dataset"
+                :key="department._id"
                 class="list__row list__row--shadow list__row--white"
                 :class="{
                   'list__row--opened':
-                    infoItem._id === employee._id ||
-                    editedItem._id === employee._id,
+                    infoItem._id === department._id ||
+                    editedItem._id === department._id,
                 }"
               >
-                <v-item
-                  :index="index"
-                  :role="role"
-                  :infoItem="infoItem"
-                  :employee="employee"
-                  :editedItem="editedItem"
-                  @toggleInfo="toggleInfo"
-                  @toggleEdit="toggleEdit"
-                  @toggleDelete="toggleDelete"
-                />
-
-                <!-- Блок с детальной информацией о сотруднике -->
-                <v-info
-                  v-if="infoItem._id === employee._id"
-                  :employee="employee"
-                />
-
-                <!-- Блок с формой редактирования сотрудника -->
-                <v-edit
-                  v-if="editedItem._id === employee._id"
-                  :infoItem="editedItem"
-                />
+                <v-item :infoItem="department" />
               </div>
             </div>
           </div>
@@ -114,9 +88,9 @@ import VAddItem from "./components/VAddItem";
 import VDeleteItem from "./components/VDeleteItem";
 import VButton from "@/components/VButton";
 import VFilter from "@/components/VFilter";
+import VSearch from "@/components/VSearch";
 import VFilterToggle from "@/components/VFilterToggle";
 import VPageHeader from "@/components/VPageHeader";
-import VSearch from "@/components/VSearch";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -126,19 +100,19 @@ import { mapGetters, mapMutations } from "vuex";
 
 export default {
   components: {
+    VItem,
+    VEdit,
+    VInfo,
     VAddItem,
+    VDeleteItem,
+    VSearch,
+    VButton,
     VFilter,
     VSpinner,
     VNotFoundQuery,
     VPagination,
-    VItem,
-    VButton,
-    VInfo,
-    VSearch,
-    VEdit,
     VFilterToggle,
     VPageHeader,
-    VDeleteItem,
   },
   data() {
     return {
@@ -186,7 +160,7 @@ export default {
     },
   },
   mounted() {
-    this.getData();
+    this.refresh();
   },
   methods: {
     ...mapMutations({
@@ -197,25 +171,6 @@ export default {
     },
     toggleFilter() {
       this.showFilter = !this.showFilter;
-    },
-    async getData() {
-      try {
-        this.isLoading = false;
-        this.filtersOptions.page = this.$route.params.page;
-
-        const { data } = await getDataFromPage(
-          "/user/get",
-          this.filtersOptions
-        );
-
-        this.dataset = data.users;
-        this.count = data.count;
-      } catch (e) {
-      } finally {
-        this.isLoading = true;
-        this.infoItem = {};
-        this.$scrollTo("body", 300, {});
-      }
     },
     toggleInfo(item) {
       this.editedItem = {};
@@ -240,15 +195,16 @@ export default {
         this.filtersOptions.page = this.$route.params.page;
 
         const { data } = await getDataFromPage(
-          "/user/get",
+          "/departments/get",
           this.filtersOptions
         );
 
-        this.dataset = data.users;
-        this.count = data.count;
+        this.dataset = data.departments;
+        this.count = data.count ? data.count : 0;
       } catch (e) {
       } finally {
         this.infoItem = {};
+        this.isLoading = true;
         this.$scrollTo("body", 300, {});
       }
     },
@@ -313,27 +269,22 @@ export default {
   },
   watch: {
     $route: async function () {
-      await this.getData();
+      await this.refresh();
     },
     filtersOptions: {
       handler: async function () {
-        await this.getData();
+        await this.refresh();
       },
       deep: true,
-    },
-    firedUsers() {
-      if (this.firedUsers) {
-        this.downloadUsers();
-      }
     },
   },
 };
 </script>
 
 <style lang="scss">
-.employee-page {
+.departments-page {
   .list__columns {
-    grid-template-columns: 160px 160px 350px 120px 120px 250px 1fr;
+    grid-template-columns: 300px 450px 450px 1fr;
   }
   .list__column:last-child {
     padding-left: 20px;
@@ -341,13 +292,25 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 200px 260px 440px 170px 170px 300px 1fr;
+      grid-template-columns: 300px 450px 450px 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: 300px 450px 450px 1fr;
     }
   }
 
   .page__right--middle {
     .list__columns {
-      grid-template-columns: 160px 160px 400px 150px 150px 300px 1fr;
+      grid-template-columns: 300px 450px 450px 1fr;
+    }
+  }
+
+  .list__column {
+    &:first-child {
+      text-align: left;
     }
   }
 
