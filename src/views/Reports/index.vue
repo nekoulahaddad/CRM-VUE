@@ -175,5 +175,23 @@ export default {
       }
     }
   }
+
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: 30px 400px 210px 210px 210px 210px 210px 210px 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: 30px 220px 220px 400px 200px 200px 200px 200px 1fr;
+    }
+  }
+
+  .page__right--middle {
+    .list__columns {
+      grid-template-columns: 30px 400px 170px 170px 170px 170px 170px 170px 1fr;
+    }
+  }
 }
 </style>
