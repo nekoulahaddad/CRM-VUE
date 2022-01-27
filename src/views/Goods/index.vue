@@ -72,6 +72,8 @@
                       @changeVisibility="changeCategoryVisibility"
                       :item="item"
                       :current="current"
+                      :dropDown="dropDown"
+                      @toggleDropDown="toggleDropDown"
                     />
                   </Draggable>
                 </Container>
@@ -187,6 +189,7 @@ export default {
       removeGroup: false,
       editGroup: false,
       product: {},
+      dropDown: {},
       addProductToGroup: false,
       downloadExcelGoods: false,
       excelImportForm: false,
@@ -249,6 +252,13 @@ export default {
   methods: {
     toggleFilter() {
       this.showFilter = !this.showFilter;
+    },
+    toggleDropDown(dropDown) {
+      if (this.dropDown._id === dropDown._id) {
+        this.dropDown = {};
+      } else {
+        this.dropDown = dropDown;
+      }
     },
     async updateByFilter() {
       if (!this.isLoading) {
