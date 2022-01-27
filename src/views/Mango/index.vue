@@ -185,5 +185,23 @@ export default {
     left: 50%;
     transform: translateX(-50%) !important;
   }
+
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: minmax(30px, 70px) repeat(3, 500px) 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: minmax(30px, 70px) repeat(3, 450px) 1fr;
+    }
+  }
+
+  .page__right--middle {
+    .list__columns {
+      grid-template-columns: minmax(30px, 70px) repeat(3, 400px) 1fr;
+    }
+  }
 }
 </style>
