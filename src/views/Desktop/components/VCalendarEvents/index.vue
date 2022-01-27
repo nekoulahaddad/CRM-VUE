@@ -1,7 +1,8 @@
 <template>
   <div class="calendar-events">
     <div class="calendar-events__inner">
-      <vue-scroll>
+      <div v-if="!items.length">Событий не найдено</div>
+      <vue-scroll v-else>
         <div class="calendar-events__item item" v-for="event in items">
           <span class="calendar-events__title">{{ event.title }}</span>
           <div class="calendar-events__start-date"></div>
@@ -24,6 +25,7 @@ export default {
       type: Array,
       required: true,
     },
+    clickedDay: Object,
   },
   data() {
     return {
@@ -31,14 +33,22 @@ export default {
     };
   },
   watch: {
+    clickedDay(e) {
+      this.filterEvents(e);
+    },
     events() {
+      this.filterEvents();
+    },
+  },
+  methods: {
+    filterEvents(e = "") {
       this.items = [];
-      const currentDate = this.$moment();
+      const currentDate = this.$moment(this.clickedDay?.id || "");
 
       this.events.map((event) => {
         const compareDate = this.$moment(event.startDate);
 
-        if (currentDate.startOf("month").isSame(compareDate.startOf("month"))) {
+        if (currentDate.startOf("day").isSame(compareDate.startOf("day"))) {
           this.items.push(event);
         }
       });

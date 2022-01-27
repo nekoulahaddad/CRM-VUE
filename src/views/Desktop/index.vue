@@ -98,8 +98,8 @@
             </a>
           </div>
 
-          <vc-calendar :attributes="attrs" />
-          <v-calendar-events :events="events" />
+          <vc-calendar @dayclick="dayClicked" :attributes="attrs" />
+          <v-calendar-events :clickedDay="clickedDay" :events="events" />
         </div>
       </div>
     </div>
@@ -125,6 +125,7 @@ export default {
   },
   data() {
     return {
+      clickedDay: null,
       dataset: [],
       departments: [],
       events: [],
@@ -150,6 +151,9 @@ export default {
     };
   },
   methods: {
+    dayClicked(e) {
+      this.clickedDay = e;
+    },
     async fetchData() {
       try {
         const { data } = await getDataFromPage(`/tasks/get`, {});
