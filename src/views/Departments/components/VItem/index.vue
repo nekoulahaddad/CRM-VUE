@@ -7,7 +7,7 @@
       {{ infoItem.count || "0" }}
     </div>
     <div class="list__column text--blue">
-      {{ infoItem.title }}
+      <div class="bg bg--green-light">{{ infoItem.title }}</div>
     </div>
     <div class="list__column">
       <div class="table__actions">

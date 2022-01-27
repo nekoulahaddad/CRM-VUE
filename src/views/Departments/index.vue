@@ -214,32 +214,27 @@ export default {
     },
     getSearchData() {
       this.changeStatus(false);
-
-      if (this.user.trim().length < 3) {
+      let search = this.user;
+      if (search.length < 3) {
         this.$toast.error("Запрос слишком короткий!");
         this.changeStatus(true);
-      } else {
-        this.isLoading = false;
-
-        axios
-          .get(`/user/getsearchwithoutdirector/${this.user}`)
-          .then(async (res) => {
-            if (res.data.users.length) {
-              this.dataset = res.data.users;
-              this.count = res.data.count ? res.data.count : 0;
-              this.$toast.success("Результаты запросов!");
-            } else {
-              this.$toast.error("Результаты не найдены!");
-              this.user = "";
-            }
-
-            this.changeStatus(true);
-            this.$forceUpdate();
-          })
-          .finally(() => {
-            this.isLoading = true;
-          });
+        return;
       }
+      axios
+        .get(`/user/getsearchwithoutdirector/${search}`)
+        .then(async (res) => {
+          let result = await res;
+          if (result.data.users.length) {
+            this.count = result.data.length;
+            //this.updateUsers(result);
+            this.$toast.success("Результаты запросов!");
+          } else {
+            this.$toast.error("Результаты не найдены!");
+            this.user = "";
+          }
+          this.changeStatus(true);
+          this.$forceUpdate();
+        });
     },
     resetFilters() {
       this.$refs.filters.filterOptions = {};
