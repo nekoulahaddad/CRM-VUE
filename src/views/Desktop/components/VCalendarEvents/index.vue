@@ -132,6 +132,7 @@ export default {
   }
 
   &__item {
+    margin-bottom: 16px;
     &:hover {
       box-shadow: none;
     }
