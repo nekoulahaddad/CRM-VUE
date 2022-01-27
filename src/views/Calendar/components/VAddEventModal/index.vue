@@ -9,9 +9,37 @@
         alt=""
       />
     </div>
+    <div class="vm--modal__inner">
+      <div class="group">
+        <div class="group__title">Заголовок мероприятия:</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Введите заголовок мероприятия..."
+          />
+        </div>
+      </div>
+    </div>
+    <div class="vm--modal__inner">
+      <div class="group">
+        <div class="group__title">Описание:</div>
+        <div class="group__content">
+          <textarea
+            class="form-textarea"
+            placeholder="Введите описание данного мероприятия..."
+          />
+        </div>
+      </div>
+      <v-button red>Создать</v-button>
+    </div>
   </v-modal>
 </template>
 
 <script>
-export default {};
+import VButton from "@/components/VButton";
+
+export default {
+  components: { VButton },
+};
 </script>
