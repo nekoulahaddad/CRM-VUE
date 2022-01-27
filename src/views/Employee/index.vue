@@ -333,7 +333,7 @@ export default {
 <style lang="scss">
 .employee-page {
   .list__columns {
-    grid-template-columns: 160px 160px 350px 120px 120px 250px 1fr;
+    grid-template-columns: 160px 160px 350px 120px 120px 300px 1fr;
   }
   .list__column:last-child {
     padding-left: 20px;
@@ -342,6 +342,12 @@ export default {
   .page__right--fluid {
     .list__columns {
       grid-template-columns: 200px 260px 440px 170px 170px 300px 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: 180px 260px 400px 170px 170px 300px 1fr;
     }
   }
 
