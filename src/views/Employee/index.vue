@@ -280,5 +280,16 @@ export default {
   .list__column:last-child {
     padding-left: 20px;
   }
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: 200px 260px 440px 170px 170px 300px 1fr;
+    }
+  }
+
+  .page__right--middle {
+    .list__columns {
+      grid-template-columns: 160px 160px 400px 150px 150px 300px 1fr;
+    }
+  }
 }
 </style>
