@@ -61,9 +61,10 @@
         </div>
         <div class="table__icon">
           <img
+            alt=""
             v-if="role === 'director'"
             src="@/assets/icons/trash_icon.svg"
-            alt=""
+            @click="$emit('toggleDelete', employee)"
           />
           <div class="table__hidden-icon" v-else></div>
         </div>

@@ -1,5 +1,7 @@
 <template>
   <div class="page employee-page">
+    <v-delete-item :deletedItem="deletedItem" @refresh="refresh" />
+
     <v-page-header
       :title="$t('pages.employee.pageTitle')"
       icon="employees_title"
@@ -61,6 +63,7 @@
                   :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией о сотруднике -->
@@ -90,6 +93,7 @@
 import VItem from "./components/VItem";
 import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
+import VDeleteItem from "./components/VDeleteItem";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VSearch from "@/components/VSearch";
@@ -111,6 +115,7 @@ export default {
     VSearch,
     VEdit,
     VPageHeader,
+    VDeleteItem,
   },
   data() {
     return {
@@ -198,13 +203,26 @@ export default {
         this.editedItem = item;
       }
     },
-    toggleDelete(id) {
-      if (!this.open.delete) {
-        this.deletedItem._id = id;
-      } else {
-        this.deletedItem = {};
+    async refresh() {
+      try {
+        this.filtersOptions.page = this.$route.params.page;
+
+        const { data } = await getDataFromPage(
+          "/user/get",
+          this.filtersOptions
+        );
+
+        this.dataset = data.users;
+        this.count = data.count;
+      } catch (e) {
+      } finally {
+        this.infoItem = {};
+        this.$scrollTo("body", 300, {});
       }
-      this.open.delete = !this.open.delete;
+    },
+    toggleDelete(deletedItem) {
+      this.deletedItem = deletedItem;
+      this.$modal.show("deleteEmployee");
     },
     getSearchData() {
       this.changeStatus(false);
