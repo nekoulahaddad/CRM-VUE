@@ -1,5 +1,6 @@
 <template>
   <div class="page desktop-page">
+    <v-add-event-modal />
     <v-add-task-modal :departments="departments" />
     <v-edit-task-modal :task="{}" />
     <v-page-header
@@ -93,7 +94,11 @@
       <div class="page__right">
         <div class="desktop-calendar">
           <div class="add-new-event">
-            <a href="" @click.prevent="" class="add-new-event__link">
+            <a
+              href=""
+              @click.prevent="$modal.show('addEvent')"
+              class="add-new-event__link"
+            >
               <img src="@/assets/icons/plus.svg" alt="" />
             </a>
           </div>
@@ -108,6 +113,7 @@
 
 <script>
 import VPageHeader from "@/components/VPageHeader";
+import VAddEventModal from "@/views/Calendar/components/VAddEventModal";
 import VAddTaskModal from "./components/VAddTaskModal";
 import VCalendarEvents from "./components/VCalendarEvents";
 import VEditTaskModal from "../../components/VModals/EditTaskModal";
@@ -122,6 +128,7 @@ export default {
     VPageHeader,
     VAddTaskModal,
     VCalendarEvents,
+    VAddEventModal,
   },
   data() {
     return {
