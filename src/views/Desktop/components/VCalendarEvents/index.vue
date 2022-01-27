@@ -9,8 +9,14 @@
           :key="event._id"
         >
           <span class="calendar-events__title">{{ event.title }}</span>
-          <div class="calendar-events__start-date"></div>
-          <div class="calendar-events__end-date"></div>
+          <div class="calendar-events__start-date">
+            {{ $moment(event.startDate).format("DD/MM/YYYY - HH:II") }} - Дата
+            начала
+          </div>
+          <div class="calendar-events__end-date">
+            {{ $moment(event.endDate).format("DD/MM/YYYY - HH:II") }} - Дата
+            окончания
+          </div>
           <div class="calendar-events__participants participants">
             <div class="item__title">Участники:</div>
             <div class="item__content">
@@ -94,6 +100,27 @@ export default {
     height: 450px;
   }
 
+  &__start-date,
+  &__end-date {
+    color: #a1a1aa;
+    font-size: 11px;
+    position: relative;
+    padding-left: 20px;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 12px;
+      height: 12px;
+      background-color: #3b82f6;
+      border-radius: 50%;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
   &__title {
     background-color: $color-red;
     padding: 6px;
@@ -101,6 +128,7 @@ export default {
     border-radius: 6px;
     font-weight: 500;
     display: inline-block;
+    margin-bottom: 10px;
   }
 
   &__item {
