@@ -277,7 +277,6 @@ export default {
   props: {
     infoItem: {
       type: Object,
-      required: true,
     },
   },
   components: { VButton, datetime: Datetime },

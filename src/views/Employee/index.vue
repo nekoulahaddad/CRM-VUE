@@ -26,6 +26,7 @@
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
+            <v-add-item v-if="addEmployee" />
             <div class="list">
               <div class="list__header">
                 <v-search
@@ -92,6 +93,7 @@
 import VItem from "./components/VItem";
 import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
+import VAddItem from "./components/VAddItem";
 import VDeleteItem from "./components/VDeleteItem";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
@@ -105,6 +107,7 @@ import { mapGetters, mapMutations } from "vuex";
 
 export default {
   components: {
+    VAddItem,
     VFilter,
     VSpinner,
     VNotFoundQuery,
@@ -147,6 +150,9 @@ export default {
         let role = this.getUserRole();
         return role.role;
       },
+    },
+    addEmployee() {
+      return this.$store.state.actions.addEmployee;
     },
     options: {
       get: function () {
@@ -280,6 +286,7 @@ export default {
   .list__column:last-child {
     padding-left: 20px;
   }
+
   .page__right--fluid {
     .list__columns {
       grid-template-columns: 200px 260px 440px 170px 170px 300px 1fr;

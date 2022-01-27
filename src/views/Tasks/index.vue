@@ -465,7 +465,7 @@ export default {
 <style lang="scss">
 .tasks-page {
   .list__columns {
-    grid-template-columns: 30px 160px 160px 318px 120px 120px 120px 1fr;
+    grid-template-columns: 30px 160px 160px 350px 180px 180px 180px 1fr;
   }
   .list__header {
     .list__column {
@@ -480,6 +480,24 @@ export default {
       & + * {
         margin-top: 10px;
       }
+    }
+  }
+
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: 30px 200px 260px 440px 170px 170px 300px 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: 30px 220px 220px 400px 200px 200px 200px 1fr;
+    }
+  }
+
+  .page__right--middle {
+    .list__columns {
+      grid-template-columns: 30px 200px 200px 400px 150px 150px 150px 1fr;
     }
   }
 }
