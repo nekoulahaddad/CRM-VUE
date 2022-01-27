@@ -11,6 +11,7 @@
     v-else
     src="@/assets/icons/filter_active.svg"
     @click="toggleFilter"
+    class="filter-toggle"
     alt=""
   />
 </template>

@@ -2,12 +2,22 @@
   <div class="page employee-page">
     <v-delete-item :deletedItem="deletedItem" @refresh="refresh" />
 
-    <v-page-header
-      :title="$t('pages.employee.pageTitle')"
-      icon="employees_title"
-      @toggleFilter="toggleFilter"
-      :showFilter="showFilter"
-    />
+    <div
+      class="page__header page-header"
+      :class="{ 'page-header--collapse': sidebar }"
+    >
+      <div class="page-header__inner">
+        <div class="page-header__left">
+          <div class="page__icon">
+            <img :src="require(`@/assets/icons/education_title.svg`)" alt="" />
+          </div>
+          <h1 class="page__title">{{ $t("pages.employee.pageTitle") }}</h1>
+          <v-filter type="employee" />
+          <v-filter-toggle @toggleFilter="toggleFilter" :active="showFilter" />
+        </div>
+      </div>
+    </div>
+
     <div class="page__body d-flex">
       <!-- Фильтр -->
       <div class="page__left" v-if="showFilter">
@@ -96,6 +106,7 @@ import VInfo from "./components/VInfo";
 import VAddItem from "./components/VAddItem";
 import VDeleteItem from "./components/VDeleteItem";
 import VFilter from "@/components/VFilter";
+import VFilterToggle from "@/components/VFilterToggle";
 import VPageHeader from "@/components/VPageHeader";
 import VSearch from "@/components/VSearch";
 import VSpinner from "@/components/VSpinner";
@@ -116,6 +127,7 @@ export default {
     VInfo,
     VSearch,
     VEdit,
+    VFilterToggle,
     VPageHeader,
     VDeleteItem,
   },
@@ -325,6 +337,16 @@ export default {
     .list__columns {
       grid-template-columns: 160px 160px 400px 150px 150px 300px 1fr;
     }
+  }
+
+  .page-header__left {
+    position: relative;
+    width: 100%;
+  }
+
+  .filter-toggle {
+    position: absolute;
+    right: 0;
   }
 }
 </style>
