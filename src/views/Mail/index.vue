@@ -215,6 +215,12 @@ export default {
 
 <style scoped lang="scss">
 .mail-page {
+  .list__header .list__column:last-child {
+    text-align: right;
+    position: relative;
+    right: 92px;
+  }
+
   .list__columns {
     grid-template-columns: minmax(50px, 70px) repeat(8, 120px) 1fr;
   }
@@ -223,6 +229,24 @@ export default {
       &:first-child {
         text-align: left;
       }
+    }
+  }
+
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: minmax(50px, 70px) repeat(8, 170px) 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: minmax(50px, 70px) repeat(8, 160px) 1fr;
+    }
+  }
+
+  .page__right--middle {
+    .list__columns {
+      grid-template-columns: minmax(50px, 70px) repeat(8, 150px) 1fr;
     }
   }
 }
