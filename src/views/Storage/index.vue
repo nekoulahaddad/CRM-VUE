@@ -34,6 +34,12 @@
               >
                 <v-category :key="item.id" :item="item" />
               </div>
+              <div
+                class="list__row list__row--shadow list__row--white"
+                v-for="item in dataset.products"
+              >
+                <v-product :key="item.id" :item="item" />
+              </div>
             </div>
           </div>
           <v-pagination :count="count" />
@@ -49,6 +55,7 @@ import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VCategory from "./components/VCategory";
+import VProduct from "./components/VProduct";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import { mapGetters, mapMutations } from "vuex";
@@ -63,6 +70,7 @@ export default {
     VNotFoundQuery,
     VPageHeader,
     VCategory,
+    VProduct,
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),

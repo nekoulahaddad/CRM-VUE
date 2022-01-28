@@ -12,7 +12,6 @@
     >
       <router-link
         :to="`/dashboard/storage/${+item.nesting + 2}/categories/${item._id}/1`"
-        @click.prevent="$emit('toggleInfo', item)"
       >
         {{ item.categoryName }}
       </router-link>
