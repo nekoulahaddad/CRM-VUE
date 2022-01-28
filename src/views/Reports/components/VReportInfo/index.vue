@@ -35,11 +35,10 @@
           {{ report.description }}
         </div>
       </div>
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.reports.reportDocs") }}
-        </div>
-        <div class="group__value">
+
+      <div class="group">
+        <div class="group__title">{{ $t("pages.reports.reportDocs") }}</div>
+        <div class="group__content">
           <div v-if="documents.length" class="list__documents documents">
             <div
               v-for="(photo, index) in documents"
@@ -160,3 +159,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.documents__item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+</style>
