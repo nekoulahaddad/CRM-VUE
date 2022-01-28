@@ -76,6 +76,9 @@ export default {};
     height: 162px;
     border-radius: $border-radius;
     padding: 17px 10px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   &__columns {
@@ -98,13 +101,13 @@ export default {};
 
     &::after {
       content: "";
-      height: 2px;
+      height: 3px;
       position: absolute;
       background-color: $color-red;
       border-radius: $border-radius;
-      width: 100%;
+      width: 85%;
       bottom: 0;
-      left: 0;
+      left: 10px;
       right: 0;
     }
 
@@ -112,9 +115,20 @@ export default {};
       display: flex;
     }
 
+    &__bottom {
+      margin-top: 5px;
+    }
+
     &__count {
       font-weight: 600;
       font-size: 16px;
+    }
+
+    &__title {
+      font-size: 12px;
+      font-weight: 600;
+      position: relative;
+      top: 3px;
     }
   }
 }

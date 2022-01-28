@@ -80,7 +80,7 @@ export default {
     VPageHeader,
   },
   computed: {
-    ...mapGetters(["sidebar"]),
+    ...mapGetters({ sidebar: "sidebar" }),
   },
   data() {
     return {

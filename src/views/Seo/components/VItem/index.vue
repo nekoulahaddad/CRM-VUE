@@ -1,6 +1,19 @@
 <template>
   <div class="list__columns list__columns--shadow list__columns--white">
-    <div class="list__column">{{ item.categoryName }}</div>
+    <div
+      class="list__column"
+      @click="
+        current[current.length - 1] !== item.categoryName
+          ? current.push(item)
+          : false
+      "
+    >
+      <router-link
+        :to="`/dashboard/seo/${+item.nesting + 2}/categories/${item._id}/1`"
+      >
+        {{ item.categoryName }}
+      </router-link>
+    </div>
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
@@ -22,6 +35,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      current: [],
+    };
   },
 };
 </script>

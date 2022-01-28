@@ -98,7 +98,7 @@ export default {
     VPageHeader,
   },
   computed: {
-    ...mapGetters(["sidebar"]),
+    ...mapGetters({ sidebar: "sidebar" }),
   },
   mounted() {
     this.fetchData();
