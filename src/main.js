@@ -22,6 +22,7 @@ import { Settings } from "luxon";
 import i18n from "./i18n";
 import dataMixins from "@/mixins/data";
 import dateMixins from "@/mixins/date";
+import dragMixins from "@/mixins/drag";
 import fioMixins from "@/mixins/fio";
 import nameMixins from "@/mixins/name";
 import markMixins from "@/mixins/mark";
@@ -118,8 +119,9 @@ Vue.use(Toast, {
 });
 Vue.component("paginate", Paginate);
 
-//Vue.mixin(dataMixins);
+Vue.mixin(dataMixins);
 Vue.mixin(dateMixins);
+Vue.mixin(dragMixins);
 Vue.mixin(deliveryMixins);
 Vue.mixin(oneCMixins);
 Vue.mixin(fioMixins);

@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page storage-page">
     <v-page-header
       title="Снабженец"
       icon="storage_title"
@@ -21,23 +21,21 @@
         <div v-if="!filtersOptions.region">Выберите регион</div>
         <v-spinner v-else-if="!isLoading" />
         <template v-else-if="dataset.categories.length">
-          <table class="table table--separate">
-            <thead class="thead">
-              <tr class="thead__top">
-                <td colspan="12">
-                  <div class="table__title">Заказы</div>
-                </td>
-              </tr>
-              <tr class="thead__bottom">
-                <td>Название категории:</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in dataset.categories" :key="item.id">
-                <td>{{ item.categoryName }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="scroll-horizontal">
+            <div class="list list-shadow">
+              <div class="list__header">
+                <div class="list__title title">
+                  <div class="title__item">Заказы</div>
+                </div>
+              </div>
+              <div
+                class="list__row list__row--shadow list__row--white"
+                v-for="item in dataset.categories"
+              >
+                <v-category :key="item.id" :item="item" />
+              </div>
+            </div>
+          </div>
           <v-pagination :count="count" />
         </template>
         <v-not-found-query v-else />
@@ -50,6 +48,7 @@
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
+import VCategory from "./components/VCategory";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import { mapGetters, mapMutations } from "vuex";
@@ -57,9 +56,16 @@ import getDataFromPage from "../../api/getDataFromPage";
 import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
-  components: { VFilter, VPagination, VSpinner, VNotFoundQuery, VPageHeader },
+  components: {
+    VFilter,
+    VPagination,
+    VSpinner,
+    VNotFoundQuery,
+    VPageHeader,
+    VCategory,
+  },
   computed: {
-    ...mapGetters(["sidebar"]),
+    ...mapGetters({ sidebar: "sidebar" }),
   },
   data() {
     return {
@@ -145,12 +151,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.table {
-  .thead__bottom {
-    td {
-      text-align: left;
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>
