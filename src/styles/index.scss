@@ -200,4 +200,29 @@ ul {
   width: 100%;
 }
 
+.page__right {
+  .scroll-horizontal {
+    overflow-x: auto;
+    width: 1394px;
+  }
+}
+
+.page__right--middle {
+  .list {
+    width: 1412px;
+  }
+}
+.page__right--fluid {
+  .scroll-horizontal {
+    overflow-x: auto;
+    width: 1791px;
+  }
+}
+.page__right--full {
+  .scroll-horizontal {
+    overflow-x: auto;
+    width: 1677px;
+  }
+}
+
 @import "media";
