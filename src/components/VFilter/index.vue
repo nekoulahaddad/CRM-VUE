@@ -104,6 +104,7 @@
                 :sameDateFormat="sameDateFormat"
                 :showHelperButtons="true"
                 :switchButtonInitial="true"
+                :helperButtons="helperButtons"
                 switchButtonLabel="Все время"
                 :calendarDateInput="calendarDateInput"
                 @date-applied="selectPeriodDate"
@@ -904,6 +905,68 @@ export default {
         {
           title: "За год",
           value: "year",
+        },
+      ],
+      helperButtons: [
+        {
+          name: "Сегодня",
+          from: this.$moment().startOf("day"),
+          to: this.$moment().endOf("day"),
+        },
+        {
+          name: "Вчера",
+          from: this.$moment().subtract("day", 1).startOf("day"),
+          to: this.$moment().subtract("day", 1).endOf("day"),
+        },
+        {
+          name: "Неделя",
+          from: this.$moment().startOf("day").subtract("day", 7),
+          to: this.$moment().endOf("day"),
+        },
+        {
+          name: "Т. неделя",
+          from: this.$moment().startOf("week"),
+          to: this.$moment().endOf("week"),
+        },
+        {
+          name: "П. неделя",
+          from: this.$moment().startOf("week").subtract("day", 7),
+          to: this.$moment().endOf("week").subtract("day", 7),
+        },
+        {
+          name: "Месяц",
+          from: this.$moment().startOf("day").subtract("month", 1),
+          to: this.$moment().endOf("day"),
+        },
+        {
+          name: "Т. месяц",
+          from: this.$moment().startOf("month"),
+          to: this.$moment().endOf("month"),
+        },
+        {
+          name: "П. месяц",
+          from: this.$moment().startOf("month").subtract("month", 1),
+          to: this.$moment().endOf("month").subtract("month", 1),
+        },
+        {
+          name: "Год",
+          from: this.$moment().startOf("year").subtract("year", 1),
+          to: this.$moment().endOf("day"),
+        },
+        {
+          name: "Т. год",
+          from: this.$moment().startOf("year"),
+          to: this.$moment().endOf("year"),
+        },
+        {
+          name: "П. год",
+          from: this.$moment().startOf("year").subtract("year", 1),
+          to: this.$moment().endOf("year").subtract("year", 1),
+        },
+        {
+          name: "Все время",
+          from: this.$moment().startOf("year").year(1970),
+          to: this.$moment().endOf("year"),
         },
       ],
       author: "",

@@ -129,7 +129,7 @@ export default {
 
 .revs {
   width: 267px;
-  height: 254px;
+  min-height: 254px;
   background-color: $color-white;
   border-radius: $border-radius;
   box-shadow: 0 3.5px 5.5px rgba(0, 0, 0, 0.02);
