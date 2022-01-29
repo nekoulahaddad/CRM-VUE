@@ -233,7 +233,17 @@
               <autocomplete
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
-              />
+                :get-result-value="getResultValue"
+                @change="selectOptions($event, null, 'executor', null)"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectUser(result)" v-bind="props">
+                    <div class="wiki-title">
+                      {{ result.surname }}
+                    </div>
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
           <div class="filter__group group">
@@ -301,11 +311,20 @@
           <div class="filter__group group">
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
+              <autocomplete
+                :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
-              />
+                :get-result-value="getResultValue"
+                @change="selectOptions($event, null, 'executor', null)"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectUser(result)" v-bind="props">
+                    <div class="wiki-title">
+                      {{ result.surname }}
+                    </div>
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
           <div class="filter__group group">
@@ -435,14 +454,20 @@
           <div class="filter__group group">
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
+              <autocomplete
+                :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
-                v-model="fio"
-                @input="getUsersByFIO"
+                :get-result-value="getResultValue"
                 @change="selectOptions($event, null, 'executor', null)"
-              />
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectUser(result)" v-bind="props">
+                    <div class="wiki-title">
+                      {{ result.surname }}
+                    </div>
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
           <div class="filter__group group">
