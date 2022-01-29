@@ -112,7 +112,6 @@ export default {
         method: "POST",
       }).then(() => {
         this.$emit("toggleEdit", this.item);
-        this.$emit("editCallback");
         this.$toast.success("Заявка успешно изменена");
         this.changeStatus(true);
       });
