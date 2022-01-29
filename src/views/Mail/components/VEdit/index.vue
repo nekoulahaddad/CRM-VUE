@@ -113,6 +113,7 @@ export default {
       }).then(() => {
         this.$emit("toggleEdit", this.item);
         this.$toast.success("Заявка успешно изменена");
+        this.$emit("getData");
         this.changeStatus(true);
       });
     },

@@ -63,6 +63,7 @@
                   :editedItem="editedItem"
                   @toggleEdit="toggleEdit"
                   @editCallback="editCallback"
+                  @getData="getData"
                 />
               </div>
             </div>
