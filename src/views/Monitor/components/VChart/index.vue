@@ -74,8 +74,28 @@ export default {
     };
   },
   watch: {
+    ordersForMonth() {
+      let labels = Array.apply(null, { length: 31 });
+      let data = Array.apply(null, { length: 31 });
+      for (let i = 0; i < data.length; i++) {
+        let index = this.ordersForMonth.findIndex((item) => item.day === i + 1);
+        labels[i] = `${i + 1 < 10 ? `0${i + 1}` : i + 1}`;
+        data[i] = {
+          x: i + 1,
+          y: index > -1 ? this.ordersForMonth[index].count : 0,
+        };
+      }
+      this.dataset = {
+        labels,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: "rgba(196, 24, 60, .8)",
+          },
+        ],
+      };
+    },
     sales() {
-      this.dataset = {};
       let labels = Array.apply(null, { length: 31 });
       let data = Array.apply(null, { length: 31 });
       for (let i = 0; i < data.length; i++) {

@@ -12,7 +12,7 @@
               <div class="column__title">Клиенты:</div>
             </div>
             <div class="column__bottom">
-              <div class="column__count">2557</div>
+              <div class="column__count">{{ clientCount }}</div>
             </div>
           </div>
         </div>
@@ -25,7 +25,7 @@
               <div class="column__title">Сотрудники:</div>
             </div>
             <div class="column__bottom">
-              <div class="column__count">327</div>
+              <div class="column__count">{{ employeeCount }}</div>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
               <div class="column__title">Количество дел:</div>
             </div>
             <div class="column__bottom">
-              <div class="column__count">540</div>
+              <div class="column__count">{{ taskCount }}</div>
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@
               <div class="column__title">Загруженность работников:</div>
             </div>
             <div class="column__bottom">
-              <div class="column__count">28%</div>
+              <div class="column__count">{{ workload }}%</div>
             </div>
           </div>
         </div>
@@ -59,7 +59,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    clientCount: Number,
+    employeeCount: Number,
+    taskCount: Number,
+    workload: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+};
 </script>
 
 <style lang="scss">

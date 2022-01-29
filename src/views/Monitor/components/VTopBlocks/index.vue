@@ -40,7 +40,21 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    rev: {
+      type: Object,
+    },
+  },
+  data() {
+    return {
+      info: [],
+    };
+  },
+  watch: {
+    rev() {},
+  },
+};
 </script>
 
 <style lang="scss">

@@ -12,12 +12,17 @@
       </div>
       <div class="page__right">
         <div class="scroll-horizontal">
-          <v-top-blocks />
+          <v-top-blocks :rev="rev" />
           <div class="d-flex">
             <!-- Заявки за текущей месяц -->
             <v-mail-by-month />
             <!-- Новые клиенты -->
-            <v-clients />
+            <v-clients
+              :workload="workload"
+              :clientCount="clients"
+              :taskCount="tasks"
+              :employeeCount="users"
+            />
           </div>
           <div class="d-flex">
             <!-- Топ продаваемых продуктов -->
