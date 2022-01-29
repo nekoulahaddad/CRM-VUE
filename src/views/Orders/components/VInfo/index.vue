@@ -1,5 +1,5 @@
 <template>
-  <div class="list__info list-info employee-list-info">
+  <div class="list__info list-info orders-list-info">
     <div class="group__title text--blue">
       {{ $t("pages.orders.info") }}
     </div>
@@ -147,6 +147,70 @@
         <div class="group__value">{{ infoItem.manager_comment }}</div>
       </div>
     </div>
+    <template v-if="infoItem.products.length">
+      <div class="group__title text--blue">Товары:</div>
+      <div class="list sub-list">
+        <div class="list__header">
+          <div class="list__columns">
+            <div class="list__column">№:</div>
+            <div class="list__column">Название товара:</div>
+            <div class="list__column">Артикул:</div>
+            <div class="list__column">Кол-во:</div>
+            <div class="list__column">Цена за ед.:</div>
+            <div class="list__column">Итог:</div>
+          </div>
+        </div>
+        <div
+          v-for="(product, index) in infoItem.products"
+          :key="product._id"
+          class="list__row list__row--shadow list__row--white"
+        >
+          <div class="list__columns">
+            <div class="list__column">{{ index + 1 }}</div>
+            <div class="list__column bg bg--blue-light">
+              {{ product.title }}
+            </div>
+            <div class="list__column">{{ product.article }}</div>
+            <div class="list__column">{{ product.quantity }}</div>
+            <div class="list__column">
+              {{ product.cost.toFixed(2) + " " + infoItem.region.valute.icon }}
+            </div>
+            <div class="list__column">
+              {{
+                (product.cost * product.quantity).toFixed(2) +
+                " " +
+                infoItem.region.valute.icon
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="total-item" v-if="deliverySum">
+        Сумма доставки:
+        <span class="text text--green">
+          {{ deliverySum.toFixed(2) + " " + infoItem.region.valute.icon }}
+        </span>
+      </div>
+      <div class="total-item" v-else-if="deliveryRequest">
+        Сумма доставки:
+        <span class="text text--green">{{ deliveryRequest }}</span>
+      </div>
+      <div class="total-item">
+        Сумма заказа:
+        <span class="text text--green">{{
+          sum.toFixed(2) + " " + infoItem.region.valute.icon
+        }}</span>
+      </div>
+      <div class="total-item">
+        Итого:
+        <span class="text text--blue-delos">
+          {{
+            (deliverySum + sum).toFixed(2) + " " + infoItem.region.valute.icon
+          }}
+        </span>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -241,6 +305,11 @@ export default {
     sum: {
       get() {
         return this.infoItem.sum;
+      },
+    },
+    deliverySum: {
+      get: function () {
+        return this.infoItem.deliverySum;
       },
     },
     deliveryRequest: {
@@ -540,3 +609,72 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.orders-list-info {
+  .group__title {
+    font-size: 16px;
+    font-weight: 700;
+    position: relative;
+
+    &:not(:first-child) {
+      padding-top: 10px;
+
+      &:before {
+        content: "";
+        position: absolute;
+        display: flex;
+        height: 2px;
+        background-color: $color-gray-secondary;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+    }
+  }
+
+  .sub-list {
+    .list__header {
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      height: auto;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+      }
+
+      .list__columns {
+        background-color: $color-white;
+      }
+    }
+    .list__columns {
+      justify-content: left !important;
+      grid-template-columns: 70px 500px 280px 280px 260px 260px !important;
+
+      .list__column:first-child {
+        text-align: left;
+        padding-left: 5px;
+      }
+    }
+  }
+  .total-item {
+    font-size: 16px;
+    font-weight: 700;
+
+    & + * {
+      margin-top: 10px;
+    }
+  }
+}
+</style>
