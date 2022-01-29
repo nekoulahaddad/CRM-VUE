@@ -1,5 +1,7 @@
 <template>
-  <div class="list__columns list__columns--shadow list__columns--white">
+  <div
+    class="list__columns list__columns--shadow set-list__columns list__columns--white"
+  >
     <div
       class="list__column"
       @click="
@@ -35,11 +37,15 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  data() {
-    return {
-      current: [],
-    };
+    current: Array,
   },
 };
 </script>
+
+<style lang="scss">
+.set-list__columns {
+  a {
+    display: block;
+  }
+}
+</style>

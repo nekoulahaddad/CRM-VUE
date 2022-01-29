@@ -42,10 +42,26 @@
                 class="list__row list__row--shadow list__row--white"
                 :class="{ 'list__row--opened': editedItem._id === item._id }"
               >
-                <v-item :item="item" @toggleEdit="toggleEdit" />
+                <v-item
+                  :current="current"
+                  :item="item"
+                  @toggleEdit="toggleEdit"
+                />
 
                 <!-- Блок с формой редактирования -->
-                <v-edit v-if="editedItem._id === item._id" :item="editedItem" />
+                <v-edit
+                  v-if="editedItem._id === item._id"
+                  :type="type"
+                  :item="editedItem"
+                  :region="filtersOptions.region"
+                />
+              </div>
+              <div
+                v-for="item in dataset.products"
+                :key="item._id"
+                class="list__row list__row--shadow list__row--white"
+              >
+                <v-product :item="item" />
               </div>
             </div>
           </div>
@@ -60,6 +76,7 @@
 <script>
 import VEdit from "./components/VEdit";
 import VItem from "./components/VItem";
+import VProduct from "./components/VProduct";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
@@ -77,6 +94,7 @@ export default {
     VNotFoundQuery,
     VPagination,
     VSpinner,
+    VProduct,
     VPageHeader,
   },
   computed: {
@@ -142,6 +160,7 @@ export default {
       try {
         this.isLoading = false;
         this.filtersOptions.page = this.$route.params.page;
+        this.filtersOptions.type = this.$route.params.type;
 
         const result = await getDataFromPage(
           `/${this.$route.params.type || "categories"}/get`,

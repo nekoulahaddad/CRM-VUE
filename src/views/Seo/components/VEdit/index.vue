@@ -147,15 +147,14 @@ export default {
 
       axios
         .post("/seo/update/", infoData)
-        .then(async (res) => {
-          let result = await res;
-          this.$emit("editItem", result.data);
+        .then(() => {
           this.$toast.success("Элемент успешно обновлен!");
-          this.$emit("toggleOpen");
-          this.changeStatus(true);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        })
+        .finally(() => {
           this.changeStatus(true);
         });
     },
