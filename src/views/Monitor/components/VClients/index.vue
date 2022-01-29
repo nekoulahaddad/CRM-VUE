@@ -32,8 +32,9 @@
         <div class="clients__column column">
           <div class="column__inner">
             <div class="column__top">
-              <img src="@/assets/icons/cart_all.svg" alt="" />
-              <div class="column__icon"></div>
+              <div class="column__icon">
+                <img src="@/assets/icons/cart_all.svg" alt="" />
+              </div>
               <div class="column__title">Количество дел:</div>
             </div>
             <div class="column__bottom">
@@ -44,8 +45,9 @@
         <div class="clients__column column">
           <div class="column__inner">
             <div class="column__top">
-              <img src="@/assets/icons/settings_small.svg" alt="" />
-              <div class="column__icon"></div>
+              <div class="column__icon">
+                <img src="@/assets/icons/settings_small.svg" alt="" />
+              </div>
               <div class="column__title">Загруженность работников:</div>
             </div>
             <div class="column__bottom">
