@@ -208,6 +208,7 @@ export default {
 
 .group__title {
   position: relative;
+  font-size: 16px;
 
   &:not(:first-child) {
     padding-top: 10px;
