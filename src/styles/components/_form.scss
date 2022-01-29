@@ -1,6 +1,6 @@
 @mixin form-element {
   background-color: $color-white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: $border-radius;
   border: none;
   height: 33px;
@@ -17,6 +17,7 @@
 
 .autocomplete-input {
   background: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) !important;
 }
 
 .autocomplete-input,
