@@ -20,7 +20,9 @@
       >
         <div v-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
         <v-spinner v-else-if="!isLoading" />
-        <template v-else-if="dataset.categories.length">
+        <template
+          v-else-if="dataset.categories.length || dataset.products.length"
+        >
           <div class="scroll-horizontal">
             <div class="list list-shadow">
               <div class="list__header">
