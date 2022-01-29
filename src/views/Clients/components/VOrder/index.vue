@@ -1,6 +1,7 @@
 <template>
   <div
     class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
+    :class="{ 'list__body--opened': opened }"
   >
     <div class="list__column list__column--number">
       {{ order.number }}
@@ -82,6 +83,11 @@ export default {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     justify-content: center;
     grid-template-columns: 50px 330px 330px 330px 330px 33px !important;
+    border-radius: 0 !important;
+
+    &--opened {
+      background-color: $color-gray-secondary !important;
+    }
   }
 }
 </style>
