@@ -1,5 +1,5 @@
 <template>
-  <div class="list__info list-info">
+  <div class="list__info order-list-info">
     <div class="group__title text--blue">
       {{ $t("pages.clients.clientInfo") }}
     </div>
@@ -135,7 +135,7 @@
     </div>
     <template v-if="order.products.length">
       <div class="group__title text--blue">Товары:</div>
-      <div class="list">
+      <div class="list sub-list">
         <div class="list__header">
           <div class="list__columns">
             <div class="list__column">№:</div>
@@ -146,22 +146,36 @@
             <div class="list__column">Итог:</div>
           </div>
         </div>
+        <div
+          v-for="(product, index) in order.products"
+          :key="product._id"
+          class="list__row list__row--shadow list__row--white"
+        >
+          <div class="list__columns">
+            <div class="list__column">{{ index + 1 }}</div>
+            <div class="list__column bg bg--blue-light">
+              {{ product.title }}
+            </div>
+            <div class="list__column">{{ product.article }}</div>
+            <div class="list__column">{{ product.quantity }}</div>
+            <div class="list__column">
+              {{ product.cost.toFixed(2) + " " + order.region.valute.icon }}
+            </div>
+            <div class="list__column">
+              {{
+                (product.cost * product.quantity).toFixed(2) +
+                " " +
+                order.region.valute.icon
+              }}
+            </div>
+          </div>
+        </div>
       </div>
-      <div v-for="(product, index) in order.products" :key="product._id">
-        <div>{{ index + 1 }}</div>
-        <div>{{ product.title }}</div>
-        <div>{{ product.article }}</div>
-        <div>{{ product.quantity }}</div>
-        <div>
-          {{ product.cost.toFixed(2) + " " + order.region.valute.icon }}
-        </div>
-        <div>
-          {{
-            (product.cost * product.quantity).toFixed(2) +
-            " " +
-            order.region.valute.icon
-          }}
-        </div>
+      <div class="order-sum">
+        Сумма:
+        <span class="order-sum__value">
+          {{ sum.toFixed(2) + " " + order.region.valute.icon }}
+        </span>
       </div>
     </template>
   </div>
@@ -177,6 +191,13 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    sum: {
+      get: function () {
+        return this.order.sum;
+      },
     },
   },
 };
@@ -200,6 +221,49 @@ export default {
       top: 0;
       left: 0;
       right: 0;
+    }
+  }
+}
+
+.order-list-info {
+  .sub-list {
+    .list__header {
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+      }
+
+      .list__columns {
+      }
+    }
+    .list__columns {
+      justify-content: left !important;
+      grid-template-columns: 70px 500px 280px 280px 260px 260px !important;
+
+      .list__column:first-child {
+        text-align: left;
+        padding-left: 5px;
+      }
+    }
+  }
+  .order-sum {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 15px;
+
+    &__value {
+      color: $color-blue-delos;
     }
   }
 }
