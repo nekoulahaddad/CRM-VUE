@@ -540,7 +540,17 @@
               <autocomplete
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
-              />
+                :get-result-value="getResultValue"
+                @change="selectOptions($event, null, 'executor', null)"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectUser(result)" v-bind="props">
+                    <div class="wiki-title">
+                      {{ result.surname }}
+                    </div>
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
 
@@ -863,6 +873,7 @@ export default {
   },
   data() {
     return {
+      executor: "",
       filter: false,
       sameDateFormat: {
         from: "DD.MM.YYYY, HH:mm",
@@ -996,8 +1007,21 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
-    searchByExecutor(str) {
-      console.log(str);
+    clickOnExecutor(result) {
+      console.log(result);
+    },
+    getResultValue(result) {
+      return result.surname;
+    },
+    searchByExecutor(input) {
+      if (input.length < 1) {
+        return;
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
     },
     selectPeriodDate(startDate, endDate) {
       this.$parent.isLoading = false;
@@ -1279,6 +1303,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .filter {
   margin-right: 16px;
 
@@ -1288,6 +1314,19 @@ export default {
 
   &--collapse {
     display: none;
+  }
+
+  .autocomplete-result-list {
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+
+    li {
+      background: none;
+      cursor: pointer;
+      padding-left: 10px;
+      &:hover {
+        background: $color-gray-secondary;
+      }
+    }
   }
 }
 </style>
