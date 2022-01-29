@@ -248,7 +248,6 @@ export default {
     toggleDelete(deletedItem) {
       this.deletedItem = deletedItem;
       this.$modal.show("delete");
-      //this.deletedItem._id = id;
     },
     toggleEdit(item) {
       this.infoSubItem = {};
@@ -395,7 +394,6 @@ export default {
       }).then(async (res) => {
         this.isLoadingSubTasks = false;
         this.sub_tasks = res.data.tasks;
-        console.log(this.sub_tasks);
       });
     },
     changeTaskStatus(task, status) {
