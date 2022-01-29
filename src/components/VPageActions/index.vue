@@ -12,6 +12,13 @@
         </a>
       </template>
 
+      <!-- Заказы -->
+      <template v-if="name === 'orders'">
+        <a href="" class="page-actions__button" @click.prevent="">
+          <img src="@/assets/icons/create_order.svg" alt="" />
+        </a>
+      </template>
+
       <!-- Сотрудники -->
       <template v-if="name === 'employee'">
         <a

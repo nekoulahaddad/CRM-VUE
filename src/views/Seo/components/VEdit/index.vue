@@ -53,9 +53,16 @@ import axios from "@/api/axios";
 
 export default {
   props: {
+    type: {
+      type: String,
+      default: () => "",
+    },
     item: {
       type: Object,
       required: true,
+    },
+    region: {
+      type: String,
     },
   },
   components: { VButton, VueEditor },
@@ -81,7 +88,6 @@ export default {
           : "";
       },
       set: function (keywords) {
-        this.$refs.keywords.value = keywords;
         if (!this.item.meta) {
           this.item.meta = {};
         }
@@ -93,7 +99,6 @@ export default {
         return this.item && this.item.description ? this.item.description : "";
       },
       set: function (description) {
-        this.$refs.description.value = description;
         this.item.description = description;
       },
     },
@@ -123,30 +128,21 @@ export default {
       this.changeStatus(false);
 
       let infoData = {};
-      infoData.id = this.editedItem._id;
+      infoData.id = this.item._id;
       infoData.type = this.type;
       infoData.region = this.region;
 
-      if (this.editedItem.meta.title || this.editedItem.meta.title === "") {
-        infoData.title = this.editedItem.meta.title;
+      if (this.item.meta.title || this.item.meta.title === "") {
+        infoData.title = this.item.meta.title;
       }
-      if (this.editedItem.description || this.editedItem.description === "") {
-        infoData.description = this.editedItem.description.replace(
-          /$nbsp;/g,
-          " "
-        );
+      if (this.item.description || this.item.description === "") {
+        infoData.description = this.item.description.replace(/$nbsp;/g, " ");
       }
-      if (
-        this.editedItem.meta.keywords ||
-        this.editedItem.meta.keywords === ""
-      ) {
-        infoData.keywords = this.editedItem.meta.keywords;
+      if (this.item.meta.keywords || this.item.meta.keywords === "") {
+        infoData.keywords = this.item.meta.keywords;
       }
-      if (
-        this.editedItem.meta.description ||
-        this.editedItem.meta.description === ""
-      ) {
-        infoData.metadescription = this.editedItem.meta.description;
+      if (this.item.meta.description || this.item.meta.description === "") {
+        infoData.metadescription = this.item.meta.description;
       }
 
       axios

@@ -198,9 +198,9 @@
       </div>
       <div class="total-item">
         Сумма заказа:
-        <span class="text text--green">{{
-          sum.toFixed(2) + " " + infoItem.region.valute.icon
-        }}</span>
+        <span class="text text--green">
+          {{ sum.toFixed(2) + " " + infoItem.region.valute.icon }}
+        </span>
       </div>
       <div class="total-item">
         Итого:

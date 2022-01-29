@@ -25,11 +25,10 @@
         </div>
         <div class="group__value">{{ task.description }}</div>
       </div>
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.tasks.taskDocs") }}
-        </div>
-        <div class="group__value">
+
+      <div class="group">
+        <div class="group__title">{{ $t("pages.tasks.taskDocs") }}</div>
+        <div class="group__content">
           <div v-if="documents.length" class="list__documents documents">
             <div
               v-for="(photo, index) in documents"
@@ -50,6 +49,7 @@
           <div v-else>Нет документов</div>
         </div>
       </div>
+
       <div class="group__content">
         <div class="group__item text--bold-700">
           {{ $t("pages.tasks.taskRegion") }}
@@ -272,4 +272,14 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.documents__item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  & + * {
+    margin-top: 10px;
+  }
+}
+</style>

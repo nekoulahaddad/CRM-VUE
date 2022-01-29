@@ -37,7 +37,7 @@
                 </div>
               </div>
               <div
-                v-for="(item, index) in dataset.categories"
+                v-for="item in dataset.categories"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
                 :class="{ 'list__row--opened': editedItem._id === item._id }"
@@ -45,7 +45,7 @@
                 <v-item :item="item" @toggleEdit="toggleEdit" />
 
                 <!-- Блок с формой редактирования -->
-                <v-edit v-if="editedItem._id === item._id" :item="item" />
+                <v-edit v-if="editedItem._id === item._id" :item="editedItem" />
               </div>
             </div>
           </div>
