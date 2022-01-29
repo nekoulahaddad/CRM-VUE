@@ -8,6 +8,7 @@ import VueNumberFormat from "vue-number-format";
 import VueSocketIOExt from "vue-socket.io-extended";
 import VueCustomTooltip from "@adamdehaven/vue-custom-tooltip";
 import Popover from "vue-js-popover";
+import Autocomplete from "@trevoreyre/autocomplete-vue";
 import VueTheMask from "vue-the-mask";
 import io from "socket.io-client";
 import VModal from "vue-js-modal";
@@ -36,6 +37,7 @@ import deliveryMixins from "@/mixins/delivery";
 import VueInputDropdown from "vue-input-dropdown";
 import transformRoleMixins from "@/mixins/transformRole";
 import statusMixins from "@/mixins/status";
+import "@trevoreyre/autocomplete-vue/dist/style.css";
 import "moment/locale/ru";
 Settings.defaultLocale = "RU";
 import "vue-toastification/dist/index.css";
@@ -75,6 +77,7 @@ Vue.use(VueCustomTooltip, {
 Vue.use(VCalendar, {
   componentPrefix: "vc",
 });
+Vue.use(Autocomplete);
 Vue.use(VueSimpleSVG);
 Vue.use(VModal, { componentName: "v-modal" });
 Vue.use(Popover);

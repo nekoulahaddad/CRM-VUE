@@ -230,9 +230,8 @@
           <div class="filter__group group">
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
+              <autocomplete
+                :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
               />
             </div>
@@ -538,9 +537,8 @@
           <div class="filter__group group">
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
+              <autocomplete
+                :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
               />
             </div>
@@ -998,6 +996,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    searchByExecutor(str) {
+      console.log(str);
+    },
     selectPeriodDate(startDate, endDate) {
       this.$parent.isLoading = false;
       this.$emit("refreshDates", startDate, endDate, this.regionsPool);

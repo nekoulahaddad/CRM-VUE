@@ -6,6 +6,10 @@
 
   &__content {
     display: flex;
+
+    & > div {
+      width: 100%;
+    }
   }
 
   &__item {
