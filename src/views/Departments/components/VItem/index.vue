@@ -14,6 +14,12 @@
         <div class="table__icon">
           <img src="@/assets/icons/info_icon.svg" alt="" />
         </div>
+        <div class="table__icon">
+          <img src="@/assets/icons/write_icon.svg" alt="" />
+        </div>
+        <div class="table__icon">
+          <img src="@/assets/icons/trash_icon.svg" alt="" />
+        </div>
       </div>
     </div>
   </div>

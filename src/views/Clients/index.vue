@@ -60,26 +60,40 @@
                 />
 
                 <div
-                  v-for="(order, index) in item.orders"
-                  :key="order._id"
-                  class="list__row list__row--shadow list__row--white"
+                  v-if="infoItem._id === item._id"
+                  class="list list-shadow order-list-shadow"
                 >
-                  <!-- Блок с заказами клиента -->
-                  <v-order
-                    v-if="infoItem._id === item._id"
-                    :order="order"
-                    :infoItem="infoItem"
-                    :opened="infoSubItem._id === order._id"
-                    :user="item"
-                    @toggleSubInfo="toggleSubInfo"
-                  />
+                  <div class="list__header">
+                    <div class="list__columns">
+                      <div class="list__column">№:</div>
+                      <div class="list__column">Оплачен:</div>
+                      <div class="list__column">Статус заказа:</div>
+                      <div class="list__column">Доставлен:</div>
+                      <div class="list__column">Менеджер:</div>
+                      <div class="list__column"></div>
+                    </div>
+                  </div>
+                  <div
+                    v-for="(order, index) in item.orders"
+                    :key="order._id"
+                    class="list__row list__row--shadow list__row--white"
+                  >
+                    <!-- Блок с заказами клиента -->
+                    <v-order
+                      :order="order"
+                      :infoItem="infoItem"
+                      :opened="infoSubItem._id === order._id"
+                      :user="item"
+                      @toggleSubInfo="toggleSubInfo"
+                    />
 
-                  <!-- Блок с детальной информацией о заказе -->
-                  <v-order-info
-                    v-if="infoSubItem._id === order._id"
-                    :user="item"
-                    :order="order"
-                  />
+                    <!-- Блок с детальной информацией о заказе -->
+                    <v-order-info
+                      v-if="infoSubItem._id === order._id"
+                      :user="item"
+                      :order="order"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

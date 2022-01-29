@@ -1,5 +1,7 @@
 <template>
-  <div class="list__columns list__columns--shadow list__columns--white">
+  <div
+    class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
+  >
     <div class="list__column list__column--number">
       {{ order.number }}
     </div>
@@ -57,3 +59,29 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.order-list-columns {
+  background-color: $color-white !important;
+}
+.order-list-shadow {
+  width: 100% !important;
+
+  .list__header {
+    height: auto;
+
+    .list__columns {
+      background-color: $color-white !important;
+      grid-template-columns: 50px 330px 330px 330px 330px 30px !important;
+      justify-content: center;
+    }
+  }
+  .list__body {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    grid-template-columns: 50px 330px 330px 330px 330px 33px !important;
+  }
+}
+</style>
