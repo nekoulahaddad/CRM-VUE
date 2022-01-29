@@ -500,5 +500,18 @@ export default {
       grid-template-columns: 30px 200px 200px 400px 150px 150px 150px 1fr;
     }
   }
+
+  .sub-tasks {
+    .list__columns {
+      grid-template-columns: 130px 180px 180px 360px 180px 180px 180px 1fr;
+
+      .list__column:first-child {
+        padding-left: 100px;
+      }
+      .list__column:last-child {
+        padding-right: 100px;
+      }
+    }
+  }
 }
 </style>
