@@ -133,6 +133,37 @@
         <div class="group__value">{{ order.manager_comment }}</div>
       </div>
     </div>
+    <template v-if="order.products.length">
+      <div class="group__title text--blue">Товары:</div>
+      <div class="list">
+        <div class="list__header">
+          <div class="list__columns">
+            <div class="list__column">№:</div>
+            <div class="list__column">Название товара:</div>
+            <div class="list__column">Артикул:</div>
+            <div class="list__column">Кол-во:</div>
+            <div class="list__column">Цена за ед.:</div>
+            <div class="list__column">Итог:</div>
+          </div>
+        </div>
+      </div>
+      <div v-for="(product, index) in order.products" :key="product._id">
+        <div>{{ index + 1 }}</div>
+        <div>{{ product.title }}</div>
+        <div>{{ product.article }}</div>
+        <div>{{ product.quantity }}</div>
+        <div>
+          {{ product.cost.toFixed(2) + " " + order.region.valute.icon }}
+        </div>
+        <div>
+          {{
+            (product.cost * product.quantity).toFixed(2) +
+            " " +
+            order.region.valute.icon
+          }}
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -150,3 +181,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.group__title {
+  position: relative;
+
+  &:not(:first-child) {
+    padding-top: 10px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      display: flex;
+      height: 2px;
+      background-color: $color-gray-secondary;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+}
+</style>
