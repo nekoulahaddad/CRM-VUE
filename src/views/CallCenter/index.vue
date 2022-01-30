@@ -126,7 +126,6 @@ export default {
     };
   },
   methods: {
-    ...mapGetters(["sidebar"]),
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },
