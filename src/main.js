@@ -29,6 +29,7 @@ import nameMixins from "@/mixins/name";
 import markMixins from "@/mixins/mark";
 import oneCMixins from "@/mixins/oneC";
 import paymentMixins from "@/mixins/payment";
+
 import phoneMixins from "@/mixins/phone";
 import profileMixins from "@/mixins/profile";
 import ratingMixins from "@/mixins/rating";
@@ -90,6 +91,8 @@ Vue.use(VueScrollTo, {
   offset: 0,
   force: true,
 });
+import { Datetime } from "vue-datetime";
+Vue.component("datetime", Datetime);
 Vue.use(VueNumberFormat, {
   prefix: "",
   suffix: " ₽",

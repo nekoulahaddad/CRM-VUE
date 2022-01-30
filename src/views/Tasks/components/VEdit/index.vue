@@ -69,7 +69,6 @@
               v-model="date"
               required
               input-class="forms__container--input"
-              type="date"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
             />
           </div>
@@ -87,7 +86,6 @@
 <script>
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
-import { Datetime } from "vue-datetime";
 import { mapMutations } from "vuex";
 
 export default {
@@ -107,7 +105,7 @@ export default {
       documents: [],
     };
   },
-  components: { VButton, Datetime },
+  components: { VButton },
   methods: {
     ...mapMutations({
       changeStatus: "change_load_status",
