@@ -49,11 +49,12 @@
                   </router-link>
                 </div>
                 <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.seo.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
+                  <div class="list__column">
+                    {{
+                      dataset.categories
+                        ? "Название категории:"
+                        : "Название товара:"
+                    }}
                   </div>
                 </div>
               </div>
