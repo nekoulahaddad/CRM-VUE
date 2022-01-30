@@ -346,6 +346,8 @@ export default {
     },
     filtersOptions: {
       handler: async function () {
+        this.infoItem = {};
+        this.editedItem = {};
         await this.getData();
       },
       deep: true,
