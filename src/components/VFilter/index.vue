@@ -1325,6 +1325,12 @@ export default {
 .filter {
   margin-right: 16px;
 
+  .group__content {
+    & > div {
+      width: 100%;
+    }
+  }
+
   &__actions {
     margin-top: 20px;
   }
