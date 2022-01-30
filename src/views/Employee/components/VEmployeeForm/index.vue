@@ -72,17 +72,30 @@
       </div>
 
       <div class="form-top__right">
-        <img
-          alt=""
-          :src="
-            infoItem && infoItem.avatar === 'Выбрать файл'
-              ? `${serverAddr + '/avatars/default.svg'}`
-              : infoItem && avatar === 'Выбрать файл'
-              ? `${serverAddr + infoItem.avatar}`
-              : url
-          "
-        />
-        <v-button red>Загрузить</v-button>
+        <div class="employee-photo">
+          <span class="text text--blue">Фото:</span>
+          <img
+            alt=""
+            :src="
+              infoItem && infoItem.avatar === 'Выбрать файл'
+                ? `${serverAddr + '/avatars/default.svg'}`
+                : infoItem && avatar === 'Выбрать файл'
+                ? `${serverAddr + infoItem.avatar}`
+                : url
+            "
+          />
+        </div>
+
+        <div>
+          <input
+            hidden
+            @change="fileUpload($event)"
+            name="avatar"
+            type="file"
+            id="employee-photo"
+          />
+          <label for="employee-photo">Загрузить</label>
+        </div>
       </div>
     </div>
     <div class="group__title text--blue">
@@ -517,6 +530,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .form-top {
   display: flex;
   justify-content: space-between;
@@ -526,6 +541,34 @@ export default {
   }
 
   &__right {
+    button {
+      margin-top: 20px;
+    }
+  }
+
+  .employee-photo {
+    display: flex;
+    align-items: end;
+
+    span {
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
+
+  label[for="employee-photo"] {
+    border-radius: $border-radius;
+    width: 230px;
+    height: 37px;
+    background-color: $color-red;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 20px;
+    cursor: pointer;
   }
 }
 </style>
