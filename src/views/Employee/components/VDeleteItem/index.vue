@@ -60,3 +60,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.vm--modal {
+  &__text {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  &__buttons {
+    justify-content: center;
+  }
+}
+</style>

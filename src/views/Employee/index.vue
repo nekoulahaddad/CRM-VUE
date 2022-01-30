@@ -94,6 +94,9 @@
                 <v-edit
                   v-if="editedItem._id === employee._id"
                   :infoItem="editedItem"
+                  @toggleEdit="toggleEdit"
+                  @addToUsers="addToUsers"
+                  @changeUser="changeUser"
                 />
               </div>
             </div>
@@ -197,6 +200,32 @@ export default {
     },
     toggleFilter() {
       this.showFilter = !this.showFilter;
+    },
+    addToUsers(user) {
+      this.addedItem = user;
+      let users = this.dataset;
+
+      if (users.length !== 15) {
+        users.push(user);
+        this.dataset = users;
+      }
+      this.count++;
+      setTimeout(() => {
+        this.addedItem = {};
+      }, 500);
+      this.changeStatus(true);
+    },
+    changeUser(user) {
+      this.updatedItem = user[0];
+      let updatedUser = user[0];
+      let index = this.dataset.findIndex(
+        (item) => item._id === updatedUser._id
+      );
+      this.dataset[index] = updatedUser;
+      setTimeout(() => {
+        this.updatedUser = {};
+      }, 500);
+      this.changeStatus(true);
     },
     async getData() {
       try {

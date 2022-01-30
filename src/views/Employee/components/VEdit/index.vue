@@ -1,13 +1,16 @@
 <template>
   <div class="list__info list-info employee-edit-form">
-    <v-employee-form :infoItem="infoItem" />
+    <v-employee-form
+      :infoItem="infoItem"
+      @addToUsers="$emit('addToUsers')"
+      @toggleEdit="toggleEdit"
+      @changeUser="changeUser"
+    />
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
 import VEmployeeForm from "../VEmployeeForm";
-import axios from "@/api/axios";
 import VButton from "@/components/VButton";
 import { Datetime } from "vue-datetime";
 
@@ -17,6 +20,14 @@ export default {
     infoItem: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    toggleEdit(infoItem) {
+      this.$emit("toggleEdit", infoItem);
+    },
+    changeUser(user) {
+      this.$emit("changeUser", user);
     },
   },
 };

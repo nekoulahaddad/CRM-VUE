@@ -4,7 +4,7 @@
       class="draggable-item__dropdown"
       v-if="dropDown && item && dropDown._id === item._id"
     >
-      <span>Редактировать категорию</span>
+      <span @click="$emit('toggleEdit', item)">Редактировать категорию</span>
       <span>Копировать категорию</span>
       <span>Экспорт в Excel</span>
       <span>Импорт Excel</span>
@@ -111,6 +111,7 @@ export default {
       height: 17px;
       position: relative;
       top: -5px;
+      cursor: pointer;
 
       & + * {
         margin-top: 5px;

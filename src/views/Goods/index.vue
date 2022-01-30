@@ -74,6 +74,12 @@
                       :current="current"
                       :dropDown="dropDown"
                       @toggleDropDown="toggleDropDown"
+                      @toggleEdit="toggleEdit"
+                    />
+
+                    <v-edit-category
+                      v-if="editedItem._id === item._id"
+                      :editedItem="editedItem"
                     />
                   </Draggable>
                 </Container>
@@ -117,6 +123,7 @@
 <script>
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
+import VEditCategory from "./components/VEditCategory";
 import VProduct from "./components/VProduct";
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
@@ -136,6 +143,7 @@ export default {
     VNotFoundQuery,
     Draggable,
     VPageHeader,
+    VEditCategory,
     Container,
   },
   data() {
@@ -258,6 +266,13 @@ export default {
         this.dropDown = {};
       } else {
         this.dropDown = dropDown;
+      }
+    },
+    toggleEdit(item) {
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
+      } else {
+        this.editedItem = item;
       }
     },
     async updateByFilter() {

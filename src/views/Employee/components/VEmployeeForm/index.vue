@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="$emit('submit')"
+    @submit.prevent="onUserAdd"
     enctype="multipart/form-data"
     accept="image/x-png,image/gif,image/jpeg"
   >
@@ -411,15 +411,15 @@ export default {
       if (this.appartment) userData.append("appartment", this.appartment);
       if (this.passport) userData.append("passport", this.passport);
       if (this.inn) userData.append("inn", this.inn);
-      if (this.item) {
-        userData.append("options", JSON.stringify(this.item.options));
+      if (this.infoItem) {
+        userData.append("options", JSON.stringify(this.infoItem.options));
       } else {
         userData.append("options", JSON.stringify(this.options));
       }
       if (this.children.length) {
         userData.append("children", JSON.stringify(this.children));
       }
-      if (!this.item) {
+      if (!this.infoItem) {
         for (let i = 0; i < this.passport_photo.length; i++) {
           userData.append("passport_photo", this.passport_photo[i]);
         }
@@ -431,25 +431,25 @@ export default {
       if (this.additional_phone) {
         userData.append("additional_phone", this.additional_phone);
       }
-      if (this.item) {
-        userData.append("userId", this.item._id);
+      if (this.infoItem) {
+        userData.append("userId", this.infoItem._id);
       }
 
-      if (!this.item) {
+      if (!this.infoItem) {
         axios({
           url: `/user/post/`,
           data: userData,
           method: "POST",
         })
-          .then(async (res) => {
-            let result = await res;
-            this.$emit("refresh", result.data.user);
+          .then((res) => {
+            this.$emit("addToUsers", res.data.user);
             this.$emit("toggleOpen");
             this.$toast.success("Пользователь успешно добавлен!");
-            this.changeStatus(true);
           })
           .catch(async (err) => {
             this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
             this.changeStatus(true);
           });
       } else {
@@ -459,13 +459,14 @@ export default {
           method: "POST",
         })
           .then(({ data }) => {
-            this.$emit("refresh", data.user);
-            this.$emit("toggleOpen");
-            this.$toast.success("Пользователь успешно обновлен!");
-            this.changeStatus(true);
+            this.$emit("changeUser", data.user);
+            this.$emit("toggleEdit", this.infoItem);
+            this.$toast.success("Пользователь успешно изменен!");
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
             this.changeStatus(true);
           });
       }
