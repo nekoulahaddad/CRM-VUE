@@ -69,7 +69,12 @@
                 />
 
                 <!-- Блок с детальной информацией о задаче -->
-                <v-task-info v-if="infoItem._id === task._id" :task="task" />
+                <v-task-info
+                  v-if="infoItem._id === task._id"
+                  :task="task"
+                  @changeTaskStatus="changeTaskStatus"
+                  @toggleInfo="toggleInfo"
+                />
 
                 <!-- Блок с подзадачами -->
                 <div

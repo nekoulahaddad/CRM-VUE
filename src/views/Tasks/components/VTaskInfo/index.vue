@@ -99,7 +99,7 @@
             userId === task.initiator._id &&
             task.executors >= 1
           "
-          @click.prevent="changeTaskStatus(task, 'completed')"
+          @click="changeTaskStatus(task, 'completed')"
           red
         >
           {{ $t("pages.tasks.taskExecute") }}
@@ -110,7 +110,7 @@
             (userId === task.executor._id || userId === task.executor._id[0]) &&
             task.status.value === 'assigned'
           "
-          @click.prevent="changeTaskStatus(task, 'accepted')"
+          @click="changeTaskStatus(task, 'accepted')"
           red
         >
           {{ $t("pages.tasks.taskAccepted") }}
@@ -122,7 +122,7 @@
             task.status.value === 'assigned'
           "
           white
-          @click.prevent="changeTaskStatus(task, 'not accepted')"
+          @click="changeTaskStatus(task, 'not accepted')"
         >
           {{ $t("pages.tasks.taskNotAccepted") }}
         </v-button>
@@ -133,7 +133,7 @@
             (userId === task.executor._id || userId === task.executor._id[0]) &&
             task.status.value === 'accepted'
           "
-          @click.prevent="changeTaskStatus(task, 'tested')"
+          @click="changeTaskStatus(task, 'tested')"
           white
         >
           {{ $t("pages.tasks.taskTested") }}
@@ -144,7 +144,7 @@
             userId === task.initiator._id &&
             task.status.value === 'tested'
           "
-          @click.prevent="changeTaskStatus(task, 'completed')"
+          @click="changeTaskStatus(task, 'completed')"
           red
         >
           {{ $t("pages.tasks.taskExecute") }}
@@ -155,7 +155,7 @@
             userId === task.initiator._id &&
             task.status.value === 'tested'
           "
-          @click.prevent="changeTaskStatus(task, 'under revision')"
+          @click="changeTaskStatus(task, 'under revision')"
           white
         >
           {{ $t("pages.tasks.taskUnderRevision") }}
@@ -166,7 +166,7 @@
             (userId === task.executor._id || userId === task.executor._id[0]) &&
             task.status.value === 'under revision'
           "
-          @click.prevent="changeTaskStatus(task, 'tested')"
+          @click="changeTaskStatus(task, 'tested')"
           white
         >
           {{ $t("pages.tasks.taskTested") }}
@@ -265,7 +265,7 @@ export default {
         }
         this.$toast.success("Статус задачи изменен!");
         this.$emit("changeTaskStatus", result.data.task, result.data.status);
-        this.$emit("toggleInfo");
+        this.$emit("toggleInfo", this.task);
       });
     },
   },
