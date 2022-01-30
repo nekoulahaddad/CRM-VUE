@@ -6,7 +6,7 @@
   >
     <div class="form-top">
       <div class="form-top__left">
-        <div class="group__title text--blue">
+        <div class="group__title group__title--big text--blue">
           {{ $t("pages.employee.employeeMainInfo") }}
         </div>
         <div class="group">
@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-    <div class="group__title text--blue">
+    <div class="group__title group__title--big text--blue">
       {{ $t("pages.employee.employeeAddInfo") }}
     </div>
     <div class="group">
@@ -228,7 +228,7 @@
     </div>
 
     <!-- Личные данные -->
-    <div class="group__title text--blue">
+    <div class="group__title group__title--big text--blue">
       {{ $t("pages.employee.employeePersonalInfo") }}
     </div>
     <div class="group">
@@ -281,7 +281,7 @@
     </div>
 
     <!-- Дети -->
-    <div class="group__title text--blue">
+    <div class="group__title group__title--big text--blue">
       {{ $t("childs") }}
     </div>
     <div class="group">
@@ -294,7 +294,7 @@
       </v-button>
     </div>
 
-    <div class="group__title text--blue">
+    <div class="group__title group__title--big text--blue">
       {{ $t("another") }}
     </div>
 
@@ -570,5 +570,8 @@ export default {
     margin-top: 20px;
     cursor: pointer;
   }
+}
+.group__title--big {
+  font-size: 16px;
 }
 </style>
