@@ -18,7 +18,11 @@
       <div class="group">
         <div class="group__title">{{ $t("keywords") }}</div>
         <div class="group__content">
-          <textarea class="form-textarea" :placeholder="$t('keywords')" />
+          <textarea
+            class="form-textarea"
+            v-model="keywords"
+            :placeholder="$t('keywords')"
+          />
         </div>
       </div>
       <div class="group">
@@ -148,7 +152,7 @@ export default {
       axios
         .post("/seo/update/", infoData)
         .then(() => {
-          this.$toast.success("Элемент успешно обновлен!");
+          this.$toast.success("Элемент успешно изменен!");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);

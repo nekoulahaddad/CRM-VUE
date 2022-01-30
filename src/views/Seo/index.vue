@@ -26,8 +26,27 @@
           <div class="scroll-horizontal">
             <div class="list list-shadow">
               <div class="list__header">
-                <div class="list__title">
-                  {{ $t("pages.seo.pageTitle") }}
+                <div class="list__title title">
+                  <div class="title__item">
+                    {{ $t("pages.seo.pageTitle") }}
+                  </div>
+                  <router-link
+                    class="title__item"
+                    v-for="item in current"
+                    :to="`/dashboard/seo/${
+                      item.categoryName
+                        ? +item.nesting + 2
+                        : +$route.params.nesting + 1
+                    }/categories/${item._id}/1`"
+                  >
+                    {{
+                      item.categoryName
+                        ? item.categoryName
+                        : item.name
+                        ? item.name
+                        : ""
+                    }}
+                  </router-link>
                 </div>
                 <div class="list__columns">
                   <div
@@ -53,7 +72,7 @@
                 <!-- Блок с формой редактирования -->
                 <v-edit
                   v-if="editedItem._id === item._id"
-                  :type="type"
+                  type="categories"
                   :item="editedItem"
                   :region="filtersOptions.region"
                 />
@@ -193,6 +212,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .seo-page {
   .list__columns {
     grid-template-columns: 1fr 1fr;
@@ -201,6 +222,32 @@ export default {
   .list__column {
     &:first-child {
       text-align: left;
+    }
+  }
+  .title {
+    display: flex;
+
+    &__item {
+      color: rgba(0, 0, 0, 0.3);
+      position: relative;
+      margin-right: 10px;
+
+      &.router-link-active {
+        color: $color-black;
+      }
+
+      & + * {
+        padding-left: 15px;
+
+        &::before {
+          content: "/";
+          position: absolute;
+          color: rgba(0, 0, 0, 0.3);
+          left: 0;
+          top: 0;
+          bottom: 0;
+        }
+      }
     }
   }
 }
