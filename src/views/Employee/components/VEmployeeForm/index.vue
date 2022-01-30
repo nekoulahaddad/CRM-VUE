@@ -75,6 +75,7 @@
         <div class="employee-photo">
           <span class="text text--blue">Фото:</span>
           <img
+            class="photo"
             alt=""
             :src="
               infoItem && infoItem.avatar === 'Выбрать файл'
@@ -549,10 +550,12 @@ export default {
   .employee-photo {
     display: flex;
     align-items: end;
+    justify-content: end;
 
     span {
       font-weight: 700;
       font-size: 14px;
+      margin-right: 10px;
     }
   }
 
@@ -573,5 +576,10 @@ export default {
 }
 .group__title--big {
   font-size: 16px;
+}
+.photo {
+  width: 123px;
+  height: 123px;
+  object-fit: contain;
 }
 </style>
