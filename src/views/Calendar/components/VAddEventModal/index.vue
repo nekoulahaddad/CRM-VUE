@@ -17,6 +17,8 @@
             type="text"
             class="form-control"
             placeholder="Введите заголовок мероприятия..."
+            name="title"
+            @input="onChange($event)"
           />
         </div>
       </div>
@@ -25,7 +27,12 @@
       <div class="group">
         <div class="group__title">Участники:</div>
         <div class="group__content">
-          <autocomplete placeholder="Введите исполнителя задачи...">
+          <autocomplete
+            :search="searchByExecutor"
+            :get-result-value="getResultValue"
+            placeholder="Введите исполнителя задачи..."
+            @input="getUsersByFIO"
+          >
             <template #result="{ result, props }">
               <li v-bind="props">
                 {{ result.surname }}
@@ -40,10 +47,12 @@
         <div class="group__title">Дата начала:</div>
         <div class="group__content">
           <datetime
-            v-model="start"
             required
+            v-model="start"
+            type="datetime"
             input-class="forms__container--input"
             :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            @input="start = $event.target.value"
           />
         </div>
       </div>
@@ -53,10 +62,12 @@
         <div class="group__title">Дата окончания:</div>
         <div class="group__content">
           <datetime
-            v-model="end"
             required
+            v-model="end"
+            type="datetime"
             input-class="forms__container--input"
             :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            @input="end = $event.target.value"
           />
         </div>
       </div>
@@ -68,6 +79,8 @@
           <textarea
             class="form-textarea"
             placeholder="Введите описание данного мероприятия..."
+            name="description"
+            @input="onChange($event)"
           />
         </div>
       </div>
@@ -78,11 +91,17 @@
 
 <script>
 import VButton from "@/components/VButton";
+import { mapMutations } from "vuex";
+import axios from "@/api/axios";
 
 export default {
   components: { VButton },
   data() {
-    return {};
+    return {
+      fio: "",
+      users: [],
+      participants: [],
+    };
   },
   props: {
     selectionStart: {
@@ -121,5 +140,43 @@ export default {
       },
     },
   },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+    async getUsersByFIO() {
+      if (this.fio === "") {
+        return;
+      }
+      axios(`/user/getsearch/${this.fio}`).then(async (res) => {
+        let result = await res;
+        this.users = result.data;
+      });
+    },
+    searchByExecutor(input) {
+      if (input.length < 1) {
+        return;
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    getResultValue(result) {
+      return result.surname;
+    },
+  },
 };
 </script>
+
+<style lang="scss">
+.vm--modal {
+  .autocomplete-input {
+    width: 330px;
+  }
+}
+</style>
