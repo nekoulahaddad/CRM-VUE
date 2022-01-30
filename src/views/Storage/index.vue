@@ -69,6 +69,8 @@
                   v-if="editedItem._id === item._id"
                   :editedItem="editedItem"
                   :region="filtersOptions.region"
+                  @toggleEdit="toggleEdit"
+                  @editItem="editItem"
                 />
               </div>
             </div>
@@ -141,6 +143,20 @@ export default {
       } else {
         this.editedItem = item;
       }
+    },
+    editItem(data) {
+      let product = data.product;
+      let index = this.dataset.products.findIndex(
+        (item) => item._id === product._id
+      );
+      setTimeout(() => {
+        let dataset = this.dataset.products;
+
+        dataset[index] = product;
+        this.dataset.products = dataset;
+        this.editedItem = {};
+      }, 500);
+      this.changeStatus(true);
     },
     updateGoods(res) {
       this.dataset.categories = res.data.categories;

@@ -7,9 +7,10 @@
         <div class="group__content">
           <input
             class="form-control"
-            type="text"
             placeholder="Введите минимальное количество..."
             name="minq"
+            type="number"
+            v-model="minq"
             @input="onChange($event)"
           />
         </div>
@@ -21,6 +22,9 @@
             class="form-control"
             type="text"
             placeholder="Введите наименование организации..."
+            v-model="currentInput"
+            @keypress.enter.prevent="saveChip"
+            @keydown.delete="backspaceDelete"
           />
         </div>
       </div>
@@ -94,8 +98,8 @@ export default {
         .then(async (res) => {
           let result = await res;
           this.$emit("editItem", result.data);
-          this.$toast.success("Элемент успешно обновлен!");
-          this.$emit("toggleOpen");
+          this.$toast.success("Элемент успешно изменен!");
+          this.$emit("toggleEdit", this.editedItem);
           this.changeStatus(true);
         })
         .catch((err) => {
