@@ -395,7 +395,6 @@ export default {
         this.activeIndex = index;
       }
 
-      this.$toast.success("Получаю подзадачи!");
       axios({
         url: "/tasks/getsub",
         data: {
