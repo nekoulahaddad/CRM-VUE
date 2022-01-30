@@ -109,6 +109,7 @@
                     <v-task-info
                       v-if="infoSubItem._id === sub_task._id"
                       :task="sub_task"
+                      @changeTaskStatus="changeTaskStatus"
                     />
 
                     <!-- Блок редактирования задачи -->
