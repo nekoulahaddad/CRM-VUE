@@ -24,21 +24,52 @@
           <div class="scroll-horizontal">
             <div class="list list-shadow">
               <div class="list__header">
-                <div class="list__title title">
-                  <div class="title__item">Заказы</div>
+                <div class="list__title title title">
+                  <div class="title__item">Снабженец</div>
+                  <router-link
+                    v-for="item in current"
+                    :to="`/dashboard/storage/${
+                      item.categoryName
+                        ? +item.nesting + 2
+                        : +$route.params.nesting + 1
+                    }/categories/${item._id}/1`"
+                  >
+                    {{
+                      item.categoryName
+                        ? item.categoryName
+                        : item.name
+                        ? item.name
+                        : ""
+                    }}
+                  </router-link>
                 </div>
               </div>
               <div
                 class="list__row list__row--shadow list__row--white"
                 v-for="item in dataset.categories"
               >
-                <v-category :key="item.id" :item="item" />
+                <v-category :key="item._id" :item="item" />
               </div>
+            </div>
+            <div class="list list-shadow">
               <div
                 class="list__row list__row--shadow list__row--white"
                 v-for="item in dataset.products"
+                :class="{
+                  'list__row--opened': editedItem._id === item._id,
+                }"
               >
-                <v-product :key="item.id" :item="item" />
+                <v-product
+                  :key="item._id"
+                  :item="item"
+                  @toggleEdit="toggleEdit"
+                />
+
+                <v-product-edit
+                  v-if="editedItem._id === item._id"
+                  :editedItem="editedItem"
+                  :region="filtersOptions.region"
+                />
               </div>
             </div>
           </div>
@@ -51,6 +82,7 @@
 </template>
 
 <script>
+import VProductEdit from "./components/VProductEdit";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
@@ -70,6 +102,7 @@ export default {
     VNotFoundQuery,
     VPageHeader,
     VCategory,
+    VProductEdit,
     VProduct,
   },
   computed: {
@@ -101,6 +134,13 @@ export default {
     }),
     toggleFilter() {
       this.showFilter = !this.showFilter;
+    },
+    toggleEdit(item) {
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
+      } else {
+        this.editedItem = item;
+      }
     },
     updateGoods(res) {
       this.dataset.categories = res.data.categories;

@@ -3,16 +3,18 @@
     class="list__columns list__columns--shadow list__columns--white storage-list-columns"
   >
     <div class="list__column">
-      <router-link
-        :to="`/dashboard/storage/${+item.nesting + 2}/categories/${item._id}/1`"
-      >
+      <a target="_blank" :href="`https://tdcsk.com/products/${item.slug}`">
         {{ item.title }}
-      </router-link>
+      </a>
     </div>
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/write_icon.svg" alt="" />
+          <img
+            @click="$emit('toggleEdit', item)"
+            src="@/assets/icons/write_icon.svg"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -29,3 +31,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.storage-list-columns {
+  grid-template-columns: 1fr 100px;
+  a {
+    display: block;
+  }
+}
+</style>

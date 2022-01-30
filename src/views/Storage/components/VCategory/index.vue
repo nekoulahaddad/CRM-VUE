@@ -93,6 +93,9 @@ export default {
 <style lang="scss">
 .storage-page {
   .list__column {
+    a {
+      display: block;
+    }
     &:first-child {
       text-align: left !important;
     }
