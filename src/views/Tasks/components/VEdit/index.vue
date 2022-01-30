@@ -39,11 +39,11 @@
           </div>
         </div>
         <div class="group">
-          <div class="group__title">Документы</div>
+          <div class="group__title">Документы:</div>
           <div class="group__content">
-            <div v-if="task.documents.length" class="list__documents documents">
+            <div v-if="documents.length" class="list__documents documents">
               <div
-                v-for="(photo, index) in task.documents"
+                v-for="(photo, index) in documents"
                 class="documents__item"
                 @click.prevent="downloadItem(serverAddr + `${photo}`, photo)"
               >
@@ -57,9 +57,18 @@
                     : `Документ ${index + 1}`
                 }}
               </div>
+              <div>
+                <input
+                  hidden
+                  multiple
+                  @change="fileUpload($event)"
+                  name="documents"
+                  type="file"
+                  id="document-file"
+                />
+                <label for="document-file">Выбрать файл</label>
+              </div>
             </div>
-            <input type="file" id="document-file" hidden />
-            <label for="document-file">Выбрать файл</label>
           </div>
         </div>
         <div class="group">
@@ -162,6 +171,7 @@ export default {
       this.changeStatus(true);
     },
     downloadItem(url, filename) {
+      alert(url);
       axios
         .get(url, { responseType: "blob" })
         .then((response) => {
