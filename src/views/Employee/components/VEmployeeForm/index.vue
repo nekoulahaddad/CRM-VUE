@@ -4,67 +4,85 @@
     enctype="multipart/form-data"
     accept="image/x-png,image/gif,image/jpeg"
   >
-    <div class="group__title text--blue">
-      {{ $t("pages.employee.employeeMainInfo") }}
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("lastName") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          class="form-control"
-          :placeholder="$t('lastName')"
-          :value.trim="infoItem ? infoItem.surname : surname"
-          @input="onChange($event)"
-        />
+    <div class="form-top">
+      <div class="form-top__left">
+        <div class="group__title text--blue">
+          {{ $t("pages.employee.employeeMainInfo") }}
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("lastName") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              class="form-control"
+              :placeholder="$t('lastName')"
+              :value.trim="infoItem ? infoItem.surname : surname"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("firstName") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              class="form-control"
+              :placeholder="$t('firstName')"
+              :value.trim="infoItem ? infoItem.name : name"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("middleName") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              class="form-control"
+              :placeholder="$t('middleName')"
+              :value.trim="infoItem ? infoItem.lastname : lastname"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("mail") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              class="form-control"
+              :placeholder="$t('mail')"
+              :value="infoItem ? infoItem.email : email"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("phone") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              class="form-control"
+              :placeholder="$t('phone')"
+              :value="infoItem ? infoItem.phone : phone"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("firstName") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          class="form-control"
-          :placeholder="$t('firstName')"
-          :value.trim="infoItem ? infoItem.name : name"
-          @input="onChange($event)"
+
+      <div class="form-top__right">
+        <img
+          alt=""
+          :src="
+            infoItem && infoItem.avatar === 'Выбрать файл'
+              ? `${serverAddr + '/avatars/default.svg'}`
+              : infoItem && avatar === 'Выбрать файл'
+              ? `${serverAddr + infoItem.avatar}`
+              : url
+          "
         />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("middleName") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          class="form-control"
-          :placeholder="$t('middleName')"
-          :value.trim="infoItem ? infoItem.lastname : lastname"
-          @input="onChange($event)"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("mail") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          class="form-control"
-          :placeholder="$t('mail')"
-          :value="infoItem ? infoItem.email : email"
-          @input="onChange($event)"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("phone") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          class="form-control"
-          :placeholder="$t('phone')"
-          :value="infoItem ? infoItem.phone : phone"
-          @input="onChange($event)"
-        />
+        <v-button red>Загрузить</v-button>
       </div>
     </div>
     <div class="group__title text--blue">
@@ -497,3 +515,17 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.form-top {
+  display: flex;
+  justify-content: space-between;
+
+  &__left {
+    width: 976px;
+  }
+
+  &__right {
+  }
+}
+</style>
