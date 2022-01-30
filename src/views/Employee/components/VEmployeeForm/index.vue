@@ -255,10 +255,12 @@
     </div>
     <div class="group">
       <div class="group__footer">
-        <v-add-child />
+        <v-add-child v-if="showAddChild" @cancel="showAddChild = false" />
       </div>
 
-      <v-button red>{{ $t("add") }}</v-button>
+      <v-button red @click="showAddChild = true" v-if="!showAddChild">
+        {{ $t("add") }}
+      </v-button>
     </div>
 
     <div class="group__title text--blue">
@@ -297,6 +299,7 @@ export default {
       department: null,
       sub_department: null,
       personal_number: null,
+      showAddChild: false,
       role: null,
       position: null,
       education: null,

@@ -3,7 +3,7 @@
     <div class="group">
       <div class="group__title">ФИО:</div>
       <div class="group__content">
-        <input type="text" class="form-control" :placeholder="$t('lastName')" />
+        <input type="text" class="form-control" />
       </div>
     </div>
     <div class="group">
@@ -21,16 +21,26 @@
       <div class="group__title">Пол:</div>
       <div class="group__content">
         <select class="form-select">
-          <option value="">М</option>
-          <option value="">Ж</option>
+          <option value="">Муж</option>
+          <option value="">Жен</option>
         </select>
       </div>
+    </div>
+    <div class="add-child__buttons">
+      <v-button red>Добавить</v-button>
+      <v-button white @click="$emit('cancel')">Отмена</v-button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import VButton from "@/components/VButton";
+
+export default {
+  components: {
+    VButton,
+  },
+};
 </script>
 
 <style lang="scss">
@@ -43,6 +53,11 @@ export default {};
   .vdatetime-input,
   .form-select {
     width: 401px;
+  }
+
+  &__buttons {
+    display: flex;
+    margin-top: 10px;
   }
 }
 </style>
