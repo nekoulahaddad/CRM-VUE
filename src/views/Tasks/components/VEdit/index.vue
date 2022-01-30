@@ -63,6 +63,18 @@
           </div>
         </div>
         <div class="group">
+          <div class="group__title">Дедлайн:</div>
+          <div class="group__content">
+            <datetime
+              v-model="date"
+              required
+              input-class="forms__container--input"
+              type="date"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
+        </div>
+        <div class="group">
           <div class="group__footer">
             <v-button red>Отправить</v-button>
           </div>
@@ -75,6 +87,7 @@
 <script>
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
+import { Datetime } from "vue-datetime";
 import { mapMutations } from "vuex";
 
 export default {
@@ -94,7 +107,7 @@ export default {
       documents: [],
     };
   },
-  components: { VButton },
+  components: { VButton, Datetime },
   methods: {
     ...mapMutations({
       changeStatus: "change_load_status",
@@ -171,6 +184,13 @@ export default {
   },
   created() {
     this.date = new Date(this.task.deadline_date).toISOString();
+    this.title = this.task.title;
+    this.description = this.task.description;
+    this.initiator_comment = this.task.initiator_comment;
+
+    if (this.task.documents.length) {
+      this.documents = this.task.documents;
+    }
   },
 };
 </script>
@@ -223,6 +243,9 @@ export default {
     border-radius: $border-radius;
     color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
+  }
+  .vdatetime-input {
+    width: 330px;
   }
 }
 </style>
