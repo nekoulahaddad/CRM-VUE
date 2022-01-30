@@ -5,6 +5,11 @@
       @removeFromTask="removeFromTask"
     />
 
+    <v-delete-sub-item
+      :deletedItem="deletedItem"
+      @removeFromSubTask="removeFromSubTask"
+    />
+
     <v-page-header
       :title="$t('pages.tasks.pageTitle')"
       icon="tasks_title"
@@ -92,7 +97,7 @@
                       :task="sub_task"
                       @toggleSubInfo="toggleSubInfo"
                       @toggleEdit="toggleEdit"
-                      @toggleDelete="toggleDelete"
+                      @toggleSubDelete="toggleSubDelete"
                     />
 
                     <!-- Блок с детальной информацией о задаче -->
@@ -123,6 +128,7 @@
 import VEdit from "./components/VEdit";
 import VTask from "./components/VTask";
 import VDeleteItem from "./components/VDeleteItem";
+import VDeleteSubItem from "./components/VDeleteSubItem";
 import VSubTask from "./components/VSubTask";
 import VTaskInfo from "./components/VTaskInfo";
 import VFilter from "@/components/VFilter";
@@ -146,6 +152,7 @@ export default {
     VTaskInfo,
     VSubTask,
     VPageHeader,
+    VDeleteSubItem,
   },
   props: {
     user: {
@@ -249,6 +256,10 @@ export default {
       this.deletedItem = deletedItem;
       this.$modal.show("delete");
     },
+    toggleSubDelete(deletedItem) {
+      this.deletedItem = deletedItem;
+      this.$modal.show("deleteSubTask");
+    },
     toggleEdit(item) {
       this.infoSubItem = {};
 
@@ -257,14 +268,6 @@ export default {
       } else {
         this.editedItem = item;
       }
-    },
-    toggleSubDelete(id) {
-      if (!this.deleteSubForm) {
-        this.deletedItem._id = id;
-      } else {
-        this.deletedItem = {};
-      }
-      this.deleteSubForm = !this.deleteSubForm;
     },
     toggleInfo(item) {
       this.activeIndex = -1;
@@ -312,6 +315,9 @@ export default {
         this.dataset = dataset;
         this.editedItem = {};
       }, 500);
+    },
+    removeFromSubTask(item) {
+      this.sub_tasks = this.sub_tasks.filter((item) => item._id !== item._id);
     },
     removeFromTask(task) {
       this.$modal.hide("delete");
