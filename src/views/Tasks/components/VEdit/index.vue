@@ -159,16 +159,15 @@ export default {
         method: "POST",
       })
         .then(async (res) => {
-          this.$emit("editTask", res.data.task);
-          this.$toast.success("Задача успешно обновлена!");
-          this.$emit("toggleOpen");
-          this.changeStatus(true);
+          this.$emit("toggleEdit", this.task);
+          this.$toast.success("Задача успешно изменена!");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
           this.changeStatus(true);
         });
-      this.changeStatus(true);
     },
     downloadItem(url, filename) {
       alert(url);

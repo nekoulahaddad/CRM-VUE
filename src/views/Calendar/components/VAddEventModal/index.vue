@@ -10,81 +10,75 @@
       />
     </div>
     <div class="vm--modal__inner">
-      <div class="group">
-        <div class="group__title">Заголовок мероприятия:</div>
-        <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Введите заголовок мероприятия..."
-            name="title"
-            @input="onChange($event)"
-          />
+      <form @submit.prevent="onEventAdd">
+        <div class="group">
+          <div class="group__title">Заголовок мероприятия:</div>
+          <div class="group__content">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Введите заголовок мероприятия..."
+              name="title"
+              @input="onChange($event)"
+            />
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="vm--modal__inner">
-      <div class="group">
-        <div class="group__title">Участники:</div>
-        <div class="group__content">
-          <autocomplete
-            :search="searchByExecutor"
-            :get-result-value="getResultValue"
-            placeholder="Введите исполнителя задачи..."
-            @input="getUsersByFIO"
-          >
-            <template #result="{ result, props }">
-              <li v-bind="props">
-                {{ result.surname }}
-              </li>
-            </template>
-          </autocomplete>
+        <div class="group">
+          <div class="group__title">Участники:</div>
+          <div class="group__content">
+            <autocomplete
+              :search="searchByExecutor"
+              :get-result-value="getResultValue"
+              placeholder="Введите исполнителя задачи..."
+              @input="getUsersByFIO"
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props">
+                  {{ result.surname }}
+                </li>
+              </template>
+            </autocomplete>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="vm--modal__inner">
-      <div class="group">
-        <div class="group__title">Дата начала:</div>
-        <div class="group__content">
-          <datetime
-            required
-            v-model="start"
-            type="datetime"
-            input-class="forms__container--input"
-            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            @input="start = $event.target.value"
-          />
+        <div class="group">
+          <div class="group__title">Дата начала:</div>
+          <div class="group__content">
+            <datetime
+              required
+              v-model="start"
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              @input="start = $event.target.value"
+            />
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="vm--modal__inner">
-      <div class="group">
-        <div class="group__title">Дата окончания:</div>
-        <div class="group__content">
-          <datetime
-            required
-            v-model="end"
-            type="datetime"
-            input-class="forms__container--input"
-            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            @input="end = $event.target.value"
-          />
+        <div class="group">
+          <div class="group__title">Дата окончания:</div>
+          <div class="group__content">
+            <datetime
+              required
+              v-model="end"
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              @input="end = $event.target.value"
+            />
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="vm--modal__inner">
-      <div class="group">
-        <div class="group__title">Описание:</div>
-        <div class="group__content">
-          <textarea
-            class="form-textarea"
-            placeholder="Введите описание данного мероприятия..."
-            name="description"
-            @input="onChange($event)"
-          />
+        <div class="group">
+          <div class="group__title">Описание:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Введите описание данного мероприятия..."
+              name="description"
+              @input="onChange($event)"
+            />
+          </div>
         </div>
-      </div>
-      <v-button red>Создать</v-button>
+        <v-button red>Создать</v-button>
+      </form>
     </div>
   </v-modal>
 </template>
@@ -101,15 +95,11 @@ export default {
       fio: "",
       users: [],
       participants: [],
+      selectionStart: new Date(),
+      selectionEnd: new Date(),
     };
   },
   props: {
-    selectionStart: {
-      type: Date,
-    },
-    selectionEnd: {
-      type: Date,
-    },
     type: {
       type: String,
     },
@@ -168,6 +158,33 @@ export default {
     },
     getResultValue(result) {
       return result.surname;
+    },
+    onEventAdd() {
+      this.changeStatus(false);
+
+      let event = {
+        title: this.title,
+        description: this.description,
+        startDate: this.start,
+        endDate: this.end,
+        participants: this.participants,
+      };
+      console.log(this.participants);
+      axios({
+        url: `/events/post/`,
+        data: event,
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.$toast.success("Мероприятие успешно добавлено!");
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
     },
   },
 };

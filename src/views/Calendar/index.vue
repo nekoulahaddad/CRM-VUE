@@ -7,8 +7,8 @@
     />
     <div class="page__body d-flex">
       <div class="page__left"></div>
+
       <div class="page__right">
-        <vue-calendar :show-limit="3"></vue-calendar>
         <calendar-view
           :items="events"
           :show-date="showDate"
@@ -36,6 +36,7 @@
 <script>
 import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
 import VPageHeader from "@/components/VPageHeader";
+import axios from "@/api/axios";
 import "vue-simple-calendar/static/css/default.css";
 
 export default {

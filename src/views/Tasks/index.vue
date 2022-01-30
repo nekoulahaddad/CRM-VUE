@@ -116,6 +116,8 @@
                     <v-edit
                       :task="sub_task"
                       v-if="editedItem._id === sub_task._id"
+                      @editTask="editToTasks"
+                      @toggleEdit="toggleEdit"
                     />
                   </div>
                 </div>
