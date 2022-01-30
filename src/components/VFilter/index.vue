@@ -234,13 +234,11 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
-                @change="selectOptions($event, null, 'executor', null)"
+                @input="selectOptions($event, null, 'executor', null)"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
-                    <div class="wiki-title">
-                      {{ result.surname }}
-                    </div>
+                    {{ result.surname }}
                   </li>
                 </template>
               </autocomplete>
@@ -315,13 +313,11 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
-                @change="selectOptions($event, null, 'executor', null)"
+                @input="selectOptions($event, null, 'executor', null)"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
-                    <div class="wiki-title">
-                      {{ result.surname }}
-                    </div>
+                    {{ result.surname }}
                   </li>
                 </template>
               </autocomplete>
@@ -458,13 +454,11 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
-                @change="selectOptions($event, null, 'executor', null)"
+                @input="selectOptions($event, null, 'executor', null)"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
-                    <div class="wiki-title">
-                      {{ result.surname }}
-                    </div>
+                    {{ result.surname }}
                   </li>
                 </template>
               </autocomplete>
@@ -566,13 +560,11 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
-                @change="selectOptions($event, null, 'executor', null)"
+                @input="selectOptions($event, null, 'executor', null)"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
-                    <div class="wiki-title">
-                      {{ result.surname }}
-                    </div>
+                    {{ result.surname }}
                   </li>
                 </template>
               </autocomplete>
