@@ -17,7 +17,10 @@
     <div class="list__column">
       <div class="bg bg--blue-light">{{ employee.position }}</div>
     </div>
-    <div v-html="transformRating(employee.rating)" class="list__column" />
+    <div
+      v-html="transformRating(employee.rating)"
+      class="list__column text text--green"
+    />
     <div class="list__column text--sapphire">
       {{ employee.tasks.length }}
     </div>
