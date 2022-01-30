@@ -125,7 +125,7 @@ Vue.use(Toast, {
 });
 Vue.component("paginate", Paginate);
 
-//Vue.mixin(dataMixins);
+Vue.mixin(dataMixins);
 Vue.mixin(dateMixins);
 Vue.mixin(dragMixins);
 Vue.mixin(deliveryMixins);

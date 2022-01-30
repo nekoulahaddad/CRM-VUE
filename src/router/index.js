@@ -120,6 +120,11 @@ const routes = [
         name: "personal",
         component: () => import("../views/Personal"),
       },
+      {
+        path: "vacancies/:page",
+        name: "vacancies",
+        component: () => import("../views/Vacancies"),
+      },
     ],
   },
   {

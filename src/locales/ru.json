@@ -264,7 +264,8 @@
           "value": "Сотрудники"
         },
         {
-          "id": "shop",
+          "id": "vacancies",
+          "url": "vacancies",
           "title": "Вакансии",
           "value": "Вакансии"
         },
