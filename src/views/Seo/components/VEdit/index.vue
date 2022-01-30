@@ -78,7 +78,6 @@ export default {
           : "";
       },
       set: function (title) {
-        this.$refs.title.value = title;
         if (!this.item.meta) {
           this.item.meta = {};
         }
@@ -152,6 +151,7 @@ export default {
       axios
         .post("/seo/update/", infoData)
         .then(() => {
+          this.$emit("toggleEdit", this.type, this.item);
           this.$toast.success("Элемент успешно изменен!");
         })
         .catch((err) => {

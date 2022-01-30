@@ -75,6 +75,7 @@
                   type="categories"
                   :item="editedItem"
                   :region="filtersOptions.region"
+                  @toggleEdit="toggleEdit"
                 />
               </div>
               <div
@@ -82,7 +83,15 @@
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
               >
-                <v-product :item="item" />
+                <v-product :item="item" @toggleEdit="toggleEdit" />
+
+                <v-edit
+                  v-if="editedItem._id === item._id"
+                  type="products"
+                  :item="editedItem"
+                  :region="filtersOptions.region"
+                  @toggleEdit="toggleEdit"
+                />
               </div>
             </div>
           </div>

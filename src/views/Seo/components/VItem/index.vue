@@ -20,7 +20,7 @@
       <div class="table__actions">
         <div class="table__icon">
           <img
-            @click="$emit('toggleEdit', 'product', item)"
+            @click="$emit('toggleEdit', 'categories', item)"
             src="@/assets/icons/write_icon.svg"
             alt=""
           />
