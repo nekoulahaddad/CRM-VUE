@@ -255,8 +255,10 @@
     </div>
     <div class="group">
       <div class="group__footer">
-        <v-button red>{{ $t("add") }}</v-button>
+        <v-add-child />
       </div>
+
+      <v-button red>{{ $t("add") }}</v-button>
     </div>
 
     <div class="group__title text--blue">
@@ -271,6 +273,7 @@
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
+import VAddChild from "../VAddChild";
 import { Datetime } from "vue-datetime";
 
 export default {
@@ -279,7 +282,7 @@ export default {
       type: Object,
     },
   },
-  components: { VButton, datetime: Datetime },
+  components: { VAddChild, VButton, datetime: Datetime },
   data() {
     return {
       date: new Date().toString(),
