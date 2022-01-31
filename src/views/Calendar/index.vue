@@ -1,5 +1,6 @@
 <template>
   <div class="page calendar-page">
+    <v-add-event-modal />
     <v-page-header
       title="Календарь"
       icon="calendar_title"
@@ -18,6 +19,7 @@
             </a>
           </div>
           <vc-calendar :attributes="attrs" />
+          <v-calendar-events :events="events" />
         </div>
       </div>
 
@@ -49,6 +51,8 @@
 <script>
 import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
 import VPageHeader from "@/components/VPageHeader";
+import VCalendarEvents from "./components/VCalendarEvents";
+import VAddEventModal from "./components/VAddEventModal";
 import axios from "@/api/axios";
 import "vue-simple-calendar/static/css/default.css";
 
@@ -89,6 +93,8 @@ export default {
     CalendarView,
     CalendarViewHeader,
     VPageHeader,
+    VCalendarEvents,
+    VAddEventModal,
   },
   computed: {
     role: {

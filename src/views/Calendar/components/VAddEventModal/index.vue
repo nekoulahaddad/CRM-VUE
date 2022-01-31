@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="677" :minWidth="1130" name="addEvent">
+  <v-modal :adaptive="true" :minHeight="655" :minWidth="1273" name="addEvent">
     <div class="vm--modal__title">
       Создать мероприятие
       <img
@@ -193,6 +193,42 @@ export default {
 <style lang="scss">
 .vm--modal {
   .autocomplete-input {
+    width: 330px;
+  }
+  &__inner {
+    padding: 10px;
+  }
+  .form-textarea,
+  .form-control {
+    width: 689px;
+  }
+  .form-textarea {
+    height: 218px;
+  }
+  .form-select {
+    width: 401px;
+  }
+  .group__title {
+    font-size: 14px !important;
+  }
+
+  .group {
+    &__title {
+      font-size: 12px;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  button {
+    width: 230px;
+  }
+  .vdatetime-input {
     width: 330px;
   }
 }
