@@ -111,6 +111,11 @@ const routes = [
         component: () => import("../views/Storage"),
       },
       {
+        path: "organisation-chart",
+        name: "organisation-chart",
+        component: () => import("../views/OrgChart"),
+      },
+      {
         path: "tasks/:page",
         name: "tasks",
         component: () => import("../views/Tasks"),

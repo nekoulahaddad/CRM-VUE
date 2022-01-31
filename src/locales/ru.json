@@ -277,7 +277,8 @@
           "value": "Отделы"
         },
         {
-          "id": "price",
+          "id": "organisation-chart",
+          "url": "organisation-chart",
           "title": "Структура компании",
           "value": "Структура компании"
         }
