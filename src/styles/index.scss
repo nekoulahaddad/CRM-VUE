@@ -91,6 +91,12 @@ ul {
     }
   }
 
+  .page__right:not(.page__right--full):not(.page__right--middle):not(.page__right--fluid) {
+    .list:not(.sub-list) {
+      width: 1307px;
+    }
+  }
+
   &__right {
     flex: 1;
 

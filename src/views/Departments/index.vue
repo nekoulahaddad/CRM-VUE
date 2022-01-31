@@ -301,7 +301,7 @@ export default {
 <style lang="scss">
 .departments-page {
   .list__columns {
-    grid-template-columns: 300px 450px 450px 1fr;
+    grid-template-columns: 240px 400px 450px 1fr;
   }
   .list__column:last-child {
     padding-left: 20px;
