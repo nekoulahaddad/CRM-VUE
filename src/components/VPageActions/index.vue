@@ -1,9 +1,11 @@
 <template>
   <div class="page-actions">
     <div class="page-actions__inner">
-      <a href="" @click.prevent="clearCache" class="page-actions__button">
-        <img src="@/assets/icons/clear_cache.svg" alt="" />
-      </a>
+      <VueCustomTooltip label="Очистить кеш">
+        <a href="" @click.prevent="clearCache" class="page-actions__button">
+          <img src="@/assets/icons/clear_cache.svg" alt="" />
+        </a>
+      </VueCustomTooltip>
 
       <!-- Рабочий стол -->
       <template v-if="name === 'desktop'">
@@ -131,6 +133,14 @@ export default {
 
   &__inner {
     display: flex;
+
+    span[role="tooltip"] {
+      &:after {
+        background-color: $color-black;
+        color: $color-white;
+        border-radius: $border-radius;
+      }
+    }
   }
 
   &__button {
