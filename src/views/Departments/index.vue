@@ -71,8 +71,9 @@
                 }"
               >
                 <v-item
-                  :infoItem="infoItem"
                   :item="department"
+                  :infoItem="infoItem"
+                  :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @toggleDelete="toggleDelete"
@@ -82,6 +83,12 @@
                 <v-info
                   v-if="infoItem._id === department._id"
                   :infoItem="infoItem"
+                />
+
+                <v-edit
+                  :editedItem="editedItem"
+                  v-if="editedItem._id === department._id"
+                  @toggleEdit="toggleEdit"
                 />
               </div>
             </div>

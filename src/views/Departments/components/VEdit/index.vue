@@ -1,6 +1,35 @@
 <template>
   <div class="list__info list-info employee-edit-form">
-    <v-employee-form :infoItem="infoItem" />
+    <form @submit.prevent="onSectionAdd">
+      <div class="group__title group__title--big text--blue">
+        Редактировать отдел:
+      </div>
+      <div class="group">
+        <div class="group__title">Название</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            name="role"
+            v-model="title"
+            @change="onChange($event)"
+          />
+        </div>
+      </div>
+      <div class="group">
+        <div class="group__title">Руководитель</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            name="role"
+            v-model="title"
+            @change="onChange($event)"
+          />
+        </div>
+      </div>
+      <v-button red>Отправить</v-button>
+    </form>
   </div>
 </template>
 
@@ -8,16 +37,96 @@
 import { mapMutations } from "vuex";
 import VEmployeeForm from "../VEmployeeForm";
 import axios from "@/api/axios";
-import VButton from "@/components/VButton";
 import { Datetime } from "vue-datetime";
+import VButton from "@/components/VButton";
 
 export default {
-  components: { Datetime, VButton, VEmployeeForm },
+  components: { Datetime, VButton, VEmployeeForm, VButton },
   props: {
-    infoItem: {
+    editedItem: {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      title: "",
+      fio: "",
+      leader: null,
+      users: [],
+      titleName: this.editedItem ? "Редактировать отдел" : "Добавить отдел",
+    };
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+    async getUsersByFIO() {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        axios(`/user/getsearch/${this.fio}`).then(async (res) => {
+          let result = await res;
+          this.users = result.data;
+        });
+      }, 300);
+    },
+    onSectionAdd() {
+      this.changeStatus(false);
+      let sectionData = {};
+      if (this.title) {
+        sectionData.title = this.title;
+      }
+      if (this.fio) {
+        sectionData.leader = this.leader._id;
+      }
+      if (this.editedItem) {
+        sectionData.departmentId = this.editedItem._id;
+
+        axios({
+          url: `/departments/update/`,
+          data: sectionData,
+          method: "POST",
+        })
+          .then(async () => {
+            this.$emit("refresh");
+            this.$toast.success("Отдел успешно обновлен!");
+            this.$emit("toggleOpen");
+            this.changeStatus(true);
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+            this.changeStatus(true);
+          });
+      } else {
+        axios({
+          url: `/departments/post/`,
+          data: sectionData,
+          method: "POST",
+        })
+          .then(async () => {
+            await this.$emit("refresh");
+            this.$toast.success("Отдел успешно добавлен!");
+            this.$emit("toggleOpen");
+            this.changeStatus(true);
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+            this.changeStatus(true);
+          });
+      }
+    },
+  },
+  mounted() {
+    if (this.editedItem) {
+      this.title = this.editedItem.title;
+      if (this.editedItem.leader) {
+        (this.fio = this.transformFullFIO(this.editedItem.leader)),
+          (this.leader = this.editedItem.leader);
+      }
+    }
   },
 };
 </script>
