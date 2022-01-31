@@ -62,12 +62,13 @@ export default {
 
 .top-blocks {
   display: flex;
+  width: 1307px;
 
   &__item {
     background: $color-white;
     border-radius: $border-radius;
     height: 80px;
-    min-width: 349px;
+    width: 100%;
     display: flex;
     align-items: center;
     padding-left: 13px;
@@ -86,6 +87,12 @@ export default {
       color: #c4c4c4;
       margin-bottom: 5px;
     }
+  }
+}
+
+.page__right--middle {
+  .top-blocks {
+    width: 1417px;
   }
 }
 </style>

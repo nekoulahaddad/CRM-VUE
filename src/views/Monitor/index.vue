@@ -10,7 +10,14 @@
         />
         <v-revs :isLoading="isLoading" :rev="rev" />
       </div>
-      <div class="page__right">
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
         <div class="scroll-horizontal">
           <v-top-blocks :rev="rev" />
           <div class="d-flex">
@@ -50,6 +57,7 @@ import VClients from "./components/VClients";
 import VMailByMonth from "./components/VMailByMonth";
 import VTopProducts from "./components/VTopProducts";
 import axios from "@/api/axios";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -63,8 +71,12 @@ export default {
     VTopProducts,
     VPageHeader,
   },
+  computed: {
+    ...mapGetters({ sidebar: "sidebar" }),
+  },
   data() {
     return {
+      showFilter: true,
       startDate: null,
       endDate: null,
       isLoading: false,
