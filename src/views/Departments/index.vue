@@ -1,5 +1,7 @@
 <template>
   <div class="page departments-page">
+    <v-delete-item :deletedItem="deletedItem" @refresh="refresh" />
+
     <div
       class="page__header page-header"
       :class="{ 'page-header--collapse': sidebar }"
@@ -73,6 +75,7 @@
                   :item="department"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией об отделе -->
@@ -115,7 +118,6 @@ export default {
     VEdit,
     VInfo,
     VAddItem,
-    VDeleteItem,
     VSearch,
     VButton,
     VFilter,
@@ -123,6 +125,7 @@ export default {
     VNotFoundQuery,
     VPagination,
     VFilterToggle,
+    VDeleteItem,
     VPageHeader,
   },
   data() {
@@ -221,7 +224,7 @@ export default {
     },
     toggleDelete(deletedItem) {
       this.deletedItem = deletedItem;
-      this.$modal.show("deleteEmployee");
+      this.$modal.show("deleteDepartment");
     },
     getSearchData() {
       this.changeStatus(false);

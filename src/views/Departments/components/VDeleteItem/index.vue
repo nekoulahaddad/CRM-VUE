@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="deleteEmployee">
+  <v-modal :adaptive="true" :maxHeight="175" name="deleteDepartment">
     <div class="vm--modal__title">Удаление</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
@@ -31,23 +31,20 @@ export default {
       changeStatus: "change_load_status",
     }),
     cancel() {
-      this.$modal.hide("deleteEmployee");
+      this.$modal.hide("deleteDepartment");
     },
     confirm() {
       this.changeStatus(false);
       axios({
-        url: `/user/delete/`,
+        url: process.env.VUE_APP_DEVELOP_URL + `/departments/delete`,
         data: {
-          userId: this.deletedItem._id,
+          departmentId: this.deletedItem._id,
         },
-        method: "DELETE",
+        method: "POST",
       })
-        .then(async (res) => {
-          let result = await res;
-
-          this.$emit("refresh", result.data.user._id);
-          this.$toast.success("Сотрудник успешно удален!");
-          this.$emit("toggleOpen");
+        .then(async () => {
+          this.$emit("refresh");
+          this.$toast.success("Отдел успешно удален!");
           this.cancel();
         })
         .catch((err) => {
@@ -60,3 +57,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.vm--modal {
+  &__text {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  &__buttons {
+    justify-content: center;
+  }
+}
+</style>
