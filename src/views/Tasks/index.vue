@@ -496,7 +496,7 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 30px 200px 260px 440px 170px 170px 300px 1fr;
+      grid-template-columns: 30px 200px 260px 432px 170px 170px 300px 1fr;
     }
   }
 
