@@ -65,7 +65,7 @@ export default {
   background-color: $color-gray;
   padding-top: 20px;
   transition: left 0.5s;
-  max-width: 1900px;
+  max-width: 1817px;
 
   &__left {
     display: flex;

@@ -74,7 +74,7 @@ ul {
     width: 1703px;
 
     &--fluid {
-      width: 1812px;
+      width: 1704px;
     }
   }
 
@@ -93,27 +93,27 @@ ul {
 
   &__right {
     flex: 1;
-    width: 1417px;
+    width: 1307px;
 
     .list {
-      width: 1415px;
+      width: 1307px;
     }
 
     &--full {
       .list {
-        width: 1699px;
+        width: 1591px;
       }
     }
 
     &--fluid {
       .list {
-        width: 1812px;
+        width: 1704px;
       }
     }
 
     &--middle {
       .list {
-        width: 1529px;
+        width: 1525px;
       }
     }
   }
@@ -202,26 +202,26 @@ ul {
 
 .page__right {
   .scroll-horizontal {
-    overflow-x: auto;
-    width: 1394px;
+    //overflow-x: auto;
+    //width: 1394px;
   }
 }
 
 .page__right--middle {
   .list {
-    width: 1412px;
+    width: 1417px;
   }
 }
 .page__right--fluid {
   .scroll-horizontal {
-    overflow-x: auto;
-    width: 1791px;
+    //overflow-x: auto;
+    width: 1704px;
   }
 }
 .page__right--full {
   .scroll-horizontal {
-    overflow-x: auto;
-    width: 1677px;
+    //overflow-x: auto;
+    //width: 1677px;
   }
 }
 

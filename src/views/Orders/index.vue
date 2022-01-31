@@ -422,7 +422,7 @@ export default {
     right: 107px;
   }
   .list__columns {
-    grid-template-columns: 50px 120px 120px 120px 120px 120px 120px 120px 120px 240px 1fr;
+    grid-template-columns: 50px 120px 100px 100px 100px 100px 100px 100px 120px 250px 1fr;
   }
   .list__columns {
     .list__column:first-child {
@@ -432,13 +432,13 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 50px 220px 160px 160px 140px 140px 140px 140px 140px 350px 1fr;
+      grid-template-columns: 50px 167px 160px 156px 140px 140px 140px 140px 140px 321px 1fr;
     }
   }
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 50px 220px 200px 120px 120px 120px 120px 120px 160px 240px 1fr;
+      grid-template-columns: 50px 160px 200px 120px 120px 120px 120px 120px 160px 240px 1fr;
     }
   }
 
