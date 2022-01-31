@@ -241,19 +241,19 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 30px 250px 250px 250px 250px 250px 220px 250px 1fr;
+      grid-template-columns: 30px 220px 220px 220px 250px 250px 220px 250px 1fr;
     }
   }
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 30px 220px 220px 400px 200px 200px 200px 200px 1fr;
+      grid-template-columns: 30px 200px 220px 300px 200px 200px 200px 195px 1fr;
     }
   }
 
   .page__right--middle {
     .list__columns {
-      grid-template-columns: 30px 250px 220px 220px 220px 180px 180px 180px 1fr;
+      grid-template-columns: 37px 220px 180px 180px 220px 180px 180px 180px 1fr;
     }
   }
 }
