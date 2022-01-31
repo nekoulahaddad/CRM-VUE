@@ -6,7 +6,20 @@
       :filterToggle="false"
     />
     <div class="page__body d-flex">
-      <div class="page__left"></div>
+      <div class="page__left">
+        <div class="calendar-container">
+          <div class="add-new-event">
+            <a
+              href=""
+              @click.prevent="$modal.show('addEvent')"
+              class="add-new-event__link"
+            >
+              <img src="@/assets/icons/plus.svg" alt="" />
+            </a>
+          </div>
+          <vc-calendar :attributes="attrs" />
+        </div>
+      </div>
 
       <div class="page__right">
         <calendar-view
@@ -52,6 +65,24 @@ export default {
       events: [],
       edit: false,
       editedItem: {},
+      attrs: [
+        {
+          key: "today",
+          highlight: {
+            style: {
+              backgroundColor: "#db1f35",
+            },
+          },
+          dates: new Date(),
+        },
+        {
+          dot: {
+            style: {
+              backgroundColor: "red",
+            },
+          },
+        },
+      ],
     };
   },
   components: {
@@ -143,7 +174,6 @@ export default {
 
 .calendar-page {
   .page__body {
-    padding: 10px;
     border-radius: $border-radius;
   }
 }
@@ -213,5 +243,55 @@ export default {
   border-radius: $border-radius !important;
   border: 0;
   border-left: 5px solid $color-red !important;
+}
+.calendar-container {
+  background-color: $color-white;
+  border-radius: $border-radius;
+  width: 300px;
+  height: 100%;
+  margin-right: 20px;
+  margin-left: 4px;
+
+  .vc-container {
+    border: none;
+  }
+  .vc-pane-container {
+    width: 300px;
+  }
+  .vc-arrow {
+    display: none;
+  }
+  .vc-header {
+    justify-content: start;
+  }
+  .vc-title {
+    color: $color-red;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    position: relative;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+  .add-new-event {
+    padding-top: 10px;
+    padding-left: 16px;
+    padding-bottom: 16px;
+
+    &__link {
+      width: 32px;
+      height: 28px;
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $color-red;
+    }
+  }
+  .vc-highlights + .vc-focusable {
+    color: $color-white;
+  }
 }
 </style>
