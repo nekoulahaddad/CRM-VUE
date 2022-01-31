@@ -502,7 +502,7 @@ export default {
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 30px 200px 220px 400px 200px 200px 200px 1fr;
+      grid-template-columns: 30px 200px 219px 400px 200px 200px 200px 1fr;
     }
   }
 

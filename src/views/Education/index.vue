@@ -331,6 +331,7 @@ export default {
     }
   }
   .page__content {
+    width: 1591px;
     padding: 10px 17px 15px 16px;
     background-color: $color-white;
     border-radius: $border-radius;
