@@ -33,23 +33,28 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            :class="{
-              none: !item.oneC.requested,
-              req: item.oneC.requested && !item.oneC.accepted,
-            }"
-            :title="getOneCStatus(item.oneC)"
-            src="@/assets/icons/1c_icon.svg"
-            alt=""
-          />
+          <VueCustomTooltip
+            v-if="infoItem._id !== item._id"
+            :label="getOneCStatus(item.oneC)"
+          >
+            <img
+              :class="{
+                none: !item.oneC.requested,
+                req: item.oneC.requested && !item.oneC.accepted,
+              }"
+              src="@/assets/icons/1c_icon.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img
-            alt=""
-            src="@/assets/icons/info_icon.svg"
-            v-if="infoItem._id !== item._id"
-            @click="$emit('toggleInfo', item)"
-          />
+          <VueCustomTooltip v-if="infoItem._id !== item._id" label="Просмотр">
+            <img
+              alt=""
+              src="@/assets/icons/info_icon.svg"
+              @click="$emit('toggleInfo', item)"
+            />
+          </VueCustomTooltip>
           <img
             alt=""
             v-else
@@ -58,7 +63,7 @@
           />
         </div>
         <div class="table__icon">
-          <img
+          <template
             v-if="
               role === 'call' ||
               role === 'manager' ||
@@ -66,10 +71,24 @@
               role === 'admin' ||
               role === 'superadmin'
             "
-            src="@/assets/icons/write_icon.svg"
-            @click="$emit('toggleEdit', item)"
-            alt=""
-          />
+          >
+            <VueCustomTooltip
+              v-if="editedItem._id !== item._id"
+              label="Изменить"
+            >
+              <img
+                src="@/assets/icons/write_icon.svg"
+                @click="$emit('toggleEdit', item)"
+                alt=""
+              />
+            </VueCustomTooltip>
+            <img
+              alt=""
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleEdit', item)"
+            />
+          </template>
         </div>
       </div>
     </div>
@@ -80,6 +99,10 @@
 export default {
   props: {
     infoItem: {
+      type: Object,
+      required: true,
+    },
+    editedItem: {
       type: Object,
       required: true,
     },

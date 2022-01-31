@@ -63,6 +63,7 @@
                 <v-item
                   :item="item"
                   :infoItem="infoItem"
+                  :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                 />
