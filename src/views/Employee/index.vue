@@ -9,7 +9,7 @@
       <div class="page-header__inner">
         <div class="page-header__left">
           <div class="page__icon">
-            <img :src="require(`@/assets/icons/education_title.svg`)" alt="" />
+            <img :src="require(`@/assets/icons/employees_title.svg`)" alt="" />
           </div>
           <h1 class="page__title">{{ $t("pages.employee.pageTitle") }}</h1>
           <v-button

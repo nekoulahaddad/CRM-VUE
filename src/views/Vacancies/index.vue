@@ -83,7 +83,7 @@
 <script>
 import VItem from "./components/VItem";
 import { mapGetters, mapMutations } from "vuex";
-import getDataFromPage from "@/api/getDataFromPage";
+import axios from "@/api/axios";
 import VFilterToggle from "@/components/VFilterToggle";
 import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
