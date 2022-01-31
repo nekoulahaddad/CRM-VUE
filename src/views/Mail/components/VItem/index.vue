@@ -51,32 +51,36 @@
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <img
-            alt=""
-            src="@/assets/icons/info_icon.svg"
-            v-if="infoItem._id !== item._id"
-            @click="$emit('toggleInfo', item)"
-          />
-          <img
-            alt=""
-            v-else
-            src="@/assets/icons/arrow_top_icon.svg"
-            @click="$emit('toggleInfo', item)"
-          />
+          <VueCustomTooltip label="Просмотр">
+            <img
+              alt=""
+              src="@/assets/icons/info_icon.svg"
+              v-if="infoItem._id !== item._id"
+              @click="$emit('toggleInfo', item)"
+            />
+            <img
+              alt=""
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleInfo', item)"
+            />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img
-            alt=""
-            src="@/assets/icons/write_icon.svg"
-            v-if="editedItem._id !== item._id"
-            @click="$emit('toggleEdit', item)"
-          />
-          <img
-            alt=""
-            v-else
-            src="@/assets/icons/arrow_top_icon.svg"
-            @click="$emit('toggleEdit', item)"
-          />
+          <VueCustomTooltip label="Изменить">
+            <img
+              alt=""
+              src="@/assets/icons/write_icon.svg"
+              v-if="editedItem._id !== item._id"
+              @click="$emit('toggleEdit', item)"
+            />
+            <img
+              alt=""
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleEdit', item)"
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
@@ -103,10 +107,22 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .mail-list-columns {
   .list__column {
     &:first-child {
       text-align: left;
+    }
+  }
+
+  .table__icon {
+    span[role="tooltip"] {
+      &:after {
+        background-color: $color-black;
+        color: $color-white;
+        border-radius: $border-radius;
+      }
     }
   }
 }
