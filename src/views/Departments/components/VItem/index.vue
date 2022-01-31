@@ -12,13 +12,19 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/info_icon.svg" alt="" />
+          <VueCustomTooltip label="Просмотр">
+            <img src="@/assets/icons/info_icon.svg" alt="" />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/write_icon.svg" alt="" />
+          <VueCustomTooltip label="Изменить">
+            <img src="@/assets/icons/write_icon.svg" alt="" />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/trash_icon.svg" alt="" />
+          <VueCustomTooltip label="Удалить">
+            <img src="@/assets/icons/trash_icon.svg" alt="" />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
