@@ -19,13 +19,19 @@
       <div class="group">
         <div class="group__title">Руководитель</div>
         <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            name="role"
-            v-model="title"
-            @change="onChange($event)"
-          />
+          <autocomplete
+            :search="searchByExecutor"
+            :get-result-value="getResultValue"
+            placeholder="Введите исполнителя задачи..."
+            @input="getUsersByFIO"
+            v-model="fio"
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectUser(result)">
+                {{ result.surname }}
+              </li>
+            </template>
+          </autocomplete>
         </div>
       </div>
       <v-button red>Отправить</v-button>
@@ -41,7 +47,7 @@ import { Datetime } from "vue-datetime";
 import VButton from "@/components/VButton";
 
 export default {
-  components: { Datetime, VButton, VEmployeeForm, VButton },
+  components: { Datetime, VButton, VEmployeeForm },
   props: {
     editedItem: {
       type: Object,
@@ -73,6 +79,24 @@ export default {
         });
       }, 300);
     },
+    searchByExecutor(input) {
+      if (input.length < 1) {
+        return;
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    getResultValue(result) {
+      return result.surname;
+    },
+    selectUser(user) {
+      this.leader = user;
+      this.fio = this.transformFullFIO(user);
+      this.users = [];
+    },
     onSectionAdd() {
       this.changeStatus(false);
       let sectionData = {};
@@ -91,13 +115,14 @@ export default {
           method: "POST",
         })
           .then(async () => {
+            this.$emit("toggleEdit", this.editedItem);
             this.$emit("refresh");
-            this.$toast.success("Отдел успешно обновлен!");
-            this.$emit("toggleOpen");
-            this.changeStatus(true);
+            this.$toast.success("Отдел успешно изменен!");
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
             this.changeStatus(true);
           });
       } else {
@@ -107,13 +132,14 @@ export default {
           method: "POST",
         })
           .then(async () => {
-            await this.$emit("refresh");
+            this.$emit("toggleEdit", this.editedItem);
+            this.$emit("refresh");
             this.$toast.success("Отдел успешно добавлен!");
-            this.$emit("toggleOpen");
-            this.changeStatus(true);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
             this.changeStatus(true);
           });
       }
@@ -163,9 +189,15 @@ export default {
   select,
   input[type="text"] {
     font-weight: 500;
+    font-size: 14px;
   }
   .vdatetime-popup__header {
     background: $color-red;
+  }
+  .autocomplete-input {
+    width: 976px;
+    font-weight: 500;
+    font-size: 14px;
   }
 }
 </style>

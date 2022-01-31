@@ -89,6 +89,7 @@
                   :editedItem="editedItem"
                   v-if="editedItem._id === department._id"
                   @toggleEdit="toggleEdit"
+                  @refresh="refresh"
                 />
               </div>
             </div>
