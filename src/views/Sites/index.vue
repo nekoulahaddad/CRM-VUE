@@ -1,5 +1,5 @@
 <template>
-  <div class="page delivery-page">
+  <div class="page sites-page">
     <v-page-header
       :title="$t('pages.sites.pageTitle')"
       icon="sites_title"
@@ -31,9 +31,15 @@
                   </div>
                 </div>
               </div>
+              <div
+                v-for="(item, index) in dataset"
+                :key="item._id"
+                class="list__row list__row--shadow list__row--white"
+              >
+                <v-item :index="index" :item="item" />
+              </div>
             </div>
           </div>
-          <v-pagination :count="count" />
         </template>
         <v-not-found-query v-else />
       </div>
@@ -42,6 +48,7 @@
 </template>
 
 <script>
+import VItem from "./components/VItem";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -50,7 +57,7 @@ import { mapGetters } from "vuex";
 import axios from "@/api/axios";
 
 export default {
-  components: { VPageHeader, VSpinner, VNotFoundQuery, VPagination },
+  components: { VPageHeader, VSpinner, VNotFoundQuery, VPagination, VItem },
   data() {
     return {
       showFilter: false,
@@ -116,3 +123,22 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.sites-page {
+  .list__columns {
+    grid-template-columns: 50px 400px 350px 350px 350px;
+  }
+  .list__column {
+    &:first-child {
+      text-align: left;
+    }
+  }
+}
+
+.page__right--fluid {
+  .list__columns {
+    grid-template-columns: 50px 450px 400px 400px 1fr;
+  }
+}
+</style>
