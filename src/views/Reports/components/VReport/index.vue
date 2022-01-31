@@ -27,12 +27,13 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            alt=""
-            src="@/assets/icons/info_icon.svg"
-            v-if="infoItem._id !== report._id"
-            @click="$emit('toggleInfo', report)"
-          />
+          <VueCustomTooltip v-if="infoItem._id !== report._id" label="Просмотр">
+            <img
+              alt=""
+              src="@/assets/icons/info_icon.svg"
+              @click="$emit('toggleInfo', report)"
+            />
+          </VueCustomTooltip>
           <img
             alt=""
             src="@/assets/icons/arrow_top_icon.svg"
