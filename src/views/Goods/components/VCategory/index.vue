@@ -54,7 +54,9 @@
         />
       </div>
       <div class="table__icon">
-        <img src="@/assets/icons/trash_icon.svg" alt="" />
+        <VueCustomTooltip label="Удалить">
+          <img src="@/assets/icons/trash_icon.svg" alt="" />
+        </VueCustomTooltip>
       </div>
     </div>
   </div>
