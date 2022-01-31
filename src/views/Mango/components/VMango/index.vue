@@ -19,20 +19,23 @@
     <div class="list__columns">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            @click="$emit('togglePlay', item)"
+          <VueCustomTooltip
             v-if="status && play._id === item._id"
-            src="@/assets/icons/pause_icon.svg"
-            title="Пауза"
-            alt="Пауза"
-          />
-          <img
-            v-else
-            @click="$emit('togglePlay', item)"
-            src="@/assets/icons/play_icon.svg"
-            title="Воспроизвести"
-            alt="Воспроизвести"
-          />
+            label="Пауза"
+          >
+            <img
+              @click="$emit('togglePlay', item)"
+              src="@/assets/icons/pause_icon.svg"
+              alt="Пауза"
+            />
+          </VueCustomTooltip>
+          <VueCustomTooltip v-else label="Воспроизвести">
+            <img
+              @click="$emit('togglePlay', item)"
+              src="@/assets/icons/play_icon.svg"
+              alt="Воспроизвести"
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
