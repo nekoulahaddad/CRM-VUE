@@ -127,7 +127,7 @@ export default {
 <style lang="scss">
 .sites-page {
   .list__columns {
-    grid-template-columns: 50px 400px 350px 350px 350px;
+    grid-template-columns: 50px 450px 350px 350px 1fr;
   }
   .list__column {
     &:first-child {
@@ -136,9 +136,15 @@ export default {
   }
 }
 
+.page__right--full {
+  .list__columns {
+    grid-template-columns: 200px 400px 400px 400px 1fr !important;
+  }
+}
+
 .page__right--fluid {
   .list__columns {
-    grid-template-columns: 250px 400px 400px 400px 1fr;
+    grid-template-columns: 200px 400px 400px 400px 1fr !important;
   }
 }
 </style>
