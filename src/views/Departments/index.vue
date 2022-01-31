@@ -68,7 +68,18 @@
                     editedItem._id === department._id,
                 }"
               >
-                <v-item :infoItem="department" />
+                <v-item
+                  :infoItem="infoItem"
+                  :item="department"
+                  @toggleInfo="toggleInfo"
+                  @toggleEdit="toggleEdit"
+                />
+
+                <!-- Блок с детальной информацией об отделе -->
+                <v-info
+                  v-if="infoItem._id === department._id"
+                  :infoItem="infoItem"
+                />
               </div>
             </div>
           </div>

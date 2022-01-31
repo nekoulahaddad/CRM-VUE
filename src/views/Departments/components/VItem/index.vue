@@ -1,20 +1,30 @@
 <template>
   <div class="list__columns list__columns-shadow list__columns-white">
     <div class="list__column text--blue">
-      {{ transformFIO(infoItem.leader) || "Не указан" }}
+      {{ transformFIO(item.leader) || "Не указан" }}
     </div>
     <div class="list__column text--green">
-      {{ infoItem.count || "0" }}
+      {{ item.count || "0" }}
     </div>
     <div class="list__column text--blue">
-      <div class="bg bg--green-light">{{ infoItem.title }}</div>
+      <div class="bg bg--green-light">{{ item.title }}</div>
     </div>
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <VueCustomTooltip label="Просмотр">
-            <img src="@/assets/icons/info_icon.svg" alt="" />
+          <VueCustomTooltip v-if="infoItem._id !== item._id" label="Просмотр">
+            <img
+              @click="$emit('toggleInfo', item)"
+              src="@/assets/icons/info_icon.svg"
+              alt=""
+            />
           </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleInfo', item)"
+          />
         </div>
         <div class="table__icon">
           <VueCustomTooltip label="Изменить">
@@ -34,6 +44,9 @@
 <script>
 export default {
   props: {
+    item: {
+      type: Object,
+    },
     infoItem: {
       type: Object,
     },
