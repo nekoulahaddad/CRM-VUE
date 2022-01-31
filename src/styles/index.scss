@@ -93,10 +93,8 @@ ul {
 
   &__right {
     flex: 1;
-    width: 1307px;
 
     .list {
-      width: 1307px;
     }
 
     &--full {
@@ -106,7 +104,7 @@ ul {
     }
 
     &--fluid {
-      .list {
+      .list:not(.sub-list) {
         width: 1704px;
       }
     }
