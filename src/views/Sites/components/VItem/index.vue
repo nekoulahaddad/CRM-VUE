@@ -5,13 +5,19 @@
     <div class="list__column">{{ index + 1 }}</div>
     <div class="list__column bg bg--blue-light">{{ item.categoryName }}</div>
     <div class="list__column">
-      <a :href="item.url" target="_blank">{{ item.url }}</a>
+      <a :href="getUrl(item.url)" target="_blank">{{ item.url }}</a>
     </div>
-    <div class="list__column"></div>
+    <div class="list__column text text--green">
+      {{ transformTime(item.updatedAt) }}
+    </div>
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/reload.svg" alt="" />
+          <img
+            @click="$emit('updateSite', item._id)"
+            src="@/assets/icons/reload.svg"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -25,6 +31,11 @@ export default {
     item: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    getUrl(url) {
+      return `http://${url}`;
     },
   },
 };

@@ -36,7 +36,7 @@
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
               >
-                <v-item :index="index" :item="item" />
+                <v-item @updateSite="updateSite" :index="index" :item="item" />
               </div>
             </div>
           </div>
@@ -138,7 +138,7 @@ export default {
 
 .page__right--fluid {
   .list__columns {
-    grid-template-columns: 50px 450px 400px 400px 1fr;
+    grid-template-columns: 250px 400px 400px 400px 1fr;
   }
 }
 </style>
