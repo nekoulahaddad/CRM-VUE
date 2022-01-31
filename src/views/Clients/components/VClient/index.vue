@@ -22,12 +22,16 @@
       <div class="table__actions">
         <div class="table__icon">
           <template v-if="client.orders.length">
-            <img
-              alt=""
-              src="/icons/info_icon.svg"
+            <VueCustomTooltip
               v-if="infoItem._id !== client._id"
-              @click="$emit('toggleInfo', client)"
-            />
+              label="Просмотр"
+            >
+              <img
+                alt=""
+                src="/icons/info_icon.svg"
+                @click="$emit('toggleInfo', client)"
+              />
+            </VueCustomTooltip>
             <img
               alt=""
               v-else

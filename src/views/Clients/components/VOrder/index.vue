@@ -21,12 +21,13 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            alt=""
-            v-if="!opened"
-            @click="$emit('toggleSubInfo', user, order)"
-            src="@/assets/icons/info_icon.svg"
-          />
+          <VueCustomTooltip v-if="!opened" label="Просмотр">
+            <img
+              alt=""
+              @click="$emit('toggleSubInfo', user, order)"
+              src="@/assets/icons/info_icon.svg"
+            />
+          </VueCustomTooltip>
           <img
             alt=""
             v-else
