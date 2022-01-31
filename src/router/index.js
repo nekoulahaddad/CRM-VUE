@@ -116,6 +116,11 @@ const routes = [
         component: () => import("../views/Tasks"),
       },
       {
+        path: "sites",
+        name: "sites",
+        component: () => import("../views/Sites"),
+      },
+      {
         path: "personal",
         name: "personal",
         component: () => import("../views/Personal"),

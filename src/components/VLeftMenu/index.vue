@@ -49,7 +49,7 @@ export default {
     },
     getPageUrl(key) {
       let url = `/dashboard/${key}`;
-      const names = ["monitor", "calendar"];
+      const names = ["monitor", "calendar", "sites"];
       return names.includes(key) ? url : `${url}/1`;
     },
   },
