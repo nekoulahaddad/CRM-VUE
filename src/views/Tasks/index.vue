@@ -476,7 +476,7 @@ export default {
 <style lang="scss">
 .tasks-page {
   .list__columns {
-    grid-template-columns: 30px 160px 160px 350px 180px 180px 180px 1fr;
+    grid-template-columns: 30px 160px 160px 320px 180px 130px 130px 1fr;
   }
   .list__header {
     .list__column {
@@ -502,7 +502,7 @@ export default {
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 30px 220px 220px 400px 200px 200px 200px 1fr;
+      grid-template-columns: 30px 200px 220px 400px 200px 200px 200px 1fr;
     }
   }
 
