@@ -8,11 +8,13 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            @click="$emit('toggleEdit', 'products', item)"
-            src="@/assets/icons/write_icon.svg"
-            alt=""
-          />
+          <VueCustomTooltip label="Изменить">
+            <img
+              @click="$emit('toggleEdit', 'products', item)"
+              src="@/assets/icons/write_icon.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
