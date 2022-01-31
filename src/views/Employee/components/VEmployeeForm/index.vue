@@ -287,10 +287,15 @@
     </div>
     <div class="group">
       <div class="group__footer">
-        <v-add-child v-if="showAddChild" @cancel="showAddChild = false" />
+        <v-add-child
+          :newChild="newChild"
+          v-if="addChildForm"
+          @cancel="addChildForm = false"
+          @addChild="addChild"
+        />
       </div>
 
-      <v-button red @click="showAddChild = true" v-if="!showAddChild">
+      <v-button red @click="addChildForm = true" v-if="!addChildForm">
         {{ $t("add") }}
       </v-button>
     </div>
@@ -357,7 +362,7 @@ export default {
       editChildIndex: null,
       newChild: {
         fio: "",
-        birthDate: "",
+        birthDate: new Date(),
         gender: "муж",
       },
     };

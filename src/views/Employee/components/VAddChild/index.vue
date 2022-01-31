@@ -3,7 +3,12 @@
     <div class="group">
       <div class="group__title">ФИО:</div>
       <div class="group__content">
-        <input type="text" class="form-control" />
+        <input
+          type="text"
+          class="form-control"
+          name="newChild.fio"
+          v-model="newChild.fio"
+        />
       </div>
     </div>
     <div class="group">
@@ -14,20 +19,25 @@
           type="datetime"
           input-class="forms__container--input"
           :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+          v-model="newChild.birthDate"
         />
       </div>
     </div>
     <div class="group">
       <div class="group__title">Пол:</div>
       <div class="group__content">
-        <select class="form-select">
-          <option value="">Муж</option>
-          <option value="">Жен</option>
+        <select
+          class="form-select"
+          name="newChild.gender"
+          v-model="newChild.gender"
+        >
+          <option value="муж">Муж</option>
+          <option value="жен">Жен</option>
         </select>
       </div>
     </div>
     <div class="add-child__buttons">
-      <v-button red>Добавить</v-button>
+      <v-button @click="$emit('addChild')" red>Добавить</v-button>
       <v-button white @click="$emit('cancel')">Отмена</v-button>
     </div>
   </div>
@@ -37,6 +47,9 @@
 import VButton from "@/components/VButton";
 
 export default {
+  props: {
+    newChild: Object,
+  },
   components: {
     VButton,
   },
