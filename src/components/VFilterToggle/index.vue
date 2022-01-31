@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!active" class="filter-toggle" @click="toggleFilter">
+  <div v-if="active" class="filter-toggle" @click="toggleFilter">
     <div class="filter-toggle__inner">
       <div class="filter-toggle__icon">
         <img src="@/assets/icons/filter.svg" alt="" />
