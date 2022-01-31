@@ -13,7 +13,7 @@ export default {
     },
     height: {
       type: Number,
-      validator: (value) => value > 0,
+      validator: (value) => value < 300,
     },
     labels: Array,
     datasets: {
@@ -34,3 +34,9 @@ export default {
   },
 };
 </script>
+
+<style>
+canvas {
+  max-height: 350px;
+}
+</style>
