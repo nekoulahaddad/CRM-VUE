@@ -225,4 +225,14 @@ ul {
   }
 }
 
+.table__icon {
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+  }
+}
+
 @import "media";

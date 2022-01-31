@@ -32,12 +32,16 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            alt=""
-            src="@/assets/icons/info_icon.svg"
+          <VueCustomTooltip
             v-if="employee._id !== infoItem._id"
-            @click="$emit('toggleInfo', employee)"
-          />
+            label="Просмотр"
+          >
+            <img
+              alt=""
+              src="@/assets/icons/info_icon.svg"
+              @click="$emit('toggleInfo', employee)"
+            />
+          </VueCustomTooltip>
           <img
             alt=""
             src="@/assets/icons/arrow_top_icon.svg"
@@ -47,12 +51,16 @@
         </div>
         <div class="table__icon">
           <template v-if="role === 'director' || options.userEditor">
-            <img
-              alt=""
+            <VueCustomTooltip
               v-if="employee._id !== editedItem._id"
-              src="@/assets/icons/write_icon.svg"
-              @click="$emit('toggleEdit', employee)"
-            />
+              label="Изменить"
+            >
+              <img
+                alt=""
+                src="@/assets/icons/write_icon.svg"
+                @click="$emit('toggleEdit', employee)"
+              />
+            </VueCustomTooltip>
             <img
               alt=""
               src="@/assets/icons/arrow_top_icon.svg"
@@ -63,12 +71,13 @@
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <img
-            alt=""
-            v-if="role === 'director'"
-            src="@/assets/icons/trash_icon.svg"
-            @click="$emit('toggleDelete', employee)"
-          />
+          <VueCustomTooltip v-if="role === 'director'" label="Удалить">
+            <img
+              alt=""
+              src="@/assets/icons/trash_icon.svg"
+              @click="$emit('toggleDelete', employee)"
+            />
+          </VueCustomTooltip>
           <div class="table__hidden-icon" v-else></div>
         </div>
       </div>

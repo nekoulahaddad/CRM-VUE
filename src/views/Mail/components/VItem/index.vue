@@ -51,36 +51,34 @@
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <VueCustomTooltip label="Просмотр">
+          <VueCustomTooltip v-if="infoItem._id !== item._id" label="Просмотр">
             <img
               alt=""
               src="@/assets/icons/info_icon.svg"
-              v-if="infoItem._id !== item._id"
-              @click="$emit('toggleInfo', item)"
-            />
-            <img
-              alt=""
-              v-else
-              src="@/assets/icons/arrow_top_icon.svg"
               @click="$emit('toggleInfo', item)"
             />
           </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleInfo', item)"
+          />
         </div>
         <div class="table__icon">
-          <VueCustomTooltip label="Изменить">
+          <VueCustomTooltip v-if="editedItem._id !== item._id" label="Изменить">
             <img
               alt=""
               src="@/assets/icons/write_icon.svg"
-              v-if="editedItem._id !== item._id"
-              @click="$emit('toggleEdit', item)"
-            />
-            <img
-              alt=""
-              v-else
-              src="@/assets/icons/arrow_top_icon.svg"
               @click="$emit('toggleEdit', item)"
             />
           </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleEdit', item)"
+          />
         </div>
       </div>
     </div>
@@ -113,16 +111,6 @@ export default {
   .list__column {
     &:first-child {
       text-align: left;
-    }
-  }
-
-  .table__icon {
-    span[role="tooltip"] {
-      &:after {
-        background-color: $color-black;
-        color: $color-white;
-        border-radius: $border-radius;
-      }
     }
   }
 }
