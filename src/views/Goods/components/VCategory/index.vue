@@ -36,15 +36,17 @@
     </div>
     <div class="table__actions">
       <div class="table__icon">
-        <img
-          alt=""
-          :src="
-            item.visible
-              ? require('@/assets/icons/eye_close.svg')
-              : require('@/assets/icons/eye.svg')
-          "
-          @click="$emit('changeVisibility', item._id, item.visible)"
-        />
+        <VueCustomTooltip label="Видимость категории">
+          <img
+            alt=""
+            :src="
+              item.visible
+                ? require('@/assets/icons/eye_close.svg')
+                : require('@/assets/icons/eye.svg')
+            "
+            @click="$emit('changeVisibility', item._id, item.visible)"
+          />
+        </VueCustomTooltip>
       </div>
       <div class="table__icon">
         <img
