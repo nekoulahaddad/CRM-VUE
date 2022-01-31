@@ -47,7 +47,7 @@ export default {
   margin-top: 10px;
   margin-left: 10px;
   margin-bottom: 5px;
-  width: 924px;
+  width: 805px;
 
   &__inner {
     padding: 16px 10px 16px;

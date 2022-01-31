@@ -125,7 +125,7 @@ export default {
 
 .chart {
   background-color: $color-white;
-  width: 924px;
+  width: 805px;
   box-shadow: 0 3.5px 5.5px rgba(0, 0, 0, 0.02);
   margin-top: 7px;
   margin-left: 10px;

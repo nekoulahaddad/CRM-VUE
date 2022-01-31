@@ -115,6 +115,7 @@ export default {
 .mail-by-month {
   margin-top: 8px;
   position: relative;
+  width: 807px;
 
   &--loading {
     &::before {
