@@ -47,12 +47,13 @@
               task.executor._id[0]
             "
           >
-            <img
-              alt=""
-              src="@/assets/icons/info_icon.svg"
-              v-if="infoItem._id !== task._id"
-              @click="$emit('toggleInfo', task)"
-            />
+            <VueCustomTooltip v-if="infoItem._id !== task._id" label="Просмотр">
+              <img
+                alt=""
+                src="@/assets/icons/info_icon.svg"
+                @click="$emit('toggleInfo', task)"
+              />
+            </VueCustomTooltip>
             <img
               alt=""
               v-else
@@ -66,12 +67,16 @@
           <template
             v-if="id === task.initiator._id || id === task.responsible._id"
           >
-            <img
-              alt=""
+            <VueCustomTooltip
               v-if="index !== activeIndex"
-              src="@/assets/icons/document_icon.svg"
-              @click="$emit('getSubTasks', task._id, index)"
-            />
+              label="Показать подзадачи"
+            >
+              <img
+                alt=""
+                src="@/assets/icons/document_icon.svg"
+                @click="$emit('getSubTasks', task._id, index)"
+              />
+            </VueCustomTooltip>
             <img
               alt=""
               v-else
@@ -82,12 +87,13 @@
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <img
-            alt=""
-            v-if="id === task.initiator._id"
-            src="/icons/trash_icon.svg"
-            @click="$emit('toggleDelete', task)"
-          />
+          <VueCustomTooltip v-if="id === task.initiator._id" label="Удалить">
+            <img
+              alt=""
+              src="/icons/trash_icon.svg"
+              @click="$emit('toggleDelete', task)"
+            />
+          </VueCustomTooltip>
           <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
