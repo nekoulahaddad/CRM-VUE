@@ -13,11 +13,13 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            @click="$emit('updateSite', item._id)"
-            src="@/assets/icons/reload.svg"
-            alt=""
-          />
+          <VueCustomTooltip label="Обновить">
+            <img
+              @click="$emit('updateSite', item._id)"
+              src="@/assets/icons/reload.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
