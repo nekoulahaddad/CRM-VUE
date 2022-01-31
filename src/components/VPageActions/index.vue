@@ -23,55 +23,75 @@
 
       <!-- Сотрудники -->
       <template v-if="name === 'employee'">
-        <a
-          href=""
-          class="page-actions__button"
-          @click.prevent="
-            $store.commit('toggleAction', {
-              key: 'addEmployee',
-            })
-          "
-        >
-          <img src="@/assets/icons/add_employee.svg" alt="" />
-        </a>
+        <VueCustomTooltip label="Добавить сотрудника">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addEmployee',
+              })
+            "
+          >
+            <img src="@/assets/icons/add_employee.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
         <!-- Excel уволенных сотрудников -->
-        <a
-          href=""
-          @click.prevent="
-            $store.commit('toggleAction', {
-              key: 'firedUsers',
-            })
-          "
-          class="page-actions__button"
-        >
-          <img src="@/assets/icons/fired.svg" alt="" />
-        </a>
-        <a href="" class="page-actions__button">
-          <img src="@/assets/icons/birthday_cake.svg" alt="" />
-        </a>
+        <VueCustomTooltip label="Excel уволенных сотрудников">
+          <a
+            href=""
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'firedUsers',
+              })
+            "
+            class="page-actions__button"
+          >
+            <img src="@/assets/icons/fired.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
 
-        <a href="" class="page-actions__button">
-          <img src="@/assets/icons/employees.svg" alt="" />
-        </a>
+        <!-- Excel дней рождений за месяц -->
+        <VueCustomTooltip label="Excel дней рождений за месяц">
+          <a href="" class="page-actions__button">
+            <img src="@/assets/icons/birthday_cake.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+
+        <!-- Excel всех сотрудников -->
+        <VueCustomTooltip label="Excel всех сотрудников">
+          <a href="" class="page-actions__button">
+            <img src="@/assets/icons/employees.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+
+        <!-- Excel детей сотрудников -->
+        <VueCustomTooltip label="Excel детей сотрудников">
+          <a href="" class="page-actions__button">
+            <img src="@/assets/icons/baby.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
       </template>
 
       <!-- Обучение -->
       <template v-if="name === 'education'">
-        <a
-          href=""
-          @click.prevent="
-            $store.commit('toggleAction', {
-              key: 'createEducationSection',
-            })
-          "
-          class="page-actions__button"
-          :class="{
-            'page-actions__button--active2':
-              $store.state.actions.createEducationSection,
-          }"
-        >
-          <simple-svg :src="require('@/assets/icons/create_education.svg')" />
-        </a>
+        <VueCustomTooltip label="Добавить">
+          <a
+            href=""
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'createEducationSection',
+              })
+            "
+            class="page-actions__button"
+            :class="{
+              'page-actions__button--active2':
+                $store.state.actions.createEducationSection,
+            }"
+          >
+            <simple-svg :src="require('@/assets/icons/create_education.svg')" />
+          </a>
+        </VueCustomTooltip>
       </template>
 
       <!-- Задачи -->
@@ -139,6 +159,10 @@ export default {
         background-color: $color-black;
         color: $color-white;
         border-radius: $border-radius;
+      }
+
+      & + * {
+        margin-left: 20px;
       }
     }
   }
