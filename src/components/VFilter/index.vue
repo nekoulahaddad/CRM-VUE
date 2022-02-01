@@ -682,6 +682,7 @@
             <button @click="clearOptions" class="btn btn--red filter__btn">
               Очистить
             </button>
+            <v-button white>Редактировать регион</v-button>
           </div>
         </template>
       </div>
@@ -742,11 +743,10 @@
 </template>
 
 <script>
-import VButton from "@/components/VButton";
 import axios from "@/api/axios";
 import DatePicker from "vue-time-date-range-picker/dist/vdprDatePicker";
 import { mapGetters, mapMutations } from "vuex";
-import { REGION_MOSCOW_ID } from "../../constants";
+import VButton from "@/components/VButton";
 
 export default {
   props: {
@@ -1354,6 +1354,13 @@ export default {
         background: $color-gray-secondary;
       }
     }
+  }
+
+  button.btn--white {
+    border-width: 2px !important;
+    height: 37px;
+    width: 230px;
+    margin-top: 10px;
   }
 }
 </style>

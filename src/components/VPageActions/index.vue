@@ -102,7 +102,7 @@
       </template>
 
       <!-- Клиенты -->
-      <template v-if="name === 'clients'">
+      <template v-if="name === 'clients' && false">
         <a href="" class="page-actions__button">
           <img src="@/assets/icons/client_add.svg" alt="" />
         </a>
