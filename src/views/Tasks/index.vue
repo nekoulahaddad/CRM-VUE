@@ -1,21 +1,25 @@
 <template>
   <div class="page tasks-page">
+    <!-- Модальное окно для подтверждения удаления задачи -->
     <v-delete-item
       :deletedItem="deletedItem"
       @removeFromTask="removeFromTask"
     />
 
+    <!-- Модальное окно для подтверждения удаления подзадачи -->
     <v-delete-sub-item
       :deletedItem="deletedItem"
       @removeFromSubTask="removeFromSubTask"
     />
 
+    <!-- Заголовок страницы -->
     <v-page-header
       :title="$t('pages.tasks.pageTitle')"
       icon="tasks_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"
     />
+
     <div class="page__body d-flex">
       <!-- Фильтр -->
       <div class="page__left" v-if="showFilter">

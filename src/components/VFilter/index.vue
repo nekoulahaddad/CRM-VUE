@@ -417,6 +417,25 @@
         <!-- Задачи -->
         <template v-else-if="type === 'tasks'">
           <div class="filter__group group">
+            <div class="group__title">Задачи:</div>
+            <div class="group__content">
+              <select
+                class="form-select"
+                name="status"
+                @change="selectOptions($event, null, 'status', null)"
+                :value="filterOptions.status ? filterOptions.status : 'all'"
+              >
+                <option value="all">Все задачи</option>
+                <option value="assigned">Назначена</option>
+                <option value="tested">На проверке</option>
+                <option value="completed">Выполненые</option>
+                <option value="under revision>">На доработке</option>
+                <option value="accepted">Принята</option>
+                <option value="not accepted>">Отклонена</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
               <select
@@ -431,22 +450,7 @@
               </select>
             </div>
           </div>
-          <div class="filter__group group">
-            <div class="group__title">Отделы:</div>
-            <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'department')"
-                :value="
-                  filterOptions.department ? filterOptions.department : 'all'
-                "
-              >
-                <option v-for="item in info" :value="item.value">
-                  {{ item.title }} ({{ item.count }})
-                </option>
-              </select>
-            </div>
-          </div>
+
           <div class="filter__group group">
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
