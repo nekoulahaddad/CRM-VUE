@@ -231,6 +231,8 @@ export default {
 @import "@/styles/_variables";
 
 .employee-list-info {
+  background-color: $color-white;
+
   .group__title {
     position: relative;
 
