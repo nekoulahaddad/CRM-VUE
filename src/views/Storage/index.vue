@@ -24,6 +24,11 @@
           <div class="scroll-horizontal">
             <div class="list list-shadow">
               <div class="list__header">
+                <v-search
+                  @submit="getSearchData"
+                  v-model="search"
+                  placeholder="Поиск по категории, бренду, товару или артикулу"
+                />
                 <div class="list__title title title">
                   <div class="title__item">Снабженец</div>
                   <router-link
@@ -90,6 +95,8 @@ import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VCategory from "./components/VCategory";
 import VProduct from "./components/VProduct";
+import VSearch from "@/components/VSearch";
+import axios from "@/api/axios";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import { mapGetters, mapMutations } from "vuex";
@@ -106,6 +113,7 @@ export default {
     VCategory,
     VProductEdit,
     VProduct,
+    VSearch,
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
@@ -119,6 +127,7 @@ export default {
         categories: [],
         brands: [],
       },
+      search: "",
       type: "",
       current: [],
       filtersOptions: {
@@ -177,6 +186,37 @@ export default {
       } finally {
         this.isLoading = true;
       }
+    },
+    getSearchData() {
+      this.dataset = {
+        categories: [],
+        brands: [],
+        products: [],
+      };
+      let search = this.good;
+      if (search.length < 3) {
+        this.$toast.error("Запрос слишком короткий!");
+        this.changeStatus(true);
+        return;
+      }
+      this.$router.push(`/dashboard/${this.$route.name}/1/search`);
+      axios({
+        url: `/categories/getfromsearch`,
+        data: {
+          search: search,
+          region: this.filtersOptions.region,
+        },
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        let dataset = {};
+        dataset.categories = result.data.categories;
+        dataset.brands = result.data.brands;
+        dataset.products = result.data.products;
+        this.dataset = dataset;
+        this.$toast.success("Результаты запросов!");
+        this.isLoading = true;
+      });
     },
   },
   beforeRouteUpdate(to, from, next) {
