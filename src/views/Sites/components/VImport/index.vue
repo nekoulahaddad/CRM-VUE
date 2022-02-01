@@ -15,7 +15,19 @@
     </div>
     <div class="group">
       <div class="group__title">Загрузка файла:</div>
-      <div class="group__content"></div>
+      <div class="group__content">
+        <input
+          hidden
+          type="file"
+          id="document-file"
+          accept=".xlsx, .xls"
+          name="fileImport"
+          @change="fileUpload($event)"
+        />
+        <label for="document-file">
+          {{ fileImport ? fileImport.name : "Выбрать файл" }}
+        </label>
+      </div>
     </div>
     <v-button red>Импортировать</v-button>
   </div>
@@ -23,6 +35,7 @@
 
 <script>
 import VButton from "@/components/VButton";
+import { mapMutations } from "vuex";
 
 export default {
   props: {
@@ -33,6 +46,15 @@ export default {
   components: {
     VButton,
   },
+  data() {
+    return {
+      categoryName: "",
+      fileImport: null,
+      url: "www.example.com",
+      title: "Импорт товаров",
+      selected: null,
+    };
+  },
   computed: {
     description() {
       return `Обновление цен на товары для сайта ${this.item.url}`;
@@ -42,13 +64,37 @@ export default {
       return regions;
     },
   },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    fileUpload(e) {
+      const files = e.target.files;
+      this[e.target.name] = files[0];
+    },
+  },
 };
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .sites-list-info {
   .group__title {
     font-size: 16px;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 230px;
+    height: 37px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    background-color: $color-white;
+    border-radius: $border-radius;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
   }
 }
 </style>
