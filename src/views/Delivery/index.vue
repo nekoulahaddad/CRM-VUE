@@ -291,5 +291,10 @@ export default {
       grid-template-columns: 30px 350px 350px 180px 180px 260px 1fr;
     }
   }
+
+  .filter-toggle {
+    position: absolute;
+    right: 0;
+  }
 }
 </style>
