@@ -48,6 +48,9 @@
                     }}
                   </router-link>
                 </div>
+                <div class="list__columns">
+                  <div class="list__column">Название категории</div>
+                </div>
               </div>
               <div
                 class="list__row list__row--shadow list__row--white"

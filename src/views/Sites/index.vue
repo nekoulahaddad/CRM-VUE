@@ -156,17 +156,17 @@ export default {
       text-align: left;
     }
   }
-}
 
-.page__right--full {
-  .list__columns {
-    grid-template-columns: 200px 400px 400px 400px 1fr !important;
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: 200px 400px 400px 400px 1fr !important;
+    }
   }
-}
 
-.page__right--fluid {
-  .list__columns {
-    grid-template-columns: 200px 400px 400px 400px 1fr !important;
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: 200px 400px 400px 400px 1fr !important;
+    }
   }
 }
 </style>
