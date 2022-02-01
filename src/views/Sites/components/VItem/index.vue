@@ -5,7 +5,7 @@
     <div class="list__column">{{ index + 1 }}</div>
     <div class="list__column bg bg--blue-light">{{ item.categoryName }}</div>
     <div class="list__column">
-      <a :href="getUrl(item.url)" target="_blank">{{ item.url }}</a>
+      <a :href="item.url" target="_blank">{{ item.url }}</a>
     </div>
     <div class="list__column text text--green">
       {{ transformTime(item.updatedAt) }}
