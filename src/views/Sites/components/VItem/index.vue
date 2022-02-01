@@ -96,12 +96,7 @@ export default {
       this.isLoading = true;
     },
     toggleImportExcel(item) {
-      this.excelImportForm = !this.excelImportForm;
-      if (this.excelImportForm) {
-        this.item = item ? item : false;
-      } else {
-        this.item = null;
-      }
+      this.$modal.show("importSite");
     },
   },
 };

@@ -1,5 +1,6 @@
 <template>
   <div class="page sites-page">
+    <v-import-modal />
     <v-page-header
       :title="$t('pages.sites.pageTitle')"
       icon="sites_title"
@@ -55,13 +56,21 @@
 import VItem from "./components/VItem";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
+import VImportModal from "./components/VImportModal";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import { mapGetters } from "vuex";
 import axios from "@/api/axios";
 
 export default {
-  components: { VPageHeader, VSpinner, VNotFoundQuery, VPagination, VItem },
+  components: {
+    VPageHeader,
+    VSpinner,
+    VNotFoundQuery,
+    VPagination,
+    VItem,
+    VImportModal,
+  },
   data() {
     return {
       showFilter: false,
