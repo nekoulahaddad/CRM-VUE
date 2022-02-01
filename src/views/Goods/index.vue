@@ -54,6 +54,9 @@
                     </router-link>
                   </div>
                   <div class="list__columns">
+                    <div class="list__column">
+                      <img src="@/assets/icons/back.svg" alt="" />
+                    </div>
                     <div
                       v-for="field in $t('pages.goods.fields.categories')"
                       class="list__column"
@@ -375,8 +378,10 @@ export default {
 @import "@/styles/_variables";
 
 .goods-page {
-  .list__columns {
-    grid-template-columns: 1fr 1fr;
+  .list__header {
+    .list__columns {
+      grid-template-columns: 50px 1fr 1fr;
+    }
   }
 
   .smooth-dnd-draggable-wrapper {
@@ -387,8 +392,9 @@ export default {
   }
 
   .list__column {
+    text-align: left !important;
     &:first-child {
-      text-align: left;
+      padding-left: 7px;
     }
   }
   .title {
