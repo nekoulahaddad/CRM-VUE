@@ -66,7 +66,6 @@ import VItem from "./components/VItem";
 import VImport from "./components/VImport";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
-import VImportModal from "./components/VImportModal";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import { mapGetters } from "vuex";
@@ -80,7 +79,6 @@ export default {
     VPagination,
     VItem,
     VImport,
-    VImportModal,
   },
   data() {
     return {
