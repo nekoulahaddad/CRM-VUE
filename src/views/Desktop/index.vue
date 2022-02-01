@@ -236,6 +236,7 @@ export default {
   .page {
     &__left {
       flex: 1;
+      width: 1307px;
     }
 
     &__right {
@@ -279,7 +280,7 @@ export default {
       background-color: $color-white;
       border-radius: $border-radius;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
-      width: 305px;
+      width: 290px;
       padding: 10px;
 
       & + * {
