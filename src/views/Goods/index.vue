@@ -89,6 +89,14 @@
                       :dropDown="dropDown"
                       @toggleDropDown="toggleDropDown"
                       @toggleEdit="toggleEdit"
+                      @addToGoogleDoc="addToGoogleDoc"
+                      :show="filtersOptions.nesting > 0 && googleDoc != null"
+                      :opacity="
+                        googleDoc &&
+                        googleDoc.sheets.find((s) => s.categoryId == item._id)
+                          ? false
+                          : true
+                      "
                     />
 
                     <v-edit-category
@@ -144,7 +152,6 @@ import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import getDataFromPage from "@/api/getDataFromPage";
 import { mapGetters } from "vuex";
 import { REGION_MOSCOW_ID } from "../../constants";
 
@@ -237,7 +244,7 @@ export default {
           this.filtersOptions.page = this.$route.params.page;
 
           this.updateGoods(
-            await getDataFromPage(
+            await this.getDataFromPage(
               `/${this.$route.params.type || "categories"}/get`,
               this.filtersOptions
             )
@@ -272,6 +279,60 @@ export default {
     next();
   },
   methods: {
+    addToGoogleDoc(item) {
+      let status = this.googleDoc.sheets.find((s) => s.categoryId == item._id)
+        ? "delete"
+        : "add";
+      let data = {
+        region: this.region,
+        categoryId: item._id,
+        categoryName: item.categoryName,
+      };
+      this.isLoading = false;
+      axios({
+        url: `/googlesheets/${status}/`,
+        data: data,
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.editProduct(result.data.product);
+          this.$toast.success(result.data.message);
+          this.changeStatus(true);
+          this.isLoading = true;
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+          this.isLoading = true;
+        });
+    },
+    editProduct(product, old) {
+      let index = this.dataset.products.findIndex(
+        (item) => item._id === product._id
+      );
+      let indexOld;
+      if (old) {
+        indexOld = this.dataset.products.findIndex((item) => item._id === old);
+      }
+      if (index === -1 && this.type !== "search") {
+        let result = this.getDataFromPage(
+          `/${this.$route.params.type || "categories"}/get`,
+          this.filtersOptions
+        );
+        this.updateGoods(result);
+        this.changeStatus(true);
+        return;
+      }
+      if (this.type === "search" && indexOld) {
+        this.dataset.splice(indexOld, 1);
+      }
+      let dataset = this.dataset.products;
+      dataset[index] = product;
+      this.dataset.products = dataset;
+      this.editedProduct = {};
+      this.changeStatus(true);
+    },
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },
@@ -300,7 +361,7 @@ export default {
         if (this.$route.params.type !== "search") {
           try {
             this.updateGoods(
-              await getDataFromPage(
+              await this.getDataFromPage(
                 `/${this.$route.params.type || "categories"}/get`,
                 this.filtersOptions
               )
@@ -339,6 +400,25 @@ export default {
       this.updateGoods(result);
       this.clearSelectedProducts();
     },
+    async getGoodsFromRegion() {
+      try {
+        this.changeStatus(false);
+        this.downloadExcelGoods = true;
+        await axios({
+          url: `/excel/getgoodsfromregion`,
+          data: {
+            region: this.filtersOptions.region,
+          },
+          method: "POST",
+        });
+        this.$toast.success("Начинаю генерировать Excel!");
+      } catch (error) {
+        this.$toast.error(error.response.data.message);
+      } finally {
+        setTimeout(() => (this.downloadExcelGoods = false), 5000);
+      }
+      this.changeStatus(true);
+    },
     changeCategoryVisibility(id, visible) {
       this.changeStatus(false);
       let categoryData = {
@@ -371,7 +451,7 @@ export default {
   async created() {
     try {
       this.updateGoods(
-        await getDataFromPage(
+        await this.getDataFromPage(
           `/${this.$route.params.type || "categories"}/get`,
           this.filtersOptions
         )

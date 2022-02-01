@@ -35,6 +35,14 @@
       </div>
     </div>
     <div class="table__actions">
+      <div class="table__icon" v-if="show">
+        <img
+          :class="{ 'table__icon--opacity': opacity }"
+          @click="$emit('addToGoogleDoc', item)"
+          src="@/assets/icons/google_doc.svg"
+          alt=""
+        />
+      </div>
       <div class="table__icon">
         <VueCustomTooltip label="Видимость категории">
           <img
@@ -75,6 +83,12 @@ export default {
       type: Object,
       required: true,
     },
+    opacity: {
+      type: Boolean,
+    },
+    show: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -89,6 +103,10 @@ export default {
 
 .draggable-item {
   position: relative;
+
+  .handle {
+    width: 24px;
+  }
 
   &__dropdown {
     position: absolute;
@@ -121,6 +139,11 @@ export default {
         margin-top: 5px;
       }
     }
+  }
+
+  .table__icon--opacity {
+    filter: grayscale(100%);
+    opacity: 0.3;
   }
 }
 
