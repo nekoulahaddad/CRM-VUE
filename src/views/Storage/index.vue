@@ -215,4 +215,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.storage-page {
+  .list__columns {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
