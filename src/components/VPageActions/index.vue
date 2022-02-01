@@ -101,6 +101,13 @@
         </a>
       </template>
 
+      <!-- Поставщики -->
+      <template v-if="name === 'delivery'">
+        <a href="" class="page-actions__button">
+          <img src="@/assets/icons/add_delivery.svg" alt="" />
+        </a>
+      </template>
+
       <!-- Клиенты -->
       <template v-if="name === 'clients' && false">
         <a href="" class="page-actions__button">

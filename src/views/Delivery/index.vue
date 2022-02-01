@@ -1,5 +1,10 @@
 <template>
   <div class="page delivery-page">
+    <v-delete-modal
+      :deletedItem="deletedItem"
+      @removeProvider="removeProvider"
+    />
+
     <div
       class="page__header page-header"
       :class="{ 'page-header--collapse': sidebar }"
@@ -66,10 +71,14 @@
                   :item="item"
                   :infoItem="infoItem"
                   @toggleInfo="toggleInfo"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией о доставке -->
                 <v-info v-if="infoItem._id === item._id" :item="item" />
+
+                <!-- Блок редактирования информации о доставке -->
+                <v-edit />
               </div>
             </div>
           </div>
@@ -82,8 +91,10 @@
 </template>
 
 <script>
+import VEdit from "./components/VEdit";
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
+import VDeleteModal from "./components/VDeleteModal";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VButton from "@/components/VButton";
@@ -104,10 +115,12 @@ export default {
     VPagination,
     VInfo,
     VItem,
+    VEdit,
     VButton,
     VSearch,
     VPageHeader,
     VFilterToggle,
+    VDeleteModal,
   },
   computed: {
     ...mapGetters(["sidebar"]),
@@ -166,9 +179,9 @@ export default {
     toggleOpen() {
       this.open = !this.open;
     },
-    toggleDelete(id) {
-      this.deleted = !this.deleted;
-      this.deletedItem._id = id;
+    toggleDelete(deletedItem) {
+      this.deletedItem = deletedItem;
+      this.$modal.show("deleteDelivery");
     },
     toggleEdit(item) {
       if (!this.edit) {

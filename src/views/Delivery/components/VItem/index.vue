@@ -23,12 +23,13 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            alt=""
-            src="@/assets/icons/info_icon.svg"
-            v-if="infoItem._id !== item._id"
-            @click="$emit('toggleInfo', item)"
-          />
+          <VueCustomTooltip v-if="infoItem._id !== item._id" label="Просмотр">
+            <img
+              alt=""
+              src="@/assets/icons/info_icon.svg"
+              @click="$emit('toggleInfo', item)"
+            />
+          </VueCustomTooltip>
           <img
             alt=""
             src="@/assets/icons/arrow_top_icon.svg"
@@ -37,10 +38,18 @@
           />
         </div>
         <div class="table__icon">
-          <img src="/icons/write_icon.svg" alt="" />
+          <VueCustomTooltip label="Изменить">
+            <img src="/icons/write_icon.svg" alt="" />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img src="/icons/trash_icon.svg" alt="" />
+          <VueCustomTooltip label="Удалить">
+            <img
+              @click="$emit('toggleDelete', item)"
+              src="/icons/trash_icon.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
