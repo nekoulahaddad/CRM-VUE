@@ -4,20 +4,18 @@
     <div class="list-info__group group">
       <div class="group__content">
         <div class="group__item text--bold-700">Сайт:</div>
-        <div class="group__value">123</div>
+        <div class="group__value">{{ item.url }}</div>
       </div>
     </div>
     <div class="list-info__group group">
       <div class="group__content">
         <div class="group__item text--bold-700">Описание:</div>
-        <div class="group__value">123</div>
+        <div class="group__value">{{ description }}</div>
       </div>
     </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">Загрузка файла:</div>
-        <div class="group__value">123</div>
-      </div>
+    <div class="group">
+      <div class="group__title">Загрузка файла:</div>
+      <div class="group__content"></div>
     </div>
     <v-button red>Импортировать</v-button>
   </div>
@@ -34,6 +32,15 @@ export default {
   },
   components: {
     VButton,
+  },
+  computed: {
+    description() {
+      return `Обновление цен на товары для сайта ${this.item.url}`;
+    },
+    regions() {
+      let regions = this.item.regions;
+      return regions;
+    },
   },
 };
 </script>
