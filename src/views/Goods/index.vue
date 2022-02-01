@@ -103,7 +103,7 @@
           <template v-if="dataset.products.length">
             <div class="scroll-horizontal">
               <div class="list">
-                <div class="list__header">
+                <div class="list__header" v-if="!dataset.categories.length">
                   <div class="list__title">
                     {{ $t("goods") }}
                   </div>
