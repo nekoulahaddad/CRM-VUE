@@ -30,12 +30,18 @@
                 <div class="list__header">
                   <div class="list__title title">
                     <div class="title__item">
-                      {{ $t("pages.goods.pageTitle") }}
+                      <router-link
+                        :class="{ 'title__item--inactive': current.length }"
+                        :to="`/dashboard/goods/1`"
+                      >
+                        Категории
+                      </router-link>
                     </div>
                     <router-link
                       class="title__item"
-                      v-for="item in current"
+                      v-for="(item, i) in current"
                       :key="item._id"
+                      :class="{ 'title__item--inactive': current.length > i }"
                       :to="`/dashboard/goods/${
                         item.categoryName
                           ? +item.nesting + 2
@@ -427,6 +433,10 @@ export default {
         }
       }
     }
+  }
+
+  .title__item--inactive {
+    color: rgba(0, 0, 0, 0.3);
   }
 }
 </style>
