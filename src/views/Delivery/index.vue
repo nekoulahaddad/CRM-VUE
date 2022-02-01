@@ -1,11 +1,24 @@
 <template>
   <div class="page delivery-page">
-    <v-page-header
-      :title="$t('pages.delivery.pageTitle')"
-      icon="delivery_title"
-      @toggleFilter="toggleFilter"
-      :showFilter="showFilter"
-    />
+    <div
+      class="page__header page-header"
+      :class="{ 'page-header--collapse': sidebar }"
+    >
+      <div class="page-header__inner">
+        <div class="page-header__left">
+          <div class="page__icon">
+            <img :src="require(`@/assets/icons/delivery_title.svg`)" alt="" />
+          </div>
+          <h1 class="page__title">{{ $t("pages.delivery.pageTitle") }}</h1>
+          <div class="page__buttons">
+            <v-button red>Поставщики</v-button>
+            <v-button white>Карта поставщиков</v-button>
+          </div>
+          <v-filter-toggle @toggleFilter="toggleFilter" :active="showFilter" />
+        </div>
+      </div>
+    </div>
+
     <div class="page__body d-flex">
       <div class="page__left" v-if="showFilter">
         <v-filter type="providers" />
@@ -73,7 +86,9 @@ import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
+import VButton from "@/components/VButton";
 import VSearch from "@/components/VSearch";
+import VFilterToggle from "@/components/VFilterToggle";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
@@ -89,8 +104,10 @@ export default {
     VPagination,
     VInfo,
     VItem,
+    VButton,
     VSearch,
     VPageHeader,
+    VFilterToggle,
   },
   computed: {
     ...mapGetters(["sidebar"]),
