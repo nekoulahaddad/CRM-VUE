@@ -143,7 +143,7 @@ export default {
   }
 
   &__title {
-    width: 927px;
+    width: 807px;
     height: 54px;
     font-weight: 700;
     font-size: 16px;

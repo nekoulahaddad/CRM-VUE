@@ -148,5 +148,11 @@ export default {
   .page__left {
     margin-right: 6px;
   }
+  .scroll-horizontal {
+    padding-left: 0;
+  }
+  .page-header {
+    max-width: 1822px !important;
+  }
 }
 </style>
