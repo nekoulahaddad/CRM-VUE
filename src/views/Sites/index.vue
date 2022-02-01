@@ -48,8 +48,9 @@
                 />
 
                 <v-import
-                  v-if="excelImportForm._id === item._id"
                   :item="item"
+                  v-if="excelImportForm._id === item._id"
+                  @toggleImportExcel="toggleImportExcel"
                 />
               </div>
             </div>

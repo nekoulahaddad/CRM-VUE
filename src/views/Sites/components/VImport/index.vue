@@ -1,39 +1,42 @@
 <template>
   <div class="list__info list-info sites-list-info">
-    <div class="group__title text--blue">Импорт товаров:</div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">Сайт:</div>
-        <div class="group__value">{{ item.url }}</div>
+    <form @submit.prevent="onExport">
+      <div class="group__title text--blue">Импорт товаров:</div>
+      <div class="list-info__group group">
+        <div class="group__content">
+          <div class="group__item text--bold-700">Сайт:</div>
+          <div class="group__value">{{ item.url }}</div>
+        </div>
       </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">Описание:</div>
-        <div class="group__value">{{ description }}</div>
+      <div class="list-info__group group">
+        <div class="group__content">
+          <div class="group__item text--bold-700">Описание:</div>
+          <div class="group__value">{{ description }}</div>
+        </div>
       </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Загрузка файла:</div>
-      <div class="group__content">
-        <input
-          hidden
-          type="file"
-          id="document-file"
-          accept=".xlsx, .xls"
-          name="fileImport"
-          @change="fileUpload($event)"
-        />
-        <label for="document-file">
-          {{ fileImport ? fileImport.name : "Выбрать файл" }}
-        </label>
+      <div class="group">
+        <div class="group__title">Загрузка файла:</div>
+        <div class="group__content">
+          <input
+            hidden
+            type="file"
+            id="document-file"
+            accept=".xlsx, .xls"
+            name="fileImport"
+            @change="fileUpload($event)"
+          />
+          <label for="document-file">
+            {{ fileImport ? fileImport.name : "Выбрать файл" }}
+          </label>
+        </div>
       </div>
-    </div>
-    <v-button red>Импортировать</v-button>
+      <v-button red>Импортировать</v-button>
+    </form>
   </div>
 </template>
 
 <script>
+import axios from "@/api/axios";
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 
@@ -71,6 +74,31 @@ export default {
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files[0];
+    },
+    onExport() {
+      if (!this.fileImport) {
+        this.$toast.error("Вы не выбрали файл");
+        return;
+      }
+      let categoryData = new FormData();
+      categoryData.append("id", this.item._id);
+      categoryData.append("document", this.fileImport);
+      this.changeStatus(false);
+      axios({
+        url: `/sites/importexcel/`,
+        data: categoryData,
+        method: "POST",
+      })
+        .then((res) => {
+          this.$toast.success(res.data.message);
+          this.$emit("toggleImportExcel", this.item);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
     },
   },
 };
