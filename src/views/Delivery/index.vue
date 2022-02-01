@@ -296,5 +296,9 @@ export default {
     position: absolute;
     right: 0;
   }
+
+  .page__buttons {
+    margin-left: 10px;
+  }
 }
 </style>
