@@ -55,7 +55,12 @@
                   </div>
                   <div class="list__columns">
                     <div class="list__column">
-                      <img src="@/assets/icons/back.svg" alt="" />
+                      <img
+                        v-if="current.length"
+                        src="@/assets/icons/back.svg"
+                        alt=""
+                        @click="$router.go(-1)"
+                      />
                     </div>
                     <div
                       v-for="field in $t('pages.goods.fields.categories')"
