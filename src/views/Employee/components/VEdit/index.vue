@@ -37,6 +37,8 @@ export default {
 @import "@/styles/_variables";
 
 .employee-edit-form {
+  background-color: $color-white;
+
   .group {
     max-width: 976px;
 

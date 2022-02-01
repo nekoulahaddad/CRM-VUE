@@ -239,4 +239,10 @@ ul {
   }
 }
 
+.list__row--opened {
+  .table__icon::before {
+    background-color: $color-white;
+  }
+}
+
 @import "media";
