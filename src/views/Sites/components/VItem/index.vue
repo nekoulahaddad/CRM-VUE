@@ -24,13 +24,22 @@
           </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <VueCustomTooltip label="Импорт Excel">
+          <VueCustomTooltip
+            v-if="excelImportForm._id !== infoItem._id"
+            label="Импорт Excel"
+          >
             <img
-              @click="toggleImportExcel(infoItem)"
+              @click="$emit('toggleImportExcel', infoItem)"
               src="@/assets/icons/import.svg"
               alt=""
             />
           </VueCustomTooltip>
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleImportExcel', infoItem)"
+            v-else
+          />
         </div>
         <div class="table__icon">
           <VueCustomTooltip label="Обновить">
@@ -56,6 +65,9 @@ export default {
       type: Object,
       required: true,
     },
+    excelImportForm: {
+      type: Object,
+    },
   },
   data() {
     return {
@@ -64,7 +76,6 @@ export default {
       isLoading: false,
       item: {},
       status: false,
-      excelImportForm: false,
     };
   },
   computed: {
@@ -94,9 +105,6 @@ export default {
         setTimeout(() => (this.downloadExcelGoods = false), 1000);
       }
       this.isLoading = true;
-    },
-    toggleImportExcel(item) {
-      this.$modal.show("importSite");
     },
   },
 };

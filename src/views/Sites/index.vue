@@ -1,6 +1,5 @@
 <template>
   <div class="page sites-page">
-    <v-import-modal />
     <v-page-header
       :title="$t('pages.sites.pageTitle')"
       icon="sites_title"
@@ -36,11 +35,21 @@
                 v-for="(item, index) in dataset"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': excelImportForm._id === item._id,
+                }"
               >
                 <v-item
-                  @updateSite="updateSite"
                   :index="index"
                   :infoItem="item"
+                  :excelImportForm="excelImportForm"
+                  @updateSite="updateSite"
+                  @toggleImportExcel="toggleImportExcel"
+                />
+
+                <v-import
+                  v-if="excelImportForm._id === item._id"
+                  :item="item"
                 />
               </div>
             </div>
@@ -54,6 +63,7 @@
 
 <script>
 import VItem from "./components/VItem";
+import VImport from "./components/VImport";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VImportModal from "./components/VImportModal";
@@ -69,6 +79,7 @@ export default {
     VNotFoundQuery,
     VPagination,
     VItem,
+    VImport,
     VImportModal,
   },
   data() {
@@ -79,7 +90,7 @@ export default {
       isLoading: false,
       item: {},
       status: false,
-      excelImportForm: false,
+      excelImportForm: {},
     };
   },
   computed: {
@@ -93,11 +104,10 @@ export default {
   },
   methods: {
     toggleImportExcel(item) {
-      this.excelImportForm = !this.excelImportForm;
-      if (this.excelImportForm) {
-        this.item = item ? item : false;
+      if (this.excelImportForm._id === item._id) {
+        this.excelImportForm = {};
       } else {
-        this.item = null;
+        this.excelImportForm = item;
       }
     },
     async getSites(result) {
