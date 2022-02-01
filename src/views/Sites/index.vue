@@ -36,7 +36,11 @@
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
               >
-                <v-item @updateSite="updateSite" :index="index" :item="item" />
+                <v-item
+                  @updateSite="updateSite"
+                  :index="index"
+                  :infoItem="item"
+                />
               </div>
             </div>
           </div>
