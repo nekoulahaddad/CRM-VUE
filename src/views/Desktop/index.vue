@@ -235,11 +235,11 @@ export default {
 .desktop-page {
   .page {
     &__left {
-      flex: 1;
       width: 1307px;
     }
 
     &__right {
+      width: 263px;
       padding-left: 20px;
     }
   }
@@ -316,7 +316,7 @@ export default {
   .desktop-calendar {
     background-color: $color-white;
     border-radius: $border-radius;
-    width: 300px;
+    width: 263px;
     height: 100%;
   }
 
@@ -324,7 +324,7 @@ export default {
     border: none;
   }
   .vc-pane-container {
-    width: 300px;
+    width: 263px;
   }
   .vc-arrow {
     display: none;
