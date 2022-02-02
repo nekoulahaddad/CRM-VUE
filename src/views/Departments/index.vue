@@ -62,7 +62,7 @@
               </div>
 
               <!-- Блок добавления нового отдела -->
-              <v-add-item />
+              <v-add-item v-if="addDepartment" />
 
               <div
                 v-for="(department, index) in dataset"
@@ -172,8 +172,8 @@ export default {
         return role.role;
       },
     },
-    addEmployee() {
-      return this.$store.state.actions.addEmployee;
+    addDepartment() {
+      return this.$store.state.actions.addDepartment;
     },
     firedUsers() {
       return this.$store.state.actions.firedUsers;

@@ -128,7 +128,7 @@
       <template v-if="name === 'departments'">
         <a href="" class="page-actions__button">
           <img
-            src="@/assets/icons/client_add.svg"
+            src="@/assets/icons/add_department.svg"
             alt=""
             @click.prevent="
               $store.commit('toggleAction', {

@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="add-department-row__inner">
-      <form @submit.prevent="">
+      <form @submit.prevent="onSectionAdd">
         <div class="add-department-row__title text--blue">
           Основная информация:
         </div>
@@ -29,17 +29,27 @@
               class="form-control"
               type="text"
               placeholder="Введите название отдела..."
+              name="role"
+              v-model="title"
+              @change="onChange($event)"
             />
           </div>
         </div>
         <div class="card__group group">
           <div class="group__title">Руководитель:</div>
           <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введи имя руководителя..."
-            />
+            <autocomplete
+              :search="searchByExecutor"
+              :get-result-value="getResultValue"
+              placeholder="Введите исполнителя задачи..."
+              @input="getUsersByFIO"
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectUser(result)">
+                  {{ result.surname }}
+                </li>
+              </template>
+            </autocomplete>
           </div>
         </div>
         <v-button red>Сохранить</v-button>
@@ -51,9 +61,97 @@
 <script>
 import VEmployeeForm from "../VEmployeeForm";
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
   components: { VEmployeeForm, VButton },
+  data() {
+    return {
+      title: "",
+      fio: "",
+      leader: null,
+      users: [],
+      titleName: this.editedItem ? "Редактировать отдел" : "Добавить отдел",
+    };
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+    getResultValue(result) {
+      return result.surname;
+    },
+    async getUsersByFIO() {
+      axios(`/user/getsearch/${this.fio}`).then(async (res) => {
+        let result = await res;
+        this.users = result.data;
+      });
+    },
+    searchByExecutor(input) {
+      if (input.length < 1) {
+        return;
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    selectUser(user) {
+      this.leader = user;
+      this.fio = this.transformFullFIO(user);
+      this.users = [];
+    },
+    onSectionAdd() {
+      this.changeStatus(false);
+      let sectionData = {};
+      if (this.title) {
+        sectionData.title = this.title;
+      }
+      if (this.fio) {
+        sectionData.leader = this.leader._id;
+      }
+      if (this.editedItem) {
+        sectionData.departmentId = this.editedItem._id;
+        axios({
+          data: sectionData,
+          method: "POST",
+        })
+          .then(async () => {
+            this.$emit("refresh");
+            this.$toast.success("Отдел успешно обновлен!");
+            this.$emit("toggleOpen");
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
+            this.changeStatus(true);
+          });
+      } else {
+        axios({
+          url: `/departments/post/`,
+          data: sectionData,
+          method: "POST",
+        })
+          .then(async () => {
+            await this.$emit("refresh");
+            this.$toast.success("Отдел успешно добавлен!");
+            this.$emit("toggleOpen");
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
+            this.changeStatus(true);
+          });
+      }
+    },
+  },
 };
 </script>
 
@@ -99,6 +197,7 @@ export default {
     width: 401px;
   }
 
+  .autocomplete-input,
   .form-textarea,
   .form-control {
     width: 689px;
