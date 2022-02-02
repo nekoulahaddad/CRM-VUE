@@ -72,7 +72,7 @@
                 <v-info :infoItem="infoItem" v-if="infoItem._id === item._id" />
 
                 <v-edit
-                  :editedItem="editedItem"
+                  :editedItem="item"
                   v-if="editedItem._id === item._id"
                   @refreshDates="refreshDates"
                 />

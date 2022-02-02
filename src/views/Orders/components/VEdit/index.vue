@@ -233,10 +233,11 @@ export default {
       this.editedItem && this.editedItem.manager && this.editedItem.manager[0]
         ? this.transformFIO(this.editedItem.manager[0])
         : "";
-    this.editManager =
-      this.editedItem && this.editedItem.manager && this.editedItem.manager[0]
-        ? false
-        : true;
+    this.editManager = !(
+      this.editedItem &&
+      this.editedItem.manager &&
+      this.editedItem.manager[0]
+    );
     this.calculatedSum = this.editedItem.sum;
     this.deliverySum = this.editedItem.deliverySum;
   },
@@ -249,6 +250,25 @@ export default {
       let deleted = this.deletedItems;
       products = products.filter((p) => !deleted.includes(p.product_id));
       return products;
+    },
+    async getProducts() {
+      axios({
+        url: `/orders/getproducts/`,
+        data: {
+          orderId: this.editedItem._id,
+        },
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.products = result.data;
+          this.isLoading = true;
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
     },
     editOrder(status) {
       const products = this.updateInfoItemProducts();
@@ -285,6 +305,25 @@ export default {
           this.changeStatus(true);
         });
     },
+  },
+  created() {
+    this.isLoading = false;
+    this.getProducts();
+
+    axios({
+      url: "/purchase/getByOrderNumber",
+      params: {
+        orderNumber: this.editedItem.number,
+      },
+      method: "GET",
+    }).then((res) => {
+      const result = res.data.dataList;
+      result.forEach((item) => {
+        for (let i = 0; i < item.products.length; i++) {
+          this.sendedProductList.push(item.products[i]._id);
+        }
+      });
+    });
   },
 };
 </script>
