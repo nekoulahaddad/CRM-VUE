@@ -38,6 +38,8 @@
             <chip
               v-for="executor in executors"
               :text="transformFIO(executor)"
+              :close="true"
+              @closed="chipClosed"
             />
           </div>
           <div class="group__content">
@@ -143,6 +145,9 @@ export default {
     },
   },
   methods: {
+    chipClosed() {
+      this.executors = [];
+    },
     async getUsersByFIO() {
       if (this.fio === "") {
         return;
@@ -332,6 +337,16 @@ export default {
   }
   .autocomplete-input {
     width: 689px;
+  }
+  .chip {
+    position: relative;
+    padding-right: 40px;
+
+    i {
+      font-size: 37px;
+      position: absolute;
+      right: 17px;
+    }
   }
 }
 </style>

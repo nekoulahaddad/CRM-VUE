@@ -32,6 +32,7 @@ export default new Vuex.Store({
     file: {},
     actions: {
       addTask: false,
+      addVacancy: false,
       addEmployee: false,
       createEducationSection: false,
       firedUsers: false,

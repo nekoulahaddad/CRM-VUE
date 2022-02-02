@@ -39,42 +39,46 @@
         }"
       >
         <v-spinner v-if="!isLoading" />
-        <template v-else-if="dataset.length">
+        <template v-else>
           <div class="scroll-horizontal">
             <div class="list">
               <div class="list__header">
-                <v-search
-                  @submit="getSearchData"
-                  v-model="user"
-                  :placeholder="$t('pages.employee.searchPlaceholder')"
-                />
-                <div class="list__title">Вакансии</div>
+                <v-search @submit="getSearchData" v-model="user" />
+                <div class="list__title">
+                  {{ $t("pages.vacancies.pageTitle") }}
+                </div>
                 <div class="list__columns">
                   <div
-                    v-for="field in $t('pages.departments.fields')"
+                    v-for="field in $t('pages.vacancies.fields')"
                     class="list__column"
                   >
                     {{ field }}
                   </div>
                 </div>
               </div>
-              <div
-                v-for="(department, index) in dataset"
-                :key="department._id"
-                class="list__row list__row--shadow list__row--white"
-                :class="{
-                  'list__row--opened':
-                    infoItem._id === department._id ||
-                    editedItem._id === department._id,
-                }"
-              >
-                <v-item :infoItem="department" />
-              </div>
+
+              <!-- Добавление новой вакансии -->
+              <v-add-item v-if="addVacancy" />
+
+              <template v-if="dataset.length">
+                <div
+                  v-for="(department, index) in dataset"
+                  :key="department._id"
+                  class="list__row list__row--shadow list__row--white"
+                  :class="{
+                    'list__row--opened':
+                      infoItem._id === department._id ||
+                      editedItem._id === department._id,
+                  }"
+                >
+                  <v-item :infoItem="department" />
+                </div>
+                <v-pagination :count="count" />
+              </template>
+              <v-not-found-query v-else />
             </div>
           </div>
-          <v-pagination :count="count" />
         </template>
-        <v-not-found-query v-else />
       </div>
     </div>
   </div>
@@ -82,6 +86,7 @@
 
 <script>
 import VItem from "./components/VItem";
+import VAddItem from "./components/VAddItem";
 import { mapGetters, mapMutations } from "vuex";
 import axios from "@/api/axios";
 import VFilterToggle from "@/components/VFilterToggle";
@@ -96,6 +101,9 @@ import VSearch from "@/components/VSearch";
 export default {
   computed: {
     ...mapGetters(["sidebar"]),
+    addVacancy() {
+      return this.$store.state.actions.addVacancy;
+    },
   },
   data() {
     return {
@@ -126,6 +134,7 @@ export default {
     VButton,
     VFilter,
     VPageHeader,
+    VAddItem,
     VSearch,
     VFilterToggle,
     VSpinner,

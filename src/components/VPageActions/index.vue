@@ -130,6 +130,23 @@
           <img src="@/assets/icons/client_add.svg" alt="" />
         </a>
       </template>
+
+      <!-- Вакансии -->
+      <template v-if="name === 'vacancies'">
+        <VueCustomTooltip label="Добавить вакансию">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addVacancy',
+              })
+            "
+          >
+            <img src="@/assets/icons/add_vacancy.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+      </template>
     </div>
   </div>
 </template>
