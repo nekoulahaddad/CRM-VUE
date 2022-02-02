@@ -241,14 +241,12 @@ export default {
         }
       }
       axios({
-        url: process.env.VUE_APP_DEVELOP_URL + `/tasks/post/`,
+        url: `/tasks/post/`,
         data: taskData,
         method: "POST",
       })
         .then(async (res) => {
           let result = await res;
-          console.log("result");
-          console.log(result);
           this.$emit("addToTasks", result.data.task);
           this.$toast.success("Задача успешно добавлена!");
           this.$emit("toggleOpen");

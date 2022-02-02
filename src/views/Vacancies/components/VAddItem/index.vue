@@ -33,6 +33,28 @@
           </div>
         </div>
         <div class="group">
+          <div class="group__title">Отделы:</div>
+          <div class="group__content">
+            <select class="form-select" v-model="department">
+              <option value="all">Все отделы</option>
+              <option v-for="department in departments" :value="department._id">
+                {{ department.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Регионы:</div>
+          <div class="group__content">
+            <select class="form-select" v-model="department">
+              <option value="all">Все отделы</option>
+              <option v-for="region in regions" :value="region._id">
+                {{ region.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="group">
           <div class="group__title">Требования:</div>
           <div class="group__content">
             <textarea
@@ -67,9 +89,31 @@
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
 
 export default {
   components: { VButton },
+  data() {
+    return {
+      department: "all",
+      departments: [],
+      regions: [],
+    };
+  },
+  mounted() {
+    axios({
+      url: "/user/getdepartments",
+    }).then((res) => {
+      this.departments = res.data.departments;
+    });
+
+    axios({
+      url: "/regions/get",
+    }).then(async (res) => {
+      let result = await res;
+      this.regions = result.data.regions;
+    });
+  },
 };
 </script>
 
@@ -110,6 +154,14 @@ export default {
   button {
     width: 230px;
     height: 37px;
+  }
+  .form-select {
+    width: 401px;
+  }
+
+  .form-textarea,
+  .form-control {
+    width: 976px;
   }
 }
 </style>
