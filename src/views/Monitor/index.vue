@@ -127,7 +127,6 @@ export default {
     },
     setRegionsPool(pool) {
       this.regionsPool = pool;
-      this.isLoading = false;
       this.getStats();
     },
     refreshDates(startDate, endDate, pool) {

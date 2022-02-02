@@ -79,13 +79,12 @@
               <select
                 class="form-select"
                 @change="selectRegion($event)"
-                :value="filterOptions.region"
+                :value="filterOptions.region ? filterOptions.region : 'all'"
               >
                 <option value="all" selected>{{ $t("allRegions") }}</option>
                 <option
                   v-for="region in regions"
                   :key="region.id"
-                  @change="selectOptions($event, null, 'region', null)"
                   class="form-select"
                   :value="region.value"
                 >

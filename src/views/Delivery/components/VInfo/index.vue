@@ -112,7 +112,7 @@
     </template>
 
     <!-- Категории -->
-    <template v-if="categories && categories.length">
+    <template v-if="categories.length">
       <div class="group__title text--blue">
         {{ $t("categories") }}
       </div>
@@ -124,6 +124,7 @@
           <div class="group__value">
             <span
               v-for="(chip, index) in categories ? categories : item.categories"
+              :key="chip.categoryName"
             >
               {{ chip.categoryName }}
             </span>
@@ -135,6 +136,9 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
+import { REGION_MOSCOW_ID } from "../../../../constants";
+
 export default {
   props: {
     item: {
@@ -145,8 +149,31 @@ export default {
   data() {
     return {
       categories: this.item && this.item.categories ? this.item.categories : [],
-      region: "5f85ba274a9a5d34e0a45fed",
+      region: REGION_MOSCOW_ID,
     };
+  },
+  async mounted() {
+    await axios({
+      url: "/regions/get",
+    }).then(async (res) => {
+      let result = await res;
+      this.regions = result.data.regions;
+    });
+
+    if (this.item) {
+      await axios({
+        url: `/providers/getcategories/`,
+        data: {
+          parent_id: this.item._id,
+          region: this.region,
+        },
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        this.item.categories = result.data.categories;
+        this.categories = result.data.categories;
+      });
+    }
   },
 };
 </script>
@@ -157,6 +184,7 @@ export default {
 .delivery-list-info {
   .group__title {
     position: relative;
+    font-size: 16px;
 
     &:not(:first-child) {
       padding-top: 10px;
