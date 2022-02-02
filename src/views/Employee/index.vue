@@ -203,6 +203,7 @@ export default {
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },
+
     addToUsers(user) {
       this.addedItem = user;
       let users = this.dataset;

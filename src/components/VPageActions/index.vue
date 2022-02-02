@@ -67,7 +67,11 @@
 
         <!-- Excel детей сотрудников -->
         <VueCustomTooltip label="Excel детей сотрудников">
-          <a href="" class="page-actions__button">
+          <a
+            href=""
+            @click.prevent="downloadKidsOfUsers"
+            class="page-actions__button"
+          >
             <img src="@/assets/icons/baby.svg" alt="" />
           </a>
         </VueCustomTooltip>
@@ -129,8 +133,30 @@ export default {
     },
   },
   methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
     addTask() {
       this.$modal.show("addTask");
+    },
+    async downloadKidsOfUsers() {
+      this.changeStatus(false);
+      axios({
+        url: `/excel/children`,
+        data: {
+          age: 18,
+        },
+        method: "POST",
+      })
+        .then(async (res) => {
+          this.$toast.success("Результаты запросов!");
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
     },
 
     clearCache() {
