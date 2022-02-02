@@ -120,8 +120,8 @@ Vue.use(Toast, {
   transition: "Vue-Toastification__bounce",
   maxToasts: 6,
   newestOnTop: true,
-  position: "bottom-left",
-  timeout: 3500,
+  position: "bottom-right",
+  timeout: 350000,
 });
 Vue.component("paginate", Paginate);
 
