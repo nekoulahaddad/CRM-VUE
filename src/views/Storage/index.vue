@@ -29,9 +29,17 @@
                   v-model="search"
                   placeholder="Поиск по категории, бренду, товару или артикулу"
                 />
-                <div class="list__title title title">
-                  <div class="title__item">Снабженец</div>
+                <div class="list__title title">
+                  <div class="title__item">
+                    <router-link
+                      :class="{ 'title__item--inactive': current.length }"
+                      :to="`/dashboard/storage/1`"
+                    >
+                      Снабженец
+                    </router-link>
+                  </div>
                   <router-link
+                    class="title__item"
                     v-for="item in current"
                     :to="`/dashboard/storage/${
                       item.categoryName
@@ -49,14 +57,22 @@
                   </router-link>
                 </div>
                 <div class="list__columns">
-                  <div class="list__column">Название категории</div>
+                  <div class="list__column">
+                    <img
+                      alt=""
+                      v-if="current.length"
+                      src="@/assets/icons/back.svg"
+                      @click="$router.go(-1)"
+                    />
+                    Название категории
+                  </div>
                 </div>
               </div>
               <div
                 class="list__row list__row--shadow list__row--white"
                 v-for="item in dataset.categories"
               >
-                <v-category :key="item._id" :item="item" />
+                <v-category :current="current" :key="item._id" :item="item" />
               </div>
             </div>
             <div class="list list-shadow">
@@ -259,9 +275,58 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/_variables";
+
 .storage-page {
+  .list__header {
+    .list__columns {
+      grid-template-columns: 1fr;
+    }
+  }
+  .list__column {
+    text-align: left !important;
+
+    img {
+      margin-right: 10px;
+    }
+
+    &:first-child {
+    }
+  }
+
+  .title {
+    display: flex;
+
+    &__item {
+      color: rgba(0, 0, 0, 0.3);
+      position: relative;
+      margin-right: 10px;
+
+      &.router-link-active {
+        color: $color-black;
+      }
+
+      & + * {
+        padding-left: 15px;
+
+        &::before {
+          content: "/";
+          position: absolute;
+          color: rgba(0, 0, 0, 0.3);
+          left: 0;
+          top: 0;
+          bottom: 0;
+        }
+      }
+    }
+  }
+
   .list__columns {
     grid-template-columns: 1fr;
+  }
+
+  .title__item--inactive {
+    color: rgba(0, 0, 0, 0.3);
   }
 }
 </style>

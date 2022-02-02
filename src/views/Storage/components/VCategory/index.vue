@@ -24,6 +24,7 @@ import { mapMutations } from "vuex";
 
 export default {
   props: {
+    current: Array,
     item: {
       type: Object,
       required: true,
@@ -38,7 +39,6 @@ export default {
         brands: [],
       },
       type: "",
-      current: [],
       filtersOptions: {},
       count: 0,
       editForm: false,
