@@ -122,12 +122,12 @@
             {{ $t("categories") }}
           </div>
           <div class="group__value">
-            <span
+            <div
               v-for="(chip, index) in categories ? categories : item.categories"
               :key="chip.categoryName"
             >
               {{ chip.categoryName }}
-            </span>
+            </div>
           </div>
         </div>
       </div>
