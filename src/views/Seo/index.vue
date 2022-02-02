@@ -28,7 +28,12 @@
               <div class="list__header">
                 <div class="list__title title">
                   <div class="title__item">
-                    {{ $t("pages.seo.pageTitle") }}
+                    <router-link
+                      :class="{ 'title__item--inactive': current.length }"
+                      :to="`/dashboard/seo/1`"
+                    >
+                      {{ $t("pages.seo.pageTitle") }}
+                    </router-link>
                   </div>
                   <router-link
                     class="title__item"
@@ -50,6 +55,12 @@
                 </div>
                 <div class="list__columns">
                   <div class="list__column">
+                    <img
+                      alt=""
+                      v-if="current.length"
+                      src="@/assets/icons/back.svg"
+                      @click="$router.go(-1)"
+                    />
                     {{
                       dataset.categories
                         ? "Название категории:"
@@ -229,6 +240,14 @@ export default {
     grid-template-columns: 1fr 1fr;
   }
 
+  .list__header {
+    .list__column {
+      img {
+        margin-right: 10px;
+      }
+    }
+  }
+
   .list__column {
     &:first-child {
       text-align: left;
@@ -259,6 +278,9 @@ export default {
         }
       }
     }
+  }
+  .title__item--inactive {
+    color: rgba(0, 0, 0, 0.3);
   }
 }
 </style>
