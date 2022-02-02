@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="add-task-row__inner">
-      <form>
+      <form @submit.prevent="onTaskAdd">
         <div class="add-task-row__title text--blue">Новая задача</div>
         <div class="group">
           <div class="group__title">Наименование задачи:</div>
@@ -45,7 +45,7 @@
         <div class="group">
           <div class="group__title">Отделы:</div>
           <div class="group__content">
-            <select class="form-select">
+            <select class="form-select" v-model="department">
               <option value="all">Все отделы</option>
               <option v-for="department in departments" value="">
                 {{ department.title }}
@@ -109,7 +109,7 @@ export default {
       date: new Date().toISOString(),
       title: "",
       fio: "",
-      department: null,
+      department: "all",
       departments: [],
       executors: [],
       users: [],
@@ -125,6 +125,60 @@ export default {
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
+    },
+    onTaskAdd() {
+      this.changeStatus(false);
+      if (this.$moment().valueOf() > new Date(this.date).getTime()) {
+        this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
+        this.changeStatus(true);
+        return;
+      }
+      let taskData = new FormData();
+      if (this.title) {
+        taskData.append("title", this.title);
+      }
+      if (this.executors && this.executors.length) {
+        taskData.append("executors", JSON.stringify(this.executors));
+      } else {
+        this.$toast.error("Необходимо выбрать ответственного!");
+        return;
+      }
+      if (this.department) {
+        taskData.append("department", this.department);
+      }
+      if (this.description) {
+        taskData.append("description", this.description);
+      }
+      if (this.date) {
+        taskData.append("deadline_date", this.date);
+      } else {
+        this.$toast.error("Необходимо выбрать дату окончания!");
+        this.changeStatus(true);
+        return;
+      }
+      if (this.documents[0] !== "Выбрать файлы") {
+        for (let i = 0; i < this.documents.length; i++) {
+          taskData.append("documents", this.documents[i]);
+        }
+      }
+      axios({
+        url: process.env.VUE_APP_DEVELOP_URL + `/tasks/post/`,
+        data: taskData,
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          console.log("result");
+          console.log(result);
+          this.$emit("addToTasks", result.data.task);
+          this.$toast.success("Задача успешно добавлена!");
+          this.$emit("toggleOpen");
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+          this.changeStatus(true);
+        });
     },
   },
   mounted() {
