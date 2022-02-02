@@ -3,7 +3,19 @@
     class="list__row list__row--shadow list__row--white list__row--opened add-task-row"
   >
     <div class="list__columns list__columns--shadow list__columns--white">
-      <div class="list__column list__column--title">Поставить новую задачу</div>
+      <div class="list__column list__column--title">
+        Поставить новую задачу
+        <img
+          @click.prevent="
+            $store.commit('toggleAction', {
+              key: 'addTask',
+            })
+          "
+          class="add-task-row__close"
+          src="/icons/close_icon.svg"
+          alt=""
+        />
+      </div>
     </div>
     <div class="add-task-row__inner">
       <form>
@@ -65,6 +77,10 @@ export default {
     }
   }
 
+  .list__column--title {
+    position: relative;
+  }
+
   &__title {
     font-weight: 700;
     font-size: 16px;
@@ -84,6 +100,13 @@ export default {
   }
   .form-textarea {
     width: 976px;
+  }
+  &__close {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
   }
 }
 </style>
