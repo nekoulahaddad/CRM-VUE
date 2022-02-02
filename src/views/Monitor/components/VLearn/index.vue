@@ -5,12 +5,14 @@
       <vue-scroll>
         <div class="list">
           <div
-            v-for="i in 10"
+            v-for="item in educations"
             class="list__row list__row--shadow list__row--white"
           >
             <div class="list__columns">
               <div class="list__column">
-                <div>Обучение для менеджера по онлайн продажам</div>
+                <router-link to="/dashboard/education/1">
+                  {{ item.title }}
+                </router-link>
               </div>
             </div>
           </div>
@@ -21,7 +23,15 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
+
 export default {
+  data() {
+    return {
+      typeE: "crm",
+      educations: [],
+    };
+  },
   mounted() {
     const body = document.querySelector("body");
     const learn = document.querySelector(".learn");
@@ -33,6 +43,52 @@ export default {
     learn.onmouseout = function () {
       body.style.overflow = "auto";
     };
+  },
+  beforeMount() {
+    this.fetchData();
+  },
+  computed: {
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
+    department: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.department;
+      },
+    },
+  },
+  methods: {
+    async fetchData() {
+      let data = {
+        type: this.typeE,
+      };
+
+      data.role = this.role;
+      data.department = this.department;
+
+      if (this.typeE === "employee") {
+        data.department = this.department;
+      }
+
+      this.isLoading = false;
+
+      try {
+        const response = await axios({
+          url: `/educations/get/?page=1`,
+          params: data,
+          method: "GET",
+        });
+
+        this.educations = response.data.educations;
+      } catch (e) {
+      } finally {
+        this.isLoading = true;
+      }
+    },
   },
 };
 </script>
@@ -59,11 +115,12 @@ export default {
   }
 
   .list {
-    height: 137px;
+    height: 144px;
     margin-left: 2px;
     margin-top: 3px;
     margin-right: 15px;
     max-width: 768px;
+    padding-bottom: 30px;
   }
   .list__row,
   .list__columns {

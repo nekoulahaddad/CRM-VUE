@@ -148,7 +148,6 @@ export default {
   margin-top: 7px;
   margin-left: 10px;
   border-radius: $border-radius;
-  flex: 1;
 
   &__inner {
     width: 100%;
