@@ -34,7 +34,7 @@ export default {
 
 <style lang="scss">
 .storage-list-columns {
-  grid-template-columns: 1fr 100px;
+  grid-template-columns: 1fr 100px !important;
   a {
     display: block;
   }
