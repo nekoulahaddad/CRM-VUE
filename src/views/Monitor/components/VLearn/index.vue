@@ -120,7 +120,6 @@ export default {
     margin-top: 3px;
     margin-right: 15px;
     max-width: 768px;
-    padding-bottom: 30px;
   }
   .list__row,
   .list__columns {
@@ -130,6 +129,10 @@ export default {
       text-align: left;
       font-weight: 600;
     }
+  }
+
+  a {
+    display: block;
   }
 }
 </style>
