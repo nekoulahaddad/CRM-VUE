@@ -16,9 +16,19 @@
 
       <!-- Заказы -->
       <template v-if="name === 'orders'">
-        <a href="" class="page-actions__button" @click.prevent="">
-          <img src="@/assets/icons/create_order.svg" alt="" />
-        </a>
+        <VueCustomTooltip label="Добавить заказ">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addOrder',
+              })
+            "
+          >
+            <img src="@/assets/icons/create_order.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
       </template>
 
       <!-- Сотрудники -->

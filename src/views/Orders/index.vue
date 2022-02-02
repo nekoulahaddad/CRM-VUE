@@ -51,6 +51,9 @@
                 </div>
               </div>
 
+              <!-- Блок для добавления нового заказа -->
+              <v-add-item v-if="addOrder" />
+
               <div
                 v-for="item in orders.slice(0, 15)"
                 :key="item._id"
@@ -89,6 +92,7 @@
 
 <script>
 import VItem from "./components/VItem";
+import VAddItem from "./components/VAddItem";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import axios from "@/api/axios";
@@ -110,6 +114,7 @@ export default {
     VItem,
     VInfo,
     VEdit,
+    VAddItem,
     VPageHeader,
   },
   data() {
@@ -153,6 +158,9 @@ export default {
       getTotalDelivery: "getTotalDelivery",
       sidebar: "sidebar",
     }),
+    addOrder() {
+      return this.$store.state.actions.addOrder;
+    },
     orders: {
       get: function () {
         return this.getOrders;
