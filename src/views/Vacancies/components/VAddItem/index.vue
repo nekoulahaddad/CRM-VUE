@@ -17,11 +17,60 @@
         />
       </div>
     </div>
+    <div class="add-vacancy-row__inner">
+      <form @submit.prevent="">
+        <div class="add-vacancy-row__title text--blue">
+          Основная информация:
+        </div>
+        <div class="group">
+          <div class="group__title">Должность:</div>
+          <div class="group__content">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Введите должность..."
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Требования:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Введите требования для кандидата..."
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Обязаности:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Введите обязаности кандидата..."
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Условия:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Опишите условия работы..."
+            />
+          </div>
+        </div>
+        <v-button red>Создать</v-button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import VButton from "@/components/VButton";
+
+export default {
+  components: { VButton },
+};
 </script>
 
 <style lang="scss">
@@ -32,9 +81,16 @@ export default {};
     .list__column {
       text-align: left !important;
       padding-left: 0 !important;
-      font-size: 16px;
       position: relative;
     }
+  }
+
+  .list__column--title {
+    font-size: 16px !important;
+  }
+
+  &__inner {
+    padding: 10px;
   }
 
   &__close {
@@ -43,6 +99,17 @@ export default {};
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 230px;
+    height: 37px;
   }
 }
 </style>
