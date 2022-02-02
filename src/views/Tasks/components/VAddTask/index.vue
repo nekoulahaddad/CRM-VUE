@@ -41,6 +41,17 @@
           </div>
         </div>
         <div class="group">
+          <div class="group__title">Отделы:</div>
+          <div class="group__content">
+            <select class="form-select">
+              <option value="all">Все отделы</option>
+              <option v-for="department in departments" value="">
+                {{ department.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="group">
           <div class="group__title">Описание:</div>
           <div class="group__content">
             <textarea
@@ -71,16 +82,29 @@
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
 
 export default {
   components: {
     VButton,
+  },
+  data() {
+    return {
+      departments: [],
+    };
   },
   methods: {
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files;
     },
+  },
+  mounted() {
+    axios({
+      url: "/user/getdepartments",
+    }).then((res) => {
+      this.departments = res.data.departments;
+    });
   },
 };
 </script>
@@ -140,6 +164,9 @@ export default {
     border-radius: $border-radius;
     cursor: pointer;
     font-weight: bold;
+  }
+  .form-select {
+    width: 401px;
   }
 }
 </style>
