@@ -63,6 +63,7 @@ export default {
     margin-left: 2px;
     margin-top: 3px;
     margin-right: 15px;
+    max-width: 768px;
   }
   .list__row,
   .list__columns {
