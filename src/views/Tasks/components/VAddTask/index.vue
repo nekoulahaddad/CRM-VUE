@@ -49,6 +49,20 @@
             />
           </div>
         </div>
+        <div class="group">
+          <div class="group__title">Документы:</div>
+          <div class="group__content">
+            <input
+              hidden
+              type="file"
+              id="document-file"
+              multiple
+              name="documents"
+              @change="fileUpload($event)"
+            />
+            <label for="document-file"> Загрузить </label>
+          </div>
+        </div>
         <v-button red>Отправить</v-button>
       </form>
     </div>
@@ -61,6 +75,12 @@ import VButton from "@/components/VButton";
 export default {
   components: {
     VButton,
+  },
+  methods: {
+    fileUpload(e) {
+      const files = e.target.files;
+      this[e.target.name] = files;
+    },
   },
 };
 </script>
@@ -107,6 +127,19 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 230px;
+    height: 37px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    background-color: $color-white;
+    border-radius: $border-radius;
+    cursor: pointer;
+    font-weight: bold;
   }
 }
 </style>
