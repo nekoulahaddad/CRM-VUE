@@ -40,11 +40,7 @@
         <VueCustomTooltip label="Excel уволенных сотрудников">
           <a
             href=""
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'firedUsers',
-              })
-            "
+            @click.prevent="downloadUsers"
             class="page-actions__button"
           >
             <img src="@/assets/icons/fired.svg" alt="" />
@@ -204,7 +200,25 @@ export default {
           this.changeStatus(true);
         });
     },
-
+    async downloadUsers() {
+      this.changeStatus(false);
+      axios({
+        url: `/excel/users`,
+        data: {
+          region: this.filtersOptions.region,
+        },
+        method: "POST",
+      })
+        .then(async (res) => {
+          this.$toast.success(res.data.message);
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
+    },
     clearCache() {
       axios
         .get("https://tdcsk.com/api/cache-clear", {
