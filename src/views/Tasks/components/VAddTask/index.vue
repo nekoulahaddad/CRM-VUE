@@ -35,7 +35,10 @@
         <div class="group">
           <div class="group__title">ФИО исполнителей:</div>
           <div class="chips">
-            <chip v-for="executor in executors" :text="executor.surname" />
+            <chip
+              v-for="executor in executors"
+              :text="transformFIO(executor)"
+            />
           </div>
           <div class="group__content">
             <autocomplete
