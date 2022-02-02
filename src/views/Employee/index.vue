@@ -45,7 +45,6 @@
         <v-spinner v-if="!isLoading" />
         <template v-else-if="dataset.length">
           <div class="scroll-horizontal">
-            <v-add-item v-if="addEmployee" />
             <div class="list">
               <div class="list__header">
                 <v-search
@@ -65,6 +64,10 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Блок для добавления сотрудника -->
+              <v-add-item v-if="addEmployee" />
+
               <div
                 v-for="(employee, index) in dataset"
                 :key="employee._id"
