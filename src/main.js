@@ -121,7 +121,7 @@ Vue.use(Toast, {
   maxToasts: 6,
   newestOnTop: true,
   position: "bottom-right",
-  timeout: 350000,
+  timeout: 3500,
 });
 Vue.component("paginate", Paginate);
 
