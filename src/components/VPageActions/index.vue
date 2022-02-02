@@ -53,14 +53,22 @@
 
         <!-- Excel дней рождений за месяц -->
         <VueCustomTooltip label="Excel дней рождений за месяц">
-          <a href="" class="page-actions__button">
+          <a
+            href=""
+            @click.prevent="downloadUsersBirthday"
+            class="page-actions__button"
+          >
             <img src="@/assets/icons/birthday_cake.svg" alt="" />
           </a>
         </VueCustomTooltip>
 
         <!-- Excel всех сотрудников -->
         <VueCustomTooltip label="Excel всех сотрудников">
-          <a href="" class="page-actions__button">
+          <a
+            href=""
+            @click.prevent="downloadAllUsers"
+            class="page-actions__button"
+          >
             <img src="@/assets/icons/employees.svg" alt="" />
           </a>
         </VueCustomTooltip>
@@ -139,6 +147,44 @@ export default {
     addTask() {
       this.$modal.show("addTask");
     },
+    async downloadUsersBirthday(age) {
+      this.changeStatus(false);
+      axios({
+        url: `/excel/birthday`,
+        data: {
+          age: age,
+        },
+        method: "POST",
+      })
+        .then((res) => {
+          this.$toast.success(res.data.message);
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
+    },
+    async downloadAllUsers() {
+      this.changeStatus(false);
+      axios({
+        url: `/excel/allusers`,
+        data: {
+          region: this.filtersOptions.region,
+        },
+        method: "POST",
+      })
+        .then((res) => {
+          this.$toast.success(res.data.message);
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
+    },
     async downloadKidsOfUsers() {
       this.changeStatus(false);
       axios({
@@ -148,7 +194,7 @@ export default {
         },
         method: "POST",
       })
-        .then(async (res) => {
+        .then((res) => {
           this.$toast.success("Результаты запросов!");
         })
         .catch((error) => {
