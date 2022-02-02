@@ -1,0 +1,89 @@
+<template>
+  <div
+    class="list__row list__row--shadow list__row--white list__row--opened add-task-row"
+  >
+    <div class="list__columns list__columns--shadow list__columns--white">
+      <div class="list__column list__column--title">Поставить новую задачу</div>
+    </div>
+    <div class="add-task-row__inner">
+      <form>
+        <div class="add-task-row__title text--blue">Новая задача</div>
+        <div class="group">
+          <div class="group__title">Наименование задачи:</div>
+          <div class="group__content">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Введите название задачи"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">ФИО исполнителей:</div>
+          <div class="group__content">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Введите ФИО сотрудника"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Описание:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Введите описание задачи..."
+            />
+          </div>
+        </div>
+        <v-button red>Отправить</v-button>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import VButton from "@/components/VButton";
+
+export default {
+  components: {
+    VButton,
+  },
+};
+</script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.add-task-row {
+  .list__columns {
+    grid-template-columns: 1fr !important;
+    .list__column {
+      text-align: left;
+      font-size: 16px;
+    }
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 230px;
+    height: 37px;
+  }
+
+  &__inner {
+    padding: 10px;
+  }
+  .form-control {
+    width: 689px;
+  }
+  .form-textarea {
+    width: 976px;
+  }
+}
+</style>

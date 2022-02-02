@@ -104,7 +104,15 @@
 
       <!-- Задачи -->
       <template v-if="name === 'tasks'">
-        <a href="" class="page-actions__button">
+        <a
+          href=""
+          class="page-actions__button"
+          @click.prevent="
+            $store.commit('toggleAction', {
+              key: 'addTask',
+            })
+          "
+        >
           <img src="@/assets/icons/tasks_add.svg" alt="" />
         </a>
       </template>
@@ -140,9 +148,7 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
-    addTask() {
-      this.$modal.show("addTask");
-    },
+    addTask() {},
     async downloadUsersBirthday(age) {
       this.changeStatus(false);
       axios({

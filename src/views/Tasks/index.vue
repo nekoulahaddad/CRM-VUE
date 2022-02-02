@@ -52,6 +52,9 @@
                   </div>
                 </div>
               </div>
+
+              <v-add-task v-if="addTask" />
+
               <div
                 v-for="(task, index) in dataset"
                 :key="task._id"
@@ -139,6 +142,7 @@
 <script>
 import VEdit from "./components/VEdit";
 import VTask from "./components/VTask";
+import VAddTask from "./components/VAddTask";
 import VDeleteItem from "./components/VDeleteItem";
 import VDeleteSubItem from "./components/VDeleteSubItem";
 import VSubTask from "./components/VSubTask";
@@ -163,6 +167,7 @@ export default {
     VTask,
     VTaskInfo,
     VSubTask,
+    VAddTask,
     VPageHeader,
     VDeleteSubItem,
   },
@@ -220,6 +225,9 @@ export default {
         let user = this.getUserRole();
         return user._id;
       },
+    },
+    addTask() {
+      return this.$store.state.actions.addTask;
     },
     userData: {
       get: function () {
