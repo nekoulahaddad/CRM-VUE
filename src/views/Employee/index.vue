@@ -402,6 +402,8 @@ export default {
   }
 
   .page__header {
+    padding-right: 20px;
+    max-width: 1837px;
     .page__buttons {
       margin-left: 14px;
     }
