@@ -1,7 +1,10 @@
 <template>
   <div class="chart">
     <div class="chart__inner">
-      <div class="chart__title">Проданное количество товаров за декабрь:</div>
+      <div class="chart__title">
+        Проданное количество товаров за
+        {{ months[new Date().getMonth()] }}:
+      </div>
       <VLineChart
         v-if="Object.keys(sales).length"
         :width="0"
@@ -71,6 +74,20 @@ export default {
           },
         },
       },
+      months: [
+        "январь",
+        "февраль",
+        "март",
+        "апрель",
+        "май",
+        "июнь",
+        "июль",
+        "август",
+        "сентябрь",
+        "октябрь",
+        "ноябрь",
+        "декабрь",
+      ],
     };
   },
   watch: {
@@ -117,6 +134,7 @@ export default {
       };
     },
   },
+  created() {},
 };
 </script>
 
