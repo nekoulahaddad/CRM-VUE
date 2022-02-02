@@ -27,6 +27,8 @@
               class="form-control"
               type="text"
               placeholder="Введите название задачи"
+              name="title"
+              @input="onChange($event)"
             />
           </div>
         </div>
@@ -57,6 +59,8 @@
             <textarea
               class="form-textarea"
               placeholder="Введите описание задачи..."
+              name="description"
+              @input="onChange($event)"
             />
           </div>
         </div>
@@ -72,6 +76,18 @@
               @change="fileUpload($event)"
             />
             <label for="document-file"> Загрузить </label>
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Дедлайн:</div>
+          <div class="group__content">
+            <datetime
+              v-model="date"
+              required
+              input-class="forms__container--input"
+              type="date"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
           </div>
         </div>
         <v-button red>Отправить</v-button>
@@ -90,13 +106,25 @@ export default {
   },
   data() {
     return {
+      date: new Date().toISOString(),
+      title: "",
+      fio: "",
+      department: null,
       departments: [],
+      executors: [],
+      users: [],
+      description: "",
+      executor: "",
+      documents: ["Выбрать файлы"],
     };
   },
   methods: {
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files;
+    },
+    onChange(e) {
+      this[e.target.name] = e.target.value;
     },
   },
   mounted() {
@@ -167,6 +195,9 @@ export default {
   }
   .form-select {
     width: 401px;
+  }
+  .vdatetime-input {
+    width: 330px;
   }
 }
 </style>
