@@ -34,12 +34,22 @@
         </div>
         <div class="group">
           <div class="group__title">ФИО исполнителей:</div>
+          <div class="chips">
+            <chip v-for="executor in executors" :text="executor.surname" />
+          </div>
           <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите ФИО сотрудника"
-            />
+            <autocomplete
+              :search="searchByExecutor"
+              :get-result-value="getResultValue"
+              placeholder="Введите исполнителя задачи..."
+              @input="getUsersByFIO"
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectUser(result)">
+                  {{ result.surname }}
+                </li>
+              </template>
+            </autocomplete>
           </div>
         </div>
         <div class="group">
@@ -99,10 +109,12 @@
 <script>
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
+import Chip from "vue-chip";
 
 export default {
   components: {
     VButton,
+    Chip,
   },
   data() {
     return {
@@ -118,10 +130,69 @@ export default {
       documents: ["Выбрать файлы"],
     };
   },
+  computed: {
+    id: {
+      get: function () {
+        let user = this.getUserRole();
+
+        return user._id;
+      },
+    },
+  },
   methods: {
+    async getUsersByFIO() {
+      if (this.fio === "") {
+        return;
+      }
+      axios(`/user/getsearch/${this.fio}`).then(async (res) => {
+        let result = await res;
+        this.users = result.data;
+      });
+    },
+    getResultValue(result) {
+      return result.surname;
+    },
+    selectUser(user) {
+      if (user._id === this.id) {
+        this.$toast.error("Вы не можете быть исполнителем!");
+        this.fio = ``;
+        this.users = [];
+        return;
+      }
+      let index = this.executors.findIndex(
+        (arrUser) => arrUser._id === user._id
+      );
+      if (index > -1) {
+        this.$toast.error("Исполнитель уже в списке!");
+        this.fio = ``;
+        this.users = [];
+        return;
+      }
+      if (
+        this.department === null ||
+        (this.department !== null && this.executors.length < 1)
+      ) {
+        this.executors.push(user);
+        this.fio = ``;
+        this.users = [];
+        return;
+      }
+      this.$toast.error("При выбранном отделе исполнитель только один!");
+      return;
+    },
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files;
+    },
+    searchByExecutor(input) {
+      if (input.length < 1) {
+        return;
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
@@ -252,6 +323,12 @@ export default {
   }
   .vdatetime-input {
     width: 330px;
+  }
+  .chips {
+    margin-bottom: 10px;
+  }
+  .autocomplete-input {
+    width: 689px;
   }
 }
 </style>
