@@ -124,6 +124,21 @@
         </a>
       </template>
 
+      <!-- Департаменты -->
+      <template v-if="name === 'departments'">
+        <a href="" class="page-actions__button">
+          <img
+            src="@/assets/icons/client_add.svg"
+            alt=""
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addDepartment',
+              })
+            "
+          />
+        </a>
+      </template>
+
       <!-- Клиенты -->
       <template v-if="name === 'clients' && false">
         <a href="" class="page-actions__button">

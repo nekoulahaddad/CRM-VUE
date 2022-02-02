@@ -60,6 +60,10 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Блок добавления нового отдела -->
+              <v-add-item />
+
               <div
                 v-for="(department, index) in dataset"
                 :key="department._id"
