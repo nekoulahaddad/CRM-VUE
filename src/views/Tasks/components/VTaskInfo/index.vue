@@ -1,5 +1,5 @@
 <template>
-  <div class="list__info list-info">
+  <div class="list__info list-info tasks-list-info">
     <div class="group__title text--blue">
       {{ $t("pages.tasks.taskInfo") }}
     </div>
@@ -86,11 +86,23 @@
           {{ transformDate(task.deadline_date) }}
         </div>
       </div>
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.tasks.taskComment") }}
+
+      <div class="group">
+        <div class="group__title">{{ $t("pages.tasks.taskComment") }}</div>
+        <div class="group__content">
+          <textarea
+            :readonly="
+              !(
+                task.executor &&
+                (userId === task.executor._id ||
+                  userId === task.executor._id[0])
+              )
+            "
+            class="form-textarea"
+          >
+            {{ comment }}
+          </textarea>
         </div>
-        <div class="group__value">{{ comment }}</div>
       </div>
       <div class="group__footer">
         <v-button
@@ -280,6 +292,11 @@ export default {
 
   & + * {
     margin-top: 10px;
+  }
+}
+.tasks-list-info {
+  .form-textarea {
+    width: 976px;
   }
 }
 </style>
