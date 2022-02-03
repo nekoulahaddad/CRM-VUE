@@ -42,12 +42,59 @@
                   {{ $t("pages.orders.pageTitle") }}
                 </div>
                 <div class="list__columns">
+                  <div class="list__column">№:</div>
+                  <div class="list__column">Клиент:</div>
+                  <div class="list__column">Регион:</div>
                   <div
-                    v-for="field in $t('pages.orders.fields')"
-                    class="list__column"
+                    class="list__column list__column--filter"
+                    @click="sort('created')"
                   >
-                    {{ field }}
+                    <span>Дата создания:</span>
+                    <img
+                      alt=""
+                      src="@/assets/icons/filter_down.svg"
+                      :class="{
+                        'list__filter-icon--active':
+                          filtersOptions.created === -1,
+                      }"
+                      class="list__filter-icon"
+                    />
                   </div>
+                  <div
+                    class="list__column list__column--filter"
+                    @click="sort('buyed')"
+                  >
+                    <span>Оплачен:</span>
+                    <img
+                      alt=""
+                      src="@/assets/icons/filter_down.svg"
+                      :class="{
+                        'list__filter-icon--active':
+                          filtersOptions.buyed === -1,
+                      }"
+                      class="list__filter-icon"
+                    />
+                  </div>
+                  <div
+                    class="list__column list__column--filter"
+                    @click="sort('deliver')"
+                  >
+                    <span>Доставлен:</span>
+                    <img
+                      alt=""
+                      src="@/assets/icons/filter_down.svg"
+                      :class="{
+                        'list__filter-icon--active':
+                          filtersOptions.deliver === -1,
+                      }"
+                      class="list__filter-icon"
+                    />
+                  </div>
+                  <div class="list__column">Сумма:</div>
+                  <div class="list__column">Доставка:</div>
+                  <div class="list__column">Менеджер:</div>
+                  <div class="list__column">Статус:</div>
+                  <div class="list__column">1С:</div>
                 </div>
               </div>
 
