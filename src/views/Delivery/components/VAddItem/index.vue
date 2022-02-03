@@ -175,7 +175,13 @@
               type="text"
               placeholder="Введите название мессенджера..."
             />
-            <input type="text" class="form-control" placeholder="12" />
+            <phone-mask-input
+              name="phone"
+              inputClass="form-control"
+              :value="messenger.phone"
+              @change="changeMessenger($event, index)"
+              placeholder="Введите номер мессенджера..."
+            />
           </div>
         </div>
 
@@ -297,8 +303,7 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
-    addMessenger(e) {
-      e.preventDefault();
+    addMessenger() {
       if (this.specialist.messengers.length) {
         const lastMessenger =
           this.specialist.messengers[this.specialist.messengers.length - 1];
@@ -308,6 +313,11 @@ export default {
         }
       }
       this.specialist.messengers.push({ name: "", phone: "" });
+    },
+    changeMessenger(e, index) {
+      const editedMessenger = this.specialist.messengers[index];
+      editedMessenger[e.target.name] = e.target.value;
+      this.specialist.messengers.splice(index, 1, editedMessenger);
     },
     onProvidersAdd() {
       if (!this.region) {
@@ -470,6 +480,9 @@ export default {
         margin-left: 10px;
       }
     }
+  }
+  .phone-mask-wrapper-lib {
+    height: 33px;
   }
 }
 </style>
