@@ -1,5 +1,11 @@
 <template>
   <div class="page goods-page">
+    <v-delete-product
+      :deletedItem="deletedProduct"
+      @deleteProduct="deleteProduct"
+      @clearSelectedProducts="clearSelectedProducts"
+    />
+
     <v-page-header
       :title="$t('pages.goods.pageTitle')"
       icon="goods_title"
@@ -129,7 +135,11 @@
                   :key="item._id"
                   class="list__row list__row--shadow list__row--white"
                 >
-                  <v-product :item="item" @editProduct="editProduct" />
+                  <v-product
+                    :item="item"
+                    @editProduct="editProduct"
+                    @toggleDeleteProduct="toggleDeleteProduct"
+                  />
                 </div>
               </div>
             </div>
@@ -146,6 +156,7 @@
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
 import VEditCategory from "./components/VEditCategory";
+import VDeleteProduct from "./components/VDeleteProduct";
 import VProduct from "./components/VProduct";
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
@@ -166,6 +177,7 @@ export default {
     VPageHeader,
     VEditCategory,
     Container,
+    VDeleteProduct,
   },
   data() {
     return {
@@ -282,6 +294,20 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleDeleteProduct(deletedProduct) {
+      this.deletedProduct = deletedProduct;
+      this.$modal.show("deleteProduct");
+    },
+    deleteProduct(product) {
+      let index = this.dataset.products.findIndex(
+        (item) => item._id === product._id
+      );
+      let dataset = this.dataset.products;
+      dataset.splice(index, 1);
+      this.dataset.products = dataset;
+      this.deletedProduct = {};
+      this.changeStatus(true);
+    },
     addToGoogleDoc(item) {
       let status = this.googleDoc.sheets.find((s) => s.categoryId == item._id)
         ? "delete"

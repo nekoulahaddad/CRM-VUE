@@ -44,7 +44,11 @@
         </div>
         <div class="table__icon">
           <VueCustomTooltip label="Удалить товар">
-            <img alt="" src="@/assets/icons/trash_icon.svg" />
+            <img
+              alt=""
+              src="@/assets/icons/trash_icon.svg"
+              @click="$emit('toggleDeleteProduct', item)"
+            />
           </VueCustomTooltip>
         </div>
       </div>
