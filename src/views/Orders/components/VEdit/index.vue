@@ -333,5 +333,8 @@ export default {
   .form-textarea {
     width: 976px;
   }
+  .group__title {
+    font-size: 16px;
+  }
 }
 </style>
