@@ -10,7 +10,7 @@
                   style: "currency",
                   currency: "RUB",
                 }).format(rev.today)
-              : "0"
+              : "0 ₽"
           }}
         </div>
       </div>
@@ -46,7 +46,7 @@
                   style: "currency",
                   currency: "RUB",
                 }).format(rev.month)
-              : "0"
+              : "0 ₽"
           }}
         </div>
       </div>
