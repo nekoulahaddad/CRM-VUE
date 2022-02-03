@@ -139,14 +139,16 @@
         <div class="group__value">{{ fio }}</div>
       </div>
     </div>
-    <div class="list-info__group group">
+
+    <div class="group">
+      <div class="group__title">{{ $t("managerComment") }}</div>
       <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("managerComment") }}
-        </div>
-        <div class="group__value">{{ infoItem.manager_comment }}</div>
+        <textarea class="form-textarea">
+          {{ infoItem.manager_comment }}
+        </textarea>
       </div>
     </div>
+
     <template v-if="infoItem.products.length">
       <div class="group__title text--blue">Товары:</div>
       <div class="list sub-list">
@@ -677,6 +679,10 @@ export default {
     & + * {
       margin-top: 10px;
     }
+  }
+
+  .form-textarea {
+    width: 976px;
   }
 }
 </style>
