@@ -29,6 +29,8 @@
               class="form-control"
               type="text"
               placeholder="Введите название о компании..."
+              name="name"
+              v-model="name"
             />
           </div>
         </div>
@@ -39,13 +41,21 @@
               class="form-control"
               type="text"
               placeholder="Вставьте ссылку на сайт..."
+              name="site"
+              v-model="site"
             />
           </div>
         </div>
         <div class="group">
           <div class="group__title">ИНН:</div>
           <div class="group__content">
-            <input class="form-control" type="text" placeholder="Введите ИНН" />
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Введите ИНН"
+              name="inn"
+              v-model="inn"
+            />
           </div>
         </div>
         <div class="group">
@@ -55,6 +65,8 @@
               class="form-control"
               type="text"
               placeholder="Введите адрес офиса..."
+              name="office_address"
+              v-model="office_address"
             />
           </div>
         </div>
@@ -65,13 +77,16 @@
               class="form-control"
               type="text"
               placeholder="Введите адрес склада..."
+              name="warehouse_address"
+              v-model="warehouse_address"
             />
           </div>
         </div>
         <div class="group">
           <div class="group__title">Регион:</div>
           <div class="group__content">
-            <select class="form-select">
+            <select class="form-select" name="region" v-model="region">
+              <option :value="null">Выбрать регион</option>
               <option
                 v-for="region in regions"
                 :key="region._id"
@@ -106,6 +121,7 @@
               class="form-control"
               type="text"
               placeholder="Введите ФИО..."
+              v-model="director.name"
             />
           </div>
         </div>
@@ -124,7 +140,12 @@
         <div class="group">
           <div class="group__title">Телефон:</div>
           <div class="group__content">
-            <input class="form-control" type="text" placeholder="" />
+            <input
+              class="form-control"
+              type="text"
+              placeholder=""
+              v-model="director.phone"
+            />
           </div>
         </div>
         <div class="group">
@@ -134,6 +155,7 @@
               class="form-control"
               type="text"
               placeholder="Введите email"
+              v-model="director.email"
             />
           </div>
         </div>
