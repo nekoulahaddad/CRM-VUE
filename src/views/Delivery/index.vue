@@ -201,14 +201,13 @@ export default {
       this.$modal.show("deleteDelivery");
     },
     toggleEdit(item) {
-      if (!this.edit) {
-        this.editedItem = item;
+      this.infoItem = {};
+
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
       } else {
-        setTimeout(() => {
-          this.editedItem = {};
-        }, 500);
+        this.editedItem = item;
       }
-      this.edit = !this.edit;
     },
     addProvider(provider) {
       this.addedItem = provider;

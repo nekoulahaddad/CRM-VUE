@@ -99,7 +99,6 @@
       <div class="group__title">ФИО:</div>
       <div class="group__content">
         <input
-          required
           class="form-control"
           type="text"
           placeholder="Введите ФИО..."
@@ -133,7 +132,6 @@
       <div class="group__title">Email:</div>
       <div class="group__content">
         <input
-          required
           class="form-control"
           type="text"
           placeholder="Введите email"
@@ -181,6 +179,17 @@
     <div class="add-delivery-row__title text--blue">Категории:</div>
     <div class="group">
       <div class="group__title">Категории:</div>
+      <div class="chips">
+        <chip
+          v-for="(chip, index) in categories
+            ? categories
+            : this.editedItem.categories"
+          :key="chip.categoryName"
+          :text="chip.categoryName"
+          :close="true"
+          @closed="deleteChip(index)"
+        />
+      </div>
       <div class="group__content">
         <input
           class="form-control"
@@ -199,6 +208,7 @@ import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
 import PhoneMaskInput from "vue-phone-mask-input";
+import Chip from "vue-chip";
 
 export default {
   props: {
@@ -206,7 +216,7 @@ export default {
       type: Object,
     },
   },
-  components: { VButton, PhoneMaskInput },
+  components: { VButton, PhoneMaskInput, Chip },
   data() {
     return {
       categories:
@@ -309,6 +319,9 @@ export default {
       }
       this.specialist.messengers.push({ name: "", phone: "" });
     },
+    deleteChip(index) {
+      this.categories.splice(index, 1);
+    },
     onValidate(e, index) {
       const editedMessenger = this.specialist.messengers[index];
       editedMessenger["phone"] = e.number;
@@ -331,9 +344,16 @@ export default {
       let data = {
         provider: {
           name: this.name,
+          site: this.site,
+          inn: this.inn,
+          office_address: this.office_address,
+          warehouse_address: this.warehouse_address,
+          categories: this.categories,
+          specialist: this.specialist,
+          director: this.director,
+          region: this.region,
         },
       };
-
       if (this.editedItem) {
         data.providerId = this.editedItem._id;
         axios({
@@ -377,6 +397,20 @@ export default {
     }).then(async (res) => {
       this.regions = res.data.regions;
     });
+    if (this.editedItem) {
+      axios({
+        url: `/providers/getcategories/`,
+        data: {
+          parent_id: this.editedItem._id,
+          region: this.region._id,
+        },
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        this.editedItem.categories = result.data.categories;
+        this.categories = result.data.categories;
+      });
+    }
   },
 };
 </script>
@@ -444,6 +478,20 @@ export default {
   }
   .form-control {
     width: 976px;
+  }
+  .chip {
+    position: relative;
+    padding-right: 40px;
+    border-radius: $border-radius;
+    background-color: $color-gray-secondary;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+    i {
+      font-size: 37px;
+      position: absolute;
+      right: 17px;
+    }
   }
 }
 </style>
