@@ -30,7 +30,6 @@
               class="form-control"
               type="text"
               placeholder="Введите название о компании..."
-              name="name"
               v-model="name"
             />
           </div>
@@ -223,6 +222,11 @@ import axios from "@/api/axios";
 import PhoneMaskInput from "vue-phone-mask-input";
 
 export default {
+  props: {
+    editedItem: {
+      type: Object,
+    },
+  },
   components: { VButton, PhoneMaskInput },
   data() {
     return {
@@ -341,21 +345,13 @@ export default {
     },
     onProvidersAdd() {
       if (!this.region) {
-        this.$toast.error("Укажите регион!", "Ошибка");
+        this.$toast.error("Укажите регион");
         return;
       }
       this.changeStatus(false);
       let data = {
         provider: {
           name: this.name,
-          site: this.site,
-          inn: this.inn,
-          office_address: this.office_address,
-          warehouse_address: this.warehouse_address,
-          categories: this.categories,
-          specialist: this.specialist,
-          director: this.director,
-          region: this.region,
         },
       };
 
@@ -363,7 +359,7 @@ export default {
         data.providerId = this.editedItem._id;
         axios({
           url: `/providers/update/`,
-          data: data,
+          data,
           method: "POST",
         })
           .then(async (res) => {
@@ -381,14 +377,11 @@ export default {
       } else {
         axios({
           url: `/providers/post/`,
-          data: data,
+          data,
           method: "POST",
         })
-          .then(async (res) => {
-            let result = await res;
-            this.$emit("addProvider", result.data.provider);
+          .then((res) => {
             this.$toast.success("Поставщик успешно добавлен!");
-            this.$emit("toggleOpen");
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
