@@ -7,11 +7,14 @@
     is-expanded
   >
     <template v-slot:day-content="{ day, attributes }">
-      <div class="">
-        <div class="custom-calendar__date">
-          {{ $moment(day.id).format("DD.MM.YYYY") }} г.
-        </div>
-        <div class="flex-grow overflow-y-auto overflow-x-auto">
+      <div class="custom-calendar__date">
+        {{ $moment(day.id).format("DD.MM.YYYY") }} г.
+      </div>
+      <vue-scroll>
+        <div
+          class="flex-grow overflow-y-auto overflow-x-auto"
+          style="height: 80px"
+        >
           <p
             class="custom-calendar__event"
             @click="showEvent"
@@ -21,7 +24,7 @@
             {{ attr.customData.title }}
           </p>
         </div>
-      </div>
+      </vue-scroll>
     </template>
   </vc-calendar>
 </template>
@@ -79,6 +82,7 @@ export default {
     padding: 10px;
     border: 1px solid $color-gray-secondary;
     border-bottom: 0;
+    overflow: hidden;
   }
 
   .vc-title {
