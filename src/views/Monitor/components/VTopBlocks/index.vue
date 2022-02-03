@@ -89,10 +89,4 @@ export default {
     }
   }
 }
-
-.page__right--middle {
-  .top-blocks {
-    width: 1417px;
-  }
-}
 </style>
