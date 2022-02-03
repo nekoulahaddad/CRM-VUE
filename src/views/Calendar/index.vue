@@ -24,40 +24,26 @@
       </div>
 
       <div class="page__right">
-        <calendar-view
-          :items="events"
-          :show-date="showDate"
-          class="theme-default holiday-us-traditional holiday-us-official page__calendar"
-          @click-date="clickItem"
-          @date-selection="dateSelection"
-          @date-selection-finish="dateSelectionFinish"
-          :selectionStart="selectionStart"
-          :selectionEnd="selectionEnd"
-          :startingDayOfWeek="1"
-          itemContentHeight="50px"
-        >
-          <calendar-view-header
-            slot="header"
-            slot-scope="t"
-            :header-props="t.headerProps"
-            @input="setShowDate"
-          />
-        </calendar-view>
+        <v-calendar :events="events" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "@/api/axios";
 import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
 import VPageHeader from "@/components/VPageHeader";
+import VCalendar from "./components/VCalendar";
 import VCalendarEvents from "./components/VCalendarEvents";
 import VAddEventModal from "./components/VAddEventModal";
-import axios from "@/api/axios";
 import "vue-simple-calendar/static/css/default.css";
 
 export default {
-  data: function () {
+  data() {
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
+
     return {
       isLoading: false,
       showDate: new Date(),
@@ -69,6 +55,7 @@ export default {
       events: [],
       edit: false,
       editedItem: {},
+
       attrs: [
         {
           key: "today",
@@ -95,6 +82,7 @@ export default {
     VPageHeader,
     VCalendarEvents,
     VAddEventModal,
+    VCalendar,
   },
   computed: {
     role: {
@@ -253,7 +241,7 @@ export default {
 .calendar-container {
   background-color: $color-white;
   border-radius: $border-radius;
-  width: 300px;
+  width: 263px;
   height: 100%;
   margin-right: 20px;
   margin-left: 4px;
@@ -262,7 +250,7 @@ export default {
     border: none;
   }
   .vc-pane-container {
-    width: 300px;
+    width: 100%;
   }
   .vc-arrow {
     display: none;

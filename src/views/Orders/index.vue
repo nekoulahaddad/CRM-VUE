@@ -136,8 +136,10 @@
                 <v-info :infoItem="infoItem" v-if="infoItem._id === item._id" />
 
                 <v-edit
+                  type="edit"
                   :editedItem="item"
                   v-if="editedItem._id === item._id"
+                  @toggleEdit="toggleEdit"
                   @refreshDates="refreshDates"
                 />
               </div>

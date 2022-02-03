@@ -76,18 +76,19 @@
           </div>
         </div>
       </div>
-      <div class="list-info__group group">
+
+      <div class="group">
+        <div class="group__title">{{ $t("payed") }}</div>
         <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("payed") }}
-          </div>
-          <div class="group__value">
-            <span v-if="editedItem.buyed">{{
-              transformDate(editedItem.buyed)
-            }}</span>
-          </div>
+          <datetime
+            v-model="editedItem.buyed"
+            input-class="forms__container--input"
+            type="date"
+            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+          />
         </div>
       </div>
+
       <div class="list-info__group group">
         <div class="group__content">
           <div class="group__item text--bold-700">
@@ -126,16 +127,19 @@
           <div class="group__value">{{ getOneCStatus(editedItem.oneC) }}</div>
         </div>
       </div>
-      <div class="list-info__group group">
+
+      <div class="group">
+        <div class="group__title">{{ $t("delivered") }}</div>
         <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("delivered") }}
-          </div>
-          <div class="group__value">
-            {{ editedItem.deliver ? transformDate(editedItem.deliver) : "" }}
-          </div>
+          <datetime
+            v-model="editedItem.deliver"
+            input-class="forms__container--input"
+            type="date"
+            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+          />
         </div>
       </div>
+
       <div class="list-info__group group">
         <div class="group__content">
           <div class="group__item text--bold-700">
@@ -156,7 +160,154 @@
         </div>
       </div>
 
-      <v-button red>Сохранить</v-button>
+      <template>
+        <div class="group__title text--blue">Товары:</div>
+        <div class="list sub-list">
+          <div class="list__header">
+            <div class="list__columns">
+              <div class="list__column">№:</div>
+              <div class="list__column">Название товара:</div>
+              <div class="list__column">Артикул:</div>
+              <div class="list__column">Кол-во:</div>
+              <div class="list__column">Цена за ед.:</div>
+              <div class="list__column">Итог:</div>
+            </div>
+          </div>
+          <div
+            v-for="(product, index) in editedItem.products"
+            :key="product._id"
+            class="list__row list__row--shadow list__row--white"
+          >
+            <div class="list__columns">
+              <div class="list__column">{{ index + 1 }}</div>
+              <div class="list__column bg bg--blue-light">
+                {{ product.title }}
+              </div>
+              <div class="list__column">{{ product.article }}</div>
+              <div class="list__column">{{ product.quantity }}</div>
+              <div class="list__column">
+                {{
+                  product.cost.toFixed(2) + " " + editedItem.region.valute.icon
+                }}
+              </div>
+              <div class="list__column">
+                {{
+                  (product.cost * product.quantity).toFixed(2) +
+                  " " +
+                  editedItem.region.valute.icon
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="orders-edit-form__add-product">
+          <v-button v-if="editedItem.status.value == 'processing'" red>
+            Добавить
+          </v-button>
+        </div>
+
+        <div class="total-item" v-if="deliverySum">
+          Сумма доставки:
+          <span class="text text--green">
+            {{ deliverySum.toFixed(2) + " " + editedItem.region.valute.icon }}
+          </span>
+        </div>
+        <div class="total-item" v-else-if="deliveryRequest">
+          Сумма доставки:
+          <span class="text text--green">{{ deliveryRequest }}</span>
+        </div>
+        <div class="total-item">
+          Сумма заказа:
+          <span class="text text--green">
+            {{ sum.toFixed(2) + " " + editedItem.region.valute.icon }}
+          </span>
+        </div>
+        <div class="total-item">
+          Итого:
+          <span class="text text--blue-delos">
+            {{
+              (deliverySum + sum).toFixed(2) +
+              " " +
+              editedItem.region.valute.icon
+            }}
+          </span>
+        </div>
+      </template>
+
+      <div class="orders-edit-form__buttons">
+        <template
+          v-if="
+            type === 'edit' &&
+            isLoading &&
+            editedItem.manager.length &&
+            editedItem.status.value === 'completed'
+          "
+        >
+          <v-button red @click="editOrder()">Сохранить</v-button>
+          <v-button
+            redWhite
+            :disabled="!selectedProductList.length"
+            @click="toggleSendToBuyer"
+          >
+            Отправить закупщику
+          </v-button>
+          <v-button
+            redWhite
+            v-if="!editedItem.oneC.requested"
+            @click="handleDialog(confirmOneCMsg, sendToOneC, [false])"
+          >
+            Отправить в 1С
+          </v-button>
+        </template>
+
+        <v-button
+          v-if="
+            type === 'edit' &&
+            isLoading &&
+            editedItem.manager.length &&
+            editedItem.status.value === 'awaiting'
+          "
+          @click="editOrder('processing')"
+        >
+          Взять в работу
+        </v-button>
+
+        <template
+          v-if="
+            type === 'edit' &&
+            isLoading &&
+            editedItem.manager.length &&
+            editedItem.status.value === 'processing'
+          "
+        >
+          <v-button
+            red
+            @click="handleDialog(confirmMsg, editOrder, ['completed'])"
+          >
+            Подтвердить заказ
+          </v-button>
+          <v-button redWhite @click="toggleCancleOrder">
+            Отклонить заказ
+          </v-button>
+          <v-button white @click="editOrder('nocall')">
+            Нет связи с клиентом
+          </v-button>
+        </template>
+
+        <v-button
+          red
+          v-if="
+            type === 'edit' &&
+            isLoading &&
+            !editedItem.manager.length &&
+            editedItem.status.value === 'awaiting'
+          "
+          @click="editOrder()"
+        >
+          Сохранить
+        </v-button>
+      </div>
     </form>
   </div>
 </template>
@@ -168,6 +319,10 @@ import { mapMutations } from "vuex";
 
 export default {
   props: {
+    type: {
+      type: String,
+      default: "",
+    },
     editedItem: {
       type: Object,
       required: true,
@@ -179,6 +334,18 @@ export default {
   },
   components: {
     VButton,
+  },
+  computed: {
+    sum: {
+      get() {
+        return this.editedItem.sum;
+      },
+    },
+    deliveryRequest: {
+      get() {
+        return this.editedItem.deliveryRequest;
+      },
+    },
   },
   data() {
     return {
@@ -245,11 +412,50 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleCancleOrder(e) {
+      this.isDeclained = !this.isDeclained;
+      if (e && e.cancleOrder) {
+        this.editOrder("declained");
+      }
+    },
+    handleDialog(msg, callback, args) {
+      this.dialog.callback = callback;
+      this.dialog.args = args ? args : false;
+
+      this.dialog.header = msg.header;
+      this.dialog.message = msg.message;
+    },
+    sendToOneC() {
+      axios({
+        url: `/orders/sendtoonec/`,
+        data: { orderId: this.editedItem._id },
+        method: "POST",
+      })
+        .then(() => {
+          this.$emit("refreshDates");
+          this.$emit("toggleEdit");
+          this.changeStatus(true);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        });
+    },
     updateInfoItemProducts() {
       let products = this.products;
       let deleted = this.deletedItems;
       products = products.filter((p) => !deleted.includes(p.product_id));
       return products;
+    },
+    toggleSendToBuyer(res) {
+      this.sendToBuyer = !this.sendToBuyer;
+      if (res.data && res.data.data.products.length) {
+        this.selectedProductList = [];
+        res.data.data.products.forEach((item) => {
+          if (!this.sendedProductList.includes(item._id)) {
+            this.sendedProductList.push(item._id);
+          }
+        });
+      }
     },
     async getProducts() {
       axios({
@@ -259,14 +465,14 @@ export default {
         },
         method: "POST",
       })
-        .then(async (res) => {
-          let result = await res;
-          this.products = result.data;
+        .then((res) => {
+          this.products = res.data;
           this.isLoading = true;
-          this.changeStatus(true);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
           this.changeStatus(true);
         });
     },
@@ -287,7 +493,7 @@ export default {
         status: status ? status : null,
         manager_comment: this.editedItem.manager_comment,
         declainReason: this.editedItem.declainReason,
-        products: products,
+        products,
       };
       axios({
         url: `/orders/update/`,
@@ -296,7 +502,7 @@ export default {
       })
         .then(() => {
           this.$emit("refreshDates");
-          this.$toast.error("Заказ успешно изменен");
+          this.$toast.success("Заказ успешно изменен");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
@@ -329,12 +535,67 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .orders-edit-form {
   .form-textarea {
     width: 976px;
   }
   .group__title {
     font-size: 16px;
+  }
+  .sub-list {
+    width: 100%;
+
+    .list__header {
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      height: auto;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+      }
+
+      .list__columns {
+        background-color: $color-white;
+      }
+    }
+    .list__columns {
+      justify-content: left !important;
+      grid-template-columns: 70px 400px 280px 280px 260px 260px !important;
+
+      .list__column:first-child {
+        text-align: left;
+        padding-left: 5px;
+      }
+    }
+  }
+  .total-item {
+    font-size: 16px;
+    font-weight: 700;
+
+    & + * {
+      margin-top: 10px;
+    }
+  }
+  .vdatetime-input {
+    width: 401px;
+  }
+  &__buttons {
+    display: flex;
+  }
+  &__add-product {
+    margin-bottom: 10px;
+    margin-top: 15px;
   }
 }
 </style>

@@ -6,7 +6,7 @@
     class="btn"
   >
     <svg
-      v-if="disabled"
+      v-if="disabled && false"
       xmlns="http://www.w3.org/2000/svg"
       width="22"
       height="22"
@@ -64,6 +64,7 @@ export default {
         "btn--red": this.red,
         "btn--white": this.white,
         "btn--red-white": this.redWhite,
+        "btn--disabled": this.disabled,
       };
     },
   },
