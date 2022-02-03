@@ -3,7 +3,16 @@
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
         <div class="top-block__title">{{ $t("sales_today") }}</div>
-        <div class="top-block__value">₽ 70.000</div>
+        <div class="top-block__value">
+          {{
+            rev.today
+              ? new Intl.NumberFormat("ru-RU", {
+                  style: "currency",
+                  currency: "RUB",
+                }).format(rev.today)
+              : "0"
+          }}
+        </div>
       </div>
       <div class="top-block__right">
         <img src="@/assets/icons/card.svg" alt="" />
@@ -30,7 +39,16 @@
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
         <div class="top-block__title">Продажи за месяц:</div>
-        <div class="top-block__value">₽ 1.173.000</div>
+        <div class="top-block__value">
+          {{
+            rev.today
+              ? new Intl.NumberFormat("ru-RU", {
+                  style: "currency",
+                  currency: "RUB",
+                }).format(rev.month)
+              : "0"
+          }}
+        </div>
       </div>
       <div class="top-block__right">
         <img src="@/assets/icons/cart_big.svg" alt="" />
