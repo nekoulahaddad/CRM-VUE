@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="add-delivery-row__inner">
-      <form @submit.prevent="">
+      <form @submit.prevent="onProvidersAdd">
         <div class="add-delivery-row__title text--blue">
           Основная информация о поставщике:
         </div>
@@ -307,10 +307,11 @@ export default {
             this.$emit("editProvider", result.data.provider);
             this.$toast.success("Поставщик успешно обновлен!");
             this.$emit("toggleOpen");
-            this.changeStatus(true);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
             this.changeStatus(true);
           });
       } else {
@@ -324,10 +325,11 @@ export default {
             this.$emit("addProvider", result.data.provider);
             this.$toast.success("Поставщик успешно добавлен!");
             this.$emit("toggleOpen");
-            this.changeStatus(true);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
             this.changeStatus(true);
           });
       }
