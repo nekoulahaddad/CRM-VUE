@@ -114,24 +114,36 @@
 
       <!-- Задачи -->
       <template v-if="name === 'tasks'">
-        <a
-          href=""
-          class="page-actions__button"
-          @click.prevent="
-            $store.commit('toggleAction', {
-              key: 'addTask',
-            })
-          "
-        >
-          <img src="@/assets/icons/tasks_add.svg" alt="" />
-        </a>
+        <VueCustomTooltip label="Добавить задачу">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addTask',
+              })
+            "
+          >
+            <img src="@/assets/icons/tasks_add.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
       </template>
 
       <!-- Поставщики -->
       <template v-if="name === 'delivery'">
-        <a href="" class="page-actions__button">
-          <img src="@/assets/icons/add_delivery.svg" alt="" />
-        </a>
+        <VueCustomTooltip label="Добавить поставщика">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addDelivery',
+              })
+            "
+          >
+            <img src="@/assets/icons/add_delivery.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
       </template>
 
       <!-- Департаменты -->

@@ -58,6 +58,10 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Блок для добавления поставщика -->
+              <v-add-item v-if="addDelivery" />
+
               <div
                 v-for="(item, index) in dataset"
                 :key="item._id"
@@ -94,6 +98,7 @@
 import VEdit from "./components/VEdit";
 import VItem from "./components/VItem";
 import VInfo from "./components/VInfo";
+import VAddItem from "./components/VAddItem";
 import VDeleteModal from "./components/VDeleteModal";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
@@ -118,12 +123,16 @@ export default {
     VEdit,
     VButton,
     VSearch,
+    VAddItem,
     VPageHeader,
     VFilterToggle,
     VDeleteModal,
   },
   computed: {
     ...mapGetters(["sidebar"]),
+    addDelivery() {
+      return this.$store.state.actions.addDelivery;
+    },
   },
   data() {
     return {

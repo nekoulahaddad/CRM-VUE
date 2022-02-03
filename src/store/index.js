@@ -31,6 +31,7 @@ export default new Vuex.Store({
     region: localStorage.getItem("region") || null,
     file: {},
     actions: {
+      addDelivery: false,
       addDepartment: false,
       addOrder: false,
       addTask: false,

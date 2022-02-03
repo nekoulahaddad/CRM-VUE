@@ -100,8 +100,14 @@
         <div class="group">
           <div class="group__title">Регион:</div>
           <div class="group__content">
-            <select class="form-select">
-              <option value=""></option>
+            <select class="form-select" v-model="orderForm.region">
+              <option
+                v-for="region in regions"
+                :key="region._id"
+                :value="region._id"
+              >
+                {{ region.title }}
+              </option>
             </select>
           </div>
         </div>
@@ -151,6 +157,27 @@
             />
           </div>
         </div>
+        <div class="group">
+          <div class="group__title">Дата доставки:</div>
+          <div class="group__content">
+            <datetime
+              required
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Дополнительная информация:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Введите дополнительную информацию..."
+            />
+          </div>
+        </div>
+
         <v-button red>Создать</v-button>
       </form>
     </div>
@@ -159,9 +186,102 @@
 
 <script>
 import VButton from "@/components/VButton";
+import axios from "@/api/axios";
 
 export default {
   components: { VButton },
+  data() {
+    return {
+      timer: null,
+      managers: [],
+      addFormOpened: false,
+      productTitleSearch: null,
+      productsList: [],
+      selectedProduct: null,
+      articleSearch: null,
+      regions: [],
+      orderForm: {
+        buyed: null,
+        status: "5fb37d9e87b38ebe6c815647",
+        clientType: "physical",
+        number: null,
+        region: null,
+        comment: "",
+        deliver: null,
+        payment: "",
+        typeDelivery: "",
+        delivery: {
+          city: "",
+          street: "",
+          house: "",
+          building: "",
+          appt: "",
+        },
+        products: [],
+        calculatedSum: 0,
+        deliverySum: 0,
+        client: null,
+        sum: null,
+        manager: [],
+      },
+      clientForm: {
+        isOldUser: false,
+        physicalUser: {
+          name: "",
+          lastname: "",
+          phone: "",
+          email: "",
+        },
+        legalUser: {
+          name: "",
+          lastname: "",
+          email: "",
+          organisation: "",
+          phone: "",
+          ownership: "",
+          ur_actualAddress: "",
+          okpo: "",
+          ur_address: "",
+          bik: "",
+          bank: "",
+          account_number: "",
+          ur_corScore: "",
+          inn: "",
+          kpp: "",
+          director: "",
+        },
+      },
+      date: new Date().toString(),
+      isLoading: false,
+      isLoadingProductSearch: false,
+      newItem: {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+      },
+      confirmMsg: {
+        header: "Вы уверены?",
+        message: "Подтвердите действие.",
+      },
+      confirmOneCMsg: {
+        header: "Вы уверены?",
+        message: "Подтвердите действие. Заказ будет отправлен в 1С.",
+      },
+      dialog: {
+        header: "",
+        message: "",
+        callback: null,
+        args: [],
+      },
+    };
+  },
+  created() {
+    axios({
+      url: "/regions/get",
+    }).then(async (res) => {
+      this.regions = res.data.regions;
+    });
+  },
 };
 </script>
 
@@ -207,9 +327,14 @@ export default {
   &__inner {
     padding: 10px;
   }
+  .form-textarea,
   .form-control {
     width: 976px;
   }
+  .form-textarea {
+    min-height: 218px;
+  }
+  .vdatetime-input,
   .form-select {
     width: 401px;
   }
