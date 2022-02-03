@@ -186,6 +186,12 @@
               @onValidate="onValidate($event, index)"
               @change="changeMessenger($event, index)"
             />
+            <img
+              alt=""
+              class="messengers__close"
+              src="/icons/close_icon.svg"
+              @click="deleteMessenger(index)"
+            />
           </div>
         </div>
 
@@ -328,6 +334,9 @@ export default {
       editedMessenger[e.target.name] = e.target.value;
       this.specialist.messengers.splice(index, 1, editedMessenger);
     },
+    deleteMessenger(index) {
+      this.specialist.messengers.splice(index, 1);
+    },
     onProvidersAdd() {
       if (!this.region) {
         this.$toast.error("Укажите регион!", "Ошибка");
@@ -368,7 +377,6 @@ export default {
             this.changeStatus(true);
           });
       } else {
-        console.log(data);
         axios({
           url: `/providers/post/`,
           data: data,
@@ -488,6 +496,9 @@ export default {
       & + * {
         margin-left: 10px;
       }
+    }
+    &__close {
+      margin-left: 10px;
     }
   }
   .phone-mask-wrapper-lib {
