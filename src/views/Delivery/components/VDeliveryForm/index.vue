@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onProvidersAdd">
+  <form class="delivery-form" @submit.prevent="onProvidersAdd">
     <div class="add-delivery-row__title text--blue">
       Основная информация о поставщике:
     </div>
@@ -381,68 +381,69 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/styles/_variables";
 
-.list__column--title {
-  font-size: 16px;
-}
+.delivery-form {
+  .list__column--title {
+    font-size: 16px;
+  }
 
-button {
-  width: 230px;
-  height: 37px;
-}
+  button {
+    width: 230px;
+    height: 37px;
+  }
 
-.vdatetime-input,
-.form-select {
-  width: 401px;
-}
-.form-control {
-  width: 976px;
-}
+  .add-messenger {
+    border-radius: $border-radius;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 700;
+    width: 230px;
+    height: 37px;
+    background-color: $color-red;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
 
-.add-messenger {
-  border-radius: $border-radius;
-  cursor: pointer;
-  font-size: 17px;
-  font-weight: 700;
-  width: 230px;
-  height: 37px;
-  background-color: $color-red;
-  color: $color-white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
+  .messengers {
+    .form-control {
+      width: 401px;
 
-.messengers {
-  .form-control {
-    width: 401px;
-
-    & + * {
+      & + * {
+        margin-left: 10px;
+      }
+    }
+    &__close {
       margin-left: 10px;
+      position: relative;
+      top: 5px;
     }
   }
-  &__close {
-    margin-left: 10px;
-    position: relative;
-    top: 5px;
+  .phone-mask-wrapper-lib {
+    width: 401px;
+    height: 33px;
   }
-}
-.phone-mask-wrapper-lib {
-  width: 401px;
-  height: 33px;
-}
-span[role="tooltip"] {
-  &:after {
-    background-color: $color-black;
-    color: $color-white;
-    border-radius: $border-radius;
-  }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
 
-  & + * {
-    margin-left: 20px;
+    & + * {
+      margin-left: 20px;
+    }
+  }
+  .vdatetime-input,
+  .form-select {
+    width: 401px;
+  }
+  .form-control {
+    width: 976px;
   }
 }
 </style>

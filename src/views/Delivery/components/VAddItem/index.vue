@@ -84,13 +84,5 @@ export default {
     transform: translateY(-50%);
     cursor: pointer;
   }
-
-  .vdatetime-input,
-  .form-select {
-    width: 401px;
-  }
-  .form-control {
-    width: 976px;
-  }
 }
 </style>
