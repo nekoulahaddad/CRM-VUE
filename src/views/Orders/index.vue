@@ -494,13 +494,13 @@ export default {
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 50px 160px 200px 120px 120px 120px 120px 120px 160px 240px 1fr;
+      grid-template-columns: 50px 160px 200px 140px 120px 120px 120px 120px 160px 240px 1fr;
     }
   }
 
   .page__right--middle {
     .list__columns {
-      grid-template-columns: 50px 120px 120px 120px 120px 120px 120px 120px 120px 240px 1fr;
+      grid-template-columns: 50px 120px 120px 140px 120px 120px 120px 120px 120px 240px 1fr;
     }
   }
 }
