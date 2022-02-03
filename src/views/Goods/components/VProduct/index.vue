@@ -3,7 +3,7 @@
     class="list__columns list__columns-shadow list__columns-white goods-list-columns"
   >
     <div class="list__column">
-      <input type="checkbox" />
+      <input type="checkbox" @change="selectProducts($event, item)" />
     </div>
     <div class="list__column">{{ item.title }}</div>
     <div class="list__column">
@@ -71,6 +71,20 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    selectProducts(event, item) {
+      const value = event;
+      if (value) {
+        let dataset = this.$parent.selectedProducts;
+        dataset.push(item);
+        this.$parent.selectedProducts = dataset;
+        this.cleared = false;
+      } else {
+        let dataset = this.$parent.selectedProducts;
+        let index = dataset.findIndex((pr) => pr._id === item._id);
+        dataset.splice(index, 1);
+        this.$parent.selectedProducts = dataset;
+      }
+    },
     changeProductVisibility(id, visible) {
       this.changeStatus(false);
       let productData = {

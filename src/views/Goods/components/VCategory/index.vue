@@ -1,13 +1,12 @@
 <template>
   <div class="draggable-item">
-    <div
-      class="draggable-item__dropdown"
-      v-if="dropDown && item && dropDown._id === item._id"
-    >
-      <span @click="$emit('toggleEdit', item)">Редактировать категорию</span>
-      <span>Копировать категорию</span>
-      <span>Экспорт в Excel</span>
-      <span>Импорт Excel</span>
+    <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
+      <a href="" @click.prevent="$emit('toggleEdit', item)">
+        Редактировать категорию
+      </a>
+      <a href="">Копировать категорию</a>
+      <a href="">Экспорт в Excel</a>
+      <a href="">Импорт Excel</a>
       <img
         alt=""
         src="@/assets/icons/close_icon.svg"
@@ -108,39 +107,6 @@ export default {
     width: 24px;
   }
 
-  &__dropdown {
-    position: absolute;
-    right: 50px;
-    top: 30px;
-    z-index: 100;
-    width: 249px;
-    padding: 0 10px 10px;
-    height: 102px;
-    border-radius: $border-radius;
-    background-color: $color-white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
-
-    .close {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-    }
-
-    span {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      height: 17px;
-      position: relative;
-      top: -5px;
-      cursor: pointer;
-
-      & + * {
-        margin-top: 5px;
-      }
-    }
-  }
-
   .table__icon--opacity {
     filter: grayscale(100%);
     opacity: 0.3;
@@ -149,5 +115,34 @@ export default {
 
 .smooth-dnd-draggable-wrapper {
   overflow: visible !important;
+}
+
+.dropdown {
+  position: absolute;
+  right: 50px;
+  top: 30px;
+  z-index: 100;
+  width: 249px;
+  padding: 0 10px 10px;
+  height: 102px;
+  border-radius: $border-radius;
+  background-color: $color-white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
+
+  .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  a {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+    height: 24px;
+    line-height: 24px;
+  }
 }
 </style>
