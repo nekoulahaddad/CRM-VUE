@@ -111,7 +111,15 @@
         </div>
         <div class="group">
           <div class="group__title">Дата рождения:</div>
-          <div class="group__content"></div>
+          <div class="group__content">
+            <datetime
+              required
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              v-model="specialist.birth"
+            />
+          </div>
         </div>
         <div class="group">
           <div class="group__title">Телефон:</div>
@@ -150,9 +158,166 @@
 
 <script>
 import VButton from "@/components/VButton";
+import { mapMutations } from "vuex";
+import axios from "@/api/axios";
 
 export default {
   components: { VButton },
+  data() {
+    return {
+      categories:
+        this.editedItem && this.editedItem.categories
+          ? this.editedItem.categories
+          : [],
+      currentInput: "",
+      tempViews: [],
+      regions: [],
+      name: this.editedItem && this.editedItem.name ? this.editedItem.name : "",
+      site: this.editedItem && this.editedItem.site ? this.editedItem.site : "",
+      inn: this.editedItem && this.editedItem.inn ? this.editedItem.inn : "",
+      office_address:
+        this.editedItem && this.editedItem.office_address
+          ? this.editedItem.office_address
+          : "",
+      warehouse_address:
+        this.editedItem && this.editedItem.warehouse_address
+          ? this.editedItem.warehouse_address
+          : "",
+      specialist: {
+        name:
+          this.editedItem &&
+          this.editedItem.specialist &&
+          this.editedItem.specialist.name
+            ? this.editedItem.specialist.name
+            : "",
+        phone:
+          this.editedItem &&
+          this.editedItem.specialist &&
+          this.editedItem.specialist.phone
+            ? this.editedItem.specialist.phone
+            : "",
+        email:
+          this.editedItem &&
+          this.editedItem.specialist &&
+          this.editedItem.specialist.email
+            ? this.editedItem.specialist.email
+            : "",
+        birth:
+          this.editedItem &&
+          this.editedItem.specialist &&
+          this.editedItem.specialist.birth
+            ? this.editedItem.specialist.birth
+            : "",
+        messengers:
+          this.editedItem &&
+          this.editedItem.specialist &&
+          this.editedItem.specialist.messengers
+            ? this.editedItem.specialist.messengers
+            : [],
+      },
+      director: {
+        name:
+          this.editedItem &&
+          this.editedItem.director &&
+          this.editedItem.director.name
+            ? this.editedItem.director.name
+            : "",
+        phone:
+          this.editedItem &&
+          this.editedItem.director &&
+          this.editedItem.director.phone
+            ? this.editedItem.director.phone
+            : "",
+        email:
+          this.editedItem &&
+          this.editedItem.director &&
+          this.editedItem.director.email
+            ? this.editedItem.director.email
+            : "",
+        birth:
+          this.editedItem &&
+          this.editedItem.director &&
+          this.editedItem.director.birth
+            ? this.editedItem.director.birth
+            : "",
+      },
+      region:
+        this.editedItem && this.editedItem.region && this.editedItem.region
+          ? this.editedItem.region
+          : null,
+      title: this.editedItem
+        ? "Редактировать поставщика"
+        : "Добавить поставщика",
+    };
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onProvidersAdd() {
+      if (!this.region) {
+        this.$toast.error("Укажите регион!", "Ошибка");
+        return;
+      }
+      this.changeStatus(false);
+      let data = {
+        provider: {
+          name: this.name,
+          site: this.site,
+          inn: this.inn,
+          office_address: this.office_address,
+          warehouse_address: this.warehouse_address,
+          categories: this.categories,
+          specialist: this.specialist,
+          director: this.director,
+          region: this.region,
+        },
+      };
+      if (this.editedItem) {
+        data.providerId = this.editedItem._id;
+        axios({
+          url: `/providers/update/`,
+          data: data,
+          method: "POST",
+        })
+          .then(async (res) => {
+            let result = await res;
+            this.$emit("editProvider", result.data.provider);
+            this.$toast.success("Поставщик успешно обновлен!");
+            this.$emit("toggleOpen");
+            this.changeStatus(true);
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+            this.changeStatus(true);
+          });
+      } else {
+        axios({
+          url: `/providers/post/`,
+          data: data,
+          method: "POST",
+        })
+          .then(async (res) => {
+            let result = await res;
+            this.$emit("addProvider", result.data.provider);
+            this.$toast.success("Поставщик успешно добавлен!");
+            this.$emit("toggleOpen");
+            this.changeStatus(true);
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+            this.changeStatus(true);
+          });
+      }
+    },
+  },
+  created() {
+    axios({
+      url: "/regions/get",
+    }).then(async (res) => {
+      this.regions = res.data.regions;
+    });
+  },
 };
 </script>
 
@@ -213,6 +378,14 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+  }
+
+  .vdatetime-input,
+  .form-select {
+    width: 401px;
+  }
+  .form-control {
+    width: 976px;
   }
 }
 </style>
