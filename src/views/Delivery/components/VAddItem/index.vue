@@ -173,14 +173,18 @@
               required
               class="form-control"
               type="text"
+              name="name"
               placeholder="Введите название мессенджера..."
+              :value="messenger.name"
+              @input="changeMessenger($event, index)"
             />
             <phone-mask-input
               name="phone"
               inputClass="form-control"
-              :value="messenger.phone"
-              @change="changeMessenger($event, index)"
               placeholder="Введите номер мессенджера..."
+              :value="messenger.phone"
+              @onValidate="onValidate($event, index)"
+              @change="changeMessenger($event, index)"
             />
           </div>
         </div>
@@ -313,6 +317,11 @@ export default {
         }
       }
       this.specialist.messengers.push({ name: "", phone: "" });
+    },
+    onValidate(e, index) {
+      const editedMessenger = this.specialist.messengers[index];
+      editedMessenger["phone"] = e.number;
+      this.specialist.messengers.splice(index, 1, editedMessenger);
     },
     changeMessenger(e, index) {
       const editedMessenger = this.specialist.messengers[index];
