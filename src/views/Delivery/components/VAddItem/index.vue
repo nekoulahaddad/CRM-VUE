@@ -26,6 +26,7 @@
           <div class="group__title">Название компании:</div>
           <div class="group__content">
             <input
+              required
               class="form-control"
               type="text"
               placeholder="Введите название о компании..."
@@ -97,7 +98,7 @@
             </select>
           </div>
         </div>
-        <div class="group">
+        <div class="group" v-if="false">
           <div class="group__title">Статус поставщика:</div>
           <div class="group__content">
             <select class="form-select">
@@ -105,7 +106,7 @@
             </select>
           </div>
         </div>
-        <div class="group">
+        <div class="group" v-if="false">
           <div class="group__title">Вариант поставки:</div>
           <div class="group__content">
             <select class="form-select">
@@ -118,6 +119,7 @@
           <div class="group__title">ФИО:</div>
           <div class="group__content">
             <input
+              required
               class="form-control"
               type="text"
               placeholder="Введите ФИО..."
@@ -129,7 +131,6 @@
           <div class="group__title">Дата рождения:</div>
           <div class="group__content">
             <datetime
-              required
               type="datetime"
               input-class="forms__container--input"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
@@ -140,11 +141,11 @@
         <div class="group">
           <div class="group__title">Телефон:</div>
           <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder=""
+            <phone-mask-input
+              name="phone"
+              inputClass="form-control"
               v-model="director.phone"
+              placeholder="Номер телефона"
             />
           </div>
         </div>
@@ -152,6 +153,7 @@
           <div class="group__title">Email:</div>
           <div class="group__content">
             <input
+              required
               class="form-control"
               type="text"
               placeholder="Введите email"
@@ -160,7 +162,24 @@
           </div>
         </div>
         <div class="add-delivery-row__title text--blue">Мессенджеры:</div>
-        <v-button red>Добавить</v-button>
+        <div
+          class="group messengers"
+          v-if="specialist.messengers"
+          v-for="(messenger, index) in specialist.messengers"
+          :key="messenger.name"
+        >
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="text"
+              placeholder="Введите название мессенджера..."
+            />
+            <input type="text" class="form-control" placeholder="12" />
+          </div>
+        </div>
+
+        <span class="add-messenger" @click="addMessenger">Добавить</span>
         <div class="add-delivery-row__title text--blue">Категории:</div>
         <div class="group">
           <div class="group__title">Категории:</div>
@@ -169,6 +188,7 @@
               class="form-control"
               type="text"
               placeholder="Введите название категории..."
+              v-model="currentInput"
             />
           </div>
         </div>
@@ -182,9 +202,10 @@
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
+import PhoneMaskInput from "vue-phone-mask-input";
 
 export default {
-  components: { VButton },
+  components: { VButton, PhoneMaskInput },
   data() {
     return {
       categories:
@@ -276,6 +297,18 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    addMessenger(e) {
+      e.preventDefault();
+      if (this.specialist.messengers.length) {
+        const lastMessenger =
+          this.specialist.messengers[this.specialist.messengers.length - 1];
+        if (!lastMessenger.name || !lastMessenger.phone) {
+          this.$toast.error("Заполните предыдущее поле!");
+          return;
+        }
+      }
+      this.specialist.messengers.push({ name: "", phone: "" });
+    },
     onProvidersAdd() {
       if (!this.region) {
         this.$toast.error("Укажите регион!", "Ошибка");
@@ -295,6 +328,7 @@ export default {
           region: this.region,
         },
       };
+
       if (this.editedItem) {
         data.providerId = this.editedItem._id;
         axios({
@@ -315,6 +349,7 @@ export default {
             this.changeStatus(true);
           });
       } else {
+        console.log(data);
         axios({
           url: `/providers/post/`,
           data: data,
@@ -410,6 +445,31 @@ export default {
   }
   .form-control {
     width: 976px;
+  }
+
+  .add-messenger {
+    border-radius: $border-radius;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 700;
+    width: 230px;
+    height: 37px;
+    background-color: $color-red;
+    color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .messengers {
+    .form-control {
+      width: 401px;
+
+      & + * {
+        margin-left: 10px;
+      }
+    }
   }
 }
 </style>
