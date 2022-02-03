@@ -44,12 +44,42 @@
                   {{ $t("pages.tasks.pageTitle") }}
                 </div>
                 <div class="list__columns">
+                  <div class="list__column">№:</div>
+                  <div class="list__column">Автор:</div>
+                  <div class="list__column">Исполнитель:</div>
+                  <div class="list__column">Задача:</div>
                   <div
-                    v-for="field in $t('pages.tasks.fields')"
-                    class="list__column"
+                    class="list__column list__column--filter"
+                    @click="sort('creation')"
                   >
-                    {{ field }}
+                    <span>Дата создания:</span>
+                    <img
+                      alt=""
+                      src="@/assets/icons/filter_down.svg"
+                      :class="{
+                        'list__filter-icon--active':
+                          filtersOptions.creation_date === -1,
+                      }"
+                      class="list__filter-icon"
+                    />
                   </div>
+                  <div
+                    class="list__column list__column--filter"
+                    @click="sort('deadline')"
+                  >
+                    <span>Дедлайн:</span>
+                    <img
+                      alt=""
+                      :class="{
+                        'list__filter-icon--active':
+                          filtersOptions.deadline_date === -1,
+                      }"
+                      class="list__filter-icon"
+                      src="@/assets/icons/filter_down.svg"
+                    />
+                  </div>
+                  <div class="list__column">Статус:</div>
+                  <div class="list__column"></div>
                 </div>
               </div>
 
