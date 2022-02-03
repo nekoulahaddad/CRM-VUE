@@ -35,12 +35,29 @@
                   {{ $t("pages.clients.pageTitle") }}
                 </div>
                 <div class="list__columns">
+                  <div class="list__column">№:</div>
+                  <div class="list__column">Клиент:</div>
+                  <div class="list__column">Почта:</div>
+                  <div class="list__column">Телефон:</div>
+                  <div class="list__column">Регион:</div>
+                  <div class="list__column">Дата:</div>
+                  <div class="list__column">Сумма:</div>
                   <div
-                    v-for="field in $t('pages.clients.fields')"
-                    class="list__column"
+                    class="list__column list__column--filter"
+                    @click="sort('clubcard')"
                   >
-                    {{ field }}
+                    <span>Клубная карта:</span>
+                    <img
+                      alt=""
+                      src="@/assets/icons/filter_down.svg"
+                      :class="{
+                        'list__filter-icon--active':
+                          filtersOptions.clubcard === -1,
+                      }"
+                      class="list__filter-icon"
+                    />
                   </div>
+                  <div class="list__column"></div>
                 </div>
               </div>
               <div
@@ -165,6 +182,17 @@ export default {
   methods: {
     refreshDates(startDate, endDate) {
       this.fetchData();
+    },
+    sort(type) {
+      switch (type) {
+        case "clubcard":
+          if (this.filtersOptions.clubcard) {
+            this.filtersOptions.clubcard *= -1;
+            return;
+          }
+          this.filtersOptions.clubcard = -1;
+          break;
+      }
     },
     toggleFilter() {
       this.showFilter = !this.showFilter;
