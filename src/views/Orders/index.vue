@@ -42,7 +42,21 @@
                   {{ $t("pages.orders.pageTitle") }}
                 </div>
                 <div class="list__columns">
-                  <div class="list__column">№:</div>
+                  <div
+                    class="list__column list__column--filter"
+                    @click="sort('number')"
+                  >
+                    <span>№:</span>
+                    <img
+                      alt=""
+                      src="@/assets/icons/filter_down.svg"
+                      :class="{
+                        'list__filter-icon--active':
+                          filtersOptions.number === -1,
+                      }"
+                      class="list__filter-icon"
+                    />
+                  </div>
                   <div class="list__column">Клиент:</div>
                   <div class="list__column">Регион:</div>
                   <div
