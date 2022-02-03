@@ -431,6 +431,7 @@ button {
   }
 }
 .phone-mask-wrapper-lib {
+  width: 401px;
   height: 33px;
 }
 span[role="tooltip"] {

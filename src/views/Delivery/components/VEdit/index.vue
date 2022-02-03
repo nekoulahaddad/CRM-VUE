@@ -1,5 +1,7 @@
 <template>
-  <v-delivery-form :editedItem="editedItem" />
+  <div class="edit-delivery">
+    <v-delivery-form :editedItem="editedItem" />
+  </div>
 </template>
 
 <script>
@@ -15,3 +17,9 @@ export default {
   components: { VDeliveryForm },
 };
 </script>
+
+<style lang="scss">
+.edit-delivery {
+  padding: 10px;
+}
+</style>
