@@ -186,12 +186,14 @@
               @onValidate="onValidate($event, index)"
               @change="changeMessenger($event, index)"
             />
-            <img
-              alt=""
-              class="messengers__close"
-              src="/icons/close_icon.svg"
-              @click="deleteMessenger(index)"
-            />
+            <VueCustomTooltip label="Удалить мессенджер">
+              <img
+                alt=""
+                class="messengers__close"
+                src="/icons/close_icon.svg"
+                @click="deleteMessenger(index)"
+              />
+            </VueCustomTooltip>
           </div>
         </div>
 
@@ -499,10 +501,23 @@ export default {
     }
     &__close {
       margin-left: 10px;
+      position: relative;
+      top: 5px;
     }
   }
   .phone-mask-wrapper-lib {
     height: 33px;
+  }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
   }
 }
 </style>
