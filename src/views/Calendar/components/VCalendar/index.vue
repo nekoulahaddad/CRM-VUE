@@ -3,8 +3,8 @@
     class="custom-calendar max-w-full"
     :masks="masks"
     :attributes="attributes"
-    disable-page-swipe
     is-expanded
+    :trimWeeks="true"
   >
     <template v-slot:day-content="{ day, attributes }">
       <div class="custom-calendar__date">
@@ -63,6 +63,19 @@ export default {
         };
       });
     },
+  },
+  mounted() {
+    const body = document.querySelector("body");
+    const days = document.querySelectorAll(".vc-day");
+
+    days.forEach((day) => {
+      day.onmouseover = function () {
+        body.style.overflow = "hidden";
+      };
+      day.onmouseout = function () {
+        body.style.overflow = "auto";
+      };
+    });
   },
 };
 </script>
