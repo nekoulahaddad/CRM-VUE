@@ -12,22 +12,29 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/add_to_group.svg" alt="" />
+          <VueCustomTooltip label="Добавить товар в группу">
+            <img src="@/assets/icons/add_to_group.svg" alt="" />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/move_goods.svg" alt="" />
+          <VueCustomTooltip label="Перемещение товара">
+            <img src="@/assets/icons/move_goods.svg" alt="" />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img alt="" src="@/assets/icons/eye_close.svg" />
+          <VueCustomTooltip label="Видимость товара">
+            <img alt="" src="@/assets/icons/eye_close.svg" />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img alt="" src="@/assets/icons/structure.svg" />
+          <VueCustomTooltip label="Редактировать товар">
+            <img alt="" src="@/assets/icons/write_icon.svg" />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img alt="" src="@/assets/icons/write_icon.svg" />
-        </div>
-        <div class="table__icon">
-          <img alt="" src="@/assets/icons/trash_icon.svg" />
+          <VueCustomTooltip label="Удалить товар">
+            <img alt="" src="@/assets/icons/trash_icon.svg" />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
