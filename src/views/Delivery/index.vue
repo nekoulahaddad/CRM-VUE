@@ -67,14 +67,17 @@
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
                 :class="{
-                  'list__row--opened': infoItem._id === item._id,
+                  'list__row--opened':
+                    infoItem._id === item._id || editedItem._id === item._id,
                 }"
               >
                 <v-item
                   :index="index"
                   :item="item"
                   :infoItem="infoItem"
+                  :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
+                  @toggleEdit="toggleEdit"
                   @toggleDelete="toggleDelete"
                 />
 
@@ -82,7 +85,12 @@
                 <v-info v-if="infoItem._id === item._id" :item="item" />
 
                 <!-- Блок редактирования информации о доставке -->
-                <v-edit />
+                <v-edit
+                  v-if="editedItem._id === item._id"
+                  :editedItem="editedItem"
+                  :item="item"
+                  @toggleEdit="toggleEdit"
+                />
               </div>
             </div>
           </div>

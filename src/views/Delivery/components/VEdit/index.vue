@@ -1,5 +1,17 @@
-<template></template>
+<template>
+  <v-delivery-form :editedItem="editedItem" />
+</template>
 
 <script>
-export default {};
+import VDeliveryForm from "../VDeliveryForm";
+
+export default {
+  props: {
+    editedItem: {
+      type: Object,
+      required: true,
+    },
+  },
+  components: { VDeliveryForm },
+};
 </script>

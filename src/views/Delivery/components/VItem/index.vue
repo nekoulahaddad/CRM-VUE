@@ -38,16 +38,26 @@
           />
         </div>
         <div class="table__icon">
-          <VueCustomTooltip label="Изменить">
-            <img src="/icons/write_icon.svg" alt="" />
+          <VueCustomTooltip v-if="editedItem._id !== item._id" label="Изменить">
+            <img
+              alt=""
+              src="@/assets/icons/write_icon.svg"
+              @click="$emit('toggleEdit', item)"
+            />
           </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleEdit', item)"
+          />
         </div>
         <div class="table__icon">
           <VueCustomTooltip label="Удалить">
             <img
+              alt=""
               @click="$emit('toggleDelete', item)"
               src="/icons/trash_icon.svg"
-              alt=""
             />
           </VueCustomTooltip>
         </div>
@@ -65,6 +75,10 @@ export default {
       required: true,
     },
     infoItem: {
+      type: Object,
+      required: true,
+    },
+    editedItem: {
       type: Object,
       required: true,
     },
