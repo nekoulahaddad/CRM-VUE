@@ -322,5 +322,12 @@ export default {
   .page__buttons {
     margin-left: 10px;
   }
+
+  .page__header {
+    max-width: 1827px;
+  }
+  .filter-toggle {
+    right: 10px;
+  }
 }
 </style>
