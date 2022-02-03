@@ -21,9 +21,20 @@
             <img src="@/assets/icons/move_goods.svg" alt="" />
           </VueCustomTooltip>
         </div>
-        <div class="table__icon">
+        <div
+          class="table__icon"
+          v-if="item.type !== 'group'"
+          @click="changeProductVisibility(item._id, item.visible)"
+        >
           <VueCustomTooltip label="Видимость товара">
-            <img alt="" src="@/assets/icons/eye_close.svg" />
+            <img
+              alt=""
+              :src="
+                item.visible
+                  ? require('@/assets/icons/eye_close.svg')
+                  : require('@/assets/icons/eye.svg')
+              "
+            />
           </VueCustomTooltip>
         </div>
         <div class="table__icon">
@@ -42,11 +53,50 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
+import { mapMutations } from "vuex";
+
 export default {
   props: {
     item: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    changeProductVisibility(id, visible) {
+      this.changeStatus(false);
+      let productData = {
+        region: this.$parent.filtersOptions.region,
+        productId: id,
+        visible: !visible,
+      };
+      axios({
+        url: `/products/updatevisibility/`,
+        data: productData,
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.item.visible = result.data.product.visible;
+          this.$emit("editProduct", result.data.product, this.item);
+          this.$toast.success(
+            `Товар ${
+              result.data.product.visible
+                ? "будет отображаться"
+                : "не будет отображаться"
+            }`
+          );
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
     },
   },
 };

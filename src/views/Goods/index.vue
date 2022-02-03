@@ -129,7 +129,7 @@
                   :key="item._id"
                   class="list__row list__row--shadow list__row--white"
                 >
-                  <v-product :item="item" />
+                  <v-product :item="item" @editProduct="editProduct" />
                 </div>
               </div>
             </div>
@@ -152,7 +152,7 @@ import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
@@ -279,6 +279,9 @@ export default {
     next();
   },
   methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
     addToGoogleDoc(item) {
       let status = this.googleDoc.sheets.find((s) => s.categoryId == item._id)
         ? "delete"
@@ -436,14 +439,14 @@ export default {
           this.$toast.success(
             `Категория ${
               res.data.visible ? "будет отображаться" : "не будет отображаться"
-            }`,
-            "Успех!"
+            }`
           );
           this.$forceUpdate();
-          this.changeStatus(true);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
           this.changeStatus(true);
         });
     },
