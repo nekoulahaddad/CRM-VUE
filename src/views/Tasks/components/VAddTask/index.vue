@@ -209,13 +209,14 @@ export default {
       this[e.target.name] = files;
     },
     searchByExecutor(input) {
-      if (input.trim().length) {
-        return new Promise((resolve) => {
-          axios(`/user/getsearch/${input}`).then(async (res) => {
-            resolve(res.data);
-          });
-        });
+      if (input.length < 1) {
+        return [];
       }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
     },
     onChange(e) {
       this[e.target.name] = e.target.value;

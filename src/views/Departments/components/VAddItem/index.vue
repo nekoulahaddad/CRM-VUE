@@ -69,7 +69,6 @@ export default {
   components: { VEmployeeForm, VButton },
   data() {
     return {
-      superVisor: "",
       title: "",
       fio: "",
       leader: null,

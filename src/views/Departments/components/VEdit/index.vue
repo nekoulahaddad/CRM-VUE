@@ -82,7 +82,7 @@ export default {
     },
     searchByExecutor(input) {
       if (input.length < 1) {
-        return;
+        return [];
       }
       return new Promise((resolve) => {
         axios(`/user/getsearch/${input}`).then(async (res) => {
