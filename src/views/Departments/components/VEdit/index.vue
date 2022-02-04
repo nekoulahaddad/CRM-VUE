@@ -24,12 +24,10 @@
             :search="searchByExecutor"
             :get-result-value="getResultValue"
             placeholder="Введите исполнителя задачи..."
-            @input="getUsersByFIO"
-            v-model="fio"
           >
             <template #result="{ result, props }">
               <li v-bind="props" @click="selectUser(result)">
-                {{ result.surname }}
+                {{ transformFIO(result) }}
               </li>
             </template>
           </autocomplete>

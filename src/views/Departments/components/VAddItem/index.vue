@@ -47,7 +47,7 @@
             >
               <template #result="{ result, props }">
                 <li v-bind="props" @click="selectUser(result)">
-                  {{ result.surname }}
+                  {{ transformFIO(result) }}
                 </li>
               </template>
             </autocomplete>
@@ -84,7 +84,7 @@ export default {
       this[e.target.name] = e.target.value;
     },
     getResultValue(result) {
-      return result.surname;
+      return this.transformFIO(result);
     },
     async getUsersByFIO() {
       axios(`/user/getsearch/${this.fio}`).then(async (res) => {
@@ -98,6 +98,7 @@ export default {
       }
       return new Promise((resolve) => {
         axios(`/user/getsearch/${input}`).then(async (res) => {
+          console.log(res.data);
           resolve(res.data);
         });
       });
@@ -140,6 +141,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .add-department-row {
   .list__columns {
     grid-template-columns: 1fr !important;

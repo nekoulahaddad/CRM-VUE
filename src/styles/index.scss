@@ -250,4 +250,16 @@ ul {
   align-items: center;
 }
 
+.autocomplete-result-list {
+  li {
+    background: none;
+    cursor: pointer;
+    padding-left: 10px;
+
+    &:hover {
+      background-color: $color-gray-secondary;
+    }
+  }
+}
+
 @import "media";

@@ -28,14 +28,14 @@
           <div class="group__title">Участники:</div>
           <div class="group__content">
             <autocomplete
+              required
               :search="searchByExecutor"
               :get-result-value="getResultValue"
               placeholder="Введите исполнителя задачи..."
-              @input="getUsersByFIO"
             >
               <template #result="{ result, props }">
                 <li v-bind="props">
-                  {{ result.surname }}
+                  {{ transformFIO(result) }}
                 </li>
               </template>
             </autocomplete>

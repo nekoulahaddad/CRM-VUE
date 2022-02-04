@@ -53,7 +53,7 @@
             >
               <template #result="{ result, props }">
                 <li v-bind="props" @click="selectUser(result)">
-                  {{ result.surname }}
+                  {{ transformFIO(result) }}
                 </li>
               </template>
             </autocomplete>
