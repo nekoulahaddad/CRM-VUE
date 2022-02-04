@@ -556,6 +556,7 @@ export default {
 @import "@/styles/_variables";
 
 form {
+  .vdatetime-input,
   .form-select {
     width: 401px;
   }

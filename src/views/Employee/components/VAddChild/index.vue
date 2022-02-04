@@ -71,6 +71,10 @@ export default {
   &__buttons {
     display: flex;
     margin-top: 10px;
+
+    button {
+      margin-right: 10px;
+    }
   }
 }
 </style>
