@@ -102,7 +102,7 @@
             type="file"
             id="employee-photo"
           />
-          <label for="employee-photo">Загрузить</label>
+          <label for="employee-photo">Выбрать фото</label>
         </div>
       </div>
     </div>
@@ -592,8 +592,13 @@ export default {
     }
 
     &__edit {
-      width: 123px;
-      height: 123px;
+      width: 219px;
+      height: 303px;
+
+      img {
+        width: 100%;
+        border-radius: $border-radius;
+      }
     }
   }
 
