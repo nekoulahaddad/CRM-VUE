@@ -24,6 +24,7 @@
           <div class="group__title">Наименование задачи:</div>
           <div class="group__content">
             <input
+              required
               class="form-control"
               type="text"
               placeholder="Введите название задачи"
