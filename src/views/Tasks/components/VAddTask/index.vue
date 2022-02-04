@@ -87,6 +87,15 @@
         </div>
         <div class="group">
           <div class="group__title">Документы:</div>
+          <div class="group__documents">
+            <div
+              v-if="documents.length"
+              v-for="(photo, i) in documents"
+              :key="i"
+            >
+              {{ photo.name ? photo.name : photo }}
+            </div>
+          </div>
           <div class="group__content">
             <input
               hidden
@@ -96,7 +105,7 @@
               name="documents"
               @change="fileUpload($event)"
             />
-            <label for="document-file"> Загрузить </label>
+            <label for="document-file">Загрузить</label>
           </div>
         </div>
         <div class="group">
@@ -139,7 +148,7 @@ export default {
       users: [],
       description: "",
       executor: "",
-      documents: ["Выбрать файлы"],
+      documents: [],
     };
   },
   computed: {
@@ -287,6 +296,10 @@ export default {
       text-align: left;
       font-size: 16px;
     }
+  }
+
+  .group__documents {
+    margin-bottom: 10px;
   }
 
   .list__column--title {
