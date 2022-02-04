@@ -204,57 +204,28 @@ export default {
       if (this.region) {
         sectionData.region = this.region;
       }
-      if (this.editedItem) {
-        sectionData.educationId = this.editedItem._id;
-        axios({
-          url: `/vacancies/update/`,
-          data: sectionData,
-          method: "POST",
-        })
-          .then(async () => {
-            this.$emit("refresh");
-            this.$toast.success("Вакансия успешно изменена!");
-            this.$store.commit("toggleAction", {
-              key: "addVacancy",
-            });
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
+
+      axios({
+        url: `/vacancies/post/`,
+        data: sectionData,
+        method: "POST",
+      })
+        .then(async () => {
+          this.$emit("refresh");
+          this.$toast.success("Вакансия успешно добавлена!");
+          this.$store.commit("toggleAction", {
+            key: "addVacancy",
           });
-      } else {
-        axios({
-          url: `/vacancies/post/`,
-          data: sectionData,
-          method: "POST",
         })
-          .then(async () => {
-            this.$emit("refresh");
-            this.$toast.success("Вакансия успешно добавлена!");
-            this.$store.commit("toggleAction", {
-              key: "addVacancy",
-            });
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
-          });
-      }
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
     },
   },
   mounted() {
-    if (this.editedItem) {
-      for (let p in this.editedItem) {
-        this[p] = this.editedItem[p];
-      }
-      this.region = this.editedItem.region._id;
-      this.department = this.editedItem.department._id;
-    }
-
     axios({
       url: "/user/getdepartments",
     }).then((res) => {

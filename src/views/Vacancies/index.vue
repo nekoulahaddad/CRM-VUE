@@ -75,14 +75,26 @@
                 >
                   <v-item
                     :showInfo="infoItem._id === department._id"
+                    :showEdit="editedItem._id === department._id"
                     :infoItem="department"
+                    :editedItem="department"
                     @toggleInfo="toggleInfo"
+                    @toggleEdit="toggleEdit"
                     @toggleDelete="toggleDelete"
                   />
 
+                  <!-- Блок для просмотра детальной информации о вакансии -->
                   <v-info
                     v-if="infoItem._id === department._id"
                     :infoItem="infoItem"
+                  />
+
+                  <!-- Блок для изменения вакансии -->
+                  <v-edit
+                    v-if="editedItem._id === department._id"
+                    :editedItem="editedItem"
+                    @toggleEdit="toggleEdit"
+                    @refresh="refresh"
                   />
                 </div>
                 <v-pagination :count="count" />
@@ -98,6 +110,7 @@
 
 <script>
 import VItem from "./components/VItem";
+import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
 import VDeleteItem from "./components/VDeleteItem";
 import VAddItem from "./components/VAddItem";
@@ -149,6 +162,7 @@ export default {
     VButton,
     VFilter,
     VInfo,
+    VEdit,
     VPageHeader,
     VAddItem,
     VSearch,
