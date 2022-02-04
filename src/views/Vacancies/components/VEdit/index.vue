@@ -1,5 +1,5 @@
 <template>
-  <div class="list__info list-info employee-edit-form">
+  <div class="list__info list-info vacancy-edit-form">
     <form @submit.prevent="onSectionAdd">
       <div class="add-vacancy-row__title text--blue">Основная информация:</div>
       <div class="group">
@@ -225,3 +225,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.vacancy-edit-form {
+  .form-select {
+    width: 401px;
+  }
+  .form-textarea,
+  .form-control {
+    width: 976px;
+  }
+}
+</style>
