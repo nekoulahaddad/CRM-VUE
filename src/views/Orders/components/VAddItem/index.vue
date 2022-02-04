@@ -117,6 +117,7 @@
               class="form-control"
               type="text"
               placeholder="Введите город..."
+              v-model="orderForm.delivery.city"
             />
           </div>
         </div>
@@ -126,6 +127,7 @@
               class="form-control"
               type="text"
               placeholder="Введите улицу..."
+              v-model="orderForm.delivery.street"
             />
           </div>
         </div>
@@ -135,6 +137,7 @@
               class="form-control"
               type="text"
               placeholder="Введите дом..."
+              v-model="orderForm.delivery.house"
             />
           </div>
         </div>
@@ -144,6 +147,7 @@
               class="form-control"
               type="text"
               placeholder="Введите здание..."
+              v-model="orderForm.delivery.building"
             />
           </div>
         </div>
@@ -153,6 +157,7 @@
               class="form-control"
               type="text"
               placeholder="Введите квартиру..."
+              v-model="orderForm.delivery.appt"
             />
           </div>
         </div>
