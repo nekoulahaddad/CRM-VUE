@@ -224,6 +224,7 @@
             class="form-control"
             v-model.number="deliverySum"
           />
+          <span>{{ editedItem.region.valute.icon }}</span>
         </div>
 
         <div class="total-item" v-if="deliveryRequest">
@@ -595,6 +596,19 @@ export default {
   .total-item {
     font-size: 16px;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+
+    .form-control {
+      width: 116px;
+      margin-left: 10px;
+      box-shadow: none;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    span {
+      margin-left: 10px;
+    }
 
     & + * {
       margin-top: 10px;
