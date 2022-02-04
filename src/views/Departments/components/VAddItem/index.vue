@@ -26,6 +26,7 @@
           <div class="group__title">Название:</div>
           <div class="group__content">
             <input
+              required
               class="form-control"
               type="text"
               placeholder="Введите название отдела..."
@@ -39,10 +40,10 @@
           <div class="group__title">Руководитель:</div>
           <div class="group__content">
             <autocomplete
+              required
               :search="searchByExecutor"
               :get-result-value="getResultValue"
               placeholder="Введите исполнителя задачи..."
-              @input="getUsersByFIO"
             >
               <template #result="{ result, props }">
                 <li v-bind="props" @click="selectUser(result)">
@@ -68,6 +69,7 @@ export default {
   components: { VEmployeeForm, VButton },
   data() {
     return {
+      superVisor: "",
       title: "",
       fio: "",
       leader: null,
@@ -93,7 +95,7 @@ export default {
     },
     searchByExecutor(input) {
       if (input.length < 1) {
-        return;
+        return [];
       }
       return new Promise((resolve) => {
         axios(`/user/getsearch/${input}`).then(async (res) => {
@@ -115,41 +117,24 @@ export default {
       if (this.fio) {
         sectionData.leader = this.leader._id;
       }
-      if (this.editedItem) {
-        sectionData.departmentId = this.editedItem._id;
-        axios({
-          data: sectionData,
-          method: "POST",
-        })
-          .then(async () => {
-            this.$emit("refresh");
-            this.$toast.success("Отдел успешно обновлен!");
-            this.$emit("toggleOpen");
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
+      axios({
+        url: `/departments/post/`,
+        data: sectionData,
+        method: "POST",
+      })
+        .then(async () => {
+          await this.$emit("refresh");
+          this.$toast.success("Отдел успешно добавлен!");
+          this.$store.commit("toggleAction", {
+            key: "addDepartment",
           });
-      } else {
-        axios({
-          url: `/departments/post/`,
-          data: sectionData,
-          method: "POST",
         })
-          .then(async () => {
-            await this.$emit("refresh");
-            this.$toast.success("Отдел успешно добавлен!");
-            this.$emit("toggleOpen");
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
-          });
-      }
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
     },
   },
 };

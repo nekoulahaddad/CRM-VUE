@@ -20,6 +20,7 @@
         <div class="group__title">Руководитель</div>
         <div class="group__content">
           <autocomplete
+            required
             :search="searchByExecutor"
             :get-result-value="getResultValue"
             placeholder="Введите исполнителя задачи..."
@@ -106,52 +107,30 @@ export default {
       if (this.fio) {
         sectionData.leader = this.leader._id;
       }
-      if (this.editedItem) {
-        sectionData.departmentId = this.editedItem._id;
 
-        axios({
-          url: `/departments/update/`,
-          data: sectionData,
-          method: "POST",
+      axios({
+        url: `/departments/update/`,
+        data: sectionData,
+        method: "POST",
+      })
+        .then(async () => {
+          this.$emit("toggleEdit", this.editedItem);
+          this.$emit("refresh");
+          this.$toast.success("Отдел успешно изменен!");
         })
-          .then(async () => {
-            this.$emit("toggleEdit", this.editedItem);
-            this.$emit("refresh");
-            this.$toast.success("Отдел успешно изменен!");
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
-          });
-      } else {
-        axios({
-          url: `/departments/post/`,
-          data: sectionData,
-          method: "POST",
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
         })
-          .then(async () => {
-            this.$emit("toggleEdit", this.editedItem);
-            this.$emit("refresh");
-            this.$toast.success("Отдел успешно добавлен!");
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
-          });
-      }
+        .finally(() => {
+          this.changeStatus(true);
+        });
     },
   },
   mounted() {
-    if (this.editedItem) {
-      this.title = this.editedItem.title;
-      if (this.editedItem.leader) {
-        (this.fio = this.transformFullFIO(this.editedItem.leader)),
-          (this.leader = this.editedItem.leader);
-      }
+    this.title = this.editedItem.title;
+    if (this.editedItem.leader) {
+      (this.fio = this.transformFullFIO(this.editedItem.leader)),
+        (this.leader = this.editedItem.leader);
     }
   },
 };
