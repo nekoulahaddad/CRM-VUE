@@ -8,7 +8,7 @@
         <img
           @click.prevent="
             $store.commit('toggleAction', {
-              key: 'addVacancy',
+              key: 'addDepartment',
             })
           "
           class="add-department-row__close"
@@ -188,6 +188,7 @@ export default {
   .form-textarea,
   .form-control {
     width: 689px;
+    font-weight: 500;
   }
 }
 </style>
