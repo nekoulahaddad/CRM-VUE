@@ -586,8 +586,7 @@ export default {
       border: 2px solid rgba(0, 0, 0, 0.3);
 
       img {
-        width: 50px;
-        height: 50px;
+        max-width: 100%;
       }
     }
 
@@ -596,7 +595,7 @@ export default {
       height: 303px;
 
       img {
-        width: 100%;
+        max-width: 100%;
         border-radius: $border-radius;
       }
     }
