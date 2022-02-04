@@ -74,20 +74,27 @@
       <div class="form-top__right">
         <div class="employee-photo">
           <span class="text text--blue">Фото:</span>
-          <img
-            class="photo"
-            alt=""
-            :src="
-              infoItem && infoItem.avatar === 'Выбрать файл'
-                ? `${serverAddr + '/avatars/default.svg'}`
-                : infoItem && avatar === 'Выбрать файл'
-                ? `${serverAddr + infoItem.avatar}`
-                : url
-            "
-          />
+          <div
+            :class="{
+              'employee-photo__empty':
+                !infoItem || (infoItem && infoItem.avatar === 'Выбрать файл'),
+              'employee-photo__edit': infoItem && avatar === 'Выбрать файл',
+            }"
+          >
+            <img
+              alt=""
+              :src="
+                infoItem && infoItem.avatar === 'Выбрать файл'
+                  ? `${serverAddr + '/avatars/default.svg'}`
+                  : infoItem && avatar === 'Выбрать файл'
+                  ? `${serverAddr + infoItem.avatar}`
+                  : url
+              "
+            />
+          </div>
         </div>
 
-        <div>
+        <div class="employee-photo__upload">
           <input
             hidden
             @change="fileUpload($event)"
@@ -354,7 +361,7 @@ export default {
       },
       avatar: "Выбрать файл",
       passport_photo: ["Выбрать файлы"],
-      url: "@/assets/icons/new_avatar.svg",
+      url: require("@/assets/icons/new_avatar.svg"),
       editImg: "@/assets/icons/table/edit.svg",
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
       addChildForm: false,
@@ -561,6 +568,32 @@ export default {
       font-weight: 700;
       font-size: 14px;
       margin-right: 10px;
+    }
+
+    &__upload {
+      display: flex;
+      justify-content: end;
+    }
+
+    &__empty {
+      width: 219px;
+      height: 303px;
+      background-color: $color-gray-secondary;
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    &__edit {
+      width: 123px;
+      height: 123px;
     }
   }
 
