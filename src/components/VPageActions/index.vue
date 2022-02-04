@@ -293,7 +293,7 @@ export default {
 
       axios({
         url: `/excel/getorders`,
-        data: this.$store.state.filtersOptions,
+        data: this.$store.getters.getFilterOptions,
         method: "POST",
       }).then(async () => {
         this.$toast.success("Начинаю генерировать Excel!");

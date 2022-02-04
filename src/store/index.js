@@ -442,6 +442,6 @@ export default new Vuex.Store({
     getCallbacksCount: (state) => state.callbacksCount,
     region: (state) => state.region,
     filterRegion: (state) => state.filterRegion,
-    filterOptions: (state) => state.filterOptions,
+    getFilterOptions: (state) => state.filterOptions,
   },
 });
