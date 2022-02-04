@@ -99,6 +99,7 @@
               )
             "
             class="form-textarea"
+            v-model="comment"
           >
             {{ comment }}
           </textarea>
