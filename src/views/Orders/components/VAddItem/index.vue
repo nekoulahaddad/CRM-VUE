@@ -168,6 +168,7 @@
               type="datetime"
               input-class="forms__container--input"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              v-model="orderForm.deliver"
             />
           </div>
         </div>

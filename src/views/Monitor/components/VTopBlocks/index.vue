@@ -20,7 +20,7 @@
     </div>
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
-        <div class="top-block__title">Количество посетителей сегодня:</div>
+        <div class="top-block__title">Количество посетителей за сегодня:</div>
         <div class="top-block__value">300</div>
       </div>
       <div class="top-block__right">
@@ -29,7 +29,9 @@
     </div>
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
-        <div class="top-block__title">Новых клиентов:</div>
+        <div class="top-block__title">
+          Количество новых клиентов за текущий месяц:
+        </div>
         <div class="top-block__value">+52</div>
       </div>
       <div class="top-block__right">
@@ -38,7 +40,7 @@
     </div>
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
-        <div class="top-block__title">Продажи за месяц:</div>
+        <div class="top-block__title">Продажи за текущий месяц:</div>
         <div class="top-block__value">
           {{
             rev.today
