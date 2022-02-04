@@ -16,6 +16,15 @@
 
       <!-- Заказы -->
       <template v-if="name === 'orders'">
+        <VueCustomTooltip label="Выгрузить заказы">
+          <a
+            class="page-actions__button"
+            href=""
+            @click.prevent="downloadExcel"
+          >
+            <img src="@/assets/icons/download.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
         <VueCustomTooltip label="Добавить заказ">
           <a
             href=""
@@ -278,6 +287,19 @@ export default {
         .finally(() => {
           this.changeStatus(true);
         });
+    },
+    async downloadExcel() {
+      this.changeStatus(false);
+
+      axios({
+        url: `/excel/getorders`,
+        data: this.$store.state.filtersOptions,
+        method: "POST",
+      }).then(async () => {
+        this.$toast.success("Начинаю генерировать Excel!");
+      });
+
+      this.changeStatus(true);
     },
     clearCache() {
       axios

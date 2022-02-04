@@ -266,6 +266,7 @@ export default {
     },
     filtersOptions: {
       handler: async function () {
+        await this.$store.commit("setFilterOptions", this.filtersOptions);
         await this.fetchData();
         if (
           this.filtersOptions.region &&
@@ -283,6 +284,7 @@ export default {
     this.filtersOptions.executor =
       this.role === "manager" ? this.$store.state._id : null;
     this.fetchData();
+    this.$store.commit("setFilterOptions", this.filtersOptions);
   },
   methods: {
     ...mapActions({
@@ -457,30 +459,6 @@ export default {
         this.isLoading = true;
         this.$scrollTo("body", 300, {});
       });
-    },
-    async downloadExcel() {
-      this.changeStatus(false);
-      this.downloadExcelFile = false;
-      axios({
-        url: "/regions/getbyslug",
-        data: {
-          slug: this.filtersOptions.region,
-        },
-        method: "POST",
-      }).then(async (res) => {
-        axios({
-          url: "/excel/getordersfromregion",
-          data: {
-            region: res.data.region._id,
-            status: this.filtersOptions.status,
-          },
-          method: "POST",
-        }).then(async () => {
-          this.$toast.success("Начинаю генерировать Excel!");
-        });
-      });
-
-      this.changeStatus(true);
     },
   },
 };

@@ -29,6 +29,8 @@ export default new Vuex.Store({
     callbacksCount: 0,
     loaded: true,
     region: localStorage.getItem("region") || null,
+    filterRegion: null,
+    filterOptions: {},
     file: {},
     actions: {
       addDelivery: false,
@@ -50,6 +52,12 @@ export default new Vuex.Store({
       state.sidebar
         ? Cookies.set("sidebar", !state.sidebar)
         : Cookies.remove("sidebar");
+    },
+    setFilterOptions(state, payload) {
+      state.filterOptions = payload;
+    },
+    setFilterRegion(state, payload) {
+      state.filterRegion = payload;
     },
     toggleFilter(state) {
       state.filter = !state.filter;
@@ -433,5 +441,7 @@ export default new Vuex.Store({
     getCallbacks: (state) => state.callbacks,
     getCallbacksCount: (state) => state.callbacksCount,
     region: (state) => state.region,
+    filterRegion: (state) => state.filterRegion,
+    filterOptions: (state) => state.filterOptions,
   },
 });

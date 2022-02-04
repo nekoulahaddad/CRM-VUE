@@ -1263,6 +1263,7 @@ export default {
           break;
         case "region":
           this.filterOptions.region = e.target.value;
+          this.$store.dispatch("setFilterRegion", e.target.value);
           break;
         case "regionStats":
           this.filtersOptions.region = e.target.value;
@@ -1277,7 +1278,6 @@ export default {
             this.filterOptions.region = region._id;
             this.filterOptions.regionValue = region.value;
             this.setRegion(region._id);
-            //this.$emit("updatebyfilter");
             this.activeIndex = 0;
             this.$parent.changeOrder = false;
             this.$parent.downloadExcelFile = true;
