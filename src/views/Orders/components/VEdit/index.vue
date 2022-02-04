@@ -207,13 +207,26 @@
           </v-button>
         </div>
 
-        <div class="total-item" v-if="deliverySum">
+        <div
+          class="total-item"
+          v-if="deliverySum && editedItem.status.value !== 'processing'"
+        >
           Сумма доставки:
           <span class="text text--green">
             {{ deliverySum.toFixed(2) + " " + editedItem.region.valute.icon }}
           </span>
         </div>
-        <div class="total-item" v-else-if="deliveryRequest">
+
+        <div class="total-item" v-if="editedItem.status.value === 'processing'">
+          Сумма доставки:
+          <input
+            type="text"
+            class="form-control"
+            v-model.number="deliverySum"
+          />
+        </div>
+
+        <div class="total-item" v-if="deliveryRequest">
           Сумма доставки:
           <span class="text text--green">{{ deliveryRequest }}</span>
         </div>
