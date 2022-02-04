@@ -311,6 +311,16 @@
       {{ $t("another") }}
     </div>
 
+    <div class="group">
+      <div class="group__title">Редактировать сотрудников:</div>
+      <div class="group__content">
+        <select class="form-select">
+          <option selected="selected" value="false">Нет</option>
+          <option value="true">Да</option>
+        </select>
+      </div>
+    </div>
+
     <v-button red>{{ $t("save") }}</v-button>
   </form>
 </template>
@@ -544,6 +554,15 @@ export default {
 
 <style lang="scss">
 @import "@/styles/_variables";
+
+form {
+  .form-select {
+    width: 401px;
+  }
+  .form-control {
+    width: 976px;
+  }
+}
 
 .form-top {
   display: flex;
