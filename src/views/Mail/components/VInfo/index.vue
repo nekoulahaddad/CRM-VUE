@@ -179,6 +179,8 @@ export default {
     }
   }
   .sub-list {
+    width: 100%;
+
     .list__header {
       position: relative;
       padding-bottom: 10px;
@@ -203,7 +205,7 @@ export default {
     }
     .list__columns {
       justify-content: left !important;
-      grid-template-columns: 70px 500px 280px 280px 260px 260px !important;
+      grid-template-columns: 70px 350px 280px 280px 260px 260px !important;
 
       .list__column:first-child {
         text-align: left;
