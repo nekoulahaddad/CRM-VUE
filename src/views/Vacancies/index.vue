@@ -1,5 +1,7 @@
 <template>
   <div class="page vacancies-page">
+    <v-delete-item :deletedItem="deletedItem" @refresh="refresh" />
+
     <div
       class="page__header page-header"
       :class="{ 'page-header--collapse': sidebar }"
@@ -58,7 +60,7 @@
               </div>
 
               <!-- Добавление новой вакансии -->
-              <v-add-item v-if="addVacancy" />
+              <v-add-item v-if="addVacancy" @refresh="refresh" />
 
               <template v-if="dataset.length">
                 <div
@@ -71,7 +73,17 @@
                       editedItem._id === department._id,
                   }"
                 >
-                  <v-item :infoItem="department" />
+                  <v-item
+                    :showInfo="infoItem._id === department._id"
+                    :infoItem="department"
+                    @toggleInfo="toggleInfo"
+                    @toggleDelete="toggleDelete"
+                  />
+
+                  <v-info
+                    v-if="infoItem._id === department._id"
+                    :infoItem="infoItem"
+                  />
                 </div>
                 <v-pagination :count="count" />
               </template>
@@ -86,6 +98,8 @@
 
 <script>
 import VItem from "./components/VItem";
+import VInfo from "./components/VInfo";
+import VDeleteItem from "./components/VDeleteItem";
 import VAddItem from "./components/VAddItem";
 import { mapGetters, mapMutations } from "vuex";
 import axios from "@/api/axios";
@@ -100,7 +114,7 @@ import VSearch from "@/components/VSearch";
 
 export default {
   computed: {
-    ...mapGetters(["sidebar"]),
+    ...mapGetters({ sidebar: "sidebar" }),
     addVacancy() {
       return this.$store.state.actions.addVacancy;
     },
@@ -116,6 +130,7 @@ export default {
         edit: false,
         delete: false,
       },
+      editedItem: {},
       dataset: [],
       addedItem: {},
       deletedItem: {},
@@ -133,16 +148,27 @@ export default {
     VNotFoundQuery,
     VButton,
     VFilter,
+    VInfo,
     VPageHeader,
     VAddItem,
     VSearch,
     VFilterToggle,
     VSpinner,
+    VDeleteItem,
   },
   methods: {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleEdit(item) {
+      this.infoItem = {};
+
+      if (this.editedItem._id === item._id) {
+        this.editedItem = {};
+      } else {
+        this.editedItem = item;
+      }
+    },
     async refresh() {
       let result = this.getDataFromPage("/vacancies/get", this.filtersOptions);
       let res = await result;
@@ -187,6 +213,19 @@ export default {
     },
     goToLink(name) {
       this.$router.push({ name });
+    },
+    toggleInfo(item) {
+      this.editedItem = {};
+
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
+      } else {
+        this.infoItem = item;
+      }
+    },
+    toggleDelete(deletedItem) {
+      this.deletedItem = deletedItem;
+      this.$modal.show("deleteVacancy");
     },
     toggleFilter() {
       this.showFilter = !this.showFilter;

@@ -13,8 +13,10 @@
           <div class="group__title">{{ $t("lastName") }}</div>
           <div class="group__content">
             <input
+              required
               type="text"
               class="form-control"
+              name="surname"
               :placeholder="$t('lastName')"
               :value.trim="infoItem ? infoItem.surname : surname"
               @input="onChange($event)"
@@ -25,8 +27,10 @@
           <div class="group__title">{{ $t("firstName") }}</div>
           <div class="group__content">
             <input
+              required
               type="text"
               class="form-control"
+              name="name"
               :placeholder="$t('firstName')"
               :value.trim="infoItem ? infoItem.name : name"
               @input="onChange($event)"
@@ -39,6 +43,7 @@
             <input
               type="text"
               class="form-control"
+              name="lastname"
               :placeholder="$t('middleName')"
               :value.trim="infoItem ? infoItem.lastname : lastname"
               @input="onChange($event)"
@@ -52,6 +57,7 @@
               type="text"
               class="form-control"
               :placeholder="$t('mail')"
+              name="email"
               :value="infoItem ? infoItem.email : email"
               @input="onChange($event)"
             />
@@ -61,9 +67,11 @@
           <div class="group__title">{{ $t("phone") }}</div>
           <div class="group__content">
             <input
+              required
               type="text"
               class="form-control"
               :placeholder="$t('phone')"
+              name="phone"
               :value="infoItem ? infoItem.phone : phone"
               @input="onChange($event)"
             />
@@ -113,10 +121,15 @@
       <div class="group__title">{{ $t("department") }}</div>
       <div class="group__content">
         <select
+          required
           class="form-select"
+          name="department"
           :value="infoItem ? infoItem.department.value : department"
           @change="onChange($event)"
         >
+          <option selected disabled :value="null">
+            {{ $t("department") }}
+          </option>
           <option
             v-for="(item, index) in departments"
             :key="index"
@@ -135,6 +148,7 @@
       <div class="group__content">
         <input
           type="text"
+          name="sub_department"
           class="form-control"
           :placeholder="$t('subDepartment')"
           :value="infoItem ? infoItem.sub_department : sub_department"
@@ -147,9 +161,11 @@
       <div class="group__title">{{ $t("position") }}</div>
       <div class="group__content">
         <input
+          required
           type="text"
           class="form-control"
           :placeholder="$t('position')"
+          name="position"
           :value="infoItem ? infoItem.position : position"
           @input="onChange($event)"
         />
@@ -161,6 +177,7 @@
         <input
           type="text"
           class="form-control"
+          name="personal_number"
           :placeholder="$t('employeeNumber')"
           :value="infoItem ? infoItem.personal_number : personal_number"
           @input="onChange($event)"
@@ -171,10 +188,13 @@
       <div class="group__title">{{ $t("role") }}</div>
       <div class="group__content">
         <select
+          required
+          name="role"
           class="form-select"
           :value="infoItem ? infoItem.role : role"
           @change="onChange($event)"
         >
+          <option disabled selected :value="null">{{ $t("role") }}</option>
           <option v-for="(role, index) in $t('roles')" :value="index">
             {{ role }}
           </option>
@@ -185,6 +205,7 @@
       <div class="group__title">{{ $t("education") }}</div>
       <div class="group__content">
         <select
+          name="education"
           class="form-select"
           :value="infoItem ? infoItem.education : education"
           @change="onChange($event)"
@@ -201,6 +222,7 @@
       <div class="group__content">
         <input
           type="text"
+          name="specialty"
           class="form-control"
           :placeholder="$t('speciality')"
           :value="infoItem ? infoItem.specialty : specialty"
@@ -212,8 +234,8 @@
       <div class="group__title">{{ $t("employmentDate") }}</div>
       <div class="group__content">
         <datetime
-          v-model="employment_date"
           required
+          v-model="employment_date"
           input-class="forms__container--input"
           type="date"
           :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
@@ -224,10 +246,13 @@
       <div class="group__title">{{ $t("region") }}</div>
       <div class="group__content">
         <select
+          required
+          name="region"
           class="form-select"
           :value="infoItem ? infoItem.region.value : region"
           @change="onChange($event)"
         >
+          <option selected disabled :value="null">Выбрать регион</option>
           <option v-for="(region, index) in regions" :value="region.value">
             {{ region.title }}
           </option>
@@ -243,8 +268,8 @@
       <div class="group__title">{{ $t("birthday") }}</div>
       <div class="group__content">
         <datetime
-          v-model="date_of_birth"
           required
+          v-model="date_of_birth"
           input-class="forms__container--input"
           type="date"
           :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
@@ -256,6 +281,7 @@
       <div class="group__content">
         <input
           type="text"
+          name="zodiac_sign"
           class="form-control"
           :placeholder="$t('zodiak')"
           :value="infoItem ? infoItem.zodiac_sign : zodiac_sign"
@@ -268,6 +294,7 @@
       <div class="group__content">
         <input
           type="text"
+          name="element"
           class="form-control"
           :placeholder="$t('element')"
           :value="infoItem ? infoItem.element : element"
@@ -280,6 +307,7 @@
       <div class="group__content">
         <input
           type="text"
+          name="chinese_year"
           class="form-control"
           :placeholder="$t('chineseYear')"
           :value="infoItem ? infoItem.chinese_year : chinese_year"
@@ -296,7 +324,7 @@
       <div class="group__footer">
         <v-add-child
           :newChild="newChild"
-          v-if="addChildForm"
+          v-if="addChildForm && false"
           @cancel="addChildForm = false"
           @addChild="addChild"
         />
@@ -314,7 +342,16 @@
     <div class="group">
       <div class="group__title">Редактировать сотрудников:</div>
       <div class="group__content">
-        <select class="form-select">
+        <select
+          class="form-select"
+          name="checkbox"
+          v-model="
+            infoItem && infoItem.options
+              ? infoItem.options.userEditor
+              : options.userEditor
+          "
+          @change="onChange($event)"
+        >
           <option selected="selected" value="false">Нет</option>
           <option value="true">Да</option>
         </select>
@@ -330,7 +367,6 @@ import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
 import VAddChild from "../VAddChild";
-import { Datetime } from "vue-datetime";
 
 export default {
   props: {
@@ -338,7 +374,7 @@ export default {
       type: Object,
     },
   },
-  components: { VAddChild, VButton, datetime: Datetime },
+  components: { VAddChild, VButton },
   data() {
     return {
       date: new Date().toString(),
@@ -502,9 +538,10 @@ export default {
           method: "POST",
         })
           .then((res) => {
-            this.$emit("addToUsers", res.data.user);
-            this.$emit("toggleOpen");
             this.$toast.success("Пользователь успешно добавлен!");
+            this.$store.commit("toggleAction", {
+              key: "addEmployee",
+            });
           })
           .catch(async (err) => {
             this.$toast.error(err.response.data.message);
@@ -518,10 +555,10 @@ export default {
           data: userData,
           method: "POST",
         })
-          .then(({ data }) => {
-            this.$emit("changeUser", data.user);
-            this.$emit("toggleEdit", this.infoItem);
+          .then((res) => {
             this.$toast.success("Пользователь успешно изменен!");
+            this.$emit("refresh", res.data.user);
+            this.$emit("toggleEdit", this.infoItem);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
@@ -562,6 +599,22 @@ form {
   }
   .form-control {
     width: 976px;
+  }
+  .group__title:not(:first-child) {
+    margin-top: 15px;
+    position: relative;
+    padding-top: 10px;
+
+    &:before {
+      height: 2px;
+      position: absolute;
+      background-color: $color-gray-secondary;
+      left: 0;
+      right: 0;
+      top: 0;
+      content: "";
+      display: block;
+    }
   }
 }
 

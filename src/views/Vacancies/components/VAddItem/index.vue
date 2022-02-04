@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="add-vacancy-row__inner">
-      <form @submit.prevent="">
+      <form @submit.prevent="onSectionAdd">
         <div class="add-vacancy-row__title text--blue">
           Основная информация:
         </div>
@@ -26,17 +26,27 @@
           <div class="group__title">Должность:</div>
           <div class="group__content">
             <input
+              required
               class="form-control"
               type="text"
               placeholder="Введите должность..."
+              name="role"
+              v-model="role"
+              @change="onChange($event)"
             />
           </div>
         </div>
         <div class="group">
           <div class="group__title">Отделы:</div>
           <div class="group__content">
-            <select class="form-select" v-model="department">
-              <option value="all">Все отделы</option>
+            <select
+              required
+              class="form-select"
+              name="department"
+              v-model="department"
+              @change="onChange($event)"
+            >
+              <option selected disabled :value="null">Выберите отдел</option>
               <option v-for="department in departments" :value="department._id">
                 {{ department.title }}
               </option>
@@ -46,8 +56,14 @@
         <div class="group">
           <div class="group__title">Регионы:</div>
           <div class="group__content">
-            <select class="form-select" v-model="department">
-              <option value="all">Все отделы</option>
+            <select
+              required
+              class="form-select"
+              name="region"
+              v-model="region"
+              @change="onChange($event)"
+            >
+              <option selected disabled :value="null">Выберите регион</option>
               <option v-for="region in regions" :value="region._id">
                 {{ region.title }}
               </option>
@@ -58,8 +74,12 @@
           <div class="group__title">Требования:</div>
           <div class="group__content">
             <textarea
+              required
               class="form-textarea"
+              name="description.requirements"
               placeholder="Введите требования для кандидата..."
+              v-model="description.requirements"
+              @change="onChange($event)"
             />
           </div>
         </div>
@@ -67,8 +87,12 @@
           <div class="group__title">Обязаности:</div>
           <div class="group__content">
             <textarea
+              required
               class="form-textarea"
               placeholder="Введите обязаности кандидата..."
+              name="description.responsibilities"
+              v-model="description.responsibilities"
+              @change="onChange($event)"
             />
           </div>
         </div>
@@ -76,8 +100,26 @@
           <div class="group__title">Условия:</div>
           <div class="group__content">
             <textarea
+              required
               class="form-textarea"
               placeholder="Опишите условия работы..."
+              name="description.conditions"
+              v-model="description.conditions"
+              @change="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Ссылка:</div>
+          <div class="group__content">
+            <input
+              required
+              type="text"
+              class="form-control"
+              placeholder="Вставьте ссылку..."
+              name="vLink"
+              v-model="vLink"
+              @change="onChange($event)"
             />
           </div>
         </div>
@@ -90,17 +132,129 @@
 <script>
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
+import { mapMutations } from "vuex";
 
 export default {
+  props: {
+    type: {
+      type: String,
+    },
+    editedItem: {
+      type: Object,
+    },
+  },
   components: { VButton },
   data() {
     return {
-      department: "all",
-      departments: [],
       regions: [],
+      region: {
+        title: "Выберите регион",
+        value: null,
+      },
+      date: new Date().toString(),
+      title: "",
+      vLink: "",
+      role: "",
+      category: "",
+      department: {
+        title: "Выберите отдел",
+        value: null,
+      },
+      description: {
+        requirements: "",
+        responsibilities: "",
+        conditions: "",
+      },
+      departments: [],
+      titleName: this.editedItem
+        ? "Редактировать вакансию"
+        : "Добавить вакансию",
     };
   },
+  methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+    onSectionAdd() {
+      this.changeStatus(false);
+      let sectionData = {};
+      sectionData.description = {};
+      if (this.vLink) {
+        sectionData.link = this.vLink;
+      }
+      if (this.role) {
+        sectionData.role = this.role;
+      }
+      if (this.department) {
+        sectionData.department = this.department;
+      }
+      if (this.description.requirements) {
+        sectionData.description.requirements = this.description.requirements;
+      }
+      if (this.description.responsibilities) {
+        sectionData.description.responsibilities =
+          this.description.responsibilities;
+      }
+      if (this.description.conditions) {
+        sectionData.description.conditions = this.description.conditions;
+      }
+      if (this.region) {
+        sectionData.region = this.region;
+      }
+      if (this.editedItem) {
+        sectionData.educationId = this.editedItem._id;
+        axios({
+          url: `/vacancies/update/`,
+          data: sectionData,
+          method: "POST",
+        })
+          .then(async () => {
+            this.$emit("refresh");
+            this.$toast.success("Вакансия успешно изменена!");
+            this.$store.commit("toggleAction", {
+              key: "addVacancy",
+            });
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
+            this.changeStatus(true);
+          });
+      } else {
+        axios({
+          url: `/vacancies/post/`,
+          data: sectionData,
+          method: "POST",
+        })
+          .then(async () => {
+            this.$emit("refresh");
+            this.$toast.success("Вакансия успешно добавлена!");
+            this.$store.commit("toggleAction", {
+              key: "addVacancy",
+            });
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
+            this.changeStatus(true);
+          });
+      }
+    },
+  },
   mounted() {
+    if (this.editedItem) {
+      for (let p in this.editedItem) {
+        this[p] = this.editedItem[p];
+      }
+      this.region = this.editedItem.region._id;
+      this.department = this.editedItem.department._id;
+    }
+
     axios({
       url: "/user/getdepartments",
     }).then((res) => {

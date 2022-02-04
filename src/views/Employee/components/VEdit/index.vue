@@ -5,6 +5,7 @@
       @addToUsers="$emit('addToUsers')"
       @toggleEdit="toggleEdit"
       @changeUser="changeUser"
+      @refresh="refresh"
     />
   </div>
 </template>
@@ -23,6 +24,9 @@ export default {
     },
   },
   methods: {
+    refresh(data) {
+      this.$emit("refresh", data);
+    },
     toggleEdit(infoItem) {
       this.$emit("toggleEdit", infoItem);
     },

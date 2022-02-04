@@ -99,6 +99,7 @@
                 <v-edit
                   v-if="editedItem._id === employee._id"
                   :infoItem="editedItem"
+                  @refresh="refresh"
                   @toggleEdit="toggleEdit"
                   @addToUsers="addToUsers"
                   @changeUser="changeUser"
@@ -173,7 +174,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["sidebar"]),
+    ...mapGetters({ sidebar: "sidebar" }),
     role: {
       get: function () {
         let role = this.getUserRole();
