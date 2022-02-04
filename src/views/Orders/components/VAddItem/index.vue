@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="add-order-row__inner">
-      <form @submit.prevent="">
+      <form @submit.prevent="createOrder">
         <div class="add-order-row__title text--blue">Заказ:</div>
         <div class="group">
           <div class="group__title">Лицо заказа:</div>
@@ -37,6 +37,8 @@
               class="form-control"
               type="text"
               placeholder="Введите фамилию..."
+              v-model="clientForm.physicalUser.lastname"
+              :readonly="clientForm.isOldUser"
             />
           </div>
         </div>
@@ -47,19 +49,12 @@
               class="form-control"
               type="text"
               placeholder="Введите имя..."
+              v-model="clientForm.physicalUser.name"
+              :readonly="clientForm.isOldUser"
             />
           </div>
         </div>
-        <div class="group">
-          <div class="group__title">Отчество:</div>
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите отчество..."
-            />
-          </div>
-        </div>
+
         <div class="group">
           <div class="group__title">Почта:</div>
           <div class="group__content">
@@ -67,6 +62,8 @@
               class="form-control"
               type="text"
               placeholder="Введите почту..."
+              v-model="clientForm.physicalUser.email"
+              :readonly="clientForm.isOldUser"
             />
           </div>
         </div>
@@ -77,6 +74,8 @@
               class="form-control"
               type="text"
               placeholder="Введите телефон..."
+              v-model="clientForm.physicalUser.phone"
+              @input="getClientByPhone"
             />
           </div>
         </div>
@@ -161,7 +160,6 @@
           <div class="group__title">Дата доставки:</div>
           <div class="group__content">
             <datetime
-              required
               type="datetime"
               input-class="forms__container--input"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
@@ -274,6 +272,124 @@ export default {
         args: [],
       },
     };
+  },
+  methods: {
+    async getClientByPhone(phone) {
+      this.isLoading = true;
+      this.clientForm.isOldUser = false;
+      this.orderForm.client = null;
+      delete this.clientForm.physicalUser._id;
+      delete this.clientForm.legalUser._id;
+      try {
+        if (phone.target.value.length < 11) return;
+        await axios({
+          url: "/clients/getclientbyphone/" + phone.target.value,
+        }).then(async (res) => {
+          let result = await res;
+          if (result && result.data[0]) {
+            this.clientForm.isOldUser = true;
+            this.orderForm.client = result.data[0]._id;
+            if (result.data[0].inn) {
+              this.clientForm.legalUser = result.data[0];
+              this.orderForm.clientType = "legal";
+            } else {
+              this.clientForm.physicalUser = result.data[0];
+              this.orderForm.clientType = "physical";
+            }
+            await axios({
+              url: "/regions/getbyid",
+              method: "POST",
+              data: {
+                regionId: result.data[0].region,
+              },
+            }).then((res) => {
+              this.orderForm.region = res.data.region;
+            });
+          }
+
+          this.isLoading = false;
+        });
+      } catch (e) {
+        this.orderForm.region = null;
+        this.clientForm.physicalUser = {
+          ...this.clientForm.physicalUser,
+          name: "",
+          lastname: "",
+        };
+        this.clientForm.legalUser = {
+          ...this.clientForm.legalUser,
+          name: "",
+          lastname: "",
+          email: "",
+          organisation: "",
+          ownership: "",
+          ur_actualAddress: "",
+          okpo: "",
+          ur_address: "",
+          bik: "",
+          bank: "",
+          account_number: "",
+          ur_corScore: "",
+          inn: "",
+          kpp: "",
+          director: "",
+        };
+        this.clientForm.isOldUser = false;
+        this.isLoading = false;
+      }
+    },
+    createNewOrder() {
+      axios({
+        url: "/orders/post",
+        method: "POST",
+        data: this.orderForm,
+      }).then(async () => {
+        await this.getOrdersFromPage({
+          page: +this.$route.params.page,
+          filtersOptions: {
+            dates: "all",
+            client: "all",
+            created: -1,
+            deliver: null,
+            buyed: null,
+            number: null,
+            status: "all",
+            region: null,
+            executor: null,
+            search: "",
+            type: "all",
+          },
+        });
+      });
+      this.$emit("toggleOpen");
+    },
+    async createOrder() {
+      if (this.clientForm.isOldUser) {
+        this.createNewOrder();
+      } else {
+        const physica = {
+          ...this.clientForm.physicalUser,
+          region: this.orderForm.region,
+        };
+        const lega = {
+          ...this.clientForm.legalUser,
+          region: this.orderForm.region,
+        };
+        axios({
+          url: process.env.VUE_APP_DEVELOP_URL + "/clients/create",
+          method: "POST",
+          data: this.orderForm.clientType === "legal" ? lega : physica,
+        })
+          .then(async (res) => {
+            const result = await res;
+            this.orderForm.client = result.data.id;
+            this.createNewOrder();
+          })
+          .catch((e) => {
+            this.$toast.warning(e.message);
+          });
+      }
+    },
   },
   created() {
     axios({
