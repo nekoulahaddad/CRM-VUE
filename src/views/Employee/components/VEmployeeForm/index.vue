@@ -354,7 +354,7 @@ export default {
       },
       avatar: "Выбрать файл",
       passport_photo: ["Выбрать файлы"],
-      url: "@/assets/icons/preview.svg",
+      url: "@/assets/icons/new_avatar.svg",
       editImg: "@/assets/icons/table/edit.svg",
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
       addChildForm: false,
