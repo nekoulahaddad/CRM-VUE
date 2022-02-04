@@ -20,6 +20,7 @@
               placeholder="Введите заголовок мероприятия..."
               name="title"
               @input="onChange($event)"
+              v-model="title"
             />
           </div>
         </div>
@@ -44,12 +45,10 @@
           <div class="group__title">Дата начала:</div>
           <div class="group__content">
             <datetime
-              required
               v-model="start"
               type="datetime"
               input-class="forms__container--input"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-              @input="start = $event.target.value"
             />
           </div>
         </div>
@@ -57,12 +56,10 @@
           <div class="group__title">Дата окончания:</div>
           <div class="group__content">
             <datetime
-              required
               v-model="end"
               type="datetime"
               input-class="forms__container--input"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-              @input="end = $event.target.value"
             />
           </div>
         </div>
@@ -74,10 +71,11 @@
               placeholder="Введите описание данного мероприятия..."
               name="description"
               @input="onChange($event)"
+              v-model="description"
             />
           </div>
         </div>
-        <v-button red>Создать</v-button>
+        <v-button v-if="!event" red>Создать</v-button>
       </form>
     </div>
   </v-modal>
@@ -94,14 +92,26 @@ export default {
     return {
       fio: "",
       users: [],
+      title: "",
+      description: "",
       participants: [],
       selectionStart: new Date(),
       selectionEnd: new Date(),
     };
   },
   props: {
+    event: {
+      type: Object,
+      default: null,
+    },
     type: {
       type: String,
+    },
+  },
+  watch: {
+    event() {
+      this.description = this.event.description;
+      this.title = this.event.title;
     },
   },
   computed: {

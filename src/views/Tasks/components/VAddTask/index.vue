@@ -36,14 +36,15 @@
           <div class="group__title">ФИО исполнителей:</div>
           <div class="chips">
             <chip
-              v-for="executor in executors"
+              v-for="(executor, index) in executors"
               :text="transformFIO(executor)"
               :close="true"
-              @closed="chipClosed"
+              @closed="chipClosed(index)"
             />
           </div>
           <div class="group__content">
             <autocomplete
+              ref="executors"
               :search="searchByExecutor"
               :get-result-value="getResultValue"
               placeholder="Введите исполнителя задачи..."
@@ -60,9 +61,13 @@
         <div class="group">
           <div class="group__title">Отделы:</div>
           <div class="group__content">
-            <select class="form-select" v-model="department">
-              <option value="all">Все отделы</option>
-              <option v-for="department in departments" value="">
+            <select
+              class="form-select"
+              name="targetRegion"
+              v-model="department"
+            >
+              <option :value="null">Не выбрано</option>
+              <option v-for="department in departments" :value="department._id">
                 {{ department.title }}
               </option>
             </select>
@@ -115,6 +120,7 @@
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
 import Chip from "vue-chip";
+import { mapMutations } from "vuex";
 
 export default {
   components: {
@@ -126,7 +132,7 @@ export default {
       date: new Date().toISOString(),
       title: "",
       fio: "",
-      department: "all",
+      department: null,
       departments: [],
       executors: [],
       users: [],
@@ -145,8 +151,11 @@ export default {
     },
   },
   methods: {
+    ...mapMutations({
+      changeStatus: "change_load_status",
+    }),
     chipClosed() {
-      this.executors = [];
+      this.executors.splice(index, 1);
     },
     async getUsersByFIO() {
       if (this.fio === "") {
@@ -157,8 +166,8 @@ export default {
         this.users = result.data;
       });
     },
-    getResultValue(result) {
-      return result.surname;
+    getResultValue() {
+      return "";
     },
     selectUser(user) {
       if (user._id === this.id) {
@@ -176,10 +185,7 @@ export default {
         this.users = [];
         return;
       }
-      if (
-        this.department === null ||
-        (this.department !== null && this.executors.length < 1)
-      ) {
+      if (this.department === null || this.executors.length < 1) {
         this.executors.push(user);
         this.fio = ``;
         this.users = [];
@@ -193,14 +199,13 @@ export default {
       this[e.target.name] = files;
     },
     searchByExecutor(input) {
-      if (input.length < 1) {
-        return;
-      }
-      return new Promise((resolve) => {
-        axios(`/user/getsearch/${input}`).then(async (res) => {
-          resolve(res.data);
+      if (input.trim().length) {
+        return new Promise((resolve) => {
+          axios(`/user/getsearch/${input}`).then(async (res) => {
+            resolve(res.data);
+          });
         });
-      });
+      }
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
@@ -249,11 +254,14 @@ export default {
           let result = await res;
           this.$emit("addToTasks", result.data.task);
           this.$toast.success("Задача успешно добавлена!");
-          this.$emit("toggleOpen");
-          this.changeStatus(true);
+          this.$store.commit("toggleAction", {
+            key: "addTask",
+          });
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
           this.changeStatus(true);
         });
     },
@@ -339,6 +347,11 @@ export default {
   .chip {
     position: relative;
     padding-right: 40px;
+    background-color: $color-gray-secondary;
+
+    & + * {
+      margin-left: 5px;
+    }
 
     i {
       font-size: 37px;

@@ -1,6 +1,6 @@
 <template>
   <div class="page calendar-page">
-    <v-add-event-modal />
+    <v-add-event-modal :event="event" />
     <v-page-header
       title="Календарь"
       icon="calendar_title"
@@ -24,7 +24,7 @@
       </div>
 
       <div class="page__right">
-        <v-calendar :events="events" />
+        <v-calendar :events="events" @showEvent="showEvent" />
       </div>
     </div>
   </div>
@@ -55,6 +55,7 @@ export default {
       events: [],
       edit: false,
       editedItem: {},
+      event: null,
 
       attrs: [
         {
@@ -101,6 +102,10 @@ export default {
   methods: {
     setShowDate(d) {
       this.showDate = d;
+    },
+    showEvent(event) {
+      this.event = event;
+      this.$modal.show("addEvent");
     },
     clickItem(date, items) {
       this.selectionStart = new Date(this.$moment(date));

@@ -83,7 +83,7 @@
                 </div>
               </div>
 
-              <v-add-task v-if="addTask" />
+              <v-add-task v-if="addTask" @addToTasks="addToTasks" />
 
               <div
                 v-for="(task, index) in dataset"
@@ -341,7 +341,6 @@ export default {
       }
     },
     addToTasks(task) {
-      console.log(task);
       this.addedItem = task;
       let dataset = this.dataset;
       if (dataset.length < 15) {

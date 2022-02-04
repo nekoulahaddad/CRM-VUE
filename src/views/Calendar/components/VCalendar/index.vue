@@ -17,7 +17,7 @@
         >
           <p
             class="custom-calendar__event"
-            @click="showEvent"
+            @click="showEvent(attr)"
             v-for="attr in attributes"
             :key="attr.key"
           >
@@ -45,7 +45,12 @@ export default {
     };
   },
   methods: {
-    showEvent() {},
+    showEvent(attr) {
+      this.$emit(
+        "showEvent",
+        this.events.find((e) => e._id === attr.key)
+      );
+    },
   },
   watch: {
     events() {
@@ -55,7 +60,7 @@ export default {
         const year = new Date(event.startDate).getFullYear();
 
         return {
-          key: i,
+          key: event._id,
           customData: {
             title: event.title,
           },
