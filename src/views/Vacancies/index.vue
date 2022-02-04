@@ -275,7 +275,7 @@ export default {
 <style lang="scss">
 .vacancies-page {
   .list__columns {
-    grid-template-columns: 300px 450px 450px 1fr;
+    grid-template-columns: 300px 350px 350px 1fr;
   }
   .list__column:last-child {
     padding-left: 20px;
@@ -295,7 +295,7 @@ export default {
 
   .page__right--middle {
     .list__columns {
-      grid-template-columns: 300px 450px 450px 1fr;
+      grid-template-columns: 300px 500px 459px 1fr;
     }
   }
 
