@@ -156,6 +156,8 @@
                     <!-- Блок импорта -->
                     <v-category-import
                       v-if="categoryImportItem._id === item._id"
+                      :region="filtersOptions.region"
+                      :category="category"
                     />
                   </Draggable>
                 </Container>

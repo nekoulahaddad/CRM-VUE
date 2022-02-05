@@ -34,7 +34,7 @@
       <!-- Импорт Excel -->
       <a
         href=""
-        v-if="categoryImportItem._id !== item._id"
+        v-if="categoryImportItem._id !== item._id && item.nesting > 0"
         @click.prevent="$emit('toggleCategoryImport', item)"
       >
         Импорт Excel
