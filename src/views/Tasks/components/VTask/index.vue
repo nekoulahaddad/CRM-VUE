@@ -67,10 +67,7 @@
           <template
             v-if="id === task.initiator._id || id === task.responsible._id"
           >
-            <VueCustomTooltip
-              v-if="index !== activeIndex"
-              label="Показать подзадачи"
-            >
+            <VueCustomTooltip v-if="index !== activeIndex" label="Подзадача">
               <img
                 alt=""
                 src="@/assets/icons/document_icon.svg"
