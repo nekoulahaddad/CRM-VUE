@@ -202,6 +202,8 @@ export default {
     },
     filtersOptions: {
       handler: function () {
+        this.infoItem = {};
+        this.editedItem = {};
         this.getData();
       },
       deep: true,
