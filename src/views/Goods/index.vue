@@ -633,10 +633,15 @@ export default {
     background-color: $color-white;
     padding: 0 !important;
 
-    &--opened .draggable-item {
-      background-color: $color-gray-secondary;
-      border-top-left-radius: $border-radius;
-      border-top-right-radius: $border-radius;
+    &--opened {
+      .draggable-item {
+        background-color: $color-gray-secondary;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+      }
+      .table__icon::before {
+        background-color: $color-white;
+      }
     }
   }
 
