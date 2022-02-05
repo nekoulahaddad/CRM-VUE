@@ -1,5 +1,10 @@
 <template>
   <div class="page goods-page">
+    <v-delete-category
+      :deletedItem="deletedProduct"
+      @deleteCategory="deleteCategory"
+    />
+
     <v-delete-product
       :deletedItem="deletedProduct"
       @deleteProduct="deleteProduct"
@@ -105,6 +110,7 @@
                       :dropDown="dropDown"
                       @hideDetail="hideDetail"
                       @toggleCopy="toggleCopy"
+                      @toggleDeleteCategory="toggleDeleteCategory"
                       @toggleDropDown="toggleDropDown"
                       @toggleEdit="toggleEdit"
                       @addToGoogleDoc="addToGoogleDoc"
@@ -172,6 +178,7 @@
 <script>
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
+import VDeleteCategory from "./components/VDeleteCategory";
 import VEditCategory from "./components/VEditCategory";
 import VDeleteProduct from "./components/VDeleteProduct";
 import VProduct from "./components/VProduct";
@@ -199,6 +206,7 @@ export default {
     VEditCategory,
     Container,
     VDeleteProduct,
+    VDeleteCategory,
   },
   data() {
     return {
@@ -252,6 +260,7 @@ export default {
       removeGroup: false,
       editGroup: false,
       product: {},
+      deletedCategory: {},
       dropDown: {},
       addProductToGroup: false,
       downloadExcelGoods: false,
@@ -316,6 +325,22 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    deleteCategory(categoryId) {
+      let index = this.dataset.categories.findIndex(
+        (item) => item._id === categoryId
+      );
+      setTimeout(() => {
+        let dataset = this.dataset.categories;
+        dataset.splice(index, 1);
+        this.dataset.categories = dataset;
+        this.deletedItem = {};
+      }, 500);
+      this.changeStatus(true);
+    },
+    toggleDeleteCategory(deletedCategory) {
+      this.deletedCategory = deletedCategory;
+      this.$modal.show("deleteGoodsCategory");
+    },
     toggleDeleteProduct(deletedProduct) {
       this.deletedProduct = deletedProduct;
       this.$modal.show("deleteProduct");
