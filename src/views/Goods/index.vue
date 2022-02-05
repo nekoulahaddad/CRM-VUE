@@ -142,8 +142,11 @@
                       :editedItem="editedItem"
                     />
 
+                    <!-- Блок экспорта категории -->
                     <v-category-export
                       v-if="categoryExportItem._id === item._id"
+                      :region="filtersOptions.region"
+                      :category="category"
                     />
                   </Draggable>
                 </Container>
@@ -521,6 +524,7 @@ export default {
         this.categoryExportItem = {};
       } else {
         this.categoryExportItem = item;
+        this.category = item ? item : false;
       }
 
       this.toggleDropDown(item);
