@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="655" :minWidth="1273" name="editEvent">
+  <v-modal :adaptive="true" :minHeight="691" :minWidth="1273" name="editEvent">
     <div class="vm--modal__title">
       Создать мероприятие
       <img
@@ -9,7 +9,7 @@
         alt=""
       />
     </div>
-    <div class="vm--modal__inner">
+    <div class="vm--modal__inner vm--modal__edit-event">
       <form @submit.prevent="onEventAdd">
         <div class="group">
           <div class="group__title">Заголовок мероприятия:</div>
@@ -27,6 +27,16 @@
         </div>
         <div class="group">
           <div class="group__title">Участники:</div>
+          <div class="group__executors">
+            <select class="form-select">
+              <option
+                :value="participant._id"
+                v-for="(participant, index) in participants"
+              >
+                {{ transformFIO(participant) }}
+              </option>
+            </select>
+          </div>
           <div class="group__content">
             <autocomplete
               required
@@ -208,16 +218,20 @@ export default {
   &__inner {
     padding: 10px;
   }
-  .form-textarea,
-  .form-control {
-    width: 976px;
+
+  .vm--modal__edit-event {
+    .form-textarea,
+    .form-control {
+      width: 689px;
+    }
+    .form-select {
+      width: 330px;
+    }
+    .group__executors {
+      margin-bottom: 10px;
+    }
   }
-  .form-textarea {
-    height: 218px;
-  }
-  .form-select {
-    width: 401px;
-  }
+
   .group__title {
     font-size: 14px !important;
   }
