@@ -18,64 +18,66 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <div v-if="!filtersOptions.region">Выберите регион</div>
-        <v-spinner v-else-if="!isLoading" />
-        <template v-else-if="dataset.categories.length">
-          <div class="scroll-horizontal">
-            <div class="list list-shadow">
-              <div class="list__header">
-                <v-search
-                  @submit="getSearchData"
-                  v-model="search"
-                  placeholder="Поиск по категории, бренду, товару или артикулу"
-                />
-                <div class="list__title title">
-                  <div class="title__item">
-                    <router-link
-                      :class="{ 'title__item--inactive': current.length }"
-                      :to="`/dashboard/storage/1`"
-                    >
-                      Снабженец
-                    </router-link>
-                  </div>
+        <div class="scroll-horizontal">
+          <div class="list list-shadow">
+            <div class="list__header">
+              <v-search
+                @submit="getSearchData"
+                v-model="good"
+                placeholder="Поиск по категории, бренду, товару или артикулу"
+              />
+              <div class="list__title title">
+                <div class="title__item">
                   <router-link
-                    class="title__item"
-                    v-for="item in current"
-                    :to="`/dashboard/storage/${
-                      item.categoryName
-                        ? +item.nesting + 2
-                        : +$route.params.nesting + 1
-                    }/categories/${item._id}/1`"
+                    :class="{ 'title__item--inactive': current.length }"
+                    :to="`/dashboard/storage/1`"
                   >
-                    {{
-                      item.categoryName
-                        ? item.categoryName
-                        : item.name
-                        ? item.name
-                        : ""
-                    }}
+                    Снабженец
                   </router-link>
                 </div>
-                <div class="list__columns">
-                  <div class="list__column">
-                    <img
-                      alt=""
-                      v-if="current.length"
-                      src="@/assets/icons/back.svg"
-                      @click="$router.go(-1)"
-                    />
-                    Название категории
-                  </div>
+                <router-link
+                  class="title__item"
+                  v-for="item in current"
+                  :to="`/dashboard/storage/${
+                    item.categoryName
+                      ? +item.nesting + 2
+                      : +$route.params.nesting + 1
+                  }/categories/${item._id}/1`"
+                >
+                  {{
+                    item.categoryName
+                      ? item.categoryName
+                      : item.name
+                      ? item.name
+                      : ""
+                  }}
+                </router-link>
+              </div>
+              <div class="list__columns">
+                <div class="list__column">
+                  <img
+                    alt=""
+                    v-if="current.length"
+                    src="@/assets/icons/back.svg"
+                    @click="$router.go(-1)"
+                  />
+                  Название категории
                 </div>
               </div>
+            </div>
+
+            <v-spinner v-if="!isLoading" />
+            <div v-else-if="!filtersOptions.region">Выберите регион</div>
+
+            <template
+              v-else-if="dataset.categories.length || dataset.products.length"
+            >
               <div
                 class="list__row list__row--shadow list__row--white"
                 v-for="item in dataset.categories"
               >
                 <v-category :current="current" :key="item._id" :item="item" />
               </div>
-            </div>
-            <div class="list list-shadow">
               <div
                 class="list__row list__row--shadow list__row--white"
                 v-for="item in dataset.products"
@@ -97,11 +99,12 @@
                   @editItem="editItem"
                 />
               </div>
-            </div>
+            </template>
+
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
+        <v-pagination v-if="count" :count="count" />
       </div>
     </div>
   </div>
@@ -207,35 +210,48 @@ export default {
       }
     },
     getSearchData() {
-      this.dataset = {
-        categories: [],
-        brands: [],
-        products: [],
-      };
       let search = this.good;
+
+      if (!search.trim().length) {
+        this.fetchData();
+        return;
+      }
+
       if (search.length < 3) {
         this.$toast.error("Запрос слишком короткий!");
         this.changeStatus(true);
         return;
       }
-      this.$router.push(`/dashboard/${this.$route.name}/1/search`);
+
+      this.isLoading = false;
+
+      this.dataset = {
+        categories: [],
+        brands: [],
+        products: [],
+      };
+
+      //this.$router.push(`/dashboard/${this.$route.name}/1/search`);
       axios({
         url: `/categories/getfromsearch`,
         data: {
-          search: search,
+          search,
           region: this.filtersOptions.region,
         },
         method: "POST",
-      }).then(async (res) => {
-        let result = await res;
-        let dataset = {};
-        dataset.categories = result.data.categories;
-        dataset.brands = result.data.brands;
-        dataset.products = result.data.products;
-        this.dataset = dataset;
-        this.$toast.success("Результаты запросов!");
-        this.isLoading = true;
-      });
+      })
+        .then(async (res) => {
+          let result = await res;
+          let dataset = {};
+          dataset.categories = result.data.categories;
+          dataset.brands = result.data.brands;
+          dataset.products = result.data.products;
+          this.dataset = dataset;
+          this.$toast.success("Результаты запросов!");
+        })
+        .finally(() => {
+          this.isLoading = true;
+        });
     },
   },
   beforeRouteUpdate(to, from, next) {
