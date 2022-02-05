@@ -173,6 +173,7 @@
                   <div
                     class="list__columns list__columns-shadow goods-list-columns"
                   >
+                    <div class="list__column"></div>
                     <div class="list__column">Название товара:</div>
                     <div class="list__column">Артикул:</div>
                   </div>
@@ -716,6 +717,12 @@ export default {
 
   .title__item--inactive {
     color: rgba(0, 0, 0, 0.3);
+  }
+
+  .list__row--transparent {
+    .list__columns {
+      grid-template-columns: 50px 750px 100px;
+    }
   }
 }
 </style>
