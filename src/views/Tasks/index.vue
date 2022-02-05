@@ -270,6 +270,7 @@ export default {
     if (this.user) {
       this.filtersOptions.executor = this.user._id;
     }
+    this.$store.commit("deactivateAction", "addTask");
     this.fetchData();
   },
   methods: {

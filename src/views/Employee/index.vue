@@ -195,6 +195,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.commit("deactivateAction", "addEmployee");
     this.getData();
   },
   methods: {

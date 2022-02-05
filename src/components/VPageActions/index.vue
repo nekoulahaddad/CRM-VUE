@@ -186,13 +186,16 @@
           <a
             href=""
             class="page-actions__button"
+            :class="{
+              'page-actions__button--active': $store.state.actions.addTask,
+            }"
             @click.prevent="
               $store.commit('toggleAction', {
                 key: 'addTask',
               })
             "
           >
-            <img src="@/assets/icons/tasks_add.svg" alt="" />
+            <simple-svg :src="require('@/assets/icons/add_task.svg')" />
           </a>
         </VueCustomTooltip>
       </template>
