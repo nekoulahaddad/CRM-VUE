@@ -388,7 +388,7 @@
               </select>
             </div>
           </div>
-          <div class="filter__group group">
+          <div class="filter__group group" v-if="false">
             <div class="group__title">Тип заявки:</div>
             <div class="group__content">
               <select class="form-select">

@@ -104,18 +104,21 @@ ul {
     }
 
     &--full {
+      .pagination,
       .list {
         width: 1591px;
       }
     }
 
     &--fluid {
+      .pagination,
       .list:not(.sub-list) {
         width: 1704px;
       }
     }
 
     &--middle {
+      .pagination,
       .list {
         width: 1525px;
       }
@@ -212,6 +215,7 @@ ul {
 }
 
 .page__right--middle {
+  .pagination,
   .list {
     width: 1417px;
   }
