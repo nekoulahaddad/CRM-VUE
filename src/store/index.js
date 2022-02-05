@@ -41,6 +41,7 @@ export default new Vuex.Store({
       addEmployee: false,
       createEducationSection: false,
       firedUsers: false,
+      importGoods: false,
     },
   },
   mutations: {

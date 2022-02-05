@@ -17,20 +17,43 @@
       <!-- Товары -->
       <template v-if="name === 'goods'">
         <VueCustomTooltip label="Добавить категорию">
-          <a href="" class="page-actions__button" @click.prevent="">
-            <img src="@/assets/icons/add_category.svg" alt="" />
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              active === 'add_category'
+                ? (active = null)
+                : (active = 'add_category')
+            "
+            :class="{
+              'page-actions__button--active': active === 'add_category',
+            }"
+          >
+            <simple-svg :src="require('@/assets/icons/add_category.svg')" />
           </a>
         </VueCustomTooltip>
 
         <VueCustomTooltip label="Импорт Excel">
-          <a href="" class="page-actions__button" @click.prevent="">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'importGoods',
+              })
+            "
+          >
             <img src="@/assets/icons/import_excel.svg" alt="" />
           </a>
         </VueCustomTooltip>
 
         <VueCustomTooltip label="Список всех пользователей">
-          <a href="" class="page-actions__button" @click.prevent="">
-            <img src="@/assets/icons/all_users.svg" alt="" />
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="getInfoAboutAllUsers"
+          >
+            <simple-svg :src="require('@/assets/icons/all_users.svg')" />
           </a>
         </VueCustomTooltip>
 
@@ -79,13 +102,16 @@
           <a
             href=""
             class="page-actions__button"
+            :class="{
+              'page-actions__button--active': $store.state.actions.addEmployee,
+            }"
             @click.prevent="
               $store.commit('toggleAction', {
                 key: 'addEmployee',
               })
             "
           >
-            <img src="@/assets/icons/add_employee.svg" alt="" />
+            <simple-svg :src="require('@/assets/icons/add_employee.svg')" />
           </a>
         </VueCustomTooltip>
         <!-- Excel уволенных сотрудников -->
@@ -235,6 +261,11 @@ import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
 export default {
+  data() {
+    return {
+      active: null,
+    };
+  },
   computed: {
     name() {
       return this.$route.name;
@@ -301,6 +332,20 @@ export default {
         .finally(() => {
           this.changeStatus(true);
         });
+    },
+    async getInfoAboutAllUsers() {
+      try {
+        this.changeStatus(false);
+        await axios({
+          url: `/seo/getinfoaboutallusers`,
+          method: "GET",
+        });
+        this.$toast.success("Начинаю генерировать Excel!");
+      } catch (error) {
+        this.$toast.error(error.response.data.message);
+      } finally {
+        this.changeStatus(true);
+      }
     },
     async downloadUsers() {
       this.changeStatus(false);
@@ -388,12 +433,18 @@ export default {
 
     &--active {
       background: none;
-      border: 3px solid $color-red;
+      border: 1px solid $color-red;
+
+      svg path {
+        fill: $color-red;
+      }
     }
 
     & + * {
       margin-left: 20px;
     }
+  }
+  svg path {
   }
 }
 </style>

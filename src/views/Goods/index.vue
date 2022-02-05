@@ -93,6 +93,14 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Блок импорта -->
+                <v-category-import
+                  v-if="importGoods"
+                  :region="filtersOptions.region"
+                  :category="false"
+                />
+
                 <Container
                   @drop="onDrop"
                   drag-handle-selector=".handle"
@@ -321,6 +329,9 @@ export default {
       region: "region",
       sidebar: "sidebar",
     }),
+    importGoods() {
+      return this.$store.state.actions.importGoods;
+    },
   },
   watch: {
     $route: async function () {
@@ -763,6 +774,12 @@ export default {
   .list__row--transparent {
     .list__columns {
       grid-template-columns: 50px 750px 100px;
+    }
+  }
+
+  .page__right--middle {
+    .list {
+      width: 1421px;
     }
   }
 }
