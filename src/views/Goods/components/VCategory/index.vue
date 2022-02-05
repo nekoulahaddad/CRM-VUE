@@ -1,5 +1,5 @@
 <template>
-  <div class="draggable-item list__columns">
+  <div class="draggable-item">
     <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
       <a
         href=""
@@ -24,7 +24,7 @@
         @click="$emit('toggleDropDown', item)"
       />
     </div>
-    <div class="list__column draggable-item__left">
+    <div class="draggable-item__left">
       <img class="next handle left move" src="@/assets/icons/move.svg" alt="" />
       <div>
         <router-link
@@ -130,6 +130,8 @@ export default {
 
 .draggable-item {
   position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
 
   .handle {
     width: 24px;

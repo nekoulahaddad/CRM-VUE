@@ -631,10 +631,12 @@ export default {
     grid-template-rows: 1fr;
     border-radius: $border-radius;
     background-color: $color-white;
-    padding: 0;
+    padding: 0 !important;
 
     &--opened .draggable-item {
       background-color: $color-gray-secondary;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
     }
   }
 
