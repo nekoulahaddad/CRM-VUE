@@ -1,6 +1,7 @@
 <template>
   <div class="draggable-item">
     <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
+      <!-- Редактировать категорию -->
       <a
         href=""
         v-if="editedItem._id !== item._id"
@@ -8,6 +9,9 @@
       >
         Редактировать категорию
       </a>
+      <span v-else>Редактировать категорию</span>
+
+      <!-- Копировать категорию -->
       <a
         href=""
         @click.prevent="$emit('toggleCopy', item)"
@@ -15,6 +19,9 @@
       >
         Копировать категорию
       </a>
+      <span v-else>Копировать категорию</span>
+
+      <!-- Экспорт в Excel -->
       <a
         href=""
         @click.prevent="$emit('toggleCategoryExport', item)"
@@ -22,6 +29,9 @@
       >
         Экспорт в Excel
       </a>
+      <span v-else>Экспорт в Excel</span>
+
+      <!-- Импорт Excel -->
       <a href="">Импорт Excel</a>
       <img
         alt=""
@@ -174,6 +184,15 @@ export default {
     position: absolute;
     top: 5px;
     right: 5px;
+  }
+
+  span {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    height: 21px;
+    line-height: 21px;
+    color: rgba(0, 0, 0, 0.3);
   }
 
   a {

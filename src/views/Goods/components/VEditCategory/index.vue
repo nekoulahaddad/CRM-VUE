@@ -199,7 +199,5 @@ export default {
       margin-bottom: 10px;
     }
   }
-  button {
-  }
 }
 </style>
