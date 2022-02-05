@@ -82,6 +82,15 @@
 
     &--white {
     }
+
+    &--transparent {
+      background: none;
+      box-shadow: none;
+
+      .list__columns {
+        background: none;
+      }
+    }
   }
 
   &__columns {

@@ -15,7 +15,13 @@
       >
         Копировать категорию
       </a>
-      <a href="">Экспорт в Excel</a>
+      <a
+        href=""
+        @click.prevent="$emit('toggleCategoryExport', item)"
+        v-if="categoryExportItem._id !== item._id"
+      >
+        Экспорт в Excel
+      </a>
       <a href="">Импорт Excel</a>
       <img
         alt=""
@@ -47,7 +53,11 @@
       <div class="table__icon">
         <VueCustomTooltip
           label="Скрыть"
-          v-if="copyItem._id === item._id || editedItem._id === item._id"
+          v-if="
+            categoryExportItem._id === item._id ||
+            copyItem._id === item._id ||
+            editedItem._id === item._id
+          "
         >
           <img
             @click="$emit('hideDetail')"
@@ -116,6 +126,7 @@ export default {
     },
     copyItem: Object,
     editedItem: Object,
+    categoryExportItem: Object,
   },
   data() {
     return {

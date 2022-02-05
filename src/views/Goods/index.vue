@@ -102,7 +102,8 @@
                     :class="{
                       'smooth-dnd-draggable-wrapper--opened':
                         editedItem._id === item._id ||
-                        copyItem._id === item._id,
+                        copyItem._id === item._id ||
+                        categoryExportItem._id === item._id,
                     }"
                     v-for="item in dataset.categories"
                     :key="item.id"
@@ -114,12 +115,14 @@
                       :current="current"
                       :editedItem="editedItem"
                       :dropDown="dropDown"
+                      :categoryExportItem="categoryExportItem"
                       @hideDetail="hideDetail"
                       @toggleCopy="toggleCopy"
                       @toggleDeleteCategory="toggleDeleteCategory"
                       @toggleDropDown="toggleDropDown"
                       @toggleEdit="toggleEdit"
                       @addToGoogleDoc="addToGoogleDoc"
+                      @toggleCategoryExport="toggleCategoryExport"
                       :show="filtersOptions.nesting > 0 && googleDoc != null"
                       :opacity="
                         googleDoc &&
@@ -138,6 +141,10 @@
                       v-if="editedItem._id === item._id"
                       :editedItem="editedItem"
                     />
+
+                    <v-category-export
+                      v-if="categoryExportItem._id === item._id"
+                    />
                   </Draggable>
                 </Container>
               </div>
@@ -145,7 +152,7 @@
           </template>
           <template v-if="dataset.products.length">
             <div class="scroll-horizontal">
-              <div class="list">
+              <div class="list list-shadow">
                 <div class="list__header" v-if="!dataset.categories.length">
                   <div class="list__title">
                     {{ $t("goods") }}
@@ -157,6 +164,17 @@
                     >
                       {{ field }}
                     </div>
+                  </div>
+                </div>
+                <div
+                  class="list__row list__row--shadow list__row--transparent"
+                  v-if="dataset.categories.length"
+                >
+                  <div
+                    class="list__columns list__columns-shadow goods-list-columns"
+                  >
+                    <div class="list__column">Название товара:</div>
+                    <div class="list__column">Артикул:</div>
                   </div>
                 </div>
                 <div
@@ -189,6 +207,7 @@ import VDeleteCategory from "./components/VDeleteCategory";
 import VEditCategory from "./components/VEditCategory";
 import VDeleteProduct from "./components/VDeleteProduct";
 import VProduct from "./components/VProduct";
+import VCategoryExport from "./components/VCategoryExport";
 import VCopy from "./components/VCopy";
 import axios from "@/api/axios";
 import dataMixins from "@/mixins/data";
@@ -208,6 +227,7 @@ export default {
     VSpinner,
     VSearch,
     VCopy,
+    VCategoryExport,
     VNotFoundQuery,
     Draggable,
     VPageHeader,
@@ -258,6 +278,7 @@ export default {
       copiedCategory: {},
       downloadExcelFile: true,
       cleared: true,
+      categoryExportItem: {},
       selectedProducts: [],
       groupAdd: false,
       groupIndex: -1,
@@ -441,6 +462,7 @@ export default {
     hideDetail() {
       this.copyItem = {};
       this.editedItem = {};
+      this.categoryExportItem = {};
     },
     editProduct(product, old) {
       let index = this.dataset.products.findIndex(
@@ -480,6 +502,7 @@ export default {
     },
     toggleCopy(item) {
       this.editedItem = {};
+      this.categoryExportItem = {};
 
       if (this.copyItem._id === item._id) {
         this.copyItem = {};
@@ -489,8 +512,21 @@ export default {
 
       this.toggleDropDown(item);
     },
+    toggleCategoryExport(item) {
+      this.copyItem = {};
+      this.editedItem = {};
+
+      if (this.categoryExportItem._id === item._id) {
+        this.categoryExportItem = {};
+      } else {
+        this.categoryExportItem = item;
+      }
+
+      this.toggleDropDown(item);
+    },
     toggleEdit(item) {
       this.copyItem = {};
+      this.categoryExportItem = {};
 
       if (this.editedItem._id === item._id) {
         this.editedItem = {};
