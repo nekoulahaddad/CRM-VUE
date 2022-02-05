@@ -55,18 +55,18 @@
               </div>
               <div class="list__columns">
                 <div class="list__column">
-                  <img
-                    alt=""
-                    v-if="current.length"
-                    src="@/assets/icons/back.svg"
-                    @click="$router.go(-1)"
-                  />
                   <template
                     v-if="
                       isLoading &&
                       (dataset.categories.length || dataset.products.length)
                     "
                   >
+                    <img
+                      alt=""
+                      v-if="current.length"
+                      src="@/assets/icons/back.svg"
+                      @click="$router.go(-1)"
+                    />
                     {{
                       dataset.categories.length
                         ? current.length

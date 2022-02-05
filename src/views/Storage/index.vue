@@ -55,13 +55,24 @@
               </div>
               <div class="list__columns">
                 <div class="list__column">
-                  <img
-                    alt=""
-                    v-if="current.length"
-                    src="@/assets/icons/back.svg"
-                    @click="$router.go(-1)"
-                  />
-                  Название категории
+                  <template
+                    v-if="
+                      isLoading &&
+                      (dataset.categories.length || dataset.products.length)
+                    "
+                  >
+                    <img
+                      alt=""
+                      v-if="current.length"
+                      src="@/assets/icons/back.svg"
+                      @click="$router.go(-1)"
+                    />
+                    {{
+                      dataset.categories.length
+                        ? "Название категории:"
+                        : "Название товара:"
+                    }}
+                  </template>
                 </div>
               </div>
             </div>
