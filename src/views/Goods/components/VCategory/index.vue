@@ -32,7 +32,15 @@
       <span v-else>Экспорт в Excel</span>
 
       <!-- Импорт Excel -->
-      <a href="">Импорт Excel</a>
+      <a
+        href=""
+        v-if="categoryImportItem._id !== item._id"
+        @click.prevent="$emit('toggleCategoryImport', item)"
+      >
+        Импорт Excel
+      </a>
+      <span v-else>Импорт Excel</span>
+
       <img
         alt=""
         src="@/assets/icons/close_icon.svg"
@@ -64,6 +72,7 @@
         <VueCustomTooltip
           label="Скрыть"
           v-if="
+            categoryImportItem._id === item._id ||
             categoryExportItem._id === item._id ||
             copyItem._id === item._id ||
             editedItem._id === item._id
@@ -137,6 +146,7 @@ export default {
     copyItem: Object,
     editedItem: Object,
     categoryExportItem: Object,
+    categoryImportItem: Object,
   },
   data() {
     return {

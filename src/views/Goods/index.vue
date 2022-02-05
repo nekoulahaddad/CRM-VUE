@@ -103,6 +103,7 @@
                       'smooth-dnd-draggable-wrapper--opened':
                         editedItem._id === item._id ||
                         copyItem._id === item._id ||
+                        categoryImportItem._id === item._id ||
                         categoryExportItem._id === item._id,
                     }"
                     v-for="item in dataset.categories"
@@ -116,6 +117,7 @@
                       :editedItem="editedItem"
                       :dropDown="dropDown"
                       :categoryExportItem="categoryExportItem"
+                      :categoryImportItem="categoryImportItem"
                       @hideDetail="hideDetail"
                       @toggleCopy="toggleCopy"
                       @toggleDeleteCategory="toggleDeleteCategory"
@@ -123,6 +125,7 @@
                       @toggleEdit="toggleEdit"
                       @addToGoogleDoc="addToGoogleDoc"
                       @toggleCategoryExport="toggleCategoryExport"
+                      @toggleCategoryImport="toggleCategoryImport"
                       :show="filtersOptions.nesting > 0 && googleDoc != null"
                       :opacity="
                         googleDoc &&
@@ -143,11 +146,16 @@
                       :editedItem="editedItem"
                     />
 
-                    <!-- Блок экспорта категории -->
+                    <!-- Блок экспорта -->
                     <v-category-export
                       v-if="categoryExportItem._id === item._id"
                       :region="filtersOptions.region"
                       :category="category"
+                    />
+
+                    <!-- Блок импорта -->
+                    <v-category-import
+                      v-if="categoryImportItem._id === item._id"
                     />
                   </Draggable>
                 </Container>
@@ -213,6 +221,7 @@ import VEditCategory from "./components/VEditCategory";
 import VDeleteProduct from "./components/VDeleteProduct";
 import VProduct from "./components/VProduct";
 import VCategoryExport from "./components/VCategoryExport";
+import VCategoryImport from "./components/VCategoryImport";
 import VCopy from "./components/VCopy";
 import axios from "@/api/axios";
 import dataMixins from "@/mixins/data";
@@ -238,6 +247,7 @@ export default {
     VPageHeader,
     VEditCategory,
     Container,
+    VCategoryImport,
     VDeleteProduct,
     VDeleteCategory,
   },
@@ -284,6 +294,7 @@ export default {
       downloadExcelFile: true,
       cleared: true,
       categoryExportItem: {},
+      categoryImportItem: {},
       selectedProducts: [],
       groupAdd: false,
       groupIndex: -1,
@@ -468,6 +479,7 @@ export default {
       this.copyItem = {};
       this.editedItem = {};
       this.categoryExportItem = {};
+      this.categoryImportItem = {};
     },
     editProduct(product, old) {
       let index = this.dataset.products.findIndex(
@@ -508,6 +520,7 @@ export default {
     toggleCopy(item) {
       this.editedItem = {};
       this.categoryExportItem = {};
+      this.categoryImportItem = {};
 
       if (this.copyItem._id === item._id) {
         this.copyItem = {};
@@ -517,9 +530,24 @@ export default {
 
       this.toggleDropDown(item);
     },
+    toggleCategoryImport(item) {
+      this.copyItem = {};
+      this.editedItem = {};
+      this.categoryExportItem = {};
+
+      if (this.categoryImportItem._id === item._id) {
+        this.categoryImportItem = {};
+      } else {
+        this.categoryImportItem = item;
+        this.category = item ? item : false;
+      }
+
+      this.toggleDropDown(item);
+    },
     toggleCategoryExport(item) {
       this.copyItem = {};
       this.editedItem = {};
+      this.categoryImportItem = {};
 
       if (this.categoryExportItem._id === item._id) {
         this.categoryExportItem = {};
