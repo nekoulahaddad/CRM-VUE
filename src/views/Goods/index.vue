@@ -670,6 +670,10 @@ export default {
     background-color: $color-white;
     padding: 0 !important;
 
+    .list__info {
+      line-height: normal;
+    }
+
     &--opened {
       .draggable-item {
         background-color: $color-gray-secondary;
