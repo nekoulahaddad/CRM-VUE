@@ -34,17 +34,44 @@
         <div class="group">
           <div class="group__title">Фото категории:</div>
           <div class="group__content">
-            <div class="category-edit-form__default-img">
+            <img
+              alt=""
+              class="group__image"
+              v-if="editedItem && categoryImage === 'Выбрать файл'"
+              :src="serverAddr + editedItem.path + editedItem.img"
+              @click.prevent="
+                downloadItem(
+                  serverAddr + editedItem.path + editedItem.img,
+                  editedItem.img
+                )
+              "
+            />
+            <div v-else class="category-edit-form__default-img">
               <img src="@/assets/icons/goods_default.svg" alt="" />
               <span>Нажмите что бы выбрать</span>
             </div>
           </div>
         </div>
 
-        <div class="group">
+        <div
+          class="group"
+          v-if="$route.params.nesting - 1 === 0 && editedItem.nesting === 0"
+        >
           <div class="group__title">Иконка категории:</div>
           <div class="group__content">
-            <div class="category-edit-form__default-img">
+            <img
+              alt=""
+              class="group__image"
+              v-if="editedItem && categoryIcon === 'Выбрать файл'"
+              :src="serverAddr + editedItem.iconPath + editedItem.icon"
+              @click.prevent="
+                downloadItem(
+                  serverAddr + editedItem.iconPath + editedItem.icon,
+                  editedItem.icon
+                )
+              "
+            />
+            <div v-else class="category-edit-form__default-img">
               <img src="@/assets/icons/goods_default.svg" alt="" />
               <span>Нажмите что бы выбрать</span>
             </div>
@@ -54,7 +81,21 @@
         <div class="group">
           <div class="group__title">Изображение слайдера:</div>
           <div class="group__content">
-            <div class="category-edit-form__default-img">
+            <img
+              alt=""
+              class="group__image"
+              v-if="editedItem && categorySlide === 'Выбрать файл'"
+              :src="serverAddr + editedItem.slidePath + editedItem.slide"
+              @click.prevent="
+                editedItem.slide != 'default.jpeg'
+                  ? downloadItem(
+                      serverAddr + editedItem.slidePath + editedItem.slide,
+                      editedItem.slide
+                    )
+                  : false
+              "
+            />
+            <div v-else class="category-edit-form__default-img">
               <img src="@/assets/icons/goods_default.svg" alt="" />
               <span>Нажмите что бы выбрать</span>
             </div>
@@ -64,7 +105,19 @@
         <div class="group">
           <div class="group__title">Баннер категории:</div>
           <div class="group__content">
-            <div class="category-edit-form__default-img">
+            <img
+              alt=""
+              class="group__image"
+              v-if="editedItem && categoryBanner === 'Выбрать файл'"
+              :src="serverAddr + editedItem.bannerPath + editedItem.banner"
+              @click.prevent="
+                downloadItem(
+                  serverAddr + editedItem.bannerPath + editedItem.banner,
+                  editedItem.banner
+                )
+              "
+            />
+            <div v-else class="category-edit-form__default-img">
               <img src="@/assets/icons/goods_default.svg" alt="" />
               <span>Нажмите что бы выбрать</span>
             </div>
@@ -74,7 +127,21 @@
         <div class="group">
           <div class="group__title">Банер категории (моб. версия):</div>
           <div class="group__content">
-            <div class="category-edit-form__default-img">
+            <img
+              alt=""
+              class="group__image"
+              v-if="editedItem && categoryBannerMob === 'Выбрать файл'"
+              :src="
+                serverAddr + editedItem.bannerPathMob + editedItem.bannerMob
+              "
+              @click.prevent="
+                downloadItem(
+                  serverAddr + editedItem.bannerPathMob + editedItem.bannerMob,
+                  editedItem.bannerMob
+                )
+              "
+            />
+            <div v-else class="category-edit-form__default-img">
               <img src="@/assets/icons/goods_default.svg" alt="" />
               <span>Нажмите что бы выбрать</span>
             </div>
@@ -111,6 +178,26 @@ export default {
     },
   },
   components: { VButton },
+  methods: {
+    downloadItem(url, filename) {
+      axios
+        .get(url, { responseType: "blob" })
+        .then((response) => {
+          const link = document.createElement("a");
+          const blob = new Blob([response.data]);
+          let urll = window.URL.createObjectURL(blob);
+          link.href = urll;
+          link.download = filename;
+          link.click();
+          setTimeout(() => {
+            window.URL.revokeObjectURL(urll);
+            document.body.removeChild(link);
+          }, 0);
+          URL.revokeObjectURL(link.href);
+        })
+        .catch(console.error);
+    },
+  },
   data() {
     return {
       categoryName: "",
@@ -176,6 +263,11 @@ export default {
 
     .group {
       margin-top: 0;
+
+      &__image {
+        max-width: 200px;
+        border-radius: $border-radius;
+      }
     }
     .group__content {
       width: 280px;

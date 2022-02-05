@@ -563,6 +563,7 @@ export default {
     toggleEdit(item) {
       this.copyItem = {};
       this.categoryExportItem = {};
+      this.categoryImportItem = {};
 
       if (this.editedItem._id === item._id) {
         this.editedItem = {};
