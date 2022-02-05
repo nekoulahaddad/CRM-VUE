@@ -36,6 +36,15 @@
       </div>
     </div>
     <div class="table__actions">
+      <div class="table__icon">
+        <VueCustomTooltip label="Скрыть" v-if="copyItem._id === item._id">
+          <img
+            @click="$emit('hideDetail')"
+            src="@/assets/icons/arrow_top_icon.svg"
+            alt=""
+          />
+        </VueCustomTooltip>
+      </div>
       <div class="table__icon" v-if="show">
         <img
           :class="{ 'table__icon--opacity': opacity }"
@@ -90,6 +99,7 @@ export default {
     show: {
       type: Boolean,
     },
+    copyItem: Object,
   },
   data() {
     return {
@@ -125,7 +135,7 @@ export default {
   top: 30px;
   z-index: 100;
   width: 249px;
-  padding: 0 10px 10px;
+  padding: 11px 14px 10px;
   height: 102px;
   border-radius: $border-radius;
   background-color: $color-white;
@@ -143,8 +153,8 @@ export default {
     font-weight: 500;
     position: relative;
     cursor: pointer;
-    height: 24px;
-    line-height: 24px;
+    height: 21px;
+    line-height: 21px;
 
     &:hover {
       color: $color-red;

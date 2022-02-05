@@ -99,8 +99,10 @@
                     <v-category
                       @changeVisibility="changeCategoryVisibility"
                       :item="item"
+                      :copyItem="copyItem"
                       :current="current"
                       :dropDown="dropDown"
+                      @hideDetail="hideDetail"
                       @toggleCopy="toggleCopy"
                       @toggleDropDown="toggleDropDown"
                       @toggleEdit="toggleEdit"
@@ -355,6 +357,10 @@ export default {
           this.isLoading = true;
         });
     },
+    hideDetail() {
+      this.copyItem = {};
+      this.editedItem = {};
+    },
     editProduct(product, old) {
       let index = this.dataset.products.findIndex(
         (item) => item._id === product._id
@@ -392,6 +398,8 @@ export default {
       }
     },
     toggleCopy(item) {
+      this.editedItem = {};
+
       if (this.copyItem._id === item._id) {
         this.copyItem = {};
       } else {
@@ -401,6 +409,8 @@ export default {
       this.toggleDropDown(item);
     },
     toggleEdit(item) {
+      this.copyItem = {};
+
       if (this.editedItem._id === item._id) {
         this.editedItem = {};
       } else {
