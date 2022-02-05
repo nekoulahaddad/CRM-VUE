@@ -1,10 +1,18 @@
 <template>
   <div class="draggable-item list__columns">
     <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
-      <a href="" @click.prevent="$emit('toggleEdit', item)">
+      <a
+        href=""
+        v-if="editedItem._id !== item._id"
+        @click.prevent="$emit('toggleEdit', item)"
+      >
         Редактировать категорию
       </a>
-      <a href="" @click.prevent="$emit('toggleCopy', item)">
+      <a
+        href=""
+        @click.prevent="$emit('toggleCopy', item)"
+        v-if="copyItem._id !== item._id"
+      >
         Копировать категорию
       </a>
       <a href="">Экспорт в Excel</a>
@@ -37,7 +45,10 @@
     </div>
     <div class="table__actions">
       <div class="table__icon">
-        <VueCustomTooltip label="Скрыть" v-if="copyItem._id === item._id">
+        <VueCustomTooltip
+          label="Скрыть"
+          v-if="copyItem._id === item._id || editedItem._id === item._id"
+        >
           <img
             @click="$emit('hideDetail')"
             src="@/assets/icons/arrow_top_icon.svg"
@@ -100,6 +111,7 @@ export default {
       type: Boolean,
     },
     copyItem: Object,
+    editedItem: Object,
   },
   data() {
     return {

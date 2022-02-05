@@ -101,6 +101,7 @@
                       :item="item"
                       :copyItem="copyItem"
                       :current="current"
+                      :editedItem="editedItem"
                       :dropDown="dropDown"
                       @hideDetail="hideDetail"
                       @toggleCopy="toggleCopy"
