@@ -221,6 +221,8 @@
           :key="chip.categoryName"
         >
           {{ chip.categoryName }}
+
+          <img src="@/assets/icons/trash_icon.svg" alt="" />
         </div>
       </div>
 
@@ -384,6 +386,14 @@ export default {
     display: flex;
     align-items: center;
     padding: 10px;
+    position: relative;
+
+    img {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+    }
 
     & + * {
       margin-top: 10px;
