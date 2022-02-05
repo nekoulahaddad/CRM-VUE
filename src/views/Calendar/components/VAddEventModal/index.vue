@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="655" :minWidth="1273" name="addEvent">
+  <v-modal :adaptive="true" :minHeight="691" :minWidth="1273" name="addEvent">
     <div class="vm--modal__title">
       Создать мероприятие
       <img
@@ -9,7 +9,7 @@
         alt=""
       />
     </div>
-    <div class="vm--modal__inner">
+    <div class="vm--modal__inner vm--modal__add-event">
       <form @submit.prevent="onEventAdd">
         <div class="group">
           <div class="group__title">Заголовок мероприятия:</div>
@@ -27,15 +27,25 @@
         </div>
         <div class="group">
           <div class="group__title">Участники:</div>
+          <div class="group__executors">
+            <select class="form-select">
+              <option
+                :value="participant._id"
+                v-for="(participant, index) in participants"
+              >
+                {{ transformFIO(participant) }}
+              </option>
+            </select>
+          </div>
           <div class="group__content">
             <autocomplete
               required
               :search="searchByExecutor"
               :get-result-value="getResultValue"
-              placeholder="Введите исполнителя задачи..."
+              placeholder="Введите участника мероприятия..."
             >
               <template #result="{ result, props }">
-                <li v-bind="props">
+                <li v-bind="props" @click="selectUser(result)">
                   {{ transformFIO(result) }}
                 </li>
               </template>
@@ -86,10 +96,11 @@
 <script>
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
+import Chip from "vue-chip";
 import axios from "@/api/axios";
 
 export default {
-  components: { VButton },
+  components: { VButton, Chip },
   data() {
     return {
       fio: "",
@@ -149,6 +160,9 @@ export default {
     onChange(e) {
       this[e.target.name] = e.target.value;
     },
+    selectUser(user) {
+      this.participants.push(user);
+    },
     async getUsersByFIO() {
       if (this.fio === "") {
         return;
@@ -169,7 +183,7 @@ export default {
       });
     },
     getResultValue(result) {
-      return result.surname;
+      return "";
     },
     onEventAdd() {
       this.changeStatus(false);
@@ -201,6 +215,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .vm--modal {
   .autocomplete-input {
     width: 330px;
@@ -208,16 +224,24 @@ export default {
   &__inner {
     padding: 10px;
   }
-  .form-textarea,
-  .form-control {
-    width: 976px;
+
+  .vm--modal__add-event {
+    .form-textarea,
+    .form-control {
+      width: 689px;
+    }
+    .form-select {
+      width: 330px;
+    }
+    .group__executors {
+      margin-bottom: 10px;
+    }
   }
+
   .form-textarea {
     height: 218px;
   }
-  .form-select {
-    width: 401px;
-  }
+
   .group__title {
     font-size: 14px !important;
   }
@@ -240,6 +264,13 @@ export default {
   }
   .vdatetime-input {
     width: 330px;
+  }
+  .chip {
+    background-color: $color-gray-secondary;
+    margin-bottom: 15px;
+    & + * {
+      margin-left: 10px;
+    }
   }
 }
 </style>
