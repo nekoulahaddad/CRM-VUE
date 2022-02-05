@@ -39,6 +39,12 @@
             <div class="scroll-horizontal">
               <div class="list list-shadow">
                 <div class="list__header">
+                  <v-search
+                    @submit="getSearchData"
+                    v-model="good"
+                    placeholder="Поиск по категории, бренду, товару или артикулу"
+                  />
+
                   <div class="list__title title">
                     <div class="title__item">
                       <router-link
@@ -178,6 +184,7 @@
 <script>
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
+import VSearch from "@/components/VSearch";
 import VDeleteCategory from "./components/VDeleteCategory";
 import VEditCategory from "./components/VEditCategory";
 import VDeleteProduct from "./components/VDeleteProduct";
@@ -199,6 +206,7 @@ export default {
     VProduct,
     VFilter,
     VSpinner,
+    VSearch,
     VCopy,
     VNotFoundQuery,
     Draggable,
@@ -325,6 +333,53 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    getSearchData() {
+      let search = this.good;
+
+      if (!search.trim().length) {
+        this.refreshGoods();
+        return;
+      }
+
+      if (search.trim().length < 3) {
+        this.$toast.error("Запрос слишком короткий!");
+        return;
+      }
+
+      this.changeStatus(false);
+      this.dataset = {
+        categories: [],
+        products: [],
+      };
+
+      //this.$router.push(`/dashboard/${this.$route.name}/1/search`)
+      axios({
+        url: `/categories/getfromsearch`,
+        data: {
+          search: search,
+          region: this.filtersOptions.region,
+        },
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          let dataset = {};
+          dataset.categories = result.data.categories;
+          dataset.products = result.data.products;
+          this.dataset = dataset;
+          if (result.data.categories.length || result.data.products.length) {
+            this.$toast.success("Результаты запросов!");
+          } else {
+            this.$toast.error("Результаты не найдены!");
+            this.good = "";
+            //this.$router.push(`/dashboard/${this.$route.name}/1`)
+          }
+        })
+        .finally(() => {
+          this.isLoading = true;
+          this.changeStatus(true);
+        });
+    },
     deleteCategory(categoryId) {
       let index = this.dataset.categories.findIndex(
         (item) => item._id === categoryId
