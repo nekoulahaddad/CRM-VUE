@@ -121,9 +121,10 @@ export default {
     },
   },
   watch: {
-    event() {
-      this.description = this.event.description;
-      this.title = this.event.title;
+    editedItem() {
+      this.description = this.editedItem.description;
+      this.title = this.editedItem.title;
+      this.participants = this.editedItem.participants.map((item) => item._id);
     },
   },
   computed: {
@@ -207,6 +208,7 @@ export default {
         });
     },
   },
+  mounted() {},
 };
 </script>
 
