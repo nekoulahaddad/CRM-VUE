@@ -62,7 +62,7 @@
                       @click="$router.go(-1)"
                     />
                     {{
-                      dataset.categories
+                      dataset.categories.length
                         ? "Название категории:"
                         : "Название товара:"
                     }}
