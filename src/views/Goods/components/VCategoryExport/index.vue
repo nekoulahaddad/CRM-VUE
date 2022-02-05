@@ -11,7 +11,7 @@
         >
           Экспортировать
         </v-button>
-        <v-spinner v-else />
+        <v-spinner small v-else />
       </div>
     </div>
     <div class="group">
@@ -24,7 +24,7 @@
         >
           Экспортировать
         </v-button>
-        <v-spinner v-else />
+        <v-spinner small v-else />
       </div>
     </div>
   </div>
@@ -62,6 +62,11 @@ export default {
     }),
     async exportProducts(route, type, prefix) {
       try {
+        console.log({
+          region: this.region,
+          categoryId: [this.category._id],
+          categoryName: this.category.categoryName,
+        });
         this[route] = true;
         await axios({
           url: `/excel/${route}`,

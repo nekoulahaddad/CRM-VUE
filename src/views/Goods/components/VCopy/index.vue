@@ -6,6 +6,7 @@
         <div class="group__title">Регион:</div>
         <div class="group__content">
           <select
+            required
             class="form-select"
             name="targetRegion"
             v-model="targetRegion"
@@ -17,13 +18,15 @@
           </select>
         </div>
       </div>
-      <v-button red>Копировать</v-button>
+      <v-button v-if="!start" red>Копировать</v-button>
+      <v-spinner small v-else />
     </form>
   </div>
 </template>
 
 <script>
 import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 
@@ -38,11 +41,12 @@ export default {
       default: () => "",
     },
   },
-  components: { VButton },
+  components: { VButton, VSpinner },
   data() {
     return {
       regions: [],
       targetRegion: "",
+      start: false,
     };
   },
   methods: {
@@ -50,13 +54,13 @@ export default {
       changeStatus: "change_load_status",
     }),
     onCategoryCopy() {
+      this.start = true;
       this.changeStatus(false);
       let data = {
         region: this.region,
         categoryId: this.category._id,
         targetRegion: this.targetRegion,
       };
-      console.log(data);
       axios({
         url: `/categories/copy/`,
         data: data,
@@ -70,6 +74,7 @@ export default {
         })
         .finally(() => {
           this.changeStatus(true);
+          //this.start = false;
         });
     },
   },
