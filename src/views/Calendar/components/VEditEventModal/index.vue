@@ -1,9 +1,9 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="655" :minWidth="1273" name="addEvent">
+  <v-modal :adaptive="true" :minHeight="655" :minWidth="1273" name="editEvent">
     <div class="vm--modal__title">
       Создать мероприятие
       <img
-        @click="$modal.hide('addEvent')"
+        @click="$modal.hide('editEvent')"
         class="vm--modal__close"
         src="/icons/close_icon.svg"
         alt=""
@@ -20,8 +20,8 @@
               class="form-control"
               placeholder="Введите заголовок мероприятия..."
               name="title"
+              :value="editedItem.title"
               @input="onChange($event)"
-              v-model="title"
             />
           </div>
         </div>
@@ -73,11 +73,11 @@
               placeholder="Введите описание данного мероприятия..."
               name="description"
               @input="onChange($event)"
-              v-model="description"
+              :value="editedItem.description"
             />
           </div>
         </div>
-        <v-button red>Создать</v-button>
+        <v-button red>Сохранить</v-button>
       </form>
     </div>
   </v-modal>
@@ -102,7 +102,7 @@ export default {
     };
   },
   props: {
-    event: {
+    editedItem: {
       type: Object,
       default: null,
     },
