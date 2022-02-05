@@ -24,6 +24,7 @@
             :search="searchByExecutor"
             :get-result-value="getResultValue"
             placeholder="Введите исполнителя задачи..."
+            v-model="fio"
           >
             <template #result="{ result, props }">
               <li v-bind="props" @click="selectUser(result)">
@@ -106,14 +107,16 @@ export default {
         sectionData.leader = this.leader._id;
       }
 
+      sectionData.departmentId = this.editedItem._id;
+
       axios({
         url: `/departments/update/`,
         data: sectionData,
         method: "POST",
       })
         .then(async () => {
-          this.$emit("toggleEdit", this.editedItem);
           this.$emit("refresh");
+          this.$emit("toggleEdit", this.editedItem);
           this.$toast.success("Отдел успешно изменен!");
         })
         .catch((err) => {
