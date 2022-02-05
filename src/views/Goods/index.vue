@@ -144,6 +144,7 @@
                     <v-edit-category
                       v-if="editedItem._id === item._id"
                       :editedItem="editedItem"
+                      :region="filtersOptions.region"
                     />
 
                     <!-- Блок экспорта -->

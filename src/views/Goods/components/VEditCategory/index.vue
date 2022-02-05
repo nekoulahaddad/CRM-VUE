@@ -214,13 +214,13 @@
 
       <div class="group">
         <div class="group__title">Часто ищут:</div>
-        <div class="group__content">
-          <input
-            required
-            class="form-control"
-            type="text"
-            placeholder="Введите название категории..."
-          />
+        <div
+          class="group__find"
+          v-if="views && views.length"
+          v-for="(chip, index) in views ? views : this.editedItem.views"
+          :key="chip.categoryName"
+        >
+          {{ chip.categoryName }}
         </div>
       </div>
 
@@ -238,6 +238,10 @@ export default {
     editedItem: {
       type: Object,
       required: true,
+    },
+    region: {
+      type: String,
+      default: () => "",
     },
   },
   components: { VButton },
@@ -329,6 +333,7 @@ export default {
 
       &__image {
         max-width: 200px;
+        min-width: 123px;
         border-radius: $border-radius;
       }
     }
@@ -369,6 +374,20 @@ export default {
   }
   .group__left {
     margin-right: 10px;
+  }
+
+  .group__find {
+    width: 976px;
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
+    & + * {
+      margin-top: 10px;
+    }
   }
 }
 </style>
