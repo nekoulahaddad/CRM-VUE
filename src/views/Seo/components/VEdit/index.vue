@@ -197,5 +197,9 @@ export default {
   .form-control {
     width: 967px;
   }
+  .ql-editor,
+  .ql-container {
+    height: auto !important;
+  }
 }
 </style>
