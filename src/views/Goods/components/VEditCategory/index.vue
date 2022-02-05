@@ -223,7 +223,11 @@
           {{ chip.categoryName }}
 
           <VueCustomTooltip label="Удалить">
-            <img src="@/assets/icons/trash_icon.svg" alt="" />
+            <img
+              @click="deleteChip(index)"
+              src="@/assets/icons/trash_icon.svg"
+              alt=""
+            />
           </VueCustomTooltip>
         </div>
       </div>
@@ -250,6 +254,9 @@ export default {
   },
   components: { VButton },
   methods: {
+    deleteChip(index) {
+      this.views.splice(index, 1);
+    },
     downloadItem(url, filename) {
       axios
         .get(url, { responseType: "blob" })
