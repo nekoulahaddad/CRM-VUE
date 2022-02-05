@@ -61,7 +61,12 @@
                     src="@/assets/icons/back.svg"
                     @click="$router.go(-1)"
                   />
-                  <template v-if="isLoading">
+                  <template
+                    v-if="
+                      isLoading &&
+                      (dataset.categories.length || dataset.products.length)
+                    "
+                  >
                     {{
                       dataset.categories.length
                         ? current.length
@@ -250,28 +255,32 @@ export default {
           region: this.filtersOptions.region,
         },
         method: "POST",
-      }).then(async (res) => {
-        let result = await res;
-        let dataset = {};
+      })
+        .then(async (res) => {
+          let result = await res;
+          let dataset = {};
 
-        dataset.categories = result.data.categories;
-        dataset.products = result.data.products;
-        this.dataset = dataset;
+          dataset.categories = result.data.categories;
+          dataset.products = result.data.products;
+          this.dataset = dataset;
 
-        if (
-          result.data.categories.length ||
-          result.data.brands.length ||
-          result.data.products.length
-        ) {
-          this.$toast.success("Результаты запросов!");
-        } else {
-          this.$toast.error("Результаты не найдены!");
-          this.good = "";
-          this.$router.push(`/dashboard/${this.$route.name}/1`);
-        }
-        this.isLoading = true;
-        this.changeStatus(true);
-      });
+          if (
+            result.data.categories.length ||
+            result.data.brands.length ||
+            result.data.products.length
+          ) {
+            this.$toast.success("Результаты запросов!");
+          } else {
+            this.$toast.error("Результаты не найдены!");
+            this.good = "";
+            this.$router.push(`/dashboard/${this.$route.name}/1`);
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.isLoading = true;
+          this.changeStatus(true);
+        });
     },
     async fetchData() {
       try {
