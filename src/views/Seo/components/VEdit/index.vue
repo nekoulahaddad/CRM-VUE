@@ -29,7 +29,7 @@
         <div class="group__title">{{ $t("pageDescription") }}</div>
         <div class="group__content">
           <vue-editor
-            :placeholder="$t('pageDescription')"
+            placeholder="Введите описание страницы..."
             v-model="description"
           />
         </div>
@@ -39,7 +39,7 @@
         <div class="group__content">
           <textarea
             class="form-textarea"
-            :placeholder="$t('metaDescription')"
+            placeholder="Введите мета описание страницы..."
             v-model="metadescription"
           />
         </div>
@@ -186,6 +186,14 @@ export default {
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
     border: 0 !important;
+  }
+  .ql-editor {
+    font-size: 14px !important;
+  }
+  .quillWrapper,
+  .form-textarea,
+  .form-control {
+    width: 967px;
   }
 }
 </style>
