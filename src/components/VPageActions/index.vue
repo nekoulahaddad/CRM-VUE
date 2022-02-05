@@ -182,7 +182,7 @@
 
       <!-- Задачи -->
       <template v-if="name === 'tasks'">
-        <VueCustomTooltip label="Добавить задачу">
+        <VueCustomTooltip label="Создать задачу">
           <a
             href=""
             class="page-actions__button"
