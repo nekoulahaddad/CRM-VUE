@@ -34,21 +34,33 @@
         <div class="group">
           <div class="group__title">Фото категории:</div>
           <div class="group__content">
-            <img
-              alt=""
-              class="group__image"
-              v-if="editedItem && categoryImage === 'Выбрать файл'"
-              :src="serverAddr + editedItem.path + editedItem.img"
-              @click.prevent="
-                downloadItem(
-                  serverAddr + editedItem.path + editedItem.img,
-                  editedItem.img
-                )
-              "
-            />
-            <div v-else class="category-edit-form__default-img">
-              <img src="@/assets/icons/goods_default.svg" alt="" />
-              <span>Нажмите что бы выбрать</span>
+            <div class="group__left">
+              <img
+                alt=""
+                class="group__image"
+                v-if="editedItem && categoryImage === 'Выбрать файл'"
+                :src="serverAddr + editedItem.path + editedItem.img"
+                @click.prevent="
+                  downloadItem(
+                    serverAddr + editedItem.path + editedItem.img,
+                    editedItem.img
+                  )
+                "
+              />
+              <div v-else class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <span>Нажмите что бы выбрать</span>
+              </div>
+            </div>
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_upload.svg" alt="" />
+                </div>
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -59,21 +71,33 @@
         >
           <div class="group__title">Иконка категории:</div>
           <div class="group__content">
-            <img
-              alt=""
-              class="group__image"
-              v-if="editedItem && categoryIcon === 'Выбрать файл'"
-              :src="serverAddr + editedItem.iconPath + editedItem.icon"
-              @click.prevent="
-                downloadItem(
-                  serverAddr + editedItem.iconPath + editedItem.icon,
-                  editedItem.icon
-                )
-              "
-            />
-            <div v-else class="category-edit-form__default-img">
-              <img src="@/assets/icons/goods_default.svg" alt="" />
-              <span>Нажмите что бы выбрать</span>
+            <div class="group__left">
+              <img
+                alt=""
+                class="group__image"
+                v-if="editedItem && categoryIcon === 'Выбрать файл'"
+                :src="serverAddr + editedItem.iconPath + editedItem.icon"
+                @click.prevent="
+                  downloadItem(
+                    serverAddr + editedItem.iconPath + editedItem.icon,
+                    editedItem.icon
+                  )
+                "
+              />
+              <div v-else class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <span>Нажмите что бы выбрать</span>
+              </div>
+            </div>
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_upload.svg" alt="" />
+                </div>
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -81,23 +105,35 @@
         <div class="group">
           <div class="group__title">Изображение слайдера:</div>
           <div class="group__content">
-            <img
-              alt=""
-              class="group__image"
-              v-if="editedItem && categorySlide === 'Выбрать файл'"
-              :src="serverAddr + editedItem.slidePath + editedItem.slide"
-              @click.prevent="
-                editedItem.slide != 'default.jpeg'
-                  ? downloadItem(
-                      serverAddr + editedItem.slidePath + editedItem.slide,
-                      editedItem.slide
-                    )
-                  : false
-              "
-            />
-            <div v-else class="category-edit-form__default-img">
-              <img src="@/assets/icons/goods_default.svg" alt="" />
-              <span>Нажмите что бы выбрать</span>
+            <div class="group__left">
+              <img
+                alt=""
+                class="group__image"
+                v-if="editedItem && categorySlide === 'Выбрать файл'"
+                :src="serverAddr + editedItem.slidePath + editedItem.slide"
+                @click.prevent="
+                  editedItem.slide != 'default.jpeg'
+                    ? downloadItem(
+                        serverAddr + editedItem.slidePath + editedItem.slide,
+                        editedItem.slide
+                      )
+                    : false
+                "
+              />
+              <div v-else class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <span>Нажмите что бы выбрать</span>
+              </div>
+            </div>
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_upload.svg" alt="" />
+                </div>
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -105,21 +141,33 @@
         <div class="group">
           <div class="group__title">Баннер категории:</div>
           <div class="group__content">
-            <img
-              alt=""
-              class="group__image"
-              v-if="editedItem && categoryBanner === 'Выбрать файл'"
-              :src="serverAddr + editedItem.bannerPath + editedItem.banner"
-              @click.prevent="
-                downloadItem(
-                  serverAddr + editedItem.bannerPath + editedItem.banner,
-                  editedItem.banner
-                )
-              "
-            />
-            <div v-else class="category-edit-form__default-img">
-              <img src="@/assets/icons/goods_default.svg" alt="" />
-              <span>Нажмите что бы выбрать</span>
+            <div class="group__left">
+              <img
+                alt=""
+                class="group__image"
+                v-if="editedItem && categoryBanner === 'Выбрать файл'"
+                :src="serverAddr + editedItem.bannerPath + editedItem.banner"
+                @click.prevent="
+                  downloadItem(
+                    serverAddr + editedItem.bannerPath + editedItem.banner,
+                    editedItem.banner
+                  )
+                "
+              />
+              <div v-else class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <span>Нажмите что бы выбрать</span>
+              </div>
+            </div>
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_upload.svg" alt="" />
+                </div>
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -127,23 +175,38 @@
         <div class="group">
           <div class="group__title">Банер категории (моб. версия):</div>
           <div class="group__content">
-            <img
-              alt=""
-              class="group__image"
-              v-if="editedItem && categoryBannerMob === 'Выбрать файл'"
-              :src="
-                serverAddr + editedItem.bannerPathMob + editedItem.bannerMob
-              "
-              @click.prevent="
-                downloadItem(
-                  serverAddr + editedItem.bannerPathMob + editedItem.bannerMob,
-                  editedItem.bannerMob
-                )
-              "
-            />
-            <div v-else class="category-edit-form__default-img">
-              <img src="@/assets/icons/goods_default.svg" alt="" />
-              <span>Нажмите что бы выбрать</span>
+            <div class="group__left">
+              <img
+                alt=""
+                class="group__image"
+                v-if="editedItem && categoryBannerMob === 'Выбрать файл'"
+                :src="
+                  serverAddr + editedItem.bannerPathMob + editedItem.bannerMob
+                "
+                @click.prevent="
+                  downloadItem(
+                    serverAddr +
+                      editedItem.bannerPathMob +
+                      editedItem.bannerMob,
+                    editedItem.bannerMob
+                  )
+                "
+              />
+              <div v-else class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <span>Нажмите что бы выбрать</span>
+              </div>
+            </div>
+
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_upload.svg" alt="" />
+                </div>
+                <div class="actions__btn">
+                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -271,6 +334,7 @@ export default {
     }
     .group__content {
       width: 280px;
+      display: flex;
     }
   }
 
@@ -290,6 +354,21 @@ export default {
     img {
       margin-bottom: 10px;
     }
+  }
+  .actions {
+    &__btn {
+      width: 33px;
+      height: 33px;
+      border-radius: $border-radius;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .group__left {
+    margin-right: 10px;
   }
 }
 </style>
