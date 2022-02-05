@@ -352,5 +352,10 @@ export default {
   .empty-data {
     margin-left: 3px;
   }
+  .page__body--fluid {
+    .page__content {
+      width: 1704px;
+    }
+  }
 }
 </style>
