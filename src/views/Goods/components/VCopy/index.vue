@@ -29,9 +29,13 @@ import { mapMutations } from "vuex";
 
 export default {
   props: {
-    copyItem: {
+    category: {
       type: Object,
-      required: true,
+      default: () => {},
+    },
+    region: {
+      type: String,
+      default: () => "",
     },
   },
   components: { VButton },
@@ -52,6 +56,7 @@ export default {
         categoryId: this.category._id,
         targetRegion: this.targetRegion,
       };
+      console.log(data);
       axios({
         url: `/categories/copy/`,
         data: data,

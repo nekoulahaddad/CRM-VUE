@@ -134,7 +134,8 @@
 
                     <v-copy
                       v-if="copyItem._id === item._id"
-                      :copyItem="copyItem"
+                      :category="copyItem"
+                      :region="filtersOptions.region"
                     />
 
                     <v-edit-category

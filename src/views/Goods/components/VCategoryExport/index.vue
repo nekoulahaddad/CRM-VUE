@@ -72,19 +72,17 @@ export default {
           },
           method: "POST",
           responseType: "blob",
-        })
-          .then((response) => {
-            const link = document.createElement("a");
-            const blob = new Blob([response.data]);
-            let urll = window.URL.createObjectURL(blob);
-            link.href = urll;
-            link.download = `${prefix}_${this.category.categoryName}.${type}`;
-            link.click();
-            window.URL.revokeObjectURL(urll);
-            URL.revokeObjectURL(link.href);
-            this.$emit("toggleOpen");
-          })
-          .catch(() => {});
+        }).then((response) => {
+          const link = document.createElement("a");
+          const blob = new Blob([response.data]);
+          let urll = window.URL.createObjectURL(blob);
+          link.href = urll;
+          link.download = `${prefix}_${this.category.categoryName}.${type}`;
+          link.click();
+          window.URL.revokeObjectURL(urll);
+          URL.revokeObjectURL(link.href);
+          this.$emit("toggleOpen");
+        });
       } catch (error) {
         this.$toast.error(error.response.data.message);
       } finally {
