@@ -87,12 +87,21 @@
                   drag-handle-selector=".handle"
                   lock-axis="y"
                 >
-                  <Draggable v-for="item in dataset.categories" :key="item.id">
+                  <Draggable
+                    :class="{
+                      'smooth-dnd-draggable-wrapper--opened':
+                        editedItem._id === item._id ||
+                        copyItem._id === item._id,
+                    }"
+                    v-for="item in dataset.categories"
+                    :key="item.id"
+                  >
                     <v-category
                       @changeVisibility="changeCategoryVisibility"
                       :item="item"
                       :current="current"
                       :dropDown="dropDown"
+                      @toggleCopy="toggleCopy"
                       @toggleDropDown="toggleDropDown"
                       @toggleEdit="toggleEdit"
                       @addToGoogleDoc="addToGoogleDoc"
@@ -103,6 +112,11 @@
                           ? false
                           : true
                       "
+                    />
+
+                    <v-copy
+                      v-if="copyItem._id === item._id"
+                      :copyItem="copyItem"
                     />
 
                     <v-edit-category
@@ -158,6 +172,7 @@ import VCategory from "./components/VCategory";
 import VEditCategory from "./components/VEditCategory";
 import VDeleteProduct from "./components/VDeleteProduct";
 import VProduct from "./components/VProduct";
+import VCopy from "./components/VCopy";
 import axios from "@/api/axios";
 import dataMixins from "@/mixins/data";
 import VFilter from "@/components/VFilter";
@@ -174,6 +189,7 @@ export default {
     VProduct,
     VFilter,
     VSpinner,
+    VCopy,
     VNotFoundQuery,
     Draggable,
     VPageHeader,
@@ -203,6 +219,7 @@ export default {
       deletedItem: {},
       editForm: false,
       editedItem: {},
+      copyItem: {},
       addFormProduct: false,
       addedProduct: {},
       deleteFormProduct: false,
@@ -374,12 +391,23 @@ export default {
         this.dropDown = dropDown;
       }
     },
+    toggleCopy(item) {
+      if (this.copyItem._id === item._id) {
+        this.copyItem = {};
+      } else {
+        this.copyItem = item;
+      }
+
+      this.toggleDropDown(item);
+    },
     toggleEdit(item) {
       if (this.editedItem._id === item._id) {
         this.editedItem = {};
       } else {
         this.editedItem = item;
       }
+
+      this.toggleDropDown(item);
     },
     async updateByFilter() {
       if (!this.isLoading) {
@@ -508,9 +536,15 @@ export default {
 
   .smooth-dnd-draggable-wrapper {
     display: grid;
+    height: auto;
     grid-template-rows: 1fr;
     border-radius: $border-radius;
     background-color: $color-white;
+    padding: 0;
+
+    &--opened .draggable-item {
+      background-color: $color-gray-secondary;
+    }
   }
 
   .list__column {

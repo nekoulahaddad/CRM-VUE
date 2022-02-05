@@ -1,10 +1,12 @@
 <template>
-  <div class="draggable-item">
+  <div class="draggable-item list__columns">
     <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
       <a href="" @click.prevent="$emit('toggleEdit', item)">
         Редактировать категорию
       </a>
-      <a href="">Копировать категорию</a>
+      <a href="" @click.prevent="$emit('toggleCopy', item)">
+        Копировать категорию
+      </a>
       <a href="">Экспорт в Excel</a>
       <a href="">Импорт Excel</a>
       <img
@@ -14,7 +16,7 @@
         @click="$emit('toggleDropDown', item)"
       />
     </div>
-    <div class="draggable-item__left">
+    <div class="list__column draggable-item__left">
       <img class="next handle left move" src="@/assets/icons/move.svg" alt="" />
       <div>
         <router-link
@@ -143,6 +145,10 @@ export default {
     cursor: pointer;
     height: 24px;
     line-height: 24px;
+
+    &:hover {
+      color: $color-red;
+    }
   }
 }
 </style>

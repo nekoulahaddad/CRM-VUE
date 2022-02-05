@@ -1,5 +1,7 @@
 <template>
-  <div>edit</div>
+  <div class="list__info list-info orders-edit-form">
+    <div>edit</div>
+  </div>
 </template>
 
 <script>

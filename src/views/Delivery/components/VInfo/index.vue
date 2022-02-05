@@ -153,7 +153,7 @@ export default {
     };
   },
   async mounted() {
-    await axios({
+    axios({
       url: "/regions/get",
     }).then(async (res) => {
       let result = await res;
@@ -161,7 +161,7 @@ export default {
     });
 
     if (this.item) {
-      await axios({
+      axios({
         url: `/providers/getcategories/`,
         data: {
           parent_id: this.item._id,
