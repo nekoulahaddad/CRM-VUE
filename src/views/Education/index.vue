@@ -213,6 +213,7 @@ export default {
     },
   },
   beforeMount() {
+    this.$store.commit("deactivateAction", "createEducationSection");
     this.fetchData();
   },
   methods: {

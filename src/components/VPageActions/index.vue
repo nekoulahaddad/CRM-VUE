@@ -161,7 +161,7 @@
 
       <!-- Обучение -->
       <template v-if="name === 'education'">
-        <VueCustomTooltip label="Добавить">
+        <VueCustomTooltip label="Добавить раздел">
           <a
             href=""
             @click.prevent="
@@ -171,7 +171,7 @@
             "
             class="page-actions__button"
             :class="{
-              'page-actions__button--active2':
+              'page-actions__button--active':
                 $store.state.actions.createEducationSection,
             }"
           >
