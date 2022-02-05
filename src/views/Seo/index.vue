@@ -282,5 +282,16 @@ export default {
   .title__item--inactive {
     color: rgba(0, 0, 0, 0.3);
   }
+
+  .page__right--middle {
+    .list {
+      width: 1421px;
+    }
+  }
+  .page__right--full {
+    .list {
+      width: 1590px;
+    }
+  }
 }
 </style>

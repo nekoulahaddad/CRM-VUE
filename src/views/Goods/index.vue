@@ -159,6 +159,7 @@ import VEditCategory from "./components/VEditCategory";
 import VDeleteProduct from "./components/VDeleteProduct";
 import VProduct from "./components/VProduct";
 import axios from "@/api/axios";
+import dataMixins from "@/mixins/data";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
@@ -167,6 +168,7 @@ import { mapGetters, mapMutations } from "vuex";
 import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VCategory,
     VProduct,
