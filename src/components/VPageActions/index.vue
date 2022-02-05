@@ -14,6 +14,39 @@
         </a>
       </template>
 
+      <!-- Товары -->
+      <template v-if="name === 'goods'">
+        <VueCustomTooltip label="Добавить категорию">
+          <a href="" class="page-actions__button" @click.prevent="">
+            <img src="@/assets/icons/add_category.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+
+        <VueCustomTooltip label="Импорт Excel">
+          <a href="" class="page-actions__button" @click.prevent="">
+            <img src="@/assets/icons/import_excel.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+
+        <VueCustomTooltip label="Список всех пользователей">
+          <a href="" class="page-actions__button" @click.prevent="">
+            <img src="@/assets/icons/all_users.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+
+        <VueCustomTooltip label="Скачать все товары">
+          <a href="" class="page-actions__button" @click.prevent="">
+            <img src="@/assets/icons/all_items.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+
+        <VueCustomTooltip label="Выгрузить товары данного региона">
+          <a href="" class="page-actions__button" @click.prevent="">
+            <img src="@/assets/icons/region_items.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+      </template>
+
       <!-- Заказы -->
       <template v-if="name === 'orders'">
         <VueCustomTooltip label="Выгрузить заказы">
