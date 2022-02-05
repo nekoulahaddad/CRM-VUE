@@ -18,14 +18,19 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <div v-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
-        <v-spinner v-else-if="!isLoading" />
+        <v-spinner v-if="!isLoading" />
+        <div v-else-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
         <template
-          v-else-if="dataset.categories.length || dataset.products.length"
+          v-else-if="dataset.products.length || dataset.categories.length"
         >
           <div class="scroll-horizontal">
             <div class="list list-shadow">
               <div class="list__header">
+                <v-search
+                  @submit="getSearchData"
+                  v-model="good"
+                  placeholder="Поиск по категории, бренду, товару или артикулу"
+                />
                 <div class="list__title title">
                   <div class="title__item">
                     <router-link
@@ -128,6 +133,8 @@ import VEdit from "./components/VEdit";
 import VItem from "./components/VItem";
 import VProduct from "./components/VProduct";
 import VFilter from "@/components/VFilter";
+import axios from "@/api/axios";
+import VSearch from "@/components/VSearch";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -145,6 +152,7 @@ export default {
     VPagination,
     VSpinner,
     VProduct,
+    VSearch,
     VPageHeader,
   },
   computed: {
@@ -205,6 +213,59 @@ export default {
     }),
     toggleFilter() {
       this.showFilter = !this.showFilter;
+    },
+    getSearchData() {
+      let search = this.good;
+
+      if (!search.trim().length) {
+        this.fetchData();
+        return;
+      }
+
+      if (search.trim().length < 3) {
+        this.$toast.error("Запрос слишком короткий!");
+        this.changeStatus(true);
+        return;
+      }
+
+      this.isLoading = false;
+
+      this.dataset = {
+        categories: [],
+        brands: [],
+        products: [],
+      };
+
+      //this.$router.push(`/dashboard/${this.$route.name}/1/search`);
+      axios({
+        url: `/categories/getfromsearch`,
+        data: {
+          search: search,
+          region: this.filtersOptions.region,
+        },
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        let dataset = {};
+
+        dataset.categories = result.data.categories;
+        dataset.products = result.data.products;
+        this.dataset = dataset;
+
+        if (
+          result.data.categories.length ||
+          result.data.brands.length ||
+          result.data.products.length
+        ) {
+          this.$toast.success("Результаты запросов!");
+        } else {
+          this.$toast.error("Результаты не найдены!");
+          this.good = "";
+          this.$router.push(`/dashboard/${this.$route.name}/1`);
+        }
+        this.isLoading = true;
+        this.changeStatus(true);
+      });
     },
     async fetchData() {
       try {
