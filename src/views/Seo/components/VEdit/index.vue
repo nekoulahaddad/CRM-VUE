@@ -8,6 +8,7 @@
         <div class="group__title">{{ $t("pageTitle") }}</div>
         <div class="group__content">
           <input
+            required
             type="text"
             class="form-control"
             :placeholder="$t('pageTitle')"
@@ -19,6 +20,7 @@
         <div class="group__title">{{ $t("keywords") }}</div>
         <div class="group__content">
           <textarea
+            required
             class="form-textarea"
             v-model="keywords"
             :placeholder="$t('keywords')"
@@ -29,6 +31,7 @@
         <div class="group__title">{{ $t("pageDescription") }}</div>
         <div class="group__content">
           <vue-editor
+            required
             placeholder="Введите описание страницы..."
             v-model="description"
           />
@@ -38,6 +41,7 @@
         <div class="group__title">{{ $t("metaDescription") }}</div>
         <div class="group__content">
           <textarea
+            required
             class="form-textarea"
             placeholder="Введите мета описание страницы..."
             v-model="metadescription"
@@ -111,12 +115,11 @@ export default {
           ? this.item.meta.description
           : "";
       },
-      set: function (metadescription) {
-        this.$refs.keywords.metadescription = metadescription;
+      set: function (value) {
         if (!this.item.meta) {
           this.item.meta = {};
         }
-        this.item.meta.description = metadescription;
+        this.item.meta.description = value;
       },
     },
   },
@@ -156,7 +159,6 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
         })
         .finally(() => {
           this.changeStatus(true);

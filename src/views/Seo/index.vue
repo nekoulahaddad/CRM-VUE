@@ -80,6 +80,7 @@
                 <v-item
                   :current="current"
                   :item="item"
+                  :showEdit="editedItem._id === item._id"
                   @toggleEdit="toggleEdit"
                 />
 
@@ -96,8 +97,13 @@
                 v-for="item in dataset.products"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
+                :class="{ 'list__row--opened': editedItem._id === item._id }"
               >
-                <v-product :item="item" @toggleEdit="toggleEdit" />
+                <v-product
+                  :item="item"
+                  :showEdit="editedItem._id === item._id"
+                  @toggleEdit="toggleEdit"
+                />
 
                 <v-edit
                   v-if="editedItem._id === item._id"
