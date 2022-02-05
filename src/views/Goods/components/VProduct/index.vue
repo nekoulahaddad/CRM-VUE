@@ -7,7 +7,8 @@
     </div>
     <div class="list__column">{{ item.title }}</div>
     <div class="list__column">
-      {{ item.article }}
+      <span v-if="item.type !== 'group'">{{ item.article }}</span>
+      <span v-else>Группа</span>
     </div>
     <div class="list__column">
       <div class="table__actions">
