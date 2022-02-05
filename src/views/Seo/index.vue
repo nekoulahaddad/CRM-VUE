@@ -18,54 +18,50 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <div v-else-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
-        <template
-          v-else-if="dataset.products.length || dataset.categories.length"
-        >
-          <div class="scroll-horizontal">
-            <div class="list list-shadow">
-              <div class="list__header">
-                <v-search
-                  @submit="getSearchData"
-                  v-model="good"
-                  placeholder="Поиск по категории, бренду, товару или артикулу"
-                />
-                <div class="list__title title">
-                  <div class="title__item">
-                    <router-link
-                      :class="{ 'title__item--inactive': current.length }"
-                      :to="`/dashboard/seo/1`"
-                    >
-                      {{ $t("pages.seo.pageTitle") }}
-                    </router-link>
-                  </div>
+        <div class="scroll-horizontal">
+          <div class="list list-shadow">
+            <div class="list__header">
+              <v-search
+                @submit="getSearchData"
+                v-model="good"
+                placeholder="Поиск по категории, бренду, товару или артикулу"
+              />
+              <div class="list__title title">
+                <div class="title__item">
                   <router-link
-                    class="title__item"
-                    v-for="item in current"
-                    :to="`/dashboard/seo/${
-                      item.categoryName
-                        ? +item.nesting + 2
-                        : +$route.params.nesting + 1
-                    }/categories/${item._id}/1`"
+                    :class="{ 'title__item--inactive': current.length }"
+                    :to="`/dashboard/seo/1`"
                   >
-                    {{
-                      item.categoryName
-                        ? item.categoryName
-                        : item.name
-                        ? item.name
-                        : ""
-                    }}
+                    {{ $t("pages.seo.pageTitle") }}
                   </router-link>
                 </div>
-                <div class="list__columns">
-                  <div class="list__column">
-                    <img
-                      alt=""
-                      v-if="current.length"
-                      src="@/assets/icons/back.svg"
-                      @click="$router.go(-1)"
-                    />
+                <router-link
+                  class="title__item"
+                  v-for="item in current"
+                  :to="`/dashboard/seo/${
+                    item.categoryName
+                      ? +item.nesting + 2
+                      : +$route.params.nesting + 1
+                  }/categories/${item._id}/1`"
+                >
+                  {{
+                    item.categoryName
+                      ? item.categoryName
+                      : item.name
+                      ? item.name
+                      : ""
+                  }}
+                </router-link>
+              </div>
+              <div class="list__columns">
+                <div class="list__column">
+                  <img
+                    alt=""
+                    v-if="current.length"
+                    src="@/assets/icons/back.svg"
+                    @click="$router.go(-1)"
+                  />
+                  <template v-if="isLoading">
                     {{
                       dataset.categories.length
                         ? current.length
@@ -73,9 +69,19 @@
                           : "Название категории:"
                         : "Название товара:"
                     }}
-                  </div>
+                  </template>
                 </div>
               </div>
+            </div>
+
+            <v-spinner v-if="!isLoading" />
+            <div v-else-if="!filtersOptions.region">
+              {{ $t("chooseRegion") }}
+            </div>
+
+            <template
+              v-else-if="dataset.categories.length || dataset.products.length"
+            >
               <div
                 v-for="item in dataset.categories"
                 :key="item._id"
@@ -118,11 +124,11 @@
                   @toggleEdit="toggleEdit"
                 />
               </div>
-            </div>
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination v-if="count > 15" :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
+        <v-pagination v-if="count > 15" :count="count" />
       </div>
     </div>
   </div>
