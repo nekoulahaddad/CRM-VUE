@@ -222,7 +222,9 @@
         >
           {{ chip.categoryName }}
 
-          <img src="@/assets/icons/trash_icon.svg" alt="" />
+          <VueCustomTooltip label="Удалить">
+            <img src="@/assets/icons/trash_icon.svg" alt="" />
+          </VueCustomTooltip>
         </div>
       </div>
 
@@ -388,11 +390,18 @@ export default {
     padding: 10px;
     position: relative;
 
-    img {
+    span {
       position: absolute;
       top: 50%;
       right: 10px;
       transform: translateY(-50%);
+    }
+    span[role="tooltip"] {
+      &:after {
+        background-color: $color-black;
+        color: $color-white;
+        border-radius: $border-radius;
+      }
     }
 
     & + * {
