@@ -181,7 +181,7 @@
                 <div
                   v-for="(item, index) in dataset.products"
                   :key="item._id"
-                  class="list__row list__row--shadow list__row--white"
+                  class="list__row list__row--group list__row--shadow list__row--white"
                 >
                   <v-product
                     :item="item"
@@ -658,7 +658,7 @@ export default {
 .goods-page {
   .list__header {
     .list__columns {
-      grid-template-columns: 50px 1fr 1fr;
+      grid-template-columns: 50px 750px 100px 1fr;
     }
   }
 
