@@ -5,6 +5,7 @@
     accept="image/x-png,image/gif,image/jpeg"
     class="employee-edit"
   >
+    {{ children }}
     <div class="form-top">
       <div class="form-top__left">
         <div class="group__title group__title--big text--blue">
@@ -360,9 +361,9 @@
       <div class="group__footer">
         <v-add-child
           :newChild="newChild"
-          v-if="addChildForm || editChildForm"
           :addChildForm="addChildForm"
           :editChildForm="editChildForm"
+          v-if="addChildForm || editChildForm"
           @cancel="
             (addChildForm = false),
               (editChildForm = false),
