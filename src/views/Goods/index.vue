@@ -870,6 +870,7 @@ export default {
     },
   },
   async created() {
+    this.$store.commit("deactivateAction", "addGoodsCategory");
     try {
       this.updateGoods(
         await this.getDataFromPage(
