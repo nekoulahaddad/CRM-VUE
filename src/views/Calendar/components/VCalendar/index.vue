@@ -96,6 +96,10 @@ export default {
   max-width: 1307px !important;
   border: none;
 
+  .__vuescroll {
+    height: 80px !important;
+  }
+
   .vc-day {
     padding: 10px;
     border: 1px solid $color-gray-secondary;
