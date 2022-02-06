@@ -17,15 +17,27 @@
       </div>
       <div class="group">
         <div class="group__title">Поставщики:</div>
-        <div class="group__content">
-          <input
-            class="form-control"
-            type="text"
-            placeholder="Введите наименование организации..."
-            v-model="currentInput"
-            @keypress.enter.prevent="saveChip"
-            @keydown.delete="backspaceDelete"
+        <div class="group__chips">
+          <chip
+            v-for="provider in providers"
+            :key="provider._id"
+            :close="true"
+            :text="provider.name"
+            @closed="chipClosed(index)"
           />
+        </div>
+        <div class="group__content">
+          <autocomplete
+            :search="searchByExecutor"
+            :get-result-value="getResultValue"
+            placeholder="Введите наименование организации..."
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectProvider(result)">
+                {{ result.name }}
+              </li>
+            </template>
+          </autocomplete>
         </div>
       </div>
       <v-button red>Сохранить</v-button>
@@ -35,6 +47,7 @@
 
 <script>
 import VButton from "@/components/VButton";
+import Chip from "vue-chip";
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
 
@@ -59,6 +72,7 @@ export default {
   },
   components: {
     VButton,
+    Chip,
   },
   computed: {
     minq: {
@@ -78,6 +92,12 @@ export default {
     }),
     onChange(e) {
       this[e.target.name] = e.target.value;
+    },
+    selectProvider(provider) {
+      this.providers.push(provider);
+    },
+    chipClosed(index) {
+      this.providers.splice(index, 1);
     },
     onItemEdit() {
       this.changeStatus(false);
@@ -107,33 +127,41 @@ export default {
           this.changeStatus(true);
         });
     },
-    saveChip() {
-      const { providers, currentInput } = this;
-      axios({
-        url: `/providers/getprovidersbyname/`,
-        data: {
-          title: currentInput,
-          region: this.region,
-        },
-        method: "POST",
-      }).then(async (res) => {
-        let result = await res;
-        if (!result.data.provider) {
-          this.$toast.error("Поставщик не найден", "Ошибка");
-          return;
-        }
-        let exist = false;
-        for (let i = 0; i < providers.length; i++) {
-          if (providers[i].name === result.data.provider.name) exist = true;
-        }
-        if (exist) {
-          this.$toast.error("Поставщик уже в списке", "Ошибка");
-        } else {
-          this.$toast.success("Поставщик успешно добавлен!");
-          this.providers.push(result.data.provider);
-        }
+    getResultValue(result) {
+      return "";
+    },
+    searchByExecutor(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      const { providers } = this;
+      return new Promise((resolve) => {
+        axios({
+          url: `/providers/getprovidersbyname/`,
+          data: {
+            title: input,
+            region: this.region,
+          },
+          method: "POST",
+        }).then((res) => {
+          if (!res.data.provider) {
+            return [];
+          }
+          let exist = false;
+          for (let i = 0; i < providers.length; i++) {
+            if (providers[i].name === res.data.provider.name) {
+              exist = true;
+              break;
+            }
+          }
+          if (exist) {
+            this.$toast.error("Поставщик уже в списке", "Ошибка");
+          } else {
+            resolve([res.data.provider]);
+          }
+        });
       });
-      this.currentInput = "";
     },
     deleteChip(index) {
       this.providers.splice(index, 1);
@@ -148,8 +176,29 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .storage-list-info {
   .form-control {
+    width: 976px;
+  }
+  .chip {
+    background-color: $color-gray-secondary;
+    margin-bottom: 10px;
+    position: relative;
+    padding-right: 40px;
+
+    & + * {
+      margin-left: 5px;
+    }
+
+    i {
+      font-size: 37px;
+      position: absolute;
+      right: 17px;
+    }
+  }
+  .autocomplete-input {
     width: 976px;
   }
 }

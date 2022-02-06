@@ -367,6 +367,7 @@ export default {
   .chip {
     position: relative;
     padding-right: 40px;
+    margin-bottom: 10px;
     background-color: $color-gray-secondary;
 
     & + * {
