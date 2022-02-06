@@ -93,7 +93,9 @@ export default {
   width: 1307px;
 }
 .custom-calendar {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
   max-width: 1307px !important;
+  height: 100%;
   border: none;
 
   .__vuescroll {
@@ -103,7 +105,7 @@ export default {
   .vc-day {
     padding: 10px;
     border-right: 1px solid $color-gray-secondary;
-    border-bottom: 0;
+    border-bottom: 1px solid $color-gray-secondary;
     overflow: hidden;
   }
 
