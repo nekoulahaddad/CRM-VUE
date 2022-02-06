@@ -121,10 +121,7 @@ export default {
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 15px;
-
-    &:first-letter {
-      text-transform: uppercase;
-    }
+    text-transform: capitalize;
   }
 
   &__date {
