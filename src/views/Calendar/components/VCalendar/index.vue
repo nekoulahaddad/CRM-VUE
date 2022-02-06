@@ -104,9 +104,16 @@ export default {
 
   .vc-day {
     padding: 10px;
-    border-right: 1px solid $color-gray-secondary;
-    border-bottom: 1px solid $color-gray-secondary;
+    border-right: 2px solid $color-gray-secondary;
+    border-bottom: 2px solid $color-gray-secondary;
     overflow: hidden;
+
+    &:nth-last-child(-n + 7) {
+      border-bottom: 0 !important;
+    }
+    &:nth-child(7n) {
+      border-right: 0 !important;
+    }
   }
 
   .vc-title {
@@ -149,8 +156,8 @@ export default {
     color: $color-black;
     font-size: 14px;
     font-weight: 600;
-    border-right: 1px solid $color-gray-secondary;
-    border-bottom: 1px solid $color-gray-secondary;
+    border-right: 2px solid $color-gray-secondary;
+    border-bottom: 2px solid $color-gray-secondary;
     padding: 10px 0;
 
     &:first-child {
