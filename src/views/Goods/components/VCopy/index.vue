@@ -18,7 +18,9 @@
           </select>
         </div>
       </div>
-      <v-button v-if="!start" red>Копировать</v-button>
+      <v-button v-if="!start" :disabled="!targetRegion" red>
+        Копировать
+      </v-button>
       <v-spinner small v-else />
     </form>
   </div>
@@ -67,6 +69,7 @@ export default {
         method: "POST",
       })
         .then(async (res) => {
+          this.$emit("toggleCopy", this.category);
           this.$toast.success("Категория скопирована!");
         })
         .catch((err) => {
@@ -74,7 +77,7 @@ export default {
         })
         .finally(() => {
           this.changeStatus(true);
-          //this.start = false;
+          this.start = false;
         });
     },
   },

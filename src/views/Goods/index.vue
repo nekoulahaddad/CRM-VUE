@@ -161,6 +161,7 @@
                       v-if="copyItem._id === item._id"
                       :category="copyItem"
                       :region="filtersOptions.region"
+                      @toggleCopy="toggleCopy"
                     />
 
                     <v-edit-category
