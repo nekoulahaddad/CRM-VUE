@@ -37,8 +37,12 @@
           </select>
         </div>
       </div>
-      <div class="add-child__buttons">
+      <div class="add-child__buttons" v-if="addChildForm">
         <v-button @click="$emit('addChild')" red>Добавить</v-button>
+        <v-button white @click="$emit('cancel')">Отмена</v-button>
+      </div>
+      <div class="add-child__buttons" v-if="editChildForm">
+        <v-button @click="$emit('saveChild')" red>Сохранить</v-button>
         <v-button white @click="$emit('cancel')">Отмена</v-button>
       </div>
     </form>
@@ -51,6 +55,8 @@ import VButton from "@/components/VButton";
 export default {
   props: {
     newChild: Object,
+    addChildForm: Boolean,
+    editChildForm: Boolean,
   },
   components: {
     VButton,

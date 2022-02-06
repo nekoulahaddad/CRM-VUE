@@ -325,21 +325,29 @@
       <div class="group__content group__childs">
         <div
           class="children"
+          v-if="editChildIndex !== index"
           v-for="(child, index) in children"
           :key="child._id"
         >
           <span>{{ transformChildInfo(child) }}</span>
 
           <div>
-            <VueCustomTooltip label="Изменить">
+            <VueCustomTooltip
+              label="Изменить"
+              v-if="!addChildForm && !editChildForm"
+            >
               <img
+                alt=""
                 class="children__write-icon"
                 src="@/assets/icons/write_icon.svg"
-                alt=""
+                @click="editChild(index)"
               />
             </VueCustomTooltip>
 
-            <VueCustomTooltip label="Удалить">
+            <VueCustomTooltip
+              label="Удалить"
+              v-if="!addChildForm && !editChildForm"
+            >
               <img
                 src="@/assets/icons/trash_icon.svg"
                 alt=""
@@ -352,13 +360,24 @@
       <div class="group__footer">
         <v-add-child
           :newChild="newChild"
-          v-if="addChildForm"
-          @cancel="addChildForm = false"
+          v-if="addChildForm || editChildForm"
+          :addChildForm="addChildForm"
+          :editChildForm="editChildForm"
+          @cancel="
+            (addChildForm = false),
+              (editChildForm = false),
+              (editChildIndex = null)
+          "
           @addChild="addChild"
+          @saveChild="saveChild"
         />
       </div>
 
-      <v-button red @click="addChildForm = true" v-if="!addChildForm">
+      <v-button
+        red
+        @click="addChildForm = true"
+        v-if="!addChildForm && !editChildForm"
+      >
         {{ $t("add") }}
       </v-button>
     </div>
