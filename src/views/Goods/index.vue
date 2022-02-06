@@ -205,11 +205,23 @@
                   v-for="(item, index) in dataset.products"
                   :key="item._id"
                   class="list__row list__row--group list__row--shadow list__row--white"
+                  :class="{
+                    'list__row--opened': groupProductItem._id === item._id,
+                  }"
                 >
                   <v-product
                     :item="item"
                     @editProduct="editProduct"
                     @toggleDeleteProduct="toggleDeleteProduct"
+                    @toggleProductToGroup="toggleProductToGroup"
+                  />
+
+                  <v-add-product-to-group
+                    v-if="groupProductItem._id === item._id"
+                    :region="filtersOptions.region"
+                    :product="groupProductItem"
+                    @refreshGoods="refreshGoods"
+                    @toggleProductToGroup="toggleProductToGroup"
                   />
                 </div>
               </div>
@@ -230,6 +242,7 @@ import VSearch from "@/components/VSearch";
 import VDeleteCategory from "./components/VDeleteCategory";
 import VEditCategory from "./components/VEditCategory";
 import VDeleteProduct from "./components/VDeleteProduct";
+import VAddProductToGroup from "./components/VAddProductToGroup";
 import VProduct from "./components/VProduct";
 import VCategoryExport from "./components/VCategoryExport";
 import VCategoryImport from "./components/VCategoryImport";
@@ -261,6 +274,7 @@ export default {
     VCategoryImport,
     VDeleteProduct,
     VDeleteCategory,
+    VAddProductToGroup,
   },
   data() {
     return {
@@ -280,6 +294,7 @@ export default {
       count: 0,
       addForm: false,
       addedItem: {},
+      groupProductItem: {},
       deleteForm: false,
       deletedItem: {},
       editForm: false,
@@ -568,6 +583,19 @@ export default {
       } else {
         this.categoryExportItem = item;
         this.category = item ? item : false;
+      }
+
+      this.toggleDropDown(item);
+    },
+    toggleProductToGroup(item) {
+      this.copyItem = {};
+      this.categoryExportItem = {};
+      this.categoryImportItem = {};
+
+      if (this.groupProductItem._id === item._id) {
+        this.groupProductItem = {};
+      } else {
+        this.groupProductItem = item;
       }
 
       this.toggleDropDown(item);

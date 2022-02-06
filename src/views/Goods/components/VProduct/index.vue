@@ -14,7 +14,11 @@
       <div class="table__actions">
         <div class="table__icon">
           <VueCustomTooltip label="Добавить товар в группу">
-            <img src="@/assets/icons/add_to_group.svg" alt="" />
+            <img
+              @click="$emit('toggleProductToGroup', item)"
+              src="@/assets/icons/add_to_group.svg"
+              alt=""
+            />
           </VueCustomTooltip>
         </div>
         <div class="table__icon">
