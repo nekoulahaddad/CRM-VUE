@@ -246,10 +246,7 @@ export default {
     onCategoryAdd() {
       let categoryData = new FormData();
 
-      if (this.editedItem) {
-        categoryData.append("categoryId", this.editedItem._id);
-      }
-
+      categoryData.append("categoryId", this.editedItem._id);
       categoryData.append(
         "categoryName",
         this.categoryName || this.editedItem.categoryName
@@ -262,8 +259,11 @@ export default {
       );
       categoryData.append("region", this.region);
       categoryData.append("remove", this.remove);
-      if (this.$route.params.parent_value)
+
+      if (this.$route.params.parent_value) {
         categoryData.append("parent_value", this.$route.params.parent_value);
+      }
+
       categoryData.append("categoryImage", this.categoryImage);
       categoryData.append("categoryIcon", this.categoryIcon);
 
@@ -275,20 +275,19 @@ export default {
         categoryData.append("views", JSON.stringify(this.views));
       }
 
-      if (this.editedItem) {
-        axios({
-          url: `/categories/update/`,
-          data: categoryData,
-          method: "POST",
+      axios({
+        url: `/categories/update/`,
+        data: categoryData,
+        method: "POST",
+      })
+        .then(async () => {
+          this.$emit("refreshGoods");
+          this.$toast.success("Категория успешно обновлена!");
+          this.$emit("toggleEdit", this.editedItem);
         })
-          .then(async () => {
-            this.$emit("refreshGoods");
-            this.$toast.success("Категория успешно обновлена!");
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          });
-      }
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        });
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
@@ -341,25 +340,23 @@ export default {
     };
   },
   created() {
-    if (this.editedItem) {
-      axios({
-        url: `/categories/getviews/`,
-        data: {
-          parent_id: this.editedItem._id,
-          nesting: this.editedItem.nesting,
-          region: this.region,
-        },
-        method: "POST",
-      }).then(async (res) => {
-        let result = await res;
-        this.editedItem.views = result.data.views;
-        this.views = result.data.views;
-        this.filters = result.data.filters;
-        this.editedItem.filters
-          ? (this.itemFilters = this.editedItem.filters)
-          : false;
-      });
-    }
+    axios({
+      url: `/categories/getviews/`,
+      data: {
+        parent_id: this.editedItem._id,
+        nesting: this.editedItem.nesting,
+        region: this.region,
+      },
+      method: "POST",
+    }).then(async (res) => {
+      let result = await res;
+      this.editedItem.views = result.data.views;
+      this.views = result.data.views;
+      this.filters = result.data.filters;
+      this.editedItem.filters
+        ? (this.itemFilters = this.editedItem.filters)
+        : false;
+    });
   },
 };
 </script>

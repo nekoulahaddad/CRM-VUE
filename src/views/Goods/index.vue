@@ -167,6 +167,8 @@
                       v-if="editedItem._id === item._id"
                       :editedItem="editedItem"
                       :region="filtersOptions.region"
+                      @refreshGoods="refreshGoods"
+                      @toggleEdit="toggleEdit"
                     />
 
                     <!-- Блок экспорта -->
@@ -768,11 +770,11 @@ export default {
 
       if (this.editedItem._id === item._id) {
         this.editedItem = {};
+        this.dropDown = {};
       } else {
         this.editedItem = item;
+        this.toggleDropDown(item);
       }
-
-      this.toggleDropDown(item);
     },
     async updateByFilter() {
       if (!this.isLoading) {
