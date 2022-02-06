@@ -73,14 +73,13 @@
             {{ $t("phone") }} <span class="required">*</span>
           </div>
           <div class="group__content">
-            <input
+            <phone-mask-input
               required
-              type="text"
-              class="form-control"
-              :placeholder="$t('phone')"
               name="phone"
-              :value="infoItem ? infoItem.phone : phone"
-              @input="onChange($event)"
+              inputClass="form-control"
+              :placeholder="$t('phone')"
+              value="infoItem ? infoItem.phone : phone"
+              @onValidate="onValidate($event)"
             />
           </div>
         </div>
@@ -430,6 +429,7 @@
 <script>
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
+import PhoneMaskInput from "vue-phone-mask-input";
 import axios from "@/api/axios";
 import VAddChild from "../VAddChild";
 
@@ -439,7 +439,7 @@ export default {
       type: Object,
     },
   },
-  components: { VAddChild, VButton },
+  components: { VAddChild, VButton, PhoneMaskInput },
   data() {
     return {
       date: new Date().toString(),
@@ -533,6 +533,9 @@ export default {
         gender: "муж",
       };
       this.addChildForm = false;
+    },
+    onValidate(e, index) {
+      this.phone = e.number;
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
