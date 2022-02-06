@@ -206,14 +206,18 @@
                   :key="item._id"
                   class="list__row list__row--group list__row--shadow list__row--white"
                   :class="{
-                    'list__row--opened': groupProductItem._id === item._id,
+                    'list__row--opened':
+                      groupProductItem._id === item._id ||
+                      editedGroupItem._id === item._id,
                   }"
                 >
                   <v-product
                     :item="item"
+                    :editedGroupItem="editedGroupItem"
                     @editProduct="editProduct"
                     @toggleDeleteProduct="toggleDeleteProduct"
                     @toggleProductToGroup="toggleProductToGroup"
+                    @toggleEditGroup="toggleEditGroup"
                   />
 
                   <v-add-product-to-group
@@ -223,6 +227,10 @@
                     @refreshGoods="refreshGoods"
                     @toggleMoveProduct="toggleMoveProduct"
                     @toggleProductToGroup="toggleProductToGroup"
+                  />
+
+                  <v-product-group-edit
+                    v-if="editedGroupItem._id === item._id"
                   />
                 </div>
               </div>
@@ -242,6 +250,7 @@ import VCategory from "./components/VCategory";
 import VSearch from "@/components/VSearch";
 import VDeleteCategory from "./components/VDeleteCategory";
 import VEditCategory from "./components/VEditCategory";
+import VProductGroupEdit from "./components/VProductGroupEdit";
 import VDeleteProduct from "./components/VDeleteProduct";
 import VAddProductToGroup from "./components/VAddProductToGroup";
 import VProduct from "./components/VProduct";
@@ -266,6 +275,7 @@ export default {
     VSpinner,
     VSearch,
     VCopy,
+    VProductGroupEdit,
     VCategoryExport,
     VNotFoundQuery,
     Draggable,
@@ -296,6 +306,7 @@ export default {
       addForm: false,
       addedItem: {},
       groupProductItem: {},
+      editedGroupItem: {},
       deleteForm: false,
       deletedItem: {},
       editForm: false,
@@ -447,6 +458,19 @@ export default {
           this.isLoading = true;
           this.changeStatus(true);
         });
+    },
+    toggleEditGroup(item) {
+      this.editedItem = {};
+      this.categoryExportItem = {};
+      this.categoryImportItem = {};
+
+      if (this.editedGroupItem._id === item._id) {
+        this.editedGroupItem = {};
+      } else {
+        this.editedGroupItem = item;
+      }
+
+      this.toggleDropDown(item);
     },
     toggleMoveProduct(item) {
       this.editedItem = {};

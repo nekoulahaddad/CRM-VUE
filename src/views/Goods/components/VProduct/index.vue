@@ -66,9 +66,31 @@
 
         <!-- Редактировать товар -->
         <div class="table__icon">
-          <VueCustomTooltip label="Редактировать товар">
-            <img alt="" src="@/assets/icons/write_icon.svg" />
+          <VueCustomTooltip v-if="item.type !== 'group'" label="Изменить товар">
+            <img
+              alt=""
+              src="@/assets/icons/write_icon.svg"
+              @click="$emit('toggleEditProduct', item)"
+            />
           </VueCustomTooltip>
+          <template v-else>
+            <VueCustomTooltip
+              v-if="editedGroupItem._id !== item._id"
+              label="Изменить группу"
+            >
+              <img
+                alt=""
+                src="@/assets/icons/write_icon.svg"
+                @click="$emit('toggleEditGroup', item)"
+              />
+            </VueCustomTooltip>
+            <img
+              alt=""
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleEditGroup', item)"
+            />
+          </template>
         </div>
 
         <!-- Удалить товар -->
@@ -96,6 +118,7 @@ export default {
       type: Object,
       required: true,
     },
+    editedGroupItem: Object,
   },
   methods: {
     ...mapMutations({
