@@ -282,7 +282,7 @@ export default {
       })
         .then(async () => {
           this.$emit("refreshGoods");
-          this.$toast.success("Категория успешно обновлена!");
+          this.$toast.success("Категория успешно изменена!");
           this.$emit("toggleEdit", this.editedItem);
         })
         .catch((err) => {
@@ -335,7 +335,6 @@ export default {
       currentInput: "",
       tempViews: [],
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
-      title: this.editedItem ? "Редактировать категорию" : "Создать категорию",
       remove: [],
     };
   },

@@ -161,6 +161,7 @@
                       v-if="copyItem._id === item._id"
                       :category="copyItem"
                       :region="filtersOptions.region"
+                      @refreshGoods="refreshGoods"
                       @toggleCopy="toggleCopy"
                     />
 

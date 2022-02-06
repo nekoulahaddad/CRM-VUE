@@ -68,7 +68,8 @@ export default {
         data: data,
         method: "POST",
       })
-        .then(async (res) => {
+        .then(() => {
+          this.$emit("refreshGoods");
           this.$emit("toggleCopy", this.category);
           this.$toast.success("Категория скопирована!");
         })
