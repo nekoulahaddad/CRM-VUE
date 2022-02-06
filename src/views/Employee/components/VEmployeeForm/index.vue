@@ -322,7 +322,7 @@
       {{ $t("childs") }}
     </div>
     <div class="group">
-      <div class="group__content">
+      <div class="group__content group__childs">
         <div
           class="children"
           v-for="(child, index) in children"
@@ -749,6 +749,15 @@ export default {
 
       & + * {
         margin-left: 10px;
+      }
+    }
+  }
+
+  .group__childs {
+    flex-direction: column;
+    .children {
+      & + * {
+        margin-top: 10px;
       }
     }
   }
