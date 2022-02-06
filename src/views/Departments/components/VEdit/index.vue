@@ -24,7 +24,6 @@
             :search="searchByExecutor"
             :get-result-value="getResultValue"
             placeholder="Введите исполнителя задачи..."
-            v-model="fio"
           >
             <template #result="{ result, props }">
               <li v-bind="props" @click="selectUser(result)">
@@ -70,17 +69,8 @@ export default {
     onChange(e) {
       this[e.target.name] = e.target.value;
     },
-    async getUsersByFIO() {
-      clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
-        axios(`/user/getsearch/${this.fio}`).then(async (res) => {
-          let result = await res;
-          this.users = result.data;
-        });
-      }, 300);
-    },
     searchByExecutor(input) {
-      if (input.length < 1) {
+      if (input.trim().length < 1) {
         return [];
       }
       return new Promise((resolve) => {
@@ -90,7 +80,7 @@ export default {
       });
     },
     getResultValue(result) {
-      return result.surname;
+      return this.transformFIO(result);
     },
     selectUser(user) {
       this.leader = user;

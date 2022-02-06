@@ -118,6 +118,7 @@
                         editedItem._id === item._id ||
                         copyItem._id === item._id ||
                         categoryImportItem._id === item._id ||
+                        managerItem._id === item._id ||
                         categoryExportItem._id === item._id,
                     }"
                     v-for="item in dataset.categories"
@@ -130,10 +131,12 @@
                       :current="current"
                       :editedItem="editedItem"
                       :dropDown="dropDown"
+                      :managerItem="managerItem"
                       :categoryExportItem="categoryExportItem"
                       :categoryImportItem="categoryImportItem"
                       @hideDetail="hideDetail"
                       @toggleCopy="toggleCopy"
+                      @toggleManager="toggleManager"
                       @toggleDeleteCategory="toggleDeleteCategory"
                       @toggleDropDown="toggleDropDown"
                       @toggleEdit="toggleEdit"
@@ -173,6 +176,13 @@
                       v-if="categoryImportItem._id === item._id"
                       :region="filtersOptions.region"
                       :category="category"
+                    />
+
+                    <!-- Менеджер -->
+                    <v-category-manager
+                      v-if="managerItem._id === item._id"
+                      :managerItem="managerItem"
+                      @toggleManager="toggleManager"
                     />
                   </Draggable>
                 </Container>
@@ -281,9 +291,10 @@ import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
+import VCategoryManager from "./components/VCategoryManager";
 import VSearch from "@/components/VSearch";
 import VDeleteCategory from "./components/VDeleteCategory";
-import VEditCategory from "./components/VEditCategory";
+import VEditCategory from "./components/VCategoryEdit";
 import VProductGroupEdit from "./components/VProductGroupEdit";
 import VDeleteProduct from "./components/VProductDelete";
 import VGroupDelete from "./components/VGroupDelete";
@@ -322,6 +333,7 @@ export default {
     VCategoryImport,
     VDeleteProduct,
     VProductMove,
+    VCategoryManager,
     VDeleteCategory,
     VAddProductToGroup,
   },
@@ -503,11 +515,29 @@ export default {
       this.deletedGroup = deletedGroup;
       this.$modal.show("deleteGroup");
     },
+    toggleManager(item) {
+      this.editedItem = {};
+      this.groupItems = {};
+      this.copyItem = {};
+      this.movedProduct = {};
+      this.categoryExportItem = {};
+      this.categoryImportItem = {};
+
+      if (this.managerItem._id === item._id) {
+        this.managerItem = {};
+      } else {
+        this.managerItem = item;
+      }
+
+      this.dropDown = {};
+    },
     toggleEditGroup(item) {
       this.editedItem = {};
       this.groupItems = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
+      this.managerItem = {};
+      this.copyItem = {};
 
       if (this.editedGroupItem._id === item._id) {
         this.editedGroupItem = {};
@@ -522,6 +552,8 @@ export default {
       this.categoryExportItem = {};
       this.categoryImportItem = {};
       this.editedGroupItem = {};
+      this.copyItem = {};
+      this.managerItem = {};
 
       if (this.groupItems._id === item._id) {
         this.groupItems = {};
@@ -536,6 +568,8 @@ export default {
       this.categoryExportItem = {};
       this.categoryImportItem = {};
       this.groupProductItem = {};
+      this.copyItem = {};
+      this.managerItem = {};
 
       if (this.movedProduct._id === item._id) {
         this.movedProduct = {};
@@ -608,6 +642,7 @@ export default {
       this.editedItem = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
+      this.managerItem = {};
     },
     editProduct(product, old) {
       let index = this.dataset.products.findIndex(
@@ -638,11 +673,11 @@ export default {
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },
-    toggleDropDown(dropDown) {
-      if (this.dropDown._id === dropDown._id) {
+    toggleDropDown(item) {
+      if (this.dropDown._id === item._id) {
         this.dropDown = {};
       } else {
-        this.dropDown = dropDown;
+        this.dropDown = item;
       }
     },
     toggleCopy(item) {
@@ -651,6 +686,7 @@ export default {
       this.categoryImportItem = {};
       this.categoryImportItem = {};
       this.groupProductItem = {};
+      this.managerItem = {};
 
       if (this.copyItem._id === item._id) {
         this.copyItem = {};
@@ -666,6 +702,7 @@ export default {
       this.categoryExportItem = {};
       this.categoryImportItem = {};
       this.groupProductItem = {};
+      this.managerItem = {};
 
       if (this.categoryImportItem._id === item._id) {
         this.categoryImportItem = {};
@@ -682,6 +719,7 @@ export default {
       this.categoryImportItem = {};
       this.categoryImportItem = {};
       this.groupProductItem = {};
+      this.managerItem = {};
 
       if (this.categoryExportItem._id === item._id) {
         this.categoryExportItem = {};
@@ -697,6 +735,7 @@ export default {
       this.categoryExportItem = {};
       this.categoryImportItem = {};
       this.movedProduct = {};
+      this.managerItem = {};
 
       if (this.groupProductItem._id === item._id) {
         this.groupProductItem = {};
@@ -712,6 +751,8 @@ export default {
       this.categoryImportItem = {};
       this.categoryImportItem = {};
       this.groupProductItem = {};
+      this.movedProduct = {};
+      this.managerItem = {};
 
       if (this.editedItem._id === item._id) {
         this.editedItem = {};

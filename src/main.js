@@ -21,6 +21,7 @@ import ToggleButton from "vue-js-toggle-button";
 import VueMoment from "vue-moment";
 import { Settings } from "luxon";
 import i18n from "./i18n";
+import VButton from "@/components/VButton";
 import dataMixins from "@/mixins/data";
 import dateMixins from "@/mixins/date";
 import dragMixins from "@/mixins/drag";
@@ -140,6 +141,8 @@ Vue.mixin(ratingMixins);
 Vue.mixin(roleMixins);
 Vue.mixin(statusMixins);
 Vue.mixin(transformRoleMixins);
+
+Vue.component("VButton", VButton);
 
 new Vue({
   i18n,

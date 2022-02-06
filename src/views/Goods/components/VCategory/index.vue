@@ -93,6 +93,26 @@
           alt=""
         />
       </div>
+
+      <!-- Менеджер -->
+      <div class="table__icon">
+        <VueCustomTooltip
+          v-if="managerItem._id !== item._id"
+          label="Имя менеджера"
+        >
+          <img
+            alt=""
+            @click="$emit('toggleManager', item)"
+            src="@/assets/icons/manager.svg"
+          />
+        </VueCustomTooltip>
+        <img
+          alt=""
+          v-else
+          @click="$emit('toggleManager', item)"
+          src="@/assets/icons/arrow_top_icon.svg"
+        />
+      </div>
       <div class="table__icon">
         <VueCustomTooltip label="Видимость категории">
           <img
@@ -147,6 +167,7 @@ export default {
     editedItem: Object,
     categoryExportItem: Object,
     categoryImportItem: Object,
+    managerItem: Object,
   },
   data() {
     return {
