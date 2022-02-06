@@ -16,14 +16,23 @@
           />
         </div>
       </div>
+
+      <div class="list-info__group group">
+        <div class="group__content">
+          <div class="group__item text--bold-700">Руководитель</div>
+          <div class="group__value">
+            {{ fio }}
+          </div>
+        </div>
+      </div>
+
       <div class="group">
-        <div class="group__title">Руководитель</div>
         <div class="group__content">
           <autocomplete
             required
             :search="searchByExecutor"
             :get-result-value="getResultValue"
-            placeholder="Введите исполнителя задачи..."
+            placeholder="Сменить руководителя..."
           >
             <template #result="{ result, props }">
               <li v-bind="props" @click="selectUser(result)">
