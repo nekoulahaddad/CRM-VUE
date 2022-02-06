@@ -1,7 +1,7 @@
 <template>
   <div class="page calendar-page">
-    <v-add-event-modal />
-    <v-edit-event-modal :editedItem="editedItem" />
+    <v-add-event-modal @updateEvents="updateEvents" />
+    <v-edit-event-modal @updateEvents="updateEvents" :editedItem="editedItem" />
     <v-page-header
       title="Календарь"
       icon="calendar_title"

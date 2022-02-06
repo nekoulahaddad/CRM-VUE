@@ -34,7 +34,7 @@
         <div class="group">
           <div class="group__title">Участники:</div>
           <div class="group__executors">
-            <select class="form-select">
+            <select class="form-select" required>
               <option
                 :value="participant._id"
                 v-for="(participant, index) in participants"
@@ -45,7 +45,6 @@
           </div>
           <div class="group__content">
             <autocomplete
-              required
               :search="searchByExecutor"
               :get-result-value="getResultValue"
               placeholder="Введите участника мероприятия..."
@@ -210,8 +209,10 @@ export default {
         data: event,
         method: "POST",
       })
-        .then(async (res) => {
+        .then(() => {
+          this.$emit("updateEvents");
           this.$toast.success("Мероприятие успешно добавлено!");
+          this.closeModal();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
