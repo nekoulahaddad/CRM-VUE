@@ -183,6 +183,7 @@
                       v-if="managerItem._id === item._id"
                       :managerItem="managerItem"
                       @toggleManager="toggleManager"
+                      @refreshGoods="refreshGoods"
                     />
                   </Draggable>
                 </Container>
