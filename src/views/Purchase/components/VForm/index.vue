@@ -312,6 +312,7 @@ export default {
   }
   .form-textarea {
     width: 976px;
+    height: 218px;
   }
   .form-select {
     max-width: 401px;
