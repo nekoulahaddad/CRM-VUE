@@ -14,6 +14,26 @@
         </a>
       </template>
 
+      <!-- Закупка -->
+      <template v-if="name === 'buying'">
+        <VueCustomTooltip label="Добавить закупку">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addPurchase',
+              })
+            "
+            :class="{
+              'page-actions__button--active': $store.state.actions.addPurchase,
+            }"
+          >
+            <simple-svg :src="require('@/assets/icons/add_purchase.svg')" />
+          </a>
+        </VueCustomTooltip>
+      </template>
+
       <!-- Товары -->
       <template v-if="name === 'goods'">
         <VueCustomTooltip label="Добавить категорию">

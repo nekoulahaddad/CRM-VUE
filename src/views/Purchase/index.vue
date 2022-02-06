@@ -113,6 +113,7 @@ export default {
     };
   },
   mounted() {
+    this.$store.commit("deactivateAction", "addPurchase");
     this.fetchData();
   },
   methods: {

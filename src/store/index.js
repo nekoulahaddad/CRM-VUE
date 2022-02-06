@@ -37,6 +37,7 @@ export default new Vuex.Store({
       addDelivery: false,
       addDepartment: false,
       addOrder: false,
+      addPurchase: false,
       addTask: false,
       addVacancy: false,
       addEmployee: false,
