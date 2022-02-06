@@ -322,6 +322,33 @@
       {{ $t("childs") }}
     </div>
     <div class="group">
+      <div class="group__content">
+        <div
+          class="children"
+          v-for="(child, index) in children"
+          :key="child._id"
+        >
+          <span>{{ transformChildInfo(child) }}</span>
+
+          <div>
+            <VueCustomTooltip label="Изменить">
+              <img
+                class="children__write-icon"
+                src="@/assets/icons/write_icon.svg"
+                alt=""
+              />
+            </VueCustomTooltip>
+
+            <VueCustomTooltip label="Удалить">
+              <img
+                src="@/assets/icons/trash_icon.svg"
+                alt=""
+                @click="removeChild(index)"
+              />
+            </VueCustomTooltip>
+          </div>
+        </div>
+      </div>
       <div class="group__footer">
         <v-add-child
           :newChild="newChild"
@@ -700,6 +727,30 @@ export default {
     width: 123px;
     height: 123px;
     object-fit: contain;
+  }
+  .children {
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    height: 33px;
+    width: 976px;
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+    justify-content: space-between;
+
+    span[role="tooltip"] {
+      &:after {
+        background-color: $color-black;
+        color: $color-white;
+        border-radius: $border-radius;
+      }
+
+      & + * {
+        margin-left: 10px;
+      }
+    }
   }
 }
 </style>
