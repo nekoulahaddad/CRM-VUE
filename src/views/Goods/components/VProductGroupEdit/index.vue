@@ -1,9 +1,7 @@
 <template>
   <div class="list__info list-info group-edit-form">
     <form>
-      <div class="category-edit-form__title text--blue">
-        Редактировать группу:
-      </div>
+      <div class="group-edit-form__title text--blue">Редактировать группу:</div>
 
       <div class="group">
         <div class="group__title">Заголовок группы:</div>
@@ -20,12 +18,17 @@
           </select>
         </div>
       </div>
+      <v-button red>Сохранить</v-button>
     </form>
   </div>
 </template>
 
 <script>
-export default {};
+import VButton from "@/components/VButton";
+
+export default {
+  components: { VButton },
+};
 </script>
 
 <style lang="scss">
@@ -35,6 +38,11 @@ export default {};
   }
   .form-select {
     width: 401px;
+  }
+  &__title {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
   }
 }
 </style>
