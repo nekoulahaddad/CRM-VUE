@@ -98,6 +98,16 @@ export default {
         return role._id;
       },
     },
+    addEvent() {
+      return this.$store.state.actions.addEvent;
+    },
+  },
+  watch: {
+    addEvent(value) {
+      if (value) {
+        this.$modal.show("addEvent");
+      }
+    },
   },
   methods: {
     setShowDate(d) {
@@ -163,6 +173,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.commit("deactivateAction", "addEvent");
     this.updateEvents();
   },
 };

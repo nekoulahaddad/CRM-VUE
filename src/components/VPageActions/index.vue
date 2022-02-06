@@ -14,6 +14,26 @@
         </a>
       </template>
 
+      <!-- Календарь -->
+      <template v-if="name === 'calendar'">
+        <VueCustomTooltip label="Создать мероприятие">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addEvent',
+              })
+            "
+            :class="{
+              'page-actions__button--active': $store.state.actions.addEvent,
+            }"
+          >
+            <simple-svg :src="require('@/assets/icons/add_event.svg')" />
+          </a>
+        </VueCustomTooltip>
+      </template>
+
       <!-- Обращения -->
       <template v-if="name === 'callbacks'">
         <VueCustomTooltip label="Создать обращение">

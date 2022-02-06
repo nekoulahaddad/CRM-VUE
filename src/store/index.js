@@ -37,6 +37,7 @@ export default new Vuex.Store({
       addGoodsCategory: false,
       addDelivery: false,
       addDepartment: false,
+      addEvent: false,
       addOrder: false,
       addPurchase: false,
       addTask: false,

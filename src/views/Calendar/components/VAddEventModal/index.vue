@@ -1,9 +1,15 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="691" :minWidth="1273" name="addEvent">
+  <v-modal
+    :adaptive="true"
+    :minHeight="691"
+    :minWidth="1273"
+    name="addEvent"
+    @before-close="closeModal"
+  >
     <div class="vm--modal__title">
       Создать мероприятие
       <img
-        @click="$modal.hide('addEvent')"
+        @click="closeModal"
         class="vm--modal__close"
         src="/icons/close_icon.svg"
         alt=""
@@ -157,6 +163,10 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    closeModal() {
+      this.$store.commit("deactivateAction", "addEvent");
+      this.$modal.hide("addEvent");
+    },
     onChange(e) {
       this[e.target.name] = e.target.value;
     },
