@@ -104,6 +104,7 @@
             alt=""
             @click="$emit('toggleManager', item)"
             src="@/assets/icons/manager.svg"
+            :class="{ none: !item.manager[0] }"
           />
         </VueCustomTooltip>
         <img
@@ -191,6 +192,9 @@ export default {
 
   .table__icon--opacity {
     filter: grayscale(100%);
+    opacity: 0.3;
+  }
+  img.none {
     opacity: 0.3;
   }
 }
