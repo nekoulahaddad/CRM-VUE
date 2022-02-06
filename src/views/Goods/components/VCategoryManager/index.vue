@@ -1,6 +1,6 @@
 <template>
-  <div class="list__info list-info category-edit-form">
-    <form @submit.prevent="onCategoryCopy">
+  <div class="list__info list-info manager-edit-form">
+    <form @submit.prevent>
       <div class="category-edit-form__title text--blue">
         Ответственный менеджер:
       </div>
@@ -13,12 +13,18 @@
       <div class="group">
         <div class="group__title">Изменить ответственного:</div>
         <div class="group__content">
-          <input
-            required
-            class="form-control"
-            type="text"
+          <autocomplete
+            ref="executors"
+            :search="searchByExecutor"
+            :get-result-value="getResultValue"
             placeholder="Введите ФИО ответственного..."
-          />
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectUser(result)">
+                {{ transformFIO(result) }}
+              </li>
+            </template>
+          </autocomplete>
         </div>
       </div>
 
@@ -27,7 +33,17 @@
         <div class="group__value">{{ phone || "" }}</div>
       </div>
 
-      <v-button red>Сохранить</v-button>
+      <div class="manager-edit-form__buttons">
+        <v-button
+          red
+          @click="setManager(false)"
+          :disabled="!manager || notChanged"
+          >Сохранить</v-button
+        >
+        <v-button @click="setManager(true)" :disabled="!manager" white>
+          Удалить
+        </v-button>
+      </div>
     </form>
   </div>
 </template>
@@ -77,6 +93,26 @@ export default {
     onChange(e) {
       this[e.target.name] = e.target.value;
     },
+    searchByExecutor(input) {
+      if (input.length < 1) {
+        return [];
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    getResultValue() {
+      return "";
+    },
+    selectUser(user) {
+      this.manager = user._id;
+      this.fio = this.transformFullFIO(user);
+      this.manager = user;
+      this.phone = user.phone;
+      this.users = [];
+    },
     setManager(clear) {
       this.manager._id = clear ? null : this.manager._id;
       axios({
@@ -90,6 +126,8 @@ export default {
       })
         .then(() => {
           this.$emit("refreshGoods");
+          this.$emit("toggleManager", this.managerItem);
+          this.$toast.success("Менежжер успешно удален!");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
@@ -107,7 +145,15 @@ export default {
 </script>
 
 <style lang="scss">
-.group__value {
-  font-weight: 500;
+.manager-edit-form {
+  .group__value {
+    font-weight: 500;
+  }
+  .autocomplete-input {
+    width: 976px;
+  }
+  &__buttons {
+    display: flex;
+  }
 }
 </style>

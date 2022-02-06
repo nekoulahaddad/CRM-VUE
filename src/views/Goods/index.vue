@@ -181,6 +181,7 @@
                     <!-- Менеджер -->
                     <v-category-manager
                       v-if="managerItem._id === item._id"
+                      :region="filtersOptions.region"
                       :managerItem="managerItem"
                       @toggleManager="toggleManager"
                       @refreshGoods="refreshGoods"
