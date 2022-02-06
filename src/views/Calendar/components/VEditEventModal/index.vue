@@ -1,6 +1,5 @@
 <template>
   <v-modal :adaptive="true" :minHeight="691" :minWidth="996" name="editEvent">
-    {{ editedItem.originalItem }}
     <div class="vm--modal__title">
       Редактировать мероприятие
       <img
@@ -40,13 +39,12 @@
           </div>
           <div class="group__content">
             <autocomplete
-              required
               :search="searchByExecutor"
               :get-result-value="getResultValue"
               placeholder="Введите исполнителя задачи..."
             >
               <template #result="{ result, props }">
-                <li v-bind="props">
+                <li v-bind="props" @click="selectUser(result)">
                   {{ transformFIO(result) }}
                 </li>
               </template>
@@ -59,6 +57,7 @@
             <datetime
               v-model="start"
               type="datetime"
+              @input="start = $event.target.value"
               input-class="forms__container--input"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
             />
@@ -70,6 +69,7 @@
             <datetime
               v-model="end"
               type="datetime"
+              @input="end = $event.target.value"
               input-class="forms__container--input"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
             />
@@ -105,24 +105,24 @@ export default {
     return {
       fio: "",
       users: [],
-      title: "",
-      description: "",
       participants: [],
-      selectionStart: new Date(),
-      selectionEnd: new Date(),
     };
   },
   props: {
     editedItem: {
       type: Object,
-      default: null,
+    },
+    selectionStart: {
+      type: Date,
+    },
+    selectionEnd: {
+      type: Date,
     },
     type: {
       type: String,
     },
     userId: {
       type: String,
-      default: () => "",
     },
   },
   watch: {
@@ -135,9 +135,11 @@ export default {
   computed: {
     start: {
       get: function () {
-        return this.selectionStart
-          ? new Date(this.$moment(this.selectionStart).format()).toISOString()
-          : new Date(this.$moment()).toISOString();
+        // let tz = this.$moment.tz.guess()
+        // console.log(tz)
+        return new Date(
+          this.$moment(this.editedItem.startDate).format()
+        ).toISOString();
       },
       set: function (date) {
         let newDate = new Date(this.$moment(date));
@@ -147,9 +149,9 @@ export default {
     },
     end: {
       get: function () {
-        return this.selectionEnd
-          ? new Date(this.$moment(this.selectionEnd).format()).toISOString()
-          : new Date(this.$moment()).toISOString();
+        return new Date(
+          this.$moment(this.editedItem.endDate).format()
+        ).toISOString();
       },
       set: function (date) {
         let newDate = new Date(this.$moment(date));
@@ -162,6 +164,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    selectUser(participant) {
+      this.participants.push(participant);
+    },
     onChange(e) {
       this[e.target.name] = e.target.value;
     },
@@ -185,35 +190,32 @@ export default {
       });
     },
     getResultValue(result) {
-      return result.surname;
+      return "";
     },
     onEventAdd() {
-      this.changeStatus(false);
-
       let event = {
+        _id: this.editedItem._id,
         title: this.title,
         description: this.description,
-        startDate: this.start,
-        endDate: this.end,
+        startDate: this.selectionStart,
+        endDate: this.selectionEnd,
         participants: this.participants,
       };
+      console.log(this.participants);
       axios({
-        url: `/events/post/`,
+        url: `/events/update/`,
         data: event,
         method: "POST",
       })
-        .then(async (res) => {
-          this.$toast.success("Мероприятие успешно добавлено!");
+        .then(() => {
+          this.$toast.success("Мероприятие успешно изменено!");
+          this.$modal.hide("editEvent");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
   },
-  mounted() {},
 };
 </script>
 
