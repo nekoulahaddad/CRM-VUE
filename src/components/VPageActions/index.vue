@@ -17,8 +17,19 @@
       <!-- Обращения -->
       <template v-if="name === 'callbacks'">
         <VueCustomTooltip label="Создать обращение">
-          <a href="" class="page-actions__button">
-            <img src="@/assets/icons/add_callback.svg" alt="" />
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addCallback',
+              })
+            "
+            :class="{
+              'page-actions__button--active': $store.state.actions.addCallback,
+            }"
+          >
+            <simple-svg :src="require('@/assets/icons/add_callback.svg')" />
           </a>
         </VueCustomTooltip>
       </template>
