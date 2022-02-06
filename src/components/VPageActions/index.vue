@@ -21,12 +21,13 @@
             href=""
             class="page-actions__button"
             @click.prevent="
-              active === 'add_category'
-                ? (active = null)
-                : (active = 'add_category')
+              $store.commit('toggleAction', {
+                key: 'addGoodsCategory',
+              })
             "
             :class="{
-              'page-actions__button--active': active === 'add_category',
+              'page-actions__button--active':
+                $store.state.actions.addGoodsCategory,
             }"
           >
             <simple-svg :src="require('@/assets/icons/add_category.svg')" />

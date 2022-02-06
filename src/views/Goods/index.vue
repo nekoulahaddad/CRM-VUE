@@ -100,6 +100,8 @@
                   </div>
                 </div>
 
+                <v-category-add v-if="addGoodsCategory" />
+
                 <!-- Блок импорта -->
                 <v-category-import
                   v-if="importGoods"
@@ -293,6 +295,7 @@ import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
+import VCategoryAdd from "./components/VCategoryAdd";
 import VCategoryManager from "./components/VCategoryManager";
 import VSearch from "@/components/VSearch";
 import VDeleteCategory from "./components/VDeleteCategory";
@@ -329,6 +332,7 @@ export default {
     VNotFoundQuery,
     Draggable,
     VGroupDelete,
+    VCategoryAdd,
     VPageHeader,
     VEditCategory,
     Container,
@@ -413,6 +417,9 @@ export default {
     }),
     importGoods() {
       return this.$store.state.actions.importGoods;
+    },
+    addGoodsCategory() {
+      return this.$store.state.actions.addGoodsCategory;
     },
   },
   watch: {
