@@ -11,7 +11,7 @@
             <input
               class="form-control"
               type="text"
-              v-model="task.title"
+              v-model="title"
               placeholder="Введите название задачи..."
             />
           </div>
@@ -22,7 +22,7 @@
             <textarea
               type="text"
               class="form-textarea"
-              v-model="task.description"
+              v-model="description"
               placeholder="Введите описание задачи..."
             />
           </div>
@@ -33,7 +33,7 @@
             <textarea
               type="text"
               class="form-textarea"
-              v-model="task.initiator_comment"
+              v-model="initiator_comment"
               placeholder="Введите комментарий к задаче..."
             />
           </div>
@@ -57,17 +57,20 @@
                     : `Документ ${index + 1}`
                 }}
               </div>
-              <div>
-                <input
-                  hidden
-                  multiple
-                  @change="fileUpload($event)"
-                  name="documents"
-                  type="file"
-                  id="document-file"
-                />
-                <label for="document-file">Выбрать файл</label>
-              </div>
+            </div>
+            <div v-else>Документов нет</div>
+          </div>
+          <div class="group__footer">
+            <div>
+              <input
+                hidden
+                multiple
+                @change="fileUpload($event)"
+                name="documents"
+                type="file"
+                id="document-file"
+              />
+              <label for="document-file">Выбрать файл</label>
             </div>
           </div>
         </div>
