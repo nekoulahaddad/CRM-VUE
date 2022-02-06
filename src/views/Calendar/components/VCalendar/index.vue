@@ -102,7 +102,7 @@ export default {
 
   .vc-day {
     padding: 10px;
-    border: 1px solid $color-gray-secondary;
+    border-right: 1px solid $color-gray-secondary;
     border-bottom: 0;
     overflow: hidden;
   }
@@ -150,8 +150,8 @@ export default {
     color: $color-black;
     font-size: 14px;
     font-weight: 600;
-    border: 1px solid $color-gray-secondary;
-    border-bottom: 0;
+    border-right: 1px solid $color-gray-secondary;
+    border-bottom: 1px solid $color-gray-secondary;
     padding: 10px 0;
 
     &:first-child {
@@ -161,9 +161,20 @@ export default {
       border-top-right-radius: $border-radius;
     }
 
+    &:nth-child(7) {
+      border-right: 0;
+    }
+
     &:first-letter {
       text-transform: uppercase;
     }
+  }
+
+  .vc-weeks {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: $border-radius;
+    margin: 10px;
+    padding: 0;
   }
 }
 </style>
