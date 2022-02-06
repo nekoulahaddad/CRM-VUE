@@ -1,7 +1,11 @@
 <template>
   <div class="page calendar-page">
     <v-add-event-modal @updateEvents="updateEvents" />
-    <v-edit-event-modal @updateEvents="updateEvents" :editedItem="editedItem" />
+    <v-edit-event-modal
+      :userId="userId"
+      :editedItem="editedItem"
+      @updateEvents="updateEvents"
+    />
     <v-page-header
       title="Календарь"
       icon="calendar_title"
@@ -19,8 +23,8 @@
               <img src="@/assets/icons/plus.svg" alt="" />
             </a>
           </div>
-          <vc-calendar :attributes="attrs" />
-          <v-calendar-events :events="events" />
+          <vc-calendar @dayclick="onDayClick" :attributes="attributes" />
+          <v-calendar-events :events="events" :clickedDay="clickedDay" />
         </div>
       </div>
 
@@ -46,19 +50,11 @@ export default {
     return {
       isLoading: false,
       showDate: new Date(),
-      dates: false,
       day: false,
-      days: [],
-      selectionStart: null,
-      selectionEnd: null,
-      events: [],
-      edit: false,
-      editedItem: {},
-      event: null,
-
-      attrs: [
+      days: [
         {
           key: "today",
+          id: 6,
           highlight: {
             style: {
               backgroundColor: "#db1f35",
@@ -66,12 +62,24 @@ export default {
           },
           dates: new Date(),
         },
+      ],
+      selectionStart: null,
+      selectionEnd: null,
+      events: [],
+      clickedDay: null,
+      edit: false,
+      editedItem: {},
+      event: null,
+
+      attrs: [
         {
-          dot: {
+          id: "today",
+          highlight: {
             style: {
-              backgroundColor: "red",
+              backgroundColor: "#db1f35",
             },
           },
+          dates: new Date(),
         },
       ],
     };
@@ -98,6 +106,19 @@ export default {
         return role._id;
       },
     },
+    dates() {
+      return this.days.map((day) => day.date);
+    },
+    attributes() {
+      return this.dates.map((date) => ({
+        highlight: {
+          style: {
+            backgroundColor: "#db1f35",
+          },
+        },
+        dates: date,
+      }));
+    },
     addEvent() {
       return this.$store.state.actions.addEvent;
     },
@@ -112,6 +133,15 @@ export default {
   methods: {
     setShowDate(d) {
       this.showDate = d;
+    },
+    onDayClick(day) {
+      console.log(day);
+      this.clickedDay = day;
+      this.days = [];
+      this.days.push({
+        id: day.id,
+        date: day.date,
+      });
     },
     showEvent(event) {
       this.editedItem = event;
@@ -159,8 +189,8 @@ export default {
       return result;
     },
     async updateEvents() {
-      let result = await this.getData("/events/get");
       this.isLoading = false;
+      let result = await this.getData("/events/get");
       let res = await result;
       for (let i = 0; i < res.data.length; i++) {
         let event = res.data[i];
@@ -299,6 +329,11 @@ export default {
       justify-content: center;
       background-color: $color-red;
     }
+  }
+  .vc-highlight {
+    background-color: $color-red !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
   }
   .vc-highlights + .vc-focusable {
     color: $color-white;

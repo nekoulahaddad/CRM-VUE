@@ -134,11 +134,7 @@
       <!-- Заказы -->
       <template v-if="name === 'orders'">
         <VueCustomTooltip label="Выгрузить заказы">
-          <a
-            class="page-actions__button"
-            href=""
-            @click.prevent="downloadExcel"
-          >
+          <a class="page-actions__button" href="" @click.prevent="downloadItem">
             <img src="@/assets/icons/download.svg" alt="" />
           </a>
         </VueCustomTooltip>
@@ -182,7 +178,9 @@
         <VueCustomTooltip label="Excel уволенных сотрудников">
           <a
             href=""
-            @click.prevent="downloadUsers"
+            @click.prevent="
+              downloadItem('users', 'xlsx', 'Уволенные_сотрудников')
+            "
             class="page-actions__button"
           >
             <img src="@/assets/icons/fired.svg" alt="" />
@@ -425,7 +423,7 @@ export default {
       axios({
         url: `/excel/users`,
         data: {
-          region: this.filtersOptions.region,
+          region: this.$store.getters.getFilterOptions,
         },
         method: "POST",
       })
@@ -438,6 +436,29 @@ export default {
         .finally(() => {
           this.changeStatus(true);
         });
+    },
+    async downloadItem(route, type, prefix) {
+      try {
+        await axios({
+          url: `/excel/${route}`,
+          data: {
+            age: 18,
+            region: this.$store.getters.getFilterOptions.region,
+          },
+          method: "POST",
+          responseType: "blob",
+        }).then((response) => {
+          const link = document.createElement("a");
+          const blob = new Blob([response.data]);
+          let urll = window.URL.createObjectURL(blob);
+          link.href = urll;
+          link.download = `${prefix}.${type}`;
+          link.click();
+          window.URL.revokeObjectURL(urll);
+          URL.revokeObjectURL(link.href);
+          this.$emit("toggleOpen");
+        });
+      } catch (error) {}
     },
     async downloadExcel() {
       this.changeStatus(false);

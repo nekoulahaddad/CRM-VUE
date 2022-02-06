@@ -1,5 +1,6 @@
 <template>
   <v-modal :adaptive="true" :minHeight="691" :minWidth="996" name="editEvent">
+    {{ editedItem.originalItem }}
     <div class="vm--modal__title">
       Редактировать мероприятие
       <img
@@ -118,6 +119,10 @@ export default {
     },
     type: {
       type: String,
+    },
+    userId: {
+      type: String,
+      default: () => "",
     },
   },
   watch: {

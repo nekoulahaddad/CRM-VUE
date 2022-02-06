@@ -195,6 +195,8 @@ export default {
     },
   },
   mounted() {
+    this.$store.commit("setFilterOptions", this.filtersOptions);
+    console.log(this.$store.state.filterOptions);
     this.$store.commit("deactivateAction", "addEmployee");
     this.getData();
   },
