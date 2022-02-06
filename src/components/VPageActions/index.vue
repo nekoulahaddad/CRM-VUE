@@ -85,13 +85,16 @@
           <a
             href=""
             class="page-actions__button"
+            :class="{
+              'page-actions__button--active': $store.state.actions.addOrder,
+            }"
             @click.prevent="
               $store.commit('toggleAction', {
                 key: 'addOrder',
               })
             "
           >
-            <img src="@/assets/icons/create_order.svg" alt="" />
+            <simple-svg :src="require('@/assets/icons/create_order.svg')" />
           </a>
         </VueCustomTooltip>
       </template>
