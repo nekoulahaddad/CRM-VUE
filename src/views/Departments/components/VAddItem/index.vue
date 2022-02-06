@@ -98,7 +98,6 @@ export default {
       }
       return new Promise((resolve) => {
         axios(`/user/getsearch/${input}`).then(async (res) => {
-          console.log(res.data);
           resolve(res.data);
         });
       });

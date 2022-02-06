@@ -100,7 +100,10 @@
                   </div>
                 </div>
 
-                <v-category-add v-if="addGoodsCategory" />
+                <v-category-add
+                  v-if="addGoodsCategory"
+                  :region="filtersOptions.region"
+                />
 
                 <!-- Блок импорта -->
                 <v-category-import

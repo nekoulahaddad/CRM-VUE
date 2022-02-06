@@ -1,6 +1,6 @@
 <template>
   <div class="list__info list-info category-edit-form">
-    <form>
+    <form @submit.prevent="onCategoryAdd">
       <div class="category-edit-form__title text--blue">
         Редактировать категорию:
       </div>
@@ -8,7 +8,14 @@
       <div class="group">
         <div class="group__title">Название категории:</div>
         <div class="group__content">
-          <input required class="form-control" type="text" />
+          <input
+            required
+            class="form-control"
+            type="text"
+            name="categoryName"
+            :value="categoryName ? categoryName : editedItem.categoryName"
+            @input="onChange($event)"
+          />
         </div>
       </div>
 
@@ -236,6 +243,57 @@ export default {
   },
   components: { VButton },
   methods: {
+    onCategoryAdd() {
+      let categoryData = new FormData();
+
+      if (this.editedItem) {
+        categoryData.append("categoryId", this.editedItem._id);
+      }
+
+      categoryData.append(
+        "categoryName",
+        this.categoryName || this.editedItem.categoryName
+      );
+      categoryData.append(
+        "nesting",
+        this.type !== "search"
+          ? +this.$route.params.nesting - 1
+          : this.editedItem.nesting
+      );
+      categoryData.append("region", this.region);
+      categoryData.append("remove", this.remove);
+      if (this.$route.params.parent_value)
+        categoryData.append("parent_value", this.$route.params.parent_value);
+      categoryData.append("categoryImage", this.categoryImage);
+      categoryData.append("categoryIcon", this.categoryIcon);
+
+      categoryData.append("categoryFilters", JSON.stringify(this.itemFilters));
+      categoryData.append("categorySlide", this.categorySlide);
+      categoryData.append("categoryBanner", this.categoryBanner);
+      categoryData.append("categoryBannerMob", this.categoryBannerMob);
+      if (this.views) {
+        categoryData.append("views", JSON.stringify(this.views));
+      }
+
+      if (this.editedItem) {
+        axios({
+          url: `/categories/update/`,
+          data: categoryData,
+          method: "POST",
+        })
+          .then(async () => {
+            this.$emit("refreshGoods");
+            this.$toast.success("Категория успешно обновлена!");
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
+      }
+    },
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+      this.tempViews = [];
+    },
     deleteChip(index) {
       this.views.splice(index, 1);
     },

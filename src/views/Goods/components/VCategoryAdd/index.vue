@@ -1,6 +1,7 @@
 <template>
   <div class="list__info list-info category-add-form">
-    <form>
+    {{ categoryName }}
+    <form @submit.prevent="onCategoryAdd">
       <div class="category-add-form__title text--blue">Создать категорию:</div>
 
       <div class="group">
@@ -19,15 +20,35 @@
 
       <div class="group">
         <div class="group__title">Часто ищут:</div>
+        <div
+          class="group__find"
+          v-if="views && views.length"
+          v-for="(chip, index) in views"
+          :key="chip.categoryName"
+        >
+          {{ chip.categoryName }}
+
+          <VueCustomTooltip label="Удалить">
+            <img
+              @click="deleteChip(index)"
+              src="@/assets/icons/trash_icon.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
+        </div>
         <div class="group__content">
-          <input
-            required
-            class="form-control"
-            type="text"
-            name="categoryName"
+          <autocomplete
+            ref="executors"
+            :search="searchByExecutor"
+            :get-result-value="getResultValue"
             placeholder="Введите название категории..."
-            @input="onChange($event)"
-          />
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectCategory(result)">
+                {{ result.categoryName }}
+              </li>
+            </template>
+          </autocomplete>
         </div>
       </div>
 
@@ -37,8 +58,38 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
+
 export default {
+  props: {
+    region: String,
+  },
+  data() {
+    return {
+      categoryName: "",
+      categoryImage: "Выбрать файл",
+      categoryImageUrl: require("@/assets/icons/goods_default.svg"),
+      categoryIcon: "Выбрать файл",
+      categoryIconUrl: require("@/assets/icons/goods_default.svg"),
+      categorySlide: "Выбрать файл",
+      categorySlideUrl: require("@/assets/icons/goods_default.svg"),
+      categoryBanner: "Выбрать файл",
+      categoryBannerUrl: require("@/assets/icons/goods_default.svg"),
+      categoryBannerMob: "Выбрать файл",
+      categoryBannerMobUrl: require("@/assets/icons/goods_default.svg"),
+      views: [],
+      filters: [],
+      itemFilters: [],
+      currentInput: "",
+      tempViews: [],
+      serverAddr: process.env.VUE_APP_DEVELOP_URL,
+      remove: [],
+    };
+  },
   methods: {
+    deleteChip(index) {
+      this.views.splice(index, 1);
+    },
     onChange(e) {
       this[e.target.name] = e.target.value;
       this.tempViews = [];
@@ -47,6 +98,123 @@ export default {
       const files = e.target.files;
       this[e.target.name] = files[0];
       this[e.target.name + "Url"] = URL.createObjectURL(files[0]);
+    },
+    getResultValue() {
+      return "";
+    },
+    selectCategory(category) {
+      let exist = false;
+      for (let i = 0; i < this.views.length; i++) {
+        if (this.views[i].categoryName === category.categoryName) {
+          exist = true;
+        }
+      }
+      if (exist) {
+        this.$toast.error("Категория уже в списке", "Ошибка");
+        this.tempViews = [];
+      } else {
+        this.$toast.success("Категория успешно добавлена!");
+        this.views.push(category);
+        this.tempViews = [];
+        this.currentInput = "";
+      }
+    },
+    saveChip() {
+      axios({
+        url: `/categories/getcategoriesbysearch/`,
+        data: {
+          title: this.currentInput,
+          region: this.region,
+        },
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        if (!result.data.views.length) {
+          this.$toast.error("Категория не найдена", "Ошибка");
+          return;
+        }
+        if (result.data.views.length === 1) {
+          this.$toast.success("Категория успешно добавлена!");
+          this.views.push(result.data.views[0]);
+          this.tempViews = [];
+          this.currentInput = "";
+          return;
+        }
+        this.tempViews = result.data.views;
+      });
+    },
+    onCategoryAdd() {
+      let categoryData = new FormData();
+
+      categoryData.append("categoryName", this.categoryName);
+      categoryData.append("nesting", this.$route.params.nesting - 1);
+      categoryData.append("region", this.region);
+
+      if (this.$route.params.parent_value) {
+        categoryData.append("parent_value", this.$route.params.parent_value);
+      }
+
+      categoryData.append("categoryImage", this.categoryImage);
+      categoryData.append("categoryIcon", this.categoryIcon);
+
+      categoryData.append("categoryFilters", JSON.stringify(this.itemFilters));
+      categoryData.append("categorySlide", this.categorySlide);
+      categoryData.append("categoryBanner", this.categoryBanner);
+      categoryData.append("categoryBannerMob", this.categoryBannerMob);
+
+      if (this.views) {
+        categoryData.append("views", JSON.stringify(this.views));
+      }
+
+      axios({
+        url: `/categories/post/`,
+        data: categoryData,
+        method: "POST",
+      })
+        .then((res) => {
+          if (res.data.exist) {
+            this.$toast.success("Категория уже существует!");
+          } else {
+            this.$emit("refreshGoods");
+            this.$toast.success("Категория успешно добавлена!");
+          }
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        });
+    },
+    searchByExecutor(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+      this.currentInput = input;
+      return new Promise((resolve) => {
+        axios({
+          url: `/categories/getcategoriesandbrandsbysearch/`,
+          data: {
+            title: this.currentInput,
+            region: this.region,
+          },
+          method: "POST",
+        }).then(async (res) => {
+          let result = await res;
+          if (!result.data.views.length) {
+            return;
+          }
+          if (result.data.views.length === 1) {
+            if (result.data.views[0].name) {
+              this.$toast.success("Бренд успешно выбран!");
+            } else {
+              this.$toast.success("Категория успешно выбрана!");
+            }
+            this.category = result.data.views[0];
+            this.currentInput = "";
+            return;
+          }
+          resolve(result.data.views);
+          this.tempCategories = result.data.views;
+        });
+      });
     },
   },
 };
@@ -143,6 +311,9 @@ export default {
     & + * {
       margin-top: 10px;
     }
+  }
+  .autocomplete-input {
+    width: 976px;
   }
 }
 </style>
