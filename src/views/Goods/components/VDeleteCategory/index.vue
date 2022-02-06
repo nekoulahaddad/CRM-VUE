@@ -27,15 +27,10 @@ export default {
   },
   components: { VButton },
   methods: {
-    ...mapMutations({
-      changeStatus: "change_load_status",
-    }),
     cancel() {
       this.$modal.hide("deleteGoodsCategory");
     },
     confirm() {
-      this.changeStatus(false);
-
       axios({
         url: `/categories/delete`,
         data: {
@@ -44,16 +39,14 @@ export default {
         },
         method: "POST",
       })
-        .then(async (res) => {
-          let result = await res;
-          this.$emit("deleteCategory", result.data.category);
+        .then((res) => {
+          this.$emit("deleteCategory", res.data.category);
           this.$toast.success("Категория успешно удалена!");
           this.$emit("toggleOpen");
-          this.changeStatus(true);
+          this.cancel();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
         });
     },
   },
