@@ -221,6 +221,7 @@
                   <v-product
                     :item="item"
                     :editedGroupItem="editedGroupItem"
+                    :groupProductItem="groupProductItem"
                     @editProduct="editProduct"
                     @toggleDeleteProduct="toggleDeleteProduct"
                     @toggleProductToGroup="toggleProductToGroup"

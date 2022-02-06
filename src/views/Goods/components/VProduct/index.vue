@@ -25,13 +25,24 @@
             />
           </VueCustomTooltip>
           <!-- Добавить товар в группу -->
-          <VueCustomTooltip v-else label="Добавить товар в группу">
+          <template v-else>
+            <VueCustomTooltip
+              v-if="groupProductItem._id !== item._id"
+              label="Добавить товар в группу"
+            >
+              <img
+                @click="$emit('toggleProductToGroup', item)"
+                src="@/assets/icons/add_to_group.svg"
+                alt=""
+              />
+            </VueCustomTooltip>
             <img
-              @click="$emit('toggleProductToGroup', item)"
-              src="@/assets/icons/add_to_group.svg"
               alt=""
+              v-else
+              @click="$emit('toggleProductToGroup', item)"
+              src="@/assets/icons/arrow_top_icon.svg"
             />
-          </VueCustomTooltip>
+          </template>
         </div>
 
         <!-- Перемещение товара -->
@@ -137,6 +148,7 @@ export default {
       required: true,
     },
     editedGroupItem: Object,
+    groupProductItem: Object,
   },
   methods: {
     ...mapMutations({
