@@ -186,6 +186,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.commit("deactivateAction", "addDepartment");
     this.refresh();
   },
   methods: {

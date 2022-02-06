@@ -219,16 +219,19 @@
 
       <!-- Департаменты -->
       <template v-if="name === 'departments'">
-        <a href="" class="page-actions__button">
-          <img
-            src="@/assets/icons/add_department.svg"
-            alt=""
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addDepartment',
-              })
-            "
-          />
+        <a
+          href=""
+          class="page-actions__button"
+          :class="{
+            'page-actions__button--active': $store.state.actions.addDepartment,
+          }"
+          @click.prevent="
+            $store.commit('toggleAction', {
+              key: 'addDepartment',
+            })
+          "
+        >
+          <simple-svg :src="require('@/assets/icons/add_department.svg')" />
         </a>
       </template>
 
