@@ -178,5 +178,28 @@ export default {
     margin: 10px;
     padding: 0;
   }
+
+  .vc-arrows-container {
+    justify-content: center;
+  }
+  .vc-arrow {
+    position: relative !important;
+    border-radius: $border-radius;
+    background: rgba(0, 0, 0, 0.3);
+    top: 2px;
+    width: 30px;
+    height: 30px;
+
+    svg path {
+      fill: $color-white;
+    }
+
+    &.is-left {
+      right: 95px !important;
+    }
+    &.is-right {
+      left: 95px !important;
+    }
+  }
 }
 </style>
