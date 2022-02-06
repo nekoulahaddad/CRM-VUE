@@ -107,6 +107,7 @@ export default {
     border-right: 2px solid $color-gray-secondary;
     border-bottom: 2px solid $color-gray-secondary;
     overflow: hidden;
+    cursor: pointer;
 
     &:nth-last-child(-n + 7) {
       border-bottom: 0 !important;

@@ -1,7 +1,7 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="691" :minWidth="1273" name="editEvent">
+  <v-modal :adaptive="true" :minHeight="691" :minWidth="996" name="editEvent">
     <div class="vm--modal__title">
-      Создать мероприятие
+      Редактировать мероприятие
       <img
         @click="$modal.hide('editEvent')"
         class="vm--modal__close"
@@ -215,7 +215,7 @@ export default {
 <style lang="scss">
 .vm--modal {
   .autocomplete-input {
-    width: 330px;
+    width: 401px;
   }
   &__inner {
     padding: 10px;
@@ -224,10 +224,10 @@ export default {
   .vm--modal__edit-event {
     .form-textarea,
     .form-control {
-      width: 689px;
+      width: 976px;
     }
     .form-select {
-      width: 330px;
+      width: 401px;
     }
     .group__executors {
       margin-bottom: 10px;
@@ -256,6 +256,9 @@ export default {
   }
   .vdatetime-input {
     width: 330px;
+  }
+  &__title {
+    padding-left: 10px;
   }
 }
 </style>

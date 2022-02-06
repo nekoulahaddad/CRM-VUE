@@ -2,7 +2,7 @@
   <v-modal
     :adaptive="true"
     :minHeight="691"
-    :minWidth="1273"
+    :minWidth="996"
     name="addEvent"
     @before-close="closeModal"
   >
@@ -230,7 +230,7 @@ export default {
 
 .vm--modal {
   .autocomplete-input {
-    width: 330px;
+    width: 401px;
   }
   &__inner {
     padding: 10px;
@@ -239,10 +239,10 @@ export default {
   .vm--modal__add-event {
     .form-textarea,
     .form-control {
-      width: 689px;
+      width: 976px;
     }
     .form-select {
-      width: 330px;
+      width: 401px;
     }
     .group__executors {
       margin-bottom: 10px;
@@ -282,6 +282,9 @@ export default {
     & + * {
       margin-left: 10px;
     }
+  }
+  &__title {
+    padding-left: 10px;
   }
 }
 </style>
