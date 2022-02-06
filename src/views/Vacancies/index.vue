@@ -269,6 +269,7 @@ export default {
     },
   },
   async mounted() {
+    this.$store.commit("deactivateAction", "addVacancy");
     await this.refresh();
   },
 };

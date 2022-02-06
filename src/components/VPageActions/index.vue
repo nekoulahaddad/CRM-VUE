@@ -245,13 +245,16 @@
           <a
             href=""
             class="page-actions__button"
+            :class="{
+              'page-actions__button--active': $store.state.actions.addVacancy,
+            }"
             @click.prevent="
               $store.commit('toggleAction', {
                 key: 'addVacancy',
               })
             "
           >
-            <img src="@/assets/icons/add_vacancy.svg" alt="" />
+            <simple-svg :src="require('@/assets/icons/add_vacancy.svg')" />
           </a>
         </VueCustomTooltip>
       </template>
