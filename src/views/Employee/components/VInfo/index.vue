@@ -289,6 +289,7 @@ export default {
 
       img {
         max-width: 100%;
+        cursor: auto;
       }
     }
 
@@ -297,6 +298,7 @@ export default {
       height: 303px;
 
       img {
+        cursor: auto;
         max-width: 100%;
         border-radius: $border-radius;
       }
