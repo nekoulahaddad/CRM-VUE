@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="deleteProduct">
+  <v-modal :adaptive="true" :maxHeight="175" name="deleteGoodsProduct">
     <div class="vm--modal__title">Удаление</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
@@ -39,7 +39,7 @@ export default {
       changeStatus: "change_load_status",
     }),
     cancel() {
-      this.$modal.hide("deleteProduct");
+      this.$modal.hide("deleteGoodsProduct");
     },
     confirm() {
       if (this.deletedItem && this.deletedItem._id) {

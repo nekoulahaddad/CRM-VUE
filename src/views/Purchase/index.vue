@@ -18,23 +18,24 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else-if="dataset.length">
-          <div class="scroll-horizontal">
-            <div class="list">
-              <div class="list__header">
-                <div class="list__title">
-                  {{ $t("pages.buying.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.buying.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
-                  </div>
+        <div class="scroll-horizontal">
+          <div class="list">
+            <div class="list__header">
+              <div class="list__title">
+                {{ $t("pages.buying.pageTitle") }}
+              </div>
+              <div class="list__columns">
+                <div
+                  v-for="field in $t('pages.buying.fields')"
+                  class="list__column"
+                >
+                  {{ field }}
                 </div>
               </div>
+            </div>
+
+            <v-spinner v-if="!isLoading" />
+            <template v-else-if="dataset.length">
               <div
                 v-for="(item, index) in dataset"
                 :key="item._id"
@@ -55,11 +56,11 @@
                 <!-- Блок с детальной информацией о закупке -->
                 <v-info :item="item" v-if="infoItem._id === item._id" />
               </div>
-            </div>
+              <v-pagination :count="count" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
       </div>
     </div>
   </div>
