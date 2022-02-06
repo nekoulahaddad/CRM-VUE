@@ -221,6 +221,7 @@
                     :region="filtersOptions.region"
                     :product="groupProductItem"
                     @refreshGoods="refreshGoods"
+                    @toggleMoveProduct="toggleMoveProduct"
                     @toggleProductToGroup="toggleProductToGroup"
                   />
                 </div>
@@ -309,6 +310,7 @@ export default {
       setFormManager: false,
       managerItem: {},
       editRegion: false,
+      movedItem: {},
       editSheets: false,
       good: "",
       moveProduct: false,
@@ -445,6 +447,19 @@ export default {
           this.isLoading = true;
           this.changeStatus(true);
         });
+    },
+    toggleMoveProduct(item) {
+      this.editedItem = {};
+      this.categoryExportItem = {};
+      this.categoryImportItem = {};
+
+      if (this.movedProduct._id === item._id) {
+        this.movedProduct = {};
+      } else {
+        this.movedProduct = item;
+      }
+
+      this.toggleDropDown(item);
     },
     deleteCategory(categoryId) {
       let index = this.dataset.categories.findIndex(

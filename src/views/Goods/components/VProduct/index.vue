@@ -12,6 +12,7 @@
     </div>
     <div class="list__column">
       <div class="table__actions">
+        <!-- Добавить товар в группу -->
         <div class="table__icon">
           <VueCustomTooltip label="Добавить товар в группу">
             <img
@@ -21,12 +22,19 @@
             />
           </VueCustomTooltip>
         </div>
-        <div class="table__icon">
+
+        <!-- Перемещение товара -->
+        <div class="table__icon" v-if="item.type !== 'group'">
           <VueCustomTooltip label="Перемещение товара">
-            <img src="@/assets/icons/move_goods.svg" alt="" />
+            <img
+              alt=""
+              src="@/assets/icons/move_goods.svg"
+              @click="$emit('toggleMoveProduct', item)"
+            />
           </VueCustomTooltip>
         </div>
         <div class="table__icon">
+          <!-- Видимость товара -->
           <VueCustomTooltip
             v-if="item.type !== 'group'"
             label="Видимость товара"
@@ -41,6 +49,8 @@
               @click="changeProductVisibility(item._id, item.visible)"
             />
           </VueCustomTooltip>
+
+          <!-- Видимость группы -->
           <VueCustomTooltip v-else label="Видимость группы">
             <img
               alt=""
@@ -53,11 +63,15 @@
             />
           </VueCustomTooltip>
         </div>
+
+        <!-- Редактировать товар -->
         <div class="table__icon">
           <VueCustomTooltip label="Редактировать товар">
             <img alt="" src="@/assets/icons/write_icon.svg" />
           </VueCustomTooltip>
         </div>
+
+        <!-- Удалить товар -->
         <div class="table__icon">
           <VueCustomTooltip label="Удалить товар">
             <img
