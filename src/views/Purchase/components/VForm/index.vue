@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="onCreate">
-    <div class="add-vacancy-row__title text--blue">Информация о закупке:</div>
+  <form @submit.prevent="onCreate" class="purchase-form">
+    <div class="purchase-form__title text--blue">Информация о закупке:</div>
     <div class="group">
       <div class="group__title">ФИО автора:</div>
       <div class="group__content">
@@ -86,7 +86,6 @@ export default {
       default: null,
     },
   },
-  components: { VForm },
   data() {
     return {
       fio: "",
@@ -305,3 +304,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.purchase-form {
+  .form-control {
+    width: 976px;
+  }
+  .form-textarea {
+    width: 976px;
+  }
+  .form-select {
+    max-width: 401px;
+  }
+  button {
+    width: 230px;
+    height: 37px;
+  }
+  &__title {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+}
+</style>

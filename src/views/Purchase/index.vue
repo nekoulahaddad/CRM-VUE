@@ -34,6 +34,9 @@
               </div>
             </div>
 
+            <!-- Блок добавления закупки -->
+            <v-add-item />
+
             <v-spinner v-if="!isLoading" />
             <template v-else-if="dataset.length">
               <div
@@ -68,6 +71,7 @@
 
 <script>
 import VItem from "./components/VItem";
+import VAddItem from "./components/VAddItem";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
@@ -85,10 +89,14 @@ export default {
     VSpinner,
     VItem,
     VInfo,
+    VAddItem,
     VPageHeader,
   },
   computed: {
     ...mapGetters(["sidebar"]),
+    addPurchase() {
+      return this.$store.state.actions.addPurchase;
+    },
   },
   data() {
     return {
