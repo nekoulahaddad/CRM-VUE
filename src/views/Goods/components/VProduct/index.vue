@@ -12,9 +12,20 @@
     </div>
     <div class="list__column">
       <div class="table__actions">
-        <!-- Добавить товар в группу -->
         <div class="table__icon">
-          <VueCustomTooltip label="Добавить товар в группу">
+          <!-- Показать товары группы -->
+          <VueCustomTooltip
+            v-if="item.type === 'group'"
+            label="Показать товары"
+          >
+            <img
+              @click="$emit('toggleGroupProducts', item)"
+              src="@/assets/icons/structure.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
+          <!-- Добавить товар в группу -->
+          <VueCustomTooltip v-else label="Добавить товар в группу">
             <img
               @click="$emit('toggleProductToGroup', item)"
               src="@/assets/icons/add_to_group.svg"
@@ -95,11 +106,18 @@
 
         <!-- Удалить товар -->
         <div class="table__icon">
-          <VueCustomTooltip label="Удалить товар">
+          <VueCustomTooltip v-if="item.type !== 'group'" label="Удалить товар">
             <img
               alt=""
               src="@/assets/icons/trash_icon.svg"
               @click="$emit('toggleDeleteProduct', item)"
+            />
+          </VueCustomTooltip>
+          <VueCustomTooltip v-else label="Удалить группу">
+            <img
+              alt=""
+              src="@/assets/icons/trash_icon.svg"
+              @click="$emit('toggleDeleteGroup', item)"
             />
           </VueCustomTooltip>
         </div>

@@ -11,6 +11,12 @@
       @clearSelectedProducts="clearSelectedProducts"
     />
 
+    <v-group-delete
+      :group="deletedGroup"
+      :region="filtersOptions.region"
+      @refreshGoods="refreshGoods"
+    />
+
     <v-page-header
       :title="$t('pages.goods.pageTitle')"
       icon="goods_title"
@@ -208,7 +214,8 @@
                   :class="{
                     'list__row--opened':
                       groupProductItem._id === item._id ||
-                      editedGroupItem._id === item._id,
+                      editedGroupItem._id === item._id ||
+                      groupItems._id === item._id,
                   }"
                 >
                   <v-product
@@ -218,8 +225,11 @@
                     @toggleDeleteProduct="toggleDeleteProduct"
                     @toggleProductToGroup="toggleProductToGroup"
                     @toggleEditGroup="toggleEditGroup"
+                    @toggleDeleteGroup="toggleDeleteGroup"
+                    @toggleGroupProducts="toggleGroupProducts"
                   />
 
+                  <!-- Добавление товара в группу -->
                   <v-add-product-to-group
                     v-if="groupProductItem._id === item._id"
                     :region="filtersOptions.region"
@@ -229,12 +239,19 @@
                     @toggleProductToGroup="toggleProductToGroup"
                   />
 
+                  <!-- Редактирование группы -->
                   <v-product-group-edit
                     v-if="editedGroupItem._id === item._id"
                     :group="editedGroupItem"
                     :region="filtersOptions.region"
                     @refreshGoods="refreshGoods"
                     @toggleEditGroup="toggleEditGroup"
+                  />
+
+                  <!-- Товары группы -->
+                  <v-group-products
+                    v-if="groupItems._id === item._id"
+                    :item="groupItems"
                   />
                 </div>
               </div>
@@ -251,11 +268,13 @@
 <script>
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
+import VGroupProducts from "./components/VGroupProducts";
 import VSearch from "@/components/VSearch";
 import VDeleteCategory from "./components/VDeleteCategory";
 import VEditCategory from "./components/VEditCategory";
 import VProductGroupEdit from "./components/VProductGroupEdit";
-import VDeleteProduct from "./components/VDeleteProduct";
+import VDeleteProduct from "./components/VProductDelete";
+import VGroupDelete from "./components/VGroupDelete";
 import VAddProductToGroup from "./components/VAddProductToGroup";
 import VProduct from "./components/VProduct";
 import VCategoryExport from "./components/VCategoryExport";
@@ -281,8 +300,10 @@ export default {
     VCopy,
     VProductGroupEdit,
     VCategoryExport,
+    VGroupProducts,
     VNotFoundQuery,
     Draggable,
+    VGroupDelete,
     VPageHeader,
     VEditCategory,
     Container,
@@ -330,6 +351,7 @@ export default {
       good: "",
       moveProduct: false,
       movedProduct: {},
+      groupItems: {},
       changeOrder: false,
       savedCategories: [],
       copyForm: false,
@@ -341,6 +363,7 @@ export default {
       selectedProducts: [],
       groupAdd: false,
       groupIndex: -1,
+      deletedGroup: {},
       removeFromGroup: false,
       productId: "",
       groupId: "",
@@ -463,6 +486,10 @@ export default {
           this.changeStatus(true);
         });
     },
+    toggleDeleteGroup(deletedGroup) {
+      this.deletedGroup = deletedGroup;
+      this.$modal.show("deleteGroup");
+    },
     toggleEditGroup(item) {
       this.editedItem = {};
       this.categoryExportItem = {};
@@ -472,6 +499,19 @@ export default {
         this.editedGroupItem = {};
       } else {
         this.editedGroupItem = item;
+      }
+
+      this.toggleDropDown(item);
+    },
+    toggleGroupProducts(item) {
+      this.editedItem = {};
+      this.categoryExportItem = {};
+      this.categoryImportItem = {};
+
+      if (this.groupItems._id === item._id) {
+        this.groupItems = {};
+      } else {
+        this.groupItems = item;
       }
 
       this.toggleDropDown(item);
