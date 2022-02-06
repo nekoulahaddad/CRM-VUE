@@ -272,13 +272,16 @@
           <a
             href=""
             class="page-actions__button"
+            :class="{
+              'page-actions__button--active': $store.state.actions.addDelivery,
+            }"
             @click.prevent="
               $store.commit('toggleAction', {
                 key: 'addDelivery',
               })
             "
           >
-            <img src="@/assets/icons/add_delivery.svg" alt="" />
+            <simple-svg :src="require('@/assets/icons/add_delivery.svg')" />
           </a>
         </VueCustomTooltip>
       </template>

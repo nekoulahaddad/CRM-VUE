@@ -66,7 +66,7 @@
     <div class="group">
       <div class="group__title">Регион:</div>
       <div class="group__content">
-        <select class="form-select" name="region" v-model="region">
+        <select required class="form-select" name="region" v-model="region">
           <option :value="null">Выбрать регион</option>
           <option
             v-for="region in regions"
