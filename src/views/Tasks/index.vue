@@ -556,7 +556,7 @@ export default {
 
   .sub-tasks {
     .list__columns {
-      grid-template-columns: 130px 180px 180px 360px 180px 180px 180px 1fr;
+      grid-template-columns: 130px 180px 180px 360px 180px 180px 120px 1fr;
 
       .list__column:first-child {
         padding-left: 100px;
