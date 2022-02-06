@@ -5,10 +5,20 @@
         Ответственный менеджер:
       </div>
 
+      <div class="group__content">
+        <div class="group__item text--bold-700">ФИО:</div>
+        <div class="group__value">{{ fio || "" }}</div>
+      </div>
+
       <div class="group">
-        <div class="group__title">ФИО:</div>
+        <div class="group__title">Изменить ответственного:</div>
         <div class="group__content">
-          <input required class="form-control" type="text" />
+          <input
+            required
+            class="form-control"
+            type="text"
+            placeholder="Введите ФИО ответственного..."
+          />
         </div>
       </div>
 
