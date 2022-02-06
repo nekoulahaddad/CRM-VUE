@@ -26,12 +26,11 @@
             <img src="@/assets/icons/move_goods.svg" alt="" />
           </VueCustomTooltip>
         </div>
-        <div
-          class="table__icon"
-          v-if="item.type !== 'group'"
-          @click="changeProductVisibility(item._id, item.visible)"
-        >
-          <VueCustomTooltip label="Видимость товара">
+        <div class="table__icon">
+          <VueCustomTooltip
+            v-if="item.type !== 'group'"
+            label="Видимость товара"
+          >
             <img
               alt=""
               :src="
@@ -39,6 +38,18 @@
                   ? require('@/assets/icons/eye_close.svg')
                   : require('@/assets/icons/eye.svg')
               "
+              @click="changeProductVisibility(item._id, item.visible)"
+            />
+          </VueCustomTooltip>
+          <VueCustomTooltip v-else label="Видимость группы">
+            <img
+              alt=""
+              :src="
+                item.visible
+                  ? require('@/assets/icons/eye_close.svg')
+                  : require('@/assets/icons/eye.svg')
+              "
+              @click="changeProductVisibility(item._id, item.visible)"
             />
           </VueCustomTooltip>
         </div>
@@ -89,6 +100,37 @@ export default {
         dataset.splice(index, 1);
         this.$parent.selectedProducts = dataset;
       }
+    },
+    changeGroupVisibility(id, visible) {
+      this.changeStatus(false);
+      let groupData = {
+        region: this.filtersOptions.region,
+        groupId: id,
+        visible: !visible,
+      };
+      axios({
+        url: `/groups/edit/`,
+        data: groupData,
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.$emit("refreshGoods");
+          this.$toast.success(
+            `Группа ${
+              result.data.group.visible
+                ? "будет отображаться"
+                : "не будет отображаться"
+            }`,
+            "Успех!"
+          );
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeStatus(true);
+        });
     },
     changeProductVisibility(id, visible) {
       this.changeStatus(false);
