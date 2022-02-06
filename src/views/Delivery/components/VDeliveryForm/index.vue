@@ -99,6 +99,7 @@
       <div class="group__title">ФИО:</div>
       <div class="group__content">
         <input
+          required
           class="form-control"
           type="text"
           placeholder="Введите ФИО..."
@@ -121,6 +122,7 @@
       <div class="group__title">Телефон:</div>
       <div class="group__content">
         <phone-mask-input
+          required
           name="phone"
           inputClass="form-control"
           v-model="director.phone"
@@ -132,6 +134,7 @@
       <div class="group__title">Email:</div>
       <div class="group__content">
         <input
+          required
           class="form-control"
           type="text"
           placeholder="Введите email"
