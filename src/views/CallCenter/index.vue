@@ -18,23 +18,24 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else-if="dataset.length">
-          <div class="scroll-horizontal">
-            <div class="list list-shadow">
-              <div class="list__header">
-                <div class="list__title">
-                  {{ $t("pages.callbacks.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.callbacks.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
-                  </div>
+        <div class="scroll-horizontal">
+          <div class="list list-shadow">
+            <div class="list__header">
+              <div class="list__title">
+                {{ $t("pages.callbacks.pageTitle") }}
+              </div>
+              <div class="list__columns">
+                <div
+                  v-for="field in $t('pages.callbacks.fields')"
+                  class="list__column"
+                >
+                  {{ field }}
                 </div>
               </div>
+            </div>
+
+            <v-spinner v-if="!isLoading" />
+            <template v-else-if="dataset.length">
               <div
                 v-for="(item, index) in dataset"
                 :key="item._id"
@@ -64,11 +65,11 @@
                   v-if="editedItem._id === item._id"
                 />
               </div>
-            </div>
+              <v-pagination :count="count" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
       </div>
     </div>
   </div>
@@ -186,13 +187,31 @@ export default {
 <style lang="scss">
 .callbacks-page {
   .list__columns {
-    grid-template-columns: 30px 120px 140px 140px 140px 140px 230px 140px 140px 140px 230px 1fr;
+    grid-template-columns: 30px 128px 120px 120px 120px 120px 120px 120px 120px 120px 160px 1fr;
   }
   .list__header {
     .list__column {
       &:first-child {
         text-align: left;
       }
+    }
+  }
+
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: 30px 120px 140px 140px 140px 140px 230px 140px 140px 140px 230px 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: 30px 120px 140px 140px 140px 140px 200px 140px 140px 140px 180px 1fr;
+    }
+  }
+
+  .page__right--middle {
+    .list__columns {
+      grid-template-columns: 30px 131px 120px 120px 120px 120px 200px 120px 120px 120px 200px 1fr;
     }
   }
 }

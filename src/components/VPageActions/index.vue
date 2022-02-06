@@ -14,6 +14,15 @@
         </a>
       </template>
 
+      <!-- Обращения -->
+      <template v-if="name === 'callbacks'">
+        <VueCustomTooltip label="Создать обращение">
+          <a href="" class="page-actions__button">
+            <img src="@/assets/icons/add_callback.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
+      </template>
+
       <!-- Закупка -->
       <template v-if="name === 'buying'">
         <VueCustomTooltip label="Добавить закупку">
