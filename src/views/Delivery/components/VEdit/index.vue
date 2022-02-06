@@ -1,6 +1,10 @@
 <template>
   <div class="edit-delivery">
-    <v-delivery-form :editedItem="editedItem" />
+    <v-delivery-form
+      :editedItem="editedItem"
+      @refresh="refresh"
+      @toggleEdit="toggleEdit"
+    />
   </div>
 </template>
 
@@ -15,6 +19,14 @@ export default {
     },
   },
   components: { VDeliveryForm },
+  methods: {
+    refresh() {
+      this.$emit("refresh");
+    },
+    toggleEdit(item) {
+      this.$emit("toggleEdit", item);
+    },
+  },
 };
 </script>
 

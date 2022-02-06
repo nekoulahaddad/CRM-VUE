@@ -361,11 +361,10 @@ export default {
           data,
           method: "POST",
         })
-          .then(async (res) => {
-            let result = await res;
-            this.$emit("editProvider", result.data.provider);
-            this.$toast.success("Поставщик успешно обновлен!");
-            this.$emit("toggleOpen");
+          .then(() => {
+            this.$emit("toggleEdit", this.editedItem);
+            this.$emit("refresh");
+            this.$toast.success("Поставщик успешно изменен!");
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);

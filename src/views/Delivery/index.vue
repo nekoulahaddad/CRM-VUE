@@ -90,6 +90,7 @@
                   :editedItem="editedItem"
                   :item="item"
                   @toggleEdit="toggleEdit"
+                  @refresh="fetchData"
                 />
               </div>
             </div>

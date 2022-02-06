@@ -187,6 +187,7 @@ export default {
     margin-bottom: 10px;
     position: relative;
     padding-right: 40px;
+    border-radius: 2px;
 
     & + * {
       margin-left: 5px;
