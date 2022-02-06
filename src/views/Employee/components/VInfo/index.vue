@@ -277,8 +277,8 @@ export default {
     }
 
     &__empty {
-      width: 220px;
-      height: 303px;
+      width: 116px;
+      min-height: 155px !important;
       background-color: $color-gray-secondary;
       border-radius: $border-radius;
       display: flex;
@@ -294,8 +294,8 @@ export default {
     }
 
     &__edit {
-      width: 220px;
-      height: 303px;
+      width: 116px;
+      min-height: 155px !important;
 
       img {
         cursor: auto;

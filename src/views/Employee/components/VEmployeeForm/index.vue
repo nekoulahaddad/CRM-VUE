@@ -3,6 +3,7 @@
     @submit.prevent="onUserAdd"
     enctype="multipart/form-data"
     accept="image/x-png,image/gif,image/jpeg"
+    class="employee-edit"
   >
     <div class="form-top">
       <div class="form-top__left">
@@ -324,7 +325,7 @@
       <div class="group__footer">
         <v-add-child
           :newChild="newChild"
-          v-if="addChildForm && false"
+          v-if="addChildForm"
           @cancel="addChildForm = false"
           @addChild="addChild"
         />
@@ -415,7 +416,7 @@ export default {
       editChildIndex: null,
       newChild: {
         fio: "",
-        birthDate: new Date(),
+        birthDate: "",
         gender: "муж",
       },
     };
@@ -592,7 +593,7 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
-form {
+.employee-edit {
   .vdatetime-input,
   .form-select {
     width: 401px;
@@ -616,85 +617,89 @@ form {
       display: block;
     }
   }
-}
 
-.form-top {
-  display: flex;
-  justify-content: space-between;
-
-  &__left {
-    width: 976px;
-  }
-
-  &__right {
-    button {
-      margin-top: 20px;
-    }
-  }
-
-  .employee-photo {
+  .form-top {
     display: flex;
-    align-items: end;
-    justify-content: end;
+    justify-content: space-between;
 
-    span {
-      font-weight: 700;
-      font-size: 14px;
-      margin-right: 10px;
+    &__left {
+      width: 976px;
     }
 
-    &__upload {
+    &__right {
+      button {
+        margin-top: 20px;
+      }
+    }
+
+    .employee-photo {
       display: flex;
+      align-items: end;
       justify-content: end;
+
+      span {
+        font-weight: 700;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+
+      &__upload {
+        display: flex;
+        justify-content: end;
+      }
+
+      &__empty {
+        width: 219px;
+        height: 303px;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba(0, 0, 0, 0.3);
+
+        img {
+          max-width: 100%;
+        }
+      }
+
+      &__edit {
+        width: 219px;
+        height: 303px;
+
+        img {
+          max-width: 100%;
+          border-radius: $border-radius;
+        }
+      }
     }
 
-    &__empty {
-      width: 219px;
-      height: 303px;
-      background-color: $color-gray-secondary;
+    label[for="employee-photo"] {
       border-radius: $border-radius;
+      width: 230px;
+      height: 37px;
+      background-color: $color-red;
+      color: $color-white;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid rgba(0, 0, 0, 0.3);
-
-      img {
-        max-width: 100%;
-      }
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 20px;
+      cursor: pointer;
     }
 
-    &__edit {
-      width: 219px;
-      height: 303px;
-
-      img {
-        max-width: 100%;
-        border-radius: $border-radius;
-      }
+    img {
+      cursor: auto;
     }
   }
-
-  label[for="employee-photo"] {
-    border-radius: $border-radius;
-    width: 230px;
-    height: 37px;
-    background-color: $color-red;
-    color: $color-white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .group__title--big {
     font-size: 16px;
-    font-weight: 700;
-    margin-top: 20px;
-    cursor: pointer;
   }
-}
-.group__title--big {
-  font-size: 16px;
-}
-.photo {
-  width: 123px;
-  height: 123px;
-  object-fit: contain;
+  .photo {
+    width: 123px;
+    height: 123px;
+    object-fit: contain;
+  }
 }
 </style>
