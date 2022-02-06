@@ -1,8 +1,8 @@
 <template>
   <div class="list__info list-info employee-list-info">
     <!-- Основная информация -->
-    <div class="d-flex justify-content-between">
-      <div>
+    <div class="d-flex justify-content-between form-top">
+      <div class="form-top__left">
         <div class="group__title text--blue">
           {{ $t("pages.employee.employeeMainInfo") }}
         </div>
@@ -47,19 +47,27 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="form-top__right">
         <span class="text text--blue text--bold-700">Фото:</span>
-        <img
-          alt=""
-          @click="photoFull = !photoFull"
-          :src="
-            employee && employee.avatar === 'Выбрать файл'
-              ? `${serverAddr + '/avatars/default.svg'}`
-              : employee && avatar === 'Выбрать файл'
-              ? `${serverAddr + employee.avatar}`
-              : url
-          "
-        />
+        <div
+          :class="{
+            'employee-photo__empty':
+              !employee || (employee && employee.avatar === 'Выбрать файл'),
+            'employee-photo__edit': employee && avatar === 'Выбрать файл',
+          }"
+        >
+          <img
+            alt=""
+            @click="photoFull = !photoFull"
+            :src="
+              employee && employee.avatar === 'Выбрать файл'
+                ? url
+                : employee && avatar === 'Выбрать файл'
+                ? `${serverAddr + employee.avatar}`
+                : url
+            "
+          />
+        </div>
       </div>
     </div>
 
@@ -220,7 +228,7 @@ export default {
       children: [],
       avatar: "Выбрать файл",
       passport_photo: ["Выбрать файлы"],
-      url: "@/assets/icons/preview.svg",
+      url: require("@/assets/icons/new_avatar.svg"),
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
   },
@@ -252,15 +260,58 @@ export default {
     }
   }
 
-  img {
-    width: 123px;
-    height: 123px;
-    object-fit: contain;
-    margin-left: 10px;
+  .employee-photo {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+
+    span {
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+
+    &__upload {
+      display: flex;
+      justify-content: end;
+    }
+
+    &__empty {
+      width: 220px;
+      height: 303px;
+      background-color: $color-gray-secondary;
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      margin-left: 10px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    &__edit {
+      width: 220px;
+      height: 303px;
+
+      img {
+        max-width: 100%;
+        border-radius: $border-radius;
+      }
+    }
   }
 
   .d-flex {
     margin-bottom: 10px;
+  }
+
+  .form-top {
+    &__right {
+      display: flex;
+      align-items: end;
+    }
   }
 }
 </style>

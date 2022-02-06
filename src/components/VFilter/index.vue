@@ -1263,7 +1263,7 @@ export default {
           break;
         case "region":
           this.filterOptions.region = e.target.value;
-          this.$store.dispatch("setFilterRegion", e.target.value);
+          this.$store.commit("setFilterRegion", e.target.value);
           break;
         case "regionStats":
           this.filtersOptions.region = e.target.value;

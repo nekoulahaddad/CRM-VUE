@@ -191,7 +191,9 @@
         <VueCustomTooltip label="Excel дней рождений за месяц">
           <a
             href=""
-            @click.prevent="downloadUsersBirthday"
+            @click.prevent="
+              downloadItem('birthday', 'xlsx', 'Дни_рождения_сотрудников')
+            "
             class="page-actions__button"
           >
             <img src="@/assets/icons/birthday_cake.svg" alt="" />
@@ -202,7 +204,7 @@
         <VueCustomTooltip label="Excel всех сотрудников">
           <a
             href=""
-            @click.prevent="downloadAllUsers"
+            @click.prevent="downloadItem('allusers', 'xlsx', 'Все_сотрудники')"
             class="page-actions__button"
           >
             <img src="@/assets/icons/employees.svg" alt="" />
@@ -213,7 +215,9 @@
         <VueCustomTooltip label="Excel детей сотрудников">
           <a
             href=""
-            @click.prevent="downloadKidsOfUsers"
+            @click.prevent="
+              downloadItem('children', 'xlsx', 'Дети_сотрудников')
+            "
             class="page-actions__button"
           >
             <img src="@/assets/icons/baby.svg" alt="" />
@@ -443,7 +447,7 @@ export default {
           url: `/excel/${route}`,
           data: {
             age: 18,
-            region: this.$store.getters.getFilterOptions.region,
+            region: this.$store.state.filterRegion,
           },
           method: "POST",
           responseType: "blob",

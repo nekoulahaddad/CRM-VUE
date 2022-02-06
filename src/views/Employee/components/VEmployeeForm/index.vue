@@ -93,7 +93,7 @@
               alt=""
               :src="
                 infoItem && infoItem.avatar === 'Выбрать файл'
-                  ? `${serverAddr + '/avatars/default.svg'}`
+                  ? url
                   : infoItem && avatar === 'Выбрать файл'
                   ? `${serverAddr + infoItem.avatar}`
                   : url
