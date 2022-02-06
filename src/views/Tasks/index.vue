@@ -159,6 +159,7 @@
                       v-if="editedItem._id === sub_task._id"
                       @editTask="editToTasks"
                       @toggleEdit="toggleEdit"
+                      @fetchData="fetchData"
                     />
                   </div>
                 </div>

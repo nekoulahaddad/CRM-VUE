@@ -136,14 +136,14 @@ export default {
       let taskData = new FormData();
       taskData.append("taskId", this.task._id);
       if (this.title) {
-        taskData.append("title", this.task.title);
+        taskData.append("title", this.title);
       }
 
       if (this.description) {
-        taskData.append("description", this.task.description);
+        taskData.append("description", this.description);
       }
       if (this.initiator_comment) {
-        taskData.append("initiator_comment", this.task.initiator_comment);
+        taskData.append("initiator_comment", this.initiator_comment);
       }
       if (this.date) {
         taskData.append("deadline_date", this.date);
@@ -161,7 +161,8 @@ export default {
         data: taskData,
         method: "POST",
       })
-        .then(async (res) => {
+        .then(() => {
+          this.$emit("fetchData");
           this.$emit("toggleEdit", this.task);
           this.$toast.success("Задача успешно изменена!");
         })
