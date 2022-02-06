@@ -124,8 +124,10 @@ import VButton from "@/components/VButton";
 import VSpinner from "@/components/VSpinner";
 import VFilter from "@/components/VFilter";
 import VSearch from "@/components/VSearch";
+import dataMixins from "@/mixins/data";
 
 export default {
+  mixins: [dataMixins],
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
     addVacancy() {
