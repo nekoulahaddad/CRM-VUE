@@ -231,6 +231,10 @@
 
                   <v-product-group-edit
                     v-if="editedGroupItem._id === item._id"
+                    :group="editedGroupItem"
+                    :region="filtersOptions.region"
+                    @refreshGoods="refreshGoods"
+                    @toggleEditGroup="toggleEditGroup"
                   />
                 </div>
               </div>
