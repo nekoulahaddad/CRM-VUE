@@ -17,6 +17,20 @@
         </div>
       </div>
 
+      <div class="group">
+        <div class="group__title">Часто ищут:</div>
+        <div class="group__content">
+          <input
+            required
+            class="form-control"
+            type="text"
+            name="categoryName"
+            placeholder="Введите название категории..."
+            @input="onChange($event)"
+          />
+        </div>
+      </div>
+
       <v-button red>Сохранить</v-button>
     </form>
   </div>
