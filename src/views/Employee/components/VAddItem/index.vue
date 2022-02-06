@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="add-employee-row__inner">
-      <v-employee-form />
+      <v-employee-form @refresh="refresh" />
     </div>
   </div>
 </template>
@@ -28,6 +28,11 @@ import VEmployeeForm from "../VEmployeeForm";
 
 export default {
   components: { VEmployeeForm },
+  methods: {
+    refresh(data) {
+      this.$emit("refresh", data);
+    },
+  },
 };
 </script>
 

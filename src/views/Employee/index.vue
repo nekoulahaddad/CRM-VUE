@@ -66,7 +66,7 @@
               </div>
 
               <!-- Блок для добавления сотрудника -->
-              <v-add-item v-if="addEmployee" />
+              <v-add-item v-if="addEmployee" @refresh="refresh" />
 
               <div
                 v-for="(employee, index) in dataset"

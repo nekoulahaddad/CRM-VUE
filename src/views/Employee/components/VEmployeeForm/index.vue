@@ -585,6 +585,7 @@ export default {
           method: "POST",
         })
           .then((res) => {
+            this.$emit("refresh", res.data.user);
             this.$toast.success("Пользователь успешно добавлен!");
             this.$store.commit("toggleAction", {
               key: "addEmployee",

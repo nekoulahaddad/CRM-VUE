@@ -5,6 +5,7 @@
         <div class="group__title">ФИО:</div>
         <div class="group__content">
           <input
+            required
             type="text"
             class="form-control"
             name="newChild.fio"
