@@ -14,16 +14,24 @@
       <div class="table__actions">
         <div class="table__icon">
           <!-- Показать товары группы -->
-          <VueCustomTooltip
-            v-if="item.type === 'group'"
-            label="Показать товары"
-          >
+          <template v-if="item.type === 'group'">
+            <VueCustomTooltip
+              v-if="groupItems._id !== item._id"
+              label="Показать товары"
+            >
+              <img
+                @click="$emit('toggleGroupProducts', item)"
+                src="@/assets/icons/structure.svg"
+                alt=""
+              />
+            </VueCustomTooltip>
             <img
-              @click="$emit('toggleGroupProducts', item)"
-              src="@/assets/icons/structure.svg"
               alt=""
+              v-else
+              @click="$emit('toggleGroupProducts', item)"
+              src="@/assets/icons/arrow_top_icon.svg"
             />
-          </VueCustomTooltip>
+          </template>
           <!-- Добавить товар в группу -->
           <template v-else>
             <VueCustomTooltip
@@ -86,8 +94,8 @@
           </VueCustomTooltip>
         </div>
 
-        <!-- Редактировать товар -->
         <div class="table__icon">
+          <!-- Изменить товар -->
           <VueCustomTooltip v-if="item.type !== 'group'" label="Изменить товар">
             <img
               alt=""
@@ -95,6 +103,8 @@
               @click="$emit('toggleEditProduct', item)"
             />
           </VueCustomTooltip>
+
+          <!-- Изменить группу -->
           <template v-else>
             <VueCustomTooltip
               v-if="editedGroupItem._id !== item._id"
@@ -149,6 +159,7 @@ export default {
     },
     editedGroupItem: Object,
     groupProductItem: Object,
+    groupItems: Object,
   },
   methods: {
     ...mapMutations({

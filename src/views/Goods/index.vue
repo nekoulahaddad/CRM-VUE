@@ -222,6 +222,7 @@
                     :item="item"
                     :editedGroupItem="editedGroupItem"
                     :groupProductItem="groupProductItem"
+                    :groupItems="groupItems"
                     @editProduct="editProduct"
                     @toggleDeleteProduct="toggleDeleteProduct"
                     @toggleProductToGroup="toggleProductToGroup"
@@ -493,6 +494,7 @@ export default {
     },
     toggleEditGroup(item) {
       this.editedItem = {};
+      this.groupItems = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
 
@@ -508,6 +510,7 @@ export default {
       this.editedItem = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
+      this.editedGroupItem = {};
 
       if (this.groupItems._id === item._id) {
         this.groupItems = {};
