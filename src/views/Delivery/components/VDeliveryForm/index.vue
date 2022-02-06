@@ -191,12 +191,17 @@
         />
       </div>
       <div class="group__content">
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Введите название категории..."
-          v-model="currentInput"
-        />
+        <autocomplete
+          :search="searchByExecutor"
+          :get-result-value="getResultValue"
+          placeholder="Введите наименование организации..."
+        >
+          <template #result="{ result, props }">
+            <li v-bind="props" @click="selectProvider(result)">
+              {{ result.categoryName }}
+            </li>
+          </template>
+        </autocomplete>
       </div>
     </div>
     <v-button red>Сохранить</v-button>
@@ -327,6 +332,32 @@ export default {
       editedMessenger["phone"] = e.number;
       this.specialist.messengers.splice(index, 1, editedMessenger);
     },
+    getResultValue(result) {
+      return "";
+    },
+    searchByExecutor(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      if (!this.region) {
+        this.$toast.error("Укажите регион!", "Ошибка");
+        return;
+      }
+      return new Promise((resolve) => {
+        axios({
+          url: `/categories/getcategoriesbysearch/`,
+          data: {
+            title: input,
+            region: this.region._id,
+          },
+          method: "POST",
+        }).then((res) => {
+          this.tempViews = res.data.views;
+          resolve(res.data.views);
+        });
+      });
+    },
     changeMessenger(e, index) {
       const editedMessenger = this.specialist.messengers[index];
       editedMessenger[e.target.name] = e.target.value;
@@ -334,6 +365,9 @@ export default {
     },
     deleteMessenger(index) {
       this.specialist.messengers.splice(index, 1);
+    },
+    selectProvider(provider) {
+      this.categories.push(provider);
     },
     onProvidersAdd() {
       if (!this.region) {
@@ -491,6 +525,9 @@ export default {
       position: absolute;
       right: 17px;
     }
+  }
+  .autocomplete-input {
+    width: 976px;
   }
 }
 </style>
