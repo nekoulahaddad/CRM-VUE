@@ -127,7 +127,11 @@ export default {
         .then(() => {
           this.$emit("refreshGoods");
           this.$emit("toggleManager", this.managerItem);
-          this.$toast.success("Менежжер успешно удален!");
+          if (clear) {
+            this.$toast.success("Менежжер успешно удален!");
+          } else {
+            this.$toast.success("Менежжер успешно добавлен!");
+          }
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
