@@ -5,14 +5,15 @@
     accept="image/x-png,image/gif,image/jpeg"
     class="employee-edit"
   >
-    {{ children }}
     <div class="form-top">
       <div class="form-top__left">
         <div class="group__title group__title--big text--blue">
           {{ $t("pages.employee.employeeMainInfo") }}
         </div>
         <div class="group">
-          <div class="group__title">{{ $t("lastName") }}</div>
+          <div class="group__title">
+            {{ $t("lastName") }} <span class="required">*</span>
+          </div>
           <div class="group__content">
             <input
               required
@@ -26,7 +27,9 @@
           </div>
         </div>
         <div class="group">
-          <div class="group__title">{{ $t("firstName") }}</div>
+          <div class="group__title">
+            {{ $t("firstName") }} <span class="required">*</span>
+          </div>
           <div class="group__content">
             <input
               required
@@ -66,7 +69,9 @@
           </div>
         </div>
         <div class="group">
-          <div class="group__title">{{ $t("phone") }}</div>
+          <div class="group__title">
+            {{ $t("phone") }} <span class="required">*</span>
+          </div>
           <div class="group__content">
             <input
               required
@@ -120,7 +125,9 @@
       {{ $t("pages.employee.employeeAddInfo") }}
     </div>
     <div class="group">
-      <div class="group__title">{{ $t("department") }}</div>
+      <div class="group__title">
+        {{ $t("department") }} <span class="required">*</span>
+      </div>
       <div class="group__content">
         <select
           required
@@ -160,7 +167,9 @@
     </div>
 
     <div class="group">
-      <div class="group__title">{{ $t("position") }}</div>
+      <div class="group__title">
+        {{ $t("position") }} <span class="required">*</span>
+      </div>
       <div class="group__content">
         <input
           required
@@ -187,7 +196,9 @@
       </div>
     </div>
     <div class="group">
-      <div class="group__title">{{ $t("role") }}</div>
+      <div class="group__title">
+        {{ $t("role") }} <span class="required">*</span>
+      </div>
       <div class="group__content">
         <select
           required
@@ -233,7 +244,9 @@
       </div>
     </div>
     <div class="group">
-      <div class="group__title">{{ $t("employmentDate") }}</div>
+      <div class="group__title">
+        {{ $t("employmentDate") }} <span class="required">*</span>
+      </div>
       <div class="group__content">
         <datetime
           required
@@ -245,7 +258,9 @@
       </div>
     </div>
     <div class="group">
-      <div class="group__title">{{ $t("region") }}</div>
+      <div class="group__title">
+        {{ $t("region") }} <span class="required">*</span>
+      </div>
       <div class="group__content">
         <select
           required
@@ -267,7 +282,9 @@
       {{ $t("pages.employee.employeePersonalInfo") }}
     </div>
     <div class="group">
-      <div class="group__title">{{ $t("birthday") }}</div>
+      <div class="group__title">
+        {{ $t("birthday") }} <span class="required">*</span>
+      </div>
       <div class="group__content">
         <datetime
           required
@@ -781,6 +798,9 @@ export default {
         margin-top: 10px;
       }
     }
+  }
+  .required {
+    color: $color-red;
   }
 }
 </style>
