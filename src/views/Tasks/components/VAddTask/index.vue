@@ -154,9 +154,16 @@ export default {
     id: {
       get: function () {
         let user = this.getUserRole();
-
         return user._id;
       },
+    },
+  },
+  watch: {
+    department: function () {
+      if (this.department !== null && this.executors.length > 1) {
+        this.executors = [];
+        this.$toast.error("Выберите одного исполнителя при выборе отдела!");
+      }
     },
   },
   methods: {
@@ -261,8 +268,7 @@ export default {
         method: "POST",
       })
         .then(async (res) => {
-          let result = await res;
-          this.$emit("addToTasks", result.data.task);
+          this.$emit("refresh");
           this.$toast.success("Задача успешно добавлена!");
           this.$store.commit("toggleAction", {
             key: "addTask",
@@ -276,7 +282,7 @@ export default {
         });
     },
   },
-  mounted() {
+  created() {
     axios({
       url: "/user/getdepartments",
     }).then((res) => {

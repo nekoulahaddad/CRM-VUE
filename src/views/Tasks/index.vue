@@ -83,7 +83,11 @@
                 </div>
               </div>
 
-              <v-add-task v-if="addTask" @addToTasks="addToTasks" />
+              <v-add-task
+                v-if="addTask"
+                @addToTasks="addToTasks"
+                @refresh="fetchData"
+              />
 
               <div
                 v-for="(task, index) in dataset"
