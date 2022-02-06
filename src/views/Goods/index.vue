@@ -215,7 +215,8 @@
                     'list__row--opened':
                       groupProductItem._id === item._id ||
                       editedGroupItem._id === item._id ||
-                      groupItems._id === item._id,
+                      groupItems._id === item._id ||
+                      movedProduct._id === item._id,
                   }"
                 >
                   <v-product
@@ -223,7 +224,9 @@
                     :editedGroupItem="editedGroupItem"
                     :groupProductItem="groupProductItem"
                     :groupItems="groupItems"
+                    :movedProduct="movedProduct"
                     @editProduct="editProduct"
+                    @toggleMoveProduct="toggleMoveProduct"
                     @toggleDeleteProduct="toggleDeleteProduct"
                     @toggleProductToGroup="toggleProductToGroup"
                     @toggleEditGroup="toggleEditGroup"
@@ -237,7 +240,6 @@
                     :region="filtersOptions.region"
                     :product="groupProductItem"
                     @refreshGoods="refreshGoods"
-                    @toggleMoveProduct="toggleMoveProduct"
                     @toggleProductToGroup="toggleProductToGroup"
                   />
 
@@ -248,6 +250,13 @@
                     :region="filtersOptions.region"
                     @refreshGoods="refreshGoods"
                     @toggleEditGroup="toggleEditGroup"
+                  />
+
+                  <!-- Перемещение товара -->
+                  <v-product-move
+                    v-if="movedProduct._id === item._id"
+                    :movedProduct="movedProduct"
+                    @toggleMoveProduct="toggleMoveProduct"
                   />
 
                   <!-- Товары группы -->
@@ -271,6 +280,7 @@
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
+import VProductMove from "./components/VProductMove";
 import VSearch from "@/components/VSearch";
 import VDeleteCategory from "./components/VDeleteCategory";
 import VEditCategory from "./components/VEditCategory";
@@ -311,6 +321,7 @@ export default {
     Container,
     VCategoryImport,
     VDeleteProduct,
+    VProductMove,
     VDeleteCategory,
     VAddProductToGroup,
   },
@@ -524,6 +535,7 @@ export default {
       this.editedItem = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
+      this.groupProductItem = {};
 
       if (this.movedProduct._id === item._id) {
         this.movedProduct = {};
@@ -637,6 +649,8 @@ export default {
       this.editedItem = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
+      this.categoryImportItem = {};
+      this.groupProductItem = {};
 
       if (this.copyItem._id === item._id) {
         this.copyItem = {};
@@ -650,6 +664,8 @@ export default {
       this.copyItem = {};
       this.editedItem = {};
       this.categoryExportItem = {};
+      this.categoryImportItem = {};
+      this.groupProductItem = {};
 
       if (this.categoryImportItem._id === item._id) {
         this.categoryImportItem = {};
@@ -664,6 +680,8 @@ export default {
       this.copyItem = {};
       this.editedItem = {};
       this.categoryImportItem = {};
+      this.categoryImportItem = {};
+      this.groupProductItem = {};
 
       if (this.categoryExportItem._id === item._id) {
         this.categoryExportItem = {};
@@ -678,6 +696,7 @@ export default {
       this.copyItem = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
+      this.movedProduct = {};
 
       if (this.groupProductItem._id === item._id) {
         this.groupProductItem = {};
@@ -691,6 +710,8 @@ export default {
       this.copyItem = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
+      this.categoryImportItem = {};
+      this.groupProductItem = {};
 
       if (this.editedItem._id === item._id) {
         this.editedItem = {};

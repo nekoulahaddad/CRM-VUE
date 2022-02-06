@@ -15,7 +15,7 @@
               placeholder="Введите исполнителя задачи..."
             >
               <template #result="{ result, props }">
-                <li v-bind="props" @click="selectUser(result)">
+                <li v-bind="props">
                   {{ transformFIO(result) }}
                 </li>
               </template>
