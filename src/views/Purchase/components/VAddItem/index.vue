@@ -5,6 +5,7 @@
     <div class="list__columns list__columns--shadow list__columns--white">
       <div class="list__column list__column--title">
         Добавить закупку
+
         <img
           @click.prevent="
             $store.commit('toggleAction', {
@@ -33,6 +34,9 @@ export default {
 
 <style lang="scss">
 .add-purchase-row {
+  &__title {
+    position: relative;
+  }
   &__close {
     cursor: pointer;
     right: 10px;
@@ -42,6 +46,13 @@ export default {
 
   &__inner {
     padding: 10px;
+  }
+  .list__columns {
+    grid-template-columns: 1fr !important;
+    .list__column {
+      text-align: left !important;
+      font-size: 16px;
+    }
   }
 }
 </style>
