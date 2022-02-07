@@ -88,6 +88,7 @@
 <script>
 export default {
   props: {
+    options: Object,
     infoItem: {
       type: Object,
     },

@@ -84,6 +84,7 @@
                   :infoItem="infoItem"
                   :employee="employee"
                   :editedItem="editedItem"
+                  :options="options"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @toggleDelete="toggleDelete"
