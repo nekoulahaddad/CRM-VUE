@@ -116,7 +116,7 @@
             <img
               alt=""
               src="@/assets/icons/write_icon.svg"
-              @click="$emit('toggleEditProduct', item)"
+              @click="$emit('toggleEdit', item)"
             />
           </VueCustomTooltip>
 

@@ -238,6 +238,7 @@
                       groupProductItem._id === item._id ||
                       editedGroupItem._id === item._id ||
                       groupItems._id === item._id ||
+                      editedItem._id === item._id ||
                       movedProduct._id === item._id,
                   }"
                 >
@@ -248,6 +249,7 @@
                     :groupItems="groupItems"
                     :movedProduct="movedProduct"
                     @editProduct="editProduct"
+                    @toggleEdit="toggleEdit"
                     @toggleMoveProduct="toggleMoveProduct"
                     @toggleDeleteProduct="toggleDeleteProduct"
                     @toggleProductToGroup="toggleProductToGroup"
@@ -266,7 +268,7 @@
                   />
 
                   <!-- Редактирование товара -->
-                  <v-product-edit v-if="false" />
+                  <v-product-edit v-if="editedItem._id === item._id" />
 
                   <!-- Редактирование группы -->
                   <v-product-group-edit
