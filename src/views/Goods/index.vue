@@ -265,6 +265,9 @@
                     @toggleProductToGroup="toggleProductToGroup"
                   />
 
+                  <!-- Редактирование товара -->
+                  <v-product-edit v-if="false" />
+
                   <!-- Редактирование группы -->
                   <v-product-group-edit
                     v-if="editedGroupItem._id === item._id"
@@ -303,6 +306,7 @@ import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
+import VProductEdit from "./components/VProductEdit";
 import VCategoryAdd from "./components/VCategoryAdd";
 import VCategoryManager from "./components/VCategoryManager";
 import VSearch from "@/components/VSearch";
@@ -338,6 +342,7 @@ export default {
     VCategoryExport,
     VGroupProducts,
     VNotFoundQuery,
+    VProductEdit,
     Draggable,
     VGroupDelete,
     VCategoryAdd,
