@@ -1,6 +1,18 @@
 <template>
   <div class="list__info list-info category-import">
-    <div class="group__title text--blue">Импорт товара:</div>
+    <div class="category-import__title group__title text--blue">
+      Импорт товара:
+      <img
+        alt=""
+        class="category-add-form__close"
+        src="/icons/close_icon.svg"
+        @click.prevent="
+          $store.commit('toggleAction', {
+            key: 'importGoods',
+          })
+        "
+      />
+    </div>
     <form @submit.prevent="onExport">
       <div class="list-info__group group">
         <div class="group__content">
@@ -100,6 +112,22 @@ export default {
 @import "@/styles/_variables";
 
 .category-import {
+  padding: 0;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+
+  form {
+    padding: 10px;
+  }
+
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
   .group__item {
     font-weight: 700;
   }
@@ -119,6 +147,20 @@ export default {
     border-radius: $border-radius;
     cursor: pointer;
     font-weight: bold;
+  }
+  &__title {
+    font-weight: 700;
+    margin-bottom: 10px;
+    background-color: $color-gray-secondary;
+    height: 48px;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    color: $color-black;
+    font-size: 16px;
+    position: relative;
   }
 }
 </style>
