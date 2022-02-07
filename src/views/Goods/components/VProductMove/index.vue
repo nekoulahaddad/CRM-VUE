@@ -114,6 +114,7 @@ export default {
         })
           .then(async () => {
             this.$toast.success("Товар успешно перенесен!");
+            this.$emit("toggleMoveProduct", this.movedProduct);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
