@@ -7,6 +7,7 @@
 
     <v-delete-product
       :deletedItem="deletedProduct"
+      :region="filtersOptions.region"
       @deleteProduct="deleteProduct"
       @clearSelectedProducts="clearSelectedProducts"
     />
