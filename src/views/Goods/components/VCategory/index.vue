@@ -123,6 +123,7 @@
                 ? require('@/assets/icons/eye_close.svg')
                 : require('@/assets/icons/eye.svg')
             "
+            :class="{ none: item.visible }"
             @click="$emit('changeVisibility', item._id, item.visible)"
           />
         </VueCustomTooltip>

@@ -87,6 +87,7 @@
                   ? require('@/assets/icons/eye_close.svg')
                   : require('@/assets/icons/eye.svg')
               "
+              :class="{ none: item.visible }"
               @click="changeProductVisibility(item._id, item.visible)"
             />
           </VueCustomTooltip>
@@ -292,6 +293,9 @@ export default {
   label {
     color: rgba(0, 0, 0, 0.3);
     display: flex;
+  }
+  img.none {
+    opacity: 0.3;
   }
 }
 </style>
