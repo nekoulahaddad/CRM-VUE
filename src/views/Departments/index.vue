@@ -20,7 +20,6 @@
           >
             {{ item.value }}
           </v-button>
-          <v-filter-toggle @toggleFilter="toggleFilter" :active="showFilter" />
         </div>
       </div>
     </div>
@@ -165,7 +164,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["sidebar"]),
+    ...mapGetters({ sidebar: "sidebar" }),
     role: {
       get: function () {
         let role = this.getUserRole();
