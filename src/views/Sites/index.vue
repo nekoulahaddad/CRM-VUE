@@ -65,6 +65,7 @@
 <script>
 import VItem from "./components/VItem";
 import VImport from "./components/VImport";
+import dataMixins from "@/mixins/data";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
@@ -73,6 +74,7 @@ import { mapGetters } from "vuex";
 import axios from "@/api/axios";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VPageHeader,
     VSpinner,
