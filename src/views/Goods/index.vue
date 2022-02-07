@@ -278,6 +278,7 @@
                   <v-product-move
                     v-if="movedProduct._id === item._id"
                     :movedProduct="movedProduct"
+                    :region="filtersOptions.region"
                     @toggleMoveProduct="toggleMoveProduct"
                   />
 

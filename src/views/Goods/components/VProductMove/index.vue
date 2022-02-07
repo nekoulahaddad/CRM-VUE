@@ -1,5 +1,5 @@
 <template>
-  <div class="list__info list-info product-list-info">
+  <div class="list__info list-info product-move">
     <div class="group__title text--blue">
       Переместить товар в другую категорию:
     </div>
@@ -15,8 +15,8 @@
               placeholder="Введите исполнителя задачи..."
             >
               <template #result="{ result, props }">
-                <li v-bind="props">
-                  {{ transformFIO(result) }}
+                <li v-bind="props" @click="selectCategory(result)">
+                  {{ result.categoryName }}
                 </li>
               </template>
             </autocomplete>
@@ -64,8 +64,11 @@ export default {
     onChange() {
       this.tempCategories = [];
     },
-    getResultValue() {
-      return "";
+    getResultValue(result) {
+      return result.categoryName;
+    },
+    selectCategory(category) {
+      this.category = category;
     },
     searchByExecutor(input) {
       if (input.length < 1) {
@@ -75,27 +78,16 @@ export default {
         axios({
           url: `/categories/getcategoriesandbrandsbysearch/`,
           data: {
-            title: this.currentInput,
+            title: input,
             region: this.region,
           },
           method: "POST",
-        }).then(async (res) => {
-          let result = await res;
-          if (!result.data.views.length) {
-            this.$toast.error("Категория не найдена", "Ошибка");
-            return;
+        }).then((result) => {
+          if (result.data.views.length < 1) {
+            return [];
           }
-          if (result.data.views.length === 1) {
-            if (result.data.views[0].name) {
-              this.$toast.success("Бренд успешно выбран!");
-            } else {
-              this.$toast.success("Категория успешно выбрана!");
-            }
-            this.category = result.data.views[0];
-            this.currentInput = "";
-            return;
-          }
-          this.tempCategories = result.data.views;
+
+          resolve(result.data.views);
         });
       });
     },
@@ -184,3 +176,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.product-move {
+  .autocomplete-input {
+    width: 401px;
+  }
+}
+</style>
