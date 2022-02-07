@@ -877,6 +877,7 @@ export default {
     },
   },
   async created() {
+    this.$store.commit("deactivateAction", "importGoods");
     this.$store.commit("deactivateAction", "addGoodsCategory");
     try {
       this.updateGoods(

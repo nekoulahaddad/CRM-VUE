@@ -98,13 +98,16 @@
           <a
             href=""
             class="page-actions__button"
+            :class="{
+              'page-actions__button--active': $store.state.actions.importGoods,
+            }"
             @click.prevent="
               $store.commit('toggleAction', {
                 key: 'importGoods',
               })
             "
           >
-            <img src="@/assets/icons/import_excel.svg" alt="" />
+            <simple-svg :src="require('@/assets/icons/import_excel.svg')" />
           </a>
         </VueCustomTooltip>
 
