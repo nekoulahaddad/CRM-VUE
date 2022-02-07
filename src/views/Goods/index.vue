@@ -613,7 +613,7 @@ export default {
     },
     toggleDeleteProduct(deletedProduct) {
       this.deletedProduct = deletedProduct;
-      this.$modal.show("deleteProduct");
+      this.$modal.show("deleteGoodsProduct");
     },
     deleteProduct(product) {
       let index = this.dataset.products.findIndex(
