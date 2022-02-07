@@ -65,7 +65,11 @@
         </div>
         <div class="table__icon">
           <template
-            v-if="id === task.initiator._id || id === task.responsible._id"
+            v-if="
+              role === 'superadmin' ||
+              id === task.initiator._id ||
+              id === task.responsible._id
+            "
           >
             <VueCustomTooltip v-if="index !== activeIndex" label="Подзадача">
               <img
@@ -84,7 +88,10 @@
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <VueCustomTooltip v-if="id === task.initiator._id" label="Удалить">
+          <VueCustomTooltip
+            v-if="id === task.initiator._id || role === 'superadmin'"
+            label="Удалить"
+          >
             <img
               alt=""
               src="/icons/trash_icon.svg"
@@ -101,6 +108,7 @@
 <script>
 export default {
   props: {
+    role: String,
     activeIndex: {
       type: Number,
     },

@@ -104,6 +104,7 @@
                   :infoItem="infoItem"
                   :index="index"
                   :task="task"
+                  :role="role"
                   @toggleInfo="toggleInfo"
                   @getSubTasks="getSubTasks"
                   @toggleDelete="toggleDelete"
