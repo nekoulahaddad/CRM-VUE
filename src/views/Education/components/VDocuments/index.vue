@@ -24,7 +24,9 @@
             <div class="table__icon">
               <img
                 alt=""
-                v-if="role === 'director' && canChanges"
+                v-if="
+                  (role === 'superadmin' || role === 'director') && canChanges
+                "
                 src="@/assets/icons/trash_icon.svg"
                 @click="$emit('deleteDocument', document)"
               />
