@@ -306,7 +306,6 @@ export default {
       })
         .then((res) => {
           this.educations = res.data.educations;
-          this.changeStatus(true);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);

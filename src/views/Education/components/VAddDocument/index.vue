@@ -14,6 +14,7 @@
         <div class="group__title">Название документа:</div>
         <div class="group__content">
           <input
+            required
             class="form-control"
             type="text"
             placeholder="Введите название..."
@@ -24,21 +25,24 @@
       </div>
       <div class="card__group group">
         <div class="group__title">Загрузить документ:</div>
+        <div class="group__document" v-if="document.name">
+          {{ document.name }}
+        </div>
         <div class="group__content">
           <input
             type="file"
             id="document-file"
             hidden
+            :disabled="start"
             name="document"
             @change="fileUpload($event)"
           />
-          <label for="document-file">
-            {{ document.name ? document.name : document }}
-          </label>
+          <label for="document-file"> Выбрать файл </label>
         </div>
       </div>
       <div class="group__actions">
-        <v-button red>Сохранить</v-button>
+        <v-button v-if="!start" red>Сохранить</v-button>
+        <v-spinner small v-else />
       </div>
     </form>
   </div>
@@ -47,6 +51,7 @@
 <script>
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
 import { mapMutations } from "vuex";
 
 export default {
@@ -55,9 +60,10 @@ export default {
       type: Object,
     },
   },
-  components: { VButton },
+  components: { VButton, VSpinner },
   data() {
     return {
+      start: false,
       document: "Выбрать файл",
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
@@ -87,6 +93,8 @@ export default {
         return;
       }
 
+      this.start = true;
+
       axios({
         url: "/educations/upload/",
         data: documentData,
@@ -95,11 +103,10 @@ export default {
         .then(() => {
           this.$emit("success");
           this.$toast.success("Документ успешно загружен!");
-          this.changeStatus(true);
         })
         .catch((err) => {
+          this.start = false;
           this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
         });
     },
   },
@@ -157,6 +164,9 @@ export default {
     border-radius: $border-radius;
     color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
+  }
+  .group__document {
+    margin-bottom: 10px;
   }
 }
 </style>

@@ -6,13 +6,13 @@
         <div class="group__title">Наименование раздела:</div>
         <div class="group__content">
           <input
+            required
             class="form-control"
             placeholder="Введите название раздела..."
             type="text"
             v-model="formData.title"
             @change="onChange($event)"
             name="title"
-            required
           />
         </div>
       </div>
@@ -54,12 +54,12 @@
         <div class="group__title">Описание раздела:</div>
         <div class="group__content">
           <textarea
+            required
             class="form-textarea"
             placeholder="Введите описание раздела..."
             name="description"
             v-model="formData.description"
             @change="onChange($event)"
-            require
           />
         </div>
       </div>
