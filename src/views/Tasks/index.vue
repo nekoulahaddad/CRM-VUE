@@ -235,7 +235,8 @@ export default {
           this.role === "worker" ||
           this.role === "seo" ||
           this.role === "manager" ||
-          this.role === "content"
+          this.role === "content" ||
+          this.role === "superadmin"
             ? "today"
             : null,
         creation_date: -1,

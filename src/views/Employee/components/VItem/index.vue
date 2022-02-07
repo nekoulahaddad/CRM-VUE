@@ -50,7 +50,11 @@
           />
         </div>
         <div class="table__icon">
-          <template v-if="role === 'director' || options.userEditor">
+          <template
+            v-if="
+              role === 'superadmin' || role === 'director' || options.userEditor
+            "
+          >
             <VueCustomTooltip
               v-if="employee._id !== editedItem._id"
               label="Изменить"
@@ -71,7 +75,10 @@
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <VueCustomTooltip v-if="role === 'director'" label="Удалить">
+          <VueCustomTooltip
+            v-if="role === 'superadmin' || role === 'director'"
+            label="Удалить"
+          >
             <img
               alt=""
               src="@/assets/icons/trash_icon.svg"
