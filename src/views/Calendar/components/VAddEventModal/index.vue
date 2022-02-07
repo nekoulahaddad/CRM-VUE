@@ -1,7 +1,7 @@
 <template>
   <v-modal
     :adaptive="true"
-    :minHeight="691"
+    :minHeight="696"
     :minWidth="996"
     name="addEvent"
     @before-close="closeModal"
