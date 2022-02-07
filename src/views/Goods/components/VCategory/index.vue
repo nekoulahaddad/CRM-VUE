@@ -56,7 +56,7 @@
         >
           <div
             class="table__icon"
-            :class="{ none: item.visible }"
+            :class="{ none: !item.visible }"
             @click="
               current[current.length - 1] !== item.categoryName
                 ? current.push(item)

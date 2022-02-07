@@ -6,7 +6,7 @@
       <input type="checkbox" @change="selectProducts($event, item)" />
     </div>
     <div class="list__column">
-      <span :class="{ none: item.visible }">
+      <span :class="{ none: !item.visible }">
         {{ item.title }}
       </span>
     </div>
