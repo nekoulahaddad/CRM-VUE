@@ -8,7 +8,7 @@
     />
     <div class="page__body d-flex">
       <div class="page__left" v-if="showFilter">
-        <v-filter type="goods" ref="filters" />
+        <v-filter type="goods" ref="filters" :showEditButton="false" />
       </div>
       <div
         class="page__right"

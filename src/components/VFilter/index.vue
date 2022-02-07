@@ -753,7 +753,7 @@ export default {
   props: {
     showEditButton: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     type: {
       type: String,
