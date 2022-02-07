@@ -346,6 +346,8 @@ export default {
   }
 
   .page__header {
+    max-width: 1900px;
+
     button {
       width: 250px;
       margin-left: 20px;
