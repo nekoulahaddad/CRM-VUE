@@ -644,12 +644,11 @@ export default {
           let result = await res;
           this.editProduct(result.data.product);
           this.$toast.success(result.data.message);
-          this.changeStatus(true);
-          this.isLoading = true;
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
+        })
+        .finally(() => {
           this.isLoading = true;
         });
     },

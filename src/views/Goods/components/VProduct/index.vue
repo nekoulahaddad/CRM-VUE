@@ -5,7 +5,11 @@
     <div class="list__column">
       <input type="checkbox" @change="selectProducts($event, item)" />
     </div>
-    <div class="list__column">{{ item.title }}</div>
+    <div class="list__column">
+      <span :class="{ none: item.visible }">
+        {{ item.title }}
+      </span>
+    </div>
     <div class="list__column">
       <span v-if="item.type !== 'group'">{{ item.article }}</span>
       <span v-else>Группа</span>
@@ -294,7 +298,7 @@ export default {
     color: rgba(0, 0, 0, 0.3);
     display: flex;
   }
-  img.none {
+  .none {
     opacity: 0.3;
   }
 }

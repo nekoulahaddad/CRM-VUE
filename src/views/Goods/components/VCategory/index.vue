@@ -56,6 +56,7 @@
         >
           <div
             class="table__icon"
+            :class="{ none: item.visible }"
             @click="
               current[current.length - 1] !== item.categoryName
                 ? current.push(item)
@@ -87,10 +88,10 @@
       </div>
       <div class="table__icon" v-if="show">
         <img
+          alt=""
           :class="{ 'table__icon--opacity': opacity }"
           @click="$emit('addToGoogleDoc', item)"
           src="@/assets/icons/google_doc.svg"
-          alt=""
         />
       </div>
 
@@ -195,7 +196,7 @@ export default {
     filter: grayscale(100%);
     opacity: 0.3;
   }
-  img.none {
+  .none {
     opacity: 0.3;
   }
 }
