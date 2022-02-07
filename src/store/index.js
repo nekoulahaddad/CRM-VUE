@@ -33,6 +33,7 @@ export default new Vuex.Store({
     filterOptions: {},
     file: {},
     actions: {
+      addDbTask: false,
       addCallback: false,
       addGoodsCategory: false,
       addDelivery: false,

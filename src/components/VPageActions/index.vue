@@ -9,9 +9,22 @@
 
       <!-- Рабочий стол -->
       <template v-if="name === 'desktop'">
-        <a href="" class="page-actions__button" @click.prevent="addTask">
-          <img src="@/assets/icons/tasks_add.svg" alt="" />
-        </a>
+        <VueCustomTooltip label="Добавить задачу">
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="
+              $store.commit('toggleAction', {
+                key: 'addDbTask',
+              })
+            "
+            :class="{
+              'page-actions__button--active': $store.state.actions.addDbTask,
+            }"
+          >
+            <simple-svg :src="require('@/assets/icons/add_db_task.svg')" />
+          </a>
+        </VueCustomTooltip>
       </template>
 
       <!-- Календарь -->

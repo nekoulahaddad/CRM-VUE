@@ -196,6 +196,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.commit("deactivateAction", "addDbTask");
     this.fetchData();
     this.updateEvents();
 
