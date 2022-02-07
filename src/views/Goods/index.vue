@@ -268,7 +268,7 @@
                   />
 
                   <!-- Редактирование товара -->
-                  <v-product-edit v-if="editedItem._id === item._id" />
+                  <v-product-edit v-if="editedItem._id === item._id && false" />
 
                   <!-- Редактирование группы -->
                   <v-product-group-edit
