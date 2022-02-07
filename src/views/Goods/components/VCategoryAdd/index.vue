@@ -1,9 +1,19 @@
 <template>
   <div class="list__info list-info category-add-form">
-    {{ categoryName }}
+    <div class="category-add-form__title text--blue">
+      Создать категорию:
+      <img
+        alt=""
+        class="category-add-form__close"
+        src="/icons/close_icon.svg"
+        @click.prevent="
+          $store.commit('toggleAction', {
+            key: 'addGoodsCategory',
+          })
+        "
+      />
+    </div>
     <form @submit.prevent="onCategoryAdd">
-      <div class="category-add-form__title text--blue">Создать категорию:</div>
-
       <div class="group">
         <div class="group__title">Название категории:</div>
         <div class="group__content">
@@ -224,10 +234,23 @@ export default {
 @import "@/styles/_variables";
 
 .category-add-form {
+  padding: 0;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+
   &__title {
-    font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 10px;
+    background-color: $color-gray-secondary;
+    height: 48px;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    color: $color-black;
+    font-size: 16px;
+    position: relative;
   }
   .form-control {
     width: 976px;
@@ -314,6 +337,18 @@ export default {
   }
   .autocomplete-input {
     width: 976px;
+  }
+
+  form {
+    padding: 10px;
+  }
+
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
   }
 }
 </style>
