@@ -681,7 +681,9 @@
             <button @click="clearOptions" class="btn btn--red filter__btn">
               Очистить
             </button>
-            <v-button white>Редактировать регион</v-button>
+            <v-button v-if="showEditButton" white>
+              Редактировать регион
+            </v-button>
           </div>
         </template>
       </div>
@@ -749,6 +751,10 @@ import VButton from "@/components/VButton";
 
 export default {
   props: {
+    showEditButton: {
+      type: Boolean,
+      default: false,
+    },
     type: {
       type: String,
       required: false,
