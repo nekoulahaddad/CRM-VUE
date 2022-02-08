@@ -172,9 +172,12 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     width: 401px;
+    overflow-x: hidden;
 
-    & + * {
-      margin-top: 10px;
+    margin-top: 10px;
+
+    &:last-child {
+      margin-bottom: 10px;
     }
   }
 
