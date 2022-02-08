@@ -4,7 +4,7 @@
     <v-add-event-modal @updateEvents="updateEvents" />
 
     <!-- Модальное окно со списком событий -->
-    <v-event-list :events="dayEvents" />
+    <v-event-list :events="dayEvents" :userId="userId" :role="role" />
 
     <v-edit-event-modal
       :userId="userId"
@@ -46,7 +46,7 @@
 
 <script>
 import axios from "@/api/axios";
-import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
+import { CalendarView } from "vue-simple-calendar";
 import VPageHeader from "@/components/VPageHeader";
 import VCalendar from "./components/VCalendar";
 import VCalendarEvents from "./components/VCalendarEvents";
@@ -62,6 +62,7 @@ export default {
       isLoading: false,
       showDate: new Date(),
       day: false,
+      events: [],
       days: [
         {
           key: "today",
@@ -76,7 +77,6 @@ export default {
       ],
       selectionStart: null,
       selectionEnd: null,
-      events: [],
       clickedDay: null,
       edit: false,
       editedItem: {},
@@ -97,7 +97,6 @@ export default {
   },
   components: {
     CalendarView,
-    CalendarViewHeader,
     VPageHeader,
     VCalendarEvents,
     VEditEventModal,
@@ -205,7 +204,6 @@ export default {
       return result;
     },
     async updateEvents() {
-      this.isLoading = false;
       let result = await this.getData("/events/get");
       let res = await result;
       for (let i = 0; i < res.data.length; i++) {
@@ -215,7 +213,6 @@ export default {
         res.data[i] = event;
       }
       this.events = res.data;
-      this.isLoading = true;
     },
   },
   mounted() {

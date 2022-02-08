@@ -31,16 +31,24 @@
                       <img src="@/assets/icons/info_icon.svg" alt="" />
                     </VueCustomTooltip>
                   </div>
-                  <div class="table__icon">
-                    <VueCustomTooltip label="Изменить">
-                      <img src="@/assets/icons/write_icon.svg" alt="" />
-                    </VueCustomTooltip>
-                  </div>
-                  <div class="table__icon">
-                    <VueCustomTooltip label="Удалить">
-                      <img src="@/assets/icons/trash_icon.svg" alt="" />
-                    </VueCustomTooltip>
-                  </div>
+                  <template
+                    v-if="
+                      role === 'superadmin' ||
+                      (event.customData.initiator &&
+                        event.customData.initiator._id === userId)
+                    "
+                  >
+                    <div class="table__icon">
+                      <VueCustomTooltip label="Изменить">
+                        <img src="@/assets/icons/write_icon.svg" alt="" />
+                      </VueCustomTooltip>
+                    </div>
+                    <div class="table__icon">
+                      <VueCustomTooltip label="Удалить">
+                        <img src="@/assets/icons/trash_icon.svg" alt="" />
+                      </VueCustomTooltip>
+                    </div>
+                  </template>
                 </div>
               </div>
             </div>
@@ -55,6 +63,8 @@
 export default {
   props: {
     events: Array,
+    userId: String,
+    role: String,
   },
   methods: {
     closeModal() {
