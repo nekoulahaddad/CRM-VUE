@@ -12,7 +12,7 @@
       </div>
       <div class="vm--modal__inner vm--modal__edit-event">
         <div class="group__title text--blue">Основная информация</div>
-        <form @submit.prevent="">
+        <form @submit.prevent="confirm">
           <!-- Описание -->
           <div class="group">
             <div class="group__title">Описание:</div>
@@ -143,6 +143,7 @@ export default {
       })
         .then(() => {
           this.$toast.success("Мероприятие успешно изменено!");
+          this.cancel();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
