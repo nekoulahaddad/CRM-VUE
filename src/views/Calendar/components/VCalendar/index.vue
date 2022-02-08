@@ -5,7 +5,6 @@
     :attributes="attributes"
     is-expanded
     :trimWeeks="true"
-    @dayclick="test"
   >
     <template v-slot:day-content="{ day, attributes }">
       <div class="custom-calendar__date">
@@ -18,7 +17,7 @@
         >
           <p
             class="custom-calendar__event"
-            @click="showEventList(attr)"
+            @click="showEventList(attributes)"
             v-for="attr in attributes"
             :key="attr.key"
           >
@@ -46,14 +45,8 @@ export default {
     };
   },
   methods: {
-    showEventList(attr) {
-      this.$emit(
-        "showEventList",
-        this.events.find((e) => e._id === attr.key)
-      );
-    },
-    test() {
-      alert();
+    showEventList(attributes) {
+      this.$emit("showEventList", attributes);
     },
   },
   watch: {

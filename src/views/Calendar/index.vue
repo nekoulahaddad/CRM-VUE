@@ -4,7 +4,7 @@
     <v-add-event-modal @updateEvents="updateEvents" />
 
     <!-- Модальное окно со списком событий -->
-    <v-event-list />
+    <v-event-list :events="dayEvents" />
 
     <v-edit-event-modal
       :userId="userId"
@@ -58,6 +58,7 @@ import "vue-simple-calendar/static/css/default.css";
 export default {
   data() {
     return {
+      dayEvents: [],
       isLoading: false,
       showDate: new Date(),
       day: false,
@@ -158,7 +159,8 @@ export default {
       this.editedItem = event;
       this.$modal.show("editEvent");
     },
-    showEventList(event) {
+    showEventList(events) {
+      this.dayEvents = events;
       this.$modal.show("eventList");
     },
     clickItem(date, items) {
