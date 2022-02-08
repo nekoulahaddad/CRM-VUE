@@ -1,7 +1,5 @@
 <template>
-  <v-spinner v-if="!isLoading" />
   <vc-calendar
-    v-else
     class="custom-calendar max-w-full"
     :masks="masks"
     :attributes="attributes"
@@ -9,15 +7,18 @@
     :trimWeeks="true"
   >
     <template v-slot:day-content="{ day, attributes }">
-      <div @click="showEventList(attributes)">
+      <div
+        v-if="!isLoading"
+        style="display: flex; align-items: center; justify-content: center"
+      >
+        <v-spinner small />
+      </div>
+      <div v-else @click="showEventList(attributes)">
         <div class="custom-calendar__date">
           {{ $moment(day.id).format("DD.MM.YYYY") }} г.
         </div>
         <vue-scroll>
-          <div
-            class="flex-grow overflow-y-auto overflow-x-auto"
-            style="height: 80px"
-          >
+          <div style="height: 80px" class="custom-calendar__days">
             <p
               class="custom-calendar__event"
               v-for="attr in attributes"

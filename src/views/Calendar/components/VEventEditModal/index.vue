@@ -32,26 +32,30 @@
           </div>
 
           <!-- Участники -->
-          <div class="group">
+          <div class="group participants">
             <div class="group__title">Участники:</div>
-            <div class="group__content">
-              <vue-scroll>
-                <div class="group__participants">
-                  <div
-                    class="group__participant"
-                    v-for="(participant, index) in participants"
-                    :key="index"
-                  >
-                    <span>{{ transformFIO(participant) }}</span>
-                    <div>
-                      <VueCustomTooltip label="Удалить">
-                        <img src="@/assets/icons/trash_icon.svg" alt="" />
-                      </VueCustomTooltip>
-                    </div>
+            <div class="group__participants">
+              <vue-scroll v-if="participants.length">
+                <div
+                  class="group__participant"
+                  v-for="(participant, index) in participants"
+                  :key="index"
+                >
+                  <span>{{ transformFIO(participant) }}</span>
+                  <div>
+                    <VueCustomTooltip label="Удалить">
+                      <img
+                        alt=""
+                        src="@/assets/icons/trash_icon.svg"
+                        @click="deleteChip(index)"
+                      />
+                    </VueCustomTooltip>
                   </div>
                 </div>
               </vue-scroll>
+              <div v-else>Участников нет</div>
             </div>
+            <div class="group__content"></div>
           </div>
 
           <div class="group">
@@ -166,6 +170,7 @@ export default {
       }
     },
   },
+  mounted() {},
 };
 </script>
 
@@ -199,7 +204,6 @@ export default {
     padding-right: 10px;
     width: 401px;
     overflow-x: hidden;
-
     margin-top: 10px;
 
     &:last-child {
@@ -221,6 +225,11 @@ export default {
 
   .vdatetime-input {
     width: 401px !important;
+  }
+  .participants {
+    .group__content {
+      width: 422px;
+    }
   }
 }
 </style>
