@@ -7,24 +7,25 @@
     :trimWeeks="true"
   >
     <template v-slot:day-content="{ day, attributes }">
-      <div class="custom-calendar__date">
-        {{ $moment(day.id).format("DD.MM.YYYY") }} г.
-      </div>
-      <vue-scroll>
-        <div
-          class="flex-grow overflow-y-auto overflow-x-auto"
-          style="height: 80px"
-        >
-          <p
-            class="custom-calendar__event"
-            @click="showEventList(attributes)"
-            v-for="attr in attributes"
-            :key="attr.key"
-          >
-            {{ attr.customData.title }}
-          </p>
+      <div @click="showEventList(attributes)">
+        <div class="custom-calendar__date">
+          {{ $moment(day.id).format("DD.MM.YYYY") }} г.
         </div>
-      </vue-scroll>
+        <vue-scroll>
+          <div
+            class="flex-grow overflow-y-auto overflow-x-auto"
+            style="height: 80px"
+          >
+            <p
+              class="custom-calendar__event"
+              v-for="attr in attributes"
+              :key="attr.key"
+            >
+              {{ attr.customData.title }}
+            </p>
+          </div>
+        </vue-scroll>
+      </div>
     </template>
   </vc-calendar>
 </template>
