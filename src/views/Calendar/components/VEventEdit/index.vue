@@ -26,18 +26,20 @@
       <div class="group">
         <div class="group__title">Участники:</div>
         <div class="group__participants">
-          <div
-            class="group__participant"
-            v-for="(chip, index) in participants"
-            :key="chip._id"
-          >
-            <span>{{ transformFIO(chip) }}</span>
-            <div>
-              <VueCustomTooltip label="Удалить">
-                <img src="@/assets/icons/trash_icon.svg" alt="" />
-              </VueCustomTooltip>
+          <vue-scroll>
+            <div
+              class="group__participant"
+              v-for="(chip, index) in participants"
+              :key="chip._id"
+            >
+              <span>{{ transformFIO(chip) }}</span>
+              <div>
+                <VueCustomTooltip label="Удалить">
+                  <img src="@/assets/icons/trash_icon.svg" alt="" />
+                </VueCustomTooltip>
+              </div>
             </div>
-          </div>
+          </vue-scroll>
         </div>
       </div>
 
@@ -131,6 +133,17 @@ export default {
     this.participants = this.editedItem.customData.participants.map(
       (item) => item._id
     );
+
+    const body = document.querySelector("body");
+    const users = document.querySelector(".group__participants");
+
+    users.onmouseover = function () {
+      body.style.overflow = "hidden";
+    };
+
+    users.onmouseout = function () {
+      body.style.overflow = "auto";
+    };
   },
 };
 </script>
@@ -141,9 +154,15 @@ export default {
 .event-edit {
   .form-textarea {
     width: 976px;
-    height: 200px;
+    height: 150px !important;
+  }
+
+  .group__participants {
+    width: 420px;
+    height: 150px;
   }
   .group__participant {
+    margin-left: 3px;
     height: 40px;
     border-radius: $border-radius;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
