@@ -126,6 +126,8 @@ export default {
       }
     },
     toggleInfo(item) {
+      this.editedItem = {};
+
       if (this.infoItem.key === item.key) {
         this.infoItem = {};
       } else {
