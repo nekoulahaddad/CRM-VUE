@@ -16,6 +16,9 @@
             :key="index"
             v-for="(event, index) in events"
             class="list__row list__row--shadow list__row--white"
+            :class="{
+              'list__row--opened': infoItem.key === event.key,
+            }"
           >
             <div class="list__columns list__columns-shadow list__columns-white">
               <div class="list__column">{{ event.customData.title }}</div>
@@ -30,13 +33,22 @@
 
                   <!-- Просмотр -->
                   <div class="table__icon">
-                    <VueCustomTooltip label="Просмотр">
+                    <VueCustomTooltip
+                      label="Просмотр"
+                      v-if="infoItem.key !== event.key"
+                    >
                       <img
                         alt=""
                         @click="toggleInfo(event)"
                         src="@/assets/icons/info_icon.svg"
                       />
                     </VueCustomTooltip>
+                    <img
+                      alt=""
+                      v-else
+                      @click="toggleInfo(event)"
+                      src="@/assets/icons/arrow_top_icon.svg"
+                    />
                   </div>
 
                   <template
@@ -63,6 +75,8 @@
                 </div>
               </div>
             </div>
+
+            <v-event-info v-if="infoItem.key === event.key" :infoItem="event" />
           </div>
         </div>
       </div>
@@ -71,6 +85,8 @@
 </template>
 
 <script>
+import VEventInfo from "../VEventInfo";
+
 export default {
   props: {
     events: Array,
@@ -83,6 +99,7 @@ export default {
       infoItem: {},
     };
   },
+  components: { VEventInfo },
   methods: {
     closeModal() {
       this.$modal.hide("eventList");

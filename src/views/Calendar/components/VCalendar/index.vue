@@ -59,10 +59,7 @@ export default {
 
         return {
           key: event._id,
-          customData: {
-            title: event.title,
-            initiator: event.initiator,
-          },
+          customData: event,
           dates: new Date(year, month, day),
         };
       });
