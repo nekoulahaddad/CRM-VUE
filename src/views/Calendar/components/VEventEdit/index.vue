@@ -100,7 +100,7 @@ export default {
     start: {
       get: function () {
         return new Date(
-          this.$moment(this.editedItem.startDate).format()
+          this.$moment(this.editedItem.customData.startDate).format()
         ).toISOString();
       },
       set: function (date) {
@@ -112,7 +112,7 @@ export default {
     end: {
       get: function () {
         return new Date(
-          this.$moment(this.editedItem.endDate).format()
+          this.$moment(this.editedItem.customData.endDate).format()
         ).toISOString();
       },
       set: function (date) {
