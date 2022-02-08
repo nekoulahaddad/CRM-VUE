@@ -21,16 +21,24 @@
               <div class="list__column">{{ event.customData.title }}</div>
               <div class="list__column">
                 <div class="table__actions">
+                  <!-- Копировать -->
                   <div class="table__icon">
                     <VueCustomTooltip label="Копировать">
                       <img src="@/assets/icons/copy.svg" alt="" />
                     </VueCustomTooltip>
                   </div>
+
+                  <!-- Просмотр -->
                   <div class="table__icon">
                     <VueCustomTooltip label="Просмотр">
-                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                      <img
+                        alt=""
+                        @click="toggleInfo(event)"
+                        src="@/assets/icons/info_icon.svg"
+                      />
                     </VueCustomTooltip>
                   </div>
+
                   <template
                     v-if="
                       role === 'superadmin' ||
@@ -38,11 +46,14 @@
                         event.customData.initiator._id === userId)
                     "
                   >
+                    <!-- Изменение -->
                     <div class="table__icon">
                       <VueCustomTooltip label="Изменить">
                         <img src="@/assets/icons/write_icon.svg" alt="" />
                       </VueCustomTooltip>
                     </div>
+
+                    <!-- Удаление -->
                     <div class="table__icon">
                       <VueCustomTooltip label="Удалить">
                         <img src="@/assets/icons/trash_icon.svg" alt="" />
@@ -66,9 +77,22 @@ export default {
     userId: String,
     role: String,
   },
+  data() {
+    return {
+      editedItem: {},
+      infoItem: {},
+    };
+  },
   methods: {
     closeModal() {
       this.$modal.hide("eventList");
+    },
+    toggleInfo(item) {
+      if (this.infoItem.key === item.key) {
+        this.infoItem = {};
+      } else {
+        this.infoItem = item;
+      }
     },
   },
 };
