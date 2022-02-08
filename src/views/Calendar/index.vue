@@ -8,16 +8,16 @@
       :events="dayEvents"
       :userId="userId"
       :role="role"
+      @toggleEdit="toggleEdit"
       @toggleDelete="toggleDelete"
     />
 
+    <!-- Модальное окно для изменения мероприятия -->
+    <v-event-edit-modal :editedItem="editedItem" />
+
+    <!-- Модальное окно для удаления мероприятия -->
     <v-event-delete-modal :deletedItem="deletedItem" />
 
-    <v-edit-event-modal
-      :userId="userId"
-      :editedItem="editedItem"
-      @updateEvents="updateEvents"
-    />
     <v-page-header
       title="Календарь"
       icon="calendar_title"
@@ -60,8 +60,8 @@ import VCalendar from "./components/VCalendar";
 import VCalendarEvents from "./components/VCalendarEvents";
 import VEventList from "./components/VEventList";
 import VAddEventModal from "./components/VAddEventModal";
-import VEditEventModal from "./components/VEditEventModal";
 import VEventDeleteModal from "./components/VEventDeleteModal";
+import VEventEditModal from "./components/VEventEditModal";
 import "vue-simple-calendar/static/css/default.css";
 
 export default {
@@ -89,9 +89,9 @@ export default {
       selectionEnd: null,
       clickedDay: null,
       edit: false,
+      eventItem: {},
       editedItem: {},
       event: null,
-
       attrs: [
         {
           id: "today",
@@ -109,11 +109,11 @@ export default {
     CalendarView,
     VPageHeader,
     VCalendarEvents,
-    VEditEventModal,
     VAddEventModal,
     VCalendar,
     VEventList,
     VSpinner,
+    VEventEditModal,
     VEventDeleteModal,
   },
   computed: {
@@ -167,8 +167,8 @@ export default {
       });
     },
     showEvent(event) {
-      this.editedItem = event;
-      this.$modal.show("editEvent");
+      //this.eventItem = event;
+      ///this.$modal.show("editEvent");
     },
     showEventList(events) {
       this.dayEvents = events;
@@ -204,6 +204,11 @@ export default {
         this.days = null;
       }
       this.day = !this.day;
+    },
+    toggleEdit(item) {
+      this.editedItem = item;
+      this.$modal.hide("eventList");
+      this.$modal.show("editEvent");
     },
     toggleDelete(item) {
       this.deletedItem = item;

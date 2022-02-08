@@ -1,0 +1,213 @@
+<template>
+  <v-modal :adaptive="true" :minHeight="696" :minWidth="1110" name="editEvent">
+    <div class="event-edit">
+      <div class="vm--modal__title">
+        {{ title }}
+        <img
+          @click="cancel"
+          class="vm--modal__close"
+          src="/icons/close_icon.svg"
+          alt=""
+        />
+      </div>
+      <div class="vm--modal__inner vm--modal__edit-event">
+        <form @submit.prevent="">
+          <div class="group">
+            <div class="group__title">Описание:</div>
+            <div class="group__content">
+              <textarea class="form-textarea" v-model="description" />
+            </div>
+          </div>
+
+          <!-- Создатель -->
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-600">Создатель:</div>
+              <div class="group__value">
+                {{ transformFIO(initiator) }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Участники -->
+          <div class="group">
+            <div class="group__title">Участники:</div>
+            <div class="group__content">
+              <div class="group__participants">
+                <div
+                  class="group__participant"
+                  v-for="(participant, index) in participants"
+                  :key="index"
+                >
+                  {{ transformFIO(participant._id) }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <v-spinner v-if="isLoading" small />
+          <v-button v-else red>Сохранить</v-button>
+        </form>
+      </div>
+    </div>
+  </v-modal>
+</template>
+
+<script>
+import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
+
+export default {
+  props: {
+    editedItem: {
+      type: Object,
+    },
+  },
+  data() {
+    return {
+      title: "",
+      fio: "",
+      description: "",
+      users: [],
+      participants: [],
+      isLoading: false,
+      initiator: "",
+      selectionStart: new Date().toISOString(),
+      selectionEnd: new Date().toISOString(),
+    };
+  },
+  components: { VSpinner },
+  computed: {
+    start: {
+      get: function () {
+        return new Date(
+          this.$moment(this.editedItem.customData.startDate).format()
+        ).toISOString();
+      },
+      set: function (date) {
+        let newDate = new Date(this.$moment(date));
+        this.selectionStart = newDate.toISOString();
+        return newDate;
+      },
+    },
+    end: {
+      get: function () {
+        return new Date(
+          this.$moment(this.editedItem.customData.endDate).format()
+        ).toISOString();
+      },
+      set: function (date) {
+        let newDate = new Date(this.$moment(date));
+        this.selectionEnd = newDate.toISOString();
+        return newDate;
+      },
+    },
+  },
+  methods: {
+    cancel() {
+      this.$modal.hide("editEvent");
+      this.$modal.show("eventList");
+    },
+    onChange(e) {
+      this[e.target.name] = e.target.value;
+    },
+    deleteChip(index) {
+      this.participants.splice(index, 1);
+    },
+    confirm() {
+      this.isLoading = true;
+
+      let event = {
+        _id: this.editedItem.customData._id,
+        title: this.title,
+        description: this.description,
+        startDate: this.selectionStart,
+        endDate: this.selectionEnd,
+        participants: this.participants,
+      };
+      axios({
+        url: `/events/update/`,
+        data: event,
+        method: "POST",
+      })
+        .then(() => {
+          this.$toast.success("Мероприятие успешно изменено!");
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+  },
+  watch: {
+    editedItem() {
+      if (this.editedItem.key) {
+        this.title = this.editedItem.customData.title;
+        this.initiator = this.editedItem.customData.initiator;
+        this.description = this.editedItem.customData.description;
+        this.participants = this.editedItem.customData.participants.map(
+          (item) => item._id
+        );
+      }
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.event-edit {
+  form {
+    max-height: 555px;
+    margin-left: 5px;
+  }
+
+  .form-textarea {
+    width: 976px;
+    height: 150px !important;
+  }
+
+  .group__participants {
+    width: 420px;
+    height: 150px;
+  }
+  .group__participant {
+    margin-left: 3px;
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 401px;
+    overflow-x: hidden;
+
+    margin-top: 10px;
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+  }
+
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
+  }
+
+  .vdatetime-input {
+    width: 401px !important;
+  }
+}
+</style>

@@ -65,7 +65,7 @@
                         <img
                           alt=""
                           src="@/assets/icons/write_icon.svg"
-                          @click="toggleEdit(event)"
+                          @click="$emit('toggleEdit', event)"
                         />
                       </VueCustomTooltip>
                     </div>
@@ -87,13 +87,6 @@
 
             <!-- Блок с просмотром мероприятия -->
             <v-event-info v-if="infoItem.key === event.key" :infoItem="event" />
-
-            <!-- Блок для изменения мероприятия -->
-            <v-event-edit
-              v-if="editedItem.key === event.key"
-              :editedItem="event"
-              @toggleEdit="toggleEdit"
-            />
           </div>
         </div>
       </div>
@@ -103,7 +96,7 @@
 
 <script>
 import VEventInfo from "../VEventInfo";
-import VEventEdit from "../VEventEdit";
+import VEventEdit from "../VEventEditModal";
 
 export default {
   props: {
@@ -122,16 +115,7 @@ export default {
     closeModal() {
       this.$modal.hide("eventList");
     },
-
-    toggleEdit(item) {
-      this.infoItem = {};
-
-      if (this.editedItem.key === item.key) {
-        this.editedItem = {};
-      } else {
-        this.editedItem = item;
-      }
-    },
+    toggleEdit() {},
     toggleInfo(item) {
       this.editedItem = {};
 
