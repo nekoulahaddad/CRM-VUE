@@ -1,80 +1,83 @@
 <template>
   <div class="list__info event-edit">
-    <form @submit.prevent="onEventEdit">
-      <div class="event-info__title text--blue">Основная информация:</div>
+    <vue-scroll>
+      <form @submit.prevent="onEventEdit">
+        <div class="event-info__title text--blue">Основная информация:</div>
 
-      <div class="group">
-        <div class="group__title">Описание:</div>
+        <div class="group">
+          <div class="group__title">Описание:</div>
+          <div class="group__content">
+            <textarea
+              required
+              class="form-textarea"
+              name="description"
+              v-model="description"
+            />
+          </div>
+        </div>
+
         <div class="group__content">
-          <textarea
-            required
-            class="form-textarea"
-            name="description"
-            v-model="description"
-          />
+          <div class="group__item text--bold-700">Создатель:</div>
+          <div class="group__value">
+            {{ transformFIO(editedItem.customData.initiator) }}
+          </div>
         </div>
-      </div>
 
-      <div class="group__content">
-        <div class="group__item text--bold-700">Создатель:</div>
-        <div class="group__value">
-          {{ transformFIO(editedItem.customData.initiator) }}
-        </div>
-      </div>
-
-      <div class="group">
-        <div class="group__title">Участники:</div>
-        <div class="group__participants">
-          <vue-scroll>
-            <div
-              class="group__participant"
-              v-for="(chip, index) in participants"
-              :key="chip._id"
-            >
-              <span>{{ transformFIO(chip) }}</span>
-              <div>
-                <VueCustomTooltip label="Удалить">
-                  <img
-                    alt=""
-                    src="@/assets/icons/trash_icon.svg"
-                    @click="deleteChip(index)"
-                  />
-                </VueCustomTooltip>
+        <div class="group">
+          <div class="group__title">Участники:</div>
+          <div class="group__participants" v-if="participants.length">
+            <vue-scroll>
+              <div
+                class="group__participant"
+                v-for="(chip, index) in participants"
+                :key="chip._id"
+              >
+                <span>{{ transformFIO(chip) }}</span>
+                <div>
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      alt=""
+                      src="@/assets/icons/trash_icon.svg"
+                      @click="deleteChip(index)"
+                    />
+                  </VueCustomTooltip>
+                </div>
               </div>
-            </div>
-          </vue-scroll>
+            </vue-scroll>
+          </div>
+          <div v-else>Участников нет</div>
         </div>
-      </div>
 
-      <div class="group">
-        <div class="group__title">Дата начала:</div>
-        <div class="group__content">
-          <datetime
-            v-model="start"
-            type="datetime"
-            input-class="forms__container--input"
-            @input="start = $event.target.value"
-            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-          />
+        <div class="group">
+          <div class="group__title">Дата начала:</div>
+          <div class="group__content">
+            <datetime
+              v-model="start"
+              type="datetime"
+              input-class="forms__container--input"
+              @input="start = $event.target.value"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
         </div>
-      </div>
 
-      <div class="group">
-        <div class="group__title">Дата окончания:</div>
-        <div class="group__content">
-          <datetime
-            v-model="end"
-            type="datetime"
-            input-class="forms__container--input"
-            @input="end = $event.target.value"
-            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-          />
+        <div class="group">
+          <div class="group__title">Дата окончания:</div>
+          <div class="group__content">
+            <datetime
+              v-model="end"
+              type="datetime"
+              input-class="forms__container--input"
+              @input="end = $event.target.value"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
         </div>
-      </div>
 
-      <v-spinner v-if="isLoading" small />
-      <v-button red v-else>Сохранить</v-button>
-    </form>
+        <v-spinner v-if="isLoading" small />
+        <v-button red v-else>Сохранить</v-button>
+      </form>
+    </vue-scroll>
   </div>
 </template>
 
@@ -177,13 +180,13 @@ export default {
     );
 
     const body = document.querySelector("body");
-    const users = document.querySelector(".group__participants");
+    const form = document.querySelector(".event-edit form");
 
-    users.onmouseover = function () {
+    form.onmouseover = function () {
       body.style.overflow = "hidden";
     };
 
-    users.onmouseout = function () {
+    form.onmouseout = function () {
       body.style.overflow = "auto";
     };
   },
@@ -194,6 +197,11 @@ export default {
 @import "@/styles/_variables";
 
 .event-edit {
+  form {
+    max-height: 555px;
+    margin-left: 5px;
+  }
+
   .form-textarea {
     width: 976px;
     height: 150px !important;
