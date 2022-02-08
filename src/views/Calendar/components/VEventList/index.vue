@@ -73,7 +73,11 @@
                     <!-- Удаление -->
                     <div class="table__icon">
                       <VueCustomTooltip label="Удалить">
-                        <img src="@/assets/icons/trash_icon.svg" alt="" />
+                        <img
+                          alt=""
+                          src="@/assets/icons/trash_icon.svg"
+                          @click="$emit('toggleDelete', event)"
+                        />
                       </VueCustomTooltip>
                     </div>
                   </template>
@@ -118,6 +122,7 @@ export default {
     closeModal() {
       this.$modal.hide("eventList");
     },
+
     toggleEdit(item) {
       this.infoItem = {};
 

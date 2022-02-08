@@ -4,7 +4,14 @@
     <v-add-event-modal @updateEvents="updateEvents" />
 
     <!-- Модальное окно со списком событий -->
-    <v-event-list :events="dayEvents" :userId="userId" :role="role" />
+    <v-event-list
+      :events="dayEvents"
+      :userId="userId"
+      :role="role"
+      @toggleDelete="toggleDelete"
+    />
+
+    <v-event-delete-modal :deletedItem="deletedItem" />
 
     <v-edit-event-modal
       :userId="userId"
@@ -54,6 +61,7 @@ import VCalendarEvents from "./components/VCalendarEvents";
 import VEventList from "./components/VEventList";
 import VAddEventModal from "./components/VAddEventModal";
 import VEditEventModal from "./components/VEditEventModal";
+import VEventDeleteModal from "./components/VEventDeleteModal";
 import "vue-simple-calendar/static/css/default.css";
 
 export default {
@@ -76,6 +84,7 @@ export default {
           dates: new Date(),
         },
       ],
+      deletedItem: {},
       selectionStart: null,
       selectionEnd: null,
       clickedDay: null,
@@ -105,6 +114,7 @@ export default {
     VCalendar,
     VEventList,
     VSpinner,
+    VEventDeleteModal,
   },
   computed: {
     role: {
@@ -194,6 +204,11 @@ export default {
         this.days = null;
       }
       this.day = !this.day;
+    },
+    toggleDelete(item) {
+      this.deletedItem = item;
+      this.$modal.hide("eventList");
+      this.$modal.show("deleteEvent");
     },
     getData(url) {
       let result = axios({
