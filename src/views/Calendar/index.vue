@@ -8,6 +8,8 @@
       :events="dayEvents"
       :userId="userId"
       :role="role"
+      @toggleCopy="toggleCopy"
+      @toggleInfo="toggleInfo"
       @toggleEdit="toggleEdit"
       @toggleDelete="toggleDelete"
     />
@@ -17,6 +19,12 @@
 
     <!-- Модальное окно для удаления мероприятия -->
     <v-event-delete-modal :deletedItem="deletedItem" />
+
+    <!-- Модальное окно для просмотра мероприятия -->
+    <v-event-info-modal :infoItem="infoItem" />
+
+    <!-- Модальное окно для копирования мероприятия -->
+    <v-event-copy-modal :copyItem="copyItem" />
 
     <v-page-header
       title="Календарь"
@@ -62,6 +70,8 @@ import VEventList from "./components/VEventList";
 import VAddEventModal from "./components/VAddEventModal";
 import VEventDeleteModal from "./components/VEventDeleteModal";
 import VEventEditModal from "./components/VEventEditModal";
+import VEventInfoModal from "./components/VEventInfoModal";
+import VEventCopyModal from "./components/VEventCopyModal";
 import "vue-simple-calendar/static/css/default.css";
 
 export default {
@@ -72,6 +82,8 @@ export default {
       showDate: new Date(),
       day: false,
       events: [],
+      infoItem: {},
+      copyItem: {},
       days: [
         {
           key: "today",
@@ -113,7 +125,9 @@ export default {
     VCalendar,
     VEventList,
     VSpinner,
+    VEventCopyModal,
     VEventEditModal,
+    VEventInfoModal,
     VEventDeleteModal,
   },
   computed: {
@@ -204,6 +218,16 @@ export default {
         this.days = null;
       }
       this.day = !this.day;
+    },
+    toggleInfo(item) {
+      this.infoItem = item;
+      this.$modal.hide("eventList");
+      this.$modal.show("infoEvent");
+    },
+    toggleCopy(item) {
+      this.copyItem = item;
+      this.$modal.hide("eventList");
+      this.$modal.show("copyEvent");
     },
     toggleEdit(item) {
       this.editedItem = item;

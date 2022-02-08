@@ -28,28 +28,23 @@
                   <!-- Копировать -->
                   <div class="table__icon">
                     <VueCustomTooltip label="Копировать">
-                      <img src="@/assets/icons/copy.svg" alt="" />
+                      <img
+                        alt=""
+                        src="@/assets/icons/copy.svg"
+                        @click="$emit('toggleCopy', event)"
+                      />
                     </VueCustomTooltip>
                   </div>
 
                   <!-- Просмотр -->
                   <div class="table__icon">
-                    <VueCustomTooltip
-                      label="Просмотр"
-                      v-if="infoItem.key !== event.key"
-                    >
+                    <VueCustomTooltip label="Просмотр">
                       <img
                         alt=""
-                        @click="toggleInfo(event)"
+                        @click="$emit('toggleInfo', event)"
                         src="@/assets/icons/info_icon.svg"
                       />
                     </VueCustomTooltip>
-                    <img
-                      alt=""
-                      v-else
-                      @click="toggleInfo(event)"
-                      src="@/assets/icons/arrow_top_icon.svg"
-                    />
                   </div>
 
                   <template
@@ -114,16 +109,6 @@ export default {
   methods: {
     closeModal() {
       this.$modal.hide("eventList");
-    },
-    toggleEdit() {},
-    toggleInfo(item) {
-      this.editedItem = {};
-
-      if (this.infoItem.key === item.key) {
-        this.infoItem = {};
-      } else {
-        this.infoItem = item;
-      }
     },
   },
 };
