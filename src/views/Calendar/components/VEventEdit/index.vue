@@ -33,7 +33,9 @@
           >
             <span>{{ transformFIO(chip) }}</span>
             <div>
-              <img src="@/assets/icons/trash_icon.svg" alt="" />
+              <VueCustomTooltip label="Удалить">
+                <img src="@/assets/icons/trash_icon.svg" alt="" />
+              </VueCustomTooltip>
             </div>
           </div>
         </div>
@@ -130,6 +132,18 @@ export default {
 
     & + * {
       margin-top: 10px;
+    }
+  }
+
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
     }
   }
 }
