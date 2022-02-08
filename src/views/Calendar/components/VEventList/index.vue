@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="696" :minWidth="996" name="eventList">
+  <v-modal :adaptive="true" :minHeight="696" :minWidth="1110" name="eventList">
     <div class="vm--modal__title">
       Список событий
       <img
