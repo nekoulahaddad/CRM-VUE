@@ -10,18 +10,137 @@
           @click="cancel"
         />
       </div>
+
+      <div class="event-copy__inner">
+        <!-- Заголовок -->
+        <div class="group">
+          <div class="group__title">Заголовок:</div>
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="text"
+              placeholder="Введите заголовок мероприятия..."
+            />
+          </div>
+        </div>
+
+        <!-- Описание -->
+        <div class="group">
+          <div class="group__title">Описание:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Введите описание мероприятия..."
+            />
+          </div>
+        </div>
+
+        <!-- Участники -->
+        <div class="group participants">
+          <div class="group__title">Участники:</div>
+          <div class="group__participants">
+            <vue-scroll v-if="participants.length">
+              <div
+                class="group__participant"
+                v-for="(participant, index) in participants"
+                :key="index"
+              >
+                <span>{{ transformFIO(participant) }}</span>
+                <div>
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      alt=""
+                      src="@/assets/icons/trash_icon.svg"
+                      @click="deleteChip(index)"
+                    />
+                  </VueCustomTooltip>
+                </div>
+              </div>
+            </vue-scroll>
+            <div v-else>Участников нет</div>
+          </div>
+          <div class="group__content">
+            <autocomplete
+              class="participants__input"
+              :search="searchByExecutor"
+              :get-result-value="getResultValue"
+              placeholder="Введите участника мероприятия..."
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectUser(result)">
+                  {{ transformFIO(result) }}
+                </li>
+              </template>
+            </autocomplete>
+          </div>
+        </div>
+
+        <!-- Дата начала -->
+        <div class="group">
+          <div class="group__title">Дата начала:</div>
+          <div class="group__content">
+            <datetime
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
+        </div>
+
+        <!-- Дата окончания -->
+        <div class="group">
+          <div class="group__title">Дата окончания:</div>
+          <div class="group__content">
+            <datetime
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
+        </div>
+
+        <v-spinner v-if="isLoading" small />
+        <v-button v-else red>Сохранить</v-button>
+      </div>
     </div>
   </v-modal>
 </template>
 
 <script>
+import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
+
 export default {
+  data() {
+    return {
+      participants: [],
+    };
+  },
+  components: { VSpinner },
   methods: {
     cancel() {
       this.$modal.hide("copyEvent");
       this.$modal.show("eventList");
     },
     confirm() {},
+    deleteChip(index) {},
+    getResultValue(result) {
+      return "";
+    },
+    searchByExecutor(input) {
+      if (input.length < 1) {
+        return [];
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    selectUser(participant) {
+      this.participants.push(participant);
+    },
   },
 };
 </script>
@@ -54,6 +173,49 @@ export default {
 
   &__inner {
     padding: 10px 20px 20px;
+  }
+
+  .form-textarea,
+  .form-control {
+    width: 976px;
+  }
+  .vdatetime-input {
+    width: 401px !important;
+  }
+
+  .group__participant {
+    margin-left: 3px;
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 401px;
+    overflow-x: hidden;
+    margin-top: 10px;
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+  }
+  .participants {
+    .group__content {
+      width: 422px;
+    }
+    &__input {
+      margin-top: 10px;
+    }
+  }
+  .group__participants {
+    width: 420px;
+    max-height: 150px;
+  }
+  .form-textarea {
+    width: 976px;
+    height: 150px !important;
   }
 }
 </style>

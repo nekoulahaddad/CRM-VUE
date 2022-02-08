@@ -193,6 +193,22 @@ export default {
     width: 420px;
     height: 150px;
   }
+
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
+  }
+
+  .vdatetime-input {
+    width: 401px !important;
+  }
   .group__participant {
     margin-left: 3px;
     height: 40px;
@@ -210,22 +226,6 @@ export default {
     &:last-child {
       margin-bottom: 10px;
     }
-  }
-
-  span[role="tooltip"] {
-    &:after {
-      background-color: $color-black;
-      color: $color-white;
-      border-radius: $border-radius;
-    }
-
-    & + * {
-      margin-left: 20px;
-    }
-  }
-
-  .vdatetime-input {
-    width: 401px !important;
   }
   .participants {
     .group__content {
