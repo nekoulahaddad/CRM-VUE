@@ -17,7 +17,7 @@
         >
           <p
             class="custom-calendar__event"
-            @click="showEvent(attr)"
+            @click="showEventList(attr)"
             v-for="attr in attributes"
             :key="attr.key"
           >
@@ -45,9 +45,9 @@ export default {
     };
   },
   methods: {
-    showEvent(attr) {
+    showEventList(attr) {
       this.$emit(
-        "showEvent",
+        "showEventList",
         this.events.find((e) => e._id === attr.key)
       );
     },

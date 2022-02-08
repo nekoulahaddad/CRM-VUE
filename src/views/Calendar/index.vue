@@ -1,6 +1,11 @@
 <template>
   <div class="page calendar-page">
+    <!-- Модальное окно для добавления события -->
     <v-add-event-modal @updateEvents="updateEvents" />
+
+    <!-- Модальное окно со списком событий -->
+    <v-event-list />
+
     <v-edit-event-modal
       :userId="userId"
       :editedItem="editedItem"
@@ -29,7 +34,11 @@
       </div>
 
       <div class="page__right">
-        <v-calendar :events="events" @showEvent="showEvent" />
+        <v-calendar
+          :events="events"
+          @showEvent="showEvent"
+          @showEventList="showEventList"
+        />
       </div>
     </div>
   </div>
@@ -41,6 +50,7 @@ import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
 import VPageHeader from "@/components/VPageHeader";
 import VCalendar from "./components/VCalendar";
 import VCalendarEvents from "./components/VCalendarEvents";
+import VEventList from "./components/VEventList";
 import VAddEventModal from "./components/VAddEventModal";
 import VEditEventModal from "./components/VEditEventModal";
 import "vue-simple-calendar/static/css/default.css";
@@ -92,6 +102,7 @@ export default {
     VEditEventModal,
     VAddEventModal,
     VCalendar,
+    VEventList,
   },
   computed: {
     role: {
@@ -146,6 +157,9 @@ export default {
     showEvent(event) {
       this.editedItem = event;
       this.$modal.show("editEvent");
+    },
+    showEventList(event) {
+      this.$modal.show("eventList");
     },
     clickItem(date, items) {
       this.selectionStart = new Date(this.$moment(date));
