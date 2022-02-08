@@ -33,9 +33,6 @@
         </div>
       </div>
     </div>
-    <div class="event-info__title text--blue">
-      Информация о задаче мероприятия:
-    </div>
   </div>
 </template>
 
