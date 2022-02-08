@@ -1,19 +1,22 @@
 <template>
   <div class="list__info event-edit">
-    <div class="event-info__title text--blue">Основная информация:</div>
+    <form>
+      <div class="event-info__title text--blue">Основная информация:</div>
 
-    <div class="group">
-      <div class="group__title">Описание:</div>
-      <div class="group__content">
-        <textarea
-          required
-          class="form-textarea"
-          name="description"
-          :value="editedItem.customData.description"
-          @input="onChange($event)"
-        />
+      <div class="group">
+        <div class="group__title">Описание:</div>
+        <div class="group__content">
+          <textarea
+            required
+            class="form-textarea"
+            name="description"
+            :value="editedItem.customData.description"
+            @input="onChange($event)"
+          />
+        </div>
       </div>
-    </div>
+      <v-button red>Сохранить</v-button>
+    </form>
   </div>
 </template>
 
