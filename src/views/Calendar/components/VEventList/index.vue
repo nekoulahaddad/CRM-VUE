@@ -1,42 +1,46 @@
 <template>
   <v-modal :adaptive="true" :minHeight="696" :minWidth="1110" name="eventList">
-    <div class="vm--modal__title">
-      Список событий
-      <img
-        @click="closeModal"
-        class="vm--modal__close"
-        src="/icons/close_icon.svg"
-        alt=""
-      />
-    </div>
-    <div class="vm--modal__inner">
-      <div class="list list-shadow">
-        <div
-          :key="index"
-          v-for="(event, index) in events"
-          class="list__row list__row--shadow list__row--white"
-        >
-          <div class="list__columns list__columns-shadow list__columns-white">
-            <div class="list__column">{{ event.customData.title }}</div>
-            <div class="list__column">
-              <div class="table__actions">
-                <div class="table__icon">
-                  <img src="@/assets/icons/trash_icon.svg" alt="" />
-                </div>
-                <div class="table__icon">
-                  <VueCustomTooltip label="Просмотр">
-                    <img src="@/assets/icons/info_icon.svg" alt="" />
-                  </VueCustomTooltip>
-                </div>
-                <div class="table__icon">
-                  <VueCustomTooltip label="Изменить">
-                    <img src="@/assets/icons/write_icon.svg" alt="" />
-                  </VueCustomTooltip>
-                </div>
-                <div class="table__icon">
-                  <VueCustomTooltip label="Удалить">
-                    <img src="@/assets/icons/trash_icon.svg" alt="" />
-                  </VueCustomTooltip>
+    <div class="event-list">
+      <div class="vm--modal__title">
+        Список мероприятий
+        <img
+          @click="closeModal"
+          class="vm--modal__close"
+          src="/icons/close_icon.svg"
+          alt=""
+        />
+      </div>
+      <div class="vm--modal__inner">
+        <div class="list list-shadow">
+          <div
+            :key="index"
+            v-for="(event, index) in events"
+            class="list__row list__row--shadow list__row--white"
+          >
+            <div class="list__columns list__columns-shadow list__columns-white">
+              <div class="list__column">{{ event.customData.title }}</div>
+              <div class="list__column">
+                <div class="table__actions">
+                  <div class="table__icon">
+                    <VueCustomTooltip label="Копировать">
+                      <img src="@/assets/icons/copy.svg" alt="" />
+                    </VueCustomTooltip>
+                  </div>
+                  <div class="table__icon">
+                    <VueCustomTooltip label="Просмотр">
+                      <img src="@/assets/icons/info_icon.svg" alt="" />
+                    </VueCustomTooltip>
+                  </div>
+                  <div class="table__icon">
+                    <VueCustomTooltip label="Изменить">
+                      <img src="@/assets/icons/write_icon.svg" alt="" />
+                    </VueCustomTooltip>
+                  </div>
+                  <div class="table__icon">
+                    <VueCustomTooltip label="Удалить">
+                      <img src="@/assets/icons/trash_icon.svg" alt="" />
+                    </VueCustomTooltip>
+                  </div>
                 </div>
               </div>
             </div>
@@ -67,8 +71,10 @@ export default {
   .autocomplete-input {
     width: 401px;
   }
-  &__inner {
-    padding: 10px;
+  .event-list {
+    .vm--modal__inner {
+      padding: 20px;
+    }
   }
 
   .form-textarea {
