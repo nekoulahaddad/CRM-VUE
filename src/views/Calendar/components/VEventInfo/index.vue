@@ -33,6 +33,9 @@
         </div>
       </div>
     </div>
+    <div class="event-info__title text--blue">
+      Информация о задаче мероприятия:
+    </div>
   </div>
 </template>
 
@@ -45,11 +48,29 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .event-info {
   &__title {
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 10px;
+    position: relative;
+
+    &:not(:first-child) {
+      padding-top: 10px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+      }
+    }
   }
 }
 </style>
