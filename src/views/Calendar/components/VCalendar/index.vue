@@ -1,5 +1,7 @@
 <template>
+  <v-spinner v-if="!isLoading" />
   <vc-calendar
+    v-else
     class="custom-calendar max-w-full"
     :masks="masks"
     :attributes="attributes"
@@ -31,6 +33,8 @@
 </template>
 
 <script>
+import VSpinner from "@/components/VSpinner";
+
 export default {
   props: {
     events: {
@@ -43,8 +47,10 @@ export default {
       masks: {
         weekdays: "WWWW",
       },
+      isLoading: false,
     };
   },
+  components: { VSpinner },
   methods: {
     showEventList(attributes) {
       this.$emit("showEventList", attributes);
@@ -52,6 +58,8 @@ export default {
   },
   watch: {
     events() {
+      this.isLoading = this.events.length > 0;
+
       this.attributes = this.events.map((event, i) => {
         const day = new Date(event.startDate).getDate();
         const month = new Date(event.startDate).getMonth();

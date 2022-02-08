@@ -48,6 +48,7 @@
 import axios from "@/api/axios";
 import { CalendarView } from "vue-simple-calendar";
 import VPageHeader from "@/components/VPageHeader";
+import VSpinner from "@/components/VSpinner";
 import VCalendar from "./components/VCalendar";
 import VCalendarEvents from "./components/VCalendarEvents";
 import VEventList from "./components/VEventList";
@@ -103,6 +104,7 @@ export default {
     VAddEventModal,
     VCalendar,
     VEventList,
+    VSpinner,
   },
   computed: {
     role: {
@@ -213,6 +215,7 @@ export default {
         res.data[i] = event;
       }
       this.events = res.data;
+      this.isLoading = true;
     },
   },
   mounted() {
