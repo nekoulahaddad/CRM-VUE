@@ -11,7 +11,9 @@
         />
       </div>
       <div class="vm--modal__inner vm--modal__edit-event">
+        <div class="group__title text--blue">Основная информация</div>
         <form @submit.prevent="">
+          <!-- Описание -->
           <div class="group">
             <div class="group__title">Описание:</div>
             <div class="group__content">
@@ -22,7 +24,7 @@
           <!-- Создатель -->
           <div class="list-info__group group">
             <div class="group__content">
-              <div class="group__item text--bold-600">Создатель:</div>
+              <div class="group__item text--bold-700">Создатель:</div>
               <div class="group__value">
                 {{ transformFIO(initiator) }}
               </div>
@@ -33,15 +35,46 @@
           <div class="group">
             <div class="group__title">Участники:</div>
             <div class="group__content">
-              <div class="group__participants">
-                <div
-                  class="group__participant"
-                  v-for="(participant, index) in participants"
-                  :key="index"
-                >
-                  {{ transformFIO(participant._id) }}
+              <vue-scroll>
+                <div class="group__participants">
+                  <div
+                    class="group__participant"
+                    v-for="(participant, index) in participants"
+                    :key="index"
+                  >
+                    <span>{{ transformFIO(participant) }}</span>
+                    <div>
+                      <VueCustomTooltip label="Удалить">
+                        <img src="@/assets/icons/trash_icon.svg" alt="" />
+                      </VueCustomTooltip>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </vue-scroll>
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="group__title">Дата начала:</div>
+            <div class="group__content">
+              <datetime
+                type="datetime"
+                input-class="forms__container--input"
+                :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+                v-model="selectionStart"
+              />
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="group__title">Дата окончания:</div>
+            <div class="group__content">
+              <datetime
+                type="datetime"
+                input-class="forms__container--input"
+                :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+                v-model="selectionEnd"
+              />
             </div>
           </div>
 
@@ -77,32 +110,6 @@ export default {
     };
   },
   components: { VSpinner },
-  computed: {
-    start: {
-      get: function () {
-        return new Date(
-          this.$moment(this.editedItem.customData.startDate).format()
-        ).toISOString();
-      },
-      set: function (date) {
-        let newDate = new Date(this.$moment(date));
-        this.selectionStart = newDate.toISOString();
-        return newDate;
-      },
-    },
-    end: {
-      get: function () {
-        return new Date(
-          this.$moment(this.editedItem.customData.endDate).format()
-        ).toISOString();
-      },
-      set: function (date) {
-        let newDate = new Date(this.$moment(date));
-        this.selectionEnd = newDate.toISOString();
-        return newDate;
-      },
-    },
-  },
   methods: {
     cancel() {
       this.$modal.hide("editEvent");
@@ -143,10 +150,16 @@ export default {
   },
   watch: {
     editedItem() {
-      if (this.editedItem.key) {
+      if (this.editedItem.customData) {
         this.title = this.editedItem.customData.title;
         this.initiator = this.editedItem.customData.initiator;
         this.description = this.editedItem.customData.description;
+        this.selectionStart = new Date(
+          this.$moment(this.editedItem.customData.startDate).format()
+        ).toISOString();
+        this.selectionEnd = new Date(
+          this.$moment(this.editedItem.customData.endDate).format()
+        ).toISOString();
         this.participants = this.editedItem.customData.participants.map(
           (item) => item._id
         );
