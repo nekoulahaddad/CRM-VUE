@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="770" :minWidth="1110" name="eventList">
+  <v-modal :adaptive="true" :minHeight="780" :minWidth="1110" name="eventList">
     <div class="event-list">
       <div class="vm--modal__title">
         Список мероприятий
@@ -193,7 +193,7 @@ export default {
     }
   }
   &__title {
-    padding-left: 10px;
+    padding-left: 20px !important;
   }
   .list__columns {
     grid-template-columns: 1fr 1fr;
