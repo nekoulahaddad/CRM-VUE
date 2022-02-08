@@ -416,7 +416,7 @@
         <!-- Задачи -->
         <template v-else-if="type === 'tasks'">
           <div class="filter__group group">
-            <div class="group__title">Задачи:</div>
+            <div class="group__title">Статус:</div>
             <div class="group__content">
               <select
                 class="form-select"
