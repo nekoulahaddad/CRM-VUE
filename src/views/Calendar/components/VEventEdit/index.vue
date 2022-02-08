@@ -17,7 +17,7 @@
       </div>
 
       <div class="group__content">
-        <div class="group__item text--bold-600">Создатель:</div>
+        <div class="group__item text--bold-700">Создатель:</div>
         <div class="group__value">
           {{ transformFIO(editedItem.customData.initiator) }}
         </div>
@@ -38,6 +38,30 @@
               </VueCustomTooltip>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Дата начала:</div>
+        <div class="group__content">
+          <datetime
+            v-model="start"
+            type="datetime"
+            input-class="forms__container--input"
+            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+          />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Дата окончания:</div>
+        <div class="group__content">
+          <datetime
+            v-model="end"
+            type="datetime"
+            input-class="forms__container--input"
+            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+          />
         </div>
       </div>
 
@@ -145,6 +169,10 @@ export default {
     & + * {
       margin-left: 20px;
     }
+  }
+
+  .vdatetime-input {
+    width: 401px !important;
   }
 }
 </style>
