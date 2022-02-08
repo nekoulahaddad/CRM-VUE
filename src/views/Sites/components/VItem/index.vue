@@ -41,7 +41,7 @@
             v-else
           />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" v-if="false">
           <VueCustomTooltip label="Обновить">
             <img
               @click="$emit('updateSite', infoItem._id)"
