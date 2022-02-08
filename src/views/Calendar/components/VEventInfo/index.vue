@@ -20,6 +20,18 @@
           </div>
         </div>
       </div>
+      <div class="group__content">
+        <div class="group__item text--bold-600">Дата начала:</div>
+        <div class="group__value">
+          {{ transformTime(infoItem.customData.startDate) }}
+        </div>
+      </div>
+      <div class="group__content">
+        <div class="group__item text--bold-600">Дата окончания:</div>
+        <div class="group__value">
+          {{ transformTime(infoItem.customData.endDate) }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
