@@ -15,6 +15,30 @@
           />
         </div>
       </div>
+
+      <div class="group__content">
+        <div class="group__item text--bold-600">Создатель:</div>
+        <div class="group__value">
+          {{ transformFIO(editedItem.customData.initiator) }}
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Участники:</div>
+        <div class="group__participants">
+          <div
+            class="group__participant"
+            v-for="(chip, index) in participants"
+            :key="chip._id"
+          >
+            <span>{{ transformFIO(chip) }}</span>
+            <div>
+              <img src="@/assets/icons/trash_icon.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <v-button red>Сохранить</v-button>
     </form>
   </div>
@@ -77,14 +101,36 @@ export default {
       this[e.target.name] = e.target.value;
     },
   },
+  mounted() {
+    this.participants = this.editedItem.customData.participants.map(
+      (item) => item._id
+    );
+  },
 };
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .event-edit {
   .form-textarea {
     width: 976px;
     height: 200px;
+  }
+  .group__participant {
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 401px;
+
+    & + * {
+      margin-top: 10px;
+    }
   }
 }
 </style>
