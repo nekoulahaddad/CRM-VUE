@@ -84,9 +84,11 @@
             <!-- Блок с просмотром мероприятия -->
             <v-event-info v-if="infoItem.key === event.key" :infoItem="event" />
 
+            <!-- Блок для изменения мероприятия -->
             <v-event-edit
               v-if="editedItem.key === event.key"
               :editedItem="event"
+              @toggleEdit="toggleEdit"
             />
           </div>
         </div>

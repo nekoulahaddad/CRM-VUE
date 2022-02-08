@@ -1,6 +1,6 @@
 <template>
   <div class="list__info event-edit">
-    <form>
+    <form @submit.prevent="onEventEdit">
       <div class="event-info__title text--blue">Основная информация:</div>
 
       <div class="group">
@@ -10,8 +10,7 @@
             required
             class="form-textarea"
             name="description"
-            :value="editedItem.customData.description"
-            @input="onChange($event)"
+            v-model="description"
           />
         </div>
       </div>
@@ -35,7 +34,11 @@
               <span>{{ transformFIO(chip) }}</span>
               <div>
                 <VueCustomTooltip label="Удалить">
-                  <img src="@/assets/icons/trash_icon.svg" alt="" />
+                  <img
+                    alt=""
+                    src="@/assets/icons/trash_icon.svg"
+                    @click="deleteChip(index)"
+                  />
                 </VueCustomTooltip>
               </div>
             </div>
@@ -50,6 +53,7 @@
             v-model="start"
             type="datetime"
             input-class="forms__container--input"
+            @input="start = $event.target.value"
             :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
           />
         </div>
@@ -62,28 +66,28 @@
             v-model="end"
             type="datetime"
             input-class="forms__container--input"
+            @input="end = $event.target.value"
             :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
           />
         </div>
       </div>
 
-      <v-button red>Сохранить</v-button>
+      <v-spinner v-if="isLoading" small />
+      <v-button red v-else>Сохранить</v-button>
     </form>
   </div>
 </template>
 
 <script>
+import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
+
 export default {
   props: {
     editedItem: {
       type: Object,
     },
-    selectionStart: {
-      type: Date,
-    },
-    selectionEnd: {
-      type: Date,
-    },
+
     type: {
       type: String,
     },
@@ -93,11 +97,17 @@ export default {
   },
   data() {
     return {
+      title: "",
       fio: "",
+      description: "",
       users: [],
       participants: [],
+      isLoading: false,
+      selectionStart: new Date().toISOString(),
+      selectionEnd: new Date().toISOString(),
     };
   },
+  components: { VSpinner },
   computed: {
     start: {
       get: function () {
@@ -128,8 +138,40 @@ export default {
     onChange(e) {
       this[e.target.name] = e.target.value;
     },
+    deleteChip(index) {
+      this.participants.splice(index, 1);
+    },
+    onEventEdit() {
+      this.isLoading = true;
+
+      let event = {
+        _id: this.editedItem.customData._id,
+        title: this.title,
+        description: this.description,
+        startDate: this.selectionStart,
+        endDate: this.selectionEnd,
+        participants: this.participants,
+      };
+      axios({
+        url: `/events/update/`,
+        data: event,
+        method: "POST",
+      })
+        .then(() => {
+          this.$toast.success("Мероприятие успешно изменено!");
+          this.$emit("toggleEdit", this.editedItem);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
   },
   mounted() {
+    this.title = this.editedItem.customData.title;
+    this.description = this.editedItem.customData.description;
     this.participants = this.editedItem.customData.participants.map(
       (item) => item._id
     );
