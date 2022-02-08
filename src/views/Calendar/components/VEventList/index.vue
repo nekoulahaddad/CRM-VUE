@@ -17,7 +17,8 @@
             v-for="(event, index) in events"
             class="list__row list__row--shadow list__row--white"
             :class="{
-              'list__row--opened': infoItem.key === event.key,
+              'list__row--opened':
+                infoItem.key === event.key || editedItem.key === event.key,
             }"
           >
             <div class="list__columns list__columns-shadow list__columns-white">
@@ -61,7 +62,11 @@
                     <!-- Изменение -->
                     <div class="table__icon">
                       <VueCustomTooltip label="Изменить">
-                        <img src="@/assets/icons/write_icon.svg" alt="" />
+                        <img
+                          alt=""
+                          src="@/assets/icons/write_icon.svg"
+                          @click="toggleEdit(event)"
+                        />
                       </VueCustomTooltip>
                     </div>
 
@@ -76,7 +81,13 @@
               </div>
             </div>
 
+            <!-- Блок с просмотром мероприятия -->
             <v-event-info v-if="infoItem.key === event.key" :infoItem="event" />
+
+            <v-event-edit
+              v-if="editedItem.key === event.key"
+              :editedItem="event"
+            />
           </div>
         </div>
       </div>
@@ -86,6 +97,7 @@
 
 <script>
 import VEventInfo from "../VEventInfo";
+import VEventEdit from "../VEventEdit";
 
 export default {
   props: {
@@ -99,10 +111,19 @@ export default {
       infoItem: {},
     };
   },
-  components: { VEventInfo },
+  components: { VEventInfo, VEventEdit },
   methods: {
     closeModal() {
       this.$modal.hide("eventList");
+    },
+    toggleEdit(item) {
+      this.infoItem = {};
+
+      if (this.editedItem.key === item.key) {
+        this.editedItem = {};
+      } else {
+        this.editedItem = item;
+      }
     },
     toggleInfo(item) {
       if (this.infoItem.key === item.key) {
