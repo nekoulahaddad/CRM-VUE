@@ -43,7 +43,7 @@
               <img src="@/assets/icons/plus.svg" alt="" />
             </a>
           </div>
-          <vc-calendar @dayclick="onDayClick" :attributes="attributes" />
+          <vc-calendar @dayclick="onDayClick" :attributes="attrs" />
           <v-calendar-events :events="events" :clickedDay="clickedDay" />
         </div>
       </div>
