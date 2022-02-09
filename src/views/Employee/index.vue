@@ -375,7 +375,7 @@ export default {
 <style lang="scss">
 .employee-page {
   .list__columns {
-    grid-template-columns: 120px 120px 320px 120px 120px 180px 140px 1fr;
+    grid-template-columns: 120px 120px 320px 100px 100px 180px 200px 1fr;
   }
   .list__column:last-child {
     padding-left: 20px;
@@ -383,7 +383,7 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 200px 260px 420px 170px 170px 180px 140px 1fr;
+      grid-template-columns: 160px 200px 400px 130px 130px 240px 260px 1fr;
     }
   }
 
@@ -395,7 +395,7 @@ export default {
 
   .page__right--middle {
     .list__columns {
-      grid-template-columns: 120px 140px 380px 150px 150px 180px 140px 1fr;
+      grid-template-columns: 120px 140px 340px 120px 120px 200px 220px 1fr;
     }
   }
 
