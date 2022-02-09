@@ -1,7 +1,7 @@
 <template>
   <v-modal
     :adaptive="true"
-    :minHeight="745"
+    :minHeight="768"
     :minWidth="996"
     name="addEvent"
     @before-close="closeModal"
@@ -156,7 +156,7 @@ export default {
   computed: {
     height() {
       if (this.participants.length > 3) {
-        return "150px";
+        return "154px";
       }
       return "auto";
     },
@@ -345,7 +345,7 @@ export default {
       width: 422px;
     }
     &__input {
-      margin-top: 10px;
+      margin-top: 20px;
     }
   }
   .group__participants {
