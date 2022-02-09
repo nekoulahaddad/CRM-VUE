@@ -6,115 +6,117 @@
     name="addEvent"
     @before-close="closeModal"
   >
-    <div class="vm--modal__title">
-      Создать мероприятие
-      <img
-        @click="closeModal"
-        class="vm--modal__close"
-        src="/icons/close_icon.svg"
-        alt=""
-      />
-    </div>
-    <div class="vm--modal__inner vm--modal__add-event">
-      <form @submit.prevent="onEventAdd">
-        <!-- Заголовок мероприятия -->
-        <div class="group">
-          <div class="group__title">Заголовок мероприятия:</div>
-          <div class="group__content">
-            <input
-              required
-              type="text"
-              class="form-control"
-              placeholder="Введите заголовок мероприятия..."
-              name="title"
-              @input="onChange($event)"
-              v-model="title"
-            />
+    <div class="add-event">
+      <div class="vm--modal__title">
+        Создать мероприятие
+        <img
+          @click="closeModal"
+          class="vm--modal__close"
+          src="/icons/close_icon.svg"
+          alt=""
+        />
+      </div>
+      <div class="vm--modal__inner vm--modal__add-event">
+        <form @submit.prevent="onEventAdd">
+          <!-- Заголовок мероприятия -->
+          <div class="group">
+            <div class="group__title">Заголовок мероприятия:</div>
+            <div class="group__content">
+              <input
+                required
+                type="text"
+                class="form-control"
+                placeholder="Введите заголовок мероприятия..."
+                name="title"
+                @input="onChange($event)"
+                v-model="title"
+              />
+            </div>
           </div>
-        </div>
 
-        <!-- Описание -->
-        <div class="group">
-          <div class="group__title">Описание:</div>
-          <div class="group__content">
-            <textarea
-              required
-              class="form-textarea"
-              placeholder="Введите описание данного мероприятия..."
-              name="description"
-              @input="onChange($event)"
-              v-model="description"
-            />
+          <!-- Описание -->
+          <div class="group">
+            <div class="group__title">Описание:</div>
+            <div class="group__content">
+              <textarea
+                required
+                class="form-textarea"
+                placeholder="Введите описание данного мероприятия..."
+                name="description"
+                @input="onChange($event)"
+                v-model="description"
+              />
+            </div>
           </div>
-        </div>
 
-        <div class="group participants">
-          <div class="group__title">Участники:</div>
-          <div class="group__participants" :style="{ height: height }">
-            <vue-scroll v-if="participants.length">
-              <div
-                class="group__participant"
-                v-for="(participant, index) in participants"
-                :key="index"
-              >
-                <span>{{ transformFIO(participant) }}</span>
-                <div>
-                  <VueCustomTooltip label="Удалить">
-                    <img
-                      alt=""
-                      src="@/assets/icons/trash_icon.svg"
-                      @click="deleteChip(index)"
-                    />
-                  </VueCustomTooltip>
+          <div class="group participants">
+            <div class="group__title">Участники:</div>
+            <div class="group__participants" :style="{ height: height }">
+              <vue-scroll v-if="participants.length">
+                <div
+                  class="group__participant"
+                  v-for="(participant, index) in participants"
+                  :key="index"
+                >
+                  <span>{{ transformFIO(participant) }}</span>
+                  <div>
+                    <VueCustomTooltip label="Удалить">
+                      <img
+                        alt=""
+                        src="@/assets/icons/trash_icon.svg"
+                        @click="deleteChip(index)"
+                      />
+                    </VueCustomTooltip>
+                  </div>
                 </div>
-              </div>
-            </vue-scroll>
-            <div v-else>Участников нет</div>
+              </vue-scroll>
+              <div v-else>Участников нет</div>
+            </div>
+            <div class="group__content">
+              <autocomplete
+                class="participants__input"
+                :search="searchByExecutor"
+                :get-result-value="getResultValue"
+                placeholder="Введите участника мероприятия..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectUser(result)">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
           </div>
-          <div class="group__content">
-            <autocomplete
-              class="participants__input"
-              :search="searchByExecutor"
-              :get-result-value="getResultValue"
-              placeholder="Введите участника мероприятия..."
-            >
-              <template #result="{ result, props }">
-                <li v-bind="props" @click="selectUser(result)">
-                  {{ transformFIO(result) }}
-                </li>
-              </template>
-            </autocomplete>
-          </div>
-        </div>
 
-        <!-- Дата начала -->
-        <div class="group">
-          <div class="group__title">Дата начала:</div>
-          <div class="group__content">
-            <datetime
-              v-model="start"
-              type="datetime"
-              input-class="forms__container--input"
-              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            />
+          <!-- Дата начала -->
+          <div class="group">
+            <div class="group__title">Дата начала:</div>
+            <div class="group__content">
+              <datetime
+                v-model="start"
+                type="datetime"
+                input-class="forms__container--input"
+                :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              />
+            </div>
           </div>
-        </div>
 
-        <!-- Дата окончания -->
-        <div class="group">
-          <div class="group__title">Дата окончания:</div>
-          <div class="group__content">
-            <datetime
-              v-model="end"
-              type="datetime"
-              input-class="forms__container--input"
-              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            />
+          <!-- Дата окончания -->
+          <div class="group">
+            <div class="group__title">Дата окончания:</div>
+            <div class="group__content">
+              <datetime
+                v-model="end"
+                type="datetime"
+                input-class="forms__container--input"
+                :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              />
+            </div>
           </div>
-        </div>
 
-        <v-button red>Создать</v-button>
-      </form>
+          <v-button red>Создать</v-button>
+        </form>
+      </div>
     </div>
   </v-modal>
 </template>
@@ -258,98 +260,100 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
-.vm--modal {
-  .autocomplete-input {
-    width: 401px;
-  }
-  &__inner {
-    padding: 20px;
-  }
-
-  .vm--modal__add-event {
-    .form-textarea,
-    .form-control {
-      width: 976px;
-    }
-    .form-select {
+.add-event {
+  .vm--modal {
+    .autocomplete-input {
       width: 401px;
     }
-    .group__executors {
-      margin-bottom: 10px;
+    &__inner {
+      padding: 20px;
     }
-  }
 
-  .form-textarea {
-    height: 150px;
-  }
+    .vm--modal__add-event {
+      .form-textarea,
+      .form-control {
+        width: 976px;
+      }
+      .form-select {
+        width: 401px;
+      }
+      .group__executors {
+        margin-bottom: 10px;
+      }
+    }
 
-  .group__title {
-    font-size: 14px !important;
-  }
+    .form-textarea {
+      height: 150px;
+    }
 
-  .group {
+    .group__title {
+      font-size: 14px !important;
+    }
+
+    .group {
+      &__title {
+        font-size: 12px;
+      }
+    }
+
+    &__close {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    button {
+      width: 230px;
+    }
+    .autocomplete-input,
+    .vdatetime-input {
+      width: 410px;
+    }
+    .chip {
+      background-color: $color-gray-secondary;
+      margin-bottom: 15px;
+      & + * {
+        margin-left: 10px;
+      }
+    }
     &__title {
-      font-size: 12px;
+      padding-left: 10px;
     }
-  }
+    button {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+    }
+    .group__participant {
+      margin-left: 3px;
+      height: 40px;
+      border-radius: $border-radius;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 10px;
+      padding-right: 10px;
+      width: 401px;
+      overflow-x: hidden;
+      margin-top: 10px;
 
-  &__close {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
-  button {
-    width: 230px;
-  }
-  .autocomplete-input,
-  .vdatetime-input {
-    width: 410px;
-  }
-  .chip {
-    background-color: $color-gray-secondary;
-    margin-bottom: 15px;
-    & + * {
-      margin-left: 10px;
+      &:last-child {
+        margin-bottom: 10px;
+      }
     }
-  }
-  &__title {
-    padding-left: 10px;
-  }
-  button {
-    position: absolute;
-    bottom: 10px;
-    left: 20px;
-  }
-  .group__participant {
-    margin-left: 3px;
-    height: 40px;
-    border-radius: $border-radius;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 10px;
-    padding-right: 10px;
-    width: 401px;
-    overflow-x: hidden;
-    margin-top: 10px;
-
-    &:last-child {
-      margin-bottom: 10px;
+    .participants {
+      .group__content {
+        width: 422px;
+      }
+      &__input {
+        margin-top: 20px;
+      }
     }
-  }
-  .participants {
-    .group__content {
-      width: 422px;
+    .group__participants {
+      width: 420px;
     }
-    &__input {
-      margin-top: 20px;
-    }
-  }
-  .group__participants {
-    width: 420px;
   }
 }
 </style>
