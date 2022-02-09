@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="696" :minWidth="1110" name="editEvent">
+  <v-modal :adaptive="true" :minHeight="745" :minWidth="1110" name="editEvent">
     <div class="event-edit">
       <div class="vm--modal__title">
         {{ title }}
