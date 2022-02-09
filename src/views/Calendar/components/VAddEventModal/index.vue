@@ -303,6 +303,7 @@ export default {
   button {
     width: 230px;
   }
+  .autocomplete-input,
   .vdatetime-input {
     width: 410px;
   }
