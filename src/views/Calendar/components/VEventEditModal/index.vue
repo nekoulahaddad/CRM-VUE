@@ -33,7 +33,7 @@
           <!-- Участники -->
           <div class="group participants">
             <div class="group__title">Участники:</div>
-            <div class="group__participants">
+            <div class="group__participants" :style="{ height: height }">
               <vue-scroll v-if="participants.length">
                 <div
                   class="group__participant"
@@ -124,6 +124,14 @@ export default {
       selectionStart: new Date().toISOString(),
       selectionEnd: new Date().toISOString(),
     };
+  },
+  computed: {
+    height() {
+      if (this.participants.length > 3) {
+        return "154px";
+      }
+      return "auto";
+    },
   },
   components: { VSpinner },
   methods: {
@@ -223,7 +231,6 @@ export default {
 
   .group__participants {
     width: 420px;
-    height: 150px;
   }
 
   span[role="tooltip"] {
