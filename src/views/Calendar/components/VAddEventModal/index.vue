@@ -285,5 +285,10 @@ export default {
   &__title {
     padding-left: 10px;
   }
+  button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+  }
 }
 </style>
