@@ -17,6 +17,7 @@
     </div>
     <div class="vm--modal__inner vm--modal__add-event">
       <form @submit.prevent="onEventAdd">
+        <!-- Заголовок мероприятия -->
         <div class="group">
           <div class="group__title">Заголовок мероприятия:</div>
           <div class="group__content">
@@ -31,18 +32,36 @@
             />
           </div>
         </div>
+
+        <!-- Дата начала -->
+        <div class="group">
+          <div class="group__title">Дата начала:</div>
+          <div class="group__content">
+            <datetime
+              v-model="start"
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
+        </div>
+
+        <!-- Дата окончания -->
+        <div class="group">
+          <div class="group__title">Дата окончания:</div>
+          <div class="group__content">
+            <datetime
+              v-model="end"
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
+        </div>
+
         <div class="group">
           <div class="group__title">Участники:</div>
-          <div class="group__executors">
-            <select class="form-select" required>
-              <option
-                :value="participant._id"
-                v-for="(participant, index) in participants"
-              >
-                {{ transformFIO(participant) }}
-              </option>
-            </select>
-          </div>
+          <div class="group__executors"></div>
           <div class="group__content">
             <autocomplete
               :search="searchByExecutor"
@@ -57,28 +76,8 @@
             </autocomplete>
           </div>
         </div>
-        <div class="group">
-          <div class="group__title">Дата начала:</div>
-          <div class="group__content">
-            <datetime
-              v-model="start"
-              type="datetime"
-              input-class="forms__container--input"
-              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Дата окончания:</div>
-          <div class="group__content">
-            <datetime
-              v-model="end"
-              type="datetime"
-              input-class="forms__container--input"
-              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            />
-          </div>
-        </div>
+
+        <!-- Описание -->
         <div class="group">
           <div class="group__title">Описание:</div>
           <div class="group__content">
@@ -233,7 +232,7 @@ export default {
     width: 401px;
   }
   &__inner {
-    padding: 10px;
+    padding: 20px;
   }
 
   .vm--modal__add-event {
@@ -250,7 +249,7 @@ export default {
   }
 
   .form-textarea {
-    height: 218px;
+    height: 150px;
   }
 
   .group__title {

@@ -100,7 +100,7 @@
           </div>
         </div>
 
-        <v-spinner v-if="isLoading" small />
+        <v-spinner v-if="!isLoading" small />
         <v-button v-else red>Сохранить</v-button>
       </div>
     </div>
@@ -115,6 +115,7 @@ export default {
   data() {
     return {
       participants: [],
+      isLoading: true,
     };
   },
   computed: {
