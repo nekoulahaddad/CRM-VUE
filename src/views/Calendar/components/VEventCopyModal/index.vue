@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="696" :minWidth="1110" name="copyEvent">
+  <v-modal :adaptive="true" :minHeight="745" :minWidth="1110" name="copyEvent">
     <div class="event-copy">
       <div class="vm--modal__title">
         Копирование мероприятия
@@ -39,7 +39,7 @@
         <!-- Участники -->
         <div class="group participants">
           <div class="group__title">Участники:</div>
-          <div class="group__participants">
+          <div class="group__participants" :style="{ height: height }">
             <vue-scroll v-if="participants.length">
               <div
                 class="group__participant"
@@ -116,6 +116,14 @@ export default {
     return {
       participants: [],
     };
+  },
+  computed: {
+    height() {
+      if (this.participants.length > 3) {
+        return "150px";
+      }
+      return "auto";
+    },
   },
   components: { VSpinner },
   methods: {
@@ -211,11 +219,16 @@ export default {
   }
   .group__participants {
     width: 420px;
-    max-height: 150px;
+    //height: 150px;
   }
   .form-textarea {
     width: 976px;
     height: 150px !important;
+  }
+  button {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
   }
 }
 </style>
