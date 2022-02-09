@@ -1,7 +1,7 @@
 <template>
   <v-modal
     :adaptive="true"
-    :minHeight="696"
+    :minHeight="745"
     :minWidth="996"
     name="addEvent"
     @before-close="closeModal"
@@ -33,6 +33,60 @@
           </div>
         </div>
 
+        <!-- Описание -->
+        <div class="group">
+          <div class="group__title">Описание:</div>
+          <div class="group__content">
+            <textarea
+              required
+              class="form-textarea"
+              placeholder="Введите описание данного мероприятия..."
+              name="description"
+              @input="onChange($event)"
+              v-model="description"
+            />
+          </div>
+        </div>
+
+        <div class="group participants">
+          <div class="group__title">Участники:</div>
+          <div class="group__participants" :style="{ height: height }">
+            <vue-scroll v-if="participants.length">
+              <div
+                class="group__participant"
+                v-for="(participant, index) in participants"
+                :key="index"
+              >
+                <span>{{ transformFIO(participant) }}</span>
+                <div>
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      alt=""
+                      src="@/assets/icons/trash_icon.svg"
+                      @click="deleteChip(index)"
+                    />
+                  </VueCustomTooltip>
+                </div>
+              </div>
+            </vue-scroll>
+            <div v-else>Участников нет</div>
+          </div>
+          <div class="group__content">
+            <autocomplete
+              class="participants__input"
+              :search="searchByExecutor"
+              :get-result-value="getResultValue"
+              placeholder="Введите участника мероприятия..."
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectUser(result)">
+                  {{ transformFIO(result) }}
+                </li>
+              </template>
+            </autocomplete>
+          </div>
+        </div>
+
         <!-- Дата начала -->
         <div class="group">
           <div class="group__title">Дата начала:</div>
@@ -59,38 +113,6 @@
           </div>
         </div>
 
-        <div class="group">
-          <div class="group__title">Участники:</div>
-          <div class="group__executors"></div>
-          <div class="group__content">
-            <autocomplete
-              :search="searchByExecutor"
-              :get-result-value="getResultValue"
-              placeholder="Введите участника мероприятия..."
-            >
-              <template #result="{ result, props }">
-                <li v-bind="props" @click="selectUser(result)">
-                  {{ transformFIO(result) }}
-                </li>
-              </template>
-            </autocomplete>
-          </div>
-        </div>
-
-        <!-- Описание -->
-        <div class="group">
-          <div class="group__title">Описание:</div>
-          <div class="group__content">
-            <textarea
-              required
-              class="form-textarea"
-              placeholder="Введите описание данного мероприятия..."
-              name="description"
-              @input="onChange($event)"
-              v-model="description"
-            />
-          </div>
-        </div>
         <v-button red>Создать</v-button>
       </form>
     </div>
@@ -132,6 +154,12 @@ export default {
     },
   },
   computed: {
+    height() {
+      if (this.participants.length > 3) {
+        return "150px";
+      }
+      return "auto";
+    },
     start: {
       get: function () {
         return this.selectionStart
@@ -161,6 +189,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    deleteChip(index) {
+      this.participants.splice(index, 1);
+    },
     closeModal() {
       this.$store.commit("deactivateAction", "addEvent");
       this.$modal.hide("addEvent");
@@ -273,7 +304,7 @@ export default {
     width: 230px;
   }
   .vdatetime-input {
-    width: 330px;
+    width: 410px;
   }
   .chip {
     background-color: $color-gray-secondary;
@@ -287,8 +318,37 @@ export default {
   }
   button {
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     left: 20px;
+  }
+  .group__participant {
+    margin-left: 3px;
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 401px;
+    overflow-x: hidden;
+    margin-top: 10px;
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+  }
+  .participants {
+    .group__content {
+      width: 422px;
+    }
+    &__input {
+      margin-top: 10px;
+    }
+  }
+  .group__participants {
+    width: 420px;
   }
 }
 </style>

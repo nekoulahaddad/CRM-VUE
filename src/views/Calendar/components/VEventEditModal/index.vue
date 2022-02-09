@@ -55,7 +55,20 @@
               </vue-scroll>
               <div v-else>Участников нет</div>
             </div>
-            <div class="group__content"></div>
+            <div class="group__content">
+              <autocomplete
+                class="participants__input"
+                :search="searchByExecutor"
+                :get-result-value="getResultValue"
+                placeholder="Введите участника мероприятия..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectUser(result)">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
           </div>
 
           <div class="group">
@@ -115,6 +128,19 @@ export default {
   },
   components: { VSpinner },
   methods: {
+    getResultValue(result) {
+      return "";
+    },
+    searchByExecutor(input) {
+      if (input.length < 1) {
+        return [];
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
+    },
     cancel() {
       this.$modal.hide("editEvent");
       this.$modal.show("eventList");
