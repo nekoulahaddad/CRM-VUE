@@ -179,7 +179,7 @@ export default {
     }
 
     &__title {
-      font-weight: 500;
+      font-weight: 700;
       font-size: 14px;
       margin-bottom: 5px;
     }
