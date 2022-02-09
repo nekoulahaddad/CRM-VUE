@@ -185,7 +185,6 @@ export default {
 
   .form-textarea,
   .form-control {
-    width: 976px;
   }
   .vdatetime-input {
     width: 401px !important;
@@ -222,7 +221,6 @@ export default {
     //height: 150px;
   }
   .form-textarea {
-    width: 976px;
     height: 150px !important;
   }
   button {
