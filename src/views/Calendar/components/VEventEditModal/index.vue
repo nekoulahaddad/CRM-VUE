@@ -10,8 +10,7 @@
           alt=""
         />
       </div>
-      <div class="vm--modal__inner vm--modal__edit-event">
-        <div class="group__title text--blue">Основная информация</div>
+      <div class="event-edit__inner vm--modal__edit-event">
         <form @submit.prevent="confirm">
           <!-- Описание -->
           <div class="group">
@@ -210,6 +209,10 @@ export default {
     margin-left: 5px;
   }
 
+  &__inner {
+    padding: 10px 20px;
+  }
+
   .form-textarea {
     width: 976px;
     height: 150px !important;
@@ -248,14 +251,14 @@ export default {
     width: 401px;
     overflow-x: hidden;
     margin-top: 10px;
-
-    &:last-child {
-      margin-bottom: 10px;
-    }
   }
+
   .participants {
     .group__content {
       width: 422px;
+    }
+    &__input {
+      margin-top: 20px !important;
     }
   }
 }
