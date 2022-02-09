@@ -130,11 +130,12 @@ import VSearch from "@/components/VSearch";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import getDataFromPage from "@/api/getDataFromPage";
+import dataMixins from "@/mixins/data";
 import axios from "@/api/axios";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VAddItem,
     VFilter,
@@ -197,7 +198,6 @@ export default {
   },
   mounted() {
     this.$store.commit("setFilterOptions", this.filtersOptions);
-    console.log(this.$store.state.filterOptions);
     this.$store.commit("deactivateAction", "addEmployee");
     this.getData();
   },
@@ -243,7 +243,7 @@ export default {
         this.isLoading = false;
         this.filtersOptions.page = this.$route.params.page;
 
-        const { data } = await getDataFromPage(
+        const { data } = await this.getDataFromPage(
           "/user/get",
           this.filtersOptions
         );
@@ -375,7 +375,7 @@ export default {
 <style lang="scss">
 .employee-page {
   .list__columns {
-    grid-template-columns: 120px 120px 350px 120px 120px 300px 1fr;
+    grid-template-columns: 120px 120px 320px 120px 120px 180px 140px 1fr;
   }
   .list__column:last-child {
     padding-left: 20px;
@@ -383,19 +383,19 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 200px 260px 440px 170px 170px 300px 1fr;
+      grid-template-columns: 200px 260px 420px 170px 170px 180px 140px 1fr;
     }
   }
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 120px 220px 400px 170px 170px 300px 1fr;
+      grid-template-columns: 120px 220px 340px 120px 120px 250px 250px 1fr;
     }
   }
 
   .page__right--middle {
     .list__columns {
-      grid-template-columns: 120px 140px 400px 150px 150px 300px 1fr;
+      grid-template-columns: 120px 140px 380px 150px 150px 180px 140px 1fr;
     }
   }
 

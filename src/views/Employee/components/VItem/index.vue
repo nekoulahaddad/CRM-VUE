@@ -29,6 +29,9 @@
         {{ employee.department.title }}
       </div>
     </div>
+    <div class="list__column text text--green">
+      {{ transformTime(employee.updatedAt) }}
+    </div>
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">

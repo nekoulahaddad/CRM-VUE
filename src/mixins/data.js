@@ -39,6 +39,7 @@ export default {
         endDate: options.endDate || null,
         phone: options.phone || null,
         clubcard: options.clubcard || null,
+        updatedAt: options.updatedAt || null,
       };
       let urlStr;
       if (this.$route.params.page) {
