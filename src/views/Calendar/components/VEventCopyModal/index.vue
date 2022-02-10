@@ -170,6 +170,8 @@ export default {
         initiator: this.userId,
       };
 
+      this.isLoading = false;
+
       axios({
         url: `/events/post/`,
         data: event,
@@ -182,6 +184,9 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = true;
         });
     },
     deleteChip(index) {
@@ -292,6 +297,7 @@ export default {
   .form-textarea {
     height: 150px !important;
   }
+  .spinner,
   button {
     position: absolute;
     bottom: 10px;

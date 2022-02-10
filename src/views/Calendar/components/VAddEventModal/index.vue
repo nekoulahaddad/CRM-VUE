@@ -114,7 +114,8 @@
             </div>
           </div>
 
-          <v-button red>Создать</v-button>
+          <v-spinner v-if="!isLoading" small />
+          <v-button v-else red>Сохранить</v-button>
         </form>
       </div>
     </div>
@@ -347,6 +348,7 @@ export default {
   &__title {
     padding-left: 10px;
   }
+  .spinner,
   button {
     position: absolute;
     bottom: 10px;

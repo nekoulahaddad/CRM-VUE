@@ -98,7 +98,8 @@
             </div>
           </div>
 
-          <v-button red>Сохранить</v-button>
+          <v-spinner v-if="!isLoading" small />
+          <v-button v-else red>Сохранить</v-button>
         </form>
       </div>
     </div>
@@ -122,7 +123,7 @@ export default {
       description: "",
       users: [],
       participants: [],
-      isLoading: false,
+      isLoading: true,
       initiator: "",
       selectionStart: new Date().toISOString(),
       selectionEnd: new Date().toISOString(),
@@ -176,7 +177,7 @@ export default {
         );
         return;
       }
-      this.isLoading = true;
+      this.isLoading = false;
 
       let event = {
         _id: this.editedItem.customData._id,
@@ -201,7 +202,7 @@ export default {
           this.$toast.error(err.response.data.message);
         })
         .finally(() => {
-          this.isLoading = false;
+          this.isLoading = true;
         });
     },
   },
@@ -284,6 +285,7 @@ export default {
       margin-top: 20px !important;
     }
   }
+  .spinner,
   button {
     position: absolute;
     bottom: 10px;
