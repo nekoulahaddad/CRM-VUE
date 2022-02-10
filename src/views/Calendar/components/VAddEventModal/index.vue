@@ -10,7 +10,7 @@
       <div class="vm--modal__title">
         Создать мероприятие
         <img
-          @click="closeModal"
+          @click="cancel"
           class="vm--modal__close"
           src="/icons/close_icon.svg"
           alt=""
@@ -191,6 +191,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    cancel() {
+      this.$modal.hide("addEvent");
+    },
     deleteChip(index) {
       this.participants.splice(index, 1);
     },
