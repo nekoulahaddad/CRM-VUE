@@ -261,99 +261,97 @@ export default {
 @import "@/styles/_variables";
 
 .add-event {
-  .vm--modal {
-    .autocomplete-input {
+  .autocomplete-input {
+    width: 401px;
+  }
+  &__inner {
+    padding: 20px;
+  }
+
+  .vm--modal__add-event {
+    .form-textarea,
+    .form-control {
+      width: 976px;
+    }
+    .form-select {
       width: 401px;
     }
-    &__inner {
-      padding: 20px;
+    .group__executors {
+      margin-bottom: 10px;
     }
+  }
 
-    .vm--modal__add-event {
-      .form-textarea,
-      .form-control {
-        width: 976px;
-      }
-      .form-select {
-        width: 401px;
-      }
-      .group__executors {
-        margin-bottom: 10px;
-      }
-    }
+  .form-textarea {
+    height: 150px;
+  }
 
-    .form-textarea {
-      height: 150px;
-    }
+  .group__title {
+    font-size: 14px !important;
+  }
 
-    .group__title {
-      font-size: 14px !important;
-    }
-
-    .group {
-      &__title {
-        font-size: 12px;
-      }
-    }
-
-    &__close {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-    }
-    button {
-      width: 230px;
-    }
-    .autocomplete-input,
-    .vdatetime-input {
-      width: 410px;
-    }
-    .chip {
-      background-color: $color-gray-secondary;
-      margin-bottom: 15px;
-      & + * {
-        margin-left: 10px;
-      }
-    }
+  .group {
     &__title {
-      padding-left: 10px;
+      font-size: 12px;
     }
-    button {
-      position: absolute;
-      bottom: 10px;
-      left: 20px;
-    }
-    .group__participant {
-      margin-left: 3px;
-      height: 40px;
-      border-radius: $border-radius;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-left: 10px;
-      padding-right: 10px;
-      width: 401px;
-      overflow-x: hidden;
-      margin-top: 10px;
+  }
 
-      &:last-child {
-        margin-bottom: 10px;
-      }
+  &__close {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  button {
+    width: 230px;
+  }
+  .autocomplete-input,
+  .vdatetime-input {
+    width: 410px;
+  }
+  .chip {
+    background-color: $color-gray-secondary;
+    margin-bottom: 15px;
+    & + * {
+      margin-left: 10px;
     }
-    .participants {
-      .group__content {
-        width: 422px;
-      }
-      &__input {
-        margin-top: 20px;
-      }
+  }
+  &__title {
+    padding-left: 10px;
+  }
+  button {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+  }
+  .group__participant {
+    margin-left: 3px;
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 401px;
+    overflow-x: hidden;
+    margin-top: 10px;
+
+    &:last-child {
+      margin-bottom: 10px;
     }
-    .group__participants {
-      width: 420px;
+  }
+  .participants {
+    .group__content {
+      width: 422px;
     }
+    &__input {
+      margin-top: 20px;
+    }
+  }
+  .group__participants {
+    width: 420px;
   }
 }
 </style>
