@@ -190,8 +190,12 @@ export default {
         });
       });
     },
-    selectUser(participant) {
-      this.participants.push(participant);
+    selectUser(user) {
+      if (this.participants.find((p) => p._id === user._id)) {
+        this.$toast.error("Участник уже добавлен");
+      } else {
+        this.participants.push(user);
+      }
     },
   },
   watch: {

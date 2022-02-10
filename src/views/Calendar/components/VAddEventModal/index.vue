@@ -216,7 +216,11 @@ export default {
       this[e.target.name] = e.target.value;
     },
     selectUser(user) {
-      this.participants.push(user);
+      if (this.participants.find((p) => p._id === user._id)) {
+        this.$toast.error("Участник уже добавлен");
+      } else {
+        this.participants.push(user);
+      }
     },
     async getUsersByFIO() {
       if (this.fio === "") {
