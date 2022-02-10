@@ -1,7 +1,7 @@
 <template>
   <div class="page calendar-page">
     <!-- Модальное окно для добавления события -->
-    <v-add-event-modal @updateEvents="updateEvents" />
+    <v-add-event-modal :userId="userId" @updateEvents="updateEvents" />
 
     <!-- Модальное окно со списком событий -->
     <v-event-list

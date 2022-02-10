@@ -143,6 +143,7 @@ export default {
     };
   },
   props: {
+    userId: String,
     event: {
       type: Object,
       default: null,
@@ -259,6 +260,7 @@ export default {
         startDate: this.start,
         endDate: this.end,
         participants: this.participants,
+        initiator: this.userId,
       };
       axios({
         url: `/events/post/`,
