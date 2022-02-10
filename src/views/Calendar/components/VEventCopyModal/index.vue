@@ -166,6 +166,7 @@ export default {
       })
         .then(() => {
           this.$toast.success("Мероприятие успешно создано!");
+          this.cancel();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);

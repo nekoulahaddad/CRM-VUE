@@ -32,7 +32,7 @@ export default {
       axios({
         url: `/events/delete/`,
         data: {
-          eventId: this.deletedItem._id,
+          eventId: this.deletedItem.key,
         },
         method: "POST",
       }).then(async () => {
