@@ -237,7 +237,7 @@
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
-                    {{ result.surname }}
+                    {{ transformFIO(result) }}
                   </li>
                 </template>
               </autocomplete>
@@ -316,7 +316,7 @@
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
-                    {{ result.surname }}
+                    {{ transformFIO(result) }}
                   </li>
                 </template>
               </autocomplete>
@@ -461,7 +461,7 @@
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
-                    {{ result.surname }}
+                    {{ transformFIO(result) }}
                   </li>
                 </template>
               </autocomplete>
@@ -567,7 +567,7 @@
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
-                    {{ result.surname }}
+                    {{ transformFIO(result) }}
                   </li>
                 </template>
               </autocomplete>
@@ -1033,15 +1033,13 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
-    clickOnExecutor(result) {
-      console.log(result);
-    },
+    clickOnExecutor(result) {},
     getResultValue(result) {
-      return result.surname;
+      return this.transformFIO(result);
     },
     searchByExecutor(input) {
-      if (input.length < 1) {
-        return;
+      if (input.trim().length < 1) {
+        return [];
       }
       return new Promise((resolve) => {
         axios(`/user/getsearch/${input}`).then(async (res) => {
