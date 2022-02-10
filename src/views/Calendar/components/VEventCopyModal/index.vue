@@ -1,108 +1,115 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="745" :minWidth="1110" name="copyEvent">
+  <v-modal :adaptive="true" :minHeight="765" :minWidth="1110" name="copyEvent">
     <div class="event-copy">
-      <div class="vm--modal__title">
-        Копирование мероприятия
-        <img
-          class="vm--modal__close"
-          src="/icons/close_icon.svg"
-          alt=""
-          @click="cancel"
-        />
-      </div>
-
-      <div class="event-copy__inner">
-        <!-- Заголовок -->
-        <div class="group">
-          <div class="group__title">Заголовок:</div>
-          <div class="group__content">
-            <input
-              required
-              class="form-control"
-              type="text"
-              placeholder="Введите заголовок мероприятия..."
-            />
-          </div>
+      <form @submit.prevent="confirm">
+        <div class="vm--modal__title">
+          Копирование мероприятия
+          <img
+            alt=""
+            class="vm--modal__close"
+            src="/icons/close_icon.svg"
+            @click="cancel"
+          />
         </div>
 
-        <!-- Описание -->
-        <div class="group">
-          <div class="group__title">Описание:</div>
-          <div class="group__content">
-            <textarea
-              class="form-textarea"
-              placeholder="Введите описание мероприятия..."
-            />
+        <div class="event-copy__inner">
+          <!-- Заголовок -->
+          <div class="group">
+            <div class="group__title">Заголовок:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите заголовок мероприятия..."
+                v-model="title"
+              />
+            </div>
           </div>
-        </div>
 
-        <!-- Участники -->
-        <div class="group participants">
-          <div class="group__title">Участники:</div>
-          <div class="group__participants" :style="{ height: height }">
-            <vue-scroll v-if="participants.length">
-              <div
-                class="group__participant"
-                v-for="(participant, index) in participants"
-                :key="index"
-              >
-                <span>{{ transformFIO(participant) }}</span>
-                <div>
-                  <VueCustomTooltip label="Удалить">
-                    <img
-                      alt=""
-                      src="@/assets/icons/trash_icon.svg"
-                      @click="deleteChip(index)"
-                    />
-                  </VueCustomTooltip>
+          <!-- Описание -->
+          <div class="group">
+            <div class="group__title">Описание:</div>
+            <div class="group__content">
+              <textarea
+                required
+                class="form-textarea"
+                placeholder="Введите описание мероприятия..."
+                v-model="description"
+              />
+            </div>
+          </div>
+
+          <!-- Участники -->
+          <div class="group participants">
+            <div class="group__title">Участники:</div>
+            <div class="group__participants" :style="{ height: height }">
+              <vue-scroll v-if="participants.length">
+                <div
+                  class="group__participant"
+                  v-for="(participant, index) in participants"
+                  :key="index"
+                >
+                  <span>{{ transformFIO(participant) }}</span>
+                  <div>
+                    <VueCustomTooltip label="Удалить">
+                      <img
+                        alt=""
+                        src="@/assets/icons/trash_icon.svg"
+                        @click="deleteChip(index)"
+                      />
+                    </VueCustomTooltip>
+                  </div>
                 </div>
-              </div>
-            </vue-scroll>
-            <div v-else>Участников нет</div>
+              </vue-scroll>
+              <div v-else>Участников нет</div>
+            </div>
+            <div class="group__content">
+              <autocomplete
+                class="participants__input"
+                :search="searchByExecutor"
+                :get-result-value="getResultValue"
+                placeholder="Введите участника мероприятия..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectUser(result)">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
           </div>
-          <div class="group__content">
-            <autocomplete
-              class="participants__input"
-              :search="searchByExecutor"
-              :get-result-value="getResultValue"
-              placeholder="Введите участника мероприятия..."
-            >
-              <template #result="{ result, props }">
-                <li v-bind="props" @click="selectUser(result)">
-                  {{ transformFIO(result) }}
-                </li>
-              </template>
-            </autocomplete>
-          </div>
-        </div>
 
-        <!-- Дата начала -->
-        <div class="group">
-          <div class="group__title">Дата начала:</div>
-          <div class="group__content">
-            <datetime
-              type="datetime"
-              input-class="forms__container--input"
-              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            />
+          <!-- Дата начала -->
+          <div class="group">
+            <div class="group__title">Дата начала:</div>
+            <div class="group__content">
+              <datetime
+                type="datetime"
+                input-class="forms__container--input"
+                :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+                v-model="selectionStart"
+              />
+            </div>
           </div>
-        </div>
 
-        <!-- Дата окончания -->
-        <div class="group">
-          <div class="group__title">Дата окончания:</div>
-          <div class="group__content">
-            <datetime
-              type="datetime"
-              input-class="forms__container--input"
-              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            />
+          <!-- Дата окончания -->
+          <div class="group">
+            <div class="group__title">Дата окончания:</div>
+            <div class="group__content">
+              <datetime
+                type="datetime"
+                input-class="forms__container--input"
+                :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+                v-model="selectionEnd"
+              />
+            </div>
           </div>
-        </div>
 
-        <v-spinner v-if="!isLoading" small />
-        <v-button v-else red>Сохранить</v-button>
-      </div>
+          <v-spinner v-if="!isLoading" small />
+          <v-button v-else red>Сохранить</v-button>
+        </div>
+      </form>
     </div>
   </v-modal>
 </template>
@@ -112,10 +119,20 @@ import axios from "@/api/axios";
 import VSpinner from "@/components/VSpinner";
 
 export default {
+  props: {
+    copyItem: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
+      description: "",
+      title: "",
       participants: [],
       isLoading: true,
+      selectionStart: new Date().toISOString(),
+      selectionEnd: new Date().toISOString(),
     };
   },
   computed: {
@@ -132,8 +149,31 @@ export default {
       this.$modal.hide("copyEvent");
       this.$modal.show("eventList");
     },
-    confirm() {},
-    deleteChip(index) {},
+    confirm() {
+      let event = {
+        _id: this.copyItem.customData._id,
+        title: this.title,
+        description: this.description,
+        startDate: this.selectionStart,
+        endDate: this.selectionEnd,
+        participants: this.participants,
+      };
+
+      axios({
+        url: `/events/update/`,
+        data: event,
+        method: "POST",
+      })
+        .then(() => {
+          this.$toast.success("Мероприятие успешно создано!");
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        });
+    },
+    deleteChip(index) {
+      this.participants.splice(index, 1);
+    },
     getResultValue(result) {
       return "";
     },
@@ -151,6 +191,14 @@ export default {
       this.participants.push(participant);
     },
   },
+  watch: {
+    copyItem() {
+      if (this.copyItem.customData) {
+        this.title = this.copyItem.customData.title;
+        this.description = this.copyItem.customData.description;
+      }
+    },
+  },
 };
 </script>
 
@@ -158,6 +206,9 @@ export default {
 @import "@/styles/_variables";
 
 .event-copy {
+  .participants__input {
+    margin-top: 20px !important;
+  }
   &__title {
     font-size: 16px;
     font-weight: 700;
