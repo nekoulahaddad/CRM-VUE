@@ -62,6 +62,7 @@
           <div class="group__title">Отделы:</div>
           <div class="group__content">
             <select
+              required
               class="form-select"
               name="targetRegion"
               v-model="department"
@@ -77,6 +78,7 @@
           <div class="group__title">Описание:</div>
           <div class="group__content">
             <textarea
+              required
               class="form-textarea"
               placeholder="Введите описание задачи..."
               name="description"
@@ -111,8 +113,8 @@
           <div class="group__title">Дедлайн:</div>
           <div class="group__content">
             <datetime
-              v-model="date"
               required
+              v-model="date"
               input-class="forms__container--input"
               type="date"
               :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
