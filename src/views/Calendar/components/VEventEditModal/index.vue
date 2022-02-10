@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="715" :minWidth="1110" name="editEvent">
+  <v-modal :adaptive="true" :minHeight="755" :minWidth="1110" name="editEvent">
     <div class="event-edit">
       <div class="vm--modal__title">
         Редактирование мероприятия
@@ -30,16 +30,6 @@
             <div class="group__title">Описание:</div>
             <div class="group__content">
               <textarea class="form-textarea" v-model="description" />
-            </div>
-          </div>
-
-          <!-- Создатель -->
-          <div class="list-info__group group">
-            <div class="group__content">
-              <div class="group__item text--bold-700">Создатель:</div>
-              <div class="group__value">
-                {{ transformFIO(initiator) }}
-              </div>
             </div>
           </div>
 
@@ -282,6 +272,11 @@ export default {
     &__input {
       margin-top: 20px !important;
     }
+  }
+  button {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
   }
 }
 </style>
