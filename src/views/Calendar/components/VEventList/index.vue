@@ -11,7 +11,7 @@
         />
       </div>
       <div class="vm--modal__inner">
-        <div class="list list-shadow">
+        <div class="list list-shadow" v-if="events.length">
           <div
             :key="index"
             v-for="(event, index) in events"

@@ -196,7 +196,6 @@ export default {
     },
     closeModal() {
       this.$store.commit("deactivateAction", "addEvent");
-      this.$modal.hide("addEvent");
     },
     onChange(e) {
       this[e.target.name] = e.target.value;

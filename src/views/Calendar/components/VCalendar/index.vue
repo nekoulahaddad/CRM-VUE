@@ -54,7 +54,11 @@ export default {
   components: { VSpinner },
   methods: {
     showEventList(attributes) {
-      this.$emit("showEventList", attributes);
+      if (attributes.length) {
+        this.$emit("showEventList", attributes);
+      } else {
+        this.$modal.show("addEvent");
+      }
     },
   },
   watch: {
