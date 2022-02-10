@@ -125,10 +125,11 @@
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 import Chip from "vue-chip";
+import VSpinner from "@/components/VSpinner";
 import axios from "@/api/axios";
 
 export default {
-  components: { VButton, Chip },
+  components: { VButton, Chip, VSpinner },
   data() {
     return {
       fio: "",
@@ -136,6 +137,7 @@ export default {
       title: "",
       description: "",
       participants: [],
+      isLoading: true,
       selectionStart: new Date().toISOString(),
       selectionEnd: new Date().toISOString(),
     };
@@ -238,7 +240,7 @@ export default {
       return "";
     },
     onEventAdd() {
-      this.changeStatus(false);
+      this.isLoading = false;
 
       let event = {
         title: this.title,
@@ -263,7 +265,7 @@ export default {
           this.$toast.error(err.response.data.message);
         })
         .finally(() => {
-          this.changeStatus(true);
+          this.isLoading = true;
         });
     },
   },
