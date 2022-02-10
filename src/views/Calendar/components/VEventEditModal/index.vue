@@ -2,7 +2,7 @@
   <v-modal :adaptive="true" :minHeight="715" :minWidth="1110" name="editEvent">
     <div class="event-edit">
       <div class="vm--modal__title">
-        {{ title }}
+        Редактирование мероприятия
         <img
           @click="cancel"
           class="vm--modal__close"
@@ -12,6 +12,19 @@
       </div>
       <div class="event-edit__inner vm--modal__edit-event">
         <form @submit.prevent="confirm">
+          <!-- Заголовок мероприятия -->
+          <div class="group">
+            <div class="group__title">Заголовок мероприятия:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                v-model="title"
+              />
+            </div>
+          </div>
+
           <!-- Описание -->
           <div class="group">
             <div class="group__title">Описание:</div>
@@ -207,7 +220,6 @@ export default {
       }
     },
   },
-  mounted() {},
 };
 </script>
 
