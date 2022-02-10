@@ -51,7 +51,9 @@ export default new Vuex.Store({
   },
   mutations: {
     deactivateAction(state, payload) {
-      state.actions[payload] = false;
+      if (state.actions[payload]) {
+        state.actions[payload] = false;
+      }
     },
     toggleAction(state, payload) {
       state.actions[payload.key] = !state.actions[payload.key];
