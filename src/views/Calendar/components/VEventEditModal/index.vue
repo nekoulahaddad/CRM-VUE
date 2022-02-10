@@ -170,6 +170,10 @@ export default {
       this.participants.splice(index, 1);
     },
     confirm() {
+      if (this.$moment().valueOf() > new Date(this.selectionEnd).getTime()) {
+        this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
+        return;
+      }
       this.isLoading = true;
 
       let event = {

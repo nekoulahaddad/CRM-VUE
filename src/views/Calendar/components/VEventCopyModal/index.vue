@@ -154,6 +154,11 @@ export default {
       this.$modal.show("eventList");
     },
     confirm() {
+      if (this.$moment().valueOf() > new Date(this.selectionEnd).getTime()) {
+        this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
+        return;
+      }
+
       let event = {
         title: this.title,
         description: this.description,
