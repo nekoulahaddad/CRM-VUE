@@ -73,6 +73,7 @@
             </div>
           </div>
 
+          <!-- Дата начала -->
           <div class="group">
             <div class="group__title">Дата начала:</div>
             <div class="group__content">
@@ -157,7 +158,11 @@ export default {
       this.$modal.show("eventList");
     },
     selectUser(user) {
-      this.participants.push(user);
+      if (this.participants.find((p) => p._id === user._id)) {
+        this.$toast.error("Участник уже добавлен");
+      } else {
+        this.participants.push(user);
+      }
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
