@@ -124,6 +124,9 @@ export default {
       type: Object,
       required: true,
     },
+    userId: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -152,16 +155,16 @@ export default {
     },
     confirm() {
       let event = {
-        _id: this.copyItem.customData._id,
         title: this.title,
         description: this.description,
         startDate: this.selectionStart,
         endDate: this.selectionEnd,
         participants: this.participants,
+        initiator: this.userId,
       };
 
       axios({
-        url: `/events/update/`,
+        url: `/events/post/`,
         data: event,
         method: "POST",
       })

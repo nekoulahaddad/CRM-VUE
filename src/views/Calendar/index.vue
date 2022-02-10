@@ -28,7 +28,11 @@
     <v-event-info-modal :infoItem="infoItem" />
 
     <!-- Модальное окно для копирования мероприятия -->
-    <v-event-copy-modal :copyItem="copyItem" @updateEvents="updateEvents" />
+    <v-event-copy-modal
+      :copyItem="copyItem"
+      :userId="userId"
+      @updateEvents="updateEvents"
+    />
 
     <v-page-header
       title="Календарь"
