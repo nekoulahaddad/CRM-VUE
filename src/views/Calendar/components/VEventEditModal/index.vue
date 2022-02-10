@@ -227,7 +227,6 @@ export default {
   }
 
   .form-textarea {
-    width: 976px;
     height: 150px !important;
   }
 
