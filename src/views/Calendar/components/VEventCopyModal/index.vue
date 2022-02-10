@@ -138,9 +138,10 @@ export default {
   computed: {
     height() {
       if (this.participants.length > 3) {
-        return "150px";
+        return "162px";
       }
-      return "auto";
+
+      return `${this.participants.length * 54}px`;
     },
   },
   components: { VSpinner },

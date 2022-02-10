@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="755" :minWidth="1110" name="editEvent">
+  <v-modal :adaptive="true" :minHeight="765" :minWidth="1110" name="editEvent">
     <div class="event-edit">
       <div class="vm--modal__title">
         Редактирование мероприятия
@@ -131,9 +131,10 @@ export default {
   computed: {
     height() {
       if (this.participants.length > 3) {
-        return "154px";
+        return "162px";
       }
-      return "auto";
+
+      return `${this.participants.length * 54}px`;
     },
   },
   components: { VSpinner },
