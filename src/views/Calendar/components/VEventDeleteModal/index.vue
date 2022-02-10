@@ -35,7 +35,9 @@ export default {
           eventId: this.deletedItem.key,
         },
         method: "POST",
-      }).then(async () => {
+      }).then(() => {
+        this.$emit("updateEvents");
+        this.$emit("updateAfterDeleteEvent", this.deletedItem.key);
         this.cancel();
         this.$toast.success("Мероприятие успешно удалено!");
         this.$modal.show("eventList");

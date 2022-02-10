@@ -18,7 +18,11 @@
     <v-event-edit-modal :editedItem="editedItem" />
 
     <!-- Модальное окно для удаления мероприятия -->
-    <v-event-delete-modal :deletedItem="deletedItem" />
+    <v-event-delete-modal
+      :deletedItem="deletedItem"
+      @updateEvents="updateEvents"
+      @updateAfterDeleteEvent="updateAfterDeleteEvent"
+    />
 
     <!-- Модальное окно для просмотра мероприятия -->
     <v-event-info-modal :infoItem="infoItem" />
@@ -168,6 +172,9 @@ export default {
     },
   },
   methods: {
+    updateAfterDeleteEvent(key) {
+      this.dayEvents = this.dayEvents.filter((event) => event.key !== key);
+    },
     setShowDate(d) {
       this.showDate = d;
     },
