@@ -41,7 +41,10 @@
           <div class="add-new-event">
             <a
               href=""
-              @click.prevent="$modal.show('addEvent')"
+              @click.prevent="
+                $store.commit('toggleAction', { key: 'addEvent' }),
+                  $modal.show('addEvent')
+              "
               class="add-new-event__link"
             >
               <img src="@/assets/icons/plus.svg" alt="" />
