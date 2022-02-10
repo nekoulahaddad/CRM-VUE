@@ -192,6 +192,7 @@ export default {
         method: "POST",
       })
         .then(() => {
+          this.$emit("updateAfterEditEvent", event);
           this.$emit("updateEvents");
           this.$toast.success("Мероприятие успешно изменено!");
           this.cancel();

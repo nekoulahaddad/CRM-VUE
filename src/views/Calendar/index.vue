@@ -15,7 +15,11 @@
     />
 
     <!-- Модальное окно для изменения мероприятия -->
-    <v-event-edit-modal :editedItem="editedItem" @updateEvents="updateEvents" />
+    <v-event-edit-modal
+      :editedItem="editedItem"
+      @updateAfterEditEvent="updateAfterEditEvent"
+      @updateEvents="updateEvents"
+    />
 
     <!-- Модальное окно для удаления мероприятия -->
     <v-event-delete-modal
@@ -179,6 +183,14 @@ export default {
     },
   },
   methods: {
+    updateAfterEditEvent(e) {
+      this.dayEvents = this.dayEvents.map((event) => {
+        if (event.key === e._id) {
+          event.customData.title = e.title;
+        }
+        return event;
+      });
+    },
     updateAfterDeleteEvent(key) {
       this.dayEvents = this.dayEvents.filter((event) => event.key !== key);
     },
