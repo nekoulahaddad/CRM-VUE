@@ -98,8 +98,7 @@
             </div>
           </div>
 
-          <v-spinner v-if="isLoading" small />
-          <v-button v-else red>Сохранить</v-button>
+          <v-button red>Сохранить</v-button>
         </form>
       </div>
     </div>
@@ -187,6 +186,7 @@ export default {
         method: "POST",
       })
         .then(() => {
+          this.$emit("updateEvents");
           this.$toast.success("Мероприятие успешно изменено!");
           this.cancel();
         })

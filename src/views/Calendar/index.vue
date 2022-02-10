@@ -15,7 +15,7 @@
     />
 
     <!-- Модальное окно для изменения мероприятия -->
-    <v-event-edit-modal :editedItem="editedItem" />
+    <v-event-edit-modal :editedItem="editedItem" @updateEvents="updateEvents" />
 
     <!-- Модальное окно для удаления мероприятия -->
     <v-event-delete-modal
