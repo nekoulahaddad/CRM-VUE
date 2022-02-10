@@ -246,7 +246,9 @@ export default {
     },
     onEventAdd() {
       if (this.$moment().valueOf() > new Date(this.selectionEnd).getTime()) {
-        this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
+        this.$toast.error(
+          "Дата окончания не может быть раньше текущего времени!"
+        );
         return;
       }
       this.isLoading = false;
