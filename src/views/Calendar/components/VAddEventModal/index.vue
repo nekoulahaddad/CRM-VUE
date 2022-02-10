@@ -136,8 +136,8 @@ export default {
       title: "",
       description: "",
       participants: [],
-      selectionStart: new Date(),
-      selectionEnd: new Date(),
+      selectionStart: new Date().toISOString(),
+      selectionEnd: new Date().toISOString(),
     };
   },
   props: {
@@ -191,6 +191,15 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    reset() {
+      this.fio = "";
+      this.users = [];
+      this.title = "";
+      this.description = "";
+      this.participants = [];
+      this.selectionStart = new Date().toDateString();
+      this.selectionEnd = new Date().toDateString();
+    },
     cancel() {
       this.$modal.hide("addEvent");
     },
@@ -248,6 +257,7 @@ export default {
           this.$toast.success("Мероприятие успешно добавлено!");
           this.closeModal();
           this.cancel();
+          this.reset();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
