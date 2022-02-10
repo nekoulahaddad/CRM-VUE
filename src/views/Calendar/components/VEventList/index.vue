@@ -84,6 +84,7 @@
             <v-event-info v-if="infoItem.key === event.key" :infoItem="event" />
           </div>
         </div>
+        <div v-else>Мероприятий нет</div>
       </div>
     </div>
   </v-modal>
