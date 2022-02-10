@@ -247,6 +247,7 @@ export default {
           this.$emit("updateEvents");
           this.$toast.success("Мероприятие успешно добавлено!");
           this.closeModal();
+          this.cancel();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
