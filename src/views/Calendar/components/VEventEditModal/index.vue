@@ -219,7 +219,6 @@ export default {
 .event-edit {
   form {
     max-height: 555px;
-    margin-left: 5px;
   }
 
   &__inner {
