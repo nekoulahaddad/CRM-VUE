@@ -165,6 +165,7 @@ export default {
         method: "POST",
       })
         .then(() => {
+          this.$emit("updateEvents");
           this.$toast.success("Мероприятие успешно создано!");
           this.cancel();
         })
