@@ -263,6 +263,7 @@ export default {
     },
   },
   mounted() {
+    alert("test");
     this.$store.commit("deactivateAction", "addEvent");
     this.updateEvents();
   },
