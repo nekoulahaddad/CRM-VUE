@@ -57,6 +57,9 @@ export default {
       if (attributes.length) {
         this.$emit("showEventList", attributes);
       } else {
+        this.$store.commit("toggleAction", {
+          key: "addEvent",
+        });
         this.$modal.show("addEvent");
       }
     },
