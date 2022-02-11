@@ -13,11 +13,7 @@
           <a
             href=""
             class="page-actions__button"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addDbTask',
-              })
-            "
+            @click.prevent="toggleAction('addDbTask')"
             :class="{
               'page-actions__button--active': $store.state.actions.addDbTask,
             }"
@@ -33,11 +29,7 @@
           <a
             href=""
             class="page-actions__button"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addEvent',
-              })
-            "
+            @click.prevent="toggleAction('addEvent')"
             :class="{
               'page-actions__button--active': $store.state.actions.addEvent,
             }"
@@ -53,11 +45,7 @@
           <a
             href=""
             class="page-actions__button"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addCallback',
-              })
-            "
+            @click.prevent="toggleAction('addCallback')"
             :class="{
               'page-actions__button--active': $store.state.actions.addCallback,
             }"
@@ -73,11 +61,7 @@
           <a
             href=""
             class="page-actions__button"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addPurchase',
-              })
-            "
+            @click.prevent="toggleAction('addPurchase')"
             :class="{
               'page-actions__button--active': $store.state.actions.addPurchase,
             }"
@@ -93,11 +77,7 @@
           <a
             href=""
             class="page-actions__button"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addGoodsCategory',
-              })
-            "
+            @click.prevent="toggleAction('addGoodsCategory')"
             :class="{
               'page-actions__button--active':
                 $store.state.actions.addGoodsCategory,
@@ -114,11 +94,7 @@
             :class="{
               'page-actions__button--active': $store.state.actions.importGoods,
             }"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'importGoods',
-              })
-            "
+            @click.prevent="toggleAction('importGoods')"
           >
             <simple-svg :src="require('@/assets/icons/import_excel.svg')" />
           </a>
@@ -161,11 +137,7 @@
             :class="{
               'page-actions__button--active': $store.state.actions.addOrder,
             }"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addOrder',
-              })
-            "
+            @click.prevent="toggleAction('addOrder')"
           >
             <simple-svg :src="require('@/assets/icons/create_order.svg')" />
           </a>
@@ -181,11 +153,7 @@
             :class="{
               'page-actions__button--active': $store.state.actions.addEmployee,
             }"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addEmployee',
-              })
-            "
+            @click.prevent="toggleAction('addEmployee')"
           >
             <simple-svg :src="require('@/assets/icons/add_employee.svg')" />
           </a>
@@ -246,11 +214,7 @@
         <VueCustomTooltip label="Добавить раздел">
           <a
             href=""
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'createEducationSection',
-              })
-            "
+            @click.prevent="toggleAction('createEducationSection')"
             class="page-actions__button"
             :class="{
               'page-actions__button--active':
@@ -271,11 +235,7 @@
             :class="{
               'page-actions__button--active': $store.state.actions.addTask,
             }"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addTask',
-              })
-            "
+            @click.prevent="toggleAction('addTask')"
           >
             <simple-svg :src="require('@/assets/icons/add_task.svg')" />
           </a>
@@ -291,11 +251,7 @@
             :class="{
               'page-actions__button--active': $store.state.actions.addDelivery,
             }"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addDelivery',
-              })
-            "
+            @click.prevent="toggleAction('addDelivery')"
           >
             <simple-svg :src="require('@/assets/icons/add_delivery.svg')" />
           </a>
@@ -310,11 +266,7 @@
           :class="{
             'page-actions__button--active': $store.state.actions.addDepartment,
           }"
-          @click.prevent="
-            $store.commit('toggleAction', {
-              key: 'addDepartment',
-            })
-          "
+          @click.prevent="toggleAction('addDepartment')"
         >
           <simple-svg :src="require('@/assets/icons/add_department.svg')" />
         </a>
@@ -336,11 +288,7 @@
             :class="{
               'page-actions__button--active': $store.state.actions.addVacancy,
             }"
-            @click.prevent="
-              $store.commit('toggleAction', {
-                key: 'addVacancy',
-              })
-            "
+            @click.prevent="toggleAction('addVacancy')"
           >
             <simple-svg :src="require('@/assets/icons/add_vacancy.svg')" />
           </a>
@@ -370,63 +318,6 @@ export default {
       changeStatus: "change_load_status",
     }),
     addTask() {},
-    async downloadUsersBirthday(age) {
-      this.changeStatus(false);
-      axios({
-        url: `/excel/birthday`,
-        data: {
-          age: age,
-        },
-        method: "POST",
-      })
-        .then((res) => {
-          this.$toast.success(res.data.message);
-        })
-        .catch((error) => {
-          this.$toast.error(error.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
-        });
-    },
-    async downloadAllUsers() {
-      this.changeStatus(false);
-      axios({
-        url: `/excel/allusers`,
-        data: {
-          region: this.filtersOptions.region,
-        },
-        method: "POST",
-      })
-        .then((res) => {
-          this.$toast.success(res.data.message);
-        })
-        .catch((error) => {
-          this.$toast.error(error.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
-        });
-    },
-    async downloadKidsOfUsers() {
-      this.changeStatus(false);
-      axios({
-        url: `/excel/children`,
-        data: {
-          age: 18,
-        },
-        method: "POST",
-      })
-        .then((res) => {
-          this.$toast.success("Результаты запросов!");
-        })
-        .catch((error) => {
-          this.$toast.error(error.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
-        });
-    },
     async getInfoAboutAllUsers() {
       try {
         this.changeStatus(false);
@@ -459,6 +350,13 @@ export default {
         .finally(() => {
           this.changeStatus(true);
         });
+    },
+    toggleAction(key) {
+      this.$store.commit("toggleAction", { key });
+
+      if (this.$store.state.actions[key]) {
+        this.$scrollTo("body", 300);
+      }
     },
     async downloadItem(route, type, prefix) {
       try {

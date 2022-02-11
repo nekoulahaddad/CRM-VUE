@@ -33,22 +33,34 @@
             />
           </div>
         </div>
-        <div class="group">
+        <div class="group participants">
           <div class="group__title">ФИО исполнителей:</div>
-          <div class="chips">
-            <chip
+          <div class="group__participants">
+            <div
+              v-if="executors.length"
+              class="group__participant"
               v-for="(executor, index) in executors"
-              :text="transformFIO(executor)"
-              :close="true"
-              @closed="chipClosed(index)"
-            />
+              :key="index"
+            >
+              <span>{{ transformFIO(executor) }}</span>
+              <div>
+                <VueCustomTooltip label="Удалить">
+                  <img
+                    alt=""
+                    src="@/assets/icons/trash_icon.svg"
+                    @click="deleteChip(index)"
+                  />
+                </VueCustomTooltip>
+              </div>
+            </div>
+            <div class="participants__empty" v-else>Исполнителей нет</div>
           </div>
           <div class="group__content">
             <autocomplete
-              ref="executors"
+              class="participants__input"
               :search="searchByExecutor"
               :get-result-value="getResultValue"
-              placeholder="Введите исполнителя задачи..."
+              placeholder="Введите участника мероприятия..."
             >
               <template #result="{ result, props }">
                 <li v-bind="props" @click="selectUser(result)">
@@ -216,6 +228,9 @@ export default {
       const files = e.target.files;
       this[e.target.name] = files;
     },
+    deleteChip(index) {
+      this.executors.splice(index, 1);
+    },
     searchByExecutor(input) {
       if (input.length < 1) {
         return [];
@@ -329,7 +344,7 @@ export default {
     padding: 10px;
   }
   .form-control {
-    width: 689px;
+    width: 976px;
   }
   .form-textarea {
     width: 976px;
@@ -364,7 +379,7 @@ export default {
     margin-bottom: 10px;
   }
   .autocomplete-input {
-    width: 689px;
+    width: 410px;
   }
   .chip {
     position: relative;
@@ -381,6 +396,26 @@ export default {
       position: absolute;
       right: 17px;
     }
+  }
+  .group__participant {
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 407px;
+    overflow-x: hidden;
+    margin-top: 10px;
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+  }
+  .participants__empty {
+    margin-bottom: 10px;
   }
 }
 </style>
