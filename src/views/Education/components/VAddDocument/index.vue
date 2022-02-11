@@ -11,9 +11,21 @@
         />
       </div>
       <div class="card__group group">
-        <div class="group__document" v-if="documents.length">
-          {{ documents }}
+        <div class="group__documents" v-if="documents.length">
+          <div
+            class="group__document"
+            v-for="(document, index) in documents"
+            :key="index"
+          >
+            <span>{{ document.name }}</span>
+            <img
+              alt=""
+              src="@/assets/icons/trash_icon.svg"
+              @click="deleteDocument(index)"
+            />
+          </div>
         </div>
+        <div class="group__empty-documents" v-else>Документов нет</div>
         <div class="group__content">
           <input
             hidden
@@ -24,7 +36,7 @@
             name="documents"
             @change="fileUpload($event)"
           />
-          <label for="document-file"> Выбрать файл </label>
+          <label for="document-file">Выберите файлы</label>
         </div>
       </div>
       <div class="group__actions">
@@ -51,7 +63,7 @@ export default {
   data() {
     return {
       start: false,
-      documents: "Выбрать файл",
+      documents: [],
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
   },
@@ -66,12 +78,19 @@ export default {
       const files = e.target.files;
       this[e.target.name] = files;
     },
+    deleteDocument(index) {
+      this.documents = Array.from(this.documents).filter((doc, i) => {
+        if (i !== index) {
+          return doc;
+        }
+      });
+    },
     onDocumentAdd() {
       this.changeStatus(false);
       let documentData = new FormData();
       documentData.append("educationId", this.education._id);
       //documentData.append("title", this.title);
-      console.log(this.documents);
+
       if (this.documents.length) {
         for (let i = 0; i < this.documents.length; i++) {
           documentData.append("document", this.documents[i]);
@@ -118,11 +137,16 @@ export default {
   &__title {
     position: relative;
     padding-bottom: 0;
+    margin-bottom: 5px;
   }
 
   .group {
     & + * {
       margin-top: 10px;
+    }
+
+    &__empty-documents {
+      margin-bottom: 10px;
     }
   }
 
@@ -153,8 +177,26 @@ export default {
     color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
   }
+  .group__documents {
+  }
   .group__document {
+    width: 401px;
+    display: flex;
+    justify-content: space-between;
+    height: 33px;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    border-radius: $border-radius;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-bottom: 10px;
+
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-right: 30px;
+    }
   }
 }
 </style>
