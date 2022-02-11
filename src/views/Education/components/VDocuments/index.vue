@@ -5,7 +5,7 @@
       class="list__row list__row--shadow list__row--white"
     >
       <div class="list__columns list__columns--shadow list__columns--white">
-        <div class="list__column">{{ document.title }}</div>
+        <div class="list__column">{{ document.document }}</div>
         <div class="list__column">
           <div class="table__actions">
             <div class="table__icon">
