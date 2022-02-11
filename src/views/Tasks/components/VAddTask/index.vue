@@ -402,7 +402,7 @@ export default {
     width: 401px;
   }
   .vdatetime-input {
-    width: 410px;
+    width: 401px;
   }
   .chips {
     margin-bottom: 10px;
