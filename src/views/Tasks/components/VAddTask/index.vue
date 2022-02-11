@@ -275,6 +275,10 @@ export default {
       this[e.target.name] = e.target.value;
     },
     onTaskAdd() {
+      if (!this.executors.length) {
+        this.$toast.error("Вы не выбрали исполнителя");
+        return;
+      }
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
         this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
         return;
