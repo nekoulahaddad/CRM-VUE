@@ -2,7 +2,7 @@
   <div class="card card--white add-document-card card--small">
     <form @submit.prevent="onDocumentAdd">
       <div class="card__title card__title--small">
-        Добавить документ
+        Добавить документы:
         <img
           @click="$emit('close')"
           class="card__close"
@@ -11,30 +11,17 @@
         />
       </div>
       <div class="card__group group">
-        <div class="group__title">Название документа:</div>
-        <div class="group__content">
-          <input
-            required
-            class="form-control"
-            type="text"
-            placeholder="Введите название..."
-            name="title"
-            @input="onChange($event)"
-          />
-        </div>
-      </div>
-      <div class="card__group group">
-        <div class="group__title">Загрузить документ:</div>
-        <div class="group__document" v-if="document.name">
-          {{ document.name }}
+        <div class="group__document" v-if="documents.length">
+          {{ documents }}
         </div>
         <div class="group__content">
           <input
-            type="file"
-            id="document-file"
             hidden
+            type="file"
+            multiple
+            id="document-file"
             :disabled="start"
-            name="document"
+            name="documents"
             @change="fileUpload($event)"
           />
           <label for="document-file"> Выбрать файл </label>
@@ -64,7 +51,7 @@ export default {
   data() {
     return {
       start: false,
-      document: "Выбрать файл",
+      documents: "Выбрать файл",
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
   },
@@ -77,19 +64,20 @@ export default {
     },
     fileUpload(e) {
       const files = e.target.files;
-      this[e.target.name] = files[0];
-      this[e.target.name + "Url"] = URL.createObjectURL(files[0]);
+      this[e.target.name] = files;
     },
     onDocumentAdd() {
       this.changeStatus(false);
       let documentData = new FormData();
       documentData.append("educationId", this.education._id);
-      documentData.append("title", this.title);
-      if (this.document !== "Выбрать файл") {
-        documentData.append("document", this.document);
+      //documentData.append("title", this.title);
+      console.log(this.documents);
+      if (this.documents.length) {
+        for (let i = 0; i < this.documents.length; i++) {
+          documentData.append("document", this.documents[i]);
+        }
       } else {
         this.$toast.error("Необходимо добавить документ!");
-        this.changeStatus(true);
         return;
       }
 
