@@ -188,11 +188,12 @@ import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import getDataFromPage from "@/api/getDataFromPage";
+import dataMixins from "@/mixins/data";
 import axios from "@/api/axios";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VFilter,
     VDeleteItem,
@@ -292,7 +293,7 @@ export default {
         this.isLoading = false;
         this.filtersOptions.page = this.$route.params.page;
 
-        const { data } = await getDataFromPage(
+        const { data } = await this.getDataFromPage(
           `/tasks/get`,
           this.filtersOptions
         );

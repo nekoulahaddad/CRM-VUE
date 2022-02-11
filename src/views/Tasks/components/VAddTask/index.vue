@@ -245,7 +245,6 @@ export default {
       this[e.target.name] = e.target.value;
     },
     onTaskAdd() {
-      this.changeStatus(false);
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
         this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
         this.changeStatus(true);
@@ -293,9 +292,6 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
   },
@@ -379,7 +375,7 @@ export default {
     margin-bottom: 10px;
   }
   .autocomplete-input {
-    width: 410px;
+    width: 401px;
   }
   .chip {
     position: relative;
