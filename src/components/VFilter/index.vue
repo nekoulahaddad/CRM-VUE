@@ -233,7 +233,6 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
-                @input="selectOptions($event, null, 'executor', null)"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
@@ -312,7 +311,6 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
-                @input="selectOptions($event, null, 'executor', null)"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
@@ -457,7 +455,6 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
-                @input="selectOptions($event, null, 'executor', null)"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
@@ -563,7 +560,6 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
-                @input="selectOptions($event, null, 'executor', null)"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
@@ -1057,6 +1053,7 @@ export default {
         user.lastname ? user.lastname.charAt(0) + "." : ""
       }`;
       this.users = [];
+      this.selectOptions(null, null, "executor", null);
     },
     async getUsersByFIO($event) {
       if (this.fio === "") {
