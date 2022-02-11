@@ -133,7 +133,8 @@
             />
           </div>
         </div>
-        <v-button red>Отправить</v-button>
+        <v-spinner v-if="!isLoading" small />
+        <v-button v-else red>Отправить</v-button>
       </form>
     </div>
   </div>
@@ -141,6 +142,7 @@
 
 <script>
 import VButton from "@/components/VButton";
+import VSpinner from "@/components/VSpinner";
 import axios from "@/api/axios";
 import Chip from "vue-chip";
 import { mapMutations } from "vuex";
@@ -149,6 +151,7 @@ export default {
   components: {
     VButton,
     Chip,
+    VSpinner,
   },
   data() {
     return {
@@ -159,6 +162,7 @@ export default {
       departments: [],
       executors: [],
       users: [],
+      isLoading: true,
       description: "",
       executor: "",
       documents: [],
@@ -247,7 +251,6 @@ export default {
     onTaskAdd() {
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
         this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
-        this.changeStatus(true);
         return;
       }
       let taskData = new FormData();
@@ -270,7 +273,6 @@ export default {
         taskData.append("deadline_date", this.date);
       } else {
         this.$toast.error("Необходимо выбрать дату окончания!");
-        this.changeStatus(true);
         return;
       }
       if (this.documents[0] !== "Выбрать файлы") {
@@ -278,12 +280,16 @@ export default {
           taskData.append("documents", this.documents[i]);
         }
       }
+
+      this.isLoading = false;
+
       axios({
         url: `/tasks/post/`,
         data: taskData,
         method: "POST",
       })
-        .then(async (res) => {
+        .then(() => {
+          this.isLoading = true;
           this.$emit("refresh");
           this.$toast.success("Задача успешно добавлена!");
           this.$store.commit("toggleAction", {
@@ -292,6 +298,7 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+          this.isLoading = true;
         });
     },
   },
@@ -369,7 +376,7 @@ export default {
     width: 401px;
   }
   .vdatetime-input {
-    width: 330px;
+    width: 410px;
   }
   .chips {
     margin-bottom: 10px;
@@ -402,7 +409,7 @@ export default {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
-    width: 407px;
+    width: 401px;
     overflow-x: hidden;
     margin-top: 10px;
 
