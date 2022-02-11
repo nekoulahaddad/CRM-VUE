@@ -98,15 +98,34 @@
             />
           </div>
         </div>
+
         <div class="group">
           <div class="group__title">Документы:</div>
-          <div class="group__documents">
+          <div class="group__participants">
             <div
+              class="group__participant"
               v-if="documents.length"
-              v-for="(photo, i) in documents"
-              :key="i"
+              v-for="(photo, index) in documents"
+              :key="index"
             >
-              {{ photo.name ? photo.name : photo }}
+              <span
+                style="
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                "
+              >
+                {{ photo.name ? photo.name : photo }}
+              </span>
+              <div>
+                <VueCustomTooltip label="Удалить">
+                  <img
+                    alt=""
+                    src="@/assets/icons/trash_icon.svg"
+                    @click="deleteDocument(index)"
+                  />
+                </VueCustomTooltip>
+              </div>
             </div>
           </div>
           <div class="group__content">
@@ -234,6 +253,13 @@ export default {
     },
     deleteChip(index) {
       this.executors.splice(index, 1);
+    },
+    deleteDocument(index) {
+      this.documents = Array.from(this.documents).filter((doc, i) => {
+        if (i !== index) {
+          return doc;
+        }
+      });
     },
     searchByExecutor(input) {
       if (input.length < 1) {
