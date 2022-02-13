@@ -15,7 +15,7 @@
                   downloadItem(
                     document.path + document.document,
                     document.document,
-                    document.title
+                    `Документ ${index + 1}`
                   )
                 "
                 src="@/assets/icons/doc_download_icon.svg"
