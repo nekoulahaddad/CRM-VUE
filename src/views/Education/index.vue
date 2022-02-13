@@ -322,6 +322,9 @@ export default {
 @import "@/styles/_variables";
 
 .education-page {
+  .page__body {
+    margin-bottom: 20px;
+  }
   .list__columns {
     grid-template-columns: 1fr 100px;
   }
