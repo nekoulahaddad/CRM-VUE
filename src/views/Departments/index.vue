@@ -119,11 +119,12 @@ import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
-import getDataFromPage from "@/api/getDataFromPage";
+import dataMixins from "@/mixins/data";
 import axios from "@/api/axios";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VItem,
     VEdit,
@@ -220,7 +221,7 @@ export default {
       try {
         this.filtersOptions.page = this.$route.params.page;
 
-        const { data } = await getDataFromPage(
+        const { data } = await this.getDataFromPage(
           "/departments/get",
           this.filtersOptions
         );

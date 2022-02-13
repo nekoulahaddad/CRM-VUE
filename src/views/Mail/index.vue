@@ -82,7 +82,7 @@ import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
-import getDataFromPage from "@/api/getDataFromPage";
+import dataMixins from "@/mixins/data";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
@@ -90,6 +90,7 @@ import axios from "@/api/axios";
 import { mapGetters } from "vuex";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VFilter,
     VSpinner,
@@ -144,7 +145,7 @@ export default {
         this.isLoading = false;
         this.filtersOptions.page = this.$route.params.page;
 
-        const { data } = await getDataFromPage(
+        const { data } = await this.getDataFromPage(
           "/callbacks/get",
           this.filtersOptions
         );

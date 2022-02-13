@@ -77,18 +77,15 @@ import VMango from "./components/VMango";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
-import getDataFromPage from "@/api/getDataFromPage";
+import dataMixins from "@/mixins/data";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
-import nameMixins from "@/mixins/name";
-import dateMixins from "@/mixins/date";
-import phoneMixins from "@/mixins/phone";
 import APlayer from "vue-aplayer";
 import { mapGetters } from "vuex";
 APlayer.disableVersionBadge = true;
 
 export default {
-  mixins: [dateMixins, nameMixins, phoneMixins],
+  mixins: [dataMixins],
   components: {
     APlayer,
     VFilter,
@@ -121,7 +118,7 @@ export default {
         this.isLoading = false;
         this.filtersOptions.page = this.$route.params.page;
 
-        const { data } = await getDataFromPage(
+        const { data } = await this.getDataFromPage(
           "/calls/get",
           this.filtersOptions
         );

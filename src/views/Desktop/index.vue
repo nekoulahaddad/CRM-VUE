@@ -117,11 +117,12 @@ import VAddEventModal from "@/views/Calendar/components/VAddEventModal";
 import VAddTaskModal from "./components/VAddTaskModal";
 import VCalendarEvents from "./components/VCalendarEvents";
 import VEditTaskModal from "../../components/VModals/EditTaskModal";
-import getDataFromPage from "../../api/getDataFromPage";
+import dataMixins from "@/mixins/data";
 import VContextMenu from "./components/VContextMenu";
 import axios from "@/api/axios";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VContextMenu,
     VEditTaskModal,
@@ -163,7 +164,7 @@ export default {
     },
     async fetchData() {
       try {
-        const { data } = await getDataFromPage(`/tasks/get`, {});
+        const { data } = await this.getDataFromPage(`/tasks/get`, {});
 
         this.dataset = data.tasks;
       } catch (e) {

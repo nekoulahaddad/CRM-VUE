@@ -133,10 +133,11 @@ import axios from "@/api/axios";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import { mapGetters, mapMutations } from "vuex";
-import getDataFromPage from "../../api/getDataFromPage";
+import dataMixins from "@/mixins/data";
 import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VFilter,
     VPagination,
@@ -210,7 +211,7 @@ export default {
       try {
         this.isLoading = false;
         this.updateGoods(
-          await getDataFromPage(
+          await this.getDataFromPage(
             `/${this.$route.params.type || "categories"}/get`,
             this.filtersOptions
           )

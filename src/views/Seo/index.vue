@@ -150,11 +150,12 @@ import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
 import VPagination from "@/components/VPagination";
-import getDataFromPage from "../../api/getDataFromPage";
+import dataMixins from "@/mixins/data";
 import { mapGetters, mapMutations } from "vuex";
 import { REGION_MOSCOW_ID } from "../../constants";
 
 export default {
+  mixins: [dataMixins],
   components: {
     VFilter,
     VEdit,
@@ -288,7 +289,7 @@ export default {
         this.filtersOptions.page = this.$route.params.page;
         this.filtersOptions.type = this.$route.params.type;
 
-        const result = await getDataFromPage(
+        const result = await this.getDataFromPage(
           `/${this.$route.params.type || "categories"}/get`,
           this.filtersOptions
         );
