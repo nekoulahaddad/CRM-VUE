@@ -279,7 +279,7 @@ export default {
       try {
         this.filtersOptions.page = this.$route.params.page;
 
-        const { data } = await getDataFromPage(
+        const { data } = await this.getDataFromPage(
           "/user/get",
           this.filtersOptions
         );
