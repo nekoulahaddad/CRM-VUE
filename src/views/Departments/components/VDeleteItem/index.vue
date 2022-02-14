@@ -45,6 +45,7 @@ export default {
         .then(async () => {
           this.$emit("refresh");
           this.$toast.success("Отдел успешно удален!");
+          this.$emit("afterDelete");
           this.cancel();
         })
         .catch((err) => {

@@ -1,6 +1,10 @@
 <template>
   <div class="page departments-page">
-    <v-delete-item :deletedItem="deletedItem" @refresh="refresh" />
+    <v-delete-item
+      :deletedItem="deletedItem"
+      @afterDelete="afterDelete"
+      @refresh="refresh"
+    />
 
     <div
       class="page__header page-header"
@@ -193,6 +197,11 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    afterDelete() {
+      if (!this.dataset.length) {
+        location.reload();
+      }
+    },
     goToLink(name) {
       this.$router.push({ name });
     },
