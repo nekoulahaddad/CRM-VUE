@@ -474,7 +474,7 @@
                 :get-result-value="getResultValue"
               >
                 <template #result="{ result, props }">
-                  <li @click="selectUser(result)" v-bind="props">
+                  <li @click="selectInitiator(result)" v-bind="props">
                     {{ transformFIO(result) }}
                   </li>
                 </template>
@@ -1045,16 +1045,18 @@ export default {
         return [];
       }
 
-      axios(
-        `/user/${
-          this.type === "callCenterIssues"
-            ? "getcallmanagers"
-            : this.type === "purchase"
-            ? "getmanagers"
-            : "getsearch"
-        }/${this.author}`
-      ).then((res) => {
-        this.authors = res.data;
+      return new Promise((resolve) => {
+        axios(
+          `/user/${
+            this.type === "callCenterIssues"
+              ? "getcallmanagers"
+              : this.type === "purchase"
+              ? "getmanagers"
+              : "getsearch"
+          }/${input}`
+        ).then((res) => {
+          resolve(res.data);
+        });
       });
     },
     searchByExecutor(input) {
@@ -1071,7 +1073,10 @@ export default {
       this.$parent.isLoading = false;
       this.$emit("refreshDates", startDate, endDate, this.regionsPool);
     },
-    selectInitiator() {},
+    selectInitiator(user) {
+      this.filterOptions.initiator = user._id;
+      this.selectOptions(null, null, "initiator", null);
+    },
     selectUser(user) {
       this.filterOptions.executor = user._id;
       this.fio = `${user.surname} ${user.name.charAt(0)}.${
