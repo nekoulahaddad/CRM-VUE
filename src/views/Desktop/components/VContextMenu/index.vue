@@ -2,7 +2,7 @@
   <div class="content-menu">
     <a href="" class="content-menu__item">Копировать ссылка на задачу</a>
     <a href="" class="content-menu__item">Удалить</a>
-    <a href="" class="content-menu__item">Переместить наверх</a>
+    <a v-if="false" href="" class="content-menu__item">Переместить наверх</a>
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {};
   right: 0;
   top: 90%;
   padding: 10px;
+  z-index: 100;
 
   &__item {
     display: block;

@@ -8,6 +8,7 @@
       icon="desktop_title"
       :filterToggle="false"
     />
+
     <div class="page__body d-flex">
       <div class="page__left">
         <div class="tasks">
@@ -24,18 +25,22 @@
                   <div
                     v-if="dataset.assigned.length"
                     class="list__item"
-                    v-for="(assigned, index) in dataset.assigned"
+                    v-for="(item, index) in dataset.assigned"
                     :key="index"
                   >
                     <a href="" class="list__content" @click.prevent="editTask">
-                      {{ assigned.title }}
+                      {{ item.title }}
                     </a>
                     <div class="list__actions">
-                      <img src="@/assets/icons/dots_icon.svg" alt="" />
+                      <img
+                        alt=""
+                        src="@/assets/icons/dots_icon.svg"
+                        @click="toggleContextMenu(item)"
+                      />
                     </div>
 
                     <!-- Контекстное меню -->
-                    <v-context-menu v-if="showContextMenu" />
+                    <v-context-menu v-if="showContextMenu._id === item._id" />
                   </div>
                   <div v-else>Задач нет</div>
                 </div>
@@ -52,18 +57,22 @@
                   <div
                     v-if="dataset.accepted.length"
                     class="list__item"
-                    v-for="(accepted, index) in dataset.accepted"
+                    v-for="(item, index) in dataset.accepted"
                     :key="index"
                   >
                     <a href="" class="list__content" @click.prevent="editTask">
-                      {{ accepted.title }}
+                      {{ item.title }}
                     </a>
                     <div class="list__actions">
-                      <img src="@/assets/icons/dots_icon.svg" alt="" />
+                      <img
+                        alt=""
+                        src="@/assets/icons/dots_icon.svg"
+                        @click="toggleContextMenu(item)"
+                      />
                     </div>
 
                     <!-- Контекстное меню -->
-                    <v-context-menu v-if="showContextMenu" />
+                    <v-context-menu v-if="showContextMenu._id === item._id" />
                   </div>
                   <div v-else>Задач нет</div>
                 </div>
@@ -79,18 +88,22 @@
                 <div class="list__items">
                   <div
                     class="list__item"
-                    v-for="(completed, index) in dataset.completed"
+                    v-for="(item, index) in dataset.completed"
                     :key="index"
                   >
                     <a href="" class="list__content" @click.prevent="editTask">
-                      {{ completed.title }}
+                      {{ item.title }}
                     </a>
                     <div class="list__actions">
-                      <img src="@/assets/icons/dots_icon.svg" alt="" />
+                      <img
+                        alt=""
+                        src="@/assets/icons/dots_icon.svg"
+                        @click="toggleContextMenu(item)"
+                      />
                     </div>
 
                     <!-- Контекстное меню -->
-                    <v-context-menu v-if="showContextMenu" />
+                    <v-context-menu v-if="showContextMenu._id === item._id" />
                   </div>
                 </div>
               </vue-scroll>
@@ -105,18 +118,22 @@
                 <div class="list__items">
                   <div
                     class="list__item"
-                    v-for="(tested, index) in dataset.tested"
+                    v-for="(item, index) in dataset.tested"
                     :key="index"
                   >
                     <a href="" class="list__content" @click.prevent="editTask">
-                      {{ tested.title }}
+                      {{ item.title }}
                     </a>
                     <div class="list__actions">
-                      <img src="@/assets/icons/dots_icon.svg" alt="" />
+                      <img
+                        alt=""
+                        src="@/assets/icons/dots_icon.svg"
+                        @click="toggleContextMenu(item)"
+                      />
                     </div>
 
                     <!-- Контекстное меню -->
-                    <v-context-menu v-if="showContextMenu" />
+                    <v-context-menu v-if="showContextMenu._id === item._id" />
                   </div>
                 </div>
               </vue-scroll>
@@ -178,7 +195,7 @@ export default {
       departments: [],
       events: [],
       isLoading: false,
-      showContextMenu: false,
+      showContextMenu: {},
       attrs: [
         {
           key: "today",
@@ -210,6 +227,13 @@ export default {
         this.dataset = data;
       } catch (e) {
         this.isLoading = true;
+      }
+    },
+    toggleContextMenu(item) {
+      if (this.showContextMenu._id === item._id) {
+        this.showContextMenu = {};
+      } else {
+        this.showContextMenu = item;
       }
     },
     editTask() {
@@ -328,6 +352,7 @@ export default {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
       width: 290px;
       padding: 10px;
+      position: relative;
 
       & + * {
         margin-top: 10px;
