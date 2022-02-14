@@ -15,16 +15,74 @@
           <div class="tasks__lists">
             <!-- К выполнению -->
             <div class="tasks__list list">
-              <div class="list__title text--red text">К выполнению: 8</div>
+              <div class="list__title text--red text">
+                К выполнению: {{ dataset.assigned.length }}
+              </div>
               <vue-scroll>
                 <div class="list__items">
-                  <div class="list__item" v-for="i in 8">
+                  <div
+                    v-if="dataset.assigned.length"
+                    class="list__item"
+                    v-for="(assigned, index) in dataset.assigned"
+                    :key="index"
+                  >
                     <a href="" class="list__content" @click.prevent="editTask">
-                      Необходимо обновить CRM систему, выполнив редизайн
-                      системы.
+                      {{ assigned.title }}
                     </a>
                     <div class="list__actions">
-                      <img src="@/assets/icons/arrow_twin.svg" alt="" />
+                      <img src="@/assets/icons/dots_icon.svg" alt="" />
+                    </div>
+
+                    <!-- Контекстное меню -->
+                    <v-context-menu v-if="showContextMenu" />
+                  </div>
+                  <div v-else>Задач нет</div>
+                </div>
+              </vue-scroll>
+            </div>
+            <!-- В работе -->
+            <div class="tasks__list list">
+              <div class="list__title text text--blue-delos">
+                В работе: {{ dataset.accepted.length }}
+              </div>
+              <vue-scroll>
+                <div class="list__items">
+                  <div
+                    v-if="dataset.accepted.length"
+                    class="list__item"
+                    v-for="(accepted, index) in dataset.accepted"
+                    :key="index"
+                  >
+                    <a href="" class="list__content" @click.prevent="editTask">
+                      {{ accepted.title }}
+                    </a>
+                    <div class="list__actions">
+                      <img src="@/assets/icons/dots_icon.svg" alt="" />
+                    </div>
+
+                    <!-- Контекстное меню -->
+                    <v-context-menu v-if="showContextMenu" />
+                  </div>
+                  <div v-else>Задач нет</div>
+                </div>
+              </vue-scroll>
+            </div>
+            <!-- На проверке -->
+            <div class="tasks__list list">
+              <div class="list__title text text--green">
+                На проверке: {{ dataset.completed.length }}
+              </div>
+              <vue-scroll>
+                <div class="list__items">
+                  <div
+                    class="list__item"
+                    v-for="(completed, index) in dataset.completed"
+                    :key="index"
+                  >
+                    <a href="" class="list__content" @click.prevent="editTask">
+                      {{ completed.title }}
+                    </a>
+                    <div class="list__actions">
                       <img src="@/assets/icons/dots_icon.svg" alt="" />
                     </div>
 
@@ -34,56 +92,27 @@
                 </div>
               </vue-scroll>
             </div>
-            <!-- В работе -->
-            <div class="tasks__list list">
-              <div class="list__title text text--blue-delos">В работе: 8</div>
-              <vue-scroll>
-                <div class="list__items">
-                  <div class="list__item" v-for="i in 8">
-                    <div class="list__content">
-                      Необходимо обновить CRM систему, выполнив редизайн
-                      системы.
-                    </div>
-                    <div class="list__actions">
-                      <img src="@/assets/icons/arrow_twin.svg" alt="" />
-                      <img src="@/assets/icons/dots_icon.svg" alt="" />
-                    </div>
-                  </div>
-                </div>
-              </vue-scroll>
-            </div>
-            <!-- На проверке -->
-            <div class="tasks__list list">
-              <div class="list__title text text--green">На проверке: 8</div>
-              <vue-scroll>
-                <div class="list__items">
-                  <div class="list__item" v-for="i in 8">
-                    <div class="list__content">
-                      Необходимо обновить CRM систему, выполнив редизайн
-                      системы.
-                    </div>
-                    <div class="list__actions">
-                      <img src="@/assets/icons/arrow_twin.svg" alt="" />
-                      <img src="@/assets/icons/dots_icon.svg" alt="" />
-                    </div>
-                  </div>
-                </div>
-              </vue-scroll>
-            </div>
             <!-- Выполнено -->
             <div class="tasks__list list">
-              <div class="list__title text text--blue">Выполнено: 8</div>
+              <div class="list__title text text--blue">
+                Выполнено: {{ dataset.tested.length }}
+              </div>
               <vue-scroll>
                 <div class="list__items">
-                  <div class="list__item" v-for="i in 8">
-                    <div class="list__content">
-                      Необходимо обновить CRM систему, выполнив редизайн
-                      системы.
-                    </div>
+                  <div
+                    class="list__item"
+                    v-for="(tested, index) in dataset.tested"
+                    :key="index"
+                  >
+                    <a href="" class="list__content" @click.prevent="editTask">
+                      {{ tested.title }}
+                    </a>
                     <div class="list__actions">
-                      <img src="@/assets/icons/arrow_twin.svg" alt="" />
                       <img src="@/assets/icons/dots_icon.svg" alt="" />
                     </div>
+
+                    <!-- Контекстное меню -->
+                    <v-context-menu v-if="showContextMenu" />
                   </div>
                 </div>
               </vue-scroll>
@@ -134,7 +163,12 @@ export default {
   data() {
     return {
       clickedDay: null,
-      dataset: [],
+      dataset: {
+        accepted: [],
+        assigned: [],
+        completed: [],
+        tested: [],
+      },
       departments: [],
       events: [],
       showContextMenu: false,
@@ -164,9 +198,9 @@ export default {
     },
     async fetchData() {
       try {
-        const { data } = await this.getDataFromPage(`/tasks/get`, {});
+        const { data } = await this.getDataFromPage(`/tasks/desctop`, {});
 
-        this.dataset = data.tasks;
+        this.dataset = data;
       } catch (e) {
       } finally {
       }
@@ -260,8 +294,6 @@ export default {
 
     &__lists {
       display: flex;
-      padding-left: 10px;
-      padding-right: 10px;
     }
 
     &__list {
@@ -270,6 +302,7 @@ export default {
       padding: 10px 1px 10px 10px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       width: 328px;
+      height: 900px;
 
       & + * {
         margin-left: 10px;

@@ -464,14 +464,21 @@
               </autocomplete>
             </div>
           </div>
+          <!-- Автор -->
           <div class="filter__group group">
             <div class="group__title">Автор:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
+              <autocomplete
+                :search="searchByInitiator"
                 placeholder="Введите автора задачи..."
-              />
+                :get-result-value="getResultValue"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectUser(result)" v-bind="props">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
           <div class="filter__actions">
@@ -1033,6 +1040,23 @@ export default {
     getResultValue(result) {
       return this.transformFIO(result);
     },
+    searchByInitiator(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      axios(
+        `/user/${
+          this.type === "callCenterIssues"
+            ? "getcallmanagers"
+            : this.type === "purchase"
+            ? "getmanagers"
+            : "getsearch"
+        }/${this.author}`
+      ).then((res) => {
+        this.authors = res.data;
+      });
+    },
     searchByExecutor(input) {
       if (input.trim().length < 1) {
         return [];
@@ -1047,6 +1071,7 @@ export default {
       this.$parent.isLoading = false;
       this.$emit("refreshDates", startDate, endDate, this.regionsPool);
     },
+    selectInitiator() {},
     selectUser(user) {
       this.filterOptions.executor = user._id;
       this.fio = `${user.surname} ${user.name.charAt(0)}.${

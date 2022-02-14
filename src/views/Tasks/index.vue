@@ -387,6 +387,9 @@ export default {
         let dataset = this.dataset;
         dataset.splice(index, 1);
         this.dataset = dataset;
+
+        if (this.dataset.length < 1) {
+        }
         this.deletedItem = {};
       }, 500);
     },
