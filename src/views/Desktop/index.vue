@@ -3,6 +3,7 @@
     <v-add-event-modal />
     <v-add-task-modal :departments="departments" />
     <v-edit-task-modal :task="{}" />
+    <v-delete-task :deletedItem="deletedItem" />
     <v-page-header
       title="Рабочий стол"
       icon="desktop_title"
@@ -40,7 +41,11 @@
                     </div>
 
                     <!-- Контекстное меню -->
-                    <v-context-menu v-if="showContextMenu._id === item._id" />
+                    <v-context-menu
+                      :item="item"
+                      @toggleDelete="toggleDelete"
+                      v-if="showContextMenu._id === item._id"
+                    />
                   </div>
                   <div v-else>Задач нет</div>
                 </div>
@@ -72,7 +77,11 @@
                     </div>
 
                     <!-- Контекстное меню -->
-                    <v-context-menu v-if="showContextMenu._id === item._id" />
+                    <v-context-menu
+                      :item="item"
+                      @toggleDelete="toggleDelete"
+                      v-if="showContextMenu._id === item._id"
+                    />
                   </div>
                   <div v-else>Задач нет</div>
                 </div>
@@ -103,7 +112,11 @@
                     </div>
 
                     <!-- Контекстное меню -->
-                    <v-context-menu v-if="showContextMenu._id === item._id" />
+                    <v-context-menu
+                      :item="item"
+                      @toggleDelete="toggleDelete"
+                      v-if="showContextMenu._id === item._id"
+                    />
                   </div>
                 </div>
               </vue-scroll>
@@ -133,7 +146,11 @@
                     </div>
 
                     <!-- Контекстное меню -->
-                    <v-context-menu v-if="showContextMenu._id === item._id" />
+                    <v-context-menu
+                      :item="item"
+                      @toggleDelete="toggleDelete"
+                      v-if="showContextMenu._id === item._id"
+                    />
                   </div>
                 </div>
               </vue-scroll>
@@ -166,6 +183,7 @@ import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VAddEventModal from "@/views/Calendar/components/VAddEventModal";
 import VAddTaskModal from "./components/VAddTaskModal";
+import VDeleteTask from "./components/VDeleteTask";
 import VCalendarEvents from "./components/VCalendarEvents";
 import VEditTaskModal from "../../components/VModals/EditTaskModal";
 import dataMixins from "@/mixins/data";
@@ -182,6 +200,7 @@ export default {
     VCalendarEvents,
     VAddEventModal,
     VSpinner,
+    VDeleteTask,
   },
   data() {
     return {
@@ -192,6 +211,7 @@ export default {
         completed: [],
         tested: [],
       },
+      deletedItem: {},
       departments: [],
       events: [],
       isLoading: false,
@@ -222,12 +242,16 @@ export default {
     },
     async fetchData() {
       try {
-        const { data } = await this.getDataFromPage(`/tasks/desctop`, {});
+        const { data } = await this.getDataFromPage(`/tasks/desktop`, {});
         this.isLoading = true;
         this.dataset = data;
       } catch (e) {
         this.isLoading = true;
       }
+    },
+    toggleDelete(item) {
+      this.deletedItem = item;
+      this.$modal.show("deleteTask");
     },
     toggleContextMenu(item) {
       if (this.showContextMenu._id === item._id) {

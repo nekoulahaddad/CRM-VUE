@@ -1,13 +1,23 @@
 <template>
   <div class="content-menu">
-    <a href="" class="content-menu__item">Копировать ссылка на задачу</a>
-    <a href="" class="content-menu__item">Удалить</a>
+    <a href="" class="content-menu__item"> Копировать ссылка на задачу </a>
+    <a
+      href=""
+      class="content-menu__item"
+      @click.prevent="$emit('toggleDelete', item)"
+    >
+      Удалить
+    </a>
     <a v-if="false" href="" class="content-menu__item">Переместить наверх</a>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    item: Object,
+  },
+};
 </script>
 
 <style lang="scss">
