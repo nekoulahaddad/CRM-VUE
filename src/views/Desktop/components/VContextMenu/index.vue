@@ -25,7 +25,11 @@ export default {};
   z-index: 100;
 
   &__item {
-    display: block;
+    display: inline-block;
+
+    &:hover {
+      color: $color-red;
+    }
 
     & + * {
       margin-top: 5px;
