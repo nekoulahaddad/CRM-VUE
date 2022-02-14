@@ -206,6 +206,9 @@ export default {
     },
     typeE: {
       handler: function () {
+        this.addDocumentItem = {};
+        this.infoItem = {};
+        this.editedItem = {};
         this.activeIndex = -1;
         this.fetchData();
       },
