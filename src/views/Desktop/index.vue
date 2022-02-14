@@ -29,7 +29,11 @@
                     v-for="(item, index) in dataset.assigned"
                     :key="index"
                   >
-                    <a href="" class="list__content" @click.prevent="editTask">
+                    <a
+                      href=""
+                      class="list__content"
+                      @click.prevent="editTask(item)"
+                    >
                       {{ item.title }}
                     </a>
                     <div class="list__actions">
@@ -66,7 +70,11 @@
                     v-for="(item, index) in dataset.accepted"
                     :key="index"
                   >
-                    <a href="" class="list__content" @click.prevent="editTask">
+                    <a
+                      href=""
+                      class="list__content"
+                      @click.prevent="editTask(item)"
+                    >
                       {{ item.title }}
                     </a>
                     <div class="list__actions">
@@ -102,7 +110,11 @@
                     v-for="(item, index) in dataset.completed"
                     :key="index"
                   >
-                    <a href="" class="list__content" @click.prevent="editTask">
+                    <a
+                      href=""
+                      class="list__content"
+                      @click.prevent="editTask(item)"
+                    >
                       {{ item.title }}
                     </a>
                     <div class="list__actions">
@@ -137,7 +149,11 @@
                     v-for="(item, index) in dataset.tested"
                     :key="index"
                   >
-                    <a href="" class="list__content" @click.prevent="editTask">
+                    <a
+                      href=""
+                      class="list__content"
+                      @click.prevent="editTask(item)"
+                    >
                       {{ item.title }}
                     </a>
                     <div class="list__actions">
@@ -189,7 +205,7 @@ import VAddEventModal from "@/views/Calendar/components/VAddEventModal";
 import VAddTaskModal from "./components/VAddTaskModal";
 import VDeleteTask from "./components/VDeleteTask";
 import VCalendarEvents from "./components/VCalendarEvents";
-import VEditTaskModal from "../../components/VModals/EditTaskModal";
+import VEditTaskModal from "./components/VEditTaskModal";
 import dataMixins from "@/mixins/data";
 import VContextMenu from "./components/VContextMenu";
 import axios from "@/api/axios";
@@ -215,6 +231,7 @@ export default {
         completed: [],
         tested: [],
       },
+      editedItem: {},
       deletedItem: {},
       departments: [],
       events: [],
@@ -273,7 +290,8 @@ export default {
         this.showContextMenu = item;
       }
     },
-    editTask() {
+    editTask(item) {
+      this.editedItem = item;
       this.$modal.show("editTask");
     },
     getData(url) {
