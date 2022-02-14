@@ -219,11 +219,17 @@
           <div class="filter__group group">
             <div class="group__title">Автор:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
+              <autocomplete
+                :search="searchByInitiator"
                 placeholder="Введите автора задачи..."
-              />
+                :get-result-value="getResultValue"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectInitiator(result)" v-bind="props">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
           <div class="filter__group group">
@@ -297,11 +303,17 @@
           <div class="filter__group group">
             <div class="group__title">Автор:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
+              <autocomplete
+                :search="searchByInitiator"
                 placeholder="Введите автора задачи..."
-              />
+                :get-result-value="getResultValue"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectInitiator(result)" v-bind="props">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
           <div class="filter__group group">
