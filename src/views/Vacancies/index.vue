@@ -1,6 +1,10 @@
 <template>
   <div class="page vacancies-page">
-    <v-delete-item :deletedItem="deletedItem" @refresh="refresh" />
+    <v-delete-item
+      :deletedItem="deletedItem"
+      @afterDelete="afterDelete"
+      @refresh="refresh"
+    />
 
     <div
       class="page__header page-header"
@@ -183,6 +187,11 @@ export default {
         this.editedItem = {};
       } else {
         this.editedItem = item;
+      }
+    },
+    afterDelete() {
+      if (!this.dataset.length) {
+        location.reload();
       }
     },
     async refresh() {
