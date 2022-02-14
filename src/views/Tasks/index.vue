@@ -389,6 +389,7 @@ export default {
         this.dataset = dataset;
 
         if (this.dataset.length < 1) {
+          location.reload();
         }
         this.deletedItem = {};
       }, 500);
