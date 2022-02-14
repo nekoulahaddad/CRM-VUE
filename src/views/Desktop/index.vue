@@ -3,7 +3,7 @@
     <v-add-event-modal />
     <v-add-task-modal :departments="departments" />
     <v-edit-task-modal :task="{}" />
-    <v-delete-task :deletedItem="deletedItem" />
+    <v-delete-task :deletedItem="deletedItem" @afterDelete="afterDelete" />
     <v-page-header
       title="Рабочий стол"
       icon="desktop_title"
@@ -43,6 +43,7 @@
                     <!-- Контекстное меню -->
                     <v-context-menu
                       :item="item"
+                      type="assigned"
                       @toggleDelete="toggleDelete"
                       v-if="showContextMenu._id === item._id"
                     />
@@ -79,6 +80,7 @@
                     <!-- Контекстное меню -->
                     <v-context-menu
                       :item="item"
+                      type="accepted"
                       @toggleDelete="toggleDelete"
                       v-if="showContextMenu._id === item._id"
                     />
@@ -114,6 +116,7 @@
                     <!-- Контекстное меню -->
                     <v-context-menu
                       :item="item"
+                      type="completed"
                       @toggleDelete="toggleDelete"
                       v-if="showContextMenu._id === item._id"
                     />
@@ -148,6 +151,7 @@
                     <!-- Контекстное меню -->
                     <v-context-menu
                       :item="item"
+                      type="tested"
                       @toggleDelete="toggleDelete"
                       v-if="showContextMenu._id === item._id"
                     />
@@ -216,6 +220,7 @@ export default {
       events: [],
       isLoading: false,
       showContextMenu: {},
+      type: null,
       attrs: [
         {
           key: "today",
@@ -240,6 +245,13 @@ export default {
     dayClicked(e) {
       this.clickedDay = e;
     },
+    afterDelete() {
+      this.dataset[this.type] = this.dataset[this.type].filter(
+        (item) => item._id !== this.deletedItem._id
+      );
+      this.type = null;
+      this.deletedItem = {};
+    },
     async fetchData() {
       try {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {});
@@ -249,8 +261,9 @@ export default {
         this.isLoading = true;
       }
     },
-    toggleDelete(item) {
+    toggleDelete(item, type) {
       this.deletedItem = item;
+      this.type = type;
       this.$modal.show("deleteTask");
     },
     toggleContextMenu(item) {

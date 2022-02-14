@@ -4,7 +4,7 @@
     <a
       href=""
       class="content-menu__item"
-      @click.prevent="$emit('toggleDelete', item)"
+      @click.prevent="$emit('toggleDelete', item, type)"
     >
       Удалить
     </a>
@@ -16,6 +16,7 @@
 export default {
   props: {
     item: Object,
+    type: String,
   },
 };
 </script>

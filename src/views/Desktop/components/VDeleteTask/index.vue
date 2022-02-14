@@ -34,7 +34,8 @@ export default {
         },
         method: "DELETE",
       })
-        .then((res) => {
+        .then(() => {
+          this.$emit("afterDelete");
           this.$toast.success("Задача успешно удалена!");
           this.cancel();
         })
