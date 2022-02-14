@@ -17,6 +17,7 @@
             <div class="tasks__list list">
               <div class="list__title text--red text">
                 К выполнению: {{ dataset.assigned.length }}
+                <v-spinner v-if="!isLoading" />
               </div>
               <vue-scroll>
                 <div class="list__items">
@@ -44,6 +45,7 @@
             <div class="tasks__list list">
               <div class="list__title text text--blue-delos">
                 В работе: {{ dataset.accepted.length }}
+                <v-spinner v-if="!isLoading" />
               </div>
               <vue-scroll>
                 <div class="list__items">
@@ -71,6 +73,7 @@
             <div class="tasks__list list">
               <div class="list__title text text--green">
                 На проверке: {{ dataset.completed.length }}
+                <v-spinner v-if="!isLoading" />
               </div>
               <vue-scroll>
                 <div class="list__items">
@@ -96,6 +99,7 @@
             <div class="tasks__list list">
               <div class="list__title text text--blue">
                 Выполнено: {{ dataset.tested.length }}
+                <v-spinner v-if="!isLoading" />
               </div>
               <vue-scroll>
                 <div class="list__items">
@@ -142,6 +146,7 @@
 
 <script>
 import VPageHeader from "@/components/VPageHeader";
+import VSpinner from "@/components/VSpinner";
 import VAddEventModal from "@/views/Calendar/components/VAddEventModal";
 import VAddTaskModal from "./components/VAddTaskModal";
 import VCalendarEvents from "./components/VCalendarEvents";
@@ -159,6 +164,7 @@ export default {
     VAddTaskModal,
     VCalendarEvents,
     VAddEventModal,
+    VSpinner,
   },
   data() {
     return {
@@ -171,6 +177,7 @@ export default {
       },
       departments: [],
       events: [],
+      isLoading: false,
       showContextMenu: false,
       attrs: [
         {
@@ -199,10 +206,10 @@ export default {
     async fetchData() {
       try {
         const { data } = await this.getDataFromPage(`/tasks/desctop`, {});
-
+        this.isLoading = true;
         this.dataset = data;
       } catch (e) {
-      } finally {
+        this.isLoading = true;
       }
     },
     editTask() {
@@ -308,6 +315,10 @@ export default {
         margin-left: 10px;
       }
     }
+  }
+
+  .spinner {
+    margin-top: 15px;
   }
 
   .list {
