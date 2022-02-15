@@ -1,14 +1,13 @@
 <template>
   <div class="content-menu">
-    <a href="" class="content-menu__item"> Копировать ссылка на задачу </a>
     <a
       href=""
       class="content-menu__item"
       @click.prevent="$emit('toggleDelete', item, type)"
     >
+      <img src="@/assets/icons/trash_icon.svg" alt="" />
       Удалить
     </a>
-    <a v-if="false" href="" class="content-menu__item">Переместить наверх</a>
   </div>
 </template>
 
@@ -36,7 +35,8 @@ export default {
   z-index: 100;
 
   &__item {
-    display: inline-block;
+    display: flex;
+    align-items: center;
 
     &:hover {
       color: $color-red;
@@ -44,6 +44,11 @@ export default {
 
     & + * {
       margin-top: 5px;
+    }
+
+    img {
+      width: 18px;
+      margin-right: 10px;
     }
   }
 }

@@ -15,7 +15,11 @@
         <div class="vm--modal__left">
           <div class="vm--modal__action table__actions">
             <div class="table__icon">
-              <img src="@/assets/icons/trash_icon.svg" alt="" />
+              <img
+                @click="deleteTask"
+                src="@/assets/icons/trash_icon.svg"
+                alt=""
+              />
             </div>
             <div class="table__icon">
               <img src="@/assets/icons/task_add_icon.svg" alt="" />
@@ -92,6 +96,13 @@ export default {
   props: {
     task: {
       type: Object,
+    },
+    type: String,
+  },
+  methods: {
+    deleteTask() {
+      this.$emit("toggleEdit", this.task, this.type);
+      this.$modal.hide("editTask");
     },
   },
 };

@@ -40,6 +40,8 @@ export default {
         phone: options.phone || null,
         clubcard: options.clubcard || null,
         updatedAt: options.updatedAt || null,
+        statuses: options.statuses || null,
+        skip: options.skip || null,
       };
       let urlStr;
       if (this.$route.params.page) {

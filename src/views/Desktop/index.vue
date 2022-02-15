@@ -2,7 +2,12 @@
   <div class="page desktop-page">
     <v-add-event-modal />
     <v-add-task-modal :departments="departments" />
-    <v-edit-task-modal :task="{}" />
+    <v-edit-task-modal
+      :task="{}"
+      :type="type"
+      @toggleDelete="toggleDelete"
+      @afterDelete="afterDelete"
+    />
     <v-delete-task :deletedItem="deletedItem" @afterDelete="afterDelete" />
     <v-page-header
       title="Рабочий стол"
@@ -15,24 +20,27 @@
         <div class="tasks">
           <div class="tasks__title">Доска задач</div>
           <div class="tasks__lists">
-            <!-- К выполнению -->
-            <div class="tasks__list list">
+            <v-spinner v-if="!isLoading" />
+            <div
+              v-else
+              class="tasks__list list"
+              v-for="(items, status) in dataset"
+            >
               <div class="list__title text--red text">
-                К выполнению: {{ dataset.assigned.length }}
-                <v-spinner v-if="!isLoading" />
+                {{ statuses[status] }}: {{ items.length }}
               </div>
               <vue-scroll>
                 <div class="list__items">
                   <div
-                    v-if="dataset.assigned.length"
+                    v-if="items.length"
                     class="list__item"
-                    v-for="(item, index) in dataset.assigned"
+                    v-for="(item, index) in items"
                     :key="index"
                   >
                     <a
                       href=""
                       class="list__content"
-                      @click.prevent="editTask(item)"
+                      @click.prevent="editTask(item, 'assigned')"
                     >
                       {{ item.title }}
                     </a>
@@ -53,125 +61,6 @@
                     />
                   </div>
                   <div v-else>Задач нет</div>
-                </div>
-              </vue-scroll>
-            </div>
-            <!-- В работе -->
-            <div class="tasks__list list">
-              <div class="list__title text text--blue-delos">
-                В работе: {{ dataset.accepted.length }}
-                <v-spinner v-if="!isLoading" />
-              </div>
-              <vue-scroll>
-                <div class="list__items">
-                  <div
-                    v-if="dataset.accepted.length"
-                    class="list__item"
-                    v-for="(item, index) in dataset.accepted"
-                    :key="index"
-                  >
-                    <a
-                      href=""
-                      class="list__content"
-                      @click.prevent="editTask(item)"
-                    >
-                      {{ item.title }}
-                    </a>
-                    <div class="list__actions">
-                      <img
-                        alt=""
-                        src="@/assets/icons/dots_icon.svg"
-                        @click="toggleContextMenu(item)"
-                      />
-                    </div>
-
-                    <!-- Контекстное меню -->
-                    <v-context-menu
-                      :item="item"
-                      type="accepted"
-                      @toggleDelete="toggleDelete"
-                      v-if="showContextMenu._id === item._id"
-                    />
-                  </div>
-                  <div v-else>Задач нет</div>
-                </div>
-              </vue-scroll>
-            </div>
-            <!-- На проверке -->
-            <div class="tasks__list list">
-              <div class="list__title text text--green">
-                На проверке: {{ dataset.completed.length }}
-                <v-spinner v-if="!isLoading" />
-              </div>
-              <vue-scroll>
-                <div class="list__items">
-                  <div
-                    class="list__item"
-                    v-for="(item, index) in dataset.completed"
-                    :key="index"
-                  >
-                    <a
-                      href=""
-                      class="list__content"
-                      @click.prevent="editTask(item)"
-                    >
-                      {{ item.title }}
-                    </a>
-                    <div class="list__actions">
-                      <img
-                        alt=""
-                        src="@/assets/icons/dots_icon.svg"
-                        @click="toggleContextMenu(item)"
-                      />
-                    </div>
-
-                    <!-- Контекстное меню -->
-                    <v-context-menu
-                      :item="item"
-                      type="completed"
-                      @toggleDelete="toggleDelete"
-                      v-if="showContextMenu._id === item._id"
-                    />
-                  </div>
-                </div>
-              </vue-scroll>
-            </div>
-            <!-- Выполнено -->
-            <div class="tasks__list list">
-              <div class="list__title text text--blue">
-                Выполнено: {{ dataset.tested.length }}
-                <v-spinner v-if="!isLoading" />
-              </div>
-              <vue-scroll>
-                <div class="list__items">
-                  <div
-                    class="list__item"
-                    v-for="(item, index) in dataset.tested"
-                    :key="index"
-                  >
-                    <a
-                      href=""
-                      class="list__content"
-                      @click.prevent="editTask(item)"
-                    >
-                      {{ item.title }}
-                    </a>
-                    <div class="list__actions">
-                      <img
-                        alt=""
-                        src="@/assets/icons/dots_icon.svg"
-                        @click="toggleContextMenu(item)"
-                      />
-                    </div>
-
-                    <!-- Контекстное меню -->
-                    <v-context-menu
-                      :item="item"
-                      type="tested"
-                      @toggleDelete="toggleDelete"
-                      v-if="showContextMenu._id === item._id"
-                    />
-                  </div>
                 </div>
               </vue-scroll>
             </div>
@@ -256,6 +145,12 @@ export default {
           },
         },
       ],
+      statuses: {
+        accepted: "В работе",
+        assigned: "К выполнению",
+        completed: "Выполнено",
+        tested: "На проверке",
+      },
     };
   },
   methods: {
@@ -271,7 +166,10 @@ export default {
     },
     async fetchData() {
       try {
-        const { data } = await this.getDataFromPage(`/tasks/desktop`, {});
+        const { data } = await this.getDataFromPage(`/tasks/desktop`, {
+          status: ["accepted", "assigned", "completed", "tested"],
+          skip: 1,
+        });
         this.isLoading = true;
         this.dataset = data;
       } catch (e) {
@@ -290,9 +188,11 @@ export default {
         this.showContextMenu = item;
       }
     },
-    editTask(item) {
+    editTask(item, type) {
       this.editedItem = item;
+      this.type = type;
       this.$modal.show("editTask");
+      this.showContextMenu = {};
     },
     getData(url) {
       let result = axios({
@@ -380,6 +280,10 @@ export default {
 
     &__lists {
       display: flex;
+
+      .spinner {
+        margin-bottom: 10px;
+      }
     }
 
     &__list {
