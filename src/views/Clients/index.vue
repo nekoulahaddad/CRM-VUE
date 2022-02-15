@@ -132,6 +132,7 @@ import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
 import VSpinner from "@/components/VSpinner";
 import VNotFoundQuery from "@/components/VNotFoundQuery";
+import dataMixins from "@/mixins/data";
 import { mapGetters } from "vuex";
 
 export default {

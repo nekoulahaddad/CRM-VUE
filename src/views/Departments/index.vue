@@ -254,26 +254,24 @@ export default {
       this.$modal.show("deleteDepartment");
     },
     getSearchData() {
-      this.changeStatus(false);
       let search = this.user;
+
       if (search.length < 3) {
         this.$toast.error("Запрос слишком короткий!");
-        this.changeStatus(true);
         return;
       }
+
       axios
         .get(`/user/getsearchwithoutdirector/${search}`)
         .then(async (res) => {
           let result = await res;
           if (result.data.users.length) {
             this.count = result.data.length;
-            //this.updateUsers(result);
             this.$toast.success("Результаты запросов!");
           } else {
             this.$toast.error("Результаты не найдены!");
             this.user = "";
           }
-          this.changeStatus(true);
           this.$forceUpdate();
         });
     },

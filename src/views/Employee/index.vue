@@ -297,11 +297,8 @@ export default {
       this.$modal.show("deleteEmployee");
     },
     getSearchData() {
-      this.changeStatus(false);
-
       if (this.user.trim().length < 3) {
         this.$toast.error("Запрос слишком короткий!");
-        this.changeStatus(true);
       } else {
         this.isLoading = false;
 
@@ -317,7 +314,6 @@ export default {
               this.user = "";
             }
 
-            this.changeStatus(true);
             this.$forceUpdate();
           })
           .finally(() => {
