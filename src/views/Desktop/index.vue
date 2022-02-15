@@ -168,7 +168,6 @@ export default {
       try {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
           status: ["accepted", "assigned", "completed", "tested"],
-          skip: 1,
         });
         this.isLoading = true;
         this.dataset = data;
