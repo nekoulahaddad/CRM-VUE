@@ -297,6 +297,11 @@ export default {
       this.$modal.show("deleteEmployee");
     },
     getSearchData() {
+      if (!this.user.trim().length) {
+        this.getData();
+        return;
+      }
+
       if (this.user.trim().length < 3) {
         this.$toast.error("Запрос слишком короткий!");
       } else {
