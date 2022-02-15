@@ -245,6 +245,11 @@ export default {
       }
     },
     toggleDelete(deletedItem) {
+      if (deletedItem && deletedItem.count > 0) {
+        this.$toast.error("Нельзя удалить отдел, пока в нем есть сотрудники!");
+        return false;
+      }
+
       this.deletedItem = deletedItem;
       this.$modal.show("deleteDepartment");
     },
