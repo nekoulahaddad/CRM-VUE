@@ -223,15 +223,23 @@ export default {
           method: "POST",
         })
           .then((res) => {
-            this.fetchData({
-              status: ["accepted", "assigned", "completed", "tested"],
-              step: 0,
-            });
+            this.fetchCounter();
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
           });
       }
+    },
+    async fetchCounter() {
+      try {
+        const { data } = await this.getDataFromPage(`/tasks/desktop`, {
+          status: ["accepted", "assigned", "completed", "tested"],
+        });
+
+        for (let status in data) {
+          this.dataset[status].count = data[status].count;
+        }
+      } catch (e) {}
     },
     toggleContextMenu(item) {
       if (this.showContextMenu._id === item._id) {
