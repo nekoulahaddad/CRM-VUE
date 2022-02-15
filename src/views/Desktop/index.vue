@@ -27,14 +27,14 @@
               v-for="(items, status) in dataset"
             >
               <div class="list__title text--red text">
-                {{ statuses[status] }}: {{ items.length }}
+                {{ statuses[status] }}: {{ items.count }}
               </div>
               <vue-scroll @handleScroll="handleScroll">
                 <div class="list__items">
                   <div
-                    v-if="items.length"
+                    v-if="items.tasks.length"
                     class="list__item"
-                    v-for="(item, index) in items"
+                    v-for="(item, index) in items.tasks"
                     :key="index"
                   >
                     <a
@@ -121,10 +121,10 @@ export default {
         tested: 0,
       },
       dataset: {
-        accepted: [],
-        assigned: [],
-        completed: [],
-        tested: [],
+        accepted: {},
+        assigned: {},
+        completed: {},
+        tested: {},
       },
       editedItem: {},
       deletedItem: {},
