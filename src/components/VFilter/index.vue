@@ -103,7 +103,6 @@
                 :sameDateFormat="sameDateFormat"
                 :showHelperButtons="true"
                 :switchButtonInitial="true"
-                :helperButtons="helperButtons"
                 switchButtonLabel="Все время"
                 :calendarDateInput="calendarDateInput"
                 @date-applied="selectPeriodDate"

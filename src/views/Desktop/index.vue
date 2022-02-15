@@ -31,36 +31,41 @@
               </div>
               <vue-scroll @handleScroll="handleScroll">
                 <div class="list__items">
-                  <div
-                    v-if="items.tasks.length"
-                    class="list__item"
-                    v-for="(item, index) in items.tasks"
-                    :key="index"
+                  <draggable
+                    :list="items.tasks"
+                    group="tasks"
+                    :animation="200"
+                    @change="afterAdd($event, status)"
                   >
-                    <a
-                      href=""
-                      class="list__content"
-                      @click.prevent="editTask(item, 'assigned')"
+                    <div
+                      class="list__item"
+                      v-for="(item, index) in items.tasks"
+                      :key="index"
                     >
-                      {{ item.title }}
-                    </a>
-                    <div class="list__actions">
-                      <img
-                        alt=""
-                        src="@/assets/icons/dots_icon.svg"
-                        @click="toggleContextMenu(item)"
+                      <a
+                        href=""
+                        class="list__content"
+                        @click.prevent="editTask(item, 'assigned')"
+                      >
+                        {{ item.title }}
+                      </a>
+                      <div class="list__actions">
+                        <img
+                          alt=""
+                          src="@/assets/icons/dots_icon.svg"
+                          @click="toggleContextMenu(item)"
+                        />
+                      </div>
+
+                      <!-- Контекстное меню -->
+                      <v-context-menu
+                        :item="item"
+                        type="assigned"
+                        @toggleDelete="toggleDelete"
+                        v-if="showContextMenu._id === item._id"
                       />
                     </div>
-
-                    <!-- Контекстное меню -->
-                    <v-context-menu
-                      :item="item"
-                      type="assigned"
-                      @toggleDelete="toggleDelete"
-                      v-if="showContextMenu._id === item._id"
-                    />
-                  </div>
-                  <div v-else>Задач нет</div>
+                  </draggable>
                 </div>
               </vue-scroll>
             </div>
@@ -96,12 +101,14 @@ import VDeleteTask from "./components/VDeleteTask";
 import VCalendarEvents from "./components/VCalendarEvents";
 import VEditTaskModal from "./components/VEditTaskModal";
 import dataMixins from "@/mixins/data";
+import draggable from "vuedraggable";
 import VContextMenu from "./components/VContextMenu";
 import axios from "@/api/axios";
 
 export default {
   mixins: [dataMixins],
   components: {
+    draggable,
     VContextMenu,
     VEditTaskModal,
     VPageHeader,
@@ -125,6 +132,12 @@ export default {
         assigned: {},
         completed: {},
         tested: {},
+      },
+      ids: {
+        accepted: "601bad6935e4052ee544d789",
+        assigned: "5f7afdbb701805712f1a8e2b",
+        completed: "5f7afd46701805712f1a8e27",
+        tested: "5f7f30d450523015fc320056",
       },
       editedItem: {},
       deletedItem: {},
@@ -196,6 +209,30 @@ export default {
       this.type = type;
       this.$modal.show("deleteTask");
     },
+    afterAdd(e, status) {
+      if (e.added) {
+        const task = e.added.element;
+        console.log(task);
+        let taskData = new FormData();
+        taskData.append("taskId", task._id);
+        taskData.append("status", this.ids[status]);
+
+        axios({
+          url: `/tasks/update/`,
+          data: taskData,
+          method: "POST",
+        })
+          .then((res) => {
+            this.fetchData({
+              status: ["accepted", "assigned", "completed", "tested"],
+              step: 0,
+            });
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
+      }
+    },
     toggleContextMenu(item) {
       if (this.showContextMenu._id === item._id) {
         this.showContextMenu = {};
@@ -203,6 +240,7 @@ export default {
         this.showContextMenu = item;
       }
     },
+    cloneDog() {},
     editTask(item, type) {
       this.editedItem = item;
       this.type = type;
@@ -323,6 +361,9 @@ export default {
   }
 
   .list {
+    display: flex !important;
+    flex-direction: column;
+
     &__item {
       background-color: $color-white;
       border-radius: $border-radius;
@@ -359,6 +400,12 @@ export default {
 
   .__bar-wrap-is-vertical {
     background-color: $color-white;
+  }
+
+  .list__items {
+  }
+  .list__title {
+    height: 20px;
   }
 
   .desktop-calendar {
@@ -409,6 +456,14 @@ export default {
   }
   .vc-highlights + .vc-focusable {
     color: $color-white;
+  }
+  .sortable-ghost {
+    opacity: 0.1;
+    background-color: $color-red;
+
+    .list__content {
+      color: $color-white;
+    }
   }
 }
 </style>
