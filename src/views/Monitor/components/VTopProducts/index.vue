@@ -3,14 +3,18 @@
     <div class="top-products__inner">
       <div class="top-products__title">{{ $t("topProducts") }}</div>
       <div class="top-products__body">
-        <div v-for="i in 9" class="top_products__item product">
+        <div
+          class="top_products__item product"
+          v-for="(item, index) in items"
+          :key="index"
+        >
           <img
-            src="https://i.picsum.photos/id/529/131/83.jpg?hmac=ND-mojdfluwBJNlDA-FTYr_uMh2ZqHwT_rCIi8eWPaY"
             alt=""
             class="product__image"
+            :src="`${serverAddr + item.path + item.images[0]}`"
           />
-          <div class="product__title">Ламинат Kronostep АС4 Сосна Кантри</div>
-          <div class="product__price">750 ₽</div>
+          <div class="product__title">{{ item.title }}</div>
+          <div class="product__price">{{ item.cost }} ₽</div>
         </div>
       </div>
     </div>
@@ -18,7 +22,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    items: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      serverAddr: "https://xn--j1ano.com",
+    };
+  },
+};
 </script>
 
 <style lang="scss">
@@ -62,6 +78,8 @@ export default {};
     &__image {
       border-radius: 5px;
       margin-bottom: 8px;
+      max-width: 131px;
+      max-height: 100px;
     }
 
     &__title {

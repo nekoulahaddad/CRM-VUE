@@ -29,7 +29,7 @@
               <div class="list__title text--red text">
                 {{ statuses[status] }}: {{ items.length }}
               </div>
-              <vue-scroll>
+              <vue-scroll @handleScroll="handleScroll">
                 <div class="list__items">
                   <div
                     v-if="items.length"
@@ -114,6 +114,12 @@ export default {
   data() {
     return {
       clickedDay: null,
+      skip: {
+        accepted: 0,
+        assigned: 0,
+        completed: 0,
+        tested: 0,
+      },
       dataset: {
         accepted: [],
         assigned: [],
@@ -157,6 +163,15 @@ export default {
     dayClicked(e) {
       this.clickedDay = e;
     },
+    scrollFn() {
+      console.log(111);
+    },
+    handleScroll({ process }, b, c) {
+      console.log(c);
+      if (process === 1) {
+        this.fetchData({ status: "assigned", step: 1 });
+      }
+    },
     afterDelete() {
       this.dataset[this.type] = this.dataset[this.type].filter(
         (item) => item._id !== this.deletedItem._id
@@ -164,10 +179,11 @@ export default {
       this.type = null;
       this.deletedItem = {};
     },
-    async fetchData() {
+    async fetchData({ status, step = 0 }) {
       try {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
-          status: ["accepted", "assigned", "completed", "tested"],
+          status,
+          step,
         });
         this.isLoading = true;
         this.dataset = data;
@@ -217,7 +233,10 @@ export default {
   },
   mounted() {
     this.$store.commit("deactivateAction", "addDbTask");
-    this.fetchData();
+    this.fetchData({
+      status: ["accepted", "assigned", "completed", "tested"],
+      step: 0,
+    });
     this.updateEvents();
 
     axios({

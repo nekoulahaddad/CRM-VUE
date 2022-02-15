@@ -33,7 +33,7 @@
           </div>
           <div class="d-flex">
             <!-- Топ продаваемых продуктов -->
-            <v-top-products />
+            <v-top-products :items="popularItems" />
             <div class="d-flex flex-column">
               <v-chart :sales="sales" :ordersForMonth="ordersForMonth" />
               <!-- Обучение -->
@@ -87,6 +87,7 @@ export default {
       tasks: 0,
       workload: 0,
       sales: {},
+      popularItems: [],
       orders: {
         all: 0,
         processed: 0,
@@ -118,6 +119,7 @@ export default {
           this.sales = result.sales;
           this.orders = result.orders;
           this.ordersForMonth = result.ordersForMonth;
+          this.popularItems = result.popularItems;
           this.rev = result.rev;
           this.$toast.success("Статистика обновлена!");
         })
