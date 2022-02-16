@@ -241,10 +241,6 @@ export default {
     width: 230px;
   }
 
-  .vdatetime-input {
-    width: 330px;
-  }
-
   label[for="documents"] {
     display: flex;
     align-items: center;
@@ -258,6 +254,12 @@ export default {
     background-color: $color-white;
     border-radius: $border-radius;
     cursor: pointer;
+  }
+
+  .add-task-modal {
+    .vdatetime-input {
+      width: 330px;
+    }
   }
 }
 </style>

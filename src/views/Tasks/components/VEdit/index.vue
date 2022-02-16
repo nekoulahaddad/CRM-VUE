@@ -255,7 +255,7 @@ export default {
     color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
   }
-  .vdatetime-input {
+  .edit__inner .vdatetime-input {
     width: 330px;
   }
 }

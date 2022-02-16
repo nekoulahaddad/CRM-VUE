@@ -192,6 +192,7 @@
                   input-class="forms__container--input"
                   :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
                   v-model="date"
+                  style="width: 371px"
                 />
               </div>
             </div>
