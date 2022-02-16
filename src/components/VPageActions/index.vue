@@ -163,7 +163,7 @@
           <a
             href=""
             @click.prevent="
-              downloadItem('users', 'xlsx', 'Уволенные_сотрудников')
+              downloadItem('users', 'xlsx', 'Уволенные_сотрудники')
             "
             class="page-actions__button"
           >
@@ -359,30 +359,24 @@ export default {
       }
     },
     async downloadItem(route, type, prefix) {
-      try {
-        // this.changeStatus(false)
-        // this.downloadExcelGoods = true
-        await axios({
-          url: `/excel/${route}`,
-          data: {
-            age: 18,
-            //region: this.$store.state.filterRegion,
-          },
-          method: "POST",
-          responseType: "blob",
-        })
-          .then((response) => {
-            const link = document.createElement("a");
-            const blob = new Blob([response.data]);
-            let urll = window.URL.createObjectURL(blob);
-            link.href = urll;
-            link.download = `${prefix}.${type}`;
-            link.click();
-            window.URL.revokeObjectURL(urll);
-            URL.revokeObjectURL(link.href);
-          })
-          .catch(console.error);
-      } catch (error) {}
+      axios({
+        url: `/excel/${route}`,
+        data: {
+          age: 18,
+          region: this.$store.state.filterRegion,
+        },
+        method: "POST",
+        responseType: "blob",
+      }).then((response) => {
+        const link = document.createElement("a");
+        const blob = new Blob([response.data]);
+        let urll = window.URL.createObjectURL(blob);
+        link.href = urll;
+        link.download = `${prefix}.${type}`;
+        link.click();
+        window.URL.revokeObjectURL(urll);
+        URL.revokeObjectURL(link.href);
+      });
     },
     async downloadExcel() {
       this.changeStatus(false);
