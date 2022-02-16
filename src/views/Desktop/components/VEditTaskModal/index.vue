@@ -64,6 +64,28 @@
               </div>
             </div>
 
+            <!-- Подзадачи -->
+            <template v-if="sub_tasks.length">
+              <div class="edit-task-modal__title">Подзадачи:</div>
+
+              <div class="group">
+                <div class="group__sub-tasks">
+                  <div
+                    class="group__sub-task"
+                    v-for="(sub_task, index) in sub_tasks"
+                    :key="index"
+                  >
+                    <span>{{ sub_task.title }}</span>
+                    <div>
+                      <VueCustomTooltip label="Удалить">
+                        <img src="@/assets/icons/trash_icon.svg" alt="" />
+                      </VueCustomTooltip>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+
             <div class="vm--modal__buttons">
               <v-button
                 v-if="
@@ -152,6 +174,7 @@
         </div>
         <div class="vm--modal__right">
           <form>
+            <div class="edit-task-modal__title">Сведения:</div>
             <!-- Исполнитель -->
             <div class="group">
               <div class="group__title">Исполнители:</div>
@@ -221,6 +244,7 @@ export default {
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
       initiator_comment: "",
       documents: [],
+      sub_tasks: [],
       executors: {
         surname: [],
       },
@@ -289,6 +313,18 @@ export default {
         })
         .catch(console.error);
     },
+    getSubTasks(id) {
+      axios({
+        url: "/tasks/getsub",
+        data: {
+          taskId: id,
+          page: 0,
+        },
+        method: "POST",
+      }).then(async (res) => {
+        this.sub_tasks = res.data.tasks;
+      });
+    },
     onTaskEdit() {
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
         this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
@@ -344,8 +380,13 @@ export default {
         if (this.task.documents.length) {
           this.documents = this.task.documents;
         }
+
+        this.getSubTasks(this.task._id);
       }
     },
+  },
+  created() {
+    this.sub_tasks = [];
   },
 };
 </script>
@@ -390,6 +431,13 @@ export default {
     .table__actions {
       justify-content: left !important;
       margin-bottom: 20px;
+    }
+
+    &__title {
+      font-weight: 700;
+      color: $color-blue;
+      margin-bottom: 10px;
+      font-size: 16px;
     }
 
     .group__title {
@@ -441,6 +489,29 @@ export default {
         white-space: nowrap;
         padding-right: 30px;
       }
+    }
+  }
+  .group__sub-task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 679px;
+    height: 40px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: $border-radius;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
     }
   }
 }
