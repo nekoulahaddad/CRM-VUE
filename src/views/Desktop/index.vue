@@ -3,7 +3,7 @@
     <v-add-event-modal />
     <v-add-task-modal :departments="departments" />
     <v-edit-task-modal
-      :task="{}"
+      :task="editedItem"
       :type="type"
       @toggleDelete="toggleDelete"
       @afterDelete="afterDelete"

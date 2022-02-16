@@ -482,7 +482,7 @@
               <autocomplete
                 :search="searchByInitiator"
                 placeholder="Введите автора задачи..."
-                :get-result-value="getResultValue"
+                :getResultValue="getResultValue"
               >
                 <template #result="{ result, props }">
                   <li @click="selectInitiator(result)" v-bind="props">
@@ -913,6 +913,7 @@ export default {
   },
   data() {
     return {
+      defaultValue: "",
       executor: "",
       filter: false,
       sameDateFormat: {
@@ -1049,6 +1050,9 @@ export default {
     }),
     clickOnExecutor(result) {},
     getResultValue(result) {
+      if (!result) {
+        return;
+      }
       return this.transformFIO(result);
     },
     searchByInitiator(input) {

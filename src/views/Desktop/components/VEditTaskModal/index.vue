@@ -8,7 +8,7 @@
   >
     <div class="edit-task-modal">
       <div class="vm--modal__title">
-        Необходимо обновить CRM систему, выполнив редизайн системы.
+        Редактировать задачу
         <img class="close-icon" src="@/assets/icons/close_icon.svg" alt="" />
       </div>
       <div class="d-flex justify-content-between vm--modal__inner">
