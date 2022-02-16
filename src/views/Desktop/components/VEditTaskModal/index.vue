@@ -8,7 +8,7 @@
   >
     <div class="edit-task-modal">
       <div class="vm--modal__title">
-        Редактировать задачу
+        {{ title }}
         <img
           alt=""
           class="close-icon"
