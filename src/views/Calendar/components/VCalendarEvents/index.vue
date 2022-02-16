@@ -161,6 +161,7 @@ export default {
     padding-bottom: 16px;
     position: relative;
     margin-right: 12px;
+    cursor: auto;
 
     & + * {
       margin-top: 16px;
