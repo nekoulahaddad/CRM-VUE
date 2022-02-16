@@ -53,13 +53,15 @@
             <div class="group">
               <div class="group__title">Исполнители:</div>
               <div class="group__executors">
-                <div
-                  class="group__executor"
-                  v-for="(surname, index) in executors.surname"
-                  :key="index"
-                >
-                  <span>{{ surname }}</span>
-                </div>
+                <vue-scroll>
+                  <div
+                    class="group__executor"
+                    v-for="(surname, index) in executors.surname"
+                    :key="index"
+                  >
+                    <span>{{ surname }}</span>
+                  </div>
+                </vue-scroll>
               </div>
               <div class="group__content"></div>
             </div>
@@ -67,7 +69,7 @@
             <div class="group">
               <div class="group__title">Комментарий:</div>
               <div class="group__content">
-                <textarea class="form-textarea"></textarea>
+                <textarea class="form-textarea" v-model="initiator_comment" />
               </div>
             </div>
             <!-- Автор -->
@@ -216,6 +218,12 @@ export default {
   .form-control {
     width: 679px;
   }
+  .form-textarea {
+    min-height: 150px !important;
+  }
+  .group__executors {
+    height: 126px;
+  }
   .group__executor {
     box-shadow: 0 0 5px rgb(0 0 0 / 20%);
     border-radius: $border-radius;
@@ -225,6 +233,7 @@ export default {
     padding-right: 10px;
     background-color: $color-white;
     height: 33px;
+    width: 358px;
 
     & + * {
       margin-top: 10px;
