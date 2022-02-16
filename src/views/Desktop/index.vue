@@ -213,22 +213,7 @@ export default {
     afterAdd(e, status) {
       if (e.added) {
         const task = e.added.element;
-        console.log(task);
-        let taskData = new FormData();
-        taskData.append("taskId", task._id);
-        taskData.append("status", this.ids[status]);
-
-        axios({
-          url: `/tasks/update/`,
-          data: taskData,
-          method: "POST",
-        })
-          .then((res) => {
-            this.fetchCounter();
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          });
+        this.changeTaskStatus(task._id, status);
       }
     },
     async fetchCounter() {
@@ -265,6 +250,7 @@ export default {
         data: taskData,
         method: "POST",
       }).then(async (res) => {
+        this.fetchCounter();
         let result = await res;
 
         if (
@@ -282,9 +268,6 @@ export default {
             this.$toast.success("Задача добавлена в отчет!");
           });
         }
-        this.$toast.success("Статус задачи изменен!");
-        this.$emit("changeTaskStatus", result.data.task, result.data.status);
-        this.$emit("toggleInfo", this.task);
       });
     },
     getData(url) {
