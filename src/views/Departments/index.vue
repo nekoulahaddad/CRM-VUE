@@ -43,30 +43,30 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else-if="dataset.length">
-          <div class="scroll-horizontal">
-            <div class="list">
-              <div class="list__header">
-                <v-search
-                  @submit="getSearchData"
-                  v-model="user"
-                  :placeholder="$t('pages.employee.searchPlaceholder')"
-                />
-                <div class="list__title">Отделы</div>
-                <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.departments.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
-                  </div>
+        <div class="scroll-container">
+          <div class="list">
+            <div class="list__header">
+              <v-search
+                @submit="getSearchData"
+                v-model="user"
+                :placeholder="$t('pages.employee.searchPlaceholder')"
+              />
+              <div class="list__title">Отделы</div>
+              <div class="list__columns">
+                <div
+                  v-for="field in $t('pages.departments.fields')"
+                  class="list__column"
+                >
+                  {{ field }}
                 </div>
               </div>
+            </div>
 
-              <!-- Блок добавления нового отдела -->
-              <v-add-item v-if="addDepartment" />
+            <!-- Блок добавления нового отдела -->
+            <v-add-item v-if="addDepartment" />
 
+            <v-spinner v-if="!isLoading" />
+            <template v-else-if="dataset.length">
               <div
                 v-for="(department, index) in dataset"
                 :key="department._id"
@@ -99,11 +99,11 @@
                   @refresh="refresh"
                 />
               </div>
-            </div>
+              <v-pagination :count="count" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
       </div>
     </div>
   </div>
