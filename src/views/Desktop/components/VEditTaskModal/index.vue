@@ -9,7 +9,12 @@
     <div class="edit-task-modal">
       <div class="vm--modal__title">
         Редактировать задачу
-        <img class="close-icon" src="@/assets/icons/close_icon.svg" alt="" />
+        <img
+          alt=""
+          class="close-icon"
+          src="@/assets/icons/close_icon.svg"
+          @click="cancel"
+        />
       </div>
       <div class="d-flex justify-content-between vm--modal__inner">
         <div class="vm--modal__left">
@@ -21,9 +26,6 @@
                 src="@/assets/icons/trash_icon.svg"
                 alt=""
               />
-            </div>
-            <div class="table__icon">
-              <img src="@/assets/icons/task_add_icon.svg" alt="" />
             </div>
             <div class="table__icon">
               <img src="@/assets/icons/attach_icon.svg" alt="" />
@@ -42,6 +44,28 @@
                 <textarea class="form-textarea" v-model="description" />
               </div>
             </div>
+
+            <div class="group">
+              <div class="group__title">Документы:</div>
+              <div class="group__documents">
+                <template v-if="documents.length">
+                  <div
+                    class="group__document"
+                    v-for="(document, index) in documents"
+                    :key="index"
+                  >
+                    <span>{{ document }}</span>
+                    <img
+                      alt=""
+                      src="@/assets/icons/trash_icon.svg"
+                      @click="deleteDocument(index)"
+                    />
+                  </div>
+                </template>
+                <div v-else>Документов нет</div>
+              </div>
+            </div>
+
             <div class="vm--modal__buttons">
               <v-button
                 v-if="
@@ -231,12 +255,22 @@ export default {
     },
   },
   methods: {
+    cancel() {
+      this.$modal.hide("editTask");
+    },
     changeTaskStatus(task, status) {
       this.$emit("changeTaskStatus", task, status);
     },
     deleteTask() {
       this.$emit("toggleEdit", this.task, this.type);
       this.$modal.hide("editTask");
+    },
+    deleteDocument(index) {
+      this.documents = Array.from(this.documents).filter((doc, i) => {
+        if (i !== index) {
+          return doc;
+        }
+      });
     },
     onTaskEdit() {
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
@@ -363,6 +397,26 @@ export default {
       width: 358px;
 
       margin-bottom: 10px;
+    }
+
+    .group__document {
+      width: 401px;
+      display: flex;
+      justify-content: space-between;
+      height: 33px;
+      box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+      border-radius: $border-radius;
+      align-items: center;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-bottom: 10px;
+
+      span {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-right: 30px;
+      }
     }
   }
 }

@@ -7,12 +7,16 @@
       </div>
     </div>
 
-    <v-documents
-      :documents="infoItem.documents"
-      v-if="infoItem.documents.length"
-      :infoItem="infoItem"
-      @deleteDocument="deleteDocument"
-    />
+    <div class="group">
+      <div class="group__title">Документы:</div>
+      <v-documents
+        :documents="infoItem.documents"
+        v-if="infoItem.documents.length"
+        :infoItem="infoItem"
+        @deleteDocument="deleteDocument"
+      />
+      <div v-else>Документов нет</div>
+    </div>
 
     <v-button @click="addDocument = true" v-if="!addDocument && canChanges" red>
       Добавить документ

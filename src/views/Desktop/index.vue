@@ -134,12 +134,6 @@ export default {
         completed: {},
         tested: {},
       },
-      ids: {
-        accepted: "601bad6935e4052ee544d789",
-        assigned: "5f7afdbb701805712f1a8e2b",
-        completed: "5f7afd46701805712f1a8e27",
-        tested: "5f7f30d450523015fc320056",
-      },
       editedItem: {},
       deletedItem: {},
       departments: [],
@@ -326,6 +320,11 @@ export default {
         body.style.overflow = "auto";
       };
     });
+  },
+  watch: {
+    dataset() {
+      console.log(111);
+    },
   },
 };
 </script>

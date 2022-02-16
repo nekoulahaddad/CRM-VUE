@@ -1,37 +1,33 @@
 <template>
-  <div class="list">
+  <div class="group__documents education-documents">
     <div
       v-for="(document, index) in documents"
-      class="list__row list__row--shadow list__row--white"
+      :key="index"
+      class="group__document"
     >
-      <div class="list__columns list__columns--shadow list__columns--white">
-        <div class="list__column">Документ {{ index + 1 }}</div>
-        <div class="list__column">
-          <div class="table__actions">
-            <div class="table__icon">
-              <img
-                alt=""
-                @click="
-                  downloadItem(
-                    document.path + document.document,
-                    document.document,
-                    `Документ ${index + 1}`
-                  )
-                "
-                src="@/assets/icons/doc_download_icon.svg"
-              />
-            </div>
-            <div class="table__icon">
-              <img
-                alt=""
-                v-if="
-                  (role === 'superadmin' || role === 'director') && canChanges
-                "
-                src="@/assets/icons/trash_icon.svg"
-                @click="$emit('deleteDocument', document)"
-              />
-            </div>
-          </div>
+      <span>{{ document.title }}</span>
+      <div class="table__actions">
+        <div class="table__icon">
+          <img
+            alt=""
+            @click="
+              downloadItem(
+                document.path + document.document,
+                document.document,
+                document.title
+              )
+            "
+            class="download-icon"
+            src="@/assets/icons/doc_download_icon.svg"
+          />
+        </div>
+        <div class="table__icon">
+          <img
+            alt=""
+            v-if="(role === 'superadmin' || role === 'director') && canChanges"
+            src="@/assets/icons/trash_icon.svg"
+            @click="$emit('deleteDocument', document)"
+          />
         </div>
       </div>
     </div>
@@ -121,12 +117,25 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles/_variables";
 
-.list {
-  margin-top: 10px !important;
-
-  &__columns {
-    background-color: $color-white;
+.education-documents {
+  .group__document {
+    display: flex;
+    justify-content: space-between;
+    height: 48px;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
     border-radius: $border-radius;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: $color-white;
+    margin-bottom: 10px;
+
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: 700;
+    }
   }
 }
 </style>
