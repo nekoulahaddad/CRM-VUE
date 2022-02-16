@@ -34,7 +34,6 @@ export default {
         number: options.number || null,
         dates: options.dates || null,
         manager: options.manager || null,
-        search: options.search || null,
         startDate: options.startDate || null,
         endDate: options.endDate || null,
         phone: options.phone || null,
@@ -46,6 +45,10 @@ export default {
       let urlStr;
       if (this.$route.params.page) {
         urlStr = `${url}/?page=${this.$route.params.page}`;
+
+        if (options.search) {
+          urlStr += `&search=${options.search}`;
+        }
       } else {
         urlStr = `${url}/`;
       }

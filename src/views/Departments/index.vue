@@ -253,27 +253,31 @@ export default {
       this.deletedItem = deletedItem;
       this.$modal.show("deleteDepartment");
     },
-    getSearchData() {
+    async getSearchData() {
       let search = this.user;
 
-      if (search.length < 3) {
+      if (search.trim().length < 1) {
+        this.refresh();
+        return;
+      }
+
+      if (search.trim().length < 3) {
         this.$toast.error("Запрос слишком короткий!");
         return;
       }
 
-      axios
-        .get(`/user/getsearchwithoutdirector/${search}`)
-        .then(async (res) => {
-          let result = await res;
-          if (result.data.users.length) {
-            this.count = result.data.length;
-            this.$toast.success("Результаты запросов!");
-          } else {
-            this.$toast.error("Результаты не найдены!");
-            this.user = "";
-          }
-          this.$forceUpdate();
-        });
+      this.filtersOptions.page = this.$route.params.page;
+      this.filtersOptions.search = search;
+
+      try {
+        const { data } = await this.getDataFromPage(
+          "/departments/get",
+          this.filtersOptions
+        );
+
+        this.dataset = data.departments;
+        this.count = data.count ? data.count : 0;
+      } catch (e) {}
     },
     resetFilters() {
       this.$refs.filters.filterOptions = {};
