@@ -315,9 +315,7 @@ export default {
             if (res.data.users.length) {
               this.dataset = res.data.users;
               this.count = res.data.count ? res.data.count : 0;
-              this.$toast.success("Результаты запросов!");
             } else {
-              this.$toast.error("Результаты не найдены!");
               this.user = "";
             }
 
