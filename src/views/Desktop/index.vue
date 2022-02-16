@@ -30,7 +30,7 @@
               <div class="list__title text--red text">
                 {{ statuses[status] }}: {{ items.count }}
               </div>
-              <vue-scroll @handleScroll="handleScroll">
+              <vue-scroll @handle-scroll="handleScroll($event, status)">
                 <div class="list__items">
                   <draggable
                     :list="items.tasks"
@@ -171,13 +171,18 @@ export default {
     dayClicked(e) {
       this.clickedDay = e;
     },
-    scrollFn() {
-      console.log(111);
-    },
-    handleScroll({ process }, b, c) {
-      console.log(c);
+    async handleScroll({ process }, status) {
       if (process === 1) {
-        this.fetchData({ status: "assigned", step: 1 });
+        try {
+          const { data } = await this.getDataFromPage(`/tasks/desktop`, {
+            status: [status],
+            skip: 1,
+          });
+
+          console.log(data[status].tasks);
+
+          //this.dataset[status].tasks.push(data[status].tasks);
+        } catch (e) {}
       }
     },
     afterDelete() {
@@ -320,11 +325,6 @@ export default {
         body.style.overflow = "auto";
       };
     });
-  },
-  watch: {
-    dataset() {
-      console.log(111);
-    },
   },
 };
 </script>
