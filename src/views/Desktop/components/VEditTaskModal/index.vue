@@ -51,10 +51,17 @@
           <form>
             <!-- Исполнитель -->
             <div class="group">
-              <div class="group__title">Исполнитель:</div>
-              <div class="group__content">
-                <input class="form-control" type="text" v-model="executor" />
+              <div class="group__title">Исполнители:</div>
+              <div class="group__executors">
+                <div
+                  class="group__executor"
+                  v-for="(surname, index) in executors.surname"
+                  :key="index"
+                >
+                  <span>{{ surname }}</span>
+                </div>
               </div>
+              <div class="group__content"></div>
             </div>
             <!-- Комментарий -->
             <div class="group">
@@ -102,7 +109,9 @@ export default {
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
       initiator_comment: "",
       documents: [],
-      executor: "",
+      executors: {
+        surname: [],
+      },
       initiator: "",
     };
   },
@@ -159,7 +168,7 @@ export default {
         this.date = new Date(this.task.deadline_date).toISOString();
         this.title = this.task.title;
         this.initiator = this.transformFIO(this.task.initiator);
-        this.executor = this.transformFIO(this.task.executor);
+        this.executors = this.task.executor;
         this.description = this.task.description;
         this.initiator_comment = this.task.initiator_comment;
 
@@ -206,6 +215,20 @@ export default {
   .form-textarea,
   .form-control {
     width: 679px;
+  }
+  .group__executor {
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: $color-white;
+    height: 33px;
+
+    & + * {
+      margin-top: 10px;
+    }
   }
 }
 </style>
