@@ -153,7 +153,6 @@ export default {
     width: 230px;
   }
   .vdatetime-input {
-    width: 330px;
   }
   .chip {
     background-color: $color-gray-secondary;

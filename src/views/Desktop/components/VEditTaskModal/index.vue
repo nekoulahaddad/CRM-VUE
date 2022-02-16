@@ -84,7 +84,12 @@
             <div class="group">
               <div class="group__title">Дедлайн:</div>
               <div class="group__content">
-                <input class="form-control" type="text" />
+                <datetime
+                  type="datetime"
+                  input-class="forms__container--input"
+                  :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+                  v-model="date"
+                />
               </div>
             </div>
           </form>
@@ -251,6 +256,12 @@ export default {
     width: 358px;
 
     margin-bottom: 10px;
+  }
+  .vdatetime {
+    width: 100%;
+  }
+  .forms__container--input {
+    width: 100%;
   }
 }
 </style>
