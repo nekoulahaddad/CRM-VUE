@@ -206,62 +206,68 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles/_variables";
 
-.edit-task-modal {
-  .vm--modal {
-    &__left {
-      flex: 1;
-      margin-right: 20px;
+.vm--modal {
+  &__left {
+    flex: 1;
+    margin-right: 20px;
+    .form-textarea,
+    .form-control {
+      width: 679px;
     }
+  }
 
-    &__inner {
-      padding-top: 10px;
+  &__inner {
+    padding-top: 10px;
+  }
+
+  &__right {
+    background-color: $color-gray-secondary;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 391px;
+
+    .form-textarea,
+    .form-control {
+      width: 371px;
     }
-
-    &__right {
-      background-color: $color-gray-secondary;
-      border-radius: $border-radius;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      padding: 10px;
-      width: 391px;
+    .vdatetime {
+      width: 100%;
     }
+    .forms__container--input {
+      min-width: 371px !important;
+    }
+  }
 
+  .edit-task-modal {
     .table__actions {
-      justify-content: left;
+      justify-content: left !important;
       margin-bottom: 20px;
     }
 
     .group__title {
       font-size: 12px;
     }
-  }
-  .form-textarea,
-  .form-control {
-    width: 679px;
-  }
-  .form-textarea {
-    min-height: 150px !important;
-  }
-  .group__executors {
-    height: 126px;
-  }
-  .group__executor {
-    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
-    border-radius: $border-radius;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: $color-white;
-    height: 33px;
-    width: 358px;
 
-    margin-bottom: 10px;
-  }
-  .vdatetime {
-    width: 100%;
-  }
-  .forms__container--input {
-    width: 100%;
+    .form-textarea {
+      min-height: 150px !important;
+    }
+    .group__executors {
+      height: 126px;
+    }
+    .group__executor {
+      box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      padding-right: 10px;
+      background-color: $color-white;
+      height: 33px;
+      width: 358px;
+
+      margin-bottom: 10px;
+    }
   }
 }
 </style>
