@@ -69,7 +69,10 @@
               <div class="edit-task-modal__title">Подзадачи:</div>
 
               <div class="group">
-                <div class="group__sub-tasks">
+                <div
+                  class="group__sub-tasks"
+                  :style="{ height: subTasksHeight }"
+                >
                   <div
                     class="group__sub-task"
                     v-for="(sub_task, index) in sub_tasks"
@@ -252,6 +255,12 @@ export default {
     };
   },
   computed: {
+    subTasksHeight() {
+      if (this.sub_tasks.length < 3) {
+        return `${this.sub_tasks.length * 40}px`;
+      }
+      return "150px";
+    },
     height() {
       if (this.executors.surname.length < 3) {
         return `${this.executors.surname.length * 43}px`;
@@ -501,17 +510,26 @@ export default {
     border-radius: $border-radius;
     padding-left: 10px;
     padding-right: 10px;
+
+    & + * {
+      margin-top: 10px;
+    }
+
+    span {
+      padding-right: 30px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 
   span[role="tooltip"] {
+    padding-right: 0;
+
     &:after {
       background-color: $color-black;
       color: $color-white;
       border-radius: $border-radius;
-    }
-
-    & + * {
-      margin-left: 20px;
     }
   }
 }
