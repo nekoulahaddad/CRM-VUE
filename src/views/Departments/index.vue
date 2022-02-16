@@ -16,14 +16,17 @@
             <img :src="require(`@/assets/icons/employees_title.svg`)" alt="" />
           </div>
           <h1 class="page__title">{{ $t("pages.employee.pageTitle") }}</h1>
-          <v-button
-            :red="index === 2"
-            :white="index !== 2"
-            v-for="(item, index) in $t('pages.employee.buttons')"
-            @click="goToLink(item.url)"
-          >
-            {{ item.value }}
-          </v-button>
+          <div class="page__buttons">
+            <v-button
+              :red="index === 2"
+              :white="index !== 2"
+              v-for="(item, index) in $t('pages.employee.buttons')"
+              @click="goToLink(item.url)"
+            >
+              {{ item.value }}
+            </v-button>
+          </div>
+          <v-filter-toggle @toggleFilter="toggleFilter" :active="showFilter" />
         </div>
       </div>
     </div>
@@ -146,7 +149,7 @@ export default {
   },
   data() {
     return {
-      showFilter: false,
+      showFilter: true,
       openEdit: false,
       openDelete: false,
       open: {
