@@ -54,7 +54,7 @@
                     v-for="(document, index) in documents"
                     :key="index"
                   >
-                    <span>{{ document }}</span>
+                    <span>Документ {{ index + 1 }}</span>
                     <img
                       alt=""
                       src="@/assets/icons/trash_icon.svg"

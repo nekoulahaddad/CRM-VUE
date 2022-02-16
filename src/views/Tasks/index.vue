@@ -35,60 +35,61 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else-if="dataset.length">
-          <div class="scroll-horizontal">
-            <div class="list">
-              <div class="list__header">
-                <div class="list__title">
-                  {{ $t("pages.tasks.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div class="list__column">№:</div>
-                  <div class="list__column">Автор:</div>
-                  <div class="list__column">Исполнитель:</div>
-                  <div class="list__column">Задача:</div>
-                  <div
-                    class="list__column list__column--filter"
-                    @click="sort('creation')"
-                  >
-                    <span>Дата создания:</span>
-                    <img
-                      alt=""
-                      src="@/assets/icons/filter_down.svg"
-                      :class="{
-                        'list__filter-icon--active':
-                          filtersOptions.creation_date === -1,
-                      }"
-                      class="list__filter-icon"
-                    />
-                  </div>
-                  <div
-                    class="list__column list__column--filter"
-                    @click="sort('deadline')"
-                  >
-                    <span>Дедлайн:</span>
-                    <img
-                      alt=""
-                      :class="{
-                        'list__filter-icon--active':
-                          filtersOptions.deadline_date === -1,
-                      }"
-                      class="list__filter-icon"
-                      src="@/assets/icons/filter_down.svg"
-                    />
-                  </div>
-                  <div class="list__column">Статус:</div>
-                  <div class="list__column"></div>
-                </div>
+        <div class="scroll-horizontal">
+          <div class="list">
+            <div class="list__header">
+              <div class="list__title">
+                {{ $t("pages.tasks.pageTitle") }}
               </div>
+              <div class="list__columns">
+                <div class="list__column">№:</div>
+                <div class="list__column">Автор:</div>
+                <div class="list__column">Исполнитель:</div>
+                <div class="list__column">Задача:</div>
+                <div
+                  class="list__column list__column--filter"
+                  @click="sort('creation')"
+                >
+                  <span>Дата создания:</span>
+                  <img
+                    alt=""
+                    src="@/assets/icons/filter_down.svg"
+                    :class="{
+                      'list__filter-icon--active':
+                        filtersOptions.creation_date === -1,
+                    }"
+                    class="list__filter-icon"
+                  />
+                </div>
+                <div
+                  class="list__column list__column--filter"
+                  @click="sort('deadline')"
+                >
+                  <span>Дедлайн:</span>
+                  <img
+                    alt=""
+                    :class="{
+                      'list__filter-icon--active':
+                        filtersOptions.deadline_date === -1,
+                    }"
+                    class="list__filter-icon"
+                    src="@/assets/icons/filter_down.svg"
+                  />
+                </div>
+                <div class="list__column">Статус:</div>
+                <div class="list__column"></div>
+              </div>
+            </div>
 
-              <v-add-task
-                v-if="addTask"
-                @addToTasks="addToTasks"
-                @refresh="fetchData"
-              />
+            <v-add-task
+              v-if="addTask"
+              @addToTasks="addToTasks"
+              @refresh="fetchData"
+            />
 
+            <v-spinner v-if="!isLoading" />
+
+            <template v-else-if="dataset.length">
               <div
                 v-for="(task, index) in dataset"
                 :key="task._id"
@@ -165,11 +166,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+              <v-pagination :count="count" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
       </div>
     </div>
   </div>
