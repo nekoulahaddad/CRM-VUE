@@ -128,6 +128,9 @@ export default {
       border-right: 0 !important;
     }
   }
+  .is-today {
+    background: rgba(219, 31, 53, 0.1) !important;
+  }
 
   .vc-title {
     background-color: $color-red;
