@@ -6,7 +6,6 @@
       :task="editedItem"
       :type="type"
       @toggleDelete="toggleDelete"
-      @afterDelete="afterDelete"
       @changeTaskStatus="changeTaskStatus"
     />
     <v-delete-task :deletedItem="deletedItem" @afterDelete="afterDelete" />
@@ -62,6 +61,7 @@
                       <v-context-menu
                         :item="item"
                         type="assigned"
+                        :status="status"
                         @toggleDelete="toggleDelete"
                         v-if="showContextMenu._id === item._id"
                       />
@@ -142,6 +142,7 @@ export default {
       deletedItem: {},
       departments: [],
       events: [],
+      status: "",
       isLoading: false,
       showContextMenu: {},
       type: null,
@@ -216,10 +217,10 @@ export default {
       }
     },
     afterDelete() {
-      this.dataset[this.type] = this.dataset[this.type].filter(
+      this.dataset[this.status].tasks = this.dataset[this.status].tasks.filter(
         (item) => item._id !== this.deletedItem._id
       );
-      this.type = null;
+      this.status = null;
       this.deletedItem = {};
     },
     async fetchData({ status, step = 0 }) {
@@ -234,9 +235,9 @@ export default {
         this.isLoading = true;
       }
     },
-    toggleDelete(item, type) {
+    toggleDelete(item, type, status) {
       this.deletedItem = item;
-      this.type = type;
+      this.status = status;
       this.$modal.show("deleteTask");
     },
     afterAdd(e, status) {

@@ -27,6 +27,7 @@ export default {
       this.$modal.hide("deleteTask");
     },
     confirm() {
+      console.log(this.deletedItem);
       axios({
         url: "/tasks/delete/",
         data: {
