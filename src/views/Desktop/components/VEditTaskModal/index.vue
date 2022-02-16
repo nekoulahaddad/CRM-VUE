@@ -53,13 +53,11 @@
                     class="group__document"
                     v-for="(document, index) in documents"
                     :key="index"
+                    @click.prevent="
+                      downloadItem(serverAddr + `${document}`, document)
+                    "
                   >
-                    <span>Документ {{ index + 1 }}</span>
-                    <img
-                      alt=""
-                      src="@/assets/icons/trash_icon.svg"
-                      @click="deleteDocument(index)"
-                    />
+                    Документ {{ index + 1 }}
                   </div>
                 </template>
                 <div v-else>Документов нет</div>
@@ -272,6 +270,24 @@ export default {
         }
       });
     },
+    downloadItem(url, filename) {
+      axios
+        .get(url, { responseType: "blob" })
+        .then((response) => {
+          const link = document.createElement("a");
+          const blob = new Blob([response.data]);
+          let urll = window.URL.createObjectURL(blob);
+          link.href = urll;
+          link.download = filename;
+          link.click();
+          setTimeout(() => {
+            window.URL.revokeObjectURL(urll);
+            document.body.removeChild(link);
+          }, 0);
+          URL.revokeObjectURL(link.href);
+        })
+        .catch(console.error);
+    },
     onTaskEdit() {
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
         this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
@@ -400,16 +416,23 @@ export default {
     }
 
     .group__document {
-      width: 401px;
+      width: 236px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       height: 33px;
-      box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       border-radius: $border-radius;
       align-items: center;
       padding-left: 10px;
       padding-right: 10px;
       margin-bottom: 10px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+
+      & + * {
+        margin-top: 10px;
+      }
 
       span {
         text-overflow: ellipsis;
