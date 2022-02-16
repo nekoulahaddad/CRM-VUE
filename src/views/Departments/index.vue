@@ -257,6 +257,7 @@ export default {
       let search = this.user;
 
       if (search.trim().length < 1) {
+        this.isLoading = false;
         this.refresh();
         return;
       }
@@ -266,18 +267,22 @@ export default {
         return;
       }
 
-      this.filtersOptions.page = this.$route.params.page;
-      this.filtersOptions.search = search;
+      this.isLoading = false;
 
-      try {
-        const { data } = await this.getDataFromPage(
-          "/departments/get",
-          this.filtersOptions
-        );
-
-        this.dataset = data.departments;
-        this.count = data.count ? data.count : 0;
-      } catch (e) {}
+      axios({
+        url: `/departments/get/?page=${this.$route.params.page}&search=${search}`,
+        method: "post",
+        data: {
+          options: this.filtersOptions,
+        },
+      })
+        .then(({ data }) => {
+          this.dataset = data.departments;
+          this.count = data.count;
+        })
+        .finally(() => {
+          this.isLoading = true;
+        });
     },
     resetFilters() {
       this.$refs.filters.filterOptions = {};

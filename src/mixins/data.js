@@ -45,10 +45,6 @@ export default {
       let urlStr;
       if (this.$route.params.page) {
         urlStr = `${url}/?page=${this.$route.params.page}`;
-
-        if (options.search) {
-          urlStr += `&search=${options.search}`;
-        }
       } else {
         urlStr = `${url}/`;
       }
