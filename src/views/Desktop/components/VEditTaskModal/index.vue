@@ -80,10 +80,16 @@
                       :key="index"
                     >
                       <span>{{ sub_task.title }}</span>
-                      <div>
-                        <VueCustomTooltip label="Удалить">
-                          <img src="@/assets/icons/trash_icon.svg" alt="" />
-                        </VueCustomTooltip>
+                      <div
+                        v-if="
+                          sub_task.initiator._id === id || role === 'superadmin'
+                        "
+                      >
+                        <img
+                          alt=""
+                          src="@/assets/icons/trash_icon.svg"
+                          @click="$emit('toggleSubDelete', sub_task)"
+                        />
                       </div>
                     </div>
                   </vue-scroll>
@@ -285,6 +291,12 @@ export default {
       get: function () {
         let role = this.getUserRole();
         return role._id;
+      },
+    },
+    id: {
+      get: function () {
+        let user = this.getUserRole();
+        return user._id;
       },
     },
   },

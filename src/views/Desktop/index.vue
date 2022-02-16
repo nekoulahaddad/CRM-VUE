@@ -1,14 +1,27 @@
 <template>
   <div class="page desktop-page">
     <v-add-event-modal />
+    <!-- Модальное окно для добавления задачи -->
     <v-add-task-modal :departments="departments" />
+
+    <!-- Модальное окно для просмотра задачи -->
     <v-edit-task-modal
       :task="editedItem"
       :type="type"
       @toggleDelete="toggleDelete"
+      @toggleSubDelete="toggleSubDelete"
       @changeTaskStatus="changeTaskStatus"
     />
+
+    <!-- Модальное окно для удаления задачи -->
     <v-delete-task :deletedItem="deletedItem" @afterDelete="afterDelete" />
+
+    <!-- Модальное окно для удаления подзадачи -->
+    <v-delete-sub-task
+      :deletedItem="deletedItem"
+      @afterSubDelete="afterSubDelete"
+    />
+
     <v-page-header
       title="Рабочий стол"
       icon="desktop_title"
@@ -103,6 +116,7 @@ import VSpinner from "@/components/VSpinner";
 import VAddEventModal from "@/views/Calendar/components/VAddEventModal";
 import VAddTaskModal from "./components/VAddTaskModal";
 import VDeleteTask from "./components/VDeleteTask";
+import VDeleteSubTask from "./components/VDeleteSubTask";
 import VCalendarEvents from "./components/VCalendarEvents";
 import VEditTaskModal from "./components/VEditTaskModal";
 import dataMixins from "@/mixins/data";
@@ -122,6 +136,7 @@ export default {
     VAddEventModal,
     VSpinner,
     VDeleteTask,
+    VDeleteSubTask,
   },
   data() {
     return {
@@ -216,6 +231,9 @@ export default {
         }
       }
     },
+    afterSubDelete() {
+      this.$modal.hide("deleteSubTask");
+    },
     async afterDelete() {
       this.dataset[this.status].tasks = this.dataset[this.status].tasks.filter(
         (item) => item._id !== this.deletedItem._id
@@ -254,6 +272,11 @@ export default {
       this.deletedItem = item;
       this.status = status;
       this.$modal.show("deleteTask");
+    },
+    toggleSubDelete(item, type, status) {
+      this.deletedItem = item;
+      this.status = status;
+      this.$modal.show("deleteSubTask");
     },
     afterAdd(e, status) {
       if (e.added) {

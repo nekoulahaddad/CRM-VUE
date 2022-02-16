@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="deleteTask">
+  <v-modal :adaptive="true" :maxHeight="175" name="deleteSubTask">
     <div class="vm--modal__title">Удаление</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     cancel() {
-      this.$modal.hide("deleteTask");
+      this.$modal.hide("deleteSubTask");
     },
     confirm() {
       axios({
@@ -35,8 +35,8 @@ export default {
         method: "DELETE",
       })
         .then(() => {
-          this.$emit("afterDelete");
-          this.$toast.success("Задача успешно удалена!");
+          this.$emit("afterSubDelete");
+          this.$toast.success("Подзадача успешно удалена!");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
