@@ -32,13 +32,13 @@
             <div class="group">
               <div class="group__title">Наименование задачи:</div>
               <div class="group__content">
-                <input class="form-control" type="text" />
+                <input class="form-control" type="text" v-model="title" />
               </div>
             </div>
             <div class="group">
               <div class="group__title">Описание задачи:</div>
               <div class="group__content">
-                <textarea class="form-textarea"></textarea>
+                <textarea class="form-textarea" v-model="description" />
               </div>
             </div>
             <div class="vm--modal__buttons">
@@ -49,18 +49,11 @@
         </div>
         <div class="vm--modal__right">
           <form>
-            <!-- Приоритет -->
-            <div class="group">
-              <div class="group__title">Приоритет:</div>
-              <div class="group__content">
-                <input class="form-control" type="text" />
-              </div>
-            </div>
             <!-- Исполнитель -->
             <div class="group">
               <div class="group__title">Исполнитель:</div>
               <div class="group__content">
-                <input class="form-control" type="text" />
+                <input class="form-control" type="text" v-model="executor" />
               </div>
             </div>
             <!-- Комментарий -->
@@ -74,7 +67,7 @@
             <div class="group">
               <div class="group__title">Автор:</div>
               <div class="group__content">
-                <input class="form-control" type="text" />
+                <input class="form-control" type="text" v-model="initiator" />
               </div>
             </div>
             <!-- Дедлайн -->
@@ -92,6 +85,8 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
+
 export default {
   props: {
     task: {
@@ -99,10 +94,79 @@ export default {
     },
     type: String,
   },
+  data() {
+    return {
+      date: new Date(),
+      title: "",
+      description: "",
+      serverAddr: process.env.VUE_APP_DEVELOP_URL,
+      initiator_comment: "",
+      documents: [],
+      executor: "",
+      initiator: "",
+    };
+  },
   methods: {
     deleteTask() {
       this.$emit("toggleEdit", this.task, this.type);
       this.$modal.hide("editTask");
+    },
+    onTaskEdit() {
+      if (this.$moment().valueOf() > new Date(this.date).getTime()) {
+        this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
+        this.changeStatus(true);
+        return;
+      }
+      let taskData = new FormData();
+      taskData.append("taskId", this.task._id);
+      if (this.title) {
+        taskData.append("title", this.title);
+      }
+
+      if (this.description) {
+        taskData.append("description", this.description);
+      }
+      if (this.initiator_comment) {
+        taskData.append("initiator_comment", this.initiator_comment);
+      }
+      if (this.date) {
+        taskData.append("deadline_date", this.date);
+      } else {
+        this.$toast.error("Необходимо выбрать дату окончания!");
+        return;
+      }
+      if (this.documents[0] !== "Выбрать файлы") {
+        for (let i = 0; i < this.documents.length; i++) {
+          taskData.append("documents", this.task.documents[i]);
+        }
+      }
+      axios({
+        url: "/tasks/update/",
+        data: taskData,
+        method: "POST",
+      })
+        .then(() => {
+          this.$toast.success("Задача успешно изменена!");
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        });
+    },
+  },
+  watch: {
+    task() {
+      if (this.task._id) {
+        this.date = new Date(this.task.deadline_date).toISOString();
+        this.title = this.task.title;
+        this.initiator = this.transformFIO(this.task.initiator);
+        this.executor = this.transformFIO(this.task.executor);
+        this.description = this.task.description;
+        this.initiator_comment = this.task.initiator_comment;
+
+        if (this.task.documents.length) {
+          this.documents = this.task.documents;
+        }
+      }
     },
   },
 };
