@@ -28,7 +28,7 @@
               v-for="(items, status) in dataset"
             >
               <div class="list__title text--red text">
-                {{ statuses[status] }}: {{ items.count }}
+                {{ statuses[status].title }}: {{ items.count }}
               </div>
               <vue-scroll @handle-scroll="handleScroll($event, status)">
                 <div class="list__items">
@@ -67,6 +67,10 @@
                       />
                     </div>
                   </draggable>
+                  <v-spinner
+                    class="list__spinner"
+                    v-if="!statuses[status].canScroll"
+                  />
                 </div>
               </vue-scroll>
             </div>
@@ -160,10 +164,26 @@ export default {
         },
       ],
       statuses: {
-        accepted: "В работе",
-        assigned: "К выполнению",
-        completed: "Выполнено",
-        tested: "На проверке",
+        accepted: {
+          title: "В работе",
+          skip: 0,
+          canScroll: true,
+        },
+        assigned: {
+          title: "К выполнению",
+          skip: 0,
+          canScroll: true,
+        },
+        completed: {
+          title: "Выполнено",
+          skip: 0,
+          canScroll: true,
+        },
+        tested: {
+          title: "На проверке",
+          skip: 0,
+          canScroll: true,
+        },
       },
     };
   },
@@ -172,17 +192,27 @@ export default {
       this.clickedDay = e;
     },
     async handleScroll({ process }, status) {
-      if (process === 1) {
+      const { canScroll } = this.statuses[status];
+
+      if (
+        process === 1 &&
+        canScroll &&
+        this.dataset[status].tasks.length !== this.dataset[status].count
+      ) {
         try {
+          this.statuses[status].canScroll = false;
+          this.statuses[status].skip += 15;
+
           const { data } = await this.getDataFromPage(`/tasks/desktop`, {
             status: [status],
-            skip: 1,
+            skip: this.statuses[status].skip,
           });
 
-          console.log(data[status].tasks);
-
-          //this.dataset[status].tasks.push(data[status].tasks);
-        } catch (e) {}
+          this.dataset[status].tasks.push(...data[status].tasks);
+        } catch (e) {
+        } finally {
+          this.statuses[status].canScroll = true;
+        }
       }
     },
     afterDelete() {
@@ -385,6 +415,10 @@ export default {
   .list {
     display: flex !important;
     flex-direction: column;
+
+    &__spinner {
+      text-align: center;
+    }
 
     &__item {
       background-color: $color-white;
