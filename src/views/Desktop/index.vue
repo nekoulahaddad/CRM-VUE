@@ -216,18 +216,33 @@ export default {
         }
       }
     },
-    afterDelete() {
+    async afterDelete() {
       this.dataset[this.status].tasks = this.dataset[this.status].tasks.filter(
         (item) => item._id !== this.deletedItem._id
       );
+      this.dataset[this.status].count--;
+
+      if (this.dataset[this.status].count < 15) {
+        try {
+          const { data } = await this.getDataFromPage(`/tasks/desktop`, {
+            status: [this.status],
+          });
+
+          this.dataset[status].tasks.push(...data[status].tasks);
+        } catch (e) {
+        } finally {
+        }
+      }
+
       this.status = null;
       this.deletedItem = {};
+      this.$modal.hide("deleteTask");
     },
-    async fetchData({ status, step = 0 }) {
+    async fetchData({ status, skip = 0 }) {
       try {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
           status,
-          step,
+          skip,
         });
         this.isLoading = true;
         this.dataset = data;
@@ -326,7 +341,7 @@ export default {
     this.$store.commit("deactivateAction", "addDbTask");
     this.fetchData({
       status: ["accepted", "assigned", "completed", "tested"],
-      step: 0,
+      skip: 0,
     });
     this.updateEvents();
 
