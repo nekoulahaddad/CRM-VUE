@@ -2,7 +2,7 @@
   <v-modal
     :adaptive="true"
     :minWidth="1130"
-    :minHeight="600"
+    :minHeight="700"
     :maxHeight="1200"
     name="editTask"
   >
@@ -73,18 +73,20 @@
                   class="group__sub-tasks"
                   :style="{ height: subTasksHeight }"
                 >
-                  <div
-                    class="group__sub-task"
-                    v-for="(sub_task, index) in sub_tasks"
-                    :key="index"
-                  >
-                    <span>{{ sub_task.title }}</span>
-                    <div>
-                      <VueCustomTooltip label="Удалить">
-                        <img src="@/assets/icons/trash_icon.svg" alt="" />
-                      </VueCustomTooltip>
+                  <vue-scroll>
+                    <div
+                      class="group__sub-task"
+                      v-for="(sub_task, index) in sub_tasks"
+                      :key="index"
+                    >
+                      <span>{{ sub_task.title }}</span>
+                      <div>
+                        <VueCustomTooltip label="Удалить">
+                          <img src="@/assets/icons/trash_icon.svg" alt="" />
+                        </VueCustomTooltip>
+                      </div>
                     </div>
-                  </div>
+                  </vue-scroll>
                 </div>
               </div>
             </template>
@@ -257,7 +259,7 @@ export default {
   computed: {
     subTasksHeight() {
       if (this.sub_tasks.length < 3) {
-        return `${this.sub_tasks.length * 40}px`;
+        return `${this.sub_tasks.length * 50}px`;
       }
       return "150px";
     },
@@ -504,22 +506,25 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 679px;
+    width: 660px;
     height: 40px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     border-radius: $border-radius;
     padding-left: 10px;
     padding-right: 10px;
-
-    & + * {
-      margin-top: 10px;
-    }
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 10px;
 
     span {
       padding-right: 30px;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+    }
+
+    &:first-child {
+      margin-top: 4px;
     }
   }
 
