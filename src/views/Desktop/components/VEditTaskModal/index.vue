@@ -28,7 +28,17 @@
               />
             </div>
             <div class="table__icon">
-              <img src="@/assets/icons/attach_icon.svg" alt="" />
+              <input
+                hidden
+                type="file"
+                id="docs"
+                name="documents"
+                multiple
+                @change="fileUpload($event)"
+              />
+              <label for="docs">
+                <img src="@/assets/icons/attach_icon.svg" alt="" />
+              </label>
             </div>
           </div>
           <form class="vm--modal__form modal-form">
@@ -47,8 +57,12 @@
 
             <div class="group">
               <div class="group__title">Документы:</div>
-              <div class="group__documents">
-                <template v-if="documents.length">
+              <div
+                class="group__documents"
+                :style="{ height: documentsHeight }"
+                v-if="documents.length"
+              >
+                <vue-scroll>
                   <div
                     class="group__document"
                     v-for="(document, index) in documents"
@@ -59,9 +73,9 @@
                   >
                     Документ {{ index + 1 }}
                   </div>
-                </template>
-                <div v-else>Документов нет</div>
+                </vue-scroll>
               </div>
+              <div v-else class="group__empty-documents">Документов нет</div>
             </div>
 
             <!-- Подзадачи -->
@@ -269,6 +283,12 @@ export default {
       }
       return "150px";
     },
+    documentsHeight() {
+      if (this.documents.length < 3) {
+        return `${this.documents.length * 43}px`;
+      }
+      return "126px";
+    },
     height() {
       if (this.executors.surname.length < 3) {
         return `${this.executors.surname.length * 43}px`;
@@ -301,6 +321,10 @@ export default {
     },
   },
   methods: {
+    fileUpload(e) {
+      const files = e.target.files;
+      this[e.target.name] = files;
+    },
     cancel() {
       this.$modal.hide("editTask");
     },
@@ -487,6 +511,9 @@ export default {
       margin-bottom: 10px;
     }
 
+    .group__documents {
+      width: 255px;
+    }
     .group__document {
       width: 236px;
       display: flex;
@@ -498,12 +525,14 @@ export default {
       padding-left: 10px;
       padding-right: 10px;
       margin-bottom: 10px;
+      margin-left: 4px;
+      margin-right: 4px;
       font-weight: 700;
       font-size: 12px;
       cursor: pointer;
 
-      & + * {
-        margin-top: 10px;
+      &:first-child {
+        margin-top: 4px;
       }
 
       span {
@@ -550,6 +579,9 @@ export default {
       color: $color-white;
       border-radius: $border-radius;
     }
+  }
+  .group__empty-documents {
+    margin-bottom: 10px;
   }
 }
 </style>

@@ -1,13 +1,15 @@
 <template>
   <div class="page desktop-page">
+    <!-- Модальное окно для добавления мероприятия -->
     <v-add-event-modal />
+
     <!-- Модальное окно для добавления задачи -->
     <v-add-task-modal :departments="departments" />
 
     <!-- Модальное окно для просмотра задачи -->
     <v-edit-task-modal
-      :task="editedItem"
       :type="type"
+      :task="editedItem"
       @toggleDelete="toggleDelete"
       @toggleSubDelete="toggleSubDelete"
       @changeTaskStatus="changeTaskStatus"
