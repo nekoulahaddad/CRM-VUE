@@ -521,6 +521,8 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      font-weight: 700;
+      font-size: 12px;
     }
 
     &:first-child {
