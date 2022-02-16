@@ -363,7 +363,6 @@ export default {
         url: `/excel/${route}`,
         data: {
           age: 18,
-          region: this.$store.state.filterRegion,
         },
         method: "POST",
         responseType: "blob",
