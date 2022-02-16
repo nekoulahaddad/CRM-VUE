@@ -7,6 +7,7 @@
       :type="type"
       @toggleDelete="toggleDelete"
       @afterDelete="afterDelete"
+      @changeTaskStatus="changeTaskStatus"
     />
     <v-delete-task :deletedItem="deletedItem" @afterDelete="afterDelete" />
     <v-page-header
@@ -254,6 +255,37 @@ export default {
       this.type = type;
       this.$modal.show("editTask");
       this.showContextMenu = {};
+    },
+    changeTaskStatus(id, status) {
+      let taskData = new FormData();
+      taskData.append("taskId", id);
+      taskData.append("statusValue", status);
+      axios({
+        url: "/tasks/status/",
+        data: taskData,
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+
+        if (
+          status === "completed" ||
+          status === "failed" ||
+          status === "declained"
+        ) {
+          await axios({
+            url: "/reports/post/",
+            data: {
+              taskId: task._id,
+            },
+            method: "POST",
+          }).then(() => {
+            this.$toast.success("Задача добавлена в отчет!");
+          });
+        }
+        this.$toast.success("Статус задачи изменен!");
+        this.$emit("changeTaskStatus", result.data.task, result.data.status);
+        this.$emit("toggleInfo", this.task);
+      });
     },
     getData(url) {
       let result = axios({

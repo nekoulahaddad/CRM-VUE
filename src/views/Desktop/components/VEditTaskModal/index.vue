@@ -17,6 +17,7 @@
             <div class="table__icon">
               <img
                 @click="deleteTask"
+                v-if="role === 'superadmin'"
                 src="@/assets/icons/trash_icon.svg"
                 alt=""
               />
@@ -42,8 +43,88 @@
               </div>
             </div>
             <div class="vm--modal__buttons">
-              <v-button red>Принять</v-button>
-              <v-button white>Отказаться</v-button>
+              <v-button
+                v-if="
+                  task.initiator &&
+                  userId === task.initiator._id &&
+                  task.executors >= 1
+                "
+                @click="changeTaskStatus(task, 'completed')"
+                red
+              >
+                {{ $t("pages.tasks.taskExecute") }}
+              </v-button>
+              <v-button
+                v-if="
+                  task.executor &&
+                  (userId === task.executor._id ||
+                    userId === task.executor._id[0]) &&
+                  task.status.value === 'assigned'
+                "
+                @click="changeTaskStatus(task, 'accepted')"
+                red
+              >
+                {{ $t("pages.tasks.taskAccepted") }}
+              </v-button>
+              <v-button
+                v-if="
+                  task.executor &&
+                  (userId === task.executor._id ||
+                    userId === task.executor._id[0]) &&
+                  task.status.value === 'assigned'
+                "
+                white
+                @click="changeTaskStatus(task, 'not accepted')"
+              >
+                {{ $t("pages.tasks.taskNotAccepted") }}
+              </v-button>
+
+              <v-button
+                v-if="
+                  task.executor &&
+                  (userId === task.executor._id ||
+                    userId === task.executor._id[0]) &&
+                  task.status.value === 'accepted'
+                "
+                @click="changeTaskStatus(task, 'tested')"
+                white
+              >
+                {{ $t("pages.tasks.taskTested") }}
+              </v-button>
+              <v-button
+                v-if="
+                  task.initiator &&
+                  userId === task.initiator._id &&
+                  task.status.value === 'tested'
+                "
+                @click="changeTaskStatus(task, 'completed')"
+                red
+              >
+                {{ $t("pages.tasks.taskExecute") }}
+              </v-button>
+              <v-button
+                v-if="
+                  task.initiator &&
+                  userId === task.initiator._id &&
+                  task.status.value === 'tested'
+                "
+                @click="changeTaskStatus(task, 'under revision')"
+                white
+              >
+                {{ $t("pages.tasks.taskUnderRevision") }}
+              </v-button>
+              <v-button
+                v-if="
+                  task.executor &&
+                  (userId === task.executor._id ||
+                    userId === task.executor._id[0]) &&
+                  task.status.value === 'under revision'
+                "
+                @click="changeTaskStatus(task, 'tested')"
+                white
+              >
+                {{ $t("pages.tasks.taskTested") }}
+              </v-button>
             </div>
           </form>
         </div>
@@ -136,8 +217,23 @@ export default {
       }
       return "358px";
     },
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
+    userId: {
+      get: function () {
+        let role = this.getUserRole();
+        return role._id;
+      },
+    },
   },
   methods: {
+    changeTaskStatus(task, status) {
+      this.$emit("changeTaskStatus", task, status);
+    },
     deleteTask() {
       this.$emit("toggleEdit", this.task, this.type);
       this.$modal.hide("editTask");
