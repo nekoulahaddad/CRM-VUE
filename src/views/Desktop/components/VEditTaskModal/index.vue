@@ -52,12 +52,13 @@
             <!-- Исполнитель -->
             <div class="group">
               <div class="group__title">Исполнители:</div>
-              <div class="group__executors">
+              <div class="group__executors" :style="{ height: height }">
                 <vue-scroll>
                   <div
                     class="group__executor"
                     v-for="(surname, index) in executors.surname"
                     :key="index"
+                    :style="{ width: width }"
                   >
                     <span>{{ surname }}</span>
                   </div>
@@ -116,6 +117,20 @@ export default {
       },
       initiator: "",
     };
+  },
+  computed: {
+    height() {
+      if (this.executors.surname.length < 3) {
+        return `${this.executors.surname.length * 43}px`;
+      }
+      return "126px";
+    },
+    width() {
+      if (this.executors.surname.length < 3) {
+        return "100%";
+      }
+      return "358px";
+    },
   },
   methods: {
     deleteTask() {
@@ -235,9 +250,7 @@ export default {
     height: 33px;
     width: 358px;
 
-    & + * {
-      margin-top: 10px;
-    }
+    margin-bottom: 10px;
   }
 }
 </style>
