@@ -259,7 +259,7 @@ export default {
     task: {
       type: Object,
     },
-    type: String,
+    status: String,
   },
   data() {
     return {
@@ -332,7 +332,7 @@ export default {
       this.$emit("changeTaskStatus", task, status);
     },
     deleteTask() {
-      this.$emit("toggleEdit", this.task, this.type);
+      this.$emit("toggleDelete", this.task, this.status);
       this.$modal.hide("editTask");
     },
     deleteDocument(index) {

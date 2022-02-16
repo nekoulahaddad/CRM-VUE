@@ -8,7 +8,7 @@
 
     <!-- Модальное окно для просмотра задачи -->
     <v-edit-task-modal
-      :type="type"
+      :status="status"
       :task="editedItem"
       @toggleDelete="toggleDelete"
       @toggleSubDelete="toggleSubDelete"
@@ -270,7 +270,7 @@ export default {
         this.isLoading = true;
       }
     },
-    toggleDelete(item, type, status) {
+    toggleDelete(item, status) {
       this.deletedItem = item;
       this.status = status;
       this.$modal.show("deleteTask");
@@ -304,10 +304,9 @@ export default {
         this.showContextMenu = item;
       }
     },
-    cloneDog() {},
-    editTask(item, type) {
+    editTask(item, status) {
       this.editedItem = item;
-      this.type = type;
+      this.status = status;
       this.$modal.show("editTask");
       this.showContextMenu = {};
     },
