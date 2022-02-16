@@ -130,6 +130,10 @@ export default {
   }
   .is-today {
     background: rgba(219, 31, 53, 0.1) !important;
+
+    .custom-calendar__event {
+      background-color: $color-white;
+    }
   }
 
   .vc-title {
