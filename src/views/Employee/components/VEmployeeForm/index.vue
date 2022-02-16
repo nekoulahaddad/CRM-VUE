@@ -772,7 +772,7 @@ export default {
   .children {
     box-shadow: 0 0 5px rgb(0 0 0 / 20%);
     height: 33px;
-    width: 976px;
+    width: 401px;
     border-radius: $border-radius;
     display: flex;
     align-items: center;
