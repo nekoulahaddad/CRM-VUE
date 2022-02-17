@@ -579,9 +579,11 @@
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
               <autocomplete
+                ref="executor"
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
+                @input="autocompleteInput($event, 'executor')"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
@@ -1131,10 +1133,9 @@ export default {
       });
     },
     clearOptions() {
-      this.$refs.executor.setValue("");
-      this.$refs.initiator.setValue("");
-
       if (this.type === "tasks") {
+        this.$refs.executor.setValue("");
+        this.$refs.initiator.setValue("");
         this.fio = "";
         this.author = "";
         this.filterOptions.region = "all";
@@ -1154,6 +1155,7 @@ export default {
       }
       if (this.type === "reports") {
         this.fio = "";
+        this.$refs.executor.setValue("");
         this.filterOptions.region = "all";
         this.filterOptions.departments = "all";
         this.defaultOptions.department = "all";
