@@ -140,12 +140,20 @@
         </div>
       </div>
 
-      <div class="list-info__group group">
+      <div class="group">
+        <div class="group__title">{{ $t("manager") }}</div>
         <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("manager") }}
-          </div>
-          <div class="group__value">{{ fio }}</div>
+          <autocomplete
+            :search="getUsersByFIO"
+            :get-result-value="getResultValue"
+            placeholder="Введите ФИО сотрудника..."
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectUser(result)">
+                {{ transformFIO(result) }}
+              </li>
+            </template>
+          </autocomplete>
         </div>
       </div>
 
@@ -426,6 +434,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    getResultValue(result) {
+      return this.transformFIO(result);
+    },
     toggleCancleOrder(e) {
       this.isDeclained = !this.isDeclained;
       if (e && e.cancleOrder) {
@@ -439,6 +450,19 @@ export default {
       this.dialog.header = msg.header;
       this.dialog.message = msg.message;
     },
+    async getUsersByFIO(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getmanagers/${input}/${this.editedItem.region._id}`).then(
+          (result) => {
+            resolve(result.data);
+          }
+        );
+      });
+    },
+    selectUser(user) {},
     sendToOneC() {
       axios({
         url: `/orders/sendtoonec/`,
@@ -623,6 +647,9 @@ export default {
   &__add-product {
     margin-bottom: 10px;
     margin-top: 15px;
+  }
+  .autocomplete-input {
+    width: 401px;
   }
 }
 </style>
