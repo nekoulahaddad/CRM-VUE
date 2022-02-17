@@ -1,7 +1,8 @@
 <template>
   <div class="department" v-if="node.title">
     <div class="department__inner">
-      <div class="department__panel panel">
+      <!-- Боковая панель с иконками -->
+      <div class="department__panel panel" v-if="showPanel">
         <div class="panel__icon">
           <img src="@/assets/icons/add_dep.svg" alt="" />
         </div>
@@ -15,7 +16,11 @@
           <img src="@/assets/icons/trash_icon.svg" alt="" />
         </div>
         <div class="panel__icon">
-          <img src="@/assets/icons/panel_arrow_down.svg" alt="" />
+          <img
+            alt=""
+            src="@/assets/icons/panel_arrow_down.svg"
+            @click="toggleShowPanel"
+          />
         </div>
       </div>
 
@@ -83,7 +88,11 @@
           />
         </div>
         <div class="department__menu">
-          <img src="@/assets/icons/write_icon.svg" alt="" />
+          <img
+            @click="toggleShowPanel"
+            src="@/assets/icons/write_icon.svg"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -99,6 +108,7 @@ export default {
   data() {
     return {
       showEmployees: false,
+      showPanel: false,
     };
   },
   computed: {
@@ -112,6 +122,9 @@ export default {
   methods: {
     toggleShowEmployees() {
       this.showEmployees = !this.showEmployees;
+    },
+    toggleShowPanel() {
+      this.showPanel = !this.showPanel;
     },
   },
 };
@@ -250,9 +263,6 @@ export default {
     right: 0;
     bottom: 0;
     z-index: 11;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
     background-color: $color-white;
     justify-content: space-evenly;
   }
@@ -260,12 +270,18 @@ export default {
   .panel {
     &__icon {
       position: relative;
+      width: 54px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &:not(:last-child)::after {
         content: "";
         position: absolute;
-        left: -10px;
-        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
         height: 2px;
         width: 44px;
         background-color: $color-gray-secondary;
