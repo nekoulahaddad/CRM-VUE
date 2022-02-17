@@ -23,7 +23,18 @@
     </div>
 
     <div class="page__body d-flex">
-      <v-department :node="orgTree" />
+      <div class="departments">
+        <div class="departments__item">
+          <v-department gradient="red" :node="orgTree" />
+        </div>
+        <div class="departments__item">
+          <v-department
+            gradient="purple"
+            :node="children"
+            v-for="children in orgTree.children"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -177,6 +188,23 @@ export default {
     button {
       width: 250px;
       margin-left: 20px;
+    }
+  }
+
+  .departments {
+    display: flex;
+    margin-bottom: 30px;
+
+    &__item {
+      & + * {
+        margin-left: 60px;
+      }
+    }
+
+    .department {
+      & + * {
+        margin-top: 10%;
+      }
     }
   }
 }

@@ -16,11 +16,7 @@
         </div>
 
         <!-- Градиент -->
-        <img
-          class="department__gradient"
-          src="@/assets/icons/gradient_2.svg"
-          alt=""
-        />
+        <img alt="" class="department__gradient" :src="gradientUrl" />
       </div>
       <div class="department__employees employees">
         <div class="employees__top">
@@ -49,6 +45,12 @@
 export default {
   props: {
     node: Object,
+    gradient: String,
+  },
+  computed: {
+    gradientUrl() {
+      return require(`@/assets/icons/gradient_${this.gradient}.svg`);
+    },
   },
 };
 </script>
