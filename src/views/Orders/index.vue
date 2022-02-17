@@ -36,7 +36,7 @@
                 <v-search
                   @submit="getSearchData"
                   v-model="searchStr"
-                  :placeholder="$t('pages.employee.searchPlaceholder')"
+                  placeholder="Поиск по ФИО или номеру заказа"
                 />
                 <div class="list__title">
                   {{ $t("pages.orders.pageTitle") }}
