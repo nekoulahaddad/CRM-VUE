@@ -26,40 +26,42 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else-if="dataset.length">
-          <div class="scroll-horizontal">
-            <div class="list list-shadow">
-              <div class="list__header">
-                <div class="list__title">
-                  {{ $t("pages.clients.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div class="list__column">№:</div>
-                  <div class="list__column">Клиент:</div>
-                  <div class="list__column">Почта:</div>
-                  <div class="list__column">Телефон:</div>
-                  <div class="list__column">Регион:</div>
-                  <div class="list__column">Дата:</div>
-                  <div class="list__column">Сумма:</div>
-                  <div
-                    class="list__column list__column--filter"
-                    @click="sort('clubcard')"
-                  >
-                    <span>Клубная карта:</span>
-                    <img
-                      alt=""
-                      src="@/assets/icons/filter_down.svg"
-                      :class="{
-                        'list__filter-icon--active':
-                          filtersOptions.clubcard === -1,
-                      }"
-                      class="list__filter-icon"
-                    />
-                  </div>
-                  <div class="list__column"></div>
-                </div>
+        <div class="scroll-horizontal">
+          <div class="list list-shadow">
+            <div class="list__header">
+              <div class="list__title">
+                {{ $t("pages.clients.pageTitle") }}
               </div>
+              <div class="list__columns">
+                <div class="list__column">№:</div>
+                <div class="list__column">Клиент:</div>
+                <div class="list__column">Почта:</div>
+                <div class="list__column">Телефон:</div>
+                <div class="list__column">Регион:</div>
+                <div class="list__column">Дата:</div>
+                <div class="list__column">Сумма:</div>
+                <div
+                  class="list__column list__column--filter"
+                  @click="sort('clubcard')"
+                >
+                  <span>Клубная карта:</span>
+                  <img
+                    alt=""
+                    src="@/assets/icons/filter_down.svg"
+                    :class="{
+                      'list__filter-icon--active':
+                        filtersOptions.clubcard === -1,
+                    }"
+                    class="list__filter-icon"
+                  />
+                </div>
+                <div class="list__column"></div>
+              </div>
+            </div>
+
+            <v-spinner v-if="!isLoading" />
+
+            <template v-else-if="dataset.length">
               <div
                 v-for="(item, index) in dataset"
                 :key="item._id"
@@ -113,11 +115,11 @@
                   </div>
                 </div>
               </div>
-            </div>
+              <v-pagination :count="count" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
       </div>
     </div>
   </div>
