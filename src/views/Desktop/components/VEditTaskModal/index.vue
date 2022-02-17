@@ -178,7 +178,8 @@
               </v-button>
               <v-button
                 v-if="
-                  (task.executor && task.executor._id.includes(userId)) ||
+                  task.executor &&
+                  task.executor._id.includes(userId) &&
                   status === 'under revision'
                 "
                 @click="changeTaskStatus(task, 'tested', status)"
