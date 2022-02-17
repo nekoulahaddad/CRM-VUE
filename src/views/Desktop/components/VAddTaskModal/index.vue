@@ -312,6 +312,15 @@ export default {
       width: 689px;
     }
 
+    .vm--modal__buttons {
+      flex-wrap: wrap;
+      button {
+        margin-left: 0;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+    }
+
     .group__executors {
       width: 415px;
       margin-bottom: 10px;
