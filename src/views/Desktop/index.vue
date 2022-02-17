@@ -41,7 +41,7 @@
               class="tasks__list list"
               v-for="(items, status) in dataset"
             >
-              <div class="list__title text--red text">
+              <div class="list__title text">
                 {{ statuses[status].title }}: {{ items.count }}
               </div>
               <vue-scroll @handle-scroll="handleScroll($event, status)">
@@ -453,6 +453,19 @@ export default {
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       width: 328px;
       height: 900px;
+
+      &:nth-child(1) .list__title {
+        color: $color-black;
+      }
+      &:nth-child(2) .list__title {
+        color: $color-blue;
+      }
+      &:nth-child(3) .list__title {
+        color: $color-red;
+      }
+      &:nth-child(4) .list__title {
+        color: $color-green;
+      }
 
       & + * {
         margin-left: 10px;
