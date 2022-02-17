@@ -51,8 +51,12 @@
 
           <div class="group participants">
             <div class="group__title">Участники:</div>
-            <div class="group__participants" :style="{ height: height }">
-              <vue-scroll v-if="participants.length">
+            <div
+              class="group__participants"
+              :style="{ height: height }"
+              v-if="participants.length"
+            >
+              <vue-scroll>
                 <div
                   class="group__participant"
                   v-for="(participant, index) in participants"
@@ -70,8 +74,8 @@
                   </div>
                 </div>
               </vue-scroll>
-              <div v-else>Участников нет</div>
             </div>
+            <div v-else class="group__empty-participants">Участников нет</div>
             <div class="group__content">
               <autocomplete
                 class="participants__input"
@@ -290,6 +294,8 @@ export default {
 @import "@/styles/_variables";
 
 .add-event {
+  .group__empty-participants {
+  }
   .autocomplete-input {
     width: 401px;
   }

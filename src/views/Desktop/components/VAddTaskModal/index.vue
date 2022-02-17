@@ -212,23 +212,6 @@ export default {
     padding-bottom: 14px;
   }
 
-  .form-control {
-    width: 689px;
-  }
-  .form-textarea {
-    width: 976px;
-    min-height: 199px;
-  }
-  .form-select {
-    width: 401px;
-  }
-
-  .group {
-    &__title {
-      font-size: 12px;
-    }
-  }
-
   &__close {
     position: absolute;
     right: 15px;
@@ -237,28 +220,45 @@ export default {
     cursor: pointer;
   }
 
-  button {
-    width: 230px;
-  }
-
-  label[for="documents"] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 236px;
-    height: 33px;
-    font-size: 12px;
-    font-weight: 700;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    border: 2px solid rgba(0, 0, 0, 0.3);
-    background-color: $color-white;
-    border-radius: $border-radius;
-    cursor: pointer;
-  }
-
   .add-task-modal {
     .vdatetime-input {
       width: 330px;
+    }
+
+    button {
+      width: 230px;
+    }
+
+    .form-control {
+      width: 689px;
+    }
+    .form-textarea {
+      width: 976px;
+      min-height: 199px;
+    }
+    .form-select {
+      width: 401px;
+    }
+
+    .group {
+      &__title {
+        font-size: 12px;
+      }
+    }
+
+    label[for="documents"] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 236px;
+      height: 33px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      background-color: $color-white;
+      border-radius: $border-radius;
+      cursor: pointer;
     }
   }
 }
