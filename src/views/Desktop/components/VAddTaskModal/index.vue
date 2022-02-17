@@ -1,7 +1,7 @@
 <template>
   <v-modal
     :adaptive="true"
-    :minHeight="727"
+    :minHeight="767"
     :minWidth="1130"
     name="addTask"
     @before-close="beforeClose"
@@ -39,7 +39,10 @@
                   v-for="(executor, index) in executors"
                   :key="index"
                 >
-                  {{ transformFIO(executor) }}
+                  <span>{{ transformFIO(executor) }}</span>
+                  <div>
+                    <img src="@/assets/icons/trash_icon.svg" alt="" />
+                  </div>
                 </div>
               </vue-scroll>
             </div>
@@ -143,9 +146,9 @@ export default {
     },
     height() {
       if (this.executors.length < 3) {
-        return `${this.executors.length * 43}px`;
+        return `${this.executors.length * 47}px`;
       }
-      return "126px";
+      return "132px";
     },
   },
   data() {
@@ -154,6 +157,7 @@ export default {
       title: "",
       fio: "",
       department: null,
+      departments: [],
       executors: [],
       users: [],
       description: "",
@@ -302,15 +306,16 @@ export default {
       width: 415px;
     }
     .group__executor {
+      width: 395px;
       height: 33px;
       border-radius: $border-radius;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding-left: 10px;
       padding-right: 10px;
-      margin-bottom: 10px;
-      margin-left: 4px;
-      margin-right: 4px;
+      margin: 4px 4px 10px;
     }
 
     button {
