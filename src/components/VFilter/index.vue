@@ -467,6 +467,7 @@
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
+                @input="autocompleteInput($event, 'executor')"
               >
                 <template #result="{ result, props }">
                   <li @click="selectUser(result)" v-bind="props">
@@ -485,6 +486,7 @@
                 :search="searchByInitiator"
                 placeholder="Введите автора задачи..."
                 :getResultValue="getResultValue"
+                @input="autocompleteInput($event, 'initiator')"
               >
                 <template #result="{ result, props }">
                   <li @click="selectInitiator(result)" v-bind="props">
@@ -1050,8 +1052,11 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
-    setValue() {
-      alert();
+    autocompleteInput(e, type) {
+      if (e.target.value.trim().length < 1) {
+        this.filterOptions[type] = null;
+        this.selectOptions(null, null, type, null);
+      }
     },
     clickOnExecutor(result) {},
     getResultValue(result) {
