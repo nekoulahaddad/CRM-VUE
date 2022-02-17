@@ -12,7 +12,7 @@
               <div class="director__position">{{ director.position }}</div>
             </div>
           </template>
-          <div v-else>Список директоров пуст</div>
+          <div class="director__name" v-else>Список директоров пуст</div>
         </div>
 
         <!-- Градиент -->
@@ -108,7 +108,7 @@ export default {
     color: $color-white;
 
     img {
-      left: -25px;
+      left: -20px;
       top: 0;
       position: absolute;
     }
