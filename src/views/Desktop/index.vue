@@ -1,7 +1,7 @@
 <template>
   <div class="page desktop-page">
     <!-- Модальное окно для добавления мероприятия -->
-    <v-add-event-modal />
+    <v-add-event-modal @updateEvents="updateEvents" />
 
     <!-- Модальное окно для добавления задачи -->
     <v-add-task-modal :departments="departments" />
@@ -165,20 +165,13 @@ export default {
       type: null,
       attrs: [
         {
-          key: "today",
+          id: "today",
           highlight: {
             style: {
               backgroundColor: "#db1f35",
             },
           },
           dates: new Date(),
-        },
-        {
-          dot: {
-            style: {
-              backgroundColor: "red",
-            },
-          },
         },
       ],
       statuses: {

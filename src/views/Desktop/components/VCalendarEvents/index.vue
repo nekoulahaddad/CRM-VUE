@@ -1,7 +1,8 @@
 <template>
   <div class="calendar-events">
     <div class="calendar-events__inner">
-      <div v-if="!items.length">Событий не найдено</div>
+      <v-spinner v-if="!isLoading" small />
+      <div v-else-if="!items.length">Событий не найдено</div>
       <vue-scroll v-else>
         <div
           class="calendar-events__item item"
@@ -40,6 +41,8 @@
 </template>
 
 <script>
+import VSpinner from "@/components/VSpinner";
+
 export default {
   props: {
     events: {
@@ -48,23 +51,30 @@ export default {
     },
     clickedDay: Object,
   },
+  components: {
+    VSpinner,
+  },
   data() {
     return {
       items: [],
+      day: Object,
+      isLoading: false,
     };
   },
   watch: {
-    clickedDay(e) {
-      this.filterEvents(e);
-    },
     events() {
+      this.filterEvents();
+    },
+    clickedDay() {
+      this.day = this.clickedDay;
       this.filterEvents();
     },
   },
   methods: {
-    filterEvents(e = "") {
+    filterEvents() {
       this.items = [];
-      const currentDate = this.$moment(this.clickedDay?.id || "");
+      this.isLoading = false;
+      const currentDate = this.$moment(this.day.id);
 
       this.events.map((event) => {
         const compareDate = this.$moment(event.startDate);
@@ -73,6 +83,8 @@ export default {
           this.items.push(event);
         }
       });
+
+      this.isLoading = true;
     },
   },
   mounted() {
@@ -85,6 +97,10 @@ export default {
 
     events.onmouseout = function () {
       body.style.overflow = "auto";
+    };
+
+    this.day = {
+      id: this.$moment().format("YYYY-MM-DD"),
     };
   },
 };

@@ -85,7 +85,6 @@ export default {
       this.isLoading = true;
     },
   },
-  created() {},
   mounted() {
     const body = document.querySelector("body");
     const events = document.querySelector(".calendar-events");

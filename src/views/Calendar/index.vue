@@ -198,7 +198,6 @@ export default {
       this.showDate = d;
     },
     onDayClick(day) {
-      console.log(day);
       this.clickedDay = day;
       this.days = [];
       this.days.push({
