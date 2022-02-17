@@ -1,6 +1,24 @@
 <template>
   <div class="department" v-if="node.title">
     <div class="department__inner">
+      <div class="department__panel panel">
+        <div class="panel__icon">
+          <img src="@/assets/icons/add_dep.svg" alt="" />
+        </div>
+        <div class="panel__icon">
+          <img src="@/assets/icons/panel_employee.svg" alt="" />
+        </div>
+        <div class="panel__icon">
+          <img src="@/assets/icons/panel_employees.svg" alt="" />
+        </div>
+        <div class="panel__icon">
+          <img src="@/assets/icons/trash_icon.svg" alt="" />
+        </div>
+        <div class="panel__icon">
+          <img src="@/assets/icons/panel_arrow_down.svg" alt="" />
+        </div>
+      </div>
+
       <div class="department__title department__title--center">
         {{ node.title }}
       </div>
@@ -218,6 +236,41 @@ export default {
 
     &__position {
       font-size: 12px;
+    }
+  }
+
+  &__panel {
+    width: 54px;
+    min-height: 232px;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: $color-white;
+    justify-content: space-evenly;
+  }
+
+  .panel {
+    &__icon {
+      position: relative;
+
+      &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        left: -10px;
+        bottom: -10px;
+        height: 2px;
+        width: 44px;
+        background-color: $color-gray-secondary;
+        border-radius: $border-radius;
+      }
     }
   }
 }
