@@ -64,9 +64,23 @@
                       >
                         {{ item.title }}
                       </a>
+
+                      <!-- Исполнитель -->
+                      <div class="list__executor" v-if="item.executor">
+                        Исполнитель:
+                        <span v-if="item.executor.surname.length === 1">
+                          {{ item.executor.surname[0] }}
+                        </span>
+                        <span v-else>
+                          {{ item.executor.department[0].title }}
+                        </span>
+                      </div>
+
+                      <!-- Дата создания -->
                       <div class="list__date">
                         Дата создания: {{ transformDate(item.creation_date) }}
                       </div>
+
                       <div class="list__actions">
                         <img
                           alt=""
@@ -570,6 +584,11 @@ export default {
     overflow: hidden;
   }
   .list__date {
+    opacity: 0.5;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  .list__executor {
     opacity: 0.5;
     font-size: 12px;
     margin-top: 10px;
