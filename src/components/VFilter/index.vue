@@ -408,11 +408,19 @@
           <div class="filter__group group">
             <div class="group__title">Менеджеры:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Введите менеджера"
-              />
+              <autocomplete
+                ref="manager"
+                :search="getUsersByFIO"
+                placeholder="Введите менеджера..."
+                :get-result-value="getResultValue"
+                @input="autocompleteInput($event, 'executor')"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectManager(result)" v-bind="props">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
           <div class="filter__actions">
@@ -1104,6 +1112,10 @@ export default {
       this.filterOptions.initiator = user._id;
       this.selectOptions(null, null, "initiator", null);
     },
+    selectManager(user) {
+      this.filterOptions.executor = user._id;
+      this.selectOptions(null, null, "manager", null);
+    },
     selectUser(user) {
       this.filterOptions.executor = user._id;
       this.fio = `${user.surname} ${user.name.charAt(0)}.${
@@ -1112,24 +1124,15 @@ export default {
       this.users = [];
       this.selectOptions(null, null, "executor", null);
     },
-    async getUsersByFIO($event) {
-      if (this.fio === "") {
-        this.filterOptions.executor = null;
-        this.filterOptions.manager = null;
-        return;
+    async getUsersByFIO(input) {
+      if (input.trim().length < 1) {
+        return [];
       }
 
-      axios(
-        `/user/${
-          this.type === "orders" ||
-          this.type === "callbacks" ||
-          this.type === "callCenterIssues"
-            ? "getmanagers"
-            : "getsearch"
-        }/${this.fio}`
-      ).then(async (result) => {
-        this.users = result.data;
-        this.selectOptions($event, null, "executor", null);
+      return new Promise((resolve) => {
+        axios(`/user/getmanagers/${input}`).then((result) => {
+          resolve(result.data);
+        });
       });
     },
     clearOptions() {
@@ -1219,6 +1222,7 @@ export default {
       }
       if (this.type === "callbacks") {
         this.fio = "";
+        this.$refs.manager.setValue("");
         this.filterOptions.region = "all";
         this.filterOptions.status = "all";
         this.filterOptions.executor = null;
