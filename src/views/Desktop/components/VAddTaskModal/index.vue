@@ -1,7 +1,7 @@
 <template>
   <v-modal :adaptive="true" :minHeight="727" :minWidth="1130" name="addTask">
     <div class="vm--modal__title">
-      Поставить задачу
+      Создать задачу
       <img
         @click="$modal.hide('addTask')"
         class="vm--modal__close"

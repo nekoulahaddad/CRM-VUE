@@ -140,6 +140,11 @@ export default {
     VDeleteTask,
     VDeleteSubTask,
   },
+  computed: {
+    addDbTask() {
+      return this.$store.state.actions.addDbTask;
+    },
+  },
   data() {
     return {
       clickedDay: null,
@@ -197,6 +202,13 @@ export default {
         },
       },
     };
+  },
+  watch: {
+    addDbTask() {
+      if (this.addDbTask) {
+        this.$modal.show("addTask");
+      }
+    },
   },
   methods: {
     dayClicked(e) {
