@@ -146,7 +146,7 @@
           <autocomplete
             :search="getUsersByFIO"
             :get-result-value="getResultValue"
-            placeholder="Введите ФИО сотрудника..."
+            placeholder="Введите менеджера..."
           >
             <template #result="{ result, props }">
               <li v-bind="props" @click="selectUser(result)">

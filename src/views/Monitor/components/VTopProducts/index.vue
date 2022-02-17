@@ -85,6 +85,10 @@ export default {
     &__title {
       font-weight: 500;
       line-height: 17.07px;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     &__price {
