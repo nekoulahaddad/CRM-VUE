@@ -140,8 +140,15 @@
         </div>
       </div>
 
-      <div class="group">
-        <div class="group__title">{{ $t("manager") }}</div>
+      <div class="list-info__group group">
+        <div class="group__content">
+          <div class="group__item text--bold-700">
+            {{ $t("manager") }}
+          </div>
+          <div class="group__value">
+            {{ fio }}
+          </div>
+        </div>
         <div class="group__content">
           <autocomplete
             :search="getUsersByFIO"
@@ -156,7 +163,6 @@
           </autocomplete>
         </div>
       </div>
-
       <div class="group">
         <div class="group__title">{{ $t("managerComment") }}</div>
         <div class="group__content">
@@ -462,7 +468,13 @@ export default {
         );
       });
     },
-    selectUser(user) {},
+    selectUser(user) {
+      this.manager = user._id;
+      this.fio = `${user.surname} ${user.name.charAt(0)}.${
+        user.lastname ? user.lastname.charAt(0) + "." : ""
+      }`;
+      this.users = [];
+    },
     sendToOneC() {
       axios({
         url: `/orders/sendtoonec/`,
