@@ -1,12 +1,18 @@
 <template>
-  <v-modal :adaptive="true" :minHeight="727" :minWidth="1130" name="addTask">
+  <v-modal
+    :adaptive="true"
+    :minHeight="727"
+    :minWidth="1130"
+    name="addTask"
+    @before-close="beforeClose"
+  >
     <div class="vm--modal__title">
       Создать задачу
       <img
-        @click="$modal.hide('addTask')"
+        alt=""
+        @click="cancel"
         class="vm--modal__close"
         src="/icons/close_icon.svg"
-        alt=""
       />
     </div>
     <div class="add-task-modal">
@@ -20,6 +26,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Введите название задачи"
+                v-model="title"
               />
             </div>
           </div>
@@ -38,7 +45,6 @@
             </div>
             <div class="group__content">
               <autocomplete
-                required
                 :search="getUsersByFIO"
                 :get-result-value="getResultValue"
                 placeholder="Введите ФИО сотрудника..."
@@ -78,6 +84,7 @@
                 type="text"
                 class="form-textarea"
                 placeholder="Введите описание задачи..."
+                v-model="description"
               />
             </div>
           </div>
@@ -166,10 +173,16 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    beforeClose() {
+      this.$store.commit("toggleAction", {
+        key: "addDbTask",
+      });
+    },
+    cancel() {
+      this.$modal.hide("addTask");
+    },
     getResultValue() {},
     onTaskAdd() {
-      this.changeStatus(false);
-
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
         this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
         this.changeStatus(true);
@@ -182,7 +195,7 @@ export default {
       if (this.executors && this.executors.length) {
         taskData.append("executors", JSON.stringify(this.executors));
       } else {
-        this.$toast.error("Необходимо выбрать ответственного!");
+        this.$toast.error("Необходимо выбрать исполнятеля!");
         return;
       }
       if (this.department) {
@@ -195,7 +208,6 @@ export default {
         taskData.append("deadline_date", this.date);
       } else {
         this.$toast.error("Необходимо выбрать дату окончания!");
-        this.changeStatus(true);
         return;
       }
       if (this.documents[0] !== "Выбрать файлы") {
@@ -203,21 +215,19 @@ export default {
           taskData.append("documents", this.documents[i]);
         }
       }
+
       axios({
         url: `/tasks/post/`,
         data: taskData,
         method: "POST",
       })
-        .then(async (res) => {
-          let result = await res;
-          this.$emit("addToTasks", result.data.task);
+        .then(() => {
+          this.cancel();
           this.$toast.success("Задача успешно добавлена!");
           this.$emit("toggleOpen");
-          this.changeStatus(true);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
         });
     },
     selectUser(user) {
