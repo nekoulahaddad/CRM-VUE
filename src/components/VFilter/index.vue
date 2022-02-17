@@ -463,6 +463,7 @@
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
               <autocomplete
+                ref="executor"
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
@@ -480,6 +481,7 @@
             <div class="group__title">Автор:</div>
             <div class="group__content">
               <autocomplete
+                ref="initiator"
                 :search="searchByInitiator"
                 placeholder="Введите автора задачи..."
                 :getResultValue="getResultValue"
@@ -1048,6 +1050,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    setValue() {
+      alert();
+    },
     clickOnExecutor(result) {},
     getResultValue(result) {
       if (!result) {
@@ -1121,6 +1126,9 @@ export default {
       });
     },
     clearOptions() {
+      this.$refs.executor.setValue("");
+      this.$refs.initiator.setValue("");
+
       if (this.type === "tasks") {
         this.fio = "";
         this.author = "";
