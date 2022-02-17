@@ -81,7 +81,7 @@
                 <option :value="null">Не выбрано</option>
                 <option
                   v-for="department in departments"
-                  :value="department.value"
+                  :value="department._id"
                 >
                   {{ department.title }}
                 </option>
@@ -256,8 +256,6 @@ export default {
       );
       if (index > -1) {
         this.$toast.error("Исполнитель уже в списке!");
-        this.fio = ``;
-        this.users = [];
         return;
       }
       if (this.department === null || this.executors.length < 1) {
