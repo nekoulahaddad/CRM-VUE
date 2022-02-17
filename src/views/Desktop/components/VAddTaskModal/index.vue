@@ -313,11 +313,11 @@ export default {
     }
 
     .vm--modal__buttons {
-      flex-wrap: wrap;
+      flex-wrap: wrap !important;
       button {
-        margin-left: 0;
-        margin-right: 10px;
-        margin-bottom: 10px;
+        margin-left: 0 !important;
+        margin-right: 10px !important;
+        margin-bottom: 10px !important;
       }
     }
 
