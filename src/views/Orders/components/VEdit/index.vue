@@ -188,7 +188,7 @@
             </div>
           </div>
           <div
-            v-for="(product, index) in editedItem.products"
+            v-for="(product, index) in products"
             :key="product._id"
             class="list__row list__row--shadow list__row--white"
           >
@@ -521,9 +521,6 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
     editOrder(status) {
