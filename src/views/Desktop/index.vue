@@ -64,6 +64,9 @@
                       >
                         {{ item.title }}
                       </a>
+                      <div class="list__date">
+                        Дата создания: {{ transformDate(item.creation_date) }}
+                      </div>
                       <div class="list__actions">
                         <img
                           alt=""
@@ -558,6 +561,18 @@ export default {
     &:first-letter {
       text-transform: uppercase;
     }
+  }
+
+  .list__content {
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .list__date {
+    opacity: 0.5;
+    font-size: 12px;
+    margin-top: 10px;
   }
 
   .add-new-event {
