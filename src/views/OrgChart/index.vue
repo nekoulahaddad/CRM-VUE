@@ -203,7 +203,7 @@ export default {
 
     .department {
       & + * {
-        margin-top: 10%;
+        margin-top: 10px;
       }
     }
   }

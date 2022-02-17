@@ -24,7 +24,11 @@
         <div class="employees__top">
           <div class="department__title">Сотрудники:</div>
         </div>
-        <div class="employees__bottom" :style="{ height: height }">
+        <div
+          class="employees__bottom"
+          :class="{ 'employees__bottom--opened': showEmployees }"
+          :style="{ height: height }"
+        >
           <div
             class="department__employee"
             v-for="(employee, index) in node.employees"
@@ -45,10 +49,20 @@
           </div>
         </div>
       </div>
+
+      <!-- Количество сотрудников -->
       <div class="department__footer">
-        <div class="department__counter">
+        <div
+          class="department__counter"
+          :class="{ 'department__counter--opened': showEmployees }"
+          @click="toggleShowEmployees"
+        >
           <span>{{ node.employees.length }} сотрудников</span>
-          <img src="@/assets/icons/arrow_down_white.svg" alt="" />
+          <img
+            v-if="node.employees.length > 4"
+            alt=""
+            src="@/assets/icons/arrow_down_white.svg"
+          />
         </div>
         <div class="department__menu">
           <img src="@/assets/icons/write_icon.svg" alt="" />
@@ -64,12 +78,22 @@ export default {
     node: Object,
     gradient: String,
   },
+  data() {
+    return {
+      showEmployees: false,
+    };
+  },
   computed: {
     gradientUrl() {
       return require(`@/assets/icons/gradient_${this.gradient}.svg`);
     },
     height() {
-      return `74px`;
+      return this.showEmployees ? "auto" : "74px";
+    },
+  },
+  methods: {
+    toggleShowEmployees() {
+      this.showEmployees = !this.showEmployees;
     },
   },
 };
@@ -80,7 +104,7 @@ export default {
 
 .department {
   width: 288px;
-  height: 232px;
+  min-height: 232px;
   background-color: $color-white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
   border-radius: $border-radius;
@@ -121,9 +145,12 @@ export default {
   .employees__bottom {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    row-gap: 10px;
     overflow: hidden;
     justify-content: space-between;
+
+    &--opened {
+      padding-bottom: 30px;
+    }
   }
 
   &__employee {
@@ -147,6 +174,8 @@ export default {
     position: absolute;
     bottom: 0;
     left: 50%;
+    user-select: none;
+    cursor: pointer;
     transform: translateX(-50%);
     color: $color-white;
     background-color: $color-red;
@@ -157,6 +186,13 @@ export default {
 
     img {
       margin-left: 5px;
+      transition: transform 0.1s ease;
+    }
+
+    &--opened {
+      img {
+        transform: rotate(180deg);
+      }
     }
   }
 
