@@ -32,7 +32,11 @@
           </div>
           <div class="group">
             <div class="group__title">ФИО исполнителей:</div>
-            <div class="group__executors" :style="{ height: height }">
+            <div
+              class="group__executors"
+              v-if="executors.length"
+              :style="{ height: height }"
+            >
               <vue-scroll>
                 <div
                   class="group__executor"
@@ -41,11 +45,16 @@
                 >
                   <span>{{ transformFIO(executor) }}</span>
                   <div>
-                    <img src="@/assets/icons/trash_icon.svg" alt="" />
+                    <img
+                      alt=""
+                      src="@/assets/icons/trash_icon.svg"
+                      @click="deleteExecutor(index)"
+                    />
                   </div>
                 </div>
               </vue-scroll>
             </div>
+            <div v-else class="group__empty-executors">Исполнителей нет</div>
             <div class="group__content">
               <autocomplete
                 :search="getUsersByFIO"
@@ -146,9 +155,9 @@ export default {
     },
     height() {
       if (this.executors.length < 3) {
-        return `${this.executors.length * 47}px`;
+        return `${this.executors.length * 43}px`;
       }
-      return "132px";
+      return "126px";
     },
   },
   data() {
@@ -184,6 +193,9 @@ export default {
     },
     cancel() {
       this.$modal.hide("addTask");
+    },
+    deleteExecutor(index) {
+      this.executors.splice(index, 1);
     },
     getResultValue() {},
     onTaskAdd() {
@@ -304,6 +316,7 @@ export default {
 
     .group__executors {
       width: 415px;
+      margin-bottom: 10px;
     }
     .group__executor {
       width: 395px;
@@ -316,6 +329,10 @@ export default {
       padding-left: 10px;
       padding-right: 10px;
       margin: 4px 4px 10px;
+    }
+
+    .group__empty-executors {
+      margin-bottom: 10px;
     }
 
     button {
