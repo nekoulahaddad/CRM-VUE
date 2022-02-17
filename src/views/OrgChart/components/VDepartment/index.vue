@@ -18,19 +18,36 @@
         <!-- Градиент -->
         <img alt="" class="department__gradient" :src="gradientUrl" />
       </div>
+
+      <!-- Сотрудники -->
       <div class="department__employees employees">
         <div class="employees__top">
           <div class="department__title">Сотрудники:</div>
         </div>
-        <div class="employees__bottom d-flex">
-          <div class="department__employee" v-for="i in 4">
-            <img src="@/assets/icons/org_employee.svg" alt="" />
+        <div class="employees__bottom" :style="{ height: height }">
+          <div
+            class="department__employee"
+            v-for="(employee, index) in node.employees"
+            :key="index"
+          >
+            <img
+              alt=""
+              v-if="!employee.avatar || employee.avatar === 'Выбрать файл'"
+              src="@/assets/icons/org_employee.svg"
+            />
+            <img
+              alt=""
+              v-else
+              width="60px"
+              height="60px"
+              :src="employee.avatar"
+            />
           </div>
         </div>
       </div>
       <div class="department__footer">
         <div class="department__counter">
-          <span>6 сотрудников</span>
+          <span>{{ node.employees.length }} сотрудников</span>
           <img src="@/assets/icons/arrow_down_white.svg" alt="" />
         </div>
         <div class="department__menu">
@@ -51,6 +68,9 @@ export default {
     gradientUrl() {
       return require(`@/assets/icons/gradient_${this.gradient}.svg`);
     },
+    height() {
+      return `74px`;
+    },
   },
 };
 </script>
@@ -67,8 +87,8 @@ export default {
   position: relative;
 
   &__inner {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   &__title {
@@ -98,13 +118,20 @@ export default {
     margin-top: 20px;
   }
 
+  .employees__bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 10px;
+    overflow: hidden;
+    justify-content: space-between;
+  }
+
   &__employee {
     border-radius: $border-radius;
-    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.2));
-
-    & + * {
-      margin-left: 10px;
-    }
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 57px;
+    height: 66px;
+    margin: 4px;
 
     img {
       border-radius: $border-radius;
