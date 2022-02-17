@@ -1252,8 +1252,6 @@ export default {
         };
         this.$parent.startDate = null;
         this.$parent.endDate = null;
-        let input = document.getElementById("dateInput");
-        input.value = "Выберите дату";
         this.$parent.searchStr = "";
         this.$parent.activeElement = -1;
       }
