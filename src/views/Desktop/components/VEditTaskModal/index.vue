@@ -116,46 +116,40 @@
                 v-if="
                   task.initiator &&
                   userId === task.initiator._id &&
-                  task.executors >= 1
+                  task.executors._id.length >= 1
                 "
-                @click="changeTaskStatus(task, 'completed')"
+                @click="changeTaskStatus(task, 'completed', status)"
                 red
               >
                 {{ $t("pages.tasks.taskExecute") }}
               </v-button>
               <v-button
                 v-if="
-                  task.executor &&
-                  (userId === task.executor._id ||
-                    userId === task.executor._id[0]) &&
-                  task.status.value === 'assigned'
+                  (task.executor && task.executor._id.includes(userId)) ||
+                  status === 'assigned'
                 "
-                @click="changeTaskStatus(task, 'accepted')"
+                @click="changeTaskStatus(task, 'accepted', status)"
                 red
               >
                 {{ $t("pages.tasks.taskAccepted") }}
               </v-button>
               <v-button
                 v-if="
-                  task.executor &&
-                  (userId === task.executor._id ||
-                    userId === task.executor._id[0]) &&
-                  task.status.value === 'assigned'
+                  (task.executor && task.executor._id.includes(userId)) ||
+                  status === 'assigned'
                 "
                 white
-                @click="changeTaskStatus(task, 'not accepted')"
+                @click="changeTaskStatus(task, 'not accepted', status)"
               >
                 {{ $t("pages.tasks.taskNotAccepted") }}
               </v-button>
 
               <v-button
                 v-if="
-                  task.executor &&
-                  (userId === task.executor._id ||
-                    userId === task.executor._id[0]) &&
-                  task.status.value === 'accepted'
+                  (task.executor && task.executor._id.includes(userId)) ||
+                  status === 'accepted'
                 "
-                @click="changeTaskStatus(task, 'tested')"
+                @click="changeTaskStatus(task, 'tested', status)"
                 white
               >
                 {{ $t("pages.tasks.taskTested") }}
@@ -164,9 +158,9 @@
                 v-if="
                   task.initiator &&
                   userId === task.initiator._id &&
-                  task.status.value === 'tested'
+                  status === 'tested'
                 "
-                @click="changeTaskStatus(task, 'completed')"
+                @click="changeTaskStatus(task, 'completed', status)"
                 red
               >
                 {{ $t("pages.tasks.taskExecute") }}
@@ -175,21 +169,19 @@
                 v-if="
                   task.initiator &&
                   userId === task.initiator._id &&
-                  task.status.value === 'tested'
+                  status === 'tested'
                 "
-                @click="changeTaskStatus(task, 'under revision')"
+                @click="changeTaskStatus(task, 'under revision', status)"
                 white
               >
                 {{ $t("pages.tasks.taskUnderRevision") }}
               </v-button>
               <v-button
                 v-if="
-                  task.executor &&
-                  (userId === task.executor._id ||
-                    userId === task.executor._id[0]) &&
-                  task.status.value === 'under revision'
+                  (task.executor && task.executor._id.includes(userId)) ||
+                  status === 'under revision'
                 "
-                @click="changeTaskStatus(task, 'tested')"
+                @click="changeTaskStatus(task, 'tested', status)"
                 white
               >
                 {{ $t("pages.tasks.taskTested") }}
@@ -328,8 +320,8 @@ export default {
     cancel() {
       this.$modal.hide("editTask");
     },
-    changeTaskStatus(task, status) {
-      this.$emit("changeTaskStatus", task, status);
+    changeTaskStatus(task, newStatus) {
+      this.$emit("changeTaskStatus", task, newStatus, this.status);
     },
     deleteTask() {
       this.$emit("toggleDelete", this.task, this.status);

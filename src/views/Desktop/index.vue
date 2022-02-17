@@ -276,7 +276,7 @@ export default {
     afterAdd(e, status) {
       if (e.added) {
         const task = e.added.element;
-        this.changeTaskStatus(task._id, status);
+        this.changeTaskStatus(task, status);
       }
     },
     async fetchCounter() {
@@ -303,17 +303,24 @@ export default {
       this.$modal.show("editTask");
       this.showContextMenu = {};
     },
-    changeTaskStatus(id, status) {
+    changeTaskStatus(task, newStatus, status) {
       let taskData = new FormData();
-      taskData.append("taskId", id);
-      taskData.append("statusValue", status);
+      taskData.append("taskId", task._id);
+      taskData.append("statusValue", newStatus);
+
       axios({
         url: "/tasks/status/",
         data: taskData,
         method: "POST",
       }).then(async (res) => {
         this.fetchCounter();
-        let result = await res;
+
+        this.$toast.success("Статус задачи изменен!");
+        this.$modal.hide("editTask");
+
+        this.dataset[status].tasks = this.dataset[status].tasks.filter(
+          (t) => t._id !== task._id
+        );
 
         if (
           status === "completed" ||
