@@ -21,23 +21,25 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else-if="dataset.length">
-          <div class="scroll-horizontal">
-            <div class="list list-shadow">
-              <div class="list__header">
-                <div class="list__title">
-                  {{ $t("pages.reports.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.reports.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
-                  </div>
+        <div class="scroll-horizontal">
+          <div class="list list-shadow">
+            <div class="list__header">
+              <div class="list__title">
+                {{ $t("pages.reports.pageTitle") }}
+              </div>
+              <div class="list__columns">
+                <div
+                  v-for="field in $t('pages.reports.fields')"
+                  class="list__column"
+                >
+                  {{ field }}
                 </div>
               </div>
+            </div>
+
+            <v-spinner v-if="!isLoading" />
+
+            <template v-else-if="dataset.length">
               <div
                 v-for="(item, index) in dataset"
                 :key="index"
@@ -55,11 +57,11 @@
                   :report="item"
                 />
               </div>
-            </div>
+              <v-pagination :count="count" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
       </div>
     </div>
   </div>
