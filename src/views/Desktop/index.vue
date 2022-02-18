@@ -60,7 +60,7 @@
                       <a
                         href=""
                         class="list__content text--bold-700"
-                        @click.prevent="editTask(item, 'assigned')"
+                        @click.prevent="editTask(item, status)"
                       >
                         {{ item.title }}
                       </a>

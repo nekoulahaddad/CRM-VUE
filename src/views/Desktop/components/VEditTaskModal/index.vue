@@ -113,79 +113,88 @@
 
             <div class="vm--modal__buttons">
               <v-button
+                red
                 v-if="
                   task.initiator &&
                   userId === task.initiator._id &&
                   task.executors._id.length >= 1
                 "
                 @click="changeTaskStatus(task, 'completed', status)"
-                red
               >
-                {{ $t("pages.tasks.taskExecute") }}
+                Выполнена
               </v-button>
               <v-button
+                red
                 v-if="
-                  (task.executor && task.executor._id.includes(userId)) ||
+                  task.executor &&
+                  task.executor._id &&
+                  task.executor._id.includes(userId) &&
                   status === 'assigned'
                 "
                 @click="changeTaskStatus(task, 'accepted', status)"
-                red
               >
-                {{ $t("pages.tasks.taskAccepted") }}
+                Принять
               </v-button>
               <v-button
+                white
                 v-if="
-                  (task.executor && task.executor._id.includes(userId)) ||
+                  task.executor &&
+                  task.executor._id &&
+                  task.executor._id.includes(userId) &&
                   status === 'assigned'
                 "
-                white
                 @click="changeTaskStatus(task, 'not accepted', status)"
               >
-                {{ $t("pages.tasks.taskNotAccepted") }}
+                Отказаться
               </v-button>
 
               <v-button
+                white
                 v-if="
-                  (task.executor && task.executor._id.includes(userId)) ||
+                  task.executor &&
+                  task.executor._id &&
+                  task.executor._id.includes(userId) &&
                   status === 'accepted'
                 "
                 @click="changeTaskStatus(task, 'tested', status)"
-                white
               >
-                {{ $t("pages.tasks.taskTested") }}
+                На проверку
               </v-button>
               <v-button
+                red
                 v-if="
                   task.initiator &&
+                  task.executor._id &&
                   userId === task.initiator._id &&
                   status === 'tested'
                 "
                 @click="changeTaskStatus(task, 'completed', status)"
-                red
               >
-                {{ $t("pages.tasks.taskExecute") }}
+                Выполнена
               </v-button>
               <v-button
+                white
                 v-if="
                   task.initiator &&
+                  task.executor._id &&
                   userId === task.initiator._id &&
                   status === 'tested'
                 "
                 @click="changeTaskStatus(task, 'under revision', status)"
-                white
               >
-                {{ $t("pages.tasks.taskUnderRevision") }}
+                На доработку
               </v-button>
               <v-button
+                white
                 v-if="
                   task.executor &&
+                  task.executor._id &&
                   task.executor._id.includes(userId) &&
                   status === 'under revision'
                 "
                 @click="changeTaskStatus(task, 'tested', status)"
-                white
               >
-                {{ $t("pages.tasks.taskTested") }}
+                На проверку
               </v-button>
             </div>
           </form>
