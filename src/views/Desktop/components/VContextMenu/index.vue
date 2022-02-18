@@ -3,7 +3,7 @@
     <a
       href=""
       class="content-menu__item"
-      @click.prevent="$emit('toggleDelete', item, type, status)"
+      @click.prevent="$emit('toggleDelete', item, status)"
     >
       <img src="@/assets/icons/trash_icon.svg" alt="" />
       Удалить
