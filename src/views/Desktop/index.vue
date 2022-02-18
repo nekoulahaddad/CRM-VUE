@@ -100,7 +100,7 @@
                         :item="item"
                         type="assigned"
                         :status="status"
-                        @toggleDelete="toggleDelete"
+                        @toggleDelete="toggleDelete(item, status)"
                         v-if="showContextMenu._id === item._id"
                       />
                     </div>
