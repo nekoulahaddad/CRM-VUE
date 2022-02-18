@@ -74,7 +74,6 @@
           <div class="group__title">Отделы:</div>
           <div class="group__content">
             <select
-              required
               class="form-select"
               name="targetRegion"
               v-model="department"

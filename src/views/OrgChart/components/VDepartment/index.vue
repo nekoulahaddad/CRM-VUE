@@ -2,6 +2,7 @@
   <div class="department__empty" v-if="!node" />
   <div
     class="department"
+    :class="{ 'department--line': showLine }"
     v-else-if="node.title"
     :style="{ marginBottom: globalHeight }"
   >
@@ -109,6 +110,7 @@ export default {
   props: {
     node: Object,
     gradient: String,
+    showLine: false,
   },
   data() {
     return {
@@ -158,6 +160,20 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
   border-radius: $border-radius;
   position: relative;
+
+  &--line {
+    &::before {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 8px;
+      background-color: $color-black;
+      top: 50%;
+      transform: translateY(-50%);
+      position: absolute;
+      left: -60px;
+    }
+  }
 
   &__inner {
     padding-left: 10px;

@@ -31,15 +31,22 @@
           <v-department
             gradient="purple"
             :node="item"
+            :show-line="true"
             v-for="item in orgTree.children"
           />
         </div>
         <div class="departments__item">
-          <v-department gradient="green" :node="item" v-for="item in levels" />
+          <v-department
+            :show-line="true"
+            gradient="green"
+            :node="item"
+            v-for="item in levels"
+          />
         </div>
         <div class="departments__item">
           <v-department
             gradient="blue"
+            :show-line="true"
             :node="item"
             v-for="item in subLevels"
           />
@@ -151,7 +158,6 @@ export default {
         }
 
         for (const subItem of item.children) {
-          console.log(subItem.children.length);
           if (subItem.children.length) {
             this.subLevels.push(...subItem.children);
           } else {
