@@ -1,8 +1,8 @@
 <template>
   <v-modal
     :adaptive="true"
-    :minHeight="767"
-    :minWidth="1130"
+    :minHeight="960"
+    :minWidth="1017"
     name="addTask"
     @before-close="beforeClose"
   >
@@ -31,7 +31,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">ФИО исполнителей:</div>
+            <div class="group__title">
+              ФИО {{ department ? `ответственного` : "исполнителей" }}:
+            </div>
             <div
               class="group__executors"
               v-if="executors.length"
@@ -54,9 +56,10 @@
                 </div>
               </vue-scroll>
             </div>
-            <div v-else class="group__empty-executors">Исполнителей нет</div>
             <div class="group__content">
               <autocomplete
+                ref="executor"
+                :disabled="department && executors.length > 0"
                 :search="getUsersByFIO"
                 :get-result-value="getResultValue"
                 placeholder="Введите ФИО сотрудника..."
@@ -73,7 +76,6 @@
             <div class="group__title">Отдел:</div>
             <div class="group__content">
               <select
-                required
                 class="form-select"
                 name="targetRegion"
                 v-model="department"
@@ -100,19 +102,52 @@
               />
             </div>
           </div>
+
+          <!-- Документы -->
           <div class="group">
             <div class="group__title">Документы:</div>
+            <div
+              class="group__participants"
+              :style="{ height: documentsHeight }"
+            >
+              <vue-scroll>
+                <div
+                  class="group__participant"
+                  v-if="documents.length"
+                  v-for="(photo, index) in documents"
+                  :key="index"
+                >
+                  <span
+                    style="
+                      overflow: hidden;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ photo.name ? photo.name : photo }}
+                  </span>
+                  <div>
+                    <VueCustomTooltip label="Удалить">
+                      <img
+                        alt=""
+                        src="@/assets/icons/trash_icon.svg"
+                        @click="deleteDocument(index)"
+                      />
+                    </VueCustomTooltip>
+                  </div>
+                </div>
+              </vue-scroll>
+            </div>
             <div class="group__content">
-              <div class="group__content">
-                <input
-                  hidden
-                  multiple
-                  type="file"
-                  id="documents"
-                  name="documents"
-                />
-                <label for="documents">Загрузить</label>
-              </div>
+              <input
+                hidden
+                type="file"
+                id="document-file"
+                multiple
+                name="documents"
+                @change="fileUpload($event)"
+              />
+              <label for="document-file">Загрузить</label>
             </div>
           </div>
           <div class="group">
@@ -128,7 +163,8 @@
             </div>
           </div>
 
-          <v-button red>Отправить</v-button>
+          <v-spinner v-if="!isLoading" small />
+          <v-button v-else red>Отправить</v-button>
         </form>
       </div>
     </div>
@@ -137,6 +173,7 @@
 
 <script>
 import VButton from "@/components/VButton";
+import VSpinner from "@/components/VSpinner";
 import { Datetime } from "vue-datetime";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
@@ -144,6 +181,7 @@ import { mapMutations } from "vuex";
 export default {
   components: {
     VButton,
+    VSpinner,
     datetime: Datetime,
   },
   computed: {
@@ -159,6 +197,12 @@ export default {
       }
       return "126px";
     },
+    documentsHeight() {
+      if (this.documents.length < 3) {
+        return `${this.documents.length * 43}px`;
+      }
+      return "126px";
+    },
   },
   data() {
     return {
@@ -170,8 +214,9 @@ export default {
       executors: [],
       users: [],
       description: "",
+      isLoading: true,
       executor: "",
-      documents: ["Выбрать файлы"],
+      documents: [],
     };
   },
   watch: {
@@ -194,14 +239,24 @@ export default {
     cancel() {
       this.$modal.hide("addTask");
     },
+    deleteDocument(index) {
+      this.documents = Array.from(this.documents).filter((doc, i) => {
+        if (i !== index) {
+          return doc;
+        }
+      });
+    },
     deleteExecutor(index) {
       this.executors.splice(index, 1);
+    },
+    fileUpload(e) {
+      const files = e.target.files;
+      this[e.target.name] = files;
     },
     getResultValue() {},
     onTaskAdd() {
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
         this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
-        this.changeStatus(true);
         return;
       }
       let taskData = new FormData();
@@ -232,6 +287,8 @@ export default {
         }
       }
 
+      this.isLoading = false;
+
       axios({
         url: `/tasks/post/`,
         data: taskData,
@@ -244,6 +301,9 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = true;
         });
     },
     selectUser(user) {
@@ -260,6 +320,7 @@ export default {
       }
       if (this.department === null || this.executors.length < 1) {
         this.executors.push(user);
+        this.$refs.executor.setValue("");
         return;
       }
       this.$toast.error("При выбранном отделе исполнитель только один!");
@@ -308,8 +369,18 @@ export default {
   }
 
   .add-task-modal {
+    button {
+      position: absolute;
+      bottom: 12px;
+      left: 20px;
+    }
+
     .autocomplete-input {
-      width: 689px;
+      width: 976px;
+
+      &:disabled {
+        opacity: 0.3;
+      }
     }
 
     .vm--modal__buttons {
@@ -347,7 +418,7 @@ export default {
     }
 
     .form-control {
-      width: 689px;
+      width: 976px;
     }
     .form-textarea {
       width: 976px;
@@ -376,6 +447,46 @@ export default {
       background-color: $color-white;
       border-radius: $border-radius;
       cursor: pointer;
+    }
+
+    .vdatetime {
+      width: 401px;
+    }
+    .group__participants {
+      width: 418px;
+    }
+    .group__participant {
+      height: 40px;
+      border-radius: $border-radius;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 10px;
+      padding-right: 10px;
+      width: 401px;
+      overflow-x: hidden;
+      margin-top: 10px;
+
+      &:last-child {
+        margin-bottom: 10px;
+      }
+    }
+    .participants__empty {
+      margin-bottom: 10px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 230px;
+      height: 37px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      background-color: $color-white;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-weight: bold;
     }
   }
 }
