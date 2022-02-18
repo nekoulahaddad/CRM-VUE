@@ -74,6 +74,13 @@
             <VueCustomTooltip v-if="index !== activeIndex" label="Подзадача">
               <img
                 alt=""
+                v-if="task.responsible._id || task.executor._id.length < 2"
+                src="@/assets/icons/document_icon.svg"
+                class="opacity-20"
+              />
+              <img
+                alt=""
+                v-else
                 src="@/assets/icons/document_icon.svg"
                 @click="$emit('getSubTasks', task._id, index)"
               />
@@ -130,3 +137,5 @@ export default {
   },
 };
 </script>
+
+<style lang="scss"></style>
