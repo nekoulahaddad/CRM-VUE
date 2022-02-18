@@ -1,5 +1,10 @@
 <template>
-  <div class="department" v-if="node.title">
+  <div class="department__empty" v-if="!node" />
+  <div
+    class="department"
+    v-else-if="node.title"
+    :style="{ marginBottom: globalHeight }"
+  >
     <div class="department__inner">
       <!-- Боковая панель с иконками -->
       <div class="department__panel panel" v-if="showPanel">
@@ -112,11 +117,20 @@ export default {
     };
   },
   computed: {
+    rows() {
+      return this.node.children.length;
+    },
     gradientUrl() {
       return require(`@/assets/icons/gradient_${this.gradient}.svg`);
     },
     height() {
       return this.showEmployees ? "auto" : "74px";
+    },
+    globalHeight() {
+      if (this.rows > 1) {
+        return `${(this.rows - 1) * 232 + 10 * this.rows}px`;
+      }
+      return "auto";
     },
   },
   methods: {
@@ -132,6 +146,10 @@ export default {
 
 <style lang="scss">
 @import "@/styles/_variables";
+.department__empty {
+  width: 288px;
+  min-height: 232px;
+}
 
 .department {
   width: 288px;

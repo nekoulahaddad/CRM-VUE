@@ -30,8 +30,18 @@
         <div class="departments__item">
           <v-department
             gradient="purple"
-            :node="children"
-            v-for="children in orgTree.children"
+            :node="item"
+            v-for="item in orgTree.children"
+          />
+        </div>
+        <div class="departments__item">
+          <v-department gradient="green" :node="item" v-for="item in levels" />
+        </div>
+        <div class="departments__item">
+          <v-department
+            gradient="blue"
+            :node="item"
+            v-for="item in subLevels"
           />
         </div>
       </div>
@@ -79,6 +89,8 @@ export default {
       openEmployee: false,
       isLoading: false,
       fio: "",
+      levels: [],
+      subLevels: [],
       users: [],
       newTree: [],
       departments: [],
@@ -128,9 +140,26 @@ export default {
       (res) => (this.users = res.data.users)
     );
     this.getData(`/orgtree/getfirst`).then((res) => {
-      console.log(res.data.dataTree);
       this.orgTree = res.data.dataTree || {};
       this.currentTreeId = res.data._id;
+
+      for (const item of this.orgTree.children) {
+        if (item.children.length) {
+          this.levels.push(...item.children);
+        } else {
+          this.levels.push(null);
+        }
+
+        for (const subItem of item.children) {
+          console.log(subItem.children.length);
+          if (subItem.children.length) {
+            this.subLevels.push(...subItem.children);
+          } else {
+            this.subLevels.push(null);
+          }
+        }
+      }
+      console.log(this.levels);
     });
     axios.get("/departments/all").then(async (res) => {
       let result = await res;
@@ -201,6 +230,7 @@ export default {
       }
     }
 
+    .department__empty,
     .department {
       & + * {
         margin-top: 10px;
