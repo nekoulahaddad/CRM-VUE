@@ -33,7 +33,7 @@
     <div class="page__body d-flex">
       <div class="page__left">
         <div class="tasks">
-          <div class="tasks__title">Доска задач</div>
+          <div class="tasks__title">Доска поставленных задач</div>
           <div class="tasks__lists">
             <v-spinner v-if="!isLoading" />
             <div
@@ -59,7 +59,7 @@
                     >
                       <a
                         href=""
-                        class="list__content"
+                        class="list__content text--bold-700"
                         @click.prevent="editTask(item, 'assigned')"
                       >
                         {{ item.title }}
@@ -67,18 +67,24 @@
 
                       <!-- Исполнитель -->
                       <div class="list__executor" v-if="item.executor">
-                        Исполнитель:
-                        <span v-if="item.executor.surname.length === 1">
+                        <span class="list__opacity">Исполнитель:</span>
+                        <span
+                          class="text text--red text--bold-700"
+                          v-if="item.executor.surname.length === 1"
+                        >
                           {{ item.executor.surname[0] }}
                         </span>
-                        <span v-else>
+                        <span class="text text--red text--bold-700" v-else>
                           {{ item.executor.department[0].title }}
                         </span>
                       </div>
 
                       <!-- Дата создания -->
                       <div class="list__date">
-                        Дата создания: {{ transformDate(item.creation_date) }}
+                        <span class="list__opacity">Дата создания: </span>
+                        <span class="text text--red text--bold-700">
+                          {{ transformDate(item.creation_date) }}
+                        </span>
                       </div>
 
                       <div class="list__actions">
@@ -584,14 +590,15 @@ export default {
     overflow: hidden;
   }
   .list__date {
-    opacity: 0.5;
     font-size: 12px;
     margin-top: 5px;
   }
   .list__executor {
-    opacity: 0.5;
     font-size: 12px;
     margin-top: 10px;
+  }
+  .list__opacity {
+    opacity: 0.5;
   }
 
   .add-new-event {
