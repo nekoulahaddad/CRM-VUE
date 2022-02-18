@@ -34,7 +34,9 @@
           </div>
         </div>
         <div class="group participants">
-          <div class="group__title">ФИО исполнителей:</div>
+          <div class="group__title">
+            ФИО {{ department ? `ответственного` : "исполнителей" }}:
+          </div>
           <div class="group__participants">
             <div
               v-if="executors.length"
@@ -57,10 +59,12 @@
           </div>
           <div class="group__content">
             <autocomplete
+              ref="executor"
+              :disabled="department && executors.length > 0"
               class="participants__input"
               :search="searchByExecutor"
               :get-result-value="getResultValue"
-              placeholder="Введите участника мероприятия..."
+              placeholder="Введите ФИО сотрудника..."
             >
               <template #result="{ result, props }">
                 <li v-bind="props" @click="selectUser(result)">
@@ -241,6 +245,7 @@ export default {
         this.executors.push(user);
         this.fio = ``;
         this.users = [];
+        this.$refs.executor.setValue("");
         return;
       }
       this.$toast.error("При выбранном отделе исполнитель только один!");
@@ -412,6 +417,10 @@ export default {
   }
   .autocomplete-input {
     width: 401px;
+
+    &:disabled {
+      opacity: 0.3;
+    }
   }
   .chip {
     position: relative;
