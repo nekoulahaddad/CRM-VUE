@@ -2,180 +2,189 @@
   <div class="list__info list-info orders-edit-form">
     <form @submit.prevent="editOrder">
       <div class="group__title text--blue">Редактировать заказ:</div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("orderNumber") }}
+      <div class="d-flex">
+        <div class="flex-1">
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("orderNumber") }}
+              </div>
+              <div class="group__value">{{ editedItem.number }}</div>
+            </div>
           </div>
-          <div class="group__value">{{ editedItem.number }}</div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("profile") }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("profile") }}
+              </div>
+              <div class="group__value">
+                {{ transformProfile(editedItem.payment) }}
+              </div>
+            </div>
           </div>
-          <div class="group__value">
-            {{ transformProfile(editedItem.payment) }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("customer") }}
+              </div>
+              <div class="group__value">
+                {{
+                  user
+                    ? transformName(user)
+                    : editedItem.client
+                    ? transformName(editedItem.client)
+                    : ""
+                }}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("customer") }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("phone") }}
+              </div>
+              <div class="group__value">
+                {{ user ? user.phone : editedItem.client.phone }}
+              </div>
+            </div>
           </div>
-          <div class="group__value">
-            {{
-              user
-                ? transformName(user)
-                : editedItem.client
-                ? transformName(editedItem.client)
-                : ""
-            }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("email") }}
+              </div>
+              <div class="group__value">
+                {{ user ? user.email : editedItem.client.email }}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("phone") }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("city") }}
+              </div>
+              <div class="group__value">
+                {{ user ? user.region.title : editedItem.region.title }}
+              </div>
+            </div>
           </div>
-          <div class="group__value">
-            {{ user ? user.phone : editedItem.client.phone }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("created") }}
+              </div>
+              <div class="group__value">
+                {{ transformDate(editedItem.createdAt) }}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("email") }}
-          </div>
-          <div class="group__value">
-            {{ user ? user.email : editedItem.client.email }}
-          </div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("city") }}
-          </div>
-          <div class="group__value">
-            {{ user ? user.region.title : editedItem.region.title }}
-          </div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("created") }}
-          </div>
-          <div class="group__value">
-            {{ transformDate(editedItem.createdAt) }}
-          </div>
-        </div>
-      </div>
 
-      <div class="group">
-        <div class="group__title">{{ $t("payed") }}</div>
-        <div class="group__content">
-          <datetime
-            v-model="editedItem.buyed"
-            input-class="forms__container--input"
-            type="date"
-            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-          />
-        </div>
-      </div>
-
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("payedType") }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("payedType") }}
+              </div>
+              <div class="group__value">
+                {{
+                  transformPayment(editedItem.payment, editedItem.acquiringNum)
+                }}
+              </div>
+            </div>
           </div>
-          <div class="group__value">
-            {{ transformPayment(editedItem.payment, editedItem.acquiringNum) }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("deliveryType") }}
+              </div>
+              <div class="group__value">
+                {{ transformDeliveryType(editedItem.typeDelivery) }}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("deliveryType") }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("status") }}
+              </div>
+              <div class="group__value">
+                <div v-html="transformStatus(editedItem.status)"></div>
+              </div>
+            </div>
           </div>
-          <div class="group__value">
-            {{ transformDeliveryType(editedItem.typeDelivery) }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("oneC") }}
+              </div>
+              <div class="group__value">
+                {{ getOneCStatus(editedItem.oneC) }}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("status") }}
-          </div>
-          <div class="group__value">
-            <div v-html="transformStatus(editedItem.status)"></div>
-          </div>
-        </div>
-      </div>
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("oneC") }}
-          </div>
-          <div class="group__value">{{ getOneCStatus(editedItem.oneC) }}</div>
-        </div>
-      </div>
-
-      <div class="group">
-        <div class="group__title">{{ $t("delivered") }}</div>
-        <div class="group__content">
-          <datetime
-            v-model="editedItem.deliver"
-            input-class="forms__container--input"
-            type="date"
-            :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-          />
-        </div>
-      </div>
-
-      <div class="list-info__group group">
-        <div class="group__content">
-          <div class="group__item text--bold-700">
-            {{ $t("manager") }}
-          </div>
-          <div class="group__value">
-            {{ fio }}
+          <div class="list-info__group group">
+            <div class="group__content">
+              <div class="group__item text--bold-700">
+                {{ $t("manager") }}
+              </div>
+              <div class="group__value">
+                {{ fio }}
+              </div>
+            </div>
+            <div class="group__content">
+              <autocomplete
+                :search="getUsersByFIO"
+                :get-result-value="getResultValue"
+                placeholder="Введите менеджера..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectUser(result)">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
           </div>
         </div>
-        <div class="group__content">
-          <autocomplete
-            :search="getUsersByFIO"
-            :get-result-value="getResultValue"
-            placeholder="Введите менеджера..."
-          >
-            <template #result="{ result, props }">
-              <li v-bind="props" @click="selectUser(result)">
-                {{ transformFIO(result) }}
-              </li>
-            </template>
-          </autocomplete>
-        </div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("managerComment") }}</div>
-        <div class="group__content">
-          <textarea
-            class="form-textarea"
-            name="manager_comment"
-            v-model="editedItem.manager_comment"
-          />
+        <div class="flex-1">
+          <div class="group">
+            <div class="group__title">{{ $t("payed") }}</div>
+            <div class="group__content">
+              <datetime
+                v-model="editedItem.buyed"
+                input-class="forms__container--input"
+                type="date"
+                :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">{{ $t("delivered") }}</div>
+            <div class="group__content">
+              <datetime
+                v-model="editedItem.deliver"
+                input-class="forms__container--input"
+                type="date"
+                :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">{{ $t("managerComment") }}</div>
+            <div class="group__content">
+              <textarea
+                class="form-textarea"
+                name="manager_comment"
+                v-model="editedItem.manager_comment"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       <template>
-        <div class="group__title text--blue">Товары:</div>
+        <div class="group__title text--blue" style="margin-top: 20px">
+          Товары:
+        </div>
         <div class="list sub-list">
           <div class="list__header">
             <div class="list__columns">
@@ -589,7 +598,10 @@ export default {
     width: 976px;
   }
   .group__title {
-    font-size: 16px;
+    font-size: 14px;
+    &.text--blue {
+      font-size: 16px;
+    }
   }
   .sub-list {
     width: 100%;

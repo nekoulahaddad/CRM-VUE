@@ -165,13 +165,13 @@ export default {
     &::before {
       content: "";
       display: block;
-      width: 60px;
+      width: 34px;
       height: 8px;
       background-color: $color-black;
       top: 50%;
       transform: translateY(-50%);
       position: absolute;
-      left: -60px;
+      left: -34px;
     }
   }
 

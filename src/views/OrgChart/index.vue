@@ -177,6 +177,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .org-chart-page {
   .list__columns {
     grid-template-columns: 240px 400px 450px 1fr;
@@ -231,8 +233,21 @@ export default {
     margin-bottom: 30px;
 
     &__item {
+      position: relative;
+
       & + * {
         margin-left: 60px;
+      }
+
+      &::before {
+        position: absolute;
+        display: block;
+        content: "";
+        top: 125px;
+        bottom: 0;
+        left: -34px;
+        width: 8px;
+        background-color: $color-black;
       }
     }
 
