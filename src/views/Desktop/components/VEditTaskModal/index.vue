@@ -79,7 +79,7 @@
             </div>
 
             <!-- Подзадачи -->
-            <template v-if="sub_tasks.length">
+            <template v-if="sub_tasks.length && executors._id.length > 1">
               <div class="edit-task-modal__title">Подзадачи:</div>
 
               <div class="group">
