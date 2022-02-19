@@ -67,13 +67,23 @@
 
                       <!-- Исполнитель -->
                       <div class="list__executor" v-if="item.executor">
-                        <span class="list__opacity">Исполнитель:</span>
-                        <span
+                        <div class="list__opacity">
+                          <span>
+                            <img
+                              src="@/assets/icons/employee.svg"
+                              width="15px"
+                              height="15px"
+                              alt=""
+                            />
+                          </span>
+                          <span>Исполнитель:</span>
+                        </div>
+                        <div
                           class="text text--red text--bold-700"
                           v-if="item.executor.surname.length === 1"
                         >
                           {{ item.executor.surname[0] }}
-                        </span>
+                        </div>
                         <span class="text text--red text--bold-700" v-else>
                           {{ item.executor.department[0].title }}
                         </span>
@@ -81,10 +91,20 @@
 
                       <!-- Дата создания -->
                       <div class="list__date">
-                        <span class="list__opacity">Дата создания: </span>
-                        <span class="text text--red text--bold-700">
+                        <div class="list__opacity">
+                          <span
+                            ><img
+                              src="@/assets/icons/calendar.svg"
+                              alt=""
+                              width="15px"
+                              height="15px"
+                            />
+                          </span>
+                          <span>Дата создания:</span>
+                        </div>
+                        <div class="text text--red text--bold-700">
                           {{ transformDate(item.creation_date) }}
-                        </span>
+                        </div>
                       </div>
 
                       <div class="list__actions">
@@ -592,13 +612,20 @@ export default {
   .list__date {
     font-size: 12px;
     margin-top: 5px;
+    display: flex;
   }
   .list__executor {
     font-size: 12px;
     margin-top: 10px;
+    display: flex;
   }
   .list__opacity {
     opacity: 0.5;
+    display: flex;
+
+    span {
+      margin-right: 8px;
+    }
   }
 
   .add-new-event {
