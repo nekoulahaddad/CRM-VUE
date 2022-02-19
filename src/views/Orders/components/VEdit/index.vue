@@ -230,45 +230,50 @@
           </v-button>
         </div>
 
-        <div
-          class="total-item"
-          v-if="deliverySum && editedItem.status.value !== 'processing'"
-        >
-          Сумма доставки:
-          <span class="text text--green">
-            {{ deliverySum.toFixed(2) + " " + editedItem.region.valute.icon }}
-          </span>
-        </div>
+        <div class="d-flex align-items-end flex-column">
+          <div
+            class="total-item"
+            v-if="deliverySum && editedItem.status.value !== 'processing'"
+          >
+            Сумма доставки:
+            <span class="text text--green">
+              {{ deliverySum.toFixed(2) + " " + editedItem.region.valute.icon }}
+            </span>
+          </div>
 
-        <div class="total-item" v-if="editedItem.status.value === 'processing'">
-          Сумма доставки:
-          <input
-            type="text"
-            class="form-control"
-            v-model.number="deliverySum"
-          />
-          <span>{{ editedItem.region.valute.icon }}</span>
-        </div>
+          <div
+            class="total-item"
+            v-if="editedItem.status.value === 'processing'"
+          >
+            Сумма доставки:
+            <input
+              type="text"
+              class="form-control"
+              v-model.number="deliverySum"
+            />
+            <span>{{ editedItem.region.valute.icon }}</span>
+          </div>
 
-        <div class="total-item" v-if="deliveryRequest">
-          Сумма доставки:
-          <span class="text text--green">{{ deliveryRequest }}</span>
-        </div>
-        <div class="total-item">
-          Сумма заказа:
-          <span class="text text--green">
-            {{ sum.toFixed(2) + " " + editedItem.region.valute.icon }}
-          </span>
-        </div>
-        <div class="total-item">
-          Итого:
-          <span class="text text--blue-delos">
-            {{
-              (deliverySum + sum).toFixed(2) +
-              " " +
-              editedItem.region.valute.icon
-            }}
-          </span>
+          <div class="total-item" v-if="deliveryRequest">
+            Сумма доставки:
+            <span class="text text--green">{{ deliveryRequest }}</span>
+          </div>
+          <div class="total-item">
+            Сумма заказа:
+            <span class="text text--green">
+              {{ sum.toFixed(2) + " " + editedItem.region.valute.icon }}
+            </span>
+          </div>
+          <div class="total-item">
+            Итого:
+            <span class="text text--blue-delos">
+              {{
+                (deliverySum + sum).toFixed(2) +
+                " " +
+                editedItem.region.valute.icon
+              }}
+            </span>
+          </div>
         </div>
       </template>
 
