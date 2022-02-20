@@ -1,5 +1,8 @@
 <template>
   <div class="page orders-page">
+    <!-- Модальное окно для подтверждения удаления заказа -->
+    <v-delete-item :deletedItem="deletedItem" @afterDelete="afterDelete" />
+
     <v-page-header
       :title="$t('pages.orders.pageTitle')"
       icon="orders_title"
@@ -130,6 +133,7 @@
                   :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией о заказе -->
@@ -158,6 +162,7 @@ import VItem from "./components/VItem";
 import VAddItem from "./components/VAddItem";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
+import VDeleteItem from "./components/VDeleteItem";
 import axios from "@/api/axios";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
@@ -179,6 +184,7 @@ export default {
     VEdit,
     VAddItem,
     VPageHeader,
+    VDeleteItem,
   },
   data() {
     return {
@@ -294,6 +300,16 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    afterDelete() {
+      this.getOrdersFromPage({
+        page: +this.$route.params.page,
+        filtersOptions: this.filtersOptions,
+      }).then(() => {
+        if (this.orders.length < 2) {
+          this.$router.push({ params: { page: "1" } });
+        }
+      });
+    },
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },
@@ -392,12 +408,8 @@ export default {
       this.add = !this.add;
     },
     toggleDelete(item) {
-      if (!this.deleted) {
-        this.deletedItem = item;
-      } else {
-        this.deletedItem = {};
-      }
-      this.deleted = !this.deleted;
+      this.deletedItem = item;
+      this.$modal.show("deleteOrder");
     },
     async deleteOrder() {
       await this.getOrdersFromPage({

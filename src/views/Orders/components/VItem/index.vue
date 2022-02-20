@@ -82,13 +82,16 @@
                 alt=""
               />
             </VueCustomTooltip>
+          </template>
+        </div>
+        <div class="table__icon">
+          <VueCustomTooltip label="Удалить">
             <img
               alt=""
-              v-else
-              src="@/assets/icons/arrow_top_icon.svg"
-              @click="$emit('toggleEdit', item)"
+              src="@/assets/icons/trash_icon.svg"
+              @click="$emit('toggleDelete', item)"
             />
-          </template>
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
