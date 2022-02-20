@@ -664,7 +664,17 @@ export default {
     }
     .list__columns {
       justify-content: left !important;
-      grid-template-columns: 70px 350px 200px 200px 200px 200px !important;
+      grid-template-columns: 70px 650px 130px 130px 130px 130px !important;
+
+      .page__right--full & {
+        grid-template-columns: 70px 760px 170px 170px 170px 180px !important;
+      }
+      .page__right--middle & {
+        grid-template-columns: 70px 740px 140px 140px 140px 140px !important;
+      }
+      .page__right--fluid & {
+        grid-template-columns: 70px 800px 190px 190px 190px 190px !important;
+      }
 
       .list__column:first-child {
         text-align: left;
