@@ -162,7 +162,9 @@
             <div class="list__column">Итог:</div>
           </div>
         </div>
+        <v-spinner v-if="!products.length" small />
         <div
+          v-else
           v-for="(product, index) in products"
           :key="product._id"
           class="list__row list__row--shadow list__row--white"
@@ -218,6 +220,7 @@
 
 <script>
 import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
 import { mapMutations } from "vuex";
 
 export default {
@@ -231,6 +234,7 @@ export default {
       default: () => {},
     },
   },
+  components: { VSpinner },
   data() {
     return {
       isDeclained: false,
