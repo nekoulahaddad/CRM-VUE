@@ -567,16 +567,25 @@ export default {
     }
   }
 
+  .page__right--fluid .sub-tasks .list__columns {
+    grid-template-columns: 130px 180px 180px 400px 180px 180px 180px 1fr !important;
+  }
+  .page__right--full .sub-tasks .list__columns {
+    grid-template-columns: 130px 180px 219px 250px 180px 180px 180px 1fr !important;
+  }
+  .page__right--middle .sub-tasks .list__columns {
+    grid-template-columns: 130px 140px 140px 340px 140px 140px 140px 1fr !important;
+  }
+
   .sub-tasks {
     .list__columns {
-      grid-template-columns: 130px 180px 180px 360px 180px 180px 120px 1fr;
-
       .list__column:first-child {
         padding-left: 100px;
       }
       .list__column:last-child {
         padding-right: 100px;
       }
+      grid-template-columns: 130px 120px 120px 300px 120px 120px 120px 1fr !important;
     }
   }
 }

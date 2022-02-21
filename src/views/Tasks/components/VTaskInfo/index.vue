@@ -139,7 +139,6 @@
         >
           {{ $t("pages.tasks.taskNotAccepted") }}
         </v-button>
-
         <v-button
           v-if="
             task.executor &&
