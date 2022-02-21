@@ -506,6 +506,10 @@ export default {
   }
 
   .page__right--middle {
+    .list__row,
+    .list__header {
+      width: 1422px;
+    }
     .list__columns {
       grid-template-columns: 50px 120px 120px 140px 110px 110px 120px 120px 120px 215px 1fr;
     }

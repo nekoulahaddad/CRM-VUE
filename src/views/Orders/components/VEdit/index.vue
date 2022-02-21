@@ -196,38 +196,43 @@
               <div class="list__column">Итог:</div>
             </div>
           </div>
-          <div
-            v-for="(product, index) in products"
-            :key="product._id"
-            class="list__row list__row--shadow list__row--white"
-          >
-            <div class="list__columns">
-              <div class="list__column">{{ index + 1 }}</div>
-              <div class="list__column bg bg--blue-light">
-                {{ product.title }}
-              </div>
-              <div class="list__column">{{ product.article }}</div>
-              <div class="list__column">{{ product.quantity }}</div>
-              <div class="list__column">
-                {{
-                  product.cost.toFixed(2) + " " + editedItem.region.valute.icon
-                }}
-              </div>
-              <div class="list__column">
-                {{
-                  (product.cost * product.quantity).toFixed(2) +
-                  " " +
-                  editedItem.region.valute.icon
-                }}
+          <v-spinner v-if="!products.length" />
+          <template v-else>
+            <div
+              v-for="(product, index) in products"
+              :key="product._id"
+              class="list__row list__row--shadow list__row--white"
+            >
+              <div class="list__columns">
+                <div class="list__column">{{ index + 1 }}</div>
+                <div class="list__column bg bg--blue-light">
+                  {{ product.title }}
+                </div>
+                <div class="list__column">{{ product.article }}</div>
+                <div class="list__column">{{ product.quantity }}</div>
+                <div class="list__column">
+                  {{
+                    product.cost.toFixed(2) +
+                    " " +
+                    editedItem.region.valute.icon
+                  }}
+                </div>
+                <div class="list__column">
+                  {{
+                    (product.cost * product.quantity).toFixed(2) +
+                    " " +
+                    editedItem.region.valute.icon
+                  }}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="orders-edit-form__add-product">
-          <v-button v-if="editedItem.status.value == 'processing'" red>
-            Добавить
-          </v-button>
+            <div class="orders-edit-form__add-product">
+              <v-button v-if="editedItem.status.value === 'processing'" red>
+                Добавить
+              </v-button>
+            </div>
+          </template>
         </div>
 
         <div class="d-flex align-items-end flex-column">
@@ -304,6 +309,7 @@
         </template>
 
         <v-button
+          red
           v-if="
             type === 'edit' &&
             isLoading &&
@@ -341,11 +347,10 @@
           red
           v-if="
             type === 'edit' &&
-            isLoading &&
             !editedItem.manager.length &&
             editedItem.status.value === 'awaiting'
           "
-          @click="editOrder()"
+          @click="editOrder"
         >
           Сохранить
         </v-button>
@@ -356,6 +361,7 @@
 
 <script>
 import VButton from "@/components/VButton";
+import VSpinner from "@/components/VSpinner";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
@@ -376,6 +382,7 @@ export default {
   },
   components: {
     VButton,
+    VSpinner,
   },
   computed: {
     sum: {
@@ -563,6 +570,7 @@ export default {
       })
         .then(() => {
           this.$emit("refreshDates");
+          this.$emit("toggleEdit", this.editedItem);
           this.$toast.success("Заказ успешно изменен");
         })
         .catch((err) => {
@@ -598,6 +606,22 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
+.orders-edit-form .sub-list .list__columns {
+  grid-template-columns: 70px 500px 140px 140px 140px 140px !important;
+}
+
+.page__right--fluid .orders-edit-form .sub-list .list__columns {
+  grid-template-columns: 70px 350px 200px 200px 200px 200px !important;
+}
+
+.page__right--full .orders-edit-form .sub-list .list__columns {
+  grid-template-columns: 70px 700px 170px 170px 170px 170px !important;
+}
+
+.page__right--middle .orders-edit-form .sub-list .list__columns {
+  grid-template-columns: 70px 550px 130px 130px 130px 130px !important;
+}
+
 .orders-edit-form {
   .form-textarea {
     width: 976px;
@@ -608,6 +632,7 @@ export default {
       font-size: 16px;
     }
   }
+
   .sub-list {
     width: 100%;
 
@@ -635,7 +660,6 @@ export default {
     }
     .list__columns {
       justify-content: left !important;
-      grid-template-columns: 70px 350px 200px 200px 200px 200px !important;
 
       .list__column:first-child {
         text-align: left;
