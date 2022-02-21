@@ -127,11 +127,17 @@
                 {{ $t("manager") }}
               </div>
               <div class="group__value">
-                {{ fio }}
+                <span
+                  class="manager"
+                  @click="showManagerInput = !showManagerInput"
+                >
+                  {{ fio }}
+                </span>
               </div>
             </div>
             <div class="group__content">
               <autocomplete
+                v-if="showManagerInput"
                 :search="getUsersByFIO"
                 :get-result-value="getResultValue"
                 placeholder="Введите менеджера..."
@@ -540,6 +546,7 @@ export default {
   },
   data() {
     return {
+      showManagerInput: false,
       isDeclained: false,
       editManager: false,
       sendToBuyer: false,
@@ -1007,6 +1014,15 @@ export default {
   }
   .list__row--delete {
     text-decoration: line-through;
+  }
+
+  .manager {
+    border-bottom: 1px dashed #000;
+    cursor: pointer;
+  }
+
+  .group__content--hidden {
+    opacity: 0.1;
   }
 }
 </style>

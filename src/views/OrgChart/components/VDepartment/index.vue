@@ -6,6 +6,8 @@
     v-else-if="node.title"
     :style="{ marginBottom: globalHeight }"
   >
+    <v-change-director />
+
     <div class="department__inner">
       <!-- Боковая панель с иконками -->
       <div class="department__panel panel" v-if="showPanel">
@@ -106,7 +108,10 @@
 </template>
 
 <script>
+import VChangeDirector from "../VChangeDirector";
+
 export default {
+  components: { VChangeDirector },
   props: {
     node: Object,
     gradient: String,
