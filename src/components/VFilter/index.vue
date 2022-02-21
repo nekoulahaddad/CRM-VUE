@@ -406,7 +406,7 @@
             </div>
           </div>
           <div class="filter__group group">
-            <div class="group__title">Менеджеры:</div>
+            <div class="group__title">Менеджер:</div>
             <div class="group__content">
               <autocomplete
                 ref="manager"
@@ -668,13 +668,21 @@
             </div>
           </div>
           <div class="filter__group group">
-            <div class="group__title">Менеджеры:</div>
+            <div class="group__title">Менеджер:</div>
             <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Введите менеджера"
-              />
+              <autocomplete
+                ref="manager"
+                :search="getUsersByFIO"
+                placeholder="Введите менеджера..."
+                :get-result-value="getResultValue"
+                @input="autocompleteInput($event, 'manager')"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectManager(result)" v-bind="props">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
             </div>
           </div>
           <div class="filter__actions">
@@ -1199,6 +1207,7 @@ export default {
       }
       if (this.type === "orders") {
         this.fio = "";
+        this.$refs.manager.setValue("");
         this.filterOptions.region = "all";
         this.filterOptions.status = "all";
         this.filterOptions.dates = "all";
