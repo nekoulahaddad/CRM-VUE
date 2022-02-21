@@ -49,7 +49,7 @@
           <div class="scroll-horizontal">
             <div class="list">
               <div class="list__header">
-                <v-search @submit="getSearchData" v-model="user" />
+                <v-search @submit="getSearchData" v-model="user" v-if="false" />
                 <div class="list__title">
                   {{ $t("pages.vacancies.pageTitle") }}
                 </div>
