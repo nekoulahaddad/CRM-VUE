@@ -297,7 +297,6 @@ export default {
         .then(() => {
           this.cancel();
           this.$toast.success("Задача успешно добавлена!");
-          this.$emit("toggleOpen");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);

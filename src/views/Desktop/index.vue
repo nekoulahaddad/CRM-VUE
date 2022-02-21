@@ -277,9 +277,9 @@ export default {
           });
 
           this.dataset[status].tasks.push(...data[status].tasks);
+          this.statuses[status].canScroll = true;
         } catch (e) {
         } finally {
-          this.statuses[status].canScroll = true;
         }
       }
     },
