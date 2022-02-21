@@ -79,6 +79,12 @@
                 alt=""
               />
             </VueCustomTooltip>
+            <img
+              alt=""
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleEdit', item)"
+            />
           </template>
         </div>
         <div class="table__icon">
