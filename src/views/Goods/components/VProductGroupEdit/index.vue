@@ -93,7 +93,6 @@ export default {
     },
     onChange(e) {
       this.groupProperties = e.target.value;
-      console.log((this.groupProperties = e.target.value));
     },
   },
 };

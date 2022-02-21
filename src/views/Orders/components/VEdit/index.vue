@@ -1,6 +1,6 @@
 <template>
   <div class="list__info list-info orders-edit-form">
-    <form @submit.prevent="editOrder">
+    <form @submit.prevent>
       <div class="group__title text--blue">Редактировать заказ:</div>
       <div class="d-flex">
         <div class="flex-1">
@@ -133,7 +133,7 @@
                   class="manager"
                   @click="showManagerInput = !showManagerInput"
                 >
-                  {{ fio }}
+                  {{ fio ? fio : "Добавить менеджера" }}
                 </span>
               </div>
             </div>
@@ -433,7 +433,7 @@
             editedItem.status.value === 'completed'
           "
         >
-          <v-button red @click="editOrder()">Сохранить</v-button>
+          <v-button red @click="editOrder">Сохранить</v-button>
           <v-button
             redWhite
             :disabled="!selectedProductList.length"
@@ -556,6 +556,7 @@ export default {
       sendedProductList: [],
       selectedProduct: null,
       isLoadingProductSearch: false,
+      isLoadingForm: false,
       users: [],
       date: new Date().toString(),
       title: "",
@@ -841,7 +842,7 @@ export default {
     },
     editOrder(status) {
       const products = this.updateInfoItemProducts();
-      this.changeStatus(false);
+
       let order = {
         orderId: this.editedItem._id,
         sum: this.calculatedSum,
@@ -858,6 +859,7 @@ export default {
         declainReason: this.editedItem.declainReason,
         products,
       };
+
       axios({
         url: `/orders/update/`,
         data: order,
@@ -870,9 +872,6 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
   },

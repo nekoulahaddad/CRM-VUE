@@ -165,7 +165,6 @@ export default {
           }
         }
       }
-      console.log(this.levels);
     });
     axios.get("/departments/all").then(async (res) => {
       let result = await res;

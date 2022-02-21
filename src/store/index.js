@@ -128,13 +128,10 @@ export default new Vuex.Store({
       }
     },
     SOCKET_ORDERUPDATE(state, order) {
-      console.log("Updated order");
-      console.log(order);
       let index = state.orders.findIndex((item) => item._id === order._id);
       if (!order.updated) {
         order.updated = true;
         if (index > -1) {
-          console.log(index);
           Vue.set(state.orders, index, order);
           if (state.id === order.manager[0]._id.toString()) {
             Vue.$toast.success(`Ваш заказ №${order.number} обновлен`);
@@ -185,7 +182,6 @@ export default new Vuex.Store({
     },
     SOCKET_DOWNLOADEXEL(state, file) {
       state.file = file;
-      console.log(file);
       Vue.$toast.success(`Начинаю скачивать Excel файл!`);
       state.loaded = true;
     },
@@ -196,7 +192,6 @@ export default new Vuex.Store({
       state.editedOrders = [];
     },
     set_region(state, region) {
-      console.log(region);
       state.region = region;
     },
     reset_region(state) {
@@ -291,7 +286,6 @@ export default new Vuex.Store({
             const decoded = jwt.decode(res.data.token);
             const number = decoded.data.number;
             if (res.data.token) {
-              console.log("token exist");
               localStorage.setItem("id", decoded.data._id);
               localStorage.setItem("token", token);
               localStorage.setItem("refresh", refresh);
@@ -312,7 +306,6 @@ export default new Vuex.Store({
           .catch((err) => {
             commit("logout");
             localStorage.clear();
-            console.log("errrrrrrrrrrrrrrrr");
             console.log(err);
           });
       });

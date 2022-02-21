@@ -62,11 +62,6 @@ export default {
     }),
     async exportProducts(route, type, prefix) {
       try {
-        console.log({
-          region: this.region,
-          categoryId: [this.category._id],
-          categoryName: this.category.categoryName,
-        });
         this[route] = true;
         await axios({
           url: `/excel/${route}`,

@@ -202,7 +202,6 @@ export default {
     },
     async updateVacancies(res) {
       this.isLoading = false;
-      console.log(res.data);
       this.dataset = res.data.vacancies;
       this.count = res.data.count ? res.data.count : 0;
       this.isLoading = true;
