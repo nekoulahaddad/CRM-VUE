@@ -10,6 +10,7 @@
     <v-edit-task-modal
       :status="status"
       :task="editedItem"
+      :deletedSubTask="deletedSubTask"
       @toggleDelete="toggleDelete"
       @toggleSubDelete="toggleSubDelete"
       @changeTaskStatus="changeTaskStatus"
@@ -190,6 +191,7 @@ export default {
   },
   data() {
     return {
+      deletedSubTask: null,
       clickedDay: null,
       skip: {
         accepted: 0,
@@ -281,7 +283,8 @@ export default {
         }
       }
     },
-    afterSubDelete() {
+    afterSubDelete(id) {
+      this.deletedSubTask = id;
       this.$modal.hide("deleteSubTask");
     },
     async afterDelete() {

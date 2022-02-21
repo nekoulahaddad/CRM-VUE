@@ -27,6 +27,7 @@ export default {
       this.$modal.hide("deleteSubTask");
     },
     confirm() {
+      const id = this.deletedItem._id;
       axios({
         url: "/tasks/delete/",
         data: {
@@ -35,7 +36,7 @@ export default {
         method: "DELETE",
       })
         .then(() => {
-          this.$emit("afterSubDelete");
+          this.$emit("afterSubDelete", id);
           this.$toast.success("Подзадача успешно удалена!");
         })
         .catch((err) => {

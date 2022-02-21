@@ -262,6 +262,7 @@ export default {
       type: Object,
     },
     status: String,
+    deletedSubTask: String,
   },
   data() {
     return {
@@ -417,6 +418,11 @@ export default {
     },
   },
   watch: {
+    deletedSubTask() {
+      this.sub_tasks = this.sub_tasks.filter(
+        (task) => task._id !== this.deletedSubTask
+      );
+    },
     task() {
       if (this.task._id) {
         this.date = new Date(this.task.deadline_date).toISOString();
