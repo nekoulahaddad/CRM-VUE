@@ -624,7 +624,6 @@ export default {
 
 .orders-edit-form {
   .form-textarea {
-    width: 976px;
   }
   .group__title {
     font-size: 14px;
