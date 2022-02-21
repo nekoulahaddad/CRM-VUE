@@ -460,7 +460,7 @@ export default {
 .desktop-page {
   .page {
     &__left {
-      width: 1307px;
+      width: 1417px;
     }
 
     &__right {
@@ -494,8 +494,8 @@ export default {
       border-radius: $border-radius;
       padding: 10px 1px 10px 10px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      width: 328px;
       height: 900px;
+      flex: 1;
 
       &:nth-child(1) .list__title {
         color: $color-black;
@@ -532,7 +532,7 @@ export default {
       background-color: $color-white;
       border-radius: $border-radius;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
-      width: 290px;
+      width: 314px;
       padding: 10px;
       position: relative;
 
