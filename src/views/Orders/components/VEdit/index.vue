@@ -295,10 +295,26 @@
               </div>
             </template>
 
-            <div class="list__row list__row--shadow list__row--white">
+            <!-- Добавление нового товара -->
+            <div
+              class="list__row list__row--shadow list__row--white"
+              v-if="addFormOpened"
+            >
               <div class="list__columns">
                 <div class="list__column">{{ products.length + 1 }}</div>
-                <div class="list__column bg bg--blue-light"></div>
+                <div class="list__column">
+                  <autocomplete
+                    :search="findItemByTitle"
+                    :get-result-value="getResultValue"
+                    placeholder="Введите название товара..."
+                  >
+                    <template #result="{ result, props }">
+                      <li v-bind="props" @click="selectedProductItem(result)">
+                        {{ result.title }}
+                      </li>
+                    </template>
+                  </autocomplete>
+                </div>
                 <div class="list__column d-flex justify-center">
                   <input
                     class="form-control"
@@ -321,13 +337,32 @@
                 </div>
                 <div class="list__column">{{}}</div>
                 <div class="list__column">
-                  <VueCustomTooltip label="Удалить"> </VueCustomTooltip>
+                  <VueCustomTooltip label="Добавить">
+                    <img
+                      alt=""
+                      src="@/assets/icons/check_black.svg"
+                      @click="addItemToProducts(newItem)"
+                    />
+                  </VueCustomTooltip>
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      alt=""
+                      src="@/assets/icons/trash_icon.svg"
+                      @click="cancelProductSelection"
+                    />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
 
             <div class="orders-edit-form__add-product">
-              <v-button v-if="editedItem.status.value === 'processing'" red>
+              <v-button
+                @click="addFormOpened = true"
+                v-if="
+                  editedItem.status.value === 'processing' && !addFormOpened
+                "
+                red
+              >
                 Добавить
               </v-button>
             </div>
@@ -563,7 +598,7 @@ export default {
       changeStatus: "change_load_status",
     }),
     getResultValue(result) {
-      return this.transformFIO(result);
+      return result.title;
     },
     toggleCancleOrder(e) {
       this.isDeclained = !this.isDeclained;
@@ -580,6 +615,86 @@ export default {
         }
       }
       this.calculatedSum = total;
+    },
+    addItemToProducts(item) {
+      let product = {
+        _id: false,
+        club_cost: item.club_cost,
+        cost: item.cost,
+        discount_price: item.discount_price || null,
+        product_id: item.product_id,
+        quantity: item.quantity,
+        article: item.article,
+        title: item.title,
+      };
+      if (product.product_id === undefined) {
+        this.$toast.warning(
+          "Товар не найден или указан неверный артикул, пожалуйста, найдите товар по артикулу или удалите товар"
+        );
+        return;
+      }
+      this.products.push(product);
+      this.newItems.push(product);
+      this.addFormOpened = false;
+      this.newItem = {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+      };
+      this.calculateSum();
+      this.selectedProduct = null;
+      this.productsList = [];
+      this.articleSearch = null;
+    },
+    selectedProductItem(item) {
+      this.articleSearch = item.article;
+      this.newItem.title = item.title;
+      this.newItem.article = item.article;
+      this.newItem._id = item._id;
+      this.newItem.product_id = item._id;
+      this.newItem.club_cost = item.club_cost;
+      this.newItem.cost = item.cost;
+      this.newItem.quantity = 1;
+    },
+    cancelProductSelection() {
+      alert();
+      this.addFormOpened = false;
+      this.selectedProduct = null;
+      this.productsList = [];
+      this.newItem = {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+      };
+      this.articleSearch = null;
+    },
+    findItemByTitle(title) {
+      if (title.trim().length < 3) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          axios({
+            url: `/products/getproductbysearch/`,
+            data: {
+              search: title,
+              region: this.editedItem.region._id,
+            },
+            method: "POST",
+          })
+            .then(async (result) => {
+              let res = await result;
+              this.productsList = res.data.products;
+              this.isLoadingProductSearch = false;
+              resolve(res.data.products);
+            })
+            .catch((err) => {
+              this.$toast.error(err.response.data.message);
+            });
+        }, 500);
+      });
     },
     findItemByArticle(article) {
       const articleNumber = article.target.value;
