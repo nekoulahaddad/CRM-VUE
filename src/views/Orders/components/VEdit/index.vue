@@ -1064,8 +1064,8 @@ export default {
     }
 
     &:checked:before {
-      background: url("../../../../assets/icons/check_black.svg") no-repeat
-        center;
+      background: url("../../../../assets/icons/check_black.svg") no-repeat 2px
+        4px;
     }
   }
 }
