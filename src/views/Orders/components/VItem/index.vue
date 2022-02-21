@@ -33,10 +33,7 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <VueCustomTooltip
-            v-if="infoItem._id !== item._id"
-            :label="getOneCStatus(item.oneC)"
-          >
+          <VueCustomTooltip :label="getOneCStatus(item.oneC)">
             <img
               :class="{
                 none: !item.oneC.requested,
@@ -100,7 +97,10 @@
 </template>
 
 <script>
+import oneCMixins from "@/mixins/oneC";
+
 export default {
+  mixins: [oneCMixins],
   props: {
     infoItem: {
       type: Object,

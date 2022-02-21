@@ -195,7 +195,7 @@ export default {
   .quillWrapper,
   .form-textarea,
   .form-control {
-    width: 967px;
+    width: 100%;
   }
   .ql-editor,
   .ql-container {
