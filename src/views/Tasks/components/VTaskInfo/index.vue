@@ -35,15 +35,8 @@
               class="documents__item"
               @click.prevent="downloadItem(serverAddr + `${photo}`, photo)"
             >
-              {{
-                photo.name
-                  ? photo.name.length > 30
-                    ? photo.name.slice(0, -10) +
-                      " ... ." +
-                      photo.type.split("/")[1]
-                    : photo.name
-                  : `Документ ${index + 1}`
-              }}
+              <span>{{ photo }}</span>
+              <img src="@/assets/icons/download_icon.svg" alt="" />
             </div>
           </div>
           <div v-else>Нет документов</div>
@@ -288,10 +281,20 @@ export default {
 .documents__item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
 
   & + * {
     margin-top: 10px;
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px !important;
+    white-space: nowrap;
   }
 }
 .tasks-list-info {
