@@ -482,7 +482,7 @@ export default {
   .list__header .list__column:last-child {
     text-align: right;
     position: relative;
-    right: 107px;
+    right: 158px;
   }
   .list__columns {
     grid-template-columns: 50px 120px 100px 100px 100px 100px 100px 100px 120px 215px 1fr;
