@@ -657,7 +657,6 @@ export default {
       this.newItem.quantity = 1;
     },
     cancelProductSelection() {
-      alert();
       this.addFormOpened = false;
       this.selectedProduct = null;
       this.productsList = [];
