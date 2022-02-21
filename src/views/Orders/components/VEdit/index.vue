@@ -121,6 +121,8 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="flex-1">
           <div class="list-info__group group">
             <div class="group__content">
               <div class="group__item text--bold-700">
@@ -150,8 +152,6 @@
               </autocomplete>
             </div>
           </div>
-        </div>
-        <div class="flex-1">
           <div class="group">
             <div class="group__title">{{ $t("payed") }}</div>
             <div class="group__content">
