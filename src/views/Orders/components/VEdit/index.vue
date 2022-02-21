@@ -234,6 +234,9 @@
                 v-for="(product, index) in products"
                 :key="product._id"
                 class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--delete': deletedItems.includes(product._id),
+                }"
               >
                 <div class="list__columns">
                   <div class="list__column">{{ index + 1 }}</div>
@@ -270,15 +273,18 @@
                     }}
                   </div>
                   <div class="list__column">
-                    <VueCustomTooltip label="Удалить">
+                    <VueCustomTooltip
+                      label="Отменить удаление"
+                      v-if="deletedItems.includes(product._id)"
+                    >
                       <img
-                        v-if="deletedItems.includes(product._id)"
                         @click="deleteItem(product._id)"
                         src="@/assets/icons/trash_icon.svg"
                         alt=""
                       />
+                    </VueCustomTooltip>
+                    <VueCustomTooltip label="Удалить" v-else>
                       <img
-                        v-else
                         @click="deleteItem(product._id)"
                         src="@/assets/icons/trash_icon.svg"
                         alt=""
@@ -288,6 +294,37 @@
                 </div>
               </div>
             </template>
+
+            <div class="list__row list__row--shadow list__row--white">
+              <div class="list__columns">
+                <div class="list__column">{{ products.length + 1 }}</div>
+                <div class="list__column bg bg--blue-light"></div>
+                <div class="list__column d-flex justify-center">
+                  <input
+                    class="form-control"
+                    type="number"
+                    v-model="articleSearch"
+                    placeholder="000000"
+                    @keyup="findItemByArticle"
+                  />
+                </div>
+                <div class="list__column">
+                  <input min="1" class="form-control" type="number" />
+                </div>
+                <div class="list__column">
+                  <input
+                    type="number"
+                    class="form-control"
+                    min="0.01"
+                    step="0.01"
+                  />
+                </div>
+                <div class="list__column">{{}}</div>
+                <div class="list__column">
+                  <VueCustomTooltip label="Удалить"> </VueCustomTooltip>
+                </div>
+              </div>
+            </div>
 
             <div class="orders-edit-form__add-product">
               <v-button v-if="editedItem.status.value === 'processing'" red>
@@ -544,6 +581,55 @@ export default {
       }
       this.calculatedSum = total;
     },
+    findItemByArticle(article) {
+      const articleNumber = article.target.value;
+      if (!articleNumber) {
+        this.$toast.warning("Артикул продукта не может быть типом строки");
+        return;
+      }
+      if (articleNumber.length >= 4) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          axios({
+            url: `/products/getproductbyarticle/`,
+            data: {
+              article: articleNumber,
+              region: this.infoItem.region._id,
+            },
+            method: "POST",
+          })
+            .then(async (result) => {
+              let res = await result;
+              if (res.data.product.length !== 0) {
+                this.selectedProduct = res.data.product;
+                let product = res.data.product;
+                this.newItem.title = product.title;
+                this.newItem.article = product.article;
+                this.newItem._id = product._id;
+                this.newItem.product_id = product._id;
+                this.newItem.club_cost = product.club_cost;
+                this.newItem.cost = product.cost;
+                this.newItem.quantity = 1;
+                this.$toast.success("Продукт, найденный по вашему запросу");
+              } else {
+                this.$toast.warning(
+                  "Товар по артику не найден, пожалуйста введите правильный артикул товара"
+                );
+                this.newItem = {
+                  title: "Введите артикул товара",
+                  quantity: 1,
+                  cost: 0,
+                };
+                this.selectedProduct = null;
+              }
+            })
+            .catch((err) => {
+              this.$toast.error(err.response.data.message);
+              this.changeStatus(true);
+            });
+        }, 500);
+      }
+    },
     handleDialog(msg, callback, args) {
       this.dialog.callback = callback;
       this.dialog.args = args ? args : false;
@@ -798,6 +884,9 @@ export default {
     & + * {
       margin-left: 20px;
     }
+  }
+  .list__row--delete {
+    text-decoration: line-through;
   }
 }
 </style>
