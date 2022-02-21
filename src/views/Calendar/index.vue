@@ -301,6 +301,9 @@ export default {
   .page__body {
     border-radius: $border-radius;
   }
+  .page__right {
+    width: 1417px;
+  }
 }
 .periodLabel {
   display: none !important;

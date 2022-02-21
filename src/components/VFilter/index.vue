@@ -1054,6 +1054,7 @@ export default {
           : "all",
         regionValue: null,
         executor: null,
+        manager: null,
         initiator: "all",
         dates: "all",
         type: null,
@@ -1121,7 +1122,7 @@ export default {
       this.selectOptions(null, null, "initiator", null);
     },
     selectManager(user) {
-      this.filterOptions.executor = user._id;
+      this.filterOptions.manager = user._id;
       this.selectOptions(null, null, "manager", null);
     },
     selectUser(user) {
