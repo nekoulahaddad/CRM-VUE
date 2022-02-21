@@ -198,34 +198,79 @@
           </div>
           <v-spinner v-if="!products.length" />
           <template v-else>
-            <div
-              v-for="(product, index) in products"
-              :key="product._id"
-              class="list__row list__row--shadow list__row--white"
-            >
-              <div class="list__columns">
-                <div class="list__column">{{ index + 1 }}</div>
-                <div class="list__column bg bg--blue-light">
-                  {{ product.title }}
-                </div>
-                <div class="list__column">{{ product.article }}</div>
-                <div class="list__column">{{ product.quantity }}</div>
-                <div class="list__column">
-                  {{
-                    product.cost.toFixed(2) +
-                    " " +
-                    editedItem.region.valute.icon
-                  }}
-                </div>
-                <div class="list__column">
-                  {{
-                    (product.cost * product.quantity).toFixed(2) +
-                    " " +
-                    editedItem.region.valute.icon
-                  }}
+            <template v-if="editedItem.status.value !== 'processing'">
+              <div
+                v-for="(product, index) in products"
+                :key="product._id"
+                class="list__row list__row--shadow list__row--white"
+              >
+                <div class="list__columns">
+                  <div class="list__column">{{ index + 1 }}</div>
+                  <div class="list__column bg bg--blue-light">
+                    {{ product.title }}
+                  </div>
+                  <div class="list__column">{{ product.article }}</div>
+                  <div class="list__column">{{ product.quantity }}</div>
+                  <div class="list__column">
+                    {{
+                      product.cost.toFixed(2) +
+                      " " +
+                      editedItem.region.valute.icon
+                    }}
+                  </div>
+                  <div class="list__column">
+                    {{
+                      (product.cost * product.quantity).toFixed(2) +
+                      " " +
+                      editedItem.region.valute.icon
+                    }}
+                  </div>
                 </div>
               </div>
-            </div>
+            </template>
+            <template v-else>
+              <div
+                v-for="(product, index) in products"
+                :key="product._id"
+                class="list__row list__row--shadow list__row--white"
+              >
+                <div class="list__columns">
+                  <div class="list__column">{{ index + 1 }}</div>
+                  <div class="list__column bg bg--blue-light">
+                    {{ product.title }}
+                  </div>
+                  <div class="list__column">{{ product.article }}</div>
+                  <div class="list__column">
+                    <input
+                      min="1"
+                      class="form-control"
+                      type="number"
+                      v-model="product.quantity"
+                      :disabled="deletedItems.includes(product._id)"
+                      @change="calculateSum()"
+                    />
+                  </div>
+                  <div class="list__column">
+                    <input
+                      type="number"
+                      class="form-control"
+                      min="0.01"
+                      step="0.01"
+                      :disabled="deletedItems.includes(product._id)"
+                      v-model="product.cost"
+                      @keyup="calculateSum()"
+                    />
+                  </div>
+                  <div class="list__column">
+                    {{
+                      (product.cost * product.quantity).toFixed(2) +
+                      " " +
+                      editedItem.region.valute.icon
+                    }}
+                  </div>
+                </div>
+              </div>
+            </template>
 
             <div class="orders-edit-form__add-product">
               <v-button v-if="editedItem.status.value === 'processing'" red>
@@ -266,14 +311,16 @@
           <div class="total-item">
             Сумма заказа:
             <span class="text text--green">
-              {{ sum.toFixed(2) + " " + editedItem.region.valute.icon }}
+              {{
+                calculatedSum.toFixed(2) + " " + editedItem.region.valute.icon
+              }}
             </span>
           </div>
           <div class="total-item">
             Итого:
             <span class="text text--blue-delos">
               {{
-                (deliverySum + sum).toFixed(2) +
+                (deliverySum + calculatedSum).toFixed(2) +
                 " " +
                 editedItem.region.valute.icon
               }}
@@ -470,6 +517,16 @@ export default {
         this.editOrder("declained");
       }
     },
+    calculateSum() {
+      let total = 0;
+      let type = "cost";
+      for (let p of this.products) {
+        if (!this.deletedItems.includes(p._id)) {
+          total += p[type] * p.quantity;
+        }
+      }
+      this.calculatedSum = total;
+    },
     handleDialog(msg, callback, args) {
       this.dialog.callback = callback;
       this.dialog.args = args ? args : false;
@@ -607,7 +664,7 @@ export default {
 @import "@/styles/_variables";
 
 .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 500px 140px 140px 140px 140px !important;
+  grid-template-columns: 70px 500px 140px 120px 120px 140px !important;
 }
 
 .page__right--fluid .orders-edit-form .sub-list .list__columns {
@@ -615,11 +672,11 @@ export default {
 }
 
 .page__right--full .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 700px 170px 170px 170px 170px !important;
+  grid-template-columns: 70px 700px 170px 120px 120px 170px !important;
 }
 
 .page__right--middle .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 550px 130px 130px 130px 130px !important;
+  grid-template-columns: 70px 550px 130px 120px 120px 130px !important;
 }
 
 .orders-edit-form {
@@ -699,6 +756,9 @@ export default {
   }
   .autocomplete-input {
     width: 401px;
+  }
+  .form-control[type="number"] {
+    width: 100px;
   }
 }
 </style>
