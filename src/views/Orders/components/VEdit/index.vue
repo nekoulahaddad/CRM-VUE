@@ -1019,6 +1019,7 @@ export default {
   .manager {
     border-bottom: 1px dashed #000;
     cursor: pointer;
+    user-select: none;
   }
 
   .group__content--hidden {
