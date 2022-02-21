@@ -70,9 +70,8 @@
         <div class="group">
           <div class="group__title">Телефон:</div>
           <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
+            <phone-mask-input
+              inputClass="form-control"
               placeholder="Введите телефон..."
               v-model="clientForm.physicalUser.phone"
               @input="getClientByPhone"
@@ -189,11 +188,12 @@
 </template>
 
 <script>
-import VButton from "@/components/VButton";
 import axios from "@/api/axios";
+import VButton from "@/components/VButton";
+import PhoneMaskInput from "vue-phone-mask-input";
 
 export default {
-  components: { VButton },
+  components: { VButton, PhoneMaskInput },
   data() {
     return {
       timer: null,
