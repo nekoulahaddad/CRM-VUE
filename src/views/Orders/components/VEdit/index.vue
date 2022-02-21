@@ -268,6 +268,22 @@
                       editedItem.region.valute.icon
                     }}
                   </div>
+                  <div class="list__column">
+                    <VueCustomTooltip label="Удалить">
+                      <img
+                        v-if="deletedItems.includes(product._id)"
+                        @click="deleteItem(product._id)"
+                        src="@/assets/icons/trash_icon.svg"
+                        alt=""
+                      />
+                      <img
+                        v-else
+                        @click="deleteItem(product._id)"
+                        src="@/assets/icons/trash_icon.svg"
+                        alt=""
+                      />
+                    </VueCustomTooltip>
+                  </div>
                 </div>
               </div>
             </template>
@@ -568,6 +584,14 @@ export default {
           this.$toast.error(err.response.data.message);
         });
     },
+    deleteItem(_id) {
+      if (this.deletedItems.includes(_id)) {
+        this.deletedItems = this.deletedItems.filter((id) => id != _id);
+      } else {
+        this.deletedItems.push(_id);
+      }
+      this.calculateSum();
+    },
     updateInfoItemProducts() {
       let products = this.products;
       let deleted = this.deletedItems;
@@ -664,19 +688,22 @@ export default {
 @import "@/styles/_variables";
 
 .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 500px 140px 120px 120px 140px !important;
+  grid-template-columns: 70px 500px 140px 120px 120px 140px 1fr !important;
 }
 
 .page__right--fluid .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 700px 200px 200px 200px 200px !important;
+  grid-template-columns: 70px 700px 200px 200px 200px 200px 1fr !important;
 }
 
 .page__right--full .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 700px 170px 120px 120px 170px !important;
+  grid-template-columns: 70px 700px 170px 120px 120px 170px 1fr !important;
 }
 
 .page__right--middle .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 550px 130px 120px 120px 130px !important;
+  grid-template-columns: 70px 550px 130px 120px 120px 130px 1fr !important;
+}
+.orders-edit-form .sub-list .list__columns .list__column:last-child {
+  text-align: right;
 }
 
 .orders-edit-form {
@@ -759,6 +786,17 @@ export default {
   }
   .form-control[type="number"] {
     width: 100px;
+  }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
   }
 }
 </style>
