@@ -244,7 +244,7 @@
                     {{ product.title }}
                   </div>
                   <div class="list__column">{{ product.article }}</div>
-                  <div class="list__column">
+                  <div class="list__column d-flex justify-center">
                     <input
                       min="1"
                       class="form-control"
@@ -254,7 +254,7 @@
                       @change="calculateSum()"
                     />
                   </div>
-                  <div class="list__column">
+                  <div class="list__column d-flex justify-center">
                     <input
                       type="number"
                       class="form-control"
@@ -308,10 +308,10 @@
                     @keyup="findItemByArticle"
                   />
                 </div>
-                <div class="list__column">
+                <div class="list__column d-flex justify-center">
                   <input min="1" class="form-control" type="number" />
                 </div>
-                <div class="list__column">
+                <div class="list__column d-flex justify-center">
                   <input
                     type="number"
                     class="form-control"
@@ -775,7 +775,7 @@ export default {
 @import "@/styles/_variables";
 
 .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 500px 140px 120px 120px 140px 1fr !important;
+  grid-template-columns: 70px 500px 160px 160px 160px 160px 1fr !important;
 }
 
 .page__right--fluid .orders-edit-form .sub-list .list__columns {
@@ -783,11 +783,11 @@ export default {
 }
 
 .page__right--full .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 700px 170px 120px 120px 170px 1fr !important;
+  grid-template-columns: 70px 700px 220px 160px 160px 200px 1fr !important;
 }
 
 .page__right--middle .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 550px 130px 120px 120px 130px 1fr !important;
+  grid-template-columns: 70px 550px 190px 170px 170px 170px 1fr !important;
 }
 .orders-edit-form .sub-list .list__columns .list__column:last-child {
   text-align: right;
