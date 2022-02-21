@@ -232,6 +232,25 @@
                       editedItem.region.valute.icon
                     }}
                   </div>
+                  <div class="list__column">
+                    <template
+                      v-if="
+                        type === 'edit' &&
+                        editedItem.manager.length &&
+                        editedItem.status.value === 'completed'
+                      "
+                    >
+                      <input
+                        v-if="!sendedProductList.includes(product._id)"
+                        type="checkbox"
+                        :value="{
+                          ...product,
+                          valute: editedItem.region.valute.icon,
+                        }"
+                        v-model="selectedProductList"
+                      />
+                    </template>
+                  </div>
                 </div>
               </div>
             </template>
@@ -257,7 +276,7 @@
                       type="number"
                       v-model="product.quantity"
                       :disabled="deletedItems.includes(product._id)"
-                      @change="calculateSum()"
+                      @change="calculateSum"
                     />
                   </div>
                   <div class="list__column d-flex justify-center">
@@ -268,7 +287,7 @@
                       step="0.01"
                       :disabled="deletedItems.includes(product._id)"
                       v-model="product.cost"
-                      @keyup="calculateSum()"
+                      @keyup="calculateSum"
                     />
                   </div>
                   <div class="list__column">
@@ -428,7 +447,6 @@
         <template
           v-if="
             type === 'edit' &&
-            isLoading &&
             editedItem.manager.length &&
             editedItem.status.value === 'completed'
           "
@@ -454,7 +472,6 @@
           red
           v-if="
             type === 'edit' &&
-            isLoading &&
             editedItem.manager.length &&
             editedItem.status.value === 'awaiting'
           "
@@ -466,7 +483,6 @@
         <template
           v-if="
             type === 'edit' &&
-            isLoading &&
             editedItem.manager.length &&
             editedItem.status.value === 'processing'
           "
@@ -485,7 +501,6 @@
             Нет связи с клиентом
           </v-button>
         </template>
-
         <v-button
           red
           v-if="
@@ -1023,6 +1038,35 @@ export default {
 
   .group__content--hidden {
     opacity: 0.1;
+  }
+
+  input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-color: $color-white !important;
+    cursor: pointer;
+    position: relative;
+
+    &:before {
+      width: 24px;
+      height: 24px;
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    &:checked:before {
+      background: url("../../../../assets/icons/check_black.svg") no-repeat
+        center;
+    }
   }
 }
 </style>
