@@ -113,7 +113,7 @@
         <v-button
           v-if="
             task.executor &&
-            (userId === task.executor._id || userId === task.executor._id[0]) &&
+            task.executor._id.includes(userId) &&
             task.status.value === 'assigned'
           "
           @click="changeTaskStatus(task, 'accepted')"
@@ -124,7 +124,7 @@
         <v-button
           v-if="
             task.executor &&
-            (userId === task.executor._id || userId === task.executor._id[0]) &&
+            task.executor._id.includes(userId) &&
             task.status.value === 'assigned'
           "
           white
@@ -135,7 +135,7 @@
         <v-button
           v-if="
             task.executor &&
-            (userId === task.executor._id || userId === task.executor._id[0]) &&
+            task.executor._id.includes(userId) &&
             task.status.value === 'accepted'
           "
           @click="changeTaskStatus(task, 'tested')"
@@ -168,7 +168,7 @@
         <v-button
           v-if="
             task.executor &&
-            (userId === task.executor._id || userId === task.executor._id[0]) &&
+            task.executor._id.includes(userId) &&
             task.status.value === 'under revision'
           "
           @click="changeTaskStatus(task, 'tested')"
