@@ -467,6 +467,7 @@
         >
           <v-button
             red
+            :disabled="outOfGoods"
             @click="handleDialog(confirmMsg, editOrder, ['completed'])"
           >
             Подтвердить заказ
@@ -529,6 +530,11 @@ export default {
     deliveryRequest: {
       get() {
         return this.editedItem.deliveryRequest;
+      },
+    },
+    outOfGoods: {
+      get() {
+        return this.products.length == this.deletedItems.length;
       },
     },
   },
