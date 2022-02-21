@@ -194,6 +194,7 @@
               <div class="list__column">Кол-во:</div>
               <div class="list__column">Цена за ед.:</div>
               <div class="list__column">Итог:</div>
+              <div class="list__column"></div>
             </div>
           </div>
           <v-spinner v-if="!products.length" />
