@@ -285,6 +285,7 @@ export default {
   cursor: pointer;
   padding-left: 10px;
   padding-right: 10px;
+  width: 401px;
 
   & + * {
     margin-top: 10px;
@@ -293,7 +294,7 @@ export default {
   span {
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 150px !important;
+    width: 350px !important;
     white-space: nowrap;
   }
 }
