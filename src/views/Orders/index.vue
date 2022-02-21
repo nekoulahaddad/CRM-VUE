@@ -3,6 +3,9 @@
     <!-- Модальное окно для подтверждения удаления заказа -->
     <v-delete-item :deletedItem="deletedItem" @afterDelete="afterDelete" />
 
+    <!-- Модальное окно для отправки заказа в 1С -->
+    <v-one-c-send :dialog="dialog" />
+
     <v-page-header
       :title="$t('pages.orders.pageTitle')"
       icon="orders_title"
@@ -145,6 +148,7 @@
                   v-if="editedItem._id === item._id"
                   @toggleEdit="toggleEdit"
                   @refreshDates="refreshDates"
+                  @setDialog="setDialog"
                 />
               </div>
             </div>
@@ -164,6 +168,7 @@ import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import VDeleteItem from "./components/VDeleteItem";
 import axios from "@/api/axios";
+import VOneCSend from "./components/VOneCSend";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VSearch from "@/components/VSearch";
@@ -185,6 +190,7 @@ export default {
     VAddItem,
     VPageHeader,
     VDeleteItem,
+    VOneCSend,
   },
   data() {
     return {
@@ -210,6 +216,7 @@ export default {
       open: false,
       infoItem: {},
       edit: false,
+      dialog: {},
       editedItem: {},
       searchStr: "",
       deletedItem: {},
@@ -300,6 +307,10 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    setDialog(dialog) {
+      this.dialog = dialog;
+      this.$modal.show("oneCSend");
+    },
     afterDelete() {
       this.getOrdersFromPage({
         page: +this.$route.params.page,

@@ -462,7 +462,7 @@
           <v-button
             redWhite
             v-if="!editedItem.oneC.requested"
-            @click="handleDialog(confirmOneCMsg, sendToOneC, [false])"
+            @click="handleDialog(sendToOneC, [false])"
           >
             Отправить в 1С
           </v-button>
@@ -555,7 +555,7 @@ export default {
     },
     outOfGoods: {
       get() {
-        return this.products.length == this.deletedItems.length;
+        return this.products.length === this.deletedItems.length;
       },
     },
   },
@@ -773,12 +773,10 @@ export default {
         }, 500);
       }
     },
-    handleDialog(msg, callback, args) {
+    handleDialog(callback, args) {
       this.dialog.callback = callback;
       this.dialog.args = args ? args : false;
-
-      this.dialog.header = msg.header;
-      this.dialog.message = msg.message;
+      this.$emit("setDialog", this.dialog);
     },
     async getUsersByFIO(input) {
       if (input.trim().length < 1) {
@@ -806,9 +804,10 @@ export default {
         method: "POST",
       })
         .then(() => {
+          this.$modal.hide("oneCSend");
+          this.$toast.success("Заказ успешно отправлен в 1С");
+          this.$emit("toggleEdit", this.editedItem);
           this.$emit("refreshDates");
-          this.$emit("toggleEdit");
-          this.changeStatus(true);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
