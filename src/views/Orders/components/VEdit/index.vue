@@ -611,7 +611,7 @@ export default {
 }
 
 .page__right--fluid .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 350px 200px 200px 200px 200px !important;
+  grid-template-columns: 70px 700px 200px 200px 200px 200px !important;
 }
 
 .page__right--full .orders-edit-form .sub-list .list__columns {
