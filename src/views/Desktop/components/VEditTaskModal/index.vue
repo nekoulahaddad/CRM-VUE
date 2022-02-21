@@ -94,6 +94,7 @@
                       :key="index"
                     >
                       <span>{{ sub_task.title }}</span>
+                      <div>{{ transformFIO(sub_task.executor) }}</div>
                       <div
                         v-if="
                           sub_task.initiator._id === id || role === 'superadmin'
@@ -572,6 +573,7 @@ export default {
       white-space: nowrap;
       font-weight: 700;
       font-size: 12px;
+      width: 400px !important;
     }
 
     &:first-child {
