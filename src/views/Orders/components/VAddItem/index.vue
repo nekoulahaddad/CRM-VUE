@@ -283,7 +283,9 @@
         </template>
 
         <div class="add-order-row__title text--blue">Основная информация:</div>
-        <div class="group">
+
+        <!-- Способ оплаты -->
+        <div class="group" v-if="orderForm.clientType === 'physical'">
           <div class="group__title">Способ оплаты:</div>
           <div class="group__content">
             <select
@@ -292,6 +294,9 @@
               name="payment__cash"
               v-model="orderForm.payment"
             >
+              <option selected disabled :value="null">
+                Выберите способ оплаты
+              </option>
               <option value="cash">Оплата наличными при получении</option>
               <option value="cartReceiving">
                 Оплата банковской картой при получении
@@ -299,6 +304,25 @@
             </select>
           </div>
         </div>
+        <div class="group" v-else>
+          <div class="group__title">Способ оплаты:</div>
+          <div class="group__content">
+            <select
+              required
+              class="form-select"
+              name="payment__cash"
+              v-model="orderForm.payment"
+            >
+              <option selected disabled :value="null">
+                Выберите способ оплаты
+              </option>
+              <option value="bankTransfer">
+                Оплата по выставленному счёту
+              </option>
+            </select>
+          </div>
+        </div>
+
         <div class="group">
           <div class="group__title">Способ доставки:</div>
           <div class="group__content">
@@ -308,6 +332,9 @@
               name="delivery-type__pickup"
               v-model="orderForm.typeDelivery"
             >
+              <option selected disabled :value="null">
+                Выберите способ доставки
+              </option>
               <option selected value="pickup">Самовывоз</option>
               <option value="transport">Доставка транспортом</option>
               <option value="courier">Доставка курьером</option>
@@ -431,8 +458,8 @@ export default {
         region: null,
         comment: "",
         deliver: null,
-        payment: "cash",
-        typeDelivery: "pickup",
+        payment: "",
+        typeDelivery: "",
         delivery: {
           city: "",
           street: "",
