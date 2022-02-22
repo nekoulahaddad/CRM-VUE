@@ -314,7 +314,7 @@ export default {
       this.$modal.show("orderActionModal");
     },
     afterAddOrder() {
-      this.addOrder = false;
+      this.$store.commit("toggleAction", { key: "addOrder" });
       this.fetchData();
     },
     afterDelete() {

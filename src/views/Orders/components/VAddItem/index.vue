@@ -335,7 +335,7 @@
         <div class="group">
           <div class="group__title">Регион:</div>
           <div class="group__content">
-            <select class="form-select" v-model="orderForm.region">
+            <select required class="form-select" v-model="orderForm.region">
               <option
                 v-for="region in regions"
                 :key="region._id"
@@ -415,6 +415,23 @@
               class="form-textarea"
               placeholder="Введите дополнительную информацию..."
             />
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group__title">Менеджер:</div>
+          <div class="group__content">
+            <autocomplete
+              :search="getUsersByFIO"
+              placeholder="Введите менеджера..."
+              :get-result-value="getResultValue"
+            >
+              <template #result="{ result, props }">
+                <li @click="selectManager(result)" v-bind="props">
+                  {{ transformFIO(result) }}
+                </li>
+              </template>
+            </autocomplete>
           </div>
         </div>
 
@@ -518,11 +535,6 @@ export default {
   },
   methods: {
     async getClientByPhone(phone) {
-      this.isLoading = true;
-      this.clientForm.isOldUser = false;
-      this.orderForm.client = null;
-      delete this.clientForm.physicalUser._id;
-      delete this.clientForm.legalUser._id;
       try {
         if (phone.target.value.length < 11) return;
         await axios({
@@ -547,39 +559,17 @@ export default {
               },
             }).then((res) => {
               this.orderForm.region = res.data.region;
+              this.clientForm.isOldUser = false;
+              this.orderForm.client = null;
+              delete this.clientForm.physicalUser._id;
+              delete this.clientForm.legalUser._id;
             });
           }
-
-          this.isLoading = false;
         });
-      } catch (e) {
-        this.orderForm.region = null;
-        this.clientForm.physicalUser = {
-          ...this.clientForm.physicalUser,
-          name: "",
-          lastname: "",
-        };
-        this.clientForm.legalUser = {
-          ...this.clientForm.legalUser,
-          name: "",
-          lastname: "",
-          email: "",
-          organisation: "",
-          ownership: "",
-          ur_actualAddress: "",
-          okpo: "",
-          ur_address: "",
-          bik: "",
-          bank: "",
-          account_number: "",
-          ur_corScore: "",
-          inn: "",
-          kpp: "",
-          director: "",
-        };
-        this.clientForm.isOldUser = false;
-        this.isLoading = false;
-      }
+      } catch (e) {}
+    },
+    getResultValue(result) {
+      return this.transformFIO(result);
     },
     createNewOrder() {
       axios({
@@ -591,6 +581,20 @@ export default {
         this.$emit("afterAddOrder");
       });
       this.$emit("toggleOpen");
+    },
+    async getUsersByFIO(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios(`/user/getmanagers/${input}`).then((result) => {
+          resolve(result.data);
+        });
+      });
+    },
+    selectManager(manager) {
+      this.orderForm.manager = manager;
     },
     async createOrder() {
       if (this.clientForm.isOldUser) {
@@ -679,6 +683,7 @@ export default {
   .form-textarea {
     min-height: 218px;
   }
+  .autocomplete-input,
   .vdatetime-input,
   .form-select {
     width: 401px;
