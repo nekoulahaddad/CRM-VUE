@@ -452,11 +452,11 @@
             </div>
 
             <div
-              v-for="(product, index) in productsList"
-              :key="product._id"
+              v-for="(product, index) in orderForm.products"
+              :key="index"
               class="list__row list__row--shadow list__row--white"
               :class="{
-                'list__row--delete': deletedItems.includes(product._id),
+                'list__row--delete': deletedItems.includes(index),
               }"
             >
               <div class="list__columns">
@@ -471,7 +471,7 @@
                     class="form-control"
                     type="number"
                     v-model="product.quantity"
-                    :disabled="deletedItems.includes(product._id)"
+                    :disabled="deletedItems.includes(index)"
                     @change="calculateSum"
                   />
                 </div>
@@ -481,7 +481,7 @@
                     class="form-control no-arrow"
                     min="0.01"
                     step="0.01"
-                    :disabled="deletedItems.includes(product._id)"
+                    :disabled="deletedItems.includes(index)"
                     v-model="product.cost"
                     @keyup="calculateSum"
                   />
@@ -520,7 +520,7 @@
                 <div class="list__column">
                   <autocomplete
                     :search="findItemByTitle"
-                    :get-result-value="getResultValue"
+                    :get-result-value="getItemTitle"
                     placeholder="Введите название товара..."
                   >
                     <template #result="{ result, props }">
@@ -734,7 +734,7 @@ export default {
     },
     addItemToProducts(item) {
       let product = {
-        _id: false,
+        full_cost: item.full_cost,
         club_cost: item.club_cost,
         cost: item.cost,
         discount_price: item.discount_price || null,
@@ -743,19 +743,20 @@ export default {
         article: item.article,
         title: item.title,
       };
+
       if (product.product_id === undefined) {
         this.$toast.warning(
           "Товар не найден или указан неверный артикул, пожалуйста, найдите товар по артикулу или удалите товар"
         );
         return;
       }
-      this.productsList.push(product);
-      this.newItems.push(product);
+      this.orderForm.products.push(product);
       this.addFormOpened = false;
       this.newItem = {
         title: "Введите артикул товара",
         quantity: 1,
         cost: 0,
+        full_cost: 0,
       };
       this.calculateSum();
       this.selectedProduct = null;
@@ -769,6 +770,9 @@ export default {
         this.deletedItems.push(_id);
       }
       this.calculateSum();
+    },
+    getItemTitle(result) {
+      return result.title;
     },
     calculateSum() {
       let total = 0;
@@ -845,26 +849,21 @@ export default {
       }
 
       return new Promise((resolve) => {
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-          axios({
-            url: `/products/getproductbysearch/`,
-            data: {
-              search: title,
-              region: this.orderForm.region,
-            },
-            method: "POST",
+        axios({
+          url: `/products/getproductbysearch/`,
+          data: {
+            search: title,
+            region: this.orderForm.region,
+          },
+          method: "POST",
+        })
+          .then(async (result) => {
+            let res = await result;
+            resolve(res.data.products);
           })
-            .then(async (result) => {
-              let res = await result;
-              this.productsList = res.data.products;
-              this.isLoadingProductSearch = false;
-              resolve(res.data.products);
-            })
-            .catch((err) => {
-              this.$toast.error(err.response.data.message);
-            });
-        }, 500);
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
       });
     },
     cancelProductSelection() {

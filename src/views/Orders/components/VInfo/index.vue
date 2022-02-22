@@ -194,7 +194,10 @@
         <div class="total-item" v-if="deliverySum">
           Сумма доставки:
           <span class="text text--green">
-            {{ deliverySum.toFixed(2) + " " + infoItem.region.valute.icon }}
+            {{
+              deliverySum &&
+              deliverySum.toFixed(2) + " " + infoItem.region.valute.icon
+            }}
           </span>
         </div>
         <div class="total-item" v-else-if="deliveryRequest">
@@ -204,7 +207,7 @@
         <div class="total-item">
           Сумма заказа:
           <span class="text text--green">
-            {{ sum.toFixed(2) + " " + infoItem.region.valute.icon }}
+            {{ sum && sum.toFixed(2) + " " + infoItem.region.valute.icon }}
           </span>
         </div>
         <div class="total-item">
