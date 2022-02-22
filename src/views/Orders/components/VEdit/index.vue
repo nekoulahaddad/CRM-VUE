@@ -470,7 +470,12 @@
           <v-button
             redWhite
             v-if="!editedItem.oneC.requested"
-            @click="handleDialog(sendToOneC, [false])"
+            @click="
+              handleDialog(sendToOneC, [false], {
+                title: 'Отправка заказа в 1С',
+                msg: 'Подтвердите действие. Заказ будет отправлен в 1С.',
+              })
+            "
           >
             Отправить в 1С
           </v-button>
@@ -498,7 +503,12 @@
           <v-button
             red
             :disabled="outOfGoods"
-            @click="handleDialog(confirmMsg, editOrder, ['completed'])"
+            @click="
+              handleDialog(editOrder, ['completed'], {
+                title: 'Подтверждение заказа',
+                msg: 'Вы уверены? Подтвердите действие',
+              })
+            "
           >
             Подтвердить заказ
           </v-button>
@@ -781,7 +791,8 @@ export default {
         }, 500);
       }
     },
-    handleDialog(callback, args) {
+    handleDialog(callback, args, data = {}) {
+      this.dialog.data = data;
       this.dialog.callback = callback;
       this.dialog.args = args ? args : false;
       this.$emit("setDialog", this.dialog);
@@ -812,7 +823,7 @@ export default {
         method: "POST",
       })
         .then(() => {
-          this.$modal.hide("oneCSend");
+          this.$modal.hide("orderActionModal");
           this.$toast.success("Заказ успешно отправлен в 1С");
           this.$emit("toggleEdit", this.editedItem);
           this.$emit("refreshDates");
@@ -888,6 +899,7 @@ export default {
         method: "POST",
       })
         .then(() => {
+          this.$modal.hide("orderActionModal");
           this.$emit("refreshDates");
           this.$emit("toggleEdit", this.editedItem);
           this.$toast.success("Заказ успешно изменен");

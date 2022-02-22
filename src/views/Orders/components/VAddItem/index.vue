@@ -82,16 +82,31 @@
         <div class="group">
           <div class="group__title">Способ оплаты:</div>
           <div class="group__content">
-            <select class="form-select">
-              <option value="">Выберите способ оплаты</option>
+            <select
+              class="form-select"
+              required
+              name="payment__cash"
+              v-model="orderForm.payment"
+            >
+              <option value="cash">Оплата наличными при получении</option>
+              <option value="cartReceiving">
+                Оплата банковской картой при получении
+              </option>
             </select>
           </div>
         </div>
         <div class="group">
           <div class="group__title">Способ доставки:</div>
           <div class="group__content">
-            <select class="form-select">
-              <option value="">Выберите способ доставки</option>
+            <select
+              required
+              class="form-select"
+              name="delivery-type__pickup"
+              v-model="orderForm.typeDelivery"
+            >
+              <option selected value="pickup">Самовывоз</option>
+              <option value="transport">Доставка транспортом</option>
+              <option value="courier">Доставка курьером</option>
             </select>
           </div>
         </div>
@@ -212,8 +227,8 @@ export default {
         region: null,
         comment: "",
         deliver: null,
-        payment: "",
-        typeDelivery: "",
+        payment: "cash",
+        typeDelivery: "pickup",
         delivery: {
           city: "",
           street: "",

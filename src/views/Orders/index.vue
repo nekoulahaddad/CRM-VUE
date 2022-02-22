@@ -3,8 +3,7 @@
     <!-- Модальное окно для подтверждения удаления заказа -->
     <v-delete-item :deletedItem="deletedItem" @afterDelete="afterDelete" />
 
-    <!-- Модальное окно для отправки заказа в 1С -->
-    <v-one-c-send :dialog="dialog" />
+    <v-order-action-modal :dialog="dialog" />
 
     <v-page-header
       :title="$t('pages.orders.pageTitle')"
@@ -168,7 +167,7 @@ import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import VDeleteItem from "./components/VDeleteItem";
 import axios from "@/api/axios";
-import VOneCSend from "./components/VOneCSend";
+import VOrderActionModal from "./components/VOrderActionModal";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VSearch from "@/components/VSearch";
@@ -190,7 +189,7 @@ export default {
     VAddItem,
     VPageHeader,
     VDeleteItem,
-    VOneCSend,
+    VOrderActionModal,
   },
   data() {
     return {
@@ -309,7 +308,7 @@ export default {
     }),
     setDialog(dialog) {
       this.dialog = dialog;
-      this.$modal.show("oneCSend");
+      this.$modal.show("orderActionModal");
     },
     afterDelete() {
       this.getOrdersFromPage({

@@ -1,9 +1,9 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="oneCSend">
-    <div class="vm--modal__title">Отправка заказа в 1С</div>
+  <v-modal :adaptive="true" :maxHeight="175" name="orderActionModal">
+    <div class="vm--modal__title">{{ dialog.data.title }}</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
-        Подтвердите действие. Заказ будет отправлен в 1С.
+        {{ dialog.data.msg }}
       </div>
       <div class="vm--modal__buttons">
         <v-button @click="confirm" red>Да</v-button>
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     cancel() {
-      this.$modal.hide("oneCSend");
+      this.$modal.hide("orderActionModal");
     },
     confirm() {
       this.dialog.callback(...this.dialog.args);
