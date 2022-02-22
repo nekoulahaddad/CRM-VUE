@@ -1,5 +1,11 @@
 <template>
   <div class="list__info list-info orders-edit-form">
+    <!-- Модальное окно для подтверждения отклонения заказа -->
+    <v-declained-modal
+      @toggleOpen="toggleCancelOrder"
+      :editedItem="editedItem"
+    />
+
     <form @submit.prevent>
       <div class="group__title text--blue">Редактировать заказ:</div>
       <div class="d-flex">
@@ -512,7 +518,7 @@
           >
             Подтвердить заказ
           </v-button>
-          <v-button redWhite @click="toggleCancleOrder">
+          <v-button redWhite @click="$modal.show('declainderOrder')">
             Отклонить заказ
           </v-button>
           <v-button white @click="editOrder('nocall')">
@@ -536,6 +542,7 @@
 </template>
 
 <script>
+import VDeclainedModal from "../VDeclainedModal";
 import VButton from "@/components/VButton";
 import VSpinner from "@/components/VSpinner";
 import axios from "@/api/axios";
@@ -559,6 +566,7 @@ export default {
   components: {
     VButton,
     VSpinner,
+    VDeclainedModal,
   },
   computed: {
     sum: {
@@ -647,9 +655,8 @@ export default {
     getResultValue(result) {
       return result.title;
     },
-    toggleCancleOrder(e) {
-      this.isDeclained = !this.isDeclained;
-      if (e && e.cancleOrder) {
+    toggleCancelOrder(e) {
+      if (e && e.cancelOrder) {
         this.editOrder("declained");
       }
     },

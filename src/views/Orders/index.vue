@@ -166,7 +166,7 @@ import VAddItem from "./components/VAddItem";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import VDeleteItem from "./components/VDeleteItem";
-import axios from "@/api/axios";
+import VDeclainedModal from "./components/VDeclainedModal";
 import VOrderActionModal from "./components/VOrderActionModal";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
@@ -190,6 +190,7 @@ export default {
     VPageHeader,
     VDeleteItem,
     VOrderActionModal,
+    VDeclainedModal,
   },
   data() {
     return {
