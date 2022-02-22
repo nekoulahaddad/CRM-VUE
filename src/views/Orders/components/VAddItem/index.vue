@@ -435,6 +435,24 @@
           </div>
         </div>
 
+        <template v-if="orderForm.region">
+          <div class="add-order-row__title text--blue">Товары:</div>
+
+          <div class="list sub-list">
+            <div class="list__header">
+              <div class="list__columns">
+                <div class="list__column">№:</div>
+                <div class="list__column">Название товара:</div>
+                <div class="list__column">Артикул:</div>
+                <div class="list__column">Кол-во:</div>
+                <div class="list__column">Цена за ед.:</div>
+                <div class="list__column">Итог:</div>
+                <div class="list__column"></div>
+              </div>
+            </div>
+          </div>
+        </template>
+
         <v-button red>Создать</v-button>
       </form>
     </div>
@@ -635,6 +653,25 @@ export default {
 </script>
 
 <style lang="scss">
+.add-order-row .sub-list .list__columns {
+  grid-template-columns: 70px 500px 160px 160px 160px 150px 1fr !important;
+}
+
+.page__right--fluid .add-order-row .sub-list .list__columns {
+  grid-template-columns: 70px 700px 200px 200px 200px 200px 1fr !important;
+}
+
+.page__right--full .add-order-row .sub-list .list__columns {
+  grid-template-columns: 70px 700px 220px 160px 160px 170px 1fr !important;
+}
+
+.page__right--middle .add-order-row .sub-list .list__columns {
+  grid-template-columns: 70px 550px 190px 170px 170px 150px 1fr !important;
+}
+.add-order-row .sub-list .list__columns .list__column:last-child {
+  text-align: right;
+}
+
 .add-order-row {
   .list__columns {
     grid-template-columns: 1fr !important;
