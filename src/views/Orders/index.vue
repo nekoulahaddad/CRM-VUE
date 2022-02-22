@@ -215,7 +215,9 @@ export default {
       open: false,
       infoItem: {},
       edit: false,
-      dialog: {},
+      dialog: {
+        data: { title: "", msg: "" },
+      },
       editedItem: {},
       searchStr: "",
       deletedItem: {},
