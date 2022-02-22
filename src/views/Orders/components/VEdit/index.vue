@@ -282,7 +282,7 @@
                   <div class="list__column d-flex justify-center">
                     <input
                       type="number"
-                      class="form-control"
+                      class="form-control no-arrow"
                       min="0.01"
                       step="0.01"
                       :disabled="deletedItems.includes(product._id)"
@@ -418,7 +418,8 @@
           >
             Сумма доставки:
             <input
-              type="text"
+              step="0.01"
+              type="number"
               class="form-control"
               v-model.number="deliverySum"
             />
@@ -1073,6 +1074,14 @@ export default {
       background: url("../../../../assets/icons/check_black.svg") no-repeat 2px
         4px;
     }
+  }
+  .form-control[type="number"].no-arrow {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    -moz-appearance: textfield;
   }
 }
 </style>
