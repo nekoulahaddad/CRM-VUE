@@ -971,6 +971,21 @@ export default {
 
 .add-order-row .sub-list .list__header {
   height: auto;
+  padding-bottom: 10px;
+  .list__columns {
+    background-color: $color-white !important;
+  }
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+  }
 }
 .add-order-row .sub-list .list__columns {
   grid-template-columns: 70px 500px 160px 160px 160px 150px 1fr !important;
