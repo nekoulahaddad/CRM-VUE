@@ -900,6 +900,9 @@ export default {
         products,
       };
 
+      console.log(order);
+      return;
+
       axios({
         url: `/orders/update/`,
         data: order,
