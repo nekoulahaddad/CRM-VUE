@@ -49,8 +49,14 @@ ul {
 .d-flex {
   display: flex;
 }
+.align-items-center {
+  align-items: center;
+}
 .justify-center {
   justify-content: center;
+}
+.justify-end {
+  justify-content: end;
 }
 .flex-column {
   flex-direction: column;

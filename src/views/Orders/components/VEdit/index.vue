@@ -350,18 +350,25 @@
                   />
                 </div>
                 <div class="list__column d-flex justify-center">
-                  <input min="1" class="form-control" type="number" />
+                  <input
+                    min="1"
+                    class="form-control"
+                    type="number"
+                    v-model="newItem.quantity"
+                  />
                 </div>
                 <div class="list__column d-flex justify-center">
                   <input
                     type="number"
                     class="form-control"
                     min="0.01"
-                    step="0.01"
+                    v-model="newItem.cost"
                   />
                 </div>
-                <div class="list__column">{{}}</div>
                 <div class="list__column">
+                  {{ (newItem.cost * newItem.quantity).toFixed(2) || 0 }}
+                </div>
+                <div class="list__column d-flex align-items-center justify-end">
                   <VueCustomTooltip label="Добавить">
                     <img
                       alt=""
@@ -815,7 +822,7 @@ export default {
     },
     deleteItem(_id) {
       if (this.deletedItems.includes(_id)) {
-        this.deletedItems = this.deletedItems.filter((id) => id != _id);
+        this.deletedItems = this.deletedItems.filter((id) => id !== _id);
       } else {
         this.deletedItems.push(_id);
       }
@@ -915,7 +922,7 @@ export default {
 @import "@/styles/_variables";
 
 .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 500px 160px 160px 160px 160px 1fr !important;
+  grid-template-columns: 70px 500px 160px 160px 160px 150px 1fr !important;
 }
 
 .page__right--fluid .orders-edit-form .sub-list .list__columns {
@@ -923,11 +930,11 @@ export default {
 }
 
 .page__right--full .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 700px 220px 160px 160px 200px 1fr !important;
+  grid-template-columns: 70px 700px 220px 160px 160px 170px 1fr !important;
 }
 
 .page__right--middle .orders-edit-form .sub-list .list__columns {
-  grid-template-columns: 70px 550px 190px 170px 170px 170px 1fr !important;
+  grid-template-columns: 70px 550px 190px 170px 170px 150px 1fr !important;
 }
 .orders-edit-form .sub-list .list__columns .list__column:last-child {
   text-align: right;
