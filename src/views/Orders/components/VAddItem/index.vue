@@ -143,6 +143,18 @@
             </div>
           </div>
           <div class="group">
+            <div class="group__title">Телефон:</div>
+            <div class="group__content">
+              <phone-mask-input
+                required
+                inputClass="form-control"
+                placeholder="Введите телефон..."
+                v-model="clientForm.legalUser.phone"
+                @input="getClientByPhone"
+              />
+            </div>
+          </div>
+          <div class="group">
             <div class="group__title">Название организации:</div>
             <div class="group__content">
               <input
@@ -581,6 +593,31 @@
           <span class="good-add-btn" @click="addFormOpened = true">
             Добавить
           </span>
+
+          <div class="d-flex align-items-end flex-column">
+            <div class="total-item">
+              Сумма доставки:
+              <input
+                type="number"
+                step="0.01"
+                v-model.number="orderForm.deliverySum"
+              />
+            </div>
+            <div class="total-item">
+              Сумма заказа:
+              <span class="text text--green">
+                {{ orderForm.calculatedSum.toFixed(2) }}
+              </span>
+            </div>
+            <div class="total-item">
+              Итого:
+              <span class="text text--blue-delos">
+                {{
+                  (orderForm.deliverySum + orderForm.calculatedSum).toFixed(2)
+                }}
+              </span>
+            </div>
+          </div>
         </template>
 
         <v-button red>Создать</v-button>
@@ -1041,6 +1078,14 @@ export default {
 
     & + * {
       margin-left: 20px;
+    }
+  }
+  .total-item {
+    font-size: 16px;
+    font-weight: 700;
+
+    & + * {
+      margin-top: 10px;
     }
   }
 }
