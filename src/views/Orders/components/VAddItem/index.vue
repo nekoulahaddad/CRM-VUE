@@ -68,7 +68,7 @@
             <div class="group__content">
               <input
                 class="form-control"
-                type="text"
+                type="email"
                 placeholder="Введите почту..."
                 v-model="clientForm.physicalUser.email"
                 :readonly="clientForm.isOldUser"
@@ -135,7 +135,7 @@
               <input
                 required
                 class="form-control"
-                type="text"
+                type="email"
                 placeholder="Введите почту..."
                 v-model="clientForm.legalUser.email"
                 :readonly="clientForm.isOldUser"
