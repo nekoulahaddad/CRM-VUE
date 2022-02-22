@@ -606,7 +606,7 @@
             <div class="total-item">
               Сумма заказа:
               <span class="text text--green">
-                {{ orderForm.calculatedSum.toFixed(2) }}
+                {{ orderForm.calculatedSum.toFixed(2) }} ₽
               </span>
             </div>
             <div class="total-item">
@@ -615,6 +615,7 @@
                 {{
                   (orderForm.deliverySum + orderForm.calculatedSum).toFixed(2)
                 }}
+                ₽
               </span>
             </div>
           </div>
@@ -813,13 +814,12 @@ export default {
     },
     calculateSum() {
       let total = 0;
-      let type = "cost";
-      for (let p of this.productsList) {
-        if (!this.deletedItems.includes(p._id)) {
-          total += p[type] * p.quantity;
-        }
+      let type = "full_cost";
+      for (let p of this.orderForm.products) {
+        total += p[type] * p.quantity;
       }
-      this.calculatedSum = total;
+      this.orderForm.calculatedSum = total;
+      this.orderForm.sum = this.orderForm.calculatedSum;
     },
     selectedProductItem(item) {
       this.articleSearch = item.article;
@@ -828,6 +828,7 @@ export default {
       this.newItem._id = item._id;
       this.newItem.product_id = item._id;
       this.newItem.club_cost = item.club_cost;
+      this.newItem.full_cost = item.full_cost;
       this.newItem.cost = item.cost;
       this.newItem.quantity = 1;
     },
