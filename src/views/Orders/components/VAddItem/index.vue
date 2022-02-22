@@ -23,61 +23,166 @@
         <div class="group">
           <div class="group__title">Лицо заказа:</div>
           <div class="group__content">
-            <select class="form-select">
+            <select
+              class="form-select"
+              name="clientType"
+              v-model="orderForm.clientType"
+            >
               <option value="physical">Физическое лицо</option>
               <option value="legal">Юридическое лицо</option>
             </select>
           </div>
         </div>
         <div class="add-order-row__title text--blue">Профиль:</div>
-        <div class="group">
-          <div class="group__title">Фамилия:</div>
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите фамилию..."
-              v-model="clientForm.physicalUser.lastname"
-              :readonly="clientForm.isOldUser"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Имя:</div>
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите имя..."
-              v-model="clientForm.physicalUser.name"
-              :readonly="clientForm.isOldUser"
-            />
-          </div>
-        </div>
 
-        <div class="group">
-          <div class="group__title">Почта:</div>
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите почту..."
-              v-model="clientForm.physicalUser.email"
-              :readonly="clientForm.isOldUser"
-            />
+        <!-- Физическое лицо -->
+        <template v-if="orderForm.clientType === 'physical'">
+          <div class="group">
+            <div class="group__title">Фамилия:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите фамилию..."
+                v-model="clientForm.physicalUser.lastname"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
           </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Телефон:</div>
-          <div class="group__content">
-            <phone-mask-input
-              inputClass="form-control"
-              placeholder="Введите телефон..."
-              v-model="clientForm.physicalUser.phone"
-              @input="getClientByPhone"
-            />
+          <div class="group">
+            <div class="group__title">Имя:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите имя..."
+                v-model="clientForm.physicalUser.name"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
           </div>
-        </div>
+          <div class="group">
+            <div class="group__title">Почта:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите почту..."
+                v-model="clientForm.physicalUser.email"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Телефон:</div>
+            <div class="group__content">
+              <phone-mask-input
+                required
+                inputClass="form-control"
+                placeholder="Введите телефон..."
+                v-model="clientForm.physicalUser.phone"
+                @input="getClientByPhone"
+              />
+            </div>
+          </div>
+        </template>
+        <!-- Юридическое лицо -->
+        <template v-else>
+          <div class="group">
+            <div class="group__title">Фамилия:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите фамилию..."
+                v-model="clientForm.legalUser.lastname"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Имя:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите имя..."
+                v-model="clientForm.legalUser.name"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">ИНН:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите ИНН..."
+                v-model="clientForm.legalUser.inn"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Почта:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите почту..."
+                v-model="clientForm.legalUser.email"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Название организации:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите название организации..."
+                v-model="clientForm.legalUser.organisation"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Форма собственности:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите форму собственности..."
+                v-model="clientForm.legalUser.ownership"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Юридический адрес:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите юридический адрес..."
+                v-model="clientForm.legalUser.ur_address"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+        </template>
+
         <div class="add-order-row__title text--blue">Основная информация:</div>
         <div class="group">
           <div class="group__title">Способ оплаты:</div>
@@ -397,7 +502,7 @@ export default {
           region: this.orderForm.region,
         };
         axios({
-          url: process.env.VUE_APP_DEVELOP_URL + "/clients/create",
+          url: "/clients/create",
           method: "POST",
           data: this.orderForm.clientType === "legal" ? lega : physica,
         })
@@ -407,7 +512,7 @@ export default {
             this.createNewOrder();
           })
           .catch((e) => {
-            this.$toast.warning(e.message);
+            this.$toast.error(e.message);
           });
       }
     },
