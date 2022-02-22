@@ -17,7 +17,7 @@
       {{ item.deliver ? transformDate(item.deliver) : "" }}
     </div>
     <div class="list__column">
-      {{ item.sum.toFixed(2) + " " + item.region.valute.icon }}
+      {{ item.sum && item.sum.toFixed(2) + " " + item.region.valute.icon }}
     </div>
     <div class="list__column">
       {{

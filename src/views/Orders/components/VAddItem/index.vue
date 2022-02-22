@@ -587,22 +587,8 @@ export default {
         method: "POST",
         data: this.orderForm,
       }).then(async () => {
-        await this.getOrdersFromPage({
-          page: +this.$route.params.page,
-          filtersOptions: {
-            dates: "all",
-            client: "all",
-            created: -1,
-            deliver: null,
-            buyed: null,
-            number: null,
-            status: "all",
-            region: null,
-            executor: null,
-            search: "",
-            type: "all",
-          },
-        });
+        this.$toast.success("Заказ успешно создан!");
+        this.$emit("afterAddOrder");
       });
       this.$emit("toggleOpen");
     },

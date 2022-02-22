@@ -193,7 +193,7 @@
         </div>
       </div>
 
-      <template>
+      <template v-if="products.length">
         <div class="group__title text--blue" style="margin-top: 20px">
           Товары:
         </div>
@@ -209,8 +209,7 @@
               <div class="list__column"></div>
             </div>
           </div>
-          <v-spinner v-if="!products.length" />
-          <template v-else>
+          <template>
             <template v-if="editedItem.status.value !== 'processing'">
               <div
                 v-for="(product, index) in products"
@@ -440,6 +439,7 @@
             Сумма заказа:
             <span class="text text--green">
               {{
+                calculatedSum &&
                 calculatedSum.toFixed(2) + " " + editedItem.region.valute.icon
               }}
             </span>

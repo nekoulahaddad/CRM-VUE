@@ -118,7 +118,7 @@
               </div>
 
               <!-- Блок для добавления нового заказа -->
-              <v-add-item v-if="addOrder" />
+              <v-add-item v-if="addOrder" @afterAddOrder="afterAddOrder" />
 
               <div
                 v-for="item in orders.slice(0, 15)"
@@ -312,6 +312,10 @@ export default {
     setDialog(dialog) {
       this.dialog = dialog;
       this.$modal.show("orderActionModal");
+    },
+    afterAddOrder() {
+      this.addOrder = false;
+      this.fetchData();
     },
     afterDelete() {
       this.getOrdersFromPage({
