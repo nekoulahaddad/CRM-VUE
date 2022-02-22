@@ -169,6 +169,19 @@
             </div>
           </div>
           <div class="group">
+            <div class="group__title">Фактический адрес:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите фактический адрес..."
+                v-model="clientForm.legalUser.ur_actualAddress"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
             <div class="group__title">Юридический адрес:</div>
             <div class="group__content">
               <input
@@ -177,6 +190,92 @@
                 type="text"
                 placeholder="Введите юридический адрес..."
                 v-model="clientForm.legalUser.ur_address"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">ОКПО:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите ОКПО..."
+                v-model="clientForm.legalUser.okpo"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">БИК:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите БИК..."
+                v-model="clientForm.legalUser.bik"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Наименование банка:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите наименование банка..."
+                v-model="clientForm.legalUser.bank"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Расчетный счет:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите расчетный счет..."
+                v-model="clientForm.legalUser.account_number"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Корр. счет:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                placeholder="Введите корр. счет..."
+                v-model="clientForm.legalUser.ur_corScore"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">КПП:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите КПП..."
+                v-model="clientForm.legalUser.kpp"
+                :readonly="clientForm.isOldUser"
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="group__title">Генеральный директор:</div>
+            <div class="group__content">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Введите генерального директора..."
+                v-model="clientForm.legalUser.director"
                 :readonly="clientForm.isOldUser"
               />
             </div>
