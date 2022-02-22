@@ -6,9 +6,17 @@
     :minWidth="750"
     name="declainderOrder"
   >
-    <div class="vm--modal__title">Отклонение заказа</div>
+    <div class="vm--modal__title declainder__title">
+      Отклонение заказа
+      <img
+        @click.prevent="cancel"
+        class="declainder__close"
+        src="/icons/close_icon.svg"
+        alt=""
+      />
+    </div>
     <div class="vm--modal__inner vm--modal-declainder-order">
-      <form @submit.prevent="cancelOrder">
+      <form @submit.prevent="confirm">
         <div class="vm--modal__text">Причина отказа:</div>
         <div class="vm--modal__content d-flex justify-content-between">
           <div class="d-flex align-items-center">
@@ -98,15 +106,11 @@ export default {
     cancel() {
       this.$modal.hide("declainderOrder");
     },
-    confirm() {},
-    cancelOrder() {
+    confirm() {
       this.editedItem.declainReason = this.declainReasonSelected
         ? this.declainReasonSelected
         : this.declainReason;
       this.$emit("toggleOpen", { cancelOrder: true });
-    },
-    cancelAction() {
-      this.$emit("toggleOpen", { cancelOrder: false });
     },
     changeHandler(data) {
       if (data !== "other") {
@@ -143,5 +147,15 @@ export default {
   .vm--modal__content {
     margin-bottom: 20px;
   }
+}
+.declainder__title {
+  position: relative;
+}
+.declainder__close {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 </style>
