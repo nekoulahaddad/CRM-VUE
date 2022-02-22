@@ -450,7 +450,137 @@
                 <div class="list__column"></div>
               </div>
             </div>
+
+            <div
+              v-for="(product, index) in productsList"
+              :key="product._id"
+              class="list__row list__row--shadow list__row--white"
+              :class="{
+                'list__row--delete': deletedItems.includes(product._id),
+              }"
+            >
+              <div class="list__columns">
+                <div class="list__column">{{ index + 1 }}</div>
+                <div class="list__column bg bg--blue-light">
+                  {{ product.title }}
+                </div>
+                <div class="list__column">{{ product.article }}</div>
+                <div class="list__column d-flex justify-center">
+                  <input
+                    min="1"
+                    class="form-control"
+                    type="number"
+                    v-model="product.quantity"
+                    :disabled="deletedItems.includes(product._id)"
+                    @change="calculateSum"
+                  />
+                </div>
+                <div class="list__column d-flex justify-center">
+                  <input
+                    type="number"
+                    class="form-control no-arrow"
+                    min="0.01"
+                    step="0.01"
+                    :disabled="deletedItems.includes(product._id)"
+                    v-model="product.cost"
+                    @keyup="calculateSum"
+                  />
+                </div>
+                <div class="list__column">
+                  {{ (product.cost * product.quantity).toFixed(2) }}
+                </div>
+                <div class="list__column">
+                  <VueCustomTooltip
+                    label="Отменить удаление"
+                    v-if="deletedItems.includes(product._id)"
+                  >
+                    <img
+                      @click="deleteItem(product._id)"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                    />
+                  </VueCustomTooltip>
+                  <VueCustomTooltip label="Удалить" v-else>
+                    <img
+                      @click="deleteItem(product._id)"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                    />
+                  </VueCustomTooltip>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="list__row list__row--shadow list__row--white"
+              v-if="addFormOpened"
+            >
+              <div class="list__columns">
+                <div class="list__column">{{ productsList.length + 1 }}</div>
+                <div class="list__column">
+                  <autocomplete
+                    :search="findItemByTitle"
+                    :get-result-value="getResultValue"
+                    placeholder="Введите название товара..."
+                  >
+                    <template #result="{ result, props }">
+                      <li v-bind="props" @click="selectedProductItem(result)">
+                        {{ result.title }}
+                      </li>
+                    </template>
+                  </autocomplete>
+                </div>
+                <div class="list__column d-flex justify-center">
+                  <input
+                    class="form-control"
+                    type="number"
+                    v-model="articleSearch"
+                    placeholder="000000"
+                    @keyup="findItemByArticle"
+                  />
+                </div>
+                <div class="list__column d-flex justify-center">
+                  <input
+                    min="1"
+                    class="form-control"
+                    type="number"
+                    v-model="newItem.quantity"
+                  />
+                </div>
+                <div class="list__column d-flex justify-center">
+                  <input
+                    type="number"
+                    class="form-control no-arrow"
+                    min="0.01"
+                    v-model="newItem.cost"
+                  />
+                </div>
+                <div class="list__column">
+                  {{ (newItem.cost * newItem.quantity).toFixed(2) || 0 }}
+                </div>
+                <div class="list__column d-flex align-items-center justify-end">
+                  <VueCustomTooltip label="Добавить">
+                    <img
+                      alt=""
+                      src="@/assets/icons/check_black.svg"
+                      @click="addItemToProducts(newItem)"
+                    />
+                  </VueCustomTooltip>
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      alt=""
+                      src="@/assets/icons/trash_icon.svg"
+                      @click="cancelProductSelection"
+                    />
+                  </VueCustomTooltip>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <span class="good-add-btn" @click="addFormOpened = true">
+            Добавить
+          </span>
         </template>
 
         <v-button red>Создать</v-button>
@@ -473,6 +603,7 @@ export default {
       addFormOpened: false,
       productTitleSearch: null,
       productsList: [],
+      deletedItems: [],
       selectedProduct: null,
       articleSearch: null,
       regions: [],
@@ -535,6 +666,7 @@ export default {
         quantity: 1,
         cost: 0,
       },
+      newItems: [],
       confirmMsg: {
         header: "Вы уверены?",
         message: "Подтвердите действие.",
@@ -600,6 +732,152 @@ export default {
       });
       this.$emit("toggleOpen");
     },
+    addItemToProducts(item) {
+      let product = {
+        _id: false,
+        club_cost: item.club_cost,
+        cost: item.cost,
+        discount_price: item.discount_price || null,
+        product_id: item.product_id,
+        quantity: item.quantity,
+        article: item.article,
+        title: item.title,
+      };
+      if (product.product_id === undefined) {
+        this.$toast.warning(
+          "Товар не найден или указан неверный артикул, пожалуйста, найдите товар по артикулу или удалите товар"
+        );
+        return;
+      }
+      this.productsList.push(product);
+      this.newItems.push(product);
+      this.addFormOpened = false;
+      this.newItem = {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+      };
+      this.calculateSum();
+      this.selectedProduct = null;
+      this.productsList = [];
+      this.articleSearch = null;
+    },
+    deleteItem(_id) {
+      if (this.deletedItems.includes(_id)) {
+        this.deletedItems = this.deletedItems.filter((id) => id !== _id);
+      } else {
+        this.deletedItems.push(_id);
+      }
+      this.calculateSum();
+    },
+    calculateSum() {
+      let total = 0;
+      let type = "cost";
+      for (let p of this.productsList) {
+        if (!this.deletedItems.includes(p._id)) {
+          total += p[type] * p.quantity;
+        }
+      }
+      this.calculatedSum = total;
+    },
+    selectedProductItem(item) {
+      this.articleSearch = item.article;
+      this.newItem.title = item.title;
+      this.newItem.article = item.article;
+      this.newItem._id = item._id;
+      this.newItem.product_id = item._id;
+      this.newItem.club_cost = item.club_cost;
+      this.newItem.cost = item.cost;
+      this.newItem.quantity = 1;
+    },
+    findItemByArticle(article) {
+      const articleNumber = article.target.value;
+      if (!articleNumber) {
+        this.$toast.warning("Артикул продукта не может быть типом строки");
+        return;
+      }
+      if (articleNumber.length >= 4) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          axios({
+            url: `/products/getproductbyarticle/`,
+            data: {
+              article: articleNumber,
+              region: this.orderForm.region,
+            },
+            method: "POST",
+          })
+            .then(async (result) => {
+              let res = await result;
+              if (res.data.product.length !== 0) {
+                this.selectedProduct = res.data.product;
+                let product = res.data.product;
+                this.newItem.title = product.title;
+                this.newItem.article = product.article;
+                this.newItem._id = product._id;
+                this.newItem.product_id = product._id;
+                this.newItem.club_cost = product.club_cost;
+                this.newItem.cost = product.cost;
+                this.newItem.quantity = 1;
+                this.$toast.success("Продукт, найденный по вашему запросу");
+              } else {
+                this.$toast.warning(
+                  "Товар по артику не найден, пожалуйста введите правильный артикул товара"
+                );
+                this.newItem = {
+                  title: "Введите артикул товара",
+                  quantity: 1,
+                  cost: 0,
+                };
+                this.selectedProduct = null;
+              }
+            })
+            .catch((err) => {
+              this.$toast.error(err.response.data.message);
+              this.changeStatus(true);
+            });
+        }, 500);
+      }
+    },
+    findItemByTitle(title) {
+      if (title.trim().length < 3) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          axios({
+            url: `/products/getproductbysearch/`,
+            data: {
+              search: title,
+              region: this.orderForm.region,
+            },
+            method: "POST",
+          })
+            .then(async (result) => {
+              let res = await result;
+              this.productsList = res.data.products;
+              this.isLoadingProductSearch = false;
+              resolve(res.data.products);
+            })
+            .catch((err) => {
+              this.$toast.error(err.response.data.message);
+            });
+        }, 500);
+      });
+    },
+    cancelProductSelection() {
+      this.addFormOpened = false;
+      this.selectedProduct = null;
+      this.productsList = [];
+      this.newItem = {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+      };
+      this.articleSearch = null;
+    },
     async getUsersByFIO(input) {
       if (input.trim().length < 1) {
         return [];
@@ -653,6 +931,11 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
+.add-order-row .sub-list .list__header {
+  height: auto;
+}
 .add-order-row .sub-list .list__columns {
   grid-template-columns: 70px 500px 160px 160px 160px 150px 1fr !important;
 }
@@ -673,7 +956,7 @@ export default {
 }
 
 .add-order-row {
-  .list__columns {
+  & > .list__columns {
     grid-template-columns: 1fr !important;
 
     .list__column {
@@ -724,6 +1007,42 @@ export default {
   .vdatetime-input,
   .form-select {
     width: 401px;
+  }
+  .good-add-btn {
+    width: 230px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    background-color: $color-red;
+    color: $color-white;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 700;
+    border-radius: $border-radius;
+  }
+  .form-control[type="number"] {
+    width: 100px;
+  }
+  .form-control[type="number"].no-arrow {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    -moz-appearance: textfield;
+  }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
   }
 }
 </style>
