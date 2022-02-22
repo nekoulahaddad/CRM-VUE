@@ -360,7 +360,7 @@
                 <div class="list__column d-flex justify-center">
                   <input
                     type="number"
-                    class="form-control"
+                    class="form-control no-arrow"
                     min="0.01"
                     v-model="newItem.cost"
                   />
