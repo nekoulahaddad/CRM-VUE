@@ -16,7 +16,7 @@
       />
     </div>
     <div class="vm--modal__inner vm--modal-declainder-order">
-      <form @submit.prevent="confirm">
+      <form @submit.prevent>
         <div class="vm--modal__text">Причина отказа:</div>
         <div class="vm--modal__content d-flex justify-content-between">
           <div class="d-flex align-items-center">
@@ -73,8 +73,7 @@
           v-if="declainReason === 'other'"
           type="radio"
           class="form-textarea"
-          value="дефицит товара"
-          placeholder="комментарий"
+          placeholder="Введите комментарий..."
           v-model="declainReasonOther"
           @input="changeOtherHandler(declainReasonOther)"
         />
