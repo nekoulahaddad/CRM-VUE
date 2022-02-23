@@ -65,7 +65,13 @@
           <img src="@/assets/icons/write_icon.svg" alt="" />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/trash_icon.svg" alt="" />
+          <VueCustomTooltip label="Удалить">
+            <img
+              @click="$emit('toggleDelete', item)"
+              src="@/assets/icons/trash_icon.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>

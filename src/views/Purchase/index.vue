@@ -1,5 +1,7 @@
 <template>
   <div class="page purchase-page">
+    <v-delete-item :deletedItem="deletedItem" @fetchData="fetchData" />
+
     <v-page-header
       :title="$t('pages.buying.pageTitle')"
       icon="buying_title"
@@ -54,6 +56,7 @@
                   :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией о закупке -->
@@ -73,6 +76,7 @@
 import VItem from "./components/VItem";
 import VAddItem from "./components/VAddItem";
 import VInfo from "./components/VInfo";
+import VDeleteItem from "./components/VDeleteItem";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import VPagination from "@/components/VPagination";
@@ -91,6 +95,7 @@ export default {
     VItem,
     VInfo,
     VAddItem,
+    VDeleteItem,
     VPageHeader,
   },
   computed: {
@@ -128,6 +133,10 @@ export default {
   methods: {
     toggleFilter() {
       this.showFilter = !this.showFilter;
+    },
+    toggleDelete(deletedItem) {
+      this.deletedItem = deletedItem;
+      this.$modal.show("deletePurchase");
     },
     async fetchData() {
       try {

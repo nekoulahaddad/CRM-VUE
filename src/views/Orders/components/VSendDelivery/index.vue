@@ -8,7 +8,6 @@
     <div class="vm--modal__title">Отправка закупщику</div>
     <div class="vm--modal__inner vm--modal-send-delivery">
       <div class="group__content">
-        {{ category }}
         <div class="group__item text--bold-700">ФИО инициатора:</div>
         <div class="group__value">
           {{ transformFIO(editedItem.initiator) }}
@@ -37,6 +36,24 @@
             <template #result="{ result, props }">
               <li v-bind="props" @click="selectCategory(result)">
                 {{ result.categoryName }}
+              </li>
+            </template>
+          </autocomplete>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">ФИО исполнителя:</div>
+        <div class="group__content">
+          <autocomplete
+            required
+            :search="getBuyersBySearch"
+            :get-result-value="getBuyer"
+            placeholder="Введите ФИО исполнителя..."
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectBuyer(result)">
+                {{ transformFIO(result) }}
               </li>
             </template>
           </autocomplete>
@@ -177,7 +194,109 @@ export default {
     cancel() {
       this.$modal.hide("sendDelivery");
     },
-    confirm() {},
+    confirm() {
+      if (!this.category) {
+        this.$toast.error("Вы не выбрали категорию");
+        return;
+      }
+
+      if (!this.executor) {
+        this.$toast.error("Вы не выбрали исполнителя");
+        return;
+      }
+
+      let data = {
+        data: {
+          initiator: this.initiator,
+          executor: this.executor,
+          status: this.status,
+          category: this.category,
+          region: this.editedItem.region,
+          message: this.message,
+          comment: this.comment,
+          orderNumber: this.orderNumber,
+          orderId: this.orderId,
+          products: this.editedItem
+            ? this.editedItem.products
+            : this.selectedProducts,
+          deliveryDate: this.deliveryDate,
+        },
+      };
+
+      if (
+        this.editedItem &&
+        !this.editedItem.type &&
+        this.editedItem.type !== "fromOrder"
+      ) {
+        data.dataId = this.editedItem._id;
+        let seen = null;
+        if (this.editedItem.executor._id === this.currentUser._id) {
+          seen = Date.now();
+        }
+        data.data.seenAt = seen;
+        axios({
+          url: `/purchase/update/`,
+          data: data,
+          method: "POST",
+        })
+          .then(async () => {
+            const transformedData = {
+              _id: data.dataId,
+              ...data.data,
+              category: {
+                category: {
+                  ...data.data.category,
+                },
+              },
+              createdAt: this.editedItem.createdAt,
+              seenAt: seen,
+            };
+            this.$toast.success("Закупка успешно обновлена!");
+            this.$emit("toggleOpen", transformedData);
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
+      } else {
+        data.data.initiator = this.currentUser;
+        axios({
+          url: `/purchase/post/`,
+          data: data,
+          method: "POST",
+        })
+          .then((res) => {
+            this.$toast.success("Закупка успешно отправлена!");
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
+      }
+    },
+    async getBuyersBySearch(search) {
+      if (search.trim().length < 3) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${search}`).then((res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    getBuyer(result) {
+      return this.transformFIO(result);
+    },
+    selectBuyer(user) {
+      if (user._id === this.currentUser._id) {
+        this.$toast.error("Вы не можете быть исполнителем!");
+        return;
+      }
+      if (this.executor === null) {
+        this.executor = user;
+        return;
+      }
+      this.$toast.error("При выбранном отделе исполнитель только один!");
+    },
     searchCategory(search) {
       if (search.trim().length < 3) {
         return [];
@@ -195,6 +314,14 @@ export default {
           resolve(res.data.categories);
         });
       });
+    },
+  },
+  computed: {
+    currentUser: {
+      get: function () {
+        let user = this.getUserRole();
+        return user;
+      },
     },
   },
   async created() {
