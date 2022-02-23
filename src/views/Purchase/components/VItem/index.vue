@@ -48,12 +48,13 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            alt=""
-            src="@/assets/icons/info_icon.svg"
-            v-if="item._id !== infoItem._id"
-            @click="$emit('toggleInfo', item)"
-          />
+          <VueCustomTooltip label="Просмотр" v-if="item._id !== infoItem._id">
+            <img
+              alt=""
+              src="@/assets/icons/info_icon.svg"
+              @click="$emit('toggleInfo', item)"
+            />
+          </VueCustomTooltip>
           <img
             alt=""
             src="@/assets/icons/arrow_top_icon.svg"
@@ -62,10 +63,29 @@
           />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/write_icon.svg" alt="" />
+          <VueCustomTooltip label="Изменить" v-if="item._id !== editedItem._id">
+            <img
+              @click="$emit('toggleEdit', item)"
+              src="@/assets/icons/write_icon.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleEdit', item)"
+            v-else
+          />
         </div>
         <div class="table__icon">
-          <VueCustomTooltip label="Удалить">
+          <VueCustomTooltip
+            label="Удалить"
+            v-if="
+              id === item.initiator._id ||
+              role === 'director' ||
+              role === 'superadmin'
+            "
+          >
             <img
               @click="$emit('toggleDelete', item)"
               src="@/assets/icons/trash_icon.svg"
@@ -92,6 +112,21 @@ export default {
     },
     editedItem: {
       type: Object,
+    },
+  },
+  computed: {
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        console.log(role);
+        return role.role;
+      },
+    },
+    id: {
+      get: function () {
+        let user = this.getUserRole();
+        return user._id;
+      },
     },
   },
 };
