@@ -85,9 +85,6 @@
         </div>
       </div>
 
-      <div class="group__content">
-        <div class="group__item text--bold-700">Товары:</div>
-      </div>
       <div class="vm--modal__buttons">
         <v-button @click="confirm" red>Отправить</v-button>
         <v-button @click="cancel" white>Отмена</v-button>
