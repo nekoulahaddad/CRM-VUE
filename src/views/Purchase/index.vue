@@ -194,13 +194,31 @@ export default {
 <style lang="scss">
 .purchase-page {
   .list__columns {
-    grid-template-columns: 30px 160px 160px 230px 160px 160px 160px 160px 160px 1fr;
+    grid-template-columns: 30px 120px 130px 230px 140px 140px 110px 110px 110px 1fr;
   }
   .list__header {
     .list__column {
       &:first-child {
         text-align: left;
       }
+    }
+  }
+
+  .page__right--fluid {
+    .list__columns {
+      grid-template-columns: 30px 160px 160px 300px 180px 180px 180px 180px 160px 1fr;
+    }
+  }
+
+  .page__right--full {
+    .list__columns {
+      grid-template-columns: 30px 160px 160px 230px 160px 160px 160px 160px 160px 1fr;
+    }
+  }
+
+  .page__right--middle {
+    .list__columns {
+      grid-template-columns: 30px 120px 160px 230px 160px 160px 139px 160px 120px 1fr;
     }
   }
 }
