@@ -175,7 +175,7 @@ export default {
 
 <style lang="scss">
 .purchase-edit {
-  .group__title {
+  & > .group__title {
     font-size: 16px;
   }
   .form-select,
