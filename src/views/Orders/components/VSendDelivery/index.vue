@@ -217,6 +217,7 @@ export default {
 
 <style lang="scss">
 .vm--modal {
+  position: relative;
   &__text {
     margin-bottom: 20px;
   }
@@ -237,6 +238,9 @@ export default {
     }
     .vm--modal__buttons {
       justify-content: flex-start;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
     }
     .autocomplete-input {
       width: 401px;
