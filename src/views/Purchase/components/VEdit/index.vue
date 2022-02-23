@@ -71,6 +71,21 @@
           />
         </div>
       </div>
+      <div class="group">
+        <div class="group__title">Статус:</div>
+        <div class="group__content">
+          <select class="form-select" name="status" v-model="status">
+            <option selected disabled :value="null">Выбрать статус</option>
+            <option
+              v-for="(item, index) in statusList"
+              :value="item"
+              :key="index"
+            >
+              {{ item }}
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
     <v-button red>Сохранить</v-button>
   </div>
@@ -99,11 +114,11 @@ export default {
       comment: this.item && this.item.comment ? this.item.comment : "",
       status: this.item && this.item.status ? this.item.status : null,
       statusList: [
-        "отказ",
-        "в обработке",
-        "подтвержденный",
-        "в наличии",
-        "отсутствует у поставщика",
+        "Отказ",
+        "В обработке",
+        "Подтвержденный",
+        "В наличии",
+        "Отсутствует у поставщика",
       ],
       users: [],
       regions: [],
@@ -163,6 +178,7 @@ export default {
   .group__title {
     font-size: 16px;
   }
+  .form-select,
   .autocomplete-input {
     width: 401px;
   }
@@ -176,6 +192,7 @@ export default {
   .group-goods__title {
     font-weight: 600;
   }
+
   .form-textarea {
     width: 967px;
   }
