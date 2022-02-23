@@ -84,6 +84,7 @@
                 placeholder="Введите телефон..."
                 v-model="clientForm.physicalUser.phone"
                 @input="getClientByPhone"
+                @onValidate="onValidatePhysical"
               />
             </div>
           </div>
@@ -151,6 +152,7 @@
                 placeholder="Введите телефон..."
                 v-model="clientForm.legalUser.phone"
                 @input="getClientByPhone"
+                @onValidate="onValidateLegal"
               />
             </div>
           </div>
@@ -696,6 +698,8 @@ export default {
           director: "",
         },
       },
+      isValidPhysicalNumber: false,
+      isValidLegalNumber: false,
       date: new Date().toString(),
       isLoading: false,
       isLoadingProductSearch: false,
@@ -722,6 +726,12 @@ export default {
     };
   },
   methods: {
+    onValidatePhysical({ isValidByLibPhoneNumberJs }) {
+      this.isValidPhysicalNumber = isValidByLibPhoneNumberJs;
+    },
+    onValidateLegal({ isValidByLibPhoneNumberJs }) {
+      this.isValidLegalNumber = isValidByLibPhoneNumberJs;
+    },
     async getClientByPhone(phone) {
       try {
         if (phone.target.value.length < 11) return;
@@ -930,6 +940,14 @@ export default {
       this.orderForm.manager = manager;
     },
     async createOrder() {
+      if (
+        (this.orderForm.clientType === "legal" && !this.isValidLegalNumber) ||
+        (this.orderForm.clientType !== "legal" && !this.isValidPhysicalNumber)
+      ) {
+        this.$toast.error("Неверный формат номера телефона");
+        return;
+      }
+
       if (this.clientForm.isOldUser) {
         this.createNewOrder();
       } else {
