@@ -5,6 +5,9 @@
 
     <v-order-action-modal :dialog="dialog" />
 
+    <!-- Модальное окно для отправки закупщику заказа -->
+    <v-send-delivery :editedItem="sendDeliveryItem" />
+
     <v-page-header
       :title="$t('pages.orders.pageTitle')"
       icon="orders_title"
@@ -148,6 +151,7 @@
                   @toggleEdit="toggleEdit"
                   @refreshDates="refreshDates"
                   @setDialog="setDialog"
+                  @toggleSendDelivery="toggleSendDelivery"
                 />
               </div>
             </div>
@@ -166,6 +170,7 @@ import VAddItem from "./components/VAddItem";
 import VInfo from "./components/VInfo";
 import VEdit from "./components/VEdit";
 import VDeleteItem from "./components/VDeleteItem";
+import VSendDelivery from "./components/VSendDelivery";
 import VDeclainedModal from "./components/VDeclainedModal";
 import VOrderActionModal from "./components/VOrderActionModal";
 import VFilter from "@/components/VFilter";
@@ -191,9 +196,11 @@ export default {
     VDeleteItem,
     VOrderActionModal,
     VDeclainedModal,
+    VSendDelivery,
   },
   data() {
     return {
+      sendDeliveryItem: {},
       showFilter: false,
       startDate: null,
       endDate: null,
@@ -423,6 +430,10 @@ export default {
     },
     toggleAdd() {
       this.add = !this.add;
+    },
+    toggleSendDelivery(item) {
+      this.sendDeliveryItem = item;
+      this.$modal.show("sendDelivery");
     },
     toggleDelete(item) {
       this.deletedItem = item;

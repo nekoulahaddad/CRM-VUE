@@ -579,6 +579,13 @@ export default {
         return this.editedItem.deliveryRequest;
       },
     },
+    currentUser: {
+      get: function () {
+        let user = this.getUserRole();
+
+        return user;
+      },
+    },
     outOfGoods: {
       get() {
         return this.products.length === this.deletedItems.length;
@@ -853,16 +860,18 @@ export default {
       products = products.filter((p) => !deleted.includes(p.product_id));
       return products;
     },
-    toggleSendToBuyer(res) {
-      this.sendToBuyer = !this.sendToBuyer;
-      if (res.data && res.data.data.products.length) {
-        this.selectedProductList = [];
-        res.data.data.products.forEach((item) => {
-          if (!this.sendedProductList.includes(item._id)) {
-            this.sendedProductList.push(item._id);
-          }
-        });
-      }
+    toggleSendToBuyer() {
+      this.$emit("toggleSendDelivery", {
+        type: "fromOrder",
+        initiator: this.currentUser,
+        _id: this.editedItem._id,
+        orderId: this.editedItem._id,
+        region: this.editedItem.region,
+        products: this.selectedProductList,
+        orderid: this.editedItem._id,
+        orderNumber: this.editedItem.number,
+        comment: "",
+      });
     },
     async getProducts() {
       axios({
