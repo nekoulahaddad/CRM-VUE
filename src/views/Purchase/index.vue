@@ -61,6 +61,9 @@
 
                 <!-- Блок с детальной информацией о закупке -->
                 <v-info :item="item" v-if="infoItem._id === item._id" />
+
+                <!-- Блок для редактирования закупки -->
+                <v-edit :item="item" v-if="editedItem._id === item._id" />
               </div>
               <v-pagination :count="count" />
             </template>
@@ -76,6 +79,7 @@
 import VItem from "./components/VItem";
 import VAddItem from "./components/VAddItem";
 import VInfo from "./components/VInfo";
+import VEdit from "./components/VEdit";
 import VDeleteItem from "./components/VDeleteItem";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
@@ -93,6 +97,7 @@ export default {
     VPagination,
     VSpinner,
     VItem,
+    VEdit,
     VInfo,
     VAddItem,
     VDeleteItem,

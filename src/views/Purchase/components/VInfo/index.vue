@@ -5,6 +5,10 @@
     </div>
     <div class="list-info__group group">
       <div class="group__content">
+        <div class="group__item text--bold-700">ФИО инициатора:</div>
+        <div class="group__value">{{ transformFIO(item.initiator) }}</div>
+      </div>
+      <div class="group__content">
         <div class="group__item text--bold-700">
           {{ $t("orderNumber") }}
         </div>
@@ -24,12 +28,7 @@
           {{ item.category.category.categoryName }}
         </div>
       </div>
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("author") }}
-        </div>
-        <div class="group__value">{{ transformFIO(item.initiator) }}</div>
-      </div>
+
       <div class="group__content">
         <div class="group__item text--bold-700">
           {{ $t("executor") }}
@@ -115,6 +114,10 @@ export default {
 @import "@/styles/_variables";
 
 .purchase-list-info {
+  .group__title {
+    font-size: 16px;
+  }
+
   .group-goods {
     position: relative;
 
