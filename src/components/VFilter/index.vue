@@ -256,8 +256,13 @@
                 @change="selectOptions($event, null, 'status', null)"
               >
                 <option selected value="all">Все статусы</option>
-                <option value="true">Обработана</option>
-                <option value="false">Не обработана</option>
+                <option value="отказ">Отказ</option>
+                <option value="в обработке">В обработке</option>
+                <option value="подтвержденный">Подтвержденный</option>
+                <option value="в наличии">В наличии</option>
+                <option value="отсутствует у поставщика">
+                  Отсутствует у поставщика
+                </option>
               </select>
             </div>
           </div>
