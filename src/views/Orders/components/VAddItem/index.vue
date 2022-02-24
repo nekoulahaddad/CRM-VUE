@@ -38,7 +38,9 @@
         <!-- Физическое лицо -->
         <template v-if="orderForm.clientType === 'physical'">
           <div class="group">
-            <div class="group__title">Фамилия:</div>
+            <div class="group__title">
+              Фамилия: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 required
@@ -51,7 +53,7 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Имя:</div>
+            <div class="group__title">Имя: <span class="required">*</span></div>
             <div class="group__content">
               <input
                 required
@@ -76,7 +78,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Телефон:</div>
+            <div class="group__title">
+              Телефон: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <phone-mask-input
                 required
@@ -92,7 +96,9 @@
         <!-- Юридическое лицо -->
         <template v-else>
           <div class="group">
-            <div class="group__title">Фамилия:</div>
+            <div class="group__title">
+              Фамилия: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 required
@@ -105,7 +111,7 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Имя:</div>
+            <div class="group__title">Имя: <span class="required">*</span></div>
             <div class="group__content">
               <input
                 required
@@ -118,7 +124,7 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">ИНН:</div>
+            <div class="group__title">ИНН: <span class="required">*</span></div>
             <div class="group__content">
               <input
                 required
@@ -131,7 +137,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Почта:</div>
+            <div class="group__title">
+              Почта: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 required
@@ -144,7 +152,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Телефон:</div>
+            <div class="group__title">
+              Телефон: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <phone-mask-input
                 required
@@ -157,7 +167,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Название организации:</div>
+            <div class="group__title">
+              Название организации: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 required
@@ -170,7 +182,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Форма собственности:</div>
+            <div class="group__title">
+              Форма собственности: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 required
@@ -183,7 +197,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Фактический адрес:</div>
+            <div class="group__title">
+              Фактический адрес: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 required
@@ -196,7 +212,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Юридический адрес:</div>
+            <div class="group__title">
+              Юридический адрес: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 required
@@ -221,7 +239,7 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">БИК:</div>
+            <div class="group__title">БИК: <span class="required">*</span></div>
             <div class="group__content">
               <input
                 required
@@ -258,7 +276,9 @@
             </div>
           </div>
           <div class="group">
-            <div class="group__title">Корр. счет:</div>
+            <div class="group__title">
+              Корр. счет: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 required
@@ -300,7 +320,9 @@
 
         <!-- Способ оплаты -->
         <div class="group" v-if="orderForm.clientType === 'physical'">
-          <div class="group__title">Способ оплаты:</div>
+          <div class="group__title">
+            Способ оплаты: <span class="required">*</span>
+          </div>
           <div class="group__content">
             <select
               class="form-select"
@@ -316,7 +338,9 @@
           </div>
         </div>
         <div class="group" v-else>
-          <div class="group__title">Способ оплаты:</div>
+          <div class="group__title">
+            Способ оплаты: <span class="required">*</span>
+          </div>
           <div class="group__content">
             <select
               required
@@ -332,7 +356,9 @@
         </div>
 
         <div class="group">
-          <div class="group__title">Способ доставки:</div>
+          <div class="group__title">
+            Способ доставки: <span class="required">*</span>
+          </div>
           <div class="group__content">
             <select
               required
@@ -347,7 +373,9 @@
           </div>
         </div>
         <div class="group">
-          <div class="group__title">Регион:</div>
+          <div class="group__title">
+            Регион: <span class="required">*</span>
+          </div>
           <div class="group__content">
             <select required class="form-select" v-model="orderForm.region">
               <option
@@ -1121,6 +1149,9 @@ export default {
     & + * {
       margin-top: 10px;
     }
+  }
+  .required {
+    color: #db1f35;
   }
 }
 </style>
