@@ -69,8 +69,14 @@
               role === 'superadmin'
             "
           >
+            <img
+              v-if="item.status.value === 'delivered'"
+              style="opacity: 0.2"
+              src="@/assets/icons/write_icon.svg"
+              alt=""
+            />
             <VueCustomTooltip
-              v-if="editedItem._id !== item._id"
+              v-else-if="editedItem._id !== item._id"
               label="Изменить"
             >
               <img
