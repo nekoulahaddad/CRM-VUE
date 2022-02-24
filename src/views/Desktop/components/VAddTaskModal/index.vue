@@ -369,6 +369,7 @@ export default {
   }
 
   .add-task-modal {
+    .spinner,
     button {
       position: absolute;
       bottom: 12px;
