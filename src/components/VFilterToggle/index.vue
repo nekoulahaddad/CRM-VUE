@@ -26,6 +26,13 @@ export default {
       this.$emit("toggleFilter");
     },
   },
+  watch: {
+    active() {
+      if (this.active) {
+        this.$scrollTo("body", 300);
+      }
+    },
+  },
 };
 </script>
 
