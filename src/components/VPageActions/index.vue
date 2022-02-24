@@ -126,7 +126,11 @@
       <!-- Заказы -->
       <template v-if="name === 'orders'">
         <VueCustomTooltip label="Выгрузить заказы">
-          <a class="page-actions__button" href="" @click.prevent="downloadItem">
+          <a
+            class="page-actions__button"
+            href=""
+            @click.prevent="downloadExcel"
+          >
             <img src="@/assets/icons/download.svg" alt="" />
           </a>
         </VueCustomTooltip>
@@ -378,17 +382,25 @@ export default {
       });
     },
     async downloadExcel() {
-      this.changeStatus(false);
-
-      axios({
-        url: `/excel/getorders`,
-        data: this.$store.getters.getFilterOptions,
-        method: "POST",
-      }).then(async () => {
-        this.$toast.success("Начинаю генерировать Excel!");
-      });
-
-      this.changeStatus(true);
+      try {
+        axios({
+          url: `/excel/getorders`,
+          data: this.$store.state.filterOptions,
+          method: "POST",
+          responseType: "blob",
+        }).then((response) => {
+          const link = document.createElement("a");
+          const blob = new Blob([response.data]);
+          let urll = window.URL.createObjectURL(blob);
+          link.href = urll;
+          link.download = `Заказы.xlsx`;
+          link.click();
+          window.URL.revokeObjectURL(urll);
+          URL.revokeObjectURL(link.href);
+        });
+      } catch {
+        this.$toast.error("Ошибка при скачивании файла");
+      }
     },
     clearCache() {
       axios
