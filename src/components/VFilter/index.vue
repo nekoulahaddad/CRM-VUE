@@ -1135,7 +1135,7 @@ export default {
       this.selectOptions(null, null, "initiator", null);
     },
     selectManager(user) {
-      this.filterOptions.manager = user._id;
+      this.filterOptions.executor = user._id;
       this.selectOptions(null, null, "manager", null);
     },
     selectUser(user) {

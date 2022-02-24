@@ -127,8 +127,8 @@
       <template v-if="name === 'orders'">
         <VueCustomTooltip label="Выгрузить заказы">
           <a
-            class="page-actions__button"
             href=""
+            class="page-actions__button"
             @click.prevent="downloadExcel"
           >
             <img src="@/assets/icons/download.svg" alt="" />
@@ -382,6 +382,7 @@ export default {
       });
     },
     async downloadExcel() {
+      alert();
       try {
         axios({
           url: `/excel/getorders`,
