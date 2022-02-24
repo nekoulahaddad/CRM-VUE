@@ -63,7 +63,12 @@
                 <v-info :item="item" v-if="infoItem._id === item._id" />
 
                 <!-- Блок для редактирования закупки -->
-                <v-edit :item="item" v-if="editedItem._id === item._id" />
+                <v-edit
+                  :item="item"
+                  v-if="editedItem._id === item._id"
+                  @fetchData="fetchData"
+                  @toggleEdit="toggleEdit"
+                />
               </div>
               <v-pagination :count="count" />
             </template>
@@ -198,6 +203,11 @@ export default {
 
 <style lang="scss">
 .purchase-page {
+  .page__header {
+    max-width: 1837px;
+    padding-right: 20px;
+  }
+
   .list__columns {
     grid-template-columns: 30px 120px 130px 230px 140px 140px 110px 110px 110px 1fr;
   }

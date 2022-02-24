@@ -1,98 +1,162 @@
 <template>
   <div class="list__info purchase-edit">
     <div class="group__title text--blue">Редактировать закупку</div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">ФИО инициатора:</div>
-        <div class="group__value">{{ transformFIO(item.initiator) }}</div>
-      </div>
-      <div class="group__content">
-        <div class="group__item text--bold-700">№ заказа:</div>
-        <div class="group__value">{{ item.orderNumber }}</div>
-      </div>
-      <div class="group__content">
-        <div class="group__item text--bold-700">Регион:</div>
-        <div class="group__value">{{ item.region.title }}</div>
-      </div>
-      <div class="group">
-        <div class="group__title">Категория:</div>
+    <form @submit.prevent="onEdit">
+      <div class="list-info__group group">
         <div class="group__content">
-          <autocomplete
-            required
-            :search="searchCategory"
-            :get-result-value="getResultValue"
-            placeholder="Введите категорию..."
-          >
-            <template #result="{ result, props }">
-              <li v-bind="props" @click="selectCategory(result)">
-                {{ result.categoryName }}
-              </li>
-            </template>
-          </autocomplete>
+          <div class="group__item text--bold-700">ФИО инициатора:</div>
+          <div class="group__value">{{ transformFIO(item.initiator) }}</div>
         </div>
-      </div>
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("goods") }}
+        <div class="group__content">
+          <div class="group__item text--bold-700">№ заказа:</div>
+          <div class="group__value">{{ item.orderNumber }}</div>
         </div>
-        <div class="group__value">
+        <div class="group__content">
+          <div class="group__item text--bold-700">Регион:</div>
+          <div class="group__value">{{ item.region.title }}</div>
+        </div>
+
+        <div class="group__content">
+          <div class="group__item text--bold-700">Категория:</div>
           <div
-            v-for="product in item.products"
-            class="group__goods group-goods"
+            class="group__value category"
+            @click="changeCategory = !changeCategory"
           >
-            <div class="group-goods__item">
-              <div class="group-goods__title">{{ $t("name") }}</div>
-              <div class="group-goods__value">{{ product.title }}</div>
-            </div>
-            <div class="group-goods__item">
-              <div class="group-goods__title">{{ $t("article") }}</div>
-              <div class="group-goods__value">{{ product.article }}</div>
-            </div>
-            <div class="group-goods__item">
-              <div class="group-goods__title">{{ $t("quantity") }}</div>
-              <div class="group-goods__value">{{ product.quantity }}</div>
-            </div>
-            <div class="group-goods__item">
-              <div class="group-goods__title">{{ $t("total") }}</div>
-              <div class="group-goods__value">
-                {{ product.cost }} {{ product.valute }}
+            {{ category.categoryName }}
+          </div>
+        </div>
+
+        <div class="group" v-if="changeCategory">
+          <div class="group__content">
+            <autocomplete
+              required
+              :search="searchCategory"
+              :get-result-value="getResultValue"
+              placeholder="Введите категорию..."
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectCategory(result)">
+                  {{ result.categoryName }}
+                </li>
+              </template>
+            </autocomplete>
+          </div>
+        </div>
+        <div class="group__content">
+          <div class="group__item text--bold-700">
+            {{ $t("goods") }}
+          </div>
+          <div class="group__value">
+            <div
+              v-for="product in item.products"
+              class="group__goods group-goods"
+            >
+              <div class="group-goods__item">
+                <div class="group-goods__title">{{ $t("name") }}</div>
+                <div class="group-goods__value">{{ product.title }}</div>
+              </div>
+              <div class="group-goods__item">
+                <div class="group-goods__title">{{ $t("article") }}</div>
+                <div class="group-goods__value">{{ product.article }}</div>
+              </div>
+              <div class="group-goods__item">
+                <div class="group-goods__title">{{ $t("quantity") }}</div>
+                <div class="group-goods__value">{{ product.quantity }}</div>
+              </div>
+              <div class="group-goods__item">
+                <div class="group-goods__title">{{ $t("total") }}</div>
+                <div class="group-goods__value">
+                  {{ product.cost }} {{ product.valute }}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="group">
-        <div class="group__title">Описание:</div>
-        <div class="group__content">
-          <textarea
-            class="form-textarea"
-            placeholder="Введите описание..."
-            v-model="message"
-          />
+        <div class="group">
+          <div class="group__title">Описание:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Введите описание..."
+              v-model="message"
+            />
+          </div>
         </div>
-      </div>
-      <div class="group">
-        <div class="group__title">Статус:</div>
+        <div class="group">
+          <div class="group__title">Статус:</div>
+          <div class="group__content">
+            <select class="form-select" name="status" v-model="status">
+              <option selected disabled :value="null">Выбрать статус</option>
+              <option
+                v-for="(item, index) in statusList"
+                :value="item"
+                :key="index"
+              >
+                {{ item }}
+              </option>
+            </select>
+          </div>
+        </div>
+
         <div class="group__content">
-          <select class="form-select" name="status" v-model="status">
-            <option selected disabled :value="null">Выбрать статус</option>
-            <option
-              v-for="(item, index) in statusList"
-              :value="item"
-              :key="index"
+          <div class="group__item text--bold-700">ФИО исполнителя:</div>
+          <div
+            class="group__value executor"
+            @click="changeBuyer = !changeBuyer"
+          >
+            {{ transformFIO(executor) }}
+          </div>
+        </div>
+
+        <div class="group" v-if="changeBuyer">
+          <div class="group__content">
+            <autocomplete
+              required
+              :search="getBuyersBySearch"
+              :get-result-value="getBuyer"
+              placeholder="Введите ФИО исполнителя..."
             >
-              {{ item }}
-            </option>
-          </select>
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectBuyer(result)">
+                  {{ transformFIO(result) }}
+                </li>
+              </template>
+            </autocomplete>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group__title">Комментарий:</div>
+          <div class="group__content">
+            <textarea
+              class="form-textarea"
+              placeholder="Введите комментарий..."
+              v-model="comment"
+            />
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group__title">Дата поставки:</div>
+          <div class="group__content">
+            <datetime
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              v-model="deliveryDate"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <v-button red>Сохранить</v-button>
+      <v-spinner v-if="isLoading" small />
+      <v-button v-else red>Сохранить</v-button>
+    </form>
   </div>
 </template>
 
 <script>
 import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
 
 export default {
   props: {
@@ -101,9 +165,12 @@ export default {
       required: true,
     },
   },
+  components: { VSpinner },
   data() {
     return {
       fio: "",
+      changeBuyer: false,
+      changeCategory: false,
       currentInput: "",
       categories: this.item && this.item.categories ? this.item.categories : [],
       category:
@@ -120,6 +187,7 @@ export default {
         "В наличии",
         "Отсутствует у поставщика",
       ],
+      isLoading: false,
       users: [],
       regions: [],
       region: this.item && this.item.region ? this.item.region : null,
@@ -138,9 +206,32 @@ export default {
   methods: {
     selectCategory(category) {
       this.category = category;
+      this.changeCategory = false;
+    },
+    getBuyer(result) {
+      return "";
+    },
+    selectBuyer(user) {
+      if (user._id === this.currentUser._id) {
+        this.$toast.error("Вы не можете быть исполнителем!");
+        return;
+      }
+      this.executor = user;
+      this.changeBuyer = false;
+    },
+    async getBuyersBySearch(search) {
+      if (search.trim().length < 2) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${search}`).then((res) => {
+          resolve(res.data);
+        });
+      });
     },
     searchCategory(search) {
-      if (search.trim().length < 3) {
+      if (search.trim().length < 2) {
         return [];
       }
 
@@ -158,14 +249,56 @@ export default {
       });
     },
     getResultValue(result) {
-      return result.categoryName;
+      return "";
+    },
+    onEdit() {
+      let data = {
+        data: {
+          initiator: this.initiator,
+          executor: this.executor,
+          status: this.status,
+          category: this.category,
+          region: this.region,
+          message: this.message,
+          comment: this.comment,
+          orderNumber: this.orderNumber,
+          orderId: this.orderId,
+          products: this.item ? this.item.products : this.selectedProducts,
+          deliveryDate: this.deliveryDate,
+        },
+      };
+
+      data.dataId = this.item._id;
+      let seen = null;
+      if (this.item.executor._id === this.currentUser._id) {
+        seen = Date.now();
+      }
+      data.data.seenAt = seen;
+
+      this.isLoading = true;
+
+      axios({
+        url: `/purchase/update/`,
+        data: data,
+        method: "POST",
+      })
+        .then(() => {
+          this.$emit("toggleEdit", this.item);
+          this.$emit("fetchData");
+          this.$toast.success("Закупка успешно изменена!");
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
   },
   computed: {
     currentUser: {
       get: function () {
         let user = this.getUserRole();
-
         return user;
       },
     },
@@ -179,6 +312,7 @@ export default {
     font-size: 16px;
   }
   .form-select,
+  .vdatetime-input,
   .autocomplete-input {
     width: 401px;
   }
@@ -198,6 +332,11 @@ export default {
   }
   button {
     width: 230px;
+  }
+  .category,
+  .executor {
+    border-bottom: 1px dashed;
+    cursor: pointer;
   }
 }
 </style>
