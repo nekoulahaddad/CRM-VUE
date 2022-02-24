@@ -7,7 +7,9 @@
       :placeholder="placeholder"
       :value="value"
       @input="$emit('input', $event.target.value)"
-      @keydown.enter.prevent="$emit('submit', $event.target.value)"
+      @keydown.enter.prevent="
+        (isSubmitted = true), $emit('submit', $event.target.value)
+      "
     />
     <img
       alt=""
@@ -22,7 +24,7 @@
       alt=""
       class="search__icon"
       src="@/assets/icons/search.svg"
-      @click="$emit('submit')"
+      @click="(isSubmitted = true), $emit('submit')"
       v-else
     />
   </div>
@@ -35,13 +37,19 @@ export default {
     value: String,
   },
   data() {
-    return {};
+    return {
+      isSubmitted: false,
+    };
   },
   methods: {
     clear() {
       this.$refs.searchInput.value = "";
       this.$emit("input", "");
-      this.$emit("submit", "");
+
+      if (this.isSubmitted) {
+        this.$emit("submit");
+        this.isSubmitted = false;
+      }
     },
   },
 };
