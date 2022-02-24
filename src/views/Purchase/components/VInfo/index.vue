@@ -5,7 +5,7 @@
     </div>
     <div class="list-info__group group">
       <div class="group__content">
-        <div class="group__item text--bold-700">ФИО инициатора:</div>
+        <div class="group__item text--bold-700">Автор:</div>
         <div class="group__value">{{ transformFIO(item.initiator) }}</div>
       </div>
       <div class="group__content">

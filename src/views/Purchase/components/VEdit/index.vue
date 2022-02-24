@@ -4,7 +4,7 @@
     <form @submit.prevent="onEdit">
       <div class="list-info__group group">
         <div class="group__content">
-          <div class="group__item text--bold-700">ФИО инициатора:</div>
+          <div class="group__item text--bold-700">Автор:</div>
           <div class="group__value">{{ transformFIO(item.initiator) }}</div>
         </div>
         <div class="group__content">
@@ -29,7 +29,6 @@
         <div class="group" v-if="changeCategory">
           <div class="group__content">
             <autocomplete
-              required
               :search="searchCategory"
               :get-result-value="getResultValue"
               placeholder="Введите категорию..."
@@ -111,7 +110,6 @@
         <div class="group" v-if="changeBuyer">
           <div class="group__content">
             <autocomplete
-              required
               :search="getBuyersBySearch"
               :get-result-value="getBuyer"
               placeholder="Введите ФИО исполнителя..."
@@ -220,7 +218,7 @@ export default {
       this.changeBuyer = false;
     },
     async getBuyersBySearch(search) {
-      if (search.trim().length < 2) {
+      if (search.trim().length < 1) {
         return [];
       }
 
@@ -231,7 +229,7 @@ export default {
       });
     },
     searchCategory(search) {
-      if (search.trim().length < 2) {
+      if (search.trim().length < 1) {
         return [];
       }
 
