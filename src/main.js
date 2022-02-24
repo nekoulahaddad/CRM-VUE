@@ -3,6 +3,7 @@ import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import vuescroll from "vuescroll";
+import vSelect from "vue-select";
 import VCalendar from "v-calendar";
 import VueNumberFormat from "vue-number-format";
 import VueSocketIOExt from "vue-socket.io-extended";
@@ -47,6 +48,7 @@ import "vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css";
 import "vue-js-modal/dist/styles.css";
 import "vue-datetime/dist/vue-datetime.css";
 import "./styles/index.scss";
+import "vue-select/dist/vue-select.css";
 
 moment.tz.guess();
 const token = localStorage.getItem("token");
@@ -86,6 +88,7 @@ Vue.use(Popover);
 Vue.use(VueInputDropdown);
 Vue.use(VueMoment);
 Vue.use(VueTheMask);
+Vue.component("v-select", vSelect);
 Vue.use(VueScrollTo, {
   container: "body",
   duration: 0,

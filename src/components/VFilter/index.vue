@@ -185,6 +185,7 @@
 
         <!-- Закупка -->
         <template v-else-if="type === 'purchase'">
+          <v-select :options="[1, 2, 3]"></v-select>
           <div class="filter__group group">
             <div class="group__title">Период:</div>
             <div class="group__content">

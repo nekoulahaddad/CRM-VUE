@@ -1,6 +1,7 @@
 <template>
   <div class="search">
     <input
+      ref="searchInput"
       class="search__input"
       type="text"
       :placeholder="placeholder"
@@ -11,8 +12,18 @@
     <img
       alt=""
       class="search__icon"
+      src="@/assets/icons/close_icon.svg"
+      width="20px"
+      height="20px"
+      v-if="value.length"
+      @click="clear"
+    />
+    <img
+      alt=""
+      class="search__icon"
       src="@/assets/icons/search.svg"
       @click="$emit('submit')"
+      v-else
     />
   </div>
 </template>
@@ -22,6 +33,16 @@ export default {
   props: {
     placeholder: String,
     value: String,
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    clear() {
+      this.$refs.searchInput.value = "";
+      this.$emit("input", "");
+      this.$emit("submit", "");
+    },
   },
 };
 </script>
