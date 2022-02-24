@@ -207,6 +207,13 @@
         <div class="vm--modal__right">
           <form>
             <div class="edit-task-modal__title">Сведения:</div>
+            <!-- Отдел -->
+            <div class="group">
+              <div class="group__title">Отдел:</div>
+              <div class="group__content">
+                {{ department }}
+              </div>
+            </div>
             <!-- Исполнитель -->
             <div class="group">
               <div class="group__title">Исполнители:</div>
@@ -282,6 +289,7 @@ export default {
         surname: [],
       },
       initiator: "",
+      department: null,
     };
   },
   computed: {
@@ -436,6 +444,7 @@ export default {
         this.executors = this.task.executor;
         this.description = this.task.description;
         this.initiator_comment = this.task.initiator_comment;
+        this.department = this.task.executor.department[0].title;
 
         if (this.task.documents.length) {
           this.documents = this.task.documents;
