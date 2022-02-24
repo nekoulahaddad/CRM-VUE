@@ -103,7 +103,7 @@
   },
   "menu": {
     "monitor": "Дашборд",
-    "education": "Обучение",
+    "education": "Документы",
     "employee": "Сотрудники",
     "calendar": "Календарь",
     "tasks": "Задачи",
@@ -201,7 +201,7 @@
       ]
     },
     "education": {
-      "pageTitle": "Обучение",
+      "pageTitle": "Документы",
       "buttons": [
         {
           "id": "crm",
