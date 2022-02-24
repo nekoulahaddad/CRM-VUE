@@ -79,7 +79,9 @@
             </div>
 
             <!-- Подзадачи -->
-            <template v-if="sub_tasks.length && executors._id.length > 1">
+            <template
+              v-if="sub_tasks.length && executors && executors._id.length > 1"
+            >
               <div class="edit-task-modal__title">Подзадачи:</div>
 
               <div class="group">
@@ -97,7 +99,8 @@
                       <div>{{ transformFIO(sub_task.executor) }}</div>
                       <div
                         v-if="
-                          sub_task.initiator._id === id || role === 'superadmin'
+                          (sub_task && sub_task.initiator._id === id) ||
+                          role === 'superadmin'
                         "
                       >
                         <img
@@ -118,6 +121,7 @@
                 v-if="
                   task.initiator &&
                   userId === task.initiator._id &&
+                  task.executors &&
                   task.executors._id.length >= 1
                 "
                 @click="changeTaskStatus(task, 'completed', status)"
