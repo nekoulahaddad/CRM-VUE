@@ -4,7 +4,7 @@
     <v-add-event-modal @updateEvents="updateEvents" />
 
     <!-- Модальное окно для добавления задачи -->
-    <v-add-task-modal :departments="departments" />
+    <v-add-task-modal :departments="departments" @afterAddTask="afterAddTask" />
 
     <!-- Модальное окно для просмотра задачи -->
     <v-edit-task-modal
@@ -256,6 +256,15 @@ export default {
     },
   },
   methods: {
+    async afterAddTask() {
+      try {
+        const { data } = await this.getDataFromPage(`/tasks/desktop`, {
+          status: "assigned",
+          limit: 1,
+        });
+        this.dataset["assigned"].tasks.unshift(data.assigned.tasks[0]);
+      } catch (e) {}
+    },
     dayClicked(e) {
       this.clickedDay = e;
     },

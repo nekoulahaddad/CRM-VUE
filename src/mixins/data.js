@@ -41,6 +41,7 @@ export default {
         updatedAt: options.updatedAt || null,
         statuses: options.statuses || null,
         skip: options.skip || null,
+        limit: options.limit || null,
       };
       let urlStr;
       if (this.$route.params.page) {

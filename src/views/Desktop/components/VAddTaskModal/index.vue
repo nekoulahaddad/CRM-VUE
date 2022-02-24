@@ -296,6 +296,7 @@ export default {
       })
         .then(() => {
           this.cancel();
+          this.$emit("afterAddTask");
           this.$toast.success("Задача успешно добавлена!");
         })
         .catch((err) => {
