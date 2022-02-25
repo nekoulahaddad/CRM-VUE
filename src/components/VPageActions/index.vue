@@ -125,13 +125,14 @@
 
       <!-- Заказы -->
       <template v-if="name === 'orders'">
-        <VueCustomTooltip label="Выгрузить заказы">
+        <VueCustomTooltip v="else" label="Выгрузить заказы">
           <a
             href=""
             class="page-actions__button"
             @click.prevent="downloadExcel"
           >
-            <img src="@/assets/icons/download.svg" alt="" />
+            <img src="@/assets/icons/spinner.svg" alt="" v-if="downLoad" />
+            <img src="@/assets/icons/download.svg" alt="" v-else />
           </a>
         </VueCustomTooltip>
         <VueCustomTooltip label="Добавить заказ">
@@ -310,6 +311,7 @@ export default {
   data() {
     return {
       active: null,
+      downLoad: false,
     };
   },
   computed: {
@@ -382,7 +384,7 @@ export default {
       });
     },
     async downloadExcel() {
-      console.log(2);
+      this.downLoad = true;
       try {
         axios({
           url: `/excel/getorders`,
@@ -396,12 +398,13 @@ export default {
           link.href = urll;
           link.download = `Заказы.xlsx`;
           link.click();
-          console.log(111);
           window.URL.revokeObjectURL(urll);
           URL.revokeObjectURL(link.href);
         });
       } catch {
         this.$toast.error("Ошибка при скачивании файла");
+      } finally {
+        this.downLoad = false;
       }
     },
     clearCache() {
