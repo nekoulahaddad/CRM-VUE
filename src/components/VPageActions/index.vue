@@ -382,7 +382,6 @@ export default {
       });
     },
     async downloadExcel() {
-      alert();
       try {
         axios({
           url: `/excel/getorders`,
