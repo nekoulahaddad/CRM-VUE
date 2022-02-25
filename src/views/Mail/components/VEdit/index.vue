@@ -5,17 +5,35 @@
         <div class="group__title text--blue">
           {{ $t("pages.mail.edit") }}
         </div>
-        <div class="group">
-          <div class="group__title">{{ $t("manager") }}</div>
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="$t('manager')"
-              v-model="fio"
-            />
+
+        <div class="group__content">
+          <div class="group__item text--bold-700">
+            {{ $t("manager") }}
+          </div>
+          <div
+            class="group__value manager"
+            @click="changeManager = !changeManager"
+          >
+            {{ fio }}
           </div>
         </div>
+
+        <div class="group" v-if="changeManager">
+          <autocomplete
+            required
+            ref="executor"
+            :search="getUsersByFIO"
+            :get-result-value="getResultValue"
+            placeholder="Введите Ф.И.О. менеджера..."
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectUser(result)">
+                {{ transformFIO(result) }}
+              </li>
+            </template>
+          </autocomplete>
+        </div>
+
         <div class="group">
           <div class="group__title">{{ $t("orderNumber") }}</div>
           <div class="group__content">
@@ -69,6 +87,7 @@ export default {
       comment: null,
       orderNumber: null,
       isLoading: false,
+      changeManager: false,
     };
   },
   computed: {
@@ -83,23 +102,29 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
-    async getUsersByFIO() {
-      axios(`/user/getmanagers/${this.fio}/${this.item.region._id}`).then(
-        async (res) => {
-          let result = await res;
-          this.users = result.data;
-        }
-      );
+    async getUsersByFIO(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getmanagers/${input}/${this.item.region._id}`).then(
+          async (res) => {
+            resolve(res.data);
+          }
+        );
+      });
+    },
+    getResultValue(result) {
+      return "";
     },
     selectUser(user) {
       this.manager = user._id;
       this.fio = `${user.surname} ${user.name.charAt(0)}.${
         user.lastname ? user.lastname.charAt(0) + "." : ""
       }`;
-      this.users = [];
+      this.changeManager = false;
     },
     onCallbackUpdate() {
-      this.changeStatus(false);
       let callbackData = {
         callbackId: this.item._id,
         manager: this.manager,
@@ -114,12 +139,14 @@ export default {
         this.$emit("toggleEdit", this.item);
         this.$toast.success("Заявка успешно изменена");
         this.$emit("getData");
-        this.changeStatus(true);
       });
     },
   },
   created() {
-    this.orderNumber = this.item.orderNumber;
+    this.orderNumber =
+      this.item.order && this.item.order.length
+        ? this.item.order[0].number
+        : "";
     this.comment = this.item.comment;
     this.fio = `${
       this.item.manager[0].surname
@@ -134,13 +161,19 @@ export default {
 </script>
 
 <style lang="scss">
-.mail-list-info {
+.mail-edit-form {
   .group {
-    max-width: 976px;
-
     select {
       max-width: 401px;
     }
+  }
+  .autocomplete-input {
+    width: 100%;
+  }
+  .manager {
+    border-bottom: 1px dashed;
+    cursor: pointer;
+    user-select: none;
   }
 }
 </style>

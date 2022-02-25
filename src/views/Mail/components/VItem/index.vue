@@ -18,7 +18,7 @@
     <div class="list__column text--blue">
       {{ item.manager && item.manager[0] ? transformFIO(item.manager[0]) : "" }}
     </div>
-    <div class="list__column">{{ item.orderNumber }}</div>
+    <div class="list__column">{{ item.order[0] && item.order[0].number }}</div>
     <div class="list__column">
       <VueCustomTooltip
         v-if="item.comment"
