@@ -391,20 +391,22 @@ export default {
           data: this.$store.state.filterOptions,
           method: "POST",
           responseType: "blob",
-        }).then((response) => {
-          const link = document.createElement("a");
-          const blob = new Blob([response.data]);
-          let urll = window.URL.createObjectURL(blob);
-          link.href = urll;
-          link.download = `Заказы.xlsx`;
-          link.click();
-          window.URL.revokeObjectURL(urll);
-          URL.revokeObjectURL(link.href);
-        });
+        })
+          .then((response) => {
+            const link = document.createElement("a");
+            const blob = new Blob([response.data]);
+            let urll = window.URL.createObjectURL(blob);
+            link.href = urll;
+            link.download = `Заказы.xlsx`;
+            link.click();
+            window.URL.revokeObjectURL(urll);
+            URL.revokeObjectURL(link.href);
+          })
+          .finally(() => {
+            this.downLoad = false;
+          });
       } catch {
         this.$toast.error("Ошибка при скачивании файла");
-      } finally {
-        this.downLoad = false;
       }
     },
     clearCache() {
