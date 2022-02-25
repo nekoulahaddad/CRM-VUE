@@ -98,6 +98,26 @@
           </textarea>
         </div>
       </div>
+
+      <div class="group" v-if="role === 'superadmin'">
+        <div class="group__title">Cтатус</div>
+        <div class="group__content">
+          <select class="form-select" name="status" v-model="changeStatus">
+            <option :value="null" selected disabled>Выберите статус</option>
+            <option value="assigned">Назначена</option>
+            <option value="tested">На проверке</option>
+            <option value="completed">Выполненые</option>
+            <option value="under revision>">На доработке</option>
+            <option value="accepted">Принята</option>
+            <option value="not accepted">Не принята</option>
+          </select>
+        </div>
+        <div class="group__footer" v-if="changeStatus">
+          <v-button red @click="changeTaskStatus(task, changeStatus)">
+            Сменить статус
+          </v-button>
+        </div>
+      </div>
       <div class="group__footer">
         <v-button
           v-if="
@@ -196,6 +216,7 @@ export default {
       comment: this.task && this.task.comment ? this.task.comment : "",
       documents: this.task.documents || [],
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
+      changeStatus: null,
     };
   },
   computed: {
@@ -300,7 +321,10 @@ export default {
 }
 .tasks-list-info {
   .form-textarea {
-    width: 976px;
+    width: 100%;
+  }
+  .form-select {
+    width: 401px;
   }
 }
 </style>

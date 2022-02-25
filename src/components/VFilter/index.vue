@@ -453,7 +453,7 @@
                 <option value="completed">Выполненые</option>
                 <option value="under revision>">На доработке</option>
                 <option value="accepted">Принята</option>
-                <option value="not accepted>">Отклонена</option>
+                <option value="not accepted">Не принята</option>
               </select>
             </div>
           </div>
