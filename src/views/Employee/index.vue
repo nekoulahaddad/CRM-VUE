@@ -55,9 +55,10 @@
               </div>
               <div class="list__columns">
                 <div
-                  v-for="field in $t('pages.employee.fields')"
+                  v-for="(field, i) in $t('pages.employee.fields')"
                   class="list__column"
                 >
+                  <input v-if="i === 0" type="checkbox" class="form-checkbox" />
                   {{ field }}
                 </div>
               </div>
@@ -378,19 +379,25 @@ export default {
   .list__columns {
     grid-template-columns: 120px 120px 329px 100px 100px 180px 200px 1fr;
   }
-  .list__column:last-child {
-    padding-left: 20px;
+  .list__header {
+    .list__column:first-child {
+      text-align: left;
+      .form-checkbox {
+        position: relative;
+        top: 1px;
+      }
+    }
   }
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 160px 200px 425px 130px 130px 240px 260px 1fr;
+      grid-template-columns: 180px 200px 425px 130px 130px 250px 240px 1fr;
     }
   }
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 120px 220px 352px 120px 120px 250px 250px 1fr;
+      grid-template-columns: 160px 220px 352px 120px 120px 220px 220px 1fr;
     }
   }
 

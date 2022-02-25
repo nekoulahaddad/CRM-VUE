@@ -1,6 +1,9 @@
 <template>
-  <div class="list__columns list__columns-shadow list__columns-white">
+  <div
+    class="list__columns list__columns-shadow list__columns-white employee-item"
+  >
     <div class="list__column text--blue">
+      <input type="checkbox" class="form-checkbox" />
       {{
         `${employee.surname} ${employee.name.charAt(0)}.${
           employee.lastname ? employee.lastname.charAt(0) + "." : ""
@@ -116,3 +119,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.employee-item {
+  .list__column:first-child {
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+}
+</style>
