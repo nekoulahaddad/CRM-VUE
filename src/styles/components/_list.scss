@@ -111,6 +111,8 @@
   .smooth-dnd-draggable-wrapper,
   &__column {
     font-weight: bold;
+    font-size: 13px;
+
     &:not(&--number) {
       text-align: center;
     }
