@@ -36,93 +36,92 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else-if="orders.length">
-          <div class="scroll-horizontal">
-            <div class="list list-shadow">
-              <div class="list__header">
-                <v-search
-                  @submit="getSearchData"
-                  v-model="searchStr"
-                  placeholder="Поиск по ФИО или номеру заказа"
-                />
-                <div class="list__title">
-                  {{ $t("pages.orders.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div
-                    class="list__column list__column--filter"
-                    @click="sort('number')"
-                  >
-                    <span>№:</span>
-                    <img
-                      alt=""
-                      src="@/assets/icons/filter_down.svg"
-                      :class="{
-                        'list__filter-icon--active':
-                          filtersOptions.number === -1,
-                      }"
-                      class="list__filter-icon"
-                    />
-                  </div>
-                  <div class="list__column">Клиент:</div>
-                  <div class="list__column">Регион:</div>
-                  <div
-                    class="list__column list__column--filter"
-                    @click="sort('created')"
-                  >
-                    <span>Дата создания:</span>
-                    <img
-                      alt=""
-                      src="@/assets/icons/filter_down.svg"
-                      :class="{
-                        'list__filter-icon--active':
-                          filtersOptions.created === -1,
-                      }"
-                      class="list__filter-icon"
-                    />
-                  </div>
-                  <div
-                    class="list__column list__column--filter"
-                    @click="sort('buyed')"
-                  >
-                    <span>Оплачен:</span>
-                    <img
-                      alt=""
-                      src="@/assets/icons/filter_down.svg"
-                      :class="{
-                        'list__filter-icon--active':
-                          filtersOptions.buyed === -1,
-                      }"
-                      class="list__filter-icon"
-                    />
-                  </div>
-                  <div
-                    class="list__column list__column--filter"
-                    @click="sort('deliver')"
-                  >
-                    <span>Доставлен:</span>
-                    <img
-                      alt=""
-                      src="@/assets/icons/filter_down.svg"
-                      :class="{
-                        'list__filter-icon--active':
-                          filtersOptions.deliver === -1,
-                      }"
-                      class="list__filter-icon"
-                    />
-                  </div>
-                  <div class="list__column">Сумма:</div>
-                  <div class="list__column">Доставка:</div>
-                  <div class="list__column">Менеджер:</div>
-                  <div class="list__column">Статус:</div>
-                  <div class="list__column">1С:</div>
-                </div>
+        <div class="scroll-horizontal">
+          <div class="list list-shadow">
+            <div class="list__header">
+              <v-search
+                @submit="getSearchData"
+                v-model="searchStr"
+                placeholder="Поиск по ФИО или номеру заказа"
+              />
+              <div class="list__title">
+                {{ $t("pages.orders.pageTitle") }}
               </div>
+              <div class="list__columns">
+                <div
+                  class="list__column list__column--filter"
+                  @click="sort('number')"
+                >
+                  <span>№:</span>
+                  <img
+                    alt=""
+                    src="@/assets/icons/filter_down.svg"
+                    :class="{
+                      'list__filter-icon--active': filtersOptions.number === -1,
+                    }"
+                    class="list__filter-icon"
+                  />
+                </div>
+                <div class="list__column">Клиент:</div>
+                <div class="list__column">Регион:</div>
+                <div
+                  class="list__column list__column--filter"
+                  @click="sort('created')"
+                >
+                  <span>Дата создания:</span>
+                  <img
+                    alt=""
+                    src="@/assets/icons/filter_down.svg"
+                    :class="{
+                      'list__filter-icon--active':
+                        filtersOptions.created === -1,
+                    }"
+                    class="list__filter-icon"
+                  />
+                </div>
+                <div
+                  class="list__column list__column--filter"
+                  @click="sort('buyed')"
+                >
+                  <span>Оплачен:</span>
+                  <img
+                    alt=""
+                    src="@/assets/icons/filter_down.svg"
+                    :class="{
+                      'list__filter-icon--active': filtersOptions.buyed === -1,
+                    }"
+                    class="list__filter-icon"
+                  />
+                </div>
+                <div
+                  class="list__column list__column--filter"
+                  @click="sort('deliver')"
+                >
+                  <span>Доставлен:</span>
+                  <img
+                    alt=""
+                    src="@/assets/icons/filter_down.svg"
+                    :class="{
+                      'list__filter-icon--active':
+                        filtersOptions.deliver === -1,
+                    }"
+                    class="list__filter-icon"
+                  />
+                </div>
+                <div class="list__column">Сумма:</div>
+                <div class="list__column">Доставка:</div>
+                <div class="list__column">Менеджер:</div>
+                <div class="list__column">Статус:</div>
+                <div class="list__column">1С:</div>
+              </div>
+            </div>
 
-              <!-- Блок для добавления нового заказа -->
-              <v-add-item v-if="addOrder" @afterAddOrder="afterAddOrder" />
+            <!-- Блок для добавления нового заказа -->
+            <v-add-item v-if="addOrder" @afterAddOrder="afterAddOrder" />
 
+            <v-spinner v-if="!isLoading" />
+
+            <template v-else-if="orders.length">
               <div
                 v-for="item in orders.slice(0, 15)"
                 :key="item._id"
@@ -154,11 +153,11 @@
                   @toggleSendDelivery="toggleSendDelivery"
                 />
               </div>
-            </div>
+              <v-pagination :count="getOrdersCount" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="getOrdersCount" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
       </div>
     </div>
   </div>
@@ -474,20 +473,20 @@ export default {
       }
     },
     async getSearchData() {
-      if (this.searchStr.length) {
-        this.filtersOptions.search = this.searchStr.trim();
-        this.$router.push(`/dashboard/${this.$route.name}/1`);
-        await this.getOrdersFromPage({
-          page: +this.$route.params.page,
-          filtersOptions: this.filtersOptions,
-        });
+      if (!this.searchStr.trim().length) {
+        this.fetchData();
         return;
       }
-      delete this.filtersOptions.search;
+
+      this.isLoading = false;
+      this.filtersOptions.search = this.searchStr.trim();
+      this.$router.push(`/dashboard/${this.$route.name}/1`);
       await this.getOrdersFromPage({
         page: +this.$route.params.page,
         filtersOptions: this.filtersOptions,
       });
+      delete this.filtersOptions.search;
+      this.isLoading = true;
     },
     async fetchData() {
       this.downloadExcelFile = true;

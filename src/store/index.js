@@ -336,12 +336,6 @@ export default new Vuex.Store({
             const totalProfit = res.data.profit;
             const totalShippedSum = res.data.shippedSum;
             const totalDelivery = res.data.delivery;
-            localStorage.setItem("orders", orders);
-            localStorage.setItem("ordersCount", +count);
-            localStorage.setItem("totalCpst", +totalCost);
-            localStorage.setItem("totalProfit", +totalProfit);
-            localStorage.setItem("totalProfit", +totalShippedSum);
-            localStorage.setItem("totalDelivery", +totalDelivery);
             commit("success_update_orders", {
               orders,
               count,
