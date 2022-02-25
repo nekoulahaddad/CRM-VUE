@@ -382,6 +382,7 @@ export default {
       });
     },
     async downloadExcel() {
+      console.log(2);
       try {
         axios({
           url: `/excel/getorders`,
@@ -395,6 +396,7 @@ export default {
           link.href = urll;
           link.download = `Заказы.xlsx`;
           link.click();
+          console.log(111);
           window.URL.revokeObjectURL(urll);
           URL.revokeObjectURL(link.href);
         });
