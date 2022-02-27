@@ -43,6 +43,11 @@ export default {
     align-items: center;
   }
 
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+
   &__inner {
     display: flex;
     align-items: center;
