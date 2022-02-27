@@ -118,7 +118,6 @@ export default {
     role: {
       get: function () {
         let role = this.getUserRole();
-        console.log(role);
         return role.role;
       },
     },

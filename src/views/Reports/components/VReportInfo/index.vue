@@ -157,9 +157,7 @@ export default {
         .catch(console.error);
     },
   },
-  mounted() {
-    console.log(this.report);
-  },
+  mounted() {},
 };
 </script>
 

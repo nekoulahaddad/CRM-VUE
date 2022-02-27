@@ -6,29 +6,47 @@
         Вы точно хотите удалить? Отменить это действие будет невозможно
       </div>
       <div class="vm--modal__buttons">
-        <v-button @click="confirm" red>Да</v-button>
-        <v-button @click="cancel" white>Нет</v-button>
+        <v-spinner v-if="isLoading" small />
+        <template v-else>
+          <v-button @click="confirm" red>Да</v-button>
+          <v-button @click="cancel" white>Нет</v-button>
+        </template>
       </div>
     </div>
   </v-modal>
 </template>
 
 <script>
+import VSpinner from "@/components/VSpinner";
 import axios from "@/api/axios";
 
 export default {
   props: {
     deletedItem: Object,
     selectedItems: Array,
+    deleteMany: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  components: { VSpinner },
+  data() {
+    return {
+      isLoading: false,
+    };
   },
   methods: {
     cancel() {
       this.$modal.hide("deleteOrder");
     },
     confirm() {
-      const orderId = [
-        ...new Set([...this.selectedItems, this.deletedItem._id]),
-      ];
+      let orderId = this.deletedItem._id;
+
+      if (this.deleteMany) {
+        orderId = [...new Set([...this.selectedItems, this.deletedItem._id])];
+      }
+
+      this.isLoading = true;
 
       axios({
         url: `/orders/delete`,
@@ -38,9 +56,12 @@ export default {
         method: "POST",
       })
         .then(() => {
-          this.$toast.success("Заказ успешно удален!");
+          const msg =
+            this.deleteMany && this.selectedItems.length > 1
+              ? "Заказы успешно удалены!"
+              : "Заказ успешно удален!";
+          this.$toast.success(msg);
           this.$emit("afterDelete");
-          this.cancel();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);

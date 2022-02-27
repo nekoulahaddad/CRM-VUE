@@ -155,10 +155,7 @@
           <a
             href=""
             class="page-actions__button"
-            :class="{
-              'page-actions__button--active': $store.state.actions.addOrder,
-            }"
-            @click.prevent="toggleAction('addOrder')"
+            @click.prevent="$store.commit('toggleDeleteSelectedItems', true)"
           >
             <img src="@/assets/icons/action_trash.svg" alt="" />
           </a>

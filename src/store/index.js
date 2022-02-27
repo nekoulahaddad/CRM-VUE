@@ -49,6 +49,7 @@ export default new Vuex.Store({
       firedUsers: false,
       importGoods: false,
     },
+    deleteSelectedItems: false,
   },
   mutations: {
     selectItem(state, payload) {
@@ -59,6 +60,9 @@ export default new Vuex.Store({
       } else {
         state.selectedItems.push(payload);
       }
+    },
+    toggleDeleteSelectedItems(state, payload) {
+      state.deleteSelectedItems = payload;
     },
     selectAllItems(state, payload) {
       if (payload.selectAll) {
@@ -161,7 +165,6 @@ export default new Vuex.Store({
             return;
           }
         } else {
-          console.log(index);
           if (state.id === order.manager[0]._id) {
             Vue.$toast.success(`Ваш заказ №${order.number} обновлен`);
             state.orders.push(order);
@@ -384,7 +387,6 @@ export default new Vuex.Store({
       });
     },
     socket_downloadExcel({ commit }, file) {
-      console.log("commit");
       return new Promise((resolve) => {
         commit("SOCKET_DOWNLOADEXEL", file);
         resolve();

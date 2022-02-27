@@ -4,6 +4,7 @@
     <v-delete-item
       :deletedItem="deletedItem"
       :selectedItems="selectedItems"
+      :deleteMany="deleteMany"
       @afterDelete="afterDelete"
     />
 
@@ -211,6 +212,7 @@ export default {
   },
   data() {
     return {
+      deleteMany: false,
       sendDeliveryItem: {},
       showFilter: false,
       startDate: null,
@@ -255,6 +257,9 @@ export default {
       getTotalDelivery: "getTotalDelivery",
       sidebar: "sidebar",
     }),
+    deleteSelectedItems() {
+      return this.$store.state.deleteSelectedItems;
+    },
     selectedItems() {
       const items = this.$store.getters.selectedItems;
 
@@ -307,6 +312,11 @@ export default {
     $route: function () {
       this.fetchData();
     },
+    deleteSelectedItems(value) {
+      if (value) {
+        this.toggleDeleteAll();
+      }
+    },
     filtersOptions: {
       handler: async function () {
         await this.$store.commit("setFilterOptions", this.filtersOptions);
@@ -349,15 +359,23 @@ export default {
       this.fetchData();
     },
     afterDelete() {
-      this.$store.commit("clearSelectedItems");
       this.getOrdersFromPage({
         page: +this.$route.params.page,
         filtersOptions: this.filtersOptions,
-      }).then(() => {
-        if (this.orders.length < 2) {
-          this.$router.push({ params: { page: "1" } });
-        }
-      });
+      })
+        .then(() => {
+          if (this.orders.length < 2) {
+            this.$router.push({ params: { page: "1" } });
+          }
+        })
+        .finally(() => {
+          this.$modal.hide("deleteOrder");
+          if (this.deleteMany) {
+            this.deleteMany = false;
+            this.$store.commit("clearSelectedItems");
+          }
+          this.$store.commit("toggleDeleteSelectedItems", false);
+        });
     },
     toggleFilter() {
       this.showFilter = !this.showFilter;
@@ -461,10 +479,12 @@ export default {
       this.$modal.show("sendDelivery");
     },
     toggleDelete(item) {
+      this.deleteMany = false;
       this.deletedItem = item;
       this.$modal.show("deleteOrder");
     },
     toggleDeleteAll(item) {
+      this.deleteMany = true;
       this.$modal.show("deleteOrder");
     },
     async deleteOrder() {

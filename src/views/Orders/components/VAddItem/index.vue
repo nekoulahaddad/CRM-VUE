@@ -20,465 +20,490 @@
     <div class="add-order-row__inner">
       <form @submit.prevent="createOrder">
         <div class="add-order-row__title text--blue">Заказ:</div>
-        <div class="group">
-          <div class="group__title">Лицо заказа:</div>
-          <div class="group__content">
-            <select
-              class="form-select"
-              name="clientType"
-              v-model="orderForm.clientType"
-            >
-              <option value="physical">Физическое лицо</option>
-              <option value="legal">Юридическое лицо</option>
-            </select>
-          </div>
-        </div>
-        <div class="add-order-row__title text--blue">Профиль:</div>
 
-        <!-- Физическое лицо -->
-        <template v-if="orderForm.clientType === 'physical'">
-          <div class="group">
-            <div class="group__title">
-              Фамилия: <span class="required">*</span>
+        <div class="add-order__wrapper d-flex justify-content-between">
+          <div class="add-order__left">
+            <div class="add-order-row__title text--blue" style="display: none">
+              Профиль:
             </div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите фамилию..."
-                v-model="clientForm.physicalUser.lastname"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
+            <!-- Физическое лицо -->
+            <template v-if="orderForm.clientType === 'physical'">
+              <div class="group">
+                <div class="group__title">
+                  Фамилия: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите фамилию..."
+                    v-model="clientForm.physicalUser.lastname"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Имя: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите имя..."
+                    v-model="clientForm.physicalUser.name"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">Почта:</div>
+                <div class="group__content">
+                  <input
+                    class="form-control"
+                    type="email"
+                    placeholder="Введите почту..."
+                    v-model="clientForm.physicalUser.email"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Телефон: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <phone-mask-input
+                    required
+                    inputClass="form-control"
+                    placeholder="Введите телефон..."
+                    v-model="clientForm.physicalUser.phone"
+                    @input="getClientByPhone"
+                    @onValidate="onValidatePhysical"
+                  />
+                </div>
+              </div>
+            </template>
+            <!-- Юридическое лицо -->
+            <template v-else>
+              <div class="group">
+                <div class="group__title">
+                  Фамилия: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите фамилию..."
+                    v-model="clientForm.legalUser.lastname"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Имя: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите имя..."
+                    v-model="clientForm.legalUser.name"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  ИНН: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите ИНН..."
+                    v-model="clientForm.legalUser.inn"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Почта: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="email"
+                    placeholder="Введите почту..."
+                    v-model="clientForm.legalUser.email"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Телефон: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <phone-mask-input
+                    required
+                    inputClass="form-control"
+                    placeholder="Введите телефон..."
+                    v-model="clientForm.legalUser.phone"
+                    @input="getClientByPhone"
+                    @onValidate="onValidateLegal"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Название организации: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите название организации..."
+                    v-model="clientForm.legalUser.organisation"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Форма собственности: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите форму собственности..."
+                    v-model="clientForm.legalUser.ownership"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Фактический адрес: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите фактический адрес..."
+                    v-model="clientForm.legalUser.ur_actualAddress"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Юридический адрес: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите юридический адрес..."
+                    v-model="clientForm.legalUser.ur_address"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">ОКПО:</div>
+                <div class="group__content">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите ОКПО..."
+                    v-model="clientForm.legalUser.okpo"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  БИК: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите БИК..."
+                    v-model="clientForm.legalUser.bik"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">Наименование банка:</div>
+                <div class="group__content">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите наименование банка..."
+                    v-model="clientForm.legalUser.bank"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">Расчетный счет:</div>
+                <div class="group__content">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите расчетный счет..."
+                    v-model="clientForm.legalUser.account_number"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">
+                  Корр. счет: <span class="required">*</span>
+                </div>
+                <div class="group__content">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите корр. счет..."
+                    v-model="clientForm.legalUser.ur_corScore"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">КПП:</div>
+                <div class="group__content">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите КПП..."
+                    v-model="clientForm.legalUser.kpp"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">Генеральный директор:</div>
+                <div class="group__content">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Введите генерального директора..."
+                    v-model="clientForm.legalUser.director"
+                    :readonly="clientForm.isOldUser"
+                  />
+                </div>
+              </div>
+            </template>
           </div>
-          <div class="group">
-            <div class="group__title">Имя: <span class="required">*</span></div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите имя..."
-                v-model="clientForm.physicalUser.name"
-                :readonly="clientForm.isOldUser"
-              />
+          <div class="add-order__right">
+            <!-- Лицо заказа -->
+            <div class="group">
+              <div class="group__title">Лицо заказа:</div>
+              <div class="group__content">
+                <select
+                  class="form-select"
+                  name="clientType"
+                  v-model="orderForm.clientType"
+                >
+                  <option value="physical">Физическое лицо</option>
+                  <option value="legal">Юридическое лицо</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="group">
-            <div class="group__title">Почта:</div>
-            <div class="group__content">
-              <input
-                class="form-control"
-                type="email"
-                placeholder="Введите почту..."
-                v-model="clientForm.physicalUser.email"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">
-              Телефон: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <phone-mask-input
-                required
-                inputClass="form-control"
-                placeholder="Введите телефон..."
-                v-model="clientForm.physicalUser.phone"
-                @input="getClientByPhone"
-                @onValidate="onValidatePhysical"
-              />
-            </div>
-          </div>
-        </template>
-        <!-- Юридическое лицо -->
-        <template v-else>
-          <div class="group">
-            <div class="group__title">
-              Фамилия: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите фамилию..."
-                v-model="clientForm.legalUser.lastname"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">Имя: <span class="required">*</span></div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите имя..."
-                v-model="clientForm.legalUser.name"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">ИНН: <span class="required">*</span></div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите ИНН..."
-                v-model="clientForm.legalUser.inn"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">
-              Почта: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="email"
-                placeholder="Введите почту..."
-                v-model="clientForm.legalUser.email"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">
-              Телефон: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <phone-mask-input
-                required
-                inputClass="form-control"
-                placeholder="Введите телефон..."
-                v-model="clientForm.legalUser.phone"
-                @input="getClientByPhone"
-                @onValidate="onValidateLegal"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">
-              Название организации: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите название организации..."
-                v-model="clientForm.legalUser.organisation"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">
-              Форма собственности: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите форму собственности..."
-                v-model="clientForm.legalUser.ownership"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">
-              Фактический адрес: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите фактический адрес..."
-                v-model="clientForm.legalUser.ur_actualAddress"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">
-              Юридический адрес: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите юридический адрес..."
-                v-model="clientForm.legalUser.ur_address"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">ОКПО:</div>
-            <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Введите ОКПО..."
-                v-model="clientForm.legalUser.okpo"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">БИК: <span class="required">*</span></div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите БИК..."
-                v-model="clientForm.legalUser.bik"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">Наименование банка:</div>
-            <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Введите наименование банка..."
-                v-model="clientForm.legalUser.bank"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">Расчетный счет:</div>
-            <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Введите расчетный счет..."
-                v-model="clientForm.legalUser.account_number"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">
-              Корр. счет: <span class="required">*</span>
-            </div>
-            <div class="group__content">
-              <input
-                required
-                class="form-control"
-                type="text"
-                placeholder="Введите корр. счет..."
-                v-model="clientForm.legalUser.ur_corScore"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">КПП:</div>
-            <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Введите КПП..."
-                v-model="clientForm.legalUser.kpp"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-          <div class="group">
-            <div class="group__title">Генеральный директор:</div>
-            <div class="group__content">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Введите генерального директора..."
-                v-model="clientForm.legalUser.director"
-                :readonly="clientForm.isOldUser"
-              />
-            </div>
-          </div>
-        </template>
-
-        <div class="add-order-row__title text--blue">Основная информация:</div>
-
-        <!-- Способ оплаты -->
-        <div class="group" v-if="orderForm.clientType === 'physical'">
-          <div class="group__title">
-            Способ оплаты: <span class="required">*</span>
-          </div>
-          <div class="group__content">
-            <select
-              class="form-select"
-              required
-              name="payment__cash"
-              v-model="orderForm.payment"
-            >
-              <option value="cash">Оплата наличными при получении</option>
-              <option value="cartReceiving">
-                Оплата банковской картой при получении
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="group" v-else>
-          <div class="group__title">
-            Способ оплаты: <span class="required">*</span>
-          </div>
-          <div class="group__content">
-            <select
-              required
-              class="form-select"
-              name="payment__cash"
-              v-model="orderForm.payment"
-            >
-              <option value="bankTransfer">
-                Оплата по выставленному счёту
-              </option>
-            </select>
           </div>
         </div>
 
-        <div class="group">
-          <div class="group__title">
-            Способ доставки: <span class="required">*</span>
-          </div>
-          <div class="group__content">
-            <select
-              required
-              class="form-select"
-              name="delivery-type__pickup"
-              v-model="orderForm.typeDelivery"
-            >
-              <option value="pickup">Самовывоз</option>
-              <option value="transport">Доставка транспортом</option>
-              <option value="courier">Доставка курьером</option>
-            </select>
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">
-            Регион: <span class="required">*</span>
-          </div>
-          <div class="group__content">
-            <select required class="form-select" v-model="orderForm.region">
-              <option
-                v-for="region in regions"
-                :key="region._id"
-                :value="region._id"
-              >
-                {{ region.title }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Адрес доставки:</div>
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите город..."
-              v-model="orderForm.delivery.city"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите улицу..."
-              v-model="orderForm.delivery.street"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите дом..."
-              v-model="orderForm.delivery.house"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите здание..."
-              v-model="orderForm.delivery.building"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Введите квартиру..."
-              v-model="orderForm.delivery.appt"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Дата доставки:</div>
-          <div class="group__content">
-            <datetime
-              type="datetime"
-              input-class="forms__container--input"
-              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-              v-model="orderForm.deliver"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Дополнительная информация:</div>
-          <div class="group__content">
-            <textarea
-              class="form-textarea"
-              placeholder="Введите дополнительную информацию..."
-            />
-          </div>
+        <div class="add-order-row__title text--blue" style="margin-top: 10px">
+          Основная информация:
         </div>
 
-        <div class="group">
-          <div class="group__title">Менеджер:</div>
-          <div class="group__content">
-            <autocomplete
-              :search="getUsersByFIO"
-              placeholder="Введите менеджера..."
-              :get-result-value="getResultValue"
-            >
-              <template #result="{ result, props }">
-                <li @click="selectManager(result)" v-bind="props">
-                  {{ transformFIO(result) }}
-                </li>
-              </template>
-            </autocomplete>
+        <div class="add-order__wrapper d-flex justify-content-between">
+          <div class="add-order__left">
+            <div class="group">
+              <div class="group__title">Адрес доставки:</div>
+              <div class="group__content">
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Введите город..."
+                  v-model="orderForm.delivery.city"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__content">
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Введите улицу..."
+                  v-model="orderForm.delivery.street"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__content">
+                <input
+                  class="form-control hide-arrows"
+                  type="number"
+                  placeholder="Введите дом..."
+                  v-model="orderForm.delivery.house"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__content">
+                <input
+                  class="form-control hide-arrows"
+                  type="number"
+                  placeholder="Введите здание..."
+                  v-model="orderForm.delivery.building"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__content">
+                <input
+                  class="form-control hide-arrows"
+                  type="number"
+                  placeholder="Введите квартиру..."
+                  v-model="orderForm.delivery.appt"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Дата доставки:</div>
+              <div class="group__content">
+                <datetime
+                  type="datetime"
+                  input-class="forms__container--input"
+                  :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+                  v-model="orderForm.deliver"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Дополнительная информация:</div>
+              <div class="group__content">
+                <textarea
+                  class="form-textarea"
+                  placeholder="Введите дополнительную информацию..."
+                />
+              </div>
+            </div>
+          </div>
+          <div class="add-order__right">
+            <!-- Способ оплаты -->
+            <div class="group" v-if="orderForm.clientType === 'physical'">
+              <div class="group__title">
+                Способ оплаты: <span class="required">*</span>
+              </div>
+              <div class="group__content">
+                <select
+                  class="form-select"
+                  required
+                  name="payment__cash"
+                  v-model="orderForm.payment"
+                >
+                  <option value="cash">Оплата наличными при получении</option>
+                  <option value="cartReceiving">
+                    Оплата банковской картой при получении
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="group" v-else>
+              <div class="group__title">
+                Способ оплаты: <span class="required">*</span>
+              </div>
+              <div class="group__content">
+                <select
+                  required
+                  class="form-select"
+                  name="payment__cash"
+                  v-model="orderForm.payment"
+                >
+                  <option value="bankTransfer">
+                    Оплата по выставленному счёту
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">
+                Способ доставки: <span class="required">*</span>
+              </div>
+              <div class="group__content">
+                <select
+                  required
+                  class="form-select"
+                  name="delivery-type__pickup"
+                  v-model="orderForm.typeDelivery"
+                >
+                  <option value="pickup">Самовывоз</option>
+                  <option value="transport">Доставка транспортом</option>
+                  <option value="courier">Доставка курьером</option>
+                </select>
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">
+                Регион: <span class="required">*</span>
+              </div>
+              <div class="group__content">
+                <select required class="form-select" v-model="orderForm.region">
+                  <option
+                    v-for="region in regions"
+                    :key="region._id"
+                    :value="region._id"
+                  >
+                    {{ region.title }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Менеджер:</div>
+              <div class="group__content">
+                <autocomplete
+                  :search="getUsersByFIO"
+                  placeholder="Введите менеджера..."
+                  :get-result-value="getResultValue"
+                >
+                  <template #result="{ result, props }">
+                    <li @click="selectManager(result)" v-bind="props">
+                      {{ transformFIO(result) }}
+                    </li>
+                  </template>
+                </autocomplete>
+              </div>
+            </div>
           </div>
         </div>
 
         <template v-if="orderForm.region">
-          <div class="add-order-row__title text--blue">Товары:</div>
+          <div class="add-order-row__title text--blue" style="margin-top: 15px">
+            Товары:
+          </div>
 
           <div class="list sub-list">
             <div class="list__header">
@@ -1096,7 +1121,6 @@ export default {
   }
   .form-textarea,
   .form-control {
-    width: 976px;
   }
   .form-textarea {
     min-height: 218px;
@@ -1150,8 +1174,28 @@ export default {
       margin-top: 10px;
     }
   }
+  .add-order__left {
+    flex: 1;
+    margin-right: 35px;
+  }
   .required {
     color: #db1f35;
+  }
+  .phone-mask-wrapper-lib {
+    width: 100%;
+  }
+  button {
+    margin-top: 10px;
+  }
+  input[type="number"].hide-arrows::-webkit-outer-spin-button,
+  input[type="number"].hide-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"].hide-arrows {
+    -moz-appearance: textfield;
+    width: 100%;
   }
 }
 </style>
