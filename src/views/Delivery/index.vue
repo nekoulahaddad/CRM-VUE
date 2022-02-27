@@ -189,6 +189,8 @@ export default {
       this.showFilter = !this.showFilter;
     },
     toggleInfo(item) {
+      this.editedItem = {};
+
       if (this.infoItem._id === item._id) {
         this.infoItem = {};
       } else {
