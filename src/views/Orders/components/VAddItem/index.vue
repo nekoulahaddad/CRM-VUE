@@ -393,17 +393,7 @@
                 />
               </div>
             </div>
-            <div class="group">
-              <div class="group__title">Дата доставки:</div>
-              <div class="group__content">
-                <datetime
-                  type="datetime"
-                  input-class="forms__container--input"
-                  :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-                  v-model="orderForm.deliver"
-                />
-              </div>
-            </div>
+
             <div class="group">
               <div class="group__title">Дополнительная информация:</div>
               <div class="group__content">
@@ -412,6 +402,22 @@
                   maxlength="1000"
                   placeholder="Введите дополнительную информацию..."
                 />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Менеджер:</div>
+              <div class="manager">
+                <autocomplete
+                  :search="getUsersByFIO"
+                  placeholder="Введите менеджера..."
+                  :get-result-value="getResultValue"
+                >
+                  <template #result="{ result, props }">
+                    <li @click="selectManager(result)" v-bind="props">
+                      {{ transformFIO(result) }}
+                    </li>
+                  </template>
+                </autocomplete>
               </div>
             </div>
           </div>
@@ -486,19 +492,14 @@
               </div>
             </div>
             <div class="group">
-              <div class="group__title">Менеджер:</div>
+              <div class="group__title">Дата доставки:</div>
               <div class="group__content">
-                <autocomplete
-                  :search="getUsersByFIO"
-                  placeholder="Введите менеджера..."
-                  :get-result-value="getResultValue"
-                >
-                  <template #result="{ result, props }">
-                    <li @click="selectManager(result)" v-bind="props">
-                      {{ transformFIO(result) }}
-                    </li>
-                  </template>
-                </autocomplete>
+                <datetime
+                  type="datetime"
+                  input-class="forms__container--input"
+                  :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+                  v-model="orderForm.deliver"
+                />
               </div>
             </div>
           </div>
@@ -1131,10 +1132,17 @@ export default {
   .form-textarea {
     min-height: 150px;
   }
+
   .autocomplete-input,
   .vdatetime-input,
   .form-select {
     width: 401px;
+  }
+  .manager .autocomplete {
+    width: 100%;
+    .autocomplete-input {
+      width: 100%;
+    }
   }
   .good-add-btn {
     width: 230px;
@@ -1182,7 +1190,7 @@ export default {
   }
   .add-order__left {
     flex: 1;
-    margin-right: 35px;
+    margin-right: 25px;
   }
   .required {
     color: #db1f35;

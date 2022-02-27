@@ -141,8 +141,6 @@ export default {
 
 .employee-edit-form {
   .group {
-    max-width: 976px;
-
     select {
       max-width: 401px;
     }
@@ -174,7 +172,7 @@ export default {
     background: $color-red;
   }
   .autocomplete-input {
-    width: 976px;
+    width: 100% !important;
     font-weight: 500;
     font-size: 14px;
   }
