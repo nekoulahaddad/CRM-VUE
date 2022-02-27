@@ -160,73 +160,79 @@
       </div>
     </div>
 
-    <div class="add-delivery-row__title text--blue">Мессенджеры:</div>
-    <div
-      class="group messengers"
-      v-if="specialist.messengers"
-      v-for="(messenger, index) in specialist.messengers"
-      :key="messenger.name"
-    >
-      <div class="group__content">
-        <input
-          required
-          class="form-control"
-          type="text"
-          name="name"
-          placeholder="Введите название мессенджера..."
-          :value="messenger.name"
-          style="width: 401px"
-          @input="changeMessenger($event, index)"
-        />
-        <phone-mask-input
-          name="phone"
-          inputClass="form-control"
-          placeholder="Введите номер мессенджера..."
-          :value="messenger.phone"
-          @onValidate="onValidate($event, index)"
-          style="width: 401px"
-          @change="changeMessenger($event, index)"
-        />
-        <VueCustomTooltip label="Удалить мессенджер">
-          <img
-            alt=""
-            class="messengers__close"
-            src="/icons/close_icon.svg"
-            @click="deleteMessenger(index)"
-          />
-        </VueCustomTooltip>
+    <div class="d-flex justify-content-between">
+      <div class="flex-1" style="margin-right: 25px">
+        <div class="add-delivery-row__title text--blue">Мессенджеры:</div>
+        <div
+          class="group messengers"
+          v-if="specialist.messengers"
+          v-for="(messenger, index) in specialist.messengers"
+          :key="messenger.name"
+        >
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="text"
+              name="name"
+              placeholder="Введите название мессенджера..."
+              :value="messenger.name"
+              style="width: 401px"
+              @input="changeMessenger($event, index)"
+            />
+            <phone-mask-input
+              name="phone"
+              inputClass="form-control"
+              placeholder="Введите номер мессенджера..."
+              :value="messenger.phone"
+              @onValidate="onValidate($event, index)"
+              style="width: 401px"
+              @change="changeMessenger($event, index)"
+            />
+            <VueCustomTooltip label="Удалить мессенджер">
+              <img
+                alt=""
+                class="messengers__close"
+                src="/icons/close_icon.svg"
+                @click="deleteMessenger(index)"
+              />
+            </VueCustomTooltip>
+          </div>
+        </div>
+        <span class="add-messenger" @click="addMessenger">Добавить</span>
+      </div>
+      <div>
+        <div class="add-delivery-row__title text--blue">Категории:</div>
+        <div class="group">
+          <div class="group__title">Категории:</div>
+          <div class="chips">
+            <chip
+              v-for="(chip, index) in categories
+                ? categories
+                : this.editedItem.categories"
+              :key="chip.categoryName"
+              :text="chip.categoryName"
+              :close="true"
+              @closed="deleteChip(index)"
+            />
+          </div>
+          <div class="group__content">
+            <autocomplete
+              :search="searchByExecutor"
+              :get-result-value="getResultValue"
+              placeholder="Введите наименование организации..."
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectProvider(result)">
+                  {{ result.categoryName }}
+                </li>
+              </template>
+            </autocomplete>
+          </div>
+        </div>
       </div>
     </div>
 
-    <span class="add-messenger" @click="addMessenger">Добавить</span>
-    <div class="add-delivery-row__title text--blue">Категории:</div>
-    <div class="group">
-      <div class="group__title">Категории:</div>
-      <div class="chips">
-        <chip
-          v-for="(chip, index) in categories
-            ? categories
-            : this.editedItem.categories"
-          :key="chip.categoryName"
-          :text="chip.categoryName"
-          :close="true"
-          @closed="deleteChip(index)"
-        />
-      </div>
-      <div class="group__content">
-        <autocomplete
-          :search="searchByExecutor"
-          :get-result-value="getResultValue"
-          placeholder="Введите наименование организации..."
-        >
-          <template #result="{ result, props }">
-            <li v-bind="props" @click="selectProvider(result)">
-              {{ result.categoryName }}
-            </li>
-          </template>
-        </autocomplete>
-      </div>
-    </div>
     <v-button red>Сохранить</v-button>
   </form>
 </template>
