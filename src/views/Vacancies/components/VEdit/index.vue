@@ -4,7 +4,7 @@
       <div class="add-vacancy-row__title text--blue">Основная информация:</div>
 
       <div class="d-flex justify-content-between">
-        <div class="flex-1" style="margin-right: 35px">
+        <div class="flex-1" style="margin-right: 25px">
           <div class="group">
             <div class="group__title">Должность:</div>
             <div class="group__content">

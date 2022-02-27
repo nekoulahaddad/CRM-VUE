@@ -22,107 +22,122 @@
         <div class="add-vacancy-row__title text--blue">
           Основная информация:
         </div>
-        <div class="group">
-          <div class="group__title">Должность:</div>
-          <div class="group__content">
-            <input
-              required
-              class="form-control"
-              type="text"
-              placeholder="Введите должность..."
-              name="role"
-              v-model="role"
-              @change="onChange($event)"
-            />
+
+        <div class="d-flex justify-content-between">
+          <div class="flex-1" style="margin-right: 25px">
+            <div class="group">
+              <div class="group__title">Должность:</div>
+              <div class="group__content">
+                <input
+                  required
+                  class="form-control"
+                  type="text"
+                  placeholder="Введите должность..."
+                  name="role"
+                  v-model="role"
+                  @change="onChange($event)"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Требования:</div>
+              <div class="group__content">
+                <textarea
+                  required
+                  class="form-textarea"
+                  name="description.requirements"
+                  placeholder="Введите требования для кандидата..."
+                  v-model="description.requirements"
+                  @change="onChange($event)"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Обязаности:</div>
+              <div class="group__content">
+                <textarea
+                  required
+                  class="form-textarea"
+                  placeholder="Введите обязаности кандидата..."
+                  name="description.responsibilities"
+                  v-model="description.responsibilities"
+                  @change="onChange($event)"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Условия:</div>
+              <div class="group__content">
+                <textarea
+                  required
+                  class="form-textarea"
+                  placeholder="Опишите условия работы..."
+                  name="description.conditions"
+                  v-model="description.conditions"
+                  @change="onChange($event)"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Ссылка:</div>
+              <div class="group__content">
+                <input
+                  required
+                  type="text"
+                  class="form-control"
+                  placeholder="Вставьте ссылку..."
+                  name="vLink"
+                  v-model="vLink"
+                  @change="onChange($event)"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="group">
+              <div class="group__title">Отделы:</div>
+              <div class="group__content">
+                <select
+                  required
+                  class="form-select"
+                  name="department"
+                  v-model="department"
+                  @change="onChange($event)"
+                >
+                  <option selected disabled :value="null">
+                    Выберите отдел
+                  </option>
+                  <option
+                    v-for="department in departments"
+                    :value="department._id"
+                  >
+                    {{ department.title }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Регионы:</div>
+              <div class="group__content">
+                <select
+                  required
+                  class="form-select"
+                  name="region"
+                  v-model="region"
+                  @change="onChange($event)"
+                >
+                  <option selected disabled :value="null">
+                    Выберите регион
+                  </option>
+                  <option v-for="region in regions" :value="region._id">
+                    {{ region.title }}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="group">
-          <div class="group__title">Отделы:</div>
-          <div class="group__content">
-            <select
-              required
-              class="form-select"
-              name="department"
-              v-model="department"
-              @change="onChange($event)"
-            >
-              <option selected disabled :value="null">Выберите отдел</option>
-              <option v-for="department in departments" :value="department._id">
-                {{ department.title }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Регионы:</div>
-          <div class="group__content">
-            <select
-              required
-              class="form-select"
-              name="region"
-              v-model="region"
-              @change="onChange($event)"
-            >
-              <option selected disabled :value="null">Выберите регион</option>
-              <option v-for="region in regions" :value="region._id">
-                {{ region.title }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Требования:</div>
-          <div class="group__content">
-            <textarea
-              required
-              class="form-textarea"
-              name="description.requirements"
-              placeholder="Введите требования для кандидата..."
-              v-model="description.requirements"
-              @change="onChange($event)"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Обязаности:</div>
-          <div class="group__content">
-            <textarea
-              required
-              class="form-textarea"
-              placeholder="Введите обязаности кандидата..."
-              name="description.responsibilities"
-              v-model="description.responsibilities"
-              @change="onChange($event)"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Условия:</div>
-          <div class="group__content">
-            <textarea
-              required
-              class="form-textarea"
-              placeholder="Опишите условия работы..."
-              name="description.conditions"
-              v-model="description.conditions"
-              @change="onChange($event)"
-            />
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Ссылка:</div>
-          <div class="group__content">
-            <input
-              required
-              type="text"
-              class="form-control"
-              placeholder="Вставьте ссылку..."
-              name="vLink"
-              v-model="vLink"
-              @change="onChange($event)"
-            />
-          </div>
-        </div>
+
         <v-button red>Создать</v-button>
       </form>
     </div>
@@ -286,7 +301,9 @@ export default {
 
   .form-textarea,
   .form-control {
-    width: 976px;
+  }
+  button {
+    margin-top: 10px;
   }
 }
 </style>
