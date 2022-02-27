@@ -346,13 +346,17 @@
                   </autocomplete>
                 </div>
                 <div class="list__column d-flex justify-center">
-                  <input
-                    class="form-control"
-                    type="number"
-                    v-model="articleSearch"
+                  <autocomplete
+                    :search="findItemByArticle"
+                    :get-result-value="getArticleValue"
                     placeholder="000000"
-                    @keyup="findItemByArticle"
-                  />
+                  >
+                    <template #result="{ result, props }">
+                      <li v-bind="props" @click="addItemToProducts(result)">
+                        {{ result.title }}
+                      </li>
+                    </template>
+                  </autocomplete>
                 </div>
                 <div class="list__column d-flex justify-center">
                   <input
@@ -678,6 +682,7 @@ export default {
       this.calculatedSum = total;
     },
     addItemToProducts(item) {
+      console.log(item);
       let product = {
         _id: false,
         club_cost: item.club_cost,
@@ -734,76 +739,53 @@ export default {
       }
 
       return new Promise((resolve) => {
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-          axios({
-            url: `/products/getproductbysearch/`,
-            data: {
-              search: title,
-              region: this.editedItem.region._id,
-            },
-            method: "POST",
+        axios({
+          url: `/products/getproductbysearch/`,
+          data: {
+            search: title,
+            region: this.editedItem.region._id,
+          },
+          method: "POST",
+        })
+          .then(async (result) => {
+            let res = await result;
+            this.productsList = res.data.products;
+            this.isLoadingProductSearch = false;
+            resolve(res.data.products);
           })
-            .then(async (result) => {
-              let res = await result;
-              this.productsList = res.data.products;
-              this.isLoadingProductSearch = false;
-              resolve(res.data.products);
-            })
-            .catch((err) => {
-              this.$toast.error(err.response.data.message);
-            });
-        }, 500);
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
       });
     },
+    getArticleValue(result) {
+      return result.article;
+    },
     findItemByArticle(article) {
-      const articleNumber = article.target.value;
-      if (!articleNumber) {
-        this.$toast.warning("Артикул продукта не может быть типом строки");
-        return;
+      if (article.trim().length < 3) {
+        return [];
       }
-      if (articleNumber.length >= 4) {
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-          axios({
-            url: `/products/getproductbyarticle/`,
-            data: {
-              article: articleNumber,
-              region: this.infoItem.region._id,
-            },
-            method: "POST",
+
+      return new Promise((resolve) => {
+        axios({
+          url: `/products/getproductbyarticle/`,
+          data: {
+            article,
+            region: this.editedItem.region._id,
+          },
+          method: "POST",
+        })
+          .then((result) => {
+            const product = {
+              product_id: result.data.product._id,
+              ...result.data.product,
+            };
+            resolve([product]);
           })
-            .then(async (result) => {
-              let res = await result;
-              if (res.data.product.length !== 0) {
-                this.selectedProduct = res.data.product;
-                let product = res.data.product;
-                this.newItem.title = product.title;
-                this.newItem.article = product.article;
-                this.newItem._id = product._id;
-                this.newItem.product_id = product._id;
-                this.newItem.club_cost = product.club_cost;
-                this.newItem.cost = product.cost;
-                this.newItem.quantity = 1;
-                this.$toast.success("Продукт, найденный по вашему запросу");
-              } else {
-                this.$toast.warning(
-                  "Товар по артику не найден, пожалуйста введите правильный артикул товара"
-                );
-                this.newItem = {
-                  title: "Введите артикул товара",
-                  quantity: 1,
-                  cost: 0,
-                };
-                this.selectedProduct = null;
-              }
-            })
-            .catch((err) => {
-              this.$toast.error(err.response.data.message);
-              this.changeStatus(true);
-            });
-        }, 500);
-      }
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
+      });
     },
     handleDialog(callback, args, data = {}) {
       this.dialog.data = data;

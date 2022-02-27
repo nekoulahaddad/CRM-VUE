@@ -5,6 +5,9 @@
       @deleteCategory="deleteCategory"
     />
 
+    <!-- Редактирование региона -->
+    <v-region-edit />
+
     <v-delete-product
       :deletedItem="deletedProduct"
       :region="filtersOptions.region"
@@ -151,10 +154,12 @@
                       @toggleCategoryImport="toggleCategoryImport"
                       :show="filtersOptions.nesting > 0 && googleDoc != null"
                       :opacity="
-                        googleDoc &&
-                        googleDoc.sheets.find((s) => s.categoryId == item._id)
-                          ? false
-                          : true
+                        !(
+                          googleDoc &&
+                          googleDoc.sheets.find(
+                            (s) => s.categoryId === item._id
+                          )
+                        )
                       "
                     />
 
@@ -310,6 +315,7 @@ import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
 import VProductEdit from "./components/VProductEdit";
 import VCategoryAdd from "./components/VCategoryAdd";
+import VRegionEdit from "./components/VRegionEdit";
 import VCategoryManager from "./components/VCategoryManager";
 import VSearch from "@/components/VSearch";
 import VDeleteCategory from "./components/VDeleteCategory";
@@ -340,6 +346,7 @@ export default {
     VSpinner,
     VSearch,
     VCopy,
+    VRegionEdit,
     VProductGroupEdit,
     VCategoryExport,
     VGroupProducts,

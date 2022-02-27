@@ -3,81 +3,89 @@
     <div class="add-delivery-row__title text--blue">
       Основная информация о поставщике:
     </div>
-    <div class="group">
-      <div class="group__title">Название компании:</div>
-      <div class="group__content">
-        <input
-          required
-          class="form-control"
-          type="text"
-          placeholder="Введите название о компании..."
-          v-model="name"
-        />
+
+    <div class="d-flex justify-content-between">
+      <div class="flex-1" style="margin-right: 25px">
+        <div class="group">
+          <div class="group__title">Название компании:</div>
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="text"
+              placeholder="Введите название о компании..."
+              v-model="name"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Сайт:</div>
+          <div class="group__content">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Вставьте ссылку на сайт..."
+              name="site"
+              v-model="site"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">ИНН:</div>
+          <div class="group__content">
+            <input
+              class="form-control hide-arrows"
+              type="number"
+              placeholder="Введите ИНН"
+              name="inn"
+              v-model="inn"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Адрес офиса:</div>
+          <div class="group__content">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Введите адрес офиса..."
+              name="office_address"
+              v-model="office_address"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Адрес склада:</div>
+          <div class="group__content">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Введите адрес склада..."
+              name="warehouse_address"
+              v-model="warehouse_address"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="group">
+          <div class="group__title">Регион:</div>
+          <div class="group__content">
+            <select required class="form-select" name="region" v-model="region">
+              <option :value="null">Выбрать регион</option>
+              <option
+                v-for="region in regions"
+                :key="region._id"
+                :value="region._id"
+              >
+                {{ region.title }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="group">
-      <div class="group__title">Сайт:</div>
-      <div class="group__content">
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Вставьте ссылку на сайт..."
-          name="site"
-          v-model="site"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">ИНН:</div>
-      <div class="group__content">
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Введите ИНН"
-          name="inn"
-          v-model="inn"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Адрес офиса:</div>
-      <div class="group__content">
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Введите адрес офиса..."
-          name="office_address"
-          v-model="office_address"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Адрес склада:</div>
-      <div class="group__content">
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Введите адрес склада..."
-          name="warehouse_address"
-          v-model="warehouse_address"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Регион:</div>
-      <div class="group__content">
-        <select required class="form-select" name="region" v-model="region">
-          <option :value="null">Выбрать регион</option>
-          <option
-            v-for="region in regions"
-            :key="region._id"
-            :value="region._id"
-          >
-            {{ region.title }}
-          </option>
-        </select>
-      </div>
-    </div>
+
     <div class="group" v-if="false">
       <div class="group__title">Статус поставщика:</div>
       <div class="group__content">
@@ -94,54 +102,64 @@
         </select>
       </div>
     </div>
+
     <div class="add-delivery-row__title text--blue">Директор:</div>
-    <div class="group">
-      <div class="group__title">ФИО:</div>
-      <div class="group__content">
-        <input
-          required
-          class="form-control"
-          type="text"
-          placeholder="Введите ФИО..."
-          v-model="director.name"
-        />
+
+    <div class="d-flex justify-content-between">
+      <div class="flex-1" style="margin-right: 25px">
+        <div class="group">
+          <div class="group__title">ФИО:</div>
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="text"
+              placeholder="Введите ФИО..."
+              v-model="director.name"
+            />
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group__title">Телефон:</div>
+          <div class="group__content">
+            <phone-mask-input
+              required
+              name="phone"
+              inputClass="form-control"
+              v-model="director.phone"
+              placeholder="Номер телефона"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Email:</div>
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="email"
+              placeholder="Введите email"
+              v-model="director.email"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="group">
+          <div class="group__title">Дата рождения:</div>
+          <div class="group__content">
+            <datetime
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              v-model="director.birth"
+            />
+          </div>
+        </div>
       </div>
     </div>
-    <div class="group">
-      <div class="group__title">Дата рождения:</div>
-      <div class="group__content">
-        <datetime
-          type="datetime"
-          input-class="forms__container--input"
-          :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-          v-model="director.birth"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Телефон:</div>
-      <div class="group__content">
-        <phone-mask-input
-          required
-          name="phone"
-          inputClass="form-control"
-          v-model="director.phone"
-          placeholder="Номер телефона"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Email:</div>
-      <div class="group__content">
-        <input
-          required
-          class="form-control"
-          type="text"
-          placeholder="Введите email"
-          v-model="director.email"
-        />
-      </div>
-    </div>
+
     <div class="add-delivery-row__title text--blue">Мессенджеры:</div>
     <div
       class="group messengers"
@@ -157,6 +175,7 @@
           name="name"
           placeholder="Введите название мессенджера..."
           :value="messenger.name"
+          style="width: 401px"
           @input="changeMessenger($event, index)"
         />
         <phone-mask-input
@@ -165,6 +184,7 @@
           placeholder="Введите номер мессенджера..."
           :value="messenger.phone"
           @onValidate="onValidate($event, index)"
+          style="width: 401px"
           @change="changeMessenger($event, index)"
         />
         <VueCustomTooltip label="Удалить мессенджер">
@@ -494,7 +514,7 @@ export default {
     }
   }
   .phone-mask-wrapper-lib {
-    width: 401px;
+    width: 100%;
     height: 33px;
   }
   span[role="tooltip"] {
@@ -513,7 +533,6 @@ export default {
     width: 401px;
   }
   .form-control {
-    width: 976px;
   }
   .chip {
     position: relative;
@@ -530,7 +549,7 @@ export default {
     }
   }
   .autocomplete-input {
-    width: 976px;
+    width: 401px;
   }
 }
 </style>
