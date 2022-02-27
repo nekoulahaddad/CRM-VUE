@@ -29,6 +29,7 @@
               type="text"
               placeholder="Введите название задачи"
               name="title"
+              maxlength="100"
               @input="onChange($event)"
             />
           </div>

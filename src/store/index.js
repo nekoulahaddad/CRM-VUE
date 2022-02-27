@@ -32,6 +32,7 @@ export default new Vuex.Store({
     filterRegion: null,
     filterOptions: {},
     file: {},
+    selectedItems: [],
     actions: {
       addDbTask: false,
       addCallback: false,
@@ -50,6 +51,22 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    selectItem(state, payload) {
+      if (state.selectedItems.includes(payload)) {
+        state.selectedItems = state.selectedItems.filter(
+          (id) => id !== payload
+        );
+      } else {
+        state.selectedItems.push(payload);
+      }
+    },
+    selectAllItems(state, payload) {
+      if (payload.selectAll) {
+        state.selectedItems = [...payload.ids];
+      } else {
+        state.selectedItems = [];
+      }
+    },
     deactivateAction(state, payload) {
       if (state.actions[payload]) {
         state.actions[payload] = false;
@@ -441,5 +458,6 @@ export default new Vuex.Store({
     region: (state) => state.region,
     filterRegion: (state) => state.filterRegion,
     getFilterOptions: (state) => state.filterOptions,
+    selectedItems: (state) => state.selectedItems,
   },
 });

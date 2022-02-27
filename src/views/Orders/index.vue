@@ -48,19 +48,26 @@
                 {{ $t("pages.orders.pageTitle") }}
               </div>
               <div class="list__columns">
-                <div
-                  class="list__column list__column--filter"
-                  @click="sort('number')"
-                >
-                  <span>№:</span>
-                  <img
-                    alt=""
-                    src="@/assets/icons/filter_down.svg"
-                    :class="{
-                      'list__filter-icon--active': filtersOptions.number === -1,
-                    }"
-                    class="list__filter-icon"
+                <div class="list__column list__column--filter">
+                  <input
+                    type="checkbox"
+                    class="form-checkbox"
+                    v-model="selectAll"
+                    @change="selectAllItems"
+                    :disabled="!isLoading"
                   />
+                  <span @click="sort('number')">
+                    <span>№:</span>
+                    <img
+                      alt=""
+                      src="@/assets/icons/filter_down.svg"
+                      :class="{
+                        'list__filter-icon--active':
+                          filtersOptions.number === -1,
+                      }"
+                      class="list__filter-icon"
+                    />
+                  </span>
                 </div>
                 <div class="list__column">Клиент:</div>
                 <div class="list__column">Регион:</div>
@@ -135,6 +142,7 @@
                   :item="item"
                   :infoItem="infoItem"
                   :editedItem="editedItem"
+                  :checked="selectedItems.includes(item._id)"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @toggleDelete="toggleDelete"
@@ -204,6 +212,7 @@ export default {
       startDate: null,
       endDate: null,
       count: 0,
+      selectAll: false,
       filtersOptions: {
         dates: "all",
         client: "all",
@@ -242,6 +251,15 @@ export default {
       getTotalDelivery: "getTotalDelivery",
       sidebar: "sidebar",
     }),
+    selectedItems() {
+      const items = this.$store.getters.selectedItems;
+
+      if (!items.length) {
+        this.selectAll = false;
+      }
+
+      return items;
+    },
     addOrder() {
       return this.$store.state.actions.addOrder;
     },
@@ -312,9 +330,12 @@ export default {
     ...mapActions({
       getOrdersFromPage: "getOrdersFromPage",
     }),
-    ...mapMutations({
-      changeStatus: "change_load_status",
-    }),
+    selectAllItems() {
+      this.$store.commit("selectAllItems", {
+        ids: this.orders.map((item) => item._id),
+        selectAll: this.selectAll,
+      });
+    },
     setDialog(dialog) {
       this.dialog = dialog;
       this.$modal.show("orderActionModal");
@@ -512,7 +533,7 @@ export default {
     right: 158px;
   }
   .list__columns {
-    grid-template-columns: 50px 120px 100px 100px 100px 100px 100px 100px 120px 215px 1fr;
+    grid-template-columns: 70px 120px 100px 100px 100px 100px 100px 100px 120px 215px 1fr;
   }
   .list__columns {
     .list__column:first-child {
@@ -522,13 +543,13 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 50px 167px 160px 156px 120px 120px 140px 140px 140px 312px 1fr;
+      grid-template-columns: 70px 167px 160px 156px 120px 120px 120px 140px 140px 312px 1fr;
     }
   }
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 50px 230px 120px 140px 110px 110px 110px 120px 160px 240px 1fr;
+      grid-template-columns: 70px 230px 120px 140px 110px 110px 110px 120px 160px 240px 1fr;
     }
   }
 
@@ -538,7 +559,7 @@ export default {
       width: 1422px;
     }
     .list__columns {
-      grid-template-columns: 50px 120px 120px 140px 110px 110px 120px 120px 120px 215px 1fr;
+      grid-template-columns: 70px 120px 120px 140px 110px 110px 120px 120px 120px 215px 1fr;
     }
   }
 }

@@ -2,7 +2,10 @@
   <div
     class="list__columns list__columns-shadow list__columns-white order-item"
   >
-    <div class="list__column">{{ item.number }}</div>
+    <div class="list__column d-flex align-items-center">
+      <input type="checkbox" class="form-checkbox" :checked="checked" />
+      {{ item.number }}
+    </div>
     <div class="list__column text--blue">
       {{ transformName(item.client) }}
     </div>
@@ -118,6 +121,7 @@ export default {
       type: Object,
       required: true,
     },
+    checked: Boolean,
     editedItem: {
       type: Object,
       required: true,

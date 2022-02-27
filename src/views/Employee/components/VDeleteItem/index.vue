@@ -20,9 +20,8 @@ import axios from "@/api/axios";
 
 export default {
   props: {
-    deletedItem: {
-      type: Object,
-      default: () => {},
+    ids: {
+      type: Array,
     },
   },
   components: { VButton },
@@ -38,7 +37,7 @@ export default {
       axios({
         url: `/user/delete/`,
         data: {
-          userId: this.deletedItem._id,
+          userId: this.ids,
         },
         method: "DELETE",
       })

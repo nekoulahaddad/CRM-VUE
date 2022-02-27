@@ -3,7 +3,12 @@
     class="list__columns list__columns-shadow list__columns-white employee-item"
   >
     <div class="list__column text--blue">
-      <input type="checkbox" class="form-checkbox" />
+      <input
+        type="checkbox"
+        class="form-checkbox"
+        :checked="checked"
+        @click="$store.commit('selectItem', employee._id)"
+      />
       {{
         `${employee.surname} ${employee.name.charAt(0)}.${
           employee.lastname ? employee.lastname.charAt(0) + "." : ""
@@ -105,6 +110,7 @@ export default {
     infoItem: {
       type: Object,
     },
+    checked: Boolean,
     editedItem: Object,
     employee: {
       type: Object,

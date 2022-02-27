@@ -1,6 +1,6 @@
 <template>
   <div class="page employee-page">
-    <v-delete-item :deletedItem="deletedItem" @refresh="refresh" />
+    <v-delete-item :ids="selectedItems" @refresh="refresh" />
 
     <div
       class="page__header page-header"
@@ -58,7 +58,14 @@
                   v-for="(field, i) in $t('pages.employee.fields')"
                   class="list__column"
                 >
-                  <input v-if="i === 0" type="checkbox" class="form-checkbox" />
+                  <input
+                    v-if="i === 0"
+                    type="checkbox"
+                    class="form-checkbox"
+                    v-model="selectAll"
+                    @change="selectAllItems"
+                    :disabled="!isLoading"
+                  />
                   {{ field }}
                 </div>
               </div>
@@ -87,6 +94,7 @@
                   :employee="employee"
                   :editedItem="editedItem"
                   :options="options"
+                  :checked="selectedItems.includes(employee._id)"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @toggleDelete="toggleDelete"
@@ -156,6 +164,7 @@ export default {
   },
   data() {
     return {
+      selectAll: false,
       showFilter: false,
       openEdit: false,
       openDelete: false,
@@ -186,6 +195,15 @@ export default {
         return role.role;
       },
     },
+    selectedItems() {
+      const items = this.$store.getters.selectedItems;
+
+      if (!items.length) {
+        this.selectAll = false;
+      }
+
+      return items;
+    },
     addEmployee() {
       return this.$store.state.actions.addEmployee;
     },
@@ -208,6 +226,12 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    selectAllItems() {
+      this.$store.commit("selectAllItems", {
+        ids: this.dataset.map((item) => item._id),
+        selectAll: this.selectAll,
+      });
+    },
     goToLink(name) {
       this.$router.push({ name });
     },
