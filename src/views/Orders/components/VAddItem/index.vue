@@ -35,6 +35,7 @@
                 <div class="group__content">
                   <input
                     required
+                    maxlength="50"
                     class="form-control"
                     type="text"
                     placeholder="Введите фамилию..."
@@ -50,6 +51,7 @@
                 <div class="group__content">
                   <input
                     required
+                    maxlength="50"
                     class="form-control"
                     type="text"
                     placeholder="Введите имя..."
@@ -64,6 +66,7 @@
                   <input
                     class="form-control"
                     type="email"
+                    maxlength="100"
                     placeholder="Введите почту..."
                     v-model="clientForm.physicalUser.email"
                     :readonly="clientForm.isOldUser"
@@ -406,6 +409,7 @@
               <div class="group__content">
                 <textarea
                   class="form-textarea"
+                  maxlength="1000"
                   placeholder="Введите дополнительную информацию..."
                 />
               </div>
@@ -1125,7 +1129,7 @@ export default {
   .form-control {
   }
   .form-textarea {
-    min-height: 218px;
+    min-height: 150px;
   }
   .autocomplete-input,
   .vdatetime-input,
