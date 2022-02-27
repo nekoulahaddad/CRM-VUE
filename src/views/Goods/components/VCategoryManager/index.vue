@@ -7,25 +7,28 @@
 
       <div class="group__content">
         <div class="group__item text--bold-700">ФИО:</div>
-        <div class="group__value">{{ fio || "" }}</div>
+        <div
+          class="group__value"
+          style="border-bottom: 1px dashed; cursor: pointer"
+          @click="changeManager = !changeManager"
+        >
+          {{ fio || "" }}
+        </div>
       </div>
 
-      <div class="group">
-        <div class="group__title">Изменить ответственного:</div>
-        <div class="group__content">
-          <autocomplete
-            ref="executors"
-            :search="searchByExecutor"
-            :get-result-value="getResultValue"
-            placeholder="Введите ФИО ответственного..."
-          >
-            <template #result="{ result, props }">
-              <li v-bind="props" @click="selectUser(result)">
-                {{ transformFIO(result) }}
-              </li>
-            </template>
-          </autocomplete>
-        </div>
+      <div class="group" v-if="changeManager">
+        <autocomplete
+          ref="executors"
+          :search="searchByExecutor"
+          :get-result-value="getResultValue"
+          placeholder="Введите ФИО ответственного..."
+        >
+          <template #result="{ result, props }">
+            <li v-bind="props" @click="selectUser(result)">
+              {{ transformFIO(result) }}
+            </li>
+          </template>
+        </autocomplete>
       </div>
 
       <div class="group__content">
@@ -71,6 +74,7 @@ export default {
       timer: null,
       fio: "",
       manager: null,
+      changeManager: false,
     };
   },
   computed: {
@@ -112,6 +116,7 @@ export default {
       this.manager = user;
       this.phone = user.phone;
       this.users = [];
+      this.changeManager = false;
     },
     setManager(clear) {
       this.manager._id = clear ? null : this.manager._id;
@@ -154,7 +159,7 @@ export default {
     font-weight: 500;
   }
   .autocomplete-input {
-    width: 976px;
+    width: 100%;
   }
   &__buttons {
     display: flex;
