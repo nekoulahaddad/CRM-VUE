@@ -26,7 +26,7 @@ export default {
   },
   created() {
     this.getCurrentTime();
-    this.interval = setInterval(this.getCurrentTime, 60000);
+    this.interval = setInterval(this.getCurrentTime, 1000);
   },
 };
 </script>
