@@ -650,11 +650,13 @@
           </span>
 
           <div class="d-flex align-items-end flex-column">
-            <div class="total-item">
+            <div class="total-item d-flex align-items-center">
               Сумма доставки:
               <input
+                class="form-control"
                 type="number"
                 step="0.01"
+                style="margin-left: 10px"
                 v-model.number="orderForm.deliverySum"
               />
             </div>
