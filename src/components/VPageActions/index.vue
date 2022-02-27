@@ -147,6 +147,22 @@
             <simple-svg :src="require('@/assets/icons/create_order.svg')" />
           </a>
         </VueCustomTooltip>
+
+        <VueCustomTooltip
+          label="Удалить выбранные"
+          v-if="$store.getters.selectedItems.length"
+        >
+          <a
+            href=""
+            class="page-actions__button"
+            :class="{
+              'page-actions__button--active': $store.state.actions.addOrder,
+            }"
+            @click.prevent="toggleAction('addOrder')"
+          >
+            <img src="@/assets/icons/action_trash.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
       </template>
 
       <!-- Сотрудники -->

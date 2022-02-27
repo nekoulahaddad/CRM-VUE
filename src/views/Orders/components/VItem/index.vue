@@ -3,7 +3,12 @@
     class="list__columns list__columns-shadow list__columns-white order-item"
   >
     <div class="list__column d-flex align-items-center">
-      <input type="checkbox" class="form-checkbox" :checked="checked" />
+      <input
+        type="checkbox"
+        class="form-checkbox"
+        :checked="checked"
+        @click="$store.commit('selectItem', item._id)"
+      />
       {{ item.number }}
     </div>
     <div class="list__column text--blue">

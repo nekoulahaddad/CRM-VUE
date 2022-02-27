@@ -67,6 +67,9 @@ export default new Vuex.Store({
         state.selectedItems = [];
       }
     },
+    clearSelectedItems(state) {
+      state.selectedItems = [];
+    },
     deactivateAction(state, payload) {
       if (state.actions[payload]) {
         state.actions[payload] = false;
