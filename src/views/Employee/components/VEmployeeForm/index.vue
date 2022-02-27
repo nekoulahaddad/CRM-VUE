@@ -185,8 +185,8 @@
       <div class="group__title">{{ $t("employeeNumber") }}</div>
       <div class="group__content">
         <input
-          type="text"
-          class="form-control"
+          type="number"
+          class="form-control hide-arrows"
           name="personal_number"
           :placeholder="$t('employeeNumber')"
           :value="infoItem ? infoItem.personal_number : personal_number"
@@ -804,6 +804,15 @@ export default {
   }
   .required {
     color: $color-red;
+  }
+  input[type="number"].hide-arrows::-webkit-outer-spin-button,
+  input[type="number"].hide-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"].hide-arrows {
+    -moz-appearance: textfield;
   }
 }
 </style>
