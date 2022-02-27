@@ -12,7 +12,7 @@
           style="border-bottom: 1px dashed; cursor: pointer"
           @click="changeManager = !changeManager"
         >
-          {{ fio || "" }}
+          {{ fio || "Добавить менеджера" }}
         </div>
       </div>
 
