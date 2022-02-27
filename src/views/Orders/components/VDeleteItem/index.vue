@@ -19,16 +19,21 @@ import axios from "@/api/axios";
 export default {
   props: {
     deletedItem: Object,
+    selectedItems: Array,
   },
   methods: {
     cancel() {
       this.$modal.hide("deleteOrder");
     },
     confirm() {
+      const orderId = [
+        ...new Set([...this.selectedItems, this.deletedItem._id]),
+      ];
+
       axios({
         url: `/orders/delete`,
         data: {
-          orderId: this.deletedItem._id,
+          orderId,
         },
         method: "POST",
       })

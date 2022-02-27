@@ -1,7 +1,11 @@
 <template>
   <div class="page orders-page">
     <!-- Модальное окно для подтверждения удаления заказа -->
-    <v-delete-item :deletedItem="deletedItem" @afterDelete="afterDelete" />
+    <v-delete-item
+      :deletedItem="deletedItem"
+      :selectedItems="selectedItems"
+      @afterDelete="afterDelete"
+    />
 
     <v-order-action-modal :dialog="dialog" />
 
@@ -345,6 +349,7 @@ export default {
       this.fetchData();
     },
     afterDelete() {
+      this.$store.commit("clearSelectedItems");
       this.getOrdersFromPage({
         page: +this.$route.params.page,
         filtersOptions: this.filtersOptions,
@@ -457,6 +462,9 @@ export default {
     },
     toggleDelete(item) {
       this.deletedItem = item;
+      this.$modal.show("deleteOrder");
+    },
+    toggleDeleteAll(item) {
       this.$modal.show("deleteOrder");
     },
     async deleteOrder() {
