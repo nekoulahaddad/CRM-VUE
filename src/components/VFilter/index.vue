@@ -185,7 +185,6 @@
 
         <!-- Закупка -->
         <template v-else-if="type === 'purchase'">
-          <v-select :options="[1, 2, 3]"></v-select>
           <div class="filter__group group">
             <div class="group__title">Период:</div>
             <div class="group__content">
@@ -522,16 +521,19 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'region', null)"
-                :value="filterOptions.region"
-              >
-                <option selected value="all">Все регионы</option>
-                <option v-for="item in regions" :value="item._id">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region._id,
+                  })),
+                ]"
+                @input="setSelected"
+              />
             </div>
           </div>
           <div class="filter__actions">
@@ -1084,6 +1086,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    setSelected({ value }) {
+      this.selectOptions({ target: { value } }, null, "region");
+    },
     autocompleteInput(e, type) {
       if (e.target.value.trim().length < 1) {
         this.filterOptions[type] = null;
@@ -1447,5 +1452,23 @@ export default {
     width: 230px;
     margin-top: 10px;
   }
+}
+:root {
+  --vs-dropdown-option--active-bg: none;
+  --vs-dropdown-option--active-color: #222;
+}
+.vs__clear {
+  display: none;
+}
+.vs__selected,
+.vs__dropdown-option {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+.vs__dropdown-option--highlight,
+.vs__dropdown-option--selected {
+  color: $color-red;
+}
+:root {
 }
 </style>
