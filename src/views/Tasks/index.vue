@@ -42,7 +42,10 @@
                 {{ $t("pages.tasks.pageTitle") }}
               </div>
               <div class="list__columns">
-                <div class="list__column">№:</div>
+                <div class="list__column d-flex align-items-center">
+                  <input type="checkbox" class="form-checkbox" />
+                  №:
+                </div>
                 <div class="list__column">Автор:</div>
                 <div class="list__column">Исполнитель:</div>
                 <div class="list__column">Задача:</div>
