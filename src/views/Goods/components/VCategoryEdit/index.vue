@@ -20,7 +20,7 @@
       </div>
 
       <div class="group__flex">
-        <div class="group">
+        <div class="group flex-1">
           <div class="group__title">Фото категории:</div>
           <div class="group__content">
             <div class="group__left">
@@ -55,7 +55,7 @@
         </div>
 
         <div
-          class="group"
+          class="group flex-1"
           v-if="$route.params.nesting - 1 === 0 && editedItem.nesting === 0"
         >
           <div class="group__title">Иконка категории:</div>
@@ -91,7 +91,7 @@
           </div>
         </div>
 
-        <div class="group">
+        <div class="group flex-1">
           <div class="group__title">Изображение слайдера:</div>
           <div class="group__content">
             <div class="group__left">
@@ -127,7 +127,7 @@
           </div>
         </div>
 
-        <div class="group">
+        <div class="group flex-1">
           <div class="group__title">Баннер категории:</div>
           <div class="group__content">
             <div class="group__left">
@@ -161,7 +161,7 @@
           </div>
         </div>
 
-        <div class="group">
+        <div class="group flex-1">
           <div class="group__title">Банер категории (моб. версия):</div>
           <div class="group__content">
             <div class="group__left">
