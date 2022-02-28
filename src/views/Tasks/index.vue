@@ -351,7 +351,7 @@ export default {
     toggleDelete(deletedItem) {
       this.deleteMany = false;
       this.deletedItem = deletedItem;
-      this.$modal.show("delete");
+      this.$modal.show("deleteTask");
     },
     toggleDeleteAll(item) {
       this.deleteMany = true;

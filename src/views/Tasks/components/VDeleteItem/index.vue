@@ -20,9 +20,8 @@ import { mapMutations } from "vuex";
 
 export default {
   props: {
-    ids: {
-      type: Array,
-    },
+    deletedItem: Object,
+    selectedItems: Array,
   },
   components: { VButton },
   methods: {
