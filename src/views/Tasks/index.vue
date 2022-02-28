@@ -418,7 +418,7 @@ export default {
       }, 500);
     },
     removeFromSubTask(item) {
-      this.sub_tasks = this.sub_tasks.filter((item) => item._id !== item._id);
+      this.sub_tasks = this.sub_tasks.filter((task) => task._id !== item._id);
     },
     removeFromTask(task) {
       this.$modal.hide("delete");
