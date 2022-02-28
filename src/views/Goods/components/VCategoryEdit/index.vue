@@ -143,12 +143,17 @@
                     </VueCustomTooltip>
                   </label>
                 </div>
-                <div class="actions__btn" style="border-color: #db1f35">
+                <div
+                  v-if="editedItem && editedItem.slide !== 'default.jpeg'"
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                >
                   <VueCustomTooltip label="Удалить">
                     <img
                       width="17px"
                       src="@/assets/icons/trash_icon.svg"
                       alt=""
+                      @click.prevent="deleteImage('slide', $event)"
                     />
                   </VueCustomTooltip>
                 </div>
@@ -291,6 +296,17 @@ export default {
       const files = e.target.files;
       this[e.target.name] = files[0];
       this[e.target.name + "Url"] = URL.createObjectURL(files[0]);
+    },
+    deleteImage(type, e) {
+      let fields = {
+        img: type,
+        path: type + "Path",
+        category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
+      };
+      this.editedItem[fields.img] = "default.jpeg";
+      this.editedItem[fields.path] = "/uploads/";
+      this[fields.category] = "default";
+      this.remove.push(type);
     },
     onCategoryAdd() {
       let categoryData = new FormData();
