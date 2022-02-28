@@ -80,7 +80,7 @@
             <VueCustomTooltip v-if="index !== activeIndex" label="Подзадача">
               <img
                 alt=""
-                v-if="task.responsible._id || task.executor._id.length < 2"
+                v-if="task.executor._id.length < 2"
                 src="@/assets/icons/document_icon.svg"
                 class="opacity-20"
               />
@@ -141,6 +141,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  created() {
+    console.log(this.task);
   },
 };
 </script>
