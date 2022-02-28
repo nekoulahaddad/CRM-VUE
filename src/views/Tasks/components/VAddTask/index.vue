@@ -425,6 +425,7 @@ export default {
     border-radius: $border-radius;
     cursor: pointer;
     font-weight: bold;
+    margin-bottom: 10px;
   }
   .form-select {
     width: 401px;
@@ -435,9 +436,11 @@ export default {
   .chips {
     margin-bottom: 10px;
   }
+  .participants__input {
+    width: 100%;
+  }
   .autocomplete-input {
-    width: 401px;
-
+    width: 100%;
     &:disabled {
       opacity: 0.3;
     }
