@@ -19,32 +19,34 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'region', null)"
-                :value="filterOptions.region"
-              >
-                <option selected value="all">Все регионы</option>
-                <option v-for="item in regions" :value="item.value">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region.value,
+                  })),
+                ]"
+                @input="setSelected"
+                v-model="filterOptions.region"
+              />
             </div>
           </div>
           <div class="filter__group group">
             <div class="group__title">Отделы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'department')"
-                :value="
-                  filterOptions.department ? filterOptions.department : 'all'
+              <v-select
+                :options="
+                  info.map((item) => ({
+                    label: item.title,
+                    value: item.value,
+                  }))
                 "
-              >
-                <option v-for="item in info" :value="item.value">
-                  {{ item.title }} ({{ item.count }})
-                </option>
-              </select>
+                @input="setDepartment"
+              />
             </div>
           </div>
           <div class="filter__actions">
@@ -1086,6 +1088,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    setDepartment({ value }) {
+      this.selectOptions(null, null, "department", value);
+    },
     setSelected({ value }) {
       this.selectOptions({ target: { value } }, null, "region");
     },
@@ -1469,6 +1474,13 @@ export default {
 .vs__dropdown-option--selected {
   color: $color-red;
 }
-:root {
+.vs__dropdown-option {
+  white-space: normal;
+}
+.vs__selected {
+  overflow: hidden;
+  width: 195px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
