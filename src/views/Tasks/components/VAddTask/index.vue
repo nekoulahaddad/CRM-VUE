@@ -145,19 +145,16 @@
             <div class="group">
               <div class="group__title">Отделы:</div>
               <div class="group__content">
-                <select
-                  class="form-select"
+                <v-select
                   name="targetRegion"
                   v-model="department"
-                >
-                  <option :value="null">Не выбрано</option>
-                  <option
-                    v-for="department in departments"
-                    :value="department._id"
-                  >
-                    {{ department.title }}
-                  </option>
-                </select>
+                  :options="
+                    departments.map((department) => ({
+                      label: department.title,
+                      value: department._id,
+                    }))
+                  "
+                />
               </div>
             </div>
 
@@ -301,10 +298,6 @@ export default {
       this[e.target.name] = e.target.value;
     },
     onTaskAdd() {
-      if (!this.executors.length) {
-        this.$toast.error("Вы не выбрали исполнителя");
-        return;
-      }
       if (this.$moment().valueOf() > new Date(this.date).getTime()) {
         this.$toast.error("Дэдлайн не может быть раньше текущего времени!");
         return;
@@ -319,8 +312,9 @@ export default {
         this.$toast.error("Необходимо выбрать ответственного!");
         return;
       }
+      console.log(this.department);
       if (this.department) {
-        taskData.append("department", this.department);
+        taskData.append("department", this.department.value);
       }
       if (this.description) {
         taskData.append("description", this.description);
@@ -489,6 +483,10 @@ export default {
     flex-wrap: wrap;
   }
   .group__participant {
+  }
+  .v-select {
+    width: 100%;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
   }
 }
 </style>
