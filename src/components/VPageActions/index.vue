@@ -148,170 +148,177 @@
           </a>
         </VueCustomTooltip>
 
-        <VueCustomTooltip
-          label="Удалить выбранные"
-          v-if="$store.getters.selectedItems.length"
-        >
-          <a
-            href=""
-            class="page-actions__button"
-            @click.prevent="$store.commit('toggleDeleteSelectedItems', true)"
-          >
-            <img src="@/assets/icons/action_trash.svg" alt="" />
-          </a>
-        </VueCustomTooltip>
-      </template>
+        <!-- Сотрудники -->
+        <template v-if="name === 'employee'">
+          <VueCustomTooltip label="Добавить сотрудника">
+            <a
+              href=""
+              class="page-actions__button"
+              :class="{
+                'page-actions__button--active':
+                  $store.state.actions.addEmployee,
+              }"
+              @click.prevent="toggleAction('addEmployee')"
+            >
+              <simple-svg :src="require('@/assets/icons/add_employee.svg')" />
+            </a>
+          </VueCustomTooltip>
+          <!-- Excel уволенных сотрудников -->
+          <VueCustomTooltip label="Excel уволенных сотрудников">
+            <a
+              href=""
+              @click.prevent="
+                downloadItem('users', 'xlsx', 'Уволенные_сотрудники')
+              "
+              class="page-actions__button"
+            >
+              <img src="@/assets/icons/fired.svg" alt="" />
+            </a>
+          </VueCustomTooltip>
 
-      <!-- Сотрудники -->
-      <template v-if="name === 'employee'">
-        <VueCustomTooltip label="Добавить сотрудника">
-          <a
-            href=""
-            class="page-actions__button"
-            :class="{
-              'page-actions__button--active': $store.state.actions.addEmployee,
-            }"
-            @click.prevent="toggleAction('addEmployee')"
-          >
-            <simple-svg :src="require('@/assets/icons/add_employee.svg')" />
-          </a>
-        </VueCustomTooltip>
-        <!-- Excel уволенных сотрудников -->
-        <VueCustomTooltip label="Excel уволенных сотрудников">
-          <a
-            href=""
-            @click.prevent="
-              downloadItem('users', 'xlsx', 'Уволенные_сотрудники')
-            "
-            class="page-actions__button"
-          >
-            <img src="@/assets/icons/fired.svg" alt="" />
-          </a>
-        </VueCustomTooltip>
+          <!-- Excel дней рождений за месяц -->
+          <VueCustomTooltip label="Excel дней рождений за месяц">
+            <a
+              href=""
+              @click.prevent="
+                downloadItem('birthday', 'xlsx', 'Дни_рождения_сотрудников')
+              "
+              class="page-actions__button"
+            >
+              <img src="@/assets/icons/birthday_cake.svg" alt="" />
+            </a>
+          </VueCustomTooltip>
 
-        <!-- Excel дней рождений за месяц -->
-        <VueCustomTooltip label="Excel дней рождений за месяц">
-          <a
-            href=""
-            @click.prevent="
-              downloadItem('birthday', 'xlsx', 'Дни_рождения_сотрудников')
-            "
-            class="page-actions__button"
-          >
-            <img src="@/assets/icons/birthday_cake.svg" alt="" />
-          </a>
-        </VueCustomTooltip>
+          <!-- Excel всех сотрудников -->
+          <VueCustomTooltip label="Excel всех сотрудников">
+            <a
+              href=""
+              @click.prevent="
+                downloadItem('allusers', 'xlsx', 'Все_сотрудники')
+              "
+              class="page-actions__button"
+            >
+              <img src="@/assets/icons/employees.svg" alt="" />
+            </a>
+          </VueCustomTooltip>
 
-        <!-- Excel всех сотрудников -->
-        <VueCustomTooltip label="Excel всех сотрудников">
-          <a
-            href=""
-            @click.prevent="downloadItem('allusers', 'xlsx', 'Все_сотрудники')"
-            class="page-actions__button"
-          >
-            <img src="@/assets/icons/employees.svg" alt="" />
-          </a>
-        </VueCustomTooltip>
+          <!-- Excel детей сотрудников -->
+          <VueCustomTooltip label="Excel детей сотрудников">
+            <a
+              href=""
+              @click.prevent="
+                downloadItem('children', 'xlsx', 'Дети_сотрудников')
+              "
+              class="page-actions__button"
+            >
+              <img src="@/assets/icons/baby.svg" alt="" />
+            </a>
+          </VueCustomTooltip>
+        </template>
 
-        <!-- Excel детей сотрудников -->
-        <VueCustomTooltip label="Excel детей сотрудников">
-          <a
-            href=""
-            @click.prevent="
-              downloadItem('children', 'xlsx', 'Дети_сотрудников')
-            "
-            class="page-actions__button"
-          >
-            <img src="@/assets/icons/baby.svg" alt="" />
-          </a>
-        </VueCustomTooltip>
-      </template>
+        <!-- Обучение -->
+        <template v-if="name === 'education'">
+          <VueCustomTooltip label="Добавить раздел">
+            <a
+              href=""
+              @click.prevent="toggleAction('createEducationSection')"
+              class="page-actions__button"
+              :class="{
+                'page-actions__button--active':
+                  $store.state.actions.createEducationSection,
+              }"
+            >
+              <simple-svg
+                :src="require('@/assets/icons/create_education.svg')"
+              />
+            </a>
+          </VueCustomTooltip>
+        </template>
 
-      <!-- Обучение -->
-      <template v-if="name === 'education'">
-        <VueCustomTooltip label="Добавить раздел">
+        <!-- Задачи -->
+        <template v-if="name === 'tasks'">
+          <VueCustomTooltip label="Создать задачу">
+            <a
+              href=""
+              class="page-actions__button"
+              :class="{
+                'page-actions__button--active': $store.state.actions.addTask,
+              }"
+              @click.prevent="toggleAction('addTask')"
+            >
+              <simple-svg :src="require('@/assets/icons/add_task.svg')" />
+            </a>
+          </VueCustomTooltip>
+        </template>
+
+        <!-- Поставщики -->
+        <template v-if="name === 'delivery'">
+          <VueCustomTooltip label="Добавить поставщика">
+            <a
+              href=""
+              class="page-actions__button"
+              :class="{
+                'page-actions__button--active':
+                  $store.state.actions.addDelivery,
+              }"
+              @click.prevent="toggleAction('addDelivery')"
+            >
+              <simple-svg :src="require('@/assets/icons/add_delivery.svg')" />
+            </a>
+          </VueCustomTooltip>
+        </template>
+
+        <!-- Департаменты -->
+        <template v-if="name === 'departments'">
           <a
             href=""
-            @click.prevent="toggleAction('createEducationSection')"
             class="page-actions__button"
             :class="{
               'page-actions__button--active':
-                $store.state.actions.createEducationSection,
+                $store.state.actions.addDepartment,
             }"
+            @click.prevent="toggleAction('addDepartment')"
           >
-            <simple-svg :src="require('@/assets/icons/create_education.svg')" />
+            <simple-svg :src="require('@/assets/icons/add_department.svg')" />
           </a>
-        </VueCustomTooltip>
+        </template>
+
+        <!-- Клиенты -->
+        <template v-if="name === 'clients' && false">
+          <a href="" class="page-actions__button">
+            <img src="@/assets/icons/client_add.svg" alt="" />
+          </a>
+        </template>
+
+        <!-- Вакансии -->
+        <template v-if="name === 'vacancies'">
+          <VueCustomTooltip label="Добавить вакансию">
+            <a
+              href=""
+              class="page-actions__button"
+              :class="{
+                'page-actions__button--active': $store.state.actions.addVacancy,
+              }"
+              @click.prevent="toggleAction('addVacancy')"
+            >
+              <simple-svg :src="require('@/assets/icons/add_vacancy.svg')" />
+            </a>
+          </VueCustomTooltip>
+        </template>
       </template>
 
-      <!-- Задачи -->
-      <template v-if="name === 'tasks'">
-        <VueCustomTooltip label="Создать задачу">
-          <a
-            href=""
-            class="page-actions__button"
-            :class="{
-              'page-actions__button--active': $store.state.actions.addTask,
-            }"
-            @click.prevent="toggleAction('addTask')"
-          >
-            <simple-svg :src="require('@/assets/icons/add_task.svg')" />
-          </a>
-        </VueCustomTooltip>
-      </template>
-
-      <!-- Поставщики -->
-      <template v-if="name === 'delivery'">
-        <VueCustomTooltip label="Добавить поставщика">
-          <a
-            href=""
-            class="page-actions__button"
-            :class="{
-              'page-actions__button--active': $store.state.actions.addDelivery,
-            }"
-            @click.prevent="toggleAction('addDelivery')"
-          >
-            <simple-svg :src="require('@/assets/icons/add_delivery.svg')" />
-          </a>
-        </VueCustomTooltip>
-      </template>
-
-      <!-- Департаменты -->
-      <template v-if="name === 'departments'">
+      <VueCustomTooltip
+        label="Удалить выбранные"
+        v-if="$store.getters.selectedItems.length"
+      >
         <a
           href=""
           class="page-actions__button"
-          :class="{
-            'page-actions__button--active': $store.state.actions.addDepartment,
-          }"
-          @click.prevent="toggleAction('addDepartment')"
+          @click.prevent="$store.commit('toggleDeleteSelectedItems', true)"
         >
-          <simple-svg :src="require('@/assets/icons/add_department.svg')" />
+          <img src="@/assets/icons/action_trash.svg" alt="" />
         </a>
-      </template>
-
-      <!-- Клиенты -->
-      <template v-if="name === 'clients' && false">
-        <a href="" class="page-actions__button">
-          <img src="@/assets/icons/client_add.svg" alt="" />
-        </a>
-      </template>
-
-      <!-- Вакансии -->
-      <template v-if="name === 'vacancies'">
-        <VueCustomTooltip label="Добавить вакансию">
-          <a
-            href=""
-            class="page-actions__button"
-            :class="{
-              'page-actions__button--active': $store.state.actions.addVacancy,
-            }"
-            @click.prevent="toggleAction('addVacancy')"
-          >
-            <simple-svg :src="require('@/assets/icons/add_vacancy.svg')" />
-          </a>
-        </VueCustomTooltip>
-      </template>
+      </VueCustomTooltip>
     </div>
   </div>
 </template>
