@@ -43,7 +43,13 @@
               </div>
               <div class="list__columns">
                 <div class="list__column d-flex align-items-center">
-                  <input type="checkbox" class="form-checkbox" />
+                  <input
+                    type="checkbox"
+                    class="form-checkbox"
+                    v-model="selectAll"
+                    @change="selectAllItems"
+                    :disabled="!isLoading"
+                  />
                   №:
                 </div>
                 <div class="list__column">Автор:</div>
@@ -109,6 +115,7 @@
                   :index="index"
                   :task="task"
                   :role="role"
+                  :checked="selectedItems.includes(task._id)"
                   @toggleInfo="toggleInfo"
                   @getSubTasks="getSubTasks"
                   @toggleDelete="toggleDelete"
@@ -220,6 +227,7 @@ export default {
   },
   data() {
     return {
+      selectAll: false,
       showFilter: false,
       open: false,
       edit: false,
@@ -262,6 +270,15 @@ export default {
         return role.role;
       },
     },
+    selectedItems() {
+      const items = this.$store.getters.selectedItems;
+
+      if (!items.length) {
+        this.selectAll = false;
+      }
+
+      return items;
+    },
     id: {
       get: function () {
         let user = this.getUserRole();
@@ -289,6 +306,12 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    selectAllItems() {
+      this.$store.commit("selectAllItems", {
+        ids: this.dataset.map((item) => item._id),
+        selectAll: this.selectAll,
+      });
+    },
     toggleFilter() {
       this.showFilter = !this.showFilter;
     },

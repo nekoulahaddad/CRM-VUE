@@ -1,7 +1,12 @@
 <template>
   <div class="list__columns list__columns--shadow list__columns--white">
     <div class="list__column list__column--number d-flex align-items-center">
-      <input type="checkbox" class="form-checkbox" />
+      <input
+        type="checkbox"
+        class="form-checkbox"
+        :checked="checked"
+        @click="$store.commit('selectItem', task._id)"
+      />
       {{ index + 1 + ($route.params.page - 1) * 15 }}
     </div>
     <div class="list__column text--blue">
@@ -120,6 +125,7 @@ export default {
     activeIndex: {
       type: Number,
     },
+    checked: Boolean,
     id: {
       type: String,
     },
