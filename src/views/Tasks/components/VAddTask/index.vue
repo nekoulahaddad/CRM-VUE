@@ -20,143 +20,163 @@
     <div class="add-task-row__inner">
       <form @submit.prevent="onTaskAdd">
         <div class="add-task-row__title text--blue">Новая задача</div>
-        <div class="group">
-          <div class="group__title">Наименование задачи:</div>
-          <div class="group__content">
-            <input
-              required
-              class="form-control"
-              type="text"
-              placeholder="Введите название задачи"
-              name="title"
-              maxlength="100"
-              @input="onChange($event)"
-            />
-          </div>
-        </div>
-        <div class="group participants">
-          <div class="group__title">
-            ФИО {{ department ? `ответственного` : "исполнителей" }}:
-          </div>
-          <div class="group__participants">
-            <div
-              v-if="executors.length"
-              class="group__participant"
-              v-for="(executor, index) in executors"
-              :key="index"
-            >
-              <span>{{ transformFIO(executor) }}</span>
-              <div>
-                <VueCustomTooltip label="Удалить">
-                  <img
-                    alt=""
-                    src="@/assets/icons/trash_icon.svg"
-                    @click="deleteChip(index)"
-                  />
-                </VueCustomTooltip>
+
+        <div class="d-flex justify-content-between">
+          <div class="flex-1" style="margin-right: 25px">
+            <!-- Наименование задачи -->
+            <div class="group">
+              <div class="group__title">Наименование задачи:</div>
+              <div class="group__content">
+                <input
+                  required
+                  class="form-control"
+                  type="text"
+                  placeholder="Введите название задачи"
+                  name="title"
+                  maxlength="100"
+                  @input="onChange($event)"
+                />
               </div>
             </div>
-            <div class="participants__empty" v-else>Исполнителей нет</div>
+
+            <!-- ФИО исполнителей -->
+            <div class="group participants">
+              <div class="group__title">
+                ФИО {{ department ? `ответственного` : "исполнителей" }}:
+              </div>
+              <div class="group__participants">
+                <div
+                  v-if="executors.length"
+                  class="group__participant"
+                  v-for="(executor, index) in executors"
+                  :key="index"
+                >
+                  <span>{{ transformFIO(executor) }}</span>
+                  <div>
+                    <VueCustomTooltip label="Удалить">
+                      <img
+                        alt=""
+                        src="@/assets/icons/trash_icon.svg"
+                        @click="deleteChip(index)"
+                      />
+                    </VueCustomTooltip>
+                  </div>
+                </div>
+                <div class="participants__empty" v-else>Исполнителей нет</div>
+              </div>
+              <div class="group__content">
+                <autocomplete
+                  ref="executor"
+                  :disabled="department && executors.length > 0"
+                  class="participants__input"
+                  :search="searchByExecutor"
+                  :get-result-value="getResultValue"
+                  placeholder="Введите ФИО сотрудника..."
+                >
+                  <template #result="{ result, props }">
+                    <li v-bind="props" @click="selectUser(result)">
+                      {{ transformFIO(result) }}
+                    </li>
+                  </template>
+                </autocomplete>
+              </div>
+            </div>
+
+            <!-- Описание -->
+            <div class="group">
+              <div class="group__title">Описание:</div>
+              <div class="group__content">
+                <textarea
+                  required
+                  class="form-textarea"
+                  placeholder="Введите описание задачи..."
+                  name="description"
+                  maxlength="3000"
+                  @input="onChange($event)"
+                />
+              </div>
+            </div>
+
+            <!-- Документы -->
+            <div class="group">
+              <div class="group__title">Документы:</div>
+              <div class="group__participants group__documents">
+                <div
+                  class="group__participant"
+                  v-if="documents.length"
+                  v-for="(photo, index) in documents"
+                  :key="index"
+                >
+                  <span
+                    style="
+                      overflow: hidden;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ photo.name ? photo.name : photo }}
+                  </span>
+                  <div>
+                    <VueCustomTooltip label="Удалить">
+                      <img
+                        alt=""
+                        src="@/assets/icons/trash_icon.svg"
+                        @click="deleteDocument(index)"
+                      />
+                    </VueCustomTooltip>
+                  </div>
+                </div>
+              </div>
+              <div class="group__content">
+                <input
+                  hidden
+                  type="file"
+                  id="document-file"
+                  multiple
+                  name="documents"
+                  @change="fileUpload($event)"
+                />
+                <label for="document-file">Загрузить</label>
+              </div>
+            </div>
           </div>
-          <div class="group__content">
-            <autocomplete
-              ref="executor"
-              :disabled="department && executors.length > 0"
-              class="participants__input"
-              :search="searchByExecutor"
-              :get-result-value="getResultValue"
-              placeholder="Введите ФИО сотрудника..."
-            >
-              <template #result="{ result, props }">
-                <li v-bind="props" @click="selectUser(result)">
-                  {{ transformFIO(result) }}
-                </li>
-              </template>
-            </autocomplete>
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Отделы:</div>
-          <div class="group__content">
-            <select
-              class="form-select"
-              name="targetRegion"
-              v-model="department"
-            >
-              <option :value="null">Не выбрано</option>
-              <option v-for="department in departments" :value="department._id">
-                {{ department.title }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Описание:</div>
-          <div class="group__content">
-            <textarea
-              required
-              class="form-textarea"
-              placeholder="Введите описание задачи..."
-              name="description"
-              maxlength="3000"
-              @input="onChange($event)"
-            />
+          <div>
+            <!-- Отделы -->
+            <div class="group">
+              <div class="group__title">Отделы:</div>
+              <div class="group__content">
+                <select
+                  class="form-select"
+                  name="targetRegion"
+                  v-model="department"
+                >
+                  <option :value="null">Не выбрано</option>
+                  <option
+                    v-for="department in departments"
+                    :value="department._id"
+                  >
+                    {{ department.title }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Дедлайн -->
+            <div class="group">
+              <div class="group__title">Дедлайн:</div>
+              <div class="group__content">
+                <datetime
+                  required
+                  v-model="date"
+                  input-class="forms__container--input"
+                  type="date"
+                  :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="group">
-          <div class="group__title">Документы:</div>
-          <div class="group__participants">
-            <div
-              class="group__participant"
-              v-if="documents.length"
-              v-for="(photo, index) in documents"
-              :key="index"
-            >
-              <span
-                style="
-                  overflow: hidden;
-                  white-space: nowrap;
-                  text-overflow: ellipsis;
-                "
-              >
-                {{ photo.name ? photo.name : photo }}
-              </span>
-              <div>
-                <VueCustomTooltip label="Удалить">
-                  <img
-                    alt=""
-                    src="@/assets/icons/trash_icon.svg"
-                    @click="deleteDocument(index)"
-                  />
-                </VueCustomTooltip>
-              </div>
-            </div>
-          </div>
-          <div class="group__content">
-            <input
-              hidden
-              type="file"
-              id="document-file"
-              multiple
-              name="documents"
-              @change="fileUpload($event)"
-            />
-            <label for="document-file">Загрузить</label>
-          </div>
-        </div>
-        <div class="group">
-          <div class="group__title">Дедлайн:</div>
-          <div class="group__content">
-            <datetime
-              required
-              v-model="date"
-              input-class="forms__container--input"
-              type="date"
-              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-            />
-          </div>
-        </div>
         <v-spinner v-if="!isLoading" small />
         <v-button v-else red>Отправить</v-button>
       </form>
@@ -383,10 +403,8 @@ export default {
     padding: 10px;
   }
   .form-control {
-    width: 976px;
   }
   .form-textarea {
-    width: 976px;
   }
   &__close {
     position: absolute;
@@ -462,9 +480,9 @@ export default {
   .participants__empty {
     margin-bottom: 10px;
   }
-  .group__participants {
+  .group__documents {
     display: flex;
-    width: 850px !important;
+    width: 850px;
     flex-wrap: wrap;
   }
   .group__participant {
