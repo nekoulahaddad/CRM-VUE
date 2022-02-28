@@ -577,7 +577,7 @@ export default {
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 70px 230px 120px 140px 110px 110px 110px 120px 160px 240px 1fr;
+      grid-template-columns: 70px 200px 120px 140px 110px 110px 110px 120px 160px 240px 1fr;
     }
   }
 
