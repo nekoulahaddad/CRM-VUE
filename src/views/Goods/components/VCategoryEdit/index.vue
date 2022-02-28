@@ -38,14 +38,21 @@
               />
               <div v-else class="category-edit-form__default-img">
                 <img src="@/assets/icons/goods_default.svg" alt="" />
-                <span>Нажмите что бы выбрать</span>
               </div>
             </div>
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
                   <VueCustomTooltip label="Загрузить">
-                    <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    <input
+                      type="file"
+                      id="categoryImage"
+                      name="categoryImage"
+                      hidden
+                    />
+                    <label for="categoryImage">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </label>
                   </VueCustomTooltip>
                 </div>
               </div>
@@ -74,14 +81,16 @@
               />
               <div v-else class="category-edit-form__default-img">
                 <img src="@/assets/icons/goods_default.svg" alt="" />
-                <span>Нажмите что бы выбрать</span>
               </div>
             </div>
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
                   <VueCustomTooltip label="Загрузить">
-                    <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    <input type="file" hidden />
+                    <label for=""
+                      ><img src="@/assets/icons/goods_upload.svg" alt=""
+                    /></label>
                   </VueCustomTooltip>
                 </div>
               </div>
@@ -435,23 +444,13 @@ export default {
     align-items: center;
     padding: 10px;
     position: relative;
+    margin-bottom: 10px;
 
     span {
       position: absolute;
       top: 50%;
       right: 10px;
       transform: translateY(-50%);
-    }
-    span[role="tooltip"] {
-      &:after {
-        background-color: $color-black;
-        color: $color-white;
-        border-radius: $border-radius;
-      }
-    }
-
-    & + * {
-      margin-top: 10px;
     }
   }
   span[role="tooltip"] {
