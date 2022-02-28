@@ -2,7 +2,7 @@
   <v-modal
     :adaptive="true"
     :minWidth="1130"
-    :minHeight="700"
+    :minHeight="795"
     :maxHeight="1200"
     name="editTask"
   >
@@ -45,7 +45,12 @@
             <div class="group">
               <div class="group__title">Наименование задачи:</div>
               <div class="group__content">
-                <input class="form-control" type="text" v-model="title" />
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="title"
+                  maxlength="100"
+                />
               </div>
             </div>
             <div class="group">
@@ -235,7 +240,11 @@
             <div class="group">
               <div class="group__title">Комментарий:</div>
               <div class="group__content">
-                <textarea class="form-textarea" v-model="initiator_comment" />
+                <textarea
+                  class="form-textarea"
+                  v-model="initiator_comment"
+                  maxlength="1000"
+                />
               </div>
             </div>
             <!-- Автор -->

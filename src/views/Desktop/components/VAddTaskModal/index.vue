@@ -27,6 +27,7 @@
                 class="form-control"
                 placeholder="Введите название задачи"
                 v-model="title"
+                maxlength="100"
               />
             </div>
           </div>
@@ -99,6 +100,7 @@
                 class="form-textarea"
                 placeholder="Введите описание задачи..."
                 v-model="description"
+                maxlength="3000"
               />
             </div>
           </div>
