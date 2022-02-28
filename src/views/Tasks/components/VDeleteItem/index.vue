@@ -1,6 +1,19 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="deleteTask">
-    <div class="vm--modal__title">Удаление</div>
+  <v-modal
+    :adaptive="true"
+    :maxHeight="175"
+    name="deleteTask"
+    @before-close="$store.commit('toggleDeleteSelectedItems', false)"
+  >
+    <div class="vm--modal__title">
+      Удаление
+      <img
+        class="close"
+        src="@/assets/icons/close_icon.svg"
+        alt=""
+        @click="cancel"
+      />
+    </div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
         Вы точно хотите удалить? Отменить это действие будет невозможно
@@ -32,16 +45,10 @@ export default {
       this.$modal.hide("deleteTask");
     },
     confirm() {
-      let taskId = this.deletedItem._id;
-
-      if (this.deleteMany) {
-        taskId = [...new Set([...this.selectedItems, this.deletedItem._id])];
-      }
-
       axios({
         url: "/tasks/delete/",
         data: {
-          taskId,
+          taskId: this.deleteMany ? this.selectedItems : this.deletedItem._id,
         },
         method: "DELETE",
       })
@@ -66,6 +73,13 @@ export default {
   }
   &__buttons {
     justify-content: center;
+  }
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
   }
 }
 </style>

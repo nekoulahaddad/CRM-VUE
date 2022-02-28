@@ -1,6 +1,7 @@
 <template>
   <div class="page tasks-page">
     <!-- Модальное окно для подтверждения удаления задачи -->
+
     <v-delete-item
       :deletedItem="deletedItem"
       :selectedItems="selectedItems"
@@ -353,7 +354,7 @@ export default {
       this.deletedItem = deletedItem;
       this.$modal.show("deleteTask");
     },
-    toggleDeleteAll(item) {
+    toggleDeleteAll() {
       this.deleteMany = true;
       this.$modal.show("deleteTask");
     },
