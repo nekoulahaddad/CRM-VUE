@@ -351,8 +351,22 @@ export default {
         this.changeStatus(true);
       }
     },
+    async getGoodsFromRegion() {
+      try {
+        this.downloadExcelGoods = true
+        await axios({
+          url:  `/excel/getgoodsfromregion`,
+          data: {
+            region: this.$store.getters.getFilterOptions,
+          },
+          method: "POST",
+        })
+        this.$toast.success('Начинаю генерировать Excel!')
+      } catch (error) {
+        this.$toast.error(error.response.data.message)
+      }
+    }
     async downloadUsers() {
-      this.changeStatus(false);
       axios({
         url: `/excel/users`,
         data: {
