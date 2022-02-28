@@ -20,8 +20,11 @@ import axios from "@/api/axios";
 
 export default {
   props: {
-    ids: {
-      type: Array,
+    deletedItem: Object,
+    selectedItems: Array,
+    deleteMany: {
+      type: Boolean,
+      default: false,
     },
   },
   components: { VButton },
@@ -33,7 +36,6 @@ export default {
       this.$modal.hide("deleteEmployee");
     },
     confirm() {
-      this.changeStatus(false);
       axios({
         url: `/user/delete/`,
         data: {
@@ -51,9 +53,6 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
   },

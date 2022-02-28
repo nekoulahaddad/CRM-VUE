@@ -3,6 +3,8 @@
     <!-- Модальное окно для подтверждения удаления задачи -->
     <v-delete-item
       :deletedItem="deletedItem"
+      :selectedItems="selectedItems"
+      :deleteMany="deleteMany"
       @removeFromTask="removeFromTask"
     />
 
@@ -227,6 +229,7 @@ export default {
   },
   data() {
     return {
+      deleteMany: false,
       selectAll: false,
       showFilter: false,
       open: false,
@@ -269,6 +272,9 @@ export default {
         let role = this.getUserRole();
         return role.role;
       },
+    },
+    deleteSelectedItems() {
+      return this.$store.state.deleteSelectedItems;
     },
     selectedItems() {
       const items = this.$store.getters.selectedItems;
@@ -339,8 +345,13 @@ export default {
       this.open = !this.open;
     },
     toggleDelete(deletedItem) {
+      this.deleteMany = false;
       this.deletedItem = deletedItem;
       this.$modal.show("delete");
+    },
+    toggleDeleteAll(item) {
+      this.deleteMany = true;
+      this.$modal.show("deleteTask");
     },
     toggleSubDelete(deletedItem) {
       this.deletedItem = deletedItem;
@@ -541,6 +552,11 @@ export default {
     },
   },
   watch: {
+    deleteSelectedItems(value) {
+      if (value) {
+        this.toggleDeleteAll();
+      }
+    },
     $route: function () {
       this.fetchData();
     },

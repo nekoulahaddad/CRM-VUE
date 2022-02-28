@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="delete">
+  <v-modal :adaptive="true" :maxHeight="175" name="deleteTask">
     <div class="vm--modal__title">Удаление</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
@@ -20,9 +20,8 @@ import { mapMutations } from "vuex";
 
 export default {
   props: {
-    deletedItem: {
-      type: Object,
-      required: true,
+    ids: {
+      type: Array,
     },
   },
   components: { VButton },
@@ -31,13 +30,19 @@ export default {
       changeStatus: "change_load_status",
     }),
     cancel() {
-      this.$modal.hide("delete");
+      this.$modal.hide("deleteTask");
     },
     confirm() {
+      let taskId = this.deletedItem._id;
+
+      if (this.deleteMany) {
+        taskId = [...new Set([...this.selectedItems, this.deletedItem._id])];
+      }
+
       axios({
         url: "/tasks/delete/",
         data: {
-          taskId: this.deletedItem._id,
+          taskId,
         },
         method: "DELETE",
       })
