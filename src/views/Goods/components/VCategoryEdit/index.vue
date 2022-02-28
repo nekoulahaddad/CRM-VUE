@@ -43,17 +43,18 @@
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <VueCustomTooltip label="Загрузить">
+                  <label for="categoryImage">
                     <input
                       type="file"
                       id="categoryImage"
                       name="categoryImage"
+                      @change="fileUpload($event)"
                       hidden
                     />
-                    <label for="categoryImage">
+                    <VueCustomTooltip label="Выбрать фото">
                       <img src="@/assets/icons/goods_upload.svg" alt="" />
-                    </label>
-                  </VueCustomTooltip>
+                    </VueCustomTooltip>
+                  </label>
                 </div>
               </div>
             </div>
@@ -86,12 +87,18 @@
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <VueCustomTooltip label="Загрузить">
-                    <input type="file" hidden />
-                    <label for=""
-                      ><img src="@/assets/icons/goods_upload.svg" alt=""
-                    /></label>
-                  </VueCustomTooltip>
+                  <label for="categoryIcon">
+                    <input
+                      type="file"
+                      id="categoryIcon"
+                      name="categoryIcon"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
                 </div>
               </div>
             </div>
@@ -118,15 +125,23 @@
               />
               <div v-else class="category-edit-form__default-img">
                 <img src="@/assets/icons/goods_default.svg" alt="" />
-                <span>Нажмите что бы выбрать</span>
               </div>
             </div>
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <VueCustomTooltip label="Загрузить">
-                    <img src="@/assets/icons/goods_upload.svg" alt="" />
-                  </VueCustomTooltip>
+                  <label for="categorySlide">
+                    <input
+                      type="file"
+                      id="categorySlide"
+                      name="categorySlide"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
                 </div>
                 <div class="actions__btn" style="border-color: #db1f35">
                   <VueCustomTooltip label="Удалить">
@@ -160,15 +175,23 @@
               />
               <div v-else class="category-edit-form__default-img">
                 <img src="@/assets/icons/goods_default.svg" alt="" />
-                <span>Нажмите что бы выбрать</span>
               </div>
             </div>
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <VueCustomTooltip label="Загрузить">
-                    <img src="@/assets/icons/goods_upload.svg" alt="" />
-                  </VueCustomTooltip>
+                  <label for="categoryBanner">
+                    <input
+                      type="file"
+                      id="categoryBanner"
+                      name="categoryBanner"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
                 </div>
               </div>
             </div>
@@ -197,16 +220,24 @@
               />
               <div v-else class="category-edit-form__default-img">
                 <img src="@/assets/icons/goods_default.svg" alt="" />
-                <span>Нажмите что бы выбрать</span>
               </div>
             </div>
 
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <VueCustomTooltip label="Загрузить">
-                    <img src="@/assets/icons/goods_upload.svg" alt="" />
-                  </VueCustomTooltip>
+                  <label for="categoryBannerMob">
+                    <input
+                      type="file"
+                      id="categoryBannerMob"
+                      name="categoryBannerMob"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
                 </div>
               </div>
             </div>
@@ -256,6 +287,11 @@ export default {
   },
   components: { VButton },
   methods: {
+    fileUpload(e) {
+      const files = e.target.files;
+      this[e.target.name] = files[0];
+      this[e.target.name + "Url"] = URL.createObjectURL(files[0]);
+    },
     onCategoryAdd() {
       let categoryData = new FormData();
 
@@ -430,6 +466,22 @@ export default {
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      position: relative;
+
+      label {
+        width: 33px;
+        height: 33px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: absolute;
+        top: -2px;
+        right: 0;
+        bottom: 0;
+        left: -2px;
+        z-index: 100;
+      }
     }
   }
   .group__left {
