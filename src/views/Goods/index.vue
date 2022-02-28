@@ -143,6 +143,7 @@
                       :managerItem="managerItem"
                       :categoryExportItem="categoryExportItem"
                       :categoryImportItem="categoryImportItem"
+                      :filtersOptions="filtersOptions"
                       @hideDetail="hideDetail"
                       @toggleCopy="toggleCopy"
                       @toggleManager="toggleManager"

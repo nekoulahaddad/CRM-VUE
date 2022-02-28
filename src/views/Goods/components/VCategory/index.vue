@@ -15,7 +15,7 @@
       <a
         href=""
         @click.prevent="$emit('toggleCopy', item)"
-        v-if="copyItem._id !== item._id"
+        v-if="copyItem._id !== item._id && !filtersOptions.nesting"
       >
         Копировать категорию
       </a>
@@ -152,6 +152,7 @@
 <script>
 export default {
   props: {
+    filtersOptions: Object,
     current: Array,
     dropDown: {
       type: Object,
