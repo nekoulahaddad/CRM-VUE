@@ -35,6 +35,7 @@ export default {
   props: {
     deletedItem: Object,
     selectedItems: Array,
+    deleteMany: Boolean,
   },
   components: { VButton },
   methods: {
@@ -53,8 +54,12 @@ export default {
         method: "DELETE",
       })
         .then(() => {
+          const msg =
+            this.deleteMany && this.selectedItems.length > 1
+              ? "Задачи успешно удалены!"
+              : "Задача успешно удалена!";
           this.$emit("afterDelete");
-          this.$toast.success("Задача успешно удалена!");
+          this.$toast.success(msg);
           this.cancel();
         })
         .catch((err) => {
