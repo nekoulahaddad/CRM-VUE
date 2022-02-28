@@ -369,7 +369,6 @@ export default {
     margin-bottom: 10px;
   }
   .form-control {
-    width: 976px;
   }
   .group__flex {
     display: flex;
@@ -424,7 +423,6 @@ export default {
   }
 
   .group__find {
-    width: 976px;
     height: 40px;
     border-radius: $border-radius;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
