@@ -6,6 +6,7 @@
       :selectedItems="selectedItems"
       :deleteMany="deleteMany"
       @removeFromTask="removeFromTask"
+      @afterDelete="afterDelete"
     />
 
     <!-- Модальное окно для подтверждения удаления подзадачи -->
@@ -312,6 +313,9 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    afterDelete() {
+      this.fetchData();
+    },
     selectAllItems() {
       this.$store.commit("selectAllItems", {
         ids: this.dataset.map((item) => item._id),

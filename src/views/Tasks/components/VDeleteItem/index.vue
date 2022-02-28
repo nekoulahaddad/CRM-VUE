@@ -46,15 +46,13 @@ export default {
         },
         method: "DELETE",
       })
-        .then((res) => {
-          this.$emit("removeFromTask", res.data.task);
+        .then(() => {
+          this.$emit("afterDelete");
           this.$toast.success("Задача успешно удалена!");
-          this.$emit("toggleOpen");
-          this.changeStatus(true);
+          this.cancel();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
         });
     },
   },
