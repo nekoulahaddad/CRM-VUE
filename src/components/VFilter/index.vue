@@ -31,7 +31,6 @@
                   })),
                 ]"
                 @input="setSelected"
-                v-model="filterOptions.region"
               />
             </div>
           </div>
