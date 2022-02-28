@@ -2,16 +2,6 @@
   <div class="list__info list-info category-import">
     <div class="category-import__title group__title text--blue">
       Импорт товара:
-      <img
-        alt=""
-        class="category-add-form__close"
-        src="/icons/close_icon.svg"
-        @click.prevent="
-          $store.commit('toggleAction', {
-            key: 'importGoods',
-          })
-        "
-      />
     </div>
     <form @submit.prevent="onExport">
       <div class="list-info__group group">
