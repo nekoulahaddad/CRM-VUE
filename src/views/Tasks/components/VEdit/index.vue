@@ -6,7 +6,7 @@
           {{ $t("pages.tasks.taskEdit") }}
         </div>
         <div class="group">
-          <div class="group__title">Наименоване задачи:</div>
+          <div class="group__title">Наименование задачи:</div>
           <div class="group__content">
             <input
               class="form-control"
