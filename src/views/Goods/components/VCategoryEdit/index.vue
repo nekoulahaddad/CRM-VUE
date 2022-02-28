@@ -44,10 +44,9 @@
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <img src="@/assets/icons/goods_upload.svg" alt="" />
-                </div>
-                <div class="actions__btn">
-                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                  <VueCustomTooltip label="Загрузить">
+                    <img src="@/assets/icons/goods_upload.svg" alt="" />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
@@ -81,10 +80,9 @@
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <img src="@/assets/icons/goods_upload.svg" alt="" />
-                </div>
-                <div class="actions__btn">
-                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                  <VueCustomTooltip label="Загрузить">
+                    <img src="@/assets/icons/goods_upload.svg" alt="" />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
@@ -117,10 +115,18 @@
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <img src="@/assets/icons/goods_upload.svg" alt="" />
+                  <VueCustomTooltip label="Загрузить">
+                    <img src="@/assets/icons/goods_upload.svg" alt="" />
+                  </VueCustomTooltip>
                 </div>
-                <div class="actions__btn">
-                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                <div class="actions__btn" style="border-color: #db1f35">
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                    />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
@@ -151,10 +157,9 @@
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <img src="@/assets/icons/goods_upload.svg" alt="" />
-                </div>
-                <div class="actions__btn">
-                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                  <VueCustomTooltip label="Загрузить">
+                    <img src="@/assets/icons/goods_upload.svg" alt="" />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
@@ -190,10 +195,9 @@
             <div class="group__right">
               <div class="group__actions actions">
                 <div class="actions__btn">
-                  <img src="@/assets/icons/goods_upload.svg" alt="" />
-                </div>
-                <div class="actions__btn">
-                  <img src="@/assets/icons/goods_trash.svg" alt="" />
+                  <VueCustomTooltip label="Загрузить">
+                    <img src="@/assets/icons/goods_upload.svg" alt="" />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
@@ -416,6 +420,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
     }
   }
   .group__left {
@@ -447,6 +452,17 @@ export default {
 
     & + * {
       margin-top: 10px;
+    }
+  }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
     }
   }
 }
