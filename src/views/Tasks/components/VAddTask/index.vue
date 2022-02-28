@@ -98,6 +98,7 @@
               class="form-textarea"
               placeholder="Введите описание задачи..."
               name="description"
+              maxlength="3000"
               @input="onChange($event)"
             />
           </div>
@@ -451,6 +452,8 @@ export default {
     width: 401px;
     overflow-x: hidden;
     margin-top: 10px;
+    margin-bottom: 5px;
+    margin-right: 15px;
 
     &:last-child {
       margin-bottom: 10px;
@@ -458,6 +461,13 @@ export default {
   }
   .participants__empty {
     margin-bottom: 10px;
+  }
+  .group__participants {
+    display: flex;
+    width: 850px !important;
+    flex-wrap: wrap;
+  }
+  .group__participant {
   }
 }
 </style>

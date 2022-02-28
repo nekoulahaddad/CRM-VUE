@@ -289,6 +289,7 @@
                     v-if="movedProduct._id === item._id"
                     :movedProduct="movedProduct"
                     :region="filtersOptions.region"
+                    @toggleMoveProduct="toggleMoveProduct"
                   />
 
                   <!-- Товары группы -->

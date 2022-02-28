@@ -3,7 +3,7 @@
     class="list__columns list__columns-shadow list__columns-white goods-list-columns"
   >
     <div class="list__column">
-      <input type="checkbox" @change="selectProducts($event, item)" />
+      <input type="checkbox" class="form-checkbox" />
     </div>
     <div class="list__column">
       <span :class="{ none: !item.visible }">
@@ -178,24 +178,15 @@ export default {
     groupItems: Object,
     movedProduct: Object,
   },
+  data() {
+    return {
+      cleared: true,
+    };
+  },
   methods: {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
-    selectProducts(event, item) {
-      const value = event;
-      if (value) {
-        let dataset = this.$parent.selectedProducts;
-        dataset.push(item);
-        this.$parent.selectedProducts = dataset;
-        this.cleared = false;
-      } else {
-        let dataset = this.$parent.selectedProducts;
-        let index = dataset.findIndex((pr) => pr._id === item._id);
-        dataset.splice(index, 1);
-        this.$parent.selectedProducts = dataset;
-      }
-    },
     changeGroupVisibility(id, visible) {
       this.changeStatus(false);
       let groupData = {
@@ -265,34 +256,6 @@ export default {
 <style lang="scss">
 .goods-list-columns {
   grid-template-columns: 50px 750px 100px 1fr;
-
-  input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    min-width: 16px;
-    height: 16px;
-    background-color: #f5f5f5;
-    border-radius: 2px;
-    border: 1px solid #d9d9d9;
-    cursor: pointer;
-    margin-right: 10px;
-    position: relative;
-
-    &:checked:after {
-      content: "";
-      position: absolute;
-      background: url("../../../../assets/icons/check.svg") no-repeat 1px 2px;
-      border-radius: 2px;
-      z-index: 100;
-      width: 16px;
-      height: 16px;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-  }
 
   label {
     color: rgba(0, 0, 0, 0.3);

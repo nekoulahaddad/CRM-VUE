@@ -22,19 +22,20 @@
             </autocomplete>
           </div>
         </div>
-        <v-button red>Сохранить</v-button>
+        <v-spinner v-if="isLoading" small />
+        <v-button v-else red>Сохранить</v-button>
       </form>
     </template>
   </div>
 </template>
 
 <script>
-import VButton from "@/components/VButton";
+import VSpinner from "@/components/VSpinner";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
 
 export default {
-  components: { VButton },
+  components: { VSpinner },
   props: {
     movedProduct: {
       type: Object,
@@ -55,6 +56,7 @@ export default {
       currentInput: "",
       tempCategories: [],
       title: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -96,12 +98,13 @@ export default {
     },
     async onProductTransfer() {
       if (this.movedProduct && this.movedProduct._id) {
-        this.changeStatus(false);
         if (!this.category) {
           this.$toast.error("Категория или бренд не заполнены!");
-          this.changeStatus(true);
           return;
         }
+
+        this.isLoading = true;
+
         axios({
           url: `/products/transfer`,
           data: {
@@ -112,20 +115,19 @@ export default {
           },
           method: "POST",
         })
-          .then(async () => {
-            this.$toast.success("Товар успешно перенесен!");
+          .then(() => {
+            this.isLoading = false;
+            this.$toast.success(`Товар успешно перенесен!`);
             this.$emit("toggleMoveProduct", this.movedProduct);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
+            this.isLoading = false;
           });
       }
+
       if (this.movedProducts.length) {
         for (let i = 0; i < this.movedProducts.length; i++) {
-          this.changeStatus(false);
           const product = this.movedProducts[i];
           await axios({
             url: `/products/transfer`,
@@ -137,18 +139,14 @@ export default {
             },
             method: "POST",
           })
-            .then(async () => {
+            .then(() => {
               this.$toast.success(`Товар ${product.titile} успешно перенесен!`);
               if (i + 1 === this.movedProducts.length) {
                 this.$emit("clearSelectedProducts");
-                this.$emit("toggleOpen");
               }
             })
             .catch((err) => {
               this.$toast.error(err.response.data.message);
-            })
-            .finally(() => {
-              this.changeStatus(true);
             });
         }
       }
