@@ -1,16 +1,26 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="deleteOrder">
-    <div class="vm--modal__title">Удаление</div>
+  <v-modal
+    :adaptive="true"
+    :maxHeight="175"
+    name="deleteOrder"
+    @before-close="$store.commit('toggleDeleteSelectedItems', false)"
+  >
+    <div class="vm--modal__title">
+      Удаление
+      <img
+        class="close"
+        src="@/assets/icons/close_icon.svg"
+        alt=""
+        @click="cancel"
+      />
+    </div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
         Вы точно хотите удалить? Отменить это действие будет невозможно
       </div>
       <div class="vm--modal__buttons">
-        <v-spinner v-if="isLoading" small />
-        <template v-else>
-          <v-button @click="confirm" red>Да</v-button>
-          <v-button @click="cancel" white>Нет</v-button>
-        </template>
+        <v-button @click="confirm" red>Да</v-button>
+        <v-button @click="cancel" white>Нет</v-button>
       </div>
     </div>
   </v-modal>
@@ -40,18 +50,12 @@ export default {
       this.$modal.hide("deleteOrder");
     },
     confirm() {
-      let orderId = this.deletedItem._id;
-
-      if (this.deleteMany) {
-        orderId = [...new Set([...this.selectedItems, this.deletedItem._id])];
-      }
-
       this.isLoading = true;
 
       axios({
         url: `/orders/delete`,
         data: {
-          orderId,
+          orderId: this.deleteMany ? this.selectedItems : this.deletedItem._id,
         },
         method: "POST",
       })
@@ -62,6 +66,7 @@ export default {
               : "Заказ успешно удален!";
           this.$toast.success(msg);
           this.$emit("afterDelete");
+          this.cancel();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
@@ -79,6 +84,13 @@ export default {
   }
   &__buttons {
     justify-content: center;
+  }
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
   }
 }
 </style>
