@@ -1,6 +1,7 @@
 <template>
   <div class="list__columns list__columns--shadow list__columns--white">
-    <div class="list__column list__column--number">
+    <div class="list__column list__column--number d-flex align-items-center">
+      <input type="checkbox" class="form-checkbox" />
       {{ index + 1 + ($route.params.page - 1) * 15 }}
     </div>
     <div class="list__column text--blue">
