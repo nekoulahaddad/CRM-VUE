@@ -59,7 +59,7 @@
                   class="list__column"
                 >
                   <input
-                    v-if="i === 0"
+                    v-if="i === 10000"
                     type="checkbox"
                     class="form-checkbox"
                     v-model="selectAll"

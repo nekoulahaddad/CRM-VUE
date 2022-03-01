@@ -4,6 +4,7 @@
   >
     <div class="list__column text--blue">
       <input
+        v-if="false"
         type="checkbox"
         class="form-checkbox"
         :checked="checked"
