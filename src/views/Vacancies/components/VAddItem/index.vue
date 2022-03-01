@@ -29,13 +29,14 @@
               <div class="group__title">Должность:</div>
               <div class="group__content">
                 <input
-                  required
-                  class="form-control"
                   type="text"
-                  placeholder="Введите должность..."
                   name="role"
-                  v-model="role"
+                  class="form-control"
+                  placeholder="Введите должность..."
                   @change="onChange($event)"
+                  v-model.trim="$v.role.$model"
+                  maxlength="100"
+                  :class="{ 'form-control--error': $v.role.$error }"
                 />
               </div>
             </div>
@@ -43,12 +44,15 @@
               <div class="group__title">Требования:</div>
               <div class="group__content">
                 <textarea
-                  required
                   class="form-textarea"
                   name="description.requirements"
                   placeholder="Введите требования для кандидата..."
-                  v-model="description.requirements"
                   @change="onChange($event)"
+                  v-model.trim="$v.description.requirements.$model"
+                  :class="{
+                    'form-control--error': $v.description.requirements.$error,
+                  }"
+                  maxlength="3000"
                 />
               </div>
             </div>
@@ -56,12 +60,16 @@
               <div class="group__title">Обязаности:</div>
               <div class="group__content">
                 <textarea
-                  required
                   class="form-textarea"
                   placeholder="Введите обязаности кандидата..."
                   name="description.responsibilities"
-                  v-model="description.responsibilities"
                   @change="onChange($event)"
+                  v-model.trim="$v.description.responsibilities.$model"
+                  :class="{
+                    'form-control--error':
+                      $v.description.responsibilities.$error,
+                  }"
+                  maxlength="3000"
                 />
               </div>
             </div>
@@ -69,12 +77,15 @@
               <div class="group__title">Условия:</div>
               <div class="group__content">
                 <textarea
-                  required
                   class="form-textarea"
                   placeholder="Опишите условия работы..."
                   name="description.conditions"
-                  v-model="description.conditions"
                   @change="onChange($event)"
+                  v-model.trim="$v.description.conditions.$model"
+                  :class="{
+                    'form-control--error': $v.description.conditions.$error,
+                  }"
+                  maxlength="3000"
                 />
               </div>
             </div>
@@ -82,13 +93,14 @@
               <div class="group__title">Ссылка:</div>
               <div class="group__content">
                 <input
-                  required
                   type="text"
                   class="form-control"
                   placeholder="Вставьте ссылку..."
                   name="vLink"
-                  v-model="vLink"
                   @change="onChange($event)"
+                  v-model.trim="$v.vLink.$model"
+                  :class="{ 'form-control--error': $v.vLink.$error }"
+                  maxlength="100"
                 />
               </div>
             </div>
@@ -97,42 +109,35 @@
             <div class="group">
               <div class="group__title">Отделы:</div>
               <div class="group__content">
-                <select
-                  required
-                  class="form-select"
-                  name="department"
-                  v-model="department"
-                  @change="onChange($event)"
-                >
-                  <option selected disabled :value="null">
-                    Выберите отдел
-                  </option>
-                  <option
-                    v-for="department in departments"
-                    :value="department._id"
-                  >
-                    {{ department.title }}
-                  </option>
-                </select>
+                <v-select
+                  :options="
+                    departments.map((department) => ({
+                      label: department.title,
+                      value: department._id,
+                    }))
+                  "
+                  :reduce="(item) => item.value"
+                  v-model.trim="$v.department.$model"
+                  :class="{
+                    'form-control--error': $v.department.$error,
+                  }"
+                />
               </div>
             </div>
             <div class="group">
               <div class="group__title">Регионы:</div>
               <div class="group__content">
-                <select
-                  required
-                  class="form-select"
-                  name="region"
-                  v-model="region"
-                  @change="onChange($event)"
-                >
-                  <option selected disabled :value="null">
-                    Выберите регион
-                  </option>
-                  <option v-for="region in regions" :value="region._id">
-                    {{ region.title }}
-                  </option>
-                </select>
+                <v-select
+                  :options="
+                    regions.map((region) => ({
+                      label: region.title,
+                      value: region._id,
+                    }))
+                  "
+                  :reduce="(item) => item.value"
+                  v-model.trim="$v.region.$model"
+                  :class="{ 'form-control--error': $v.region.$error }"
+                />
               </div>
             </div>
           </div>
@@ -148,6 +153,7 @@
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
+import { numeric, maxLength, required, email } from "vuelidate/lib/validators";
 
 export default {
   props: {
@@ -159,22 +165,39 @@ export default {
     },
   },
   components: { VButton },
+  validations: {
+    department: {
+      required,
+    },
+    region: {
+      required,
+    },
+    role: { required },
+    description: {
+      requirements: {
+        required,
+      },
+      responsibilities: {
+        required,
+      },
+      conditions: {
+        required,
+      },
+    },
+    vLink: {
+      required,
+    },
+  },
   data() {
     return {
       regions: [],
-      region: {
-        title: "Выберите регион",
-        value: null,
-      },
+      region: "",
       date: new Date().toString(),
       title: "",
       vLink: "",
       role: "",
       category: "",
-      department: {
-        title: "Выберите отдел",
-        value: null,
-      },
+      department: "",
       description: {
         requirements: "",
         responsibilities: "",
@@ -194,7 +217,12 @@ export default {
       this[e.target.name] = e.target.value;
     },
     onSectionAdd() {
-      this.changeStatus(false);
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return;
+      }
+
       let sectionData = {};
       sectionData.description = {};
       if (this.vLink) {
