@@ -193,7 +193,7 @@ export default {
 
   .page__right--middle {
     .list__columns {
-      grid-template-columns: 30px 327px 170px 170px 170px 170px 170px 170px 1fr;
+      grid-template-columns: 30px 351px 170px 170px 170px 170px 170px 170px 1fr;
     }
   }
 }
