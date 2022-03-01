@@ -120,18 +120,17 @@
             <div class="group">
               <div class="group__title">Статус:</div>
               <div class="group__content">
-                <select class="form-select" name="status" v-model="status">
-                  <option selected disabled :value="null">
-                    Выбрать статус
-                  </option>
-                  <option
-                    v-for="(item, index) in statusList"
-                    :value="item"
-                    :key="index"
-                  >
-                    {{ item }}
-                  </option>
-                </select>
+                <v-select
+                  :options="
+                    statusList.map((status, index) => ({
+                      label: status,
+                      value: status,
+                    }))
+                  "
+                  :reduce="(item) => item.value"
+                  name="status"
+                  v-model="status"
+                />
               </div>
             </div>
             <div class="group">
