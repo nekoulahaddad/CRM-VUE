@@ -214,7 +214,7 @@ export default {
           region: this.editedItem.region,
           message: this.message,
           comment: this.comment,
-          orderNumber: this.orderNumber,
+          orderNumber: this.editedItem.orderNumber,
           orderId: this.orderId,
           products: this.editedItem
             ? this.editedItem.products
@@ -252,7 +252,7 @@ export default {
               seenAt: seen,
             };
             this.$toast.success("Закупка успешно обновлена!");
-            this.$emit("toggleOpen", transformedData);
+            this.$emit("toggleEdit", this.editedItem);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
@@ -266,6 +266,7 @@ export default {
         })
           .then((res) => {
             this.$toast.success("Закупка успешно отправлена!");
+            this.$emit("toggleEdit", this.editedItem);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
@@ -273,7 +274,7 @@ export default {
       }
     },
     async getBuyersBySearch(search) {
-      if (search.trim().length < 3) {
+      if (search.trim().length < 1) {
         return [];
       }
 
@@ -298,7 +299,7 @@ export default {
       this.$toast.error("При выбранном отделе исполнитель только один!");
     },
     searchCategory(search) {
-      if (search.trim().length < 3) {
+      if (search.trim().length < 1) {
         return [];
       }
 
