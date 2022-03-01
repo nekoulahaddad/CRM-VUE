@@ -28,14 +28,15 @@
       <div class="group">
         <div class="group__title">Пол:</div>
         <div class="group__content">
-          <select
-            class="form-select"
+          <v-select
             name="newChild.gender"
+            :options="[
+              { label: 'Муж', value: 'муж' },
+              { label: 'Жен', value: 'жен' },
+            ]"
+            :reduce="(item) => item.value"
             v-model="newChild.gender"
-          >
-            <option value="муж">Муж</option>
-            <option value="жен">Жен</option>
-          </select>
+          />
         </div>
       </div>
       <div class="add-child__buttons" v-if="addChildForm">
