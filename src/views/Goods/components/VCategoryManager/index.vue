@@ -6,7 +6,7 @@
       </div>
 
       <div class="group__content">
-        <div class="group__item text--bold-700">ФИО:</div>
+        <div class="group__item text--bold-700">Ф.И.О:</div>
         <div
           class="group__value"
           style="border-bottom: 1px dashed; cursor: pointer"
@@ -31,7 +31,7 @@
         </autocomplete>
       </div>
 
-      <div class="group__content">
+      <div class="group__content" v-if="fio">
         <div class="group__item text--bold-700">Телефон:</div>
         <div class="group__value">{{ phone || "" }}</div>
       </div>
