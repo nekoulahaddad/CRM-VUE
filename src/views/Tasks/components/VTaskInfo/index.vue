@@ -165,6 +165,7 @@
         </v-button>
         <v-button
           v-if="
+            1 === 2 &&
             task.initiator &&
             userId === task.initiator._id &&
             task.status.value === 'tested'
