@@ -177,6 +177,12 @@ export default {
 @import "@/styles/_variables";
 
 .storage-list-info {
+  .group__title {
+    font-size: 14px;
+    &.text--blue {
+      font-size: 16px;
+    }
+  }
   .form-control {
   }
   .chip {
