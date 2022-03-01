@@ -121,34 +121,34 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'region', null)"
-                :value="filterOptions.region"
-              >
-                <option value="all" selected>Все регионы</option>
-                <option
-                  v-for="region in regions"
-                  :key="region.id"
-                  @change="selectOptions($event, null, 'region', null)"
-                  class="form-select"
-                  :value="region.value"
-                >
-                  {{ region.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region.value,
+                  })),
+                ]"
+                @input="setSelected"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.region"
+              />
             </div>
           </div>
           <div class="filter__group group">
             <div class="group__title">Сортировка:</div>
             <div class="group__content">
-              <select
-                @change="selectOptions($event, 0, 'orders', null)"
-                class="form-select"
-              >
-                <option selected value="clients">Интернет-магазин</option>
-                <option value="corporates">Корпоративные</option>
-              </select>
+              <v-select
+                :options="[
+                  { label: 'Интернет-магазин', value: 'clients' },
+                  { label: 'Корпоративные', value: 'corporates' },
+                ]"
+                @input="setOrder"
+                :reduce="(item) => item.value"
+              />
             </div>
           </div>
           <div class="filter__actions">
