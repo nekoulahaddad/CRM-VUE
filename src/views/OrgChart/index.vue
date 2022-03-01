@@ -125,7 +125,12 @@ export default {
       changeStatus: "change_load_status",
     }),
     goToLink(name) {
-      this.$router.push({ name });
+      this.$router.push({
+        name,
+        params: {
+          page: 1,
+        },
+      });
     },
     toggleFilter() {
       this.showFilter = !this.showFilter;
