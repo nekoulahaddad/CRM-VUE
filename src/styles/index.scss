@@ -292,4 +292,8 @@ ul {
   opacity: 0.5;
 }
 
+.required {
+  color: $color-red;
+}
+
 @import "media";

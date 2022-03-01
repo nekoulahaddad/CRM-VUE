@@ -4,7 +4,9 @@
       <div class="flex-1" style="margin-right: 25px">
         <!-- Наименование раздела -->
         <div class="group">
-          <div class="group__title">Наименование раздела:</div>
+          <div class="group__title">
+            Наименование раздела: <span class="required">*</span>
+          </div>
           <div class="group__content">
             <input
               required
@@ -35,7 +37,9 @@
       <div>
         <!-- Для какой роли -->
         <div class="group">
-          <div class="group__title">Для какой роли:</div>
+          <div class="group__title">
+            Для какой роли: <span class="required">*</span>
+          </div>
           <div class="group__content">
             <select
               class="form-select"
@@ -52,7 +56,9 @@
         </div>
         <!-- Для какого отдела -->
         <div class="group">
-          <div class="group__title">Для какого отдела:</div>
+          <div class="group__title">
+            Для какого отдела: <span class="required">*</span>
+          </div>
           <div class="group__content">
             <select
               class="form-select"
