@@ -2,8 +2,8 @@
   <div class="spinner">
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      :width="small ? '32' : '38'"
-      :height="small ? '32' : '38'"
+      :width="extraSmall ? 24 : small ? '32' : '38'"
+      :height="extraSmall ? 24 : small ? '32' : '38'"
       viewBox="0 0 38 38"
       stroke="#db1f35"
     >
@@ -29,6 +29,10 @@
 <script>
 export default {
   props: {
+    extraSmall: {
+      type: Boolean,
+      default: false,
+    },
     small: {
       type: Boolean,
       default: false,

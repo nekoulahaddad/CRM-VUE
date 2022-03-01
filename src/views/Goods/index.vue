@@ -143,7 +143,6 @@
                     :key="item.id"
                   >
                     <v-category
-                      @changeVisibility="changeCategoryVisibility"
                       :item="item"
                       :copyItem="copyItem"
                       :current="current"
@@ -153,9 +152,11 @@
                       :categoryExportItem="categoryExportItem"
                       :categoryImportItem="categoryImportItem"
                       :filtersOptions="filtersOptions"
+                      :categoryVisibleItem="categoryVisibleItem"
                       @hideDetail="hideDetail"
                       @toggleCopy="toggleCopy"
                       @toggleManager="toggleManager"
+                      @changeVisibility="changeCategoryVisibility"
                       @toggleDeleteCategory="toggleDeleteCategory"
                       @toggleDropDown="toggleDropDown"
                       @toggleEdit="toggleEdit"
@@ -440,6 +441,7 @@ export default {
       group: {},
       removeGroup: false,
       editGroup: false,
+      categoryVisibleItem: [],
       product: {},
       deletedCategory: {},
       dropDown: {},
@@ -905,7 +907,8 @@ export default {
       this.changeStatus(true);
     },
     changeCategoryVisibility(id, visible) {
-      this.changeStatus(false);
+      this.categoryVisibleItem.push(id);
+
       let categoryData = {
         region: this.filtersOptions.region,
         categoryId: [id],
@@ -929,7 +932,9 @@ export default {
           this.$toast.error(err.response.data.message);
         })
         .finally(() => {
-          this.changeStatus(true);
+          this.categoryVisibleItem = this.categoryVisibleItem.filter(
+            (value) => value !== id
+          );
         });
     },
   },

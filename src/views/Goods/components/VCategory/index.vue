@@ -116,7 +116,11 @@
         />
       </div>
       <div class="table__icon">
-        <VueCustomTooltip label="Видимость категории">
+        <v-spinner v-if="categoryVisibleItem.includes(item._id)" extraSmall />
+        <VueCustomTooltip
+          v-else
+          :label="item.visible ? 'Скрыть категорию' : 'Показать категорию'"
+        >
           <img
             alt=""
             :src="
@@ -150,8 +154,11 @@
 </template>
 
 <script>
+import VSpinner from "@/components/VSpinner";
+
 export default {
   props: {
+    categoryVisibleItem: String,
     filtersOptions: Object,
     current: Array,
     dropDown: {
@@ -173,6 +180,7 @@ export default {
     categoryImportItem: Object,
     managerItem: Object,
   },
+  components: { VSpinner },
   data() {
     return {
       showDropDown: false,
@@ -199,6 +207,10 @@ export default {
   }
   .none {
     opacity: 0.3;
+  }
+  .spinner {
+    position: relative;
+    top: 8px;
   }
 }
 
