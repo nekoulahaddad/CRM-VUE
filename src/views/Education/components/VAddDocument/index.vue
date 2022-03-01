@@ -178,6 +178,9 @@ export default {
     cursor: pointer;
   }
   .group__documents {
+    display: flex;
+    width: 850px;
+    flex-wrap: wrap;
   }
   .group__document {
     width: 401px;
@@ -190,6 +193,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 10px;
+    margin-right: 10px;
 
     span {
       text-overflow: ellipsis;
