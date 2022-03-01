@@ -44,69 +44,67 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else>
-          <div class="scroll-horizontal">
-            <div class="list">
-              <div class="list__header">
-                <v-search @submit="getSearchData" v-model="user" v-if="false" />
-                <div class="list__title">
-                  {{ $t("pages.vacancies.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.vacancies.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
-                  </div>
+        <div class="scroll-horizontal">
+          <div class="list">
+            <div class="list__header">
+              <v-search @submit="getSearchData" v-model="user" v-if="false" />
+              <div class="list__title">
+                {{ $t("pages.vacancies.pageTitle") }}
+              </div>
+              <div class="list__columns">
+                <div
+                  v-for="field in $t('pages.vacancies.fields')"
+                  class="list__column"
+                >
+                  {{ field }}
                 </div>
               </div>
-
-              <!-- Добавление новой вакансии -->
-              <v-add-item v-if="addVacancy" @refresh="refresh" />
-
-              <template v-if="dataset.length">
-                <div
-                  v-for="(department, index) in dataset"
-                  :key="department._id"
-                  class="list__row list__row--shadow list__row--white"
-                  :class="{
-                    'list__row--opened':
-                      infoItem._id === department._id ||
-                      editedItem._id === department._id,
-                  }"
-                >
-                  <v-item
-                    :showInfo="infoItem._id === department._id"
-                    :showEdit="editedItem._id === department._id"
-                    :infoItem="department"
-                    :editedItem="department"
-                    @toggleInfo="toggleInfo"
-                    @toggleEdit="toggleEdit"
-                    @toggleDelete="toggleDelete"
-                  />
-
-                  <!-- Блок для просмотра детальной информации о вакансии -->
-                  <v-info
-                    v-if="infoItem._id === department._id"
-                    :infoItem="infoItem"
-                  />
-
-                  <!-- Блок для изменения вакансии -->
-                  <v-edit
-                    v-if="editedItem._id === department._id"
-                    :editedItem="editedItem"
-                    @toggleEdit="toggleEdit"
-                    @refresh="refresh"
-                  />
-                </div>
-                <v-pagination :count="count" />
-              </template>
-              <v-not-found-query v-else />
             </div>
+
+            <!-- Добавление новой вакансии -->
+            <v-add-item v-if="addVacancy" @refresh="refresh" />
+
+            <v-spinner v-if="!isLoading" />
+            <template v-if="dataset.length">
+              <div
+                v-for="(department, index) in dataset"
+                :key="department._id"
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened':
+                    infoItem._id === department._id ||
+                    editedItem._id === department._id,
+                }"
+              >
+                <v-item
+                  :showInfo="infoItem._id === department._id"
+                  :showEdit="editedItem._id === department._id"
+                  :infoItem="department"
+                  :editedItem="department"
+                  @toggleInfo="toggleInfo"
+                  @toggleEdit="toggleEdit"
+                  @toggleDelete="toggleDelete"
+                />
+
+                <!-- Блок для просмотра детальной информации о вакансии -->
+                <v-info
+                  v-if="infoItem._id === department._id"
+                  :infoItem="infoItem"
+                />
+
+                <!-- Блок для изменения вакансии -->
+                <v-edit
+                  v-if="editedItem._id === department._id"
+                  :editedItem="editedItem"
+                  @toggleEdit="toggleEdit"
+                  @refresh="refresh"
+                />
+              </div>
+              <v-pagination :count="count" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-        </template>
+        </div>
       </div>
     </div>
   </div>
