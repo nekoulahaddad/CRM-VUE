@@ -100,10 +100,12 @@
             <!-- Документы -->
             <div class="group">
               <div class="group__title">Документы:</div>
-              <div class="group__participants group__documents">
+              <div
+                class="group__participants group__documents"
+                v-if="documents.length"
+              >
                 <div
                   class="group__participant"
-                  v-if="documents.length"
                   v-for="(photo, index) in documents"
                   :key="index"
                 >
@@ -127,6 +129,7 @@
                   </div>
                 </div>
               </div>
+              <div style="margin-bottom: 10px" v-else>Документов нет</div>
               <div class="group__content">
                 <input
                   hidden
@@ -481,8 +484,6 @@ export default {
     display: flex;
     width: 850px;
     flex-wrap: wrap;
-  }
-  .group__participant {
   }
   .v-select {
     width: 100%;

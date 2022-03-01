@@ -1,5 +1,5 @@
 <template>
-  <div class="list__edit edit">
+  <div class="list__edit edit subtask-edit">
     <form @submit.prevent="onTaskEdit">
       <div class="edit__inner">
         <div class="edit__title text--blue">
@@ -47,15 +47,32 @@
                 class="documents__item"
                 @click.prevent="downloadItem(serverAddr + `${photo}`, photo)"
               >
-                {{
-                  photo.name
-                    ? photo.name.length > 30
-                      ? photo.name.slice(0, -10) +
-                        " ... ." +
-                        photo.type.split("/")[1]
-                      : photo.name
-                    : `Документ ${index + 1}`
-                }}
+                <span
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                  "
+                >
+                  {{
+                    photo.name
+                      ? photo.name.length > 30
+                        ? photo.name.slice(0, -10) +
+                          " ... ." +
+                          photo.type.split("/")[1]
+                        : photo.name
+                      : `Документ ${index + 1}`
+                  }}
+                </span>
+                <div>
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      alt=""
+                      src="@/assets/icons/trash_icon.svg"
+                      @click="deleteDocument(index)"
+                    />
+                  </VueCustomTooltip>
+                </div>
               </div>
             </div>
             <div v-else>Документов нет</div>
@@ -122,6 +139,13 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    deleteDocument(index) {
+      this.documents = Array.from(this.documents).filter((doc, i) => {
+        if (i !== index) {
+          return doc;
+        }
+      });
+    },
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files;
@@ -207,6 +231,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
 .edit {
   &__inner {
     padding: 10px;
@@ -228,12 +253,8 @@ export default {
     }
   }
 }
-</style>
 
-<style lang="scss">
-@import "@/styles/_variables";
-
-.list__edit {
+.subtask-edit {
   .form-textarea {
     font-weight: 500;
   }
@@ -257,6 +278,26 @@ export default {
   }
   .edit__inner .vdatetime-input {
     width: 330px;
+  }
+  .documents {
+    width: 850px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .documents__item {
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 401px;
+    overflow-x: hidden;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-right: 15px;
   }
 }
 </style>
