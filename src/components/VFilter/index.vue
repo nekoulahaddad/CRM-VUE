@@ -366,16 +366,21 @@
           <div class="filter__group group">
             <div class="group__title">Период:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'dates', null)"
-                :value="defaultOptions.dates"
-              >
-                <option selected value="all">Все время</option>
-                <option v-for="item in dates" :value="item.value">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все время',
+                    value: 'all',
+                  },
+                  ...dates.map((item) => ({
+                    label: item.title,
+                    value: item.value,
+                  })),
+                ]"
+                v-model="defaultOptions.dates"
+                :reduce="(item) => item.value"
+                @input="setDate"
+              />
             </div>
           </div>
           <div class="filter__group group">
@@ -401,15 +406,16 @@
           <div class="filter__group group">
             <div class="group__title">Статус заказа:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                :value="filterOptions.status ? filterOptions.status : 'all'"
-                @change="selectOptions($event, null, 'status', null)"
-              >
-                <option selected value="all">Все статусы</option>
-                <option value="true">Обработана</option>
-                <option value="false">Не обработана</option>
-              </select>
+              <v-select
+                :options="[
+                  { label: 'Все статусы', value: 'all' },
+                  { label: 'Обработана', value: 'true' },
+                  { label: 'Не обработана', value: 'false' },
+                ]"
+                @input="setStatus"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.status"
+              />
             </div>
           </div>
           <div class="filter__group group" v-if="false">
@@ -1134,6 +1140,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    setDate(value) {
+      this.selectOptions({ target: { value } }, null, "dates", null);
+    },
     setOrder(value) {
       this.selectOptions({ target: { value } }, 0, "orders", null);
     },
