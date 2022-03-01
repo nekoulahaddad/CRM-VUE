@@ -345,11 +345,12 @@
                     </template>
                   </autocomplete>
                 </div>
-                <div class="list__column d-flex justify-center">
+                <div class="list__column d-flex justify-center article-group">
                   <autocomplete
                     :search="findItemByArticle"
                     :get-result-value="getArticleValue"
                     placeholder="000000"
+                    style="width: 100px"
                   >
                     <template #result="{ result, props }">
                       <li v-bind="props" @click="addItemToProducts(result)">
@@ -1092,6 +1093,9 @@ export default {
       margin: 0;
     }
     -moz-appearance: textfield;
+  }
+  .article-group .autocomplete-input {
+    width: 100px;
   }
 }
 </style>
