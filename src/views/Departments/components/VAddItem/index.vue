@@ -38,20 +38,18 @@
         </div>
         <div class="card__group group">
           <div class="group__title">Руководитель:</div>
-          <div class="group__content">
-            <autocomplete
-              required
-              :search="searchByExecutor"
-              :get-result-value="getResultValue"
-              placeholder="Введите исполнителя задачи..."
-            >
-              <template #result="{ result, props }">
-                <li v-bind="props" @click="selectUser(result)">
-                  {{ transformFIO(result) }}
-                </li>
-              </template>
-            </autocomplete>
-          </div>
+          <autocomplete
+            required
+            :search="searchByExecutor"
+            :get-result-value="getResultValue"
+            placeholder="Введите исполнителя задачи..."
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectUser(result)">
+                {{ transformFIO(result) }}
+              </li>
+            </template>
+          </autocomplete>
         </div>
         <v-button red>Сохранить</v-button>
       </form>
@@ -186,7 +184,7 @@ export default {
   .autocomplete-input,
   .form-textarea,
   .form-control {
-    width: 689px;
+    width: 100%;
     font-weight: 500;
   }
 }

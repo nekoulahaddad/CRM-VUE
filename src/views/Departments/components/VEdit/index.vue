@@ -21,26 +21,29 @@
         <div class="group__content">
           <div class="group__item text--bold-700">Руководитель</div>
           <div class="group__value">
-            {{ fio }}
+            <span
+              @click="changeUser = !changeUser"
+              style="border-bottom: 1px dashed; cursor: pointer"
+            >
+              {{ fio || "Добавить" }}
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="group">
-        <div class="group__content">
-          <autocomplete
-            required
-            :search="searchByExecutor"
-            :get-result-value="getResultValue"
-            placeholder="Сменить руководителя..."
-          >
-            <template #result="{ result, props }">
-              <li v-bind="props" @click="selectUser(result)">
-                {{ transformFIO(result) }}
-              </li>
-            </template>
-          </autocomplete>
-        </div>
+      <div class="group" v-if="changeUser">
+        <autocomplete
+          required
+          :search="searchByExecutor"
+          :get-result-value="getResultValue"
+          placeholder="Сменить руководителя..."
+        >
+          <template #result="{ result, props }">
+            <li v-bind="props" @click="selectUser(result)">
+              {{ transformFIO(result) }}
+            </li>
+          </template>
+        </autocomplete>
       </div>
       <v-button red>Отправить</v-button>
     </form>
@@ -68,6 +71,7 @@ export default {
       fio: "",
       leader: null,
       users: [],
+      changeUser: false,
       titleName: this.editedItem ? "Редактировать отдел" : "Добавить отдел",
     };
   },
@@ -95,6 +99,7 @@ export default {
       this.leader = user;
       this.fio = this.transformFullFIO(user);
       this.users = [];
+      this.changeUser = false;
     },
     onSectionAdd() {
       this.changeStatus(false);
@@ -128,9 +133,9 @@ export default {
   },
   mounted() {
     this.title = this.editedItem.title;
-    if (this.editedItem.leader) {
-      (this.fio = this.transformFullFIO(this.editedItem.leader)),
-        (this.leader = this.editedItem.leader);
+    if (this.editedItem.leader.role) {
+      this.fio = this.transformFullFIO(this.editedItem.leader);
+      this.leader = this.editedItem.leader;
     }
   },
 };
