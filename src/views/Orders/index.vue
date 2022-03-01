@@ -11,7 +11,7 @@
     <v-order-action-modal :dialog="dialog" />
 
     <!-- Модальное окно для отправки закупщику заказа -->
-    <v-send-delivery :editedItem="sendDeliveryItem" />
+    <v-send-delivery :editedItem="sendDeliveryItem" @toggleEdit="toggleEdit" />
 
     <v-page-header
       :title="$t('pages.orders.pageTitle')"

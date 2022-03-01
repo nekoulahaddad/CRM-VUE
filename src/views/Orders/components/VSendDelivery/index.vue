@@ -212,16 +212,18 @@ export default {
           status: this.status,
           category: this.category,
           region: this.editedItem.region,
-          message: this.message,
-          comment: this.comment,
+          message: this.editedItem.message,
+          comment: this.editedItem.comment,
           orderNumber: this.editedItem.orderNumber,
-          orderId: this.orderId,
+          orderId: this.editedItem.orderId,
           products: this.editedItem
             ? this.editedItem.products
             : this.selectedProducts,
-          deliveryDate: this.deliveryDate,
+          deliveryDate: this.editedItem.deliveryDate,
         },
       };
+
+      console.log(data);
 
       if (
         this.editedItem &&
@@ -239,18 +241,7 @@ export default {
           data: data,
           method: "POST",
         })
-          .then(async () => {
-            const transformedData = {
-              _id: data.dataId,
-              ...data.data,
-              category: {
-                category: {
-                  ...data.data.category,
-                },
-              },
-              createdAt: this.editedItem.createdAt,
-              seenAt: seen,
-            };
+          .then(() => {
             this.$toast.success("Закупка успешно обновлена!");
             this.$emit("toggleEdit", this.editedItem);
           })
@@ -264,7 +255,7 @@ export default {
           data: data,
           method: "POST",
         })
-          .then((res) => {
+          .then(() => {
             this.$toast.success("Закупка успешно отправлена!");
             this.$emit("toggleEdit", this.editedItem);
           })
