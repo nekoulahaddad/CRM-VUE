@@ -80,12 +80,15 @@
           </div>
           <div class="group__content">
             <v-select
+              :class="{ 'form-control--error': $v.region.$error }"
               :options="
                 regions.map((region) => ({
                   label: region.title,
                   value: region._id,
                 }))
               "
+              :reduce="(item) => item.value"
+              v-model="$v.region.$model"
             />
           </div>
         </div>
@@ -320,6 +323,7 @@ export default {
     name: {
       required,
     },
+    region: { required },
     inn: {
       numeric,
       required,
