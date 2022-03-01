@@ -31,6 +31,8 @@
                   })),
                 ]"
                 @input="setSelected"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.region"
               />
             </div>
           </div>
@@ -1090,7 +1092,7 @@ export default {
     setDepartment({ value }) {
       this.selectOptions(null, null, "department", value);
     },
-    setSelected({ value }) {
+    setSelected(value) {
       this.selectOptions({ target: { value } }, null, "region");
     },
     autocompleteInput(e, type) {
