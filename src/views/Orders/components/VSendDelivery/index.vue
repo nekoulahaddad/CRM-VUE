@@ -120,6 +120,7 @@ export default {
   data() {
     return {
       fio: "",
+      isLoading: false,
       currentInput: "",
       categories:
         this.editedItem && this.editedItem.categories
@@ -223,7 +224,7 @@ export default {
         },
       };
 
-      console.log(data);
+      this.isLoading = true;
 
       if (
         this.editedItem &&
@@ -247,6 +248,9 @@ export default {
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
+            this.isLoading = false;
           });
       } else {
         data.data.initiator = this.currentUser;
@@ -257,10 +261,13 @@ export default {
         })
           .then(() => {
             this.$toast.success("Закупка успешно отправлена!");
-            this.$emit("toggleEdit", this.editedItem);
+            this.cancel();
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
+          })
+          .finally(() => {
+            this.isLoading = false;
           });
       }
     },
