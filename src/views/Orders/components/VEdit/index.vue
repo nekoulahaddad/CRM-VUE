@@ -346,18 +346,13 @@
                   </autocomplete>
                 </div>
                 <div class="list__column d-flex justify-center article-group">
-                  <autocomplete
-                    :search="findItemByArticle"
-                    :get-result-value="getArticleValue"
+                  <input
+                    type="number"
                     placeholder="000000"
                     style="width: 100px"
-                  >
-                    <template #result="{ result, props }">
-                      <li v-bind="props" @click="addItemToProducts(result)">
-                        {{ result.title }}
-                      </li>
-                    </template>
-                  </autocomplete>
+                    class="form-control hide-arrows"
+                    @input="findItemByArticle"
+                  />
                 </div>
                 <div class="list__column d-flex justify-center">
                   <input
@@ -762,7 +757,9 @@ export default {
     getArticleValue(result) {
       return result.article;
     },
-    findItemByArticle(article) {
+    findItemByArticle(e) {
+      const article = e.target.value;
+
       if (article.trim().length < 3) {
         return [];
       }
@@ -776,12 +773,30 @@ export default {
           },
           method: "POST",
         })
-          .then((result) => {
-            const product = {
-              product_id: result.data.product._id,
-              ...result.data.product,
-            };
-            resolve([product]);
+          .then(async (result) => {
+            let res = await result;
+            if (res.data.product.length !== 0) {
+              this.selectedProduct = res.data.product;
+              let product = res.data.product;
+              this.newItem.title = product.title;
+              this.newItem.article = product.article;
+              this.newItem._id = product._id;
+              this.newItem.product_id = product._id;
+              this.newItem.club_cost = product.club_cost;
+              this.newItem.cost = product.cost;
+              this.newItem.quantity = 1;
+              this.addItemToProducts(this.newItem);
+            } else {
+              this.$toast.warning(
+                "Товар по артику не найден, пожалуйста введите правильный артикул товара"
+              );
+              this.newItem = {
+                title: "Введите артикул товара",
+                quantity: 1,
+                cost: 0,
+              };
+              this.selectedProduct = null;
+            }
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
