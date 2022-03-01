@@ -1099,6 +1099,10 @@ export default {
   }
   .article-group .autocomplete-input {
     width: 100px;
+    .autocomplete-result-list {
+      width: 401px;
+      text-align: left;
+    }
   }
 }
 </style>
