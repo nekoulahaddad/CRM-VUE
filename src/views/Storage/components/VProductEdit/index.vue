@@ -6,7 +6,7 @@
         <div class="group__title">Минимальное количество:</div>
         <div class="group__content">
           <input
-            class="form-control"
+            class="form-control hide-arrows"
             placeholder="Введите минимальное количество..."
             name="minq"
             type="number"
@@ -26,19 +26,17 @@
             @closed="chipClosed(index)"
           />
         </div>
-        <div class="group__content">
-          <autocomplete
-            :search="searchByExecutor"
-            :get-result-value="getResultValue"
-            placeholder="Введите наименование организации..."
-          >
-            <template #result="{ result, props }">
-              <li v-bind="props" @click="selectProvider(result)">
-                {{ result.name }}
-              </li>
-            </template>
-          </autocomplete>
-        </div>
+        <autocomplete
+          :search="searchByExecutor"
+          :get-result-value="getResultValue"
+          placeholder="Введите наименование организации..."
+        >
+          <template #result="{ result, props }">
+            <li v-bind="props" @click="selectProvider(result)">
+              {{ result.name }}
+            </li>
+          </template>
+        </autocomplete>
       </div>
       <v-button red>Сохранить</v-button>
     </form>
@@ -180,7 +178,6 @@ export default {
 
 .storage-list-info {
   .form-control {
-    width: 976px;
   }
   .chip {
     background-color: $color-gray-secondary;
@@ -200,7 +197,7 @@ export default {
     }
   }
   .autocomplete-input {
-    width: 976px;
+    width: 100%;
   }
 }
 </style>
