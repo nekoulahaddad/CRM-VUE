@@ -41,17 +41,20 @@
             Для какой роли: <span class="required">*</span>
           </div>
           <div class="group__content">
-            <select
-              class="form-select"
+            <v-select
+              :options="[
+                {
+                  label: 'Все роли',
+                  value: 'all',
+                },
+                ...Object.entries($t('roles')).map(([role, key]) => ({
+                  label: key,
+                  value: role,
+                })),
+              ]"
+              :reduce="(item) => item.value"
               v-model="formData.role"
-              name="role"
-              @change="onChange($event)"
-            >
-              <option value="all">Все роли</option>
-              <option :value="key" v-for="(role, key) in $t('roles')">
-                {{ role }}
-              </option>
-            </select>
+            />
           </div>
         </div>
         <!-- Для какого отдела -->
@@ -60,19 +63,17 @@
             Для какого отдела: <span class="required">*</span>
           </div>
           <div class="group__content">
-            <select
-              class="form-select"
-              v-model="formData.department"
+            <v-select
               name="department"
-              @change="onChange($event)"
-            >
-              <option
-                v-for="department in departments"
-                :value="department.value"
-              >
-                {{ department.title }}
-              </option>
-            </select>
+              :options="
+                departments.map((department) => ({
+                  label: department.title,
+                  value: department.value,
+                }))
+              "
+              :reduce="(item) => item.value"
+              v-model="formData.department"
+            />
           </div>
         </div>
       </div>
@@ -96,6 +97,12 @@ export default {
   methods: {
     onChange(e) {
       this.formData[e.target.name] = e.target.value;
+    },
+    setSelected({ value }) {
+      this.formData.department = value;
+    },
+    setRole({ value }) {
+      this.formData.role = value;
     },
   },
   data() {
@@ -126,9 +133,20 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .create-section-form {
   button {
     margin-top: 10px;
+  }
+  .v-select {
+    width: 401px;
+    background-color: $color-white;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    border-radius: $border-radius;
+  }
+  .vs__dropdown-toggle {
+    border: none;
   }
 }
 </style>
