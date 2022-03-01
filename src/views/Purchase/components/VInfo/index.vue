@@ -39,7 +39,7 @@
         <div class="group__item text--bold-700">
           {{ $t("description") }}
         </div>
-        <div class="group__value">{{ item.message }}</div>
+        <div class="group__value flex-1 word-break">{{ item.message }}</div>
       </div>
       <div class="group__content">
         <div class="group__item text--bold-700">
@@ -51,7 +51,7 @@
         <div class="group__item text--bold-700">
           {{ $t("comment") }}
         </div>
-        <div class="group__value">{{ item.comment }}</div>
+        <div class="group__value flex-1 word-break">{{ item.comment }}</div>
       </div>
       <div class="group__content">
         <div class="group__item text--bold-700">

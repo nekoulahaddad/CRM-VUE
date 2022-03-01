@@ -78,6 +78,7 @@
                   class="form-textarea"
                   placeholder="Введите описание..."
                   v-model="message"
+                  maxlength="3000"
                 />
               </div>
             </div>
@@ -112,6 +113,7 @@
                   class="form-textarea"
                   placeholder="Введите комментарий..."
                   v-model="comment"
+                  maxlength="3000"
                 />
               </div>
             </div>
