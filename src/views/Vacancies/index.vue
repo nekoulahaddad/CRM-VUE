@@ -65,7 +65,7 @@
             <v-add-item v-if="addVacancy" @refresh="refresh" />
 
             <v-spinner v-if="!isLoading" />
-            <template v-if="dataset.length">
+            <template v-else-if="dataset.length">
               <div
                 v-for="(department, index) in dataset"
                 :key="department._id"
@@ -205,7 +205,6 @@ export default {
       this.isLoading = true;
     },
     getSearchData() {
-      this.changeStatus(false);
       let search = this.user;
       if (search.length < 3) {
         this.$toast.error("Запрос слишком короткий!");
