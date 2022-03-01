@@ -612,17 +612,17 @@
           <div class="filter__group group">
             <div class="group__title">Отделы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'department')"
-                :value="
-                  filterOptions.department ? filterOptions.department : 'all'
+              <v-select
+                :options="
+                  info.map((item) => ({
+                    label: `${item.title} (${item.count})`,
+                    value: item.value,
+                  }))
                 "
-              >
-                <option v-for="item in info" :value="item.value">
-                  {{ item.title }} ({{ item.count }})
-                </option>
-              </select>
+                @input="setDepartment"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.department"
+              />
             </div>
           </div>
           <div class="filter__group group">
