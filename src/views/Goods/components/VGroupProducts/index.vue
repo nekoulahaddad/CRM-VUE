@@ -13,7 +13,11 @@
               <img src="@/assets/icons/write_icon.svg" alt="" />
             </div>
             <div class="table__icon">
-              <img src="@/assets/icons/trash_icon.svg" alt="" />
+              <img
+                @click="$emit('toggleDeleteGroupProduct', group, product)"
+                src="@/assets/icons/trash_icon.svg"
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -25,6 +29,7 @@
 <script>
 export default {
   props: {
+    group: Object,
     products: Array,
   },
 };

@@ -8,8 +8,16 @@
     <!-- Редактирование региона -->
     <v-region-edit />
 
+    <v-delete-group-product
+      :group="deletedGroup"
+      :region="filtersOptions.region"
+      :product="deletedGroupProduct"
+      @deleteProductFromGroup="deleteProductFromGroup"
+    />
+
     <v-delete-product
       :deletedItem="deletedProduct"
+      :group="deletedGroup"
       :region="filtersOptions.region"
       @deleteProduct="deleteProduct"
       @clearSelectedProducts="clearSelectedProducts"
@@ -27,6 +35,7 @@
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"
     />
+
     <div class="page__body d-flex">
       <div class="page__left" v-if="showFilter">
         <v-filter
@@ -296,7 +305,9 @@
                   <!-- Товары группы -->
                   <v-group-products
                     v-if="groupItems._id === item._id"
+                    :group="item"
                     :products="item.products"
+                    @toggleDeleteGroupProduct="toggleDeleteGroupProduct"
                   />
                 </div>
               </div>
@@ -317,6 +328,7 @@ import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
 import VProductEdit from "./components/VProductEdit";
 import VCategoryAdd from "./components/VCategoryAdd";
+import VDeleteGroupProduct from "./components/VDeleteGroupProduct";
 import VRegionEdit from "./components/VRegionEdit";
 import VCategoryManager from "./components/VCategoryManager";
 import VSearch from "@/components/VSearch";
@@ -366,6 +378,7 @@ export default {
     VCategoryManager,
     VDeleteCategory,
     VAddProductToGroup,
+    VDeleteGroupProduct,
   },
   data() {
     return {
@@ -380,6 +393,7 @@ export default {
         region: REGION_MOSCOW_ID,
         nesting: +this.$route.params.nesting - 1 || null,
       },
+      deletedGroupProduct: {},
       googleDoc: null,
       category: null,
       count: 0,
@@ -498,6 +512,15 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    deleteProductFromGroup(groupId, productId) {
+      let dataset = this.dataset.products;
+      let index = dataset.findIndex((gr) => gr._id === groupId);
+      let products = dataset[index].products;
+      let productIndex = products.findIndex((pr) => pr._id === productId);
+      products.splice(productIndex, 1);
+      dataset[index].products = products;
+      this.dataset.products = dataset;
+    },
     getSearchData() {
       let search = this.good;
 
@@ -511,13 +534,11 @@ export default {
         return;
       }
 
-      this.changeStatus(false);
       this.dataset = {
         categories: [],
         products: [],
       };
 
-      //this.$router.push(`/dashboard/${this.$route.name}/1/search`)
       axios({
         url: `/categories/getfromsearch`,
         data: {
@@ -537,12 +558,10 @@ export default {
           } else {
             this.$toast.error("Результаты не найдены!");
             this.good = "";
-            //this.$router.push(`/dashboard/${this.$route.name}/1`)
           }
         })
         .finally(() => {
           this.isLoading = true;
-          this.changeStatus(true);
         });
     },
     toggleDeleteGroup(deletedGroup) {
@@ -638,6 +657,13 @@ export default {
         this.deletedItem = {};
       }, 500);
       this.changeStatus(true);
+    },
+    toggleDeleteGroupProduct(group, product) {
+      console.log(group);
+      console.log(product);
+      this.deletedGroup = group;
+      this.deletedGroupProduct = product;
+      this.$modal.show("deleteGroupProduct");
     },
     toggleDeleteCategory(deletedCategory) {
       this.deletedCategory = deletedCategory;
