@@ -47,6 +47,8 @@
                   }))
                 "
                 @input="setDepartment"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.department"
               />
             </div>
           </div>
@@ -1089,7 +1091,7 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
-    setDepartment({ value }) {
+    setDepartment(value) {
       this.selectOptions(null, null, "department", value);
     },
     setSelected(value) {
@@ -1213,6 +1215,7 @@ export default {
         this.fio = "";
         this.filterOptions.region = "all";
         this.filterOptions.departments = "all";
+        this.filterOptions.department = "all";
         this.$parent.filtersOptions = {};
         this.activeIndex = 0;
       }
