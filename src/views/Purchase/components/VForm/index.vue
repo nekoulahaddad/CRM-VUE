@@ -1,75 +1,86 @@
 <template>
   <form @submit.prevent="onCreate" class="purchase-form">
     <div class="purchase-form__title text--blue">Информация о закупке:</div>
-    <div class="group">
-      <div class="group__title">ФИО автора:</div>
-      <div class="group__content">
-        <input
-          required
-          class="form-control"
-          type="text"
-          placeholder="Введите автора..."
-        />
+
+    <div class="d-flex justify-content-between">
+      <div class="flex-1" style="margin-right: 25px">
+        <div class="group">
+          <div class="group__title">ФИО автора:</div>
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="text"
+              placeholder="Введите автора..."
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">№ заказа:</div>
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="text"
+              placeholder="Введите номер заказа..."
+            />
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group__title">Категория:</div>
+          <div class="group__content">
+            <input
+              required
+              class="form-control"
+              type="text"
+              placeholder="Введите название категории..."
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Товары:</div>
+          <div class="group__content">
+            <textarea
+              required
+              class="form-textarea"
+              maxlength="3000"
+              placeholder="Введите обязаности кандидата..."
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Описание:</div>
+          <div class="group__content">
+            <textarea
+              required
+              class="form-textarea"
+              maxlength="3000"
+              placeholder="Введите описание товара..."
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="group">
+          <div class="group__title">Регионы:</div>
+          <div class="group__content">
+            <v-select
+              name="region"
+              :options="
+                regions.map((region) => ({
+                  label: region.title,
+                  value: region._id,
+                }))
+              "
+              :reduce="(item) => item.value"
+              v-model="region"
+            />
+          </div>
+        </div>
       </div>
     </div>
-    <div class="group">
-      <div class="group__title">№ заказа:</div>
-      <div class="group__content">
-        <input
-          required
-          class="form-control"
-          type="text"
-          placeholder="Введите номер заказа..."
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Регионы:</div>
-      <div class="group__content">
-        <v-select
-          name="region"
-          :options="
-            regions.map((region) => ({
-              label: region.title,
-              value: region._id,
-            }))
-          "
-          :reduce="(item) => item.value"
-          v-model="region"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Категория:</div>
-      <div class="group__content">
-        <input
-          required
-          class="form-control"
-          type="text"
-          placeholder="Введите название категории..."
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Товары:</div>
-      <div class="group__content">
-        <textarea
-          required
-          class="form-textarea"
-          placeholder="Введите обязаности кандидата..."
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">Описание:</div>
-      <div class="group__content">
-        <textarea
-          required
-          class="form-textarea"
-          placeholder="Введите описание товара..."
-        />
-      </div>
-    </div>
+
     <v-button red>Создать</v-button>
   </form>
 </template>
@@ -307,11 +318,9 @@ export default {
 <style lang="scss">
 .purchase-form {
   .form-control {
-    width: 976px;
   }
   .form-textarea {
-    width: 976px;
-    height: 218px;
+    height: 150px;
   }
   .form-select {
     max-width: 401px;
@@ -319,6 +328,7 @@ export default {
   button {
     width: 230px;
     height: 37px;
+    margin-top: 10px;
   }
   &__title {
     font-weight: 600;
