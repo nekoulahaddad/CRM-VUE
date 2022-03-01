@@ -306,4 +306,9 @@ ul {
   border: none;
 }
 
+.word-break {
+  width: 100vh;
+  word-wrap: break-word;
+}
+
 @import "media";

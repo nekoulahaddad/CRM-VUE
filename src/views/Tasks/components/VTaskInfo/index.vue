@@ -23,7 +23,7 @@
         <div class="group__item text--bold-700">
           {{ $t("pages.tasks.taskDescription") }}
         </div>
-        <div class="group__value">{{ task.description }}</div>
+        <div class="group__value flex-1 word-break">{{ task.description }}</div>
       </div>
 
       <div class="group">
