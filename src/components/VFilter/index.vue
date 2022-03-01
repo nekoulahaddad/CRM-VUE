@@ -445,20 +445,41 @@
           <div class="filter__group group">
             <div class="group__title">Статус:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                name="status"
-                @change="selectOptions($event, null, 'status', null)"
-                :value="filterOptions.status ? filterOptions.status : 'all'"
-              >
-                <option value="all">Все задачи</option>
-                <option value="assigned">Назначена</option>
-                <option value="tested">На проверке</option>
-                <option value="completed">Выполненые</option>
-                <option value="under revision>">На доработке</option>
-                <option value="accepted">Принята</option>
-                <option value="not accepted">Не принята</option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все задачи',
+                    value: 'all',
+                  },
+                  {
+                    label: 'Назначена',
+                    value: 'assigned',
+                  },
+                  {
+                    label: 'На проверке',
+                    value: 'tested',
+                  },
+                  {
+                    label: 'Выполненые',
+                    value: 'completed',
+                  },
+                  {
+                    label: 'На доработке',
+                    value: 'under revision',
+                  },
+                  {
+                    label: 'Принята',
+                    value: 'accepted',
+                  },
+                  {
+                    label: 'Не принята',
+                    value: 'not accepted',
+                  },
+                ]"
+                @input="setStatus"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.status"
+              />
             </div>
           </div>
           <div class="filter__group group">
@@ -1091,6 +1112,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    setStatus(value) {
+      this.selectOptions({ target: { value } }, null, "status", null);
+    },
     setDepartment(value) {
       this.selectOptions(null, null, "department", value);
     },
