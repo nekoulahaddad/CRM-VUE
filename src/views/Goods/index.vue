@@ -934,6 +934,9 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+          this.categoryVisibleItem = this.categoryVisibleItem.filter(
+            (value) => value !== id
+          );
         });
     },
   },
