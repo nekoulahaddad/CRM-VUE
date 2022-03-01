@@ -315,6 +315,7 @@ export default {
       changeStatus: "change_load_status",
     }),
     afterDelete() {
+      this.$store.commit("clearSelectedItems");
       this.fetchData();
     },
     selectAllItems() {
