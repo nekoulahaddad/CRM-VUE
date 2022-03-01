@@ -592,16 +592,21 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'region', null)"
-                :value="filterOptions.region"
-              >
-                <option selected value="all">Все регионы</option>
-                <option v-for="item in regions" :value="item.value">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region.value,
+                  })),
+                ]"
+                @input="setSelected"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.region"
+              />
             </div>
           </div>
           <div class="filter__group group">
