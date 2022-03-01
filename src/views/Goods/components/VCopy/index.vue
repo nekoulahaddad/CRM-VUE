@@ -77,7 +77,6 @@ export default {
           this.$toast.error(err.response.data.message);
         })
         .finally(() => {
-          this.changeStatus(true);
           this.start = false;
         });
     },

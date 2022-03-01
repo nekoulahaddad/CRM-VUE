@@ -158,7 +158,7 @@ import VSpinner from "@/components/VSpinner";
 
 export default {
   props: {
-    categoryVisibleItem: String,
+    categoryVisibleItem: Array,
     filtersOptions: Object,
     current: Array,
     dropDown: {

@@ -506,6 +506,16 @@ export default {
   }
 
   .edit-task-modal {
+    .vm--modal__buttons {
+      width: 600px;
+      flex-wrap: wrap;
+      button {
+        margin-left: 0;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+    }
+
     .table__actions {
       justify-content: left !important;
       margin-bottom: 20px;
