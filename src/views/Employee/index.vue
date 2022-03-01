@@ -337,13 +337,8 @@ export default {
         axios
           .get(`/user/getsearchwithoutdirector/${this.user}`)
           .then(async (res) => {
-            if (res.data.users.length) {
-              this.dataset = res.data.users;
-              this.count = res.data.count ? res.data.count : 0;
-            } else {
-              this.user = "";
-            }
-
+            this.dataset = res.data.users;
+            this.count = res.data.count ? res.data.count : 0;
             this.$forceUpdate();
           })
           .finally(() => {

@@ -7,14 +7,17 @@
     <div class="d-flex justify-content-between">
       <div class="flex-1" style="margin-right: 25px">
         <div class="group">
-          <div class="group__title">Название компании:</div>
+          <div class="group__title">
+            Название компании: <span class="required">*</span>
+          </div>
           <div class="group__content">
             <input
-              required
               class="form-control"
+              :class="{ 'form-control--error': $v.name.$error }"
               type="text"
               placeholder="Введите название о компании..."
-              v-model="name"
+              v-model.trim="$v.name.$model"
+              maxlength="100"
             />
           </div>
         </div>
@@ -23,10 +26,11 @@
           <div class="group__content">
             <input
               class="form-control"
-              type="text"
+              type="url"
               placeholder="Вставьте ссылку на сайт..."
               name="site"
               v-model="site"
+              maxlength="100"
             />
           </div>
         </div>
@@ -51,6 +55,7 @@
               placeholder="Введите адрес офиса..."
               name="office_address"
               v-model="office_address"
+              maxlength="200"
             />
           </div>
         </div>
@@ -63,24 +68,25 @@
               placeholder="Введите адрес склада..."
               name="warehouse_address"
               v-model="warehouse_address"
+              maxlength="200"
             />
           </div>
         </div>
       </div>
       <div>
         <div class="group">
-          <div class="group__title">Регион:</div>
+          <div class="group__title">
+            Регион: <span class="required">*</span>
+          </div>
           <div class="group__content">
-            <select required class="form-select" name="region" v-model="region">
-              <option :value="null">Выбрать регион</option>
-              <option
-                v-for="region in regions"
-                :key="region._id"
-                :value="region._id"
-              >
-                {{ region.title }}
-              </option>
-            </select>
+            <v-select
+              :options="
+                regions.map((region) => ({
+                  label: region.title,
+                  value: region._id,
+                }))
+              "
+            />
           </div>
         </div>
       </div>
@@ -108,14 +114,14 @@
     <div class="d-flex justify-content-between">
       <div class="flex-1" style="margin-right: 25px">
         <div class="group">
-          <div class="group__title">ФИО:</div>
+          <div class="group__title">Ф.И.О:</div>
           <div class="group__content">
             <input
-              required
-              class="form-control"
               type="text"
-              placeholder="Введите ФИО..."
-              v-model="director.name"
+              class="form-control"
+              placeholder="Введите Ф.И.О"
+              v-model.trim="director.name"
+              maxlength="200"
             />
           </div>
         </div>
@@ -124,7 +130,6 @@
           <div class="group__title">Телефон:</div>
           <div class="group__content">
             <phone-mask-input
-              required
               name="phone"
               inputClass="form-control"
               v-model="director.phone"
@@ -136,11 +141,11 @@
           <div class="group__title">Email:</div>
           <div class="group__content">
             <input
-              required
-              class="form-control"
               type="email"
+              class="form-control"
               placeholder="Введите email"
-              v-model="director.email"
+              v-model.trim="director.email"
+              maxlength="100"
             />
           </div>
         </div>
@@ -160,6 +165,67 @@
       </div>
     </div>
 
+    <div class="add-delivery-row__title text--blue">Специалист:</div>
+
+    <div class="d-flex justify-content-between">
+      <div class="flex-1" style="margin-right: 25px">
+        <div class="group">
+          <div class="group__title">Ф.И.О: <span class="required">*</span></div>
+          <div class="group__content">
+            <input
+              type="text"
+              class="form-control"
+              :class="{ 'form-control--error': $v.specialist.name.$error }"
+              placeholder="Введите Ф.И.О"
+              v-model.trim="$v.specialist.name.$model"
+              maxlength="200"
+            />
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group__title">
+            Телефон: <span class="required">*</span>
+          </div>
+          <div class="group__content">
+            <phone-mask-input
+              name="phone"
+              :class="{ 'form-control--error': $v.specialist.phone.$error }"
+              inputClass="form-control"
+              v-model.trim="$v.specialist.phone.$model"
+              placeholder="Номер телефона"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">Email: <span class="required">*</span></div>
+          <div class="group__content">
+            <input
+              type="text"
+              class="form-control"
+              :class="{ 'form-control--error': $v.specialist.email.$error }"
+              placeholder="Введите email"
+              v-model.trim="$v.specialist.email.$model"
+              maxlength="100"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="group">
+          <div class="group__title">Дата рождения:</div>
+          <div class="group__content">
+            <datetime
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              v-model="specialist.birth"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="d-flex justify-content-between">
       <div class="flex-1" style="margin-right: 25px">
         <div class="add-delivery-row__title text--blue">Мессенджеры:</div>
@@ -171,7 +237,6 @@
         >
           <div class="group__content">
             <input
-              required
               class="form-control"
               type="text"
               name="name"
@@ -241,6 +306,7 @@
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
+import { numeric, maxLength, required, email } from "vuelidate/lib/validators";
 import PhoneMaskInput from "vue-phone-mask-input";
 import Chip from "vue-chip";
 
@@ -248,6 +314,31 @@ export default {
   props: {
     editedItem: {
       type: Object,
+    },
+  },
+  validations: {
+    name: {
+      required,
+    },
+    inn: {
+      numeric,
+      required,
+      maxLength: maxLength(12),
+    },
+    director: {
+      email: {
+        email,
+      },
+    },
+    specialist: {
+      name: { required },
+      email: {
+        required,
+        email,
+      },
+      phone: {
+        required,
+      },
     },
   },
   components: { VButton, PhoneMaskInput, Chip },
@@ -342,6 +433,11 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    checkInnNumber(e) {
+      if (e.target.value.match(/^[^0-9]+$/)) {
+        e.preventDefault();
+      }
+    },
     addMessenger() {
       if (this.specialist.messengers.length) {
         const lastMessenger =
@@ -399,11 +495,17 @@ export default {
       this.categories.push(provider);
     },
     onProvidersAdd() {
-      if (!this.region) {
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return;
+      }
+
+      if (!this.region.value) {
         this.$toast.error("Укажите регион");
         return;
       }
-      this.changeStatus(false);
+
       let data = {
         provider: {
           name: this.name,
@@ -414,7 +516,7 @@ export default {
           categories: this.categories,
           specialist: this.specialist,
           director: this.director,
-          region: this.region,
+          region: this.region.value,
         },
       };
       if (this.editedItem) {
@@ -441,14 +543,12 @@ export default {
           data,
           method: "POST",
         })
-          .then((res) => {
+          .then(() => {
             this.$toast.success("Поставщик успешно добавлен!");
+            this.$store.commit("toggleAction", { addDelivery: false });
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
           });
       }
     },
@@ -555,6 +655,12 @@ export default {
     }
   }
   .autocomplete-input {
+    width: 401px;
+  }
+  .required {
+    color: #db1f35;
+  }
+  .v-select {
     width: 401px;
   }
 }

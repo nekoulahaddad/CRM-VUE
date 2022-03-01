@@ -20,6 +20,8 @@ import moment from "moment-timezone";
 import Toast from "vue-toastification";
 import ToggleButton from "vue-js-toggle-button";
 import VueMoment from "vue-moment";
+import Vuelidate from "vuelidate";
+
 import { Settings } from "luxon";
 import i18n from "./i18n";
 import VButton from "@/components/VButton";
@@ -81,6 +83,7 @@ Vue.use(VueCustomTooltip, {
 Vue.use(VCalendar, {
   componentPrefix: "vc",
 });
+Vue.use(Vuelidate);
 Vue.use(Autocomplete);
 Vue.use(VueSimpleSVG);
 Vue.use(VModal, { componentName: "v-modal" });

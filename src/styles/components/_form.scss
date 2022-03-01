@@ -32,6 +32,11 @@ input[type="text"],
   }
 }
 
+.form-control--error {
+  border: 1px solid $color-red !important;
+  box-shadow: 0 0 5px rgb(197 108 118) !important;
+}
+
 .form-textarea {
   &::placeholder {
     color: rgba(0, 0, 0, 0.3);

@@ -36,32 +36,31 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <v-spinner v-if="!isLoading" />
-        <template v-else-if="dataset.length">
-          <div class="scroll-horizontal">
-            <div class="list">
-              <div class="list__header">
-                <v-search
-                  @submit="getSearchData"
-                  v-model="search"
-                  :placeholder="$t('pages.delivery.searchPlaceholder')"
-                />
-                <div class="list__title">
-                  {{ $t("pages.delivery.pageTitle") }}
-                </div>
-                <div class="list__columns">
-                  <div
-                    v-for="field in $t('pages.delivery.fields')"
-                    class="list__column"
-                  >
-                    {{ field }}
-                  </div>
+        <div class="scroll-horizontal">
+          <div class="list">
+            <div class="list__header">
+              <v-search
+                @submit="getSearchData"
+                v-model="search"
+                :placeholder="$t('pages.delivery.searchPlaceholder')"
+              />
+              <div class="list__title">
+                {{ $t("pages.delivery.pageTitle") }}
+              </div>
+              <div class="list__columns">
+                <div
+                  v-for="field in $t('pages.delivery.fields')"
+                  class="list__column"
+                >
+                  {{ field }}
                 </div>
               </div>
+            </div>
+            <!-- Блок для добавления поставщика -->
+            <v-add-item v-if="addDelivery" />
 
-              <!-- Блок для добавления поставщика -->
-              <v-add-item v-if="addDelivery" />
-
+            <v-spinner v-if="!isLoading" />
+            <template v-else-if="dataset.length">
               <div
                 v-for="(item, index) in dataset"
                 :key="item._id"
@@ -93,11 +92,11 @@
                   @refresh="fetchData"
                 />
               </div>
-            </div>
+              <v-pagination :count="count" />
+            </template>
+            <v-not-found-query v-else />
           </div>
-          <v-pagination :count="count" />
-        </template>
-        <v-not-found-query v-else />
+        </div>
       </div>
     </div>
   </div>
@@ -264,12 +263,15 @@ export default {
       }
     },
     getSearchData() {
-      this.changeStatus(false);
-      this.isSearch = true;
       let search = this.search;
+
+      if (!search.trim().length) {
+        this.fetchData();
+        return;
+      }
+
       if (search.length < 3) {
         this.$toast.error("Запрос слишком короткий!");
-        this.changeStatus(true);
         return;
       }
 
@@ -279,18 +281,13 @@ export default {
         url: "/providers/getfromsearch",
         data: { search },
         method: "POST",
-      }).then(async (res) => {
-        const providers = res.data.providers;
-        if (providers.length) {
-          this.$toast.success("Результаты запросов!");
-        } else {
-          this.$toast.error("Результаты не найдены!");
-          this.search = "";
-        }
-        this.dataset = providers;
-        this.isLoading = true;
-        this.changeStatus(true);
-      });
+      })
+        .then((res) => {
+          this.dataset = res.data.providers;
+        })
+        .finally(() => {
+          this.isLoading = true;
+        });
     },
   },
 };
