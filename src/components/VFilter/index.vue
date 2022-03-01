@@ -662,13 +662,14 @@
           <div class="filter__group group">
             <div class="group__title">Форма продажи:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, 0, 'orders', null)"
-              >
-                <option selected value="all">B2С</option>
-                <option value="corporat">B2B</option>
-              </select>
+              <v-select
+                :options="[
+                  { label: 'B2С', value: 'all' },
+                  { label: 'B2B', value: 'corporat' },
+                ]"
+                @input="setOrder"
+                :reduce="(item) => item.value"
+              />
             </div>
           </div>
           <div class="filter__group group">
@@ -1126,6 +1127,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    setOrder(value) {
+      this.selectOptions({ target: { value } }, 0, "orders", null);
+    },
     setMonitor(value) {
       this.selectOptions({ target: { value } }, null, "monitor", null);
     },
