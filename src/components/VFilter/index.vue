@@ -64,18 +64,16 @@
           <div class="filter__group group">
             <div class="group__title">Отделы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'monitor', null)"
-              >
-                <option
-                  v-for="(item, index) of dashBoard"
-                  :value="item.value"
-                  :selected="index === 0"
-                >
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="
+                  dashBoard.map((item) => ({
+                    label: item.title,
+                    value: item.value,
+                  }))
+                "
+                :reduce="(item) => item.value"
+                @input="setMonitor"
+              />
             </div>
           </div>
           <div class="filter__group group" v-if="role === 'director'">
@@ -1117,6 +1115,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    setMonitor(value) {
+      this.selectOptions({ target: { value } }, null, "monitor", null);
+    },
     setStatus(value) {
       this.selectOptions({ target: { value } }, null, "status", null);
     },
