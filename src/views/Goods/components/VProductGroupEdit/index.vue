@@ -3,30 +3,40 @@
     <form @submit.prevent="onGroupEdit">
       <div class="group-edit-form__title text--blue">Редактировать группу:</div>
 
-      <div class="group">
-        <div class="group__title">Заголовок группы:</div>
-        <div class="group__content">
-          <input
-            required
-            class="form-control"
-            type="text"
-            name="title"
-            v-model="title"
-          />
+      <div class="d-flex">
+        <div class="flex-1" style="margin-right: 25px">
+          <div class="group">
+            <div class="group__title">Заголовок группы:</div>
+            <div class="group__content">
+              <input
+                required
+                class="form-control"
+                type="text"
+                name="title"
+                v-model="title"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="group">
+            <div class="group__title">Свойства группы:</div>
+            <div class="group__content">
+              <v-select
+                :options="
+                  getOptions().map((product) => ({
+                    label: product,
+                    value: product,
+                  }))
+                "
+                :reduce="(item) => item.value"
+                v-model="groupProperties"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="group">
-        <div class="group__title">Свойства группы:</div>
-        <div class="group__content">
-          <select class="form-select" @change="onChange($event)">
-            <option v-if="!group.groupProperties">Не выбрано</option>
-            <option v-for="(product, index) in getOptions()" :value="product">
-              {{ product }}
-            </option>
-          </select>
-        </div>
-      </div>
       <v-button red>Сохранить</v-button>
     </form>
   </div>
@@ -101,7 +111,6 @@ export default {
 <style lang="scss">
 .group-edit-form {
   .form-control {
-    width: 976px;
   }
   .form-select {
     width: 401px;
@@ -110,6 +119,9 @@ export default {
     font-weight: 600;
     font-size: 16px;
     margin-bottom: 10px;
+  }
+  button {
+    margin-top: 10px;
   }
 }
 </style>
