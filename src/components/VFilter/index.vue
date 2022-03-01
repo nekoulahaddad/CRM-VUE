@@ -203,16 +203,21 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'region', null)"
-                :value="filterOptions.region"
-              >
-                <option selected value="all">Все регионы</option>
-                <option v-for="item in regions" :value="item.value">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region.value,
+                  })),
+                ]"
+                @input="setSelected"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.region"
+              />
             </div>
           </div>
           <div class="filter__group group">
@@ -703,16 +708,21 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'region', null)"
-                :value="filterOptions.region"
-              >
-                <option selected value="all">Все регионы</option>
-                <option v-for="item in regions" :value="item.value">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region.value,
+                  })),
+                ]"
+                @input="setSelected"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.region"
+              />
             </div>
           </div>
           <div class="filter__group group">
@@ -768,18 +778,21 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select
-                ref="regionSelect"
-                class="form-select"
-                :value="filterOptions.region"
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region._id,
+                  })),
+                ]"
+                @input="setSelected"
+                :reduce="(item) => item.value"
                 v-model="filterOptions.region"
-                @change="selectOptions($event, null, 'regionButtons', null)"
-              >
-                <option value="all">Все регионы</option>
-                <option v-for="item in regions" :value="item._id">
-                  {{ item.title }}
-                </option>
-              </select>
+              />
             </div>
           </div>
           <div class="filter__actions">
