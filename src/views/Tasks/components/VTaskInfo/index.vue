@@ -121,6 +121,7 @@
       <div class="group__footer">
         <v-button
           v-if="
+            1 === 2 &&
             task.initiator &&
             userId === task.initiator._id &&
             task.executors >= 1
@@ -165,7 +166,6 @@
         </v-button>
         <v-button
           v-if="
-            1 === 2 &&
             task.initiator &&
             userId === task.initiator._id &&
             task.status.value === 'tested'
