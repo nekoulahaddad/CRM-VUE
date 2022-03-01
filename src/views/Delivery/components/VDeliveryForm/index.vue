@@ -84,7 +84,7 @@
               :options="
                 regions.map((region) => ({
                   label: region.title,
-                  value: region._id,
+                  value: region,
                 }))
               "
               :reduce="(item) => item.value"
@@ -326,13 +326,6 @@ export default {
     region: { required },
     inn: {
       numeric,
-      required,
-      maxLength: maxLength(12),
-    },
-    director: {
-      email: {
-        email,
-      },
     },
     specialist: {
       name: { required },
@@ -437,11 +430,6 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
-    checkInnNumber(e) {
-      if (e.target.value.match(/^[^0-9]+$/)) {
-        e.preventDefault();
-      }
-    },
     addMessenger() {
       if (this.specialist.messengers.length) {
         const lastMessenger =
@@ -501,6 +489,12 @@ export default {
     onProvidersAdd() {
       this.$v.$touch();
 
+      console.log(this.$v.name.required);
+      console.log(this.$v.region.required);
+      console.log(this.$v.specialist.name.required);
+      console.log(this.$v.specialist.phone.required);
+      console.log(this.$v.specialist.email.required);
+
       if (this.$v.$invalid) {
         return;
       }
@@ -538,9 +532,6 @@ export default {
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
           });
       } else {
         axios({
@@ -550,7 +541,8 @@ export default {
         })
           .then(() => {
             this.$toast.success("Поставщик успешно добавлен!");
-            this.$store.commit("toggleAction", { addDelivery: false });
+            this.$emit("fetchData");
+            this.$store.commit("toggleAction", { key: "addDelivery" });
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);

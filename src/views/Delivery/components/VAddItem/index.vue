@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="add-delivery-row__inner">
-      <v-delivery-form />
+      <v-delivery-form @fetchData="$emit('fetchData')" />
     </div>
   </div>
 </template>

@@ -57,7 +57,7 @@
               </div>
             </div>
             <!-- Блок для добавления поставщика -->
-            <v-add-item v-if="addDelivery" />
+            <v-add-item v-if="addDelivery" @fetchData="fetchData" />
 
             <v-spinner v-if="!isLoading" />
             <template v-else-if="dataset.length">
