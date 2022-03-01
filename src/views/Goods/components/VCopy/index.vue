@@ -5,17 +5,17 @@
       <div class="group">
         <div class="group__title">Регион:</div>
         <div class="group__content">
-          <select
-            required
-            class="form-select"
+          <v-select
             name="targetRegion"
+            :options="
+              regions.map((region) => ({
+                label: region.title,
+                value: region._id,
+              }))
+            "
+            :reduce="(item) => item.value"
             v-model="targetRegion"
-          >
-            <option disabled selected value="">Выбор региона</option>
-            <option v-for="region in regions" :value="region._id">
-              {{ region.title }}
-            </option>
-          </select>
+          />
         </div>
       </div>
       <v-button v-if="!start" :disabled="!targetRegion" red>

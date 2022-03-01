@@ -26,18 +26,17 @@
     <div class="group">
       <div class="group__title">Регионы:</div>
       <div class="group__content">
-        <select
-          required
-          class="form-select"
+        <v-select
           name="region"
+          :options="
+            regions.map((region) => ({
+              label: region.title,
+              value: region._id,
+            }))
+          "
+          :reduce="(item) => item.value"
           v-model="region"
-          @change="onChange($event)"
-        >
-          <option selected disabled :value="null">Выберите регион</option>
-          <option v-for="region in regions" :value="region._id">
-            {{ region.title }}
-          </option>
-        </select>
+        />
       </div>
     </div>
     <div class="group">
