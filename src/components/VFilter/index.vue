@@ -79,21 +79,18 @@
           <div class="filter__group group" v-if="role === 'director'">
             <div class="group__title">{{ $t("regions") }}</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectRegion($event)"
-                :value="filterOptions.region ? filterOptions.region : 'all'"
-              >
-                <option value="all" selected>{{ $t("allRegions") }}</option>
-                <option
-                  v-for="region in regions"
-                  :key="region.id"
-                  class="form-select"
-                  :value="region.value"
-                >
-                  {{ region.title }}
-                </option>
-              </select>
+              <v-select
+                name="targetRegion"
+                :options="
+                  regions.map((region) => ({
+                    label: region.title,
+                    value: region.value,
+                  }))
+                "
+                @input="selectRegion"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.region"
+              />
             </div>
           </div>
           <div class="filter__group group">
@@ -295,16 +292,21 @@
           <div class="filter__group group">
             <div class="group__title">Регионы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'region', null)"
-                :value="filterOptions.region"
-              >
-                <option selected value="all">Все регионы</option>
-                <option v-for="item in regions" :value="item.value">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region.value,
+                  })),
+                ]"
+                @input="setSelected"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.region"
+              />
             </div>
           </div>
           <div class="filter__group group">
@@ -1443,9 +1445,8 @@ export default {
       }
       this.$parent.isLoading = true;
     },
-    selectRegion(id) {
-      let value = id.target.value;
-      if (value == "all") {
+    selectRegion(value) {
+      if (value === "all") {
         this.setAllRegions();
       } else {
         let region = this.regions.find((r) => r.value == value);
