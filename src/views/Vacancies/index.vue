@@ -193,8 +193,13 @@ export default {
       }
     },
     async refresh() {
-      let result = this.getDataFromPage("/vacancies/get", this.filtersOptions);
-      let res = await result;
+      this.isLoading = false;
+      let result = await this.getDataFromPage(
+        "/vacancies/get",
+        this.filtersOptions
+      );
+      this.isLoading = true;
+      let res = result;
       this.updateVacancies(res);
       this.$forceUpdate();
     },
