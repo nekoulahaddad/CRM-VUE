@@ -31,7 +31,7 @@
         <div class="group__item text--bold-700">
           {{ $t("pages.reports.reportDescription") }}
         </div>
-        <div class="group__value">
+        <div class="group__value flex-1 word-break">
           {{ report.description }}
         </div>
       </div>
@@ -107,7 +107,7 @@
         <div class="group__item text--bold-700">
           {{ $t("pages.reports.reportComment") }}
         </div>
-        <div class="group__value">
+        <div class="group__value flex-1 word-break">
           {{ transformDate(report.comment) }}
         </div>
       </div>
