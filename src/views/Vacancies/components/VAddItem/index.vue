@@ -153,7 +153,7 @@
 import VButton from "@/components/VButton";
 import axios from "@/api/axios";
 import { mapMutations } from "vuex";
-import { numeric, maxLength, required, email } from "vuelidate/lib/validators";
+import { required, url } from "vuelidate/lib/validators";
 
 export default {
   props: {
@@ -185,6 +185,7 @@ export default {
       },
     },
     vLink: {
+      url,
       required,
     },
   },
