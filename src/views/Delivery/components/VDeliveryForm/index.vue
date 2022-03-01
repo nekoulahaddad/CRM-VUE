@@ -520,9 +520,10 @@ export default {
           categories: this.categories,
           specialist: this.specialist,
           director: this.director,
-          region: this.region.value,
+          region: this.region,
         },
       };
+
       if (this.editedItem) {
         data.providerId = this.editedItem._id;
         axios({

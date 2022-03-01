@@ -296,7 +296,7 @@
                   <!-- Товары группы -->
                   <v-group-products
                     v-if="groupItems._id === item._id"
-                    :item="groupItems"
+                    :products="item.products"
                   />
                 </div>
               </div>
@@ -385,6 +385,7 @@ export default {
       count: 0,
       addForm: false,
       addedItem: {},
+      subProductsItem: {},
       groupProductItem: {},
       editedGroupItem: {},
       deleteForm: false,
@@ -547,6 +548,20 @@ export default {
     toggleDeleteGroup(deletedGroup) {
       this.deletedGroup = deletedGroup;
       this.$modal.show("deleteGroup");
+    },
+    toggleSubProducts(item) {
+      this.editedItem = {};
+      this.groupItems = {};
+      this.copyItem = {};
+      this.movedProduct = {};
+      this.categoryExportItem = {};
+      this.categoryImportItem = {};
+
+      if (this.subProductsItem._id === item._id) {
+        this.subProductsItem = {};
+      } else {
+        this.subProductsItem = item;
+      }
     },
     toggleManager(item) {
       this.editedItem = {};
