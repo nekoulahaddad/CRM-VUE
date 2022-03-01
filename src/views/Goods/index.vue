@@ -920,7 +920,11 @@ export default {
         method: "POST",
       })
         .then(async (res) => {
-          this.refreshGoods();
+          await this.refreshGoods();
+          this.categoryVisibleItem = this.categoryVisibleItem.filter(
+            (value) => value !== id
+          );
+
           this.$toast.success(
             `Категория ${
               res.data.visible ? "будет отображаться" : "не будет отображаться"
@@ -930,11 +934,6 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.categoryVisibleItem = this.categoryVisibleItem.filter(
-            (value) => value !== id
-          );
         });
     },
   },
