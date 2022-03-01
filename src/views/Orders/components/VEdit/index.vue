@@ -332,7 +332,7 @@
             >
               <div class="list__columns">
                 <div class="list__column">{{ products.length + 1 }}</div>
-                <div class="list__column">
+                <div class="list__column good-name-group">
                   <autocomplete
                     :search="findItemByTitle"
                     :get-result-value="getResultValue"
@@ -1093,6 +1093,9 @@ export default {
       margin: 0;
     }
     -moz-appearance: textfield;
+  }
+  .good-name-group .autocomplete-input {
+    width: 100%;
   }
   .article-group .autocomplete-input {
     width: 100px;
