@@ -12,6 +12,7 @@
             class="form-control"
             name="role"
             v-model="title"
+            maxlength="100"
             @change="onChange($event)"
           />
         </div>
@@ -172,6 +173,9 @@ export default {
   input[type="text"] {
     font-weight: 500;
     font-size: 14px;
+  }
+  .form-control {
+    width: 100%;
   }
   .vdatetime-popup__header {
     background: $color-red;
