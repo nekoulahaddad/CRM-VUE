@@ -130,7 +130,9 @@
         <div class="group__item text--bold-700">
           {{ $t("pages.clients.orderManagerComment") }}
         </div>
-        <div class="group__value">{{ order.manager_comment }}</div>
+        <div class="group__value flex-1 word-break">
+          {{ order.manager_comment }}
+        </div>
       </div>
     </div>
     <template v-if="order.products.length">
