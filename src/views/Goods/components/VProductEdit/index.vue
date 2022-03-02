@@ -263,9 +263,20 @@
 
       <div class="group">
         <div class="group__title">Фотографии товара:</div>
-        <div class="group__content">
+        <div class="group__content photo-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1645985283720-1d991e55ff1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2075&q=80"
+            alt=""
+            class="product-photo"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1645985283720-1d991e55ff1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2075&q=80"
+            alt=""
+            class="product-photo"
+          />
           <div v-if="editedProduct.images || images[0] !== 'Выберите файлы'">
             <img
+              class="product-photo"
               v-for="item in editedProduct.images"
               v-if="editedProduct.images && images[0] === 'Выберите файлы'"
               :src="
@@ -275,6 +286,11 @@
               "
             />
           </div>
+          <label class="add-product-photo" for="product-photo">
+            <input type="file" hidden id="product-photo" />
+            <img src="@/assets/icons/add_photo.svg" alt="" />
+            <span>Нажмите чтобы выбрать</span>
+          </label>
         </div>
       </div>
 
@@ -868,6 +884,42 @@ export default {
 
     & + * {
       margin-left: 20px;
+    }
+  }
+  .product-photo {
+    width: 132px;
+    height: 132px;
+  }
+  .add-product-photo {
+    width: 132px;
+    height: 132px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    flex-direction: column;
+    text-align: center;
+
+    input {
+      position: absolute;
+    }
+
+    span {
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.3);
+      margin-top: 10px;
+      font-weight: 700;
+    }
+  }
+  .photo-wrapper {
+    flex-wrap: wrap;
+
+    & > * {
+      margin-right: 10px;
+      margin-bottom: 10px;
     }
   }
 }
