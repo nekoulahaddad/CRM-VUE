@@ -84,8 +84,52 @@
                 />
               </div>
             </div>
+
+            <template v-if="editedItem">
+              <div class="group">
+                <div class="group__title">№ заказа:</div>
+                <div class="group__content">
+                  <input
+                    class="form-control"
+                    v-model="orderNumber"
+                    type="number"
+                    placeholder="№ заказа:"
+                  />
+                </div>
+              </div>
+              <div class="group">
+                <div class="group__title">Комментарий:</div>
+                <div class="group__content">
+                  <textarea
+                    class="form-textarea"
+                    maxlength="3000"
+                    v-model="comment"
+                    placeholder="Комментарий"
+                  />
+                </div>
+              </div>
+            </template>
           </div>
           <div>
+            <div class="group" v-if="editedItem">
+              <div class="group__title">Статус:</div>
+              <div class="group__content">
+                <v-select
+                  :options="[
+                    { label: 'Выбрать статус', value: 'в обработке' },
+                    ...statusList.map((item) => ({
+                      label: item,
+                      value: item,
+                    })),
+                  ]"
+                  :reduce="(item) => item.value"
+                  name="status"
+                  v-model="status"
+                  :disabled="!status"
+                />
+              </div>
+            </div>
+
             <div class="group">
               <div class="group__title">
                 Регион: <span class="required">*</span>
