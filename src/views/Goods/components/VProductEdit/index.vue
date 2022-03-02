@@ -301,6 +301,30 @@
         </div>
       </div>
 
+      <div class="group">
+        <div class="group__title">Рекомендуемый товар:</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Введите артикул или название..."
+            v-model="currentInputRecomend"
+          />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">С этим товаром покупают:</div>
+        <div class="group__content">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Введите артикул или название..."
+            v-model="currentInputBuyed"
+          />
+        </div>
+      </div>
+
       <v-button red>Сохранить</v-button>
     </form>
   </div>
@@ -826,7 +850,7 @@ export default {
         this.currentInputRecomend = "";
       }
       axios({
-        url: process.env.VUE_APP_DEVELOP_URL + `/products/getproductbysearch/`,
+        url: `/products/getproductbysearch/`,
         data: {
           search: search,
           region: this.region,
