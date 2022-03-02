@@ -8,7 +8,7 @@
     <div class="vm--modal__title">Отправка закупщику</div>
     <div class="vm--modal__inner vm--modal-send-delivery">
       <div class="group__content">
-        <div class="group__item text--bold-700">ФИО инициатора:</div>
+        <div class="group__item text--bold-700">Ф.И.О. инициатора:</div>
         <div class="group__value">
           {{ transformFIO(editedItem.initiator) }}
         </div>
@@ -43,13 +43,13 @@
       </div>
 
       <div class="group">
-        <div class="group__title">ФИО исполнителя:</div>
+        <div class="group__title">Ф.И.О. исполнителя:</div>
         <div class="group__content">
           <autocomplete
             required
             :search="getBuyersBySearch"
             :get-result-value="getBuyer"
-            placeholder="Введите ФИО исполнителя..."
+            placeholder="Введите Ф.И.О. исполнителя..."
           >
             <template #result="{ result, props }">
               <li v-bind="props" @click="selectBuyer(result)">

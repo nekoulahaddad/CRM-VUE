@@ -83,7 +83,7 @@
               </div>
             </div>
             <div class="group__content">
-              <div class="group__item text--bold-700">ФИО исполнителя:</div>
+              <div class="group__item text--bold-700">Ф.И.О. исполнителя:</div>
               <div
                 class="group__value executor"
                 @click="changeBuyer = !changeBuyer"
@@ -96,7 +96,7 @@
                 <autocomplete
                   :search="getBuyersBySearch"
                   :get-result-value="getBuyer"
-                  placeholder="Введите ФИО исполнителя..."
+                  placeholder="Введите Ф.И.О. исполнителя..."
                 >
                   <template #result="{ result, props }">
                     <li v-bind="props" @click="selectBuyer(result)">

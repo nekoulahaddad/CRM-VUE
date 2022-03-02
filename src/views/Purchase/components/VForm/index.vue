@@ -5,13 +5,13 @@
     <div class="d-flex justify-content-between">
       <div class="flex-1" style="margin-right: 25px">
         <div class="group">
-          <div class="group__title">ФИО автора:</div>
+          <div class="group__title">Ф.И.О. автора:</div>
           <div class="group__content">
             <input
               required
               class="form-control"
               type="text"
-              placeholder="Введите автора..."
+              placeholder="Введите Ф.И.О. автора..."
             />
           </div>
         </div>

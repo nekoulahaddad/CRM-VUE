@@ -33,7 +33,7 @@
           </div>
           <div class="group">
             <div class="group__title">
-              ФИО {{ department ? `ответственного` : "исполнителей" }}:
+              Ф.И.О. {{ department ? `ответственного` : "исполнителей" }}:
             </div>
             <div
               class="group__executors"
@@ -63,7 +63,7 @@
                 :disabled="department && executors.length > 0"
                 :search="getUsersByFIO"
                 :get-result-value="getResultValue"
-                placeholder="Введите ФИО сотрудника..."
+                placeholder="Введите Ф.И.О. сотрудника..."
               >
                 <template #result="{ result, props }">
                   <li v-bind="props" @click="selectUser(result)">

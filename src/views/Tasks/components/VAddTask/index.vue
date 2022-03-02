@@ -42,7 +42,7 @@
             <!-- ФИО исполнителей -->
             <div class="group participants">
               <div class="group__title">
-                ФИО {{ department ? `ответственного` : "исполнителей" }}:
+                Ф.И.О. {{ department ? `ответственного` : "исполнителей" }}:
               </div>
               <div class="group__participants">
                 <div
@@ -71,7 +71,7 @@
                   class="participants__input"
                   :search="searchByExecutor"
                   :get-result-value="getResultValue"
-                  placeholder="Введите ФИО сотрудника..."
+                  placeholder="Введите Ф.И.О. сотрудника..."
                 >
                   <template #result="{ result, props }">
                     <li v-bind="props" @click="selectUser(result)">

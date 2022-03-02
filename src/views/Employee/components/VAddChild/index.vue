@@ -2,7 +2,7 @@
   <div class="add-child">
     <form @submit.prevent>
       <div class="group">
-        <div class="group__title">ФИО:</div>
+        <div class="group__title">Ф.И.О:</div>
         <div class="group__content">
           <input
             required

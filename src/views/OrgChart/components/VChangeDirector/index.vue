@@ -5,7 +5,7 @@
       <input
         type="text"
         class="form-control"
-        placeholder="Введите ФИО сотрудника..."
+        placeholder="Введите Ф.И.О. сотрудника..."
       />
     </div>
   </div>

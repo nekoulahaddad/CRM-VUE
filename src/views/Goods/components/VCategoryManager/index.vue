@@ -21,7 +21,7 @@
           ref="executors"
           :search="searchByExecutor"
           :get-result-value="getResultValue"
-          placeholder="Введите ФИО ответственного..."
+          placeholder="Введите Ф.И.О. ответственного..."
         >
           <template #result="{ result, props }">
             <li v-bind="props" @click="selectUser(result)">
