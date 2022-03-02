@@ -45,6 +45,7 @@
               placeholder="Введите ИНН"
               name="inn"
               v-model="inn"
+              onkeydown="return event.keyCode !== 69"
             />
           </div>
         </div>

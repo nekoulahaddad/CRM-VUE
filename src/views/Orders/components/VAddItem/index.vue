@@ -128,11 +128,12 @@
                 <div class="group__content">
                   <input
                     required
-                    class="form-control"
-                    type="text"
+                    class="form-control hide-arrows"
+                    type="number"
                     placeholder="Введите ИНН..."
                     v-model="clientForm.legalUser.inn"
                     :readonly="clientForm.isOldUser"
+                    onkeydown="return event.keyCode !== 69"
                   />
                 </div>
               </div>

@@ -115,13 +115,20 @@
           <VueCustomTooltip v-if="item.type !== 'group'" label="Изменить товар">
             <img
               alt=""
+              v-if="editedItem._id !== item._id"
               src="@/assets/icons/write_icon.svg"
+              @click="$emit('toggleEdit', item)"
+            />
+            <img
+              alt=""
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
               @click="$emit('toggleEdit', item)"
             />
           </VueCustomTooltip>
 
           <!-- Изменить группу -->
-          <template v-else>
+          <template v-if="item.type === 'group'">
             <VueCustomTooltip
               v-if="editedGroupItem._id !== item._id"
               label="Изменить группу"
@@ -173,6 +180,7 @@ export default {
       type: Object,
       required: true,
     },
+    editedItem: Object,
     editedGroupItem: Object,
     groupProductItem: Object,
     groupItems: Object,

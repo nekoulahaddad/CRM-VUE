@@ -5,17 +5,21 @@
       <div class="group">
         <div class="group__title">Выберите группу:</div>
         <div class="group__content">
-          <select
-            required
+          <v-select
+            :options="[
+              {
+                label: 'Группа товаров',
+                value: null,
+              },
+              ...groups.map((item) => ({
+                label: item.title,
+                value: item._id,
+              })),
+            ]"
             name="role"
-            class="form-select"
             v-model="groupSelected"
-          >
-            <option selected disabled :value="null">Группа товаров</option>
-            <option v-for="item in groups" :value="item._id">
-              {{ item.title }}
-            </option>
-          </select>
+            :reduce="(item) => item.value"
+          />
         </div>
       </div>
       <v-button red>Сохранить</v-button>

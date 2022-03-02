@@ -263,6 +263,7 @@
                     :editedGroupItem="editedGroupItem"
                     :groupProductItem="groupProductItem"
                     :groupItems="groupItems"
+                    :editedItem="editedItem"
                     :movedProduct="movedProduct"
                     @editProduct="editProduct"
                     @toggleEdit="toggleEdit"

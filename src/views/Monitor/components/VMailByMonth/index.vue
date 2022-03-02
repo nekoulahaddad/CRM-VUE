@@ -11,15 +11,17 @@
           <div class="managers__title">
             {{ $t("managers") }}
           </div>
-          <select
-            class="managers__select form-select"
-            @change="onChange($event)"
-          >
-            <option selected value="all">{{ $t("allManagers") }}</option>
-            <option v-for="item in managers" :value="item._id">
-              {{ transformFIO(item) }}
-            </option>
-          </select>
+
+          <v-select
+            style="width: 100%"
+            :options="[
+              { label: $t('allManagers'), value: 'all' },
+              ...managers.map((item) => ({
+                label: transformFIO(item),
+                value: item._id,
+              })),
+            ]"
+          />
         </div>
       </div>
       <div class="mail-by-month__column info-column" v-for="(item, i) of info">
