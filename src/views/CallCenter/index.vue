@@ -64,6 +64,9 @@
                 <!-- Блок с формой редактирования обращения -->
                 <v-edit-form
                   :editedItem="editedItem"
+                  :regions="regions"
+                  @toggleEdit="toggleEdit"
+                  @fetchData="fetchData"
                   v-if="editedItem._id === item._id"
                 />
               </div>

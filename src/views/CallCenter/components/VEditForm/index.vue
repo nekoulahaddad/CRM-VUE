@@ -1,149 +1,197 @@
 <template>
-  <div class="list__info list-info callback-edit-form">
-    <form @submit.prevent="onProvidersAdd">
-      <div class="group__title text--blue">
-        {{ $t("editCallback") }}
+  <div
+    class="list__row list__row--shadow list__row--white list__row--opened add-callback"
+  >
+    <div class="list__columns list__columns--shadow list__columns--white">
+      <div class="list__column list__column--title" style="position: relative">
+        Добавить обращение
+
+        <img
+          @click.prevent="
+            $store.commit('toggleAction', {
+              key: 'addCallback',
+            })
+          "
+          class="add-callback__close"
+          src="/icons/close_icon.svg"
+          alt=""
+        />
       </div>
-      <div class="group">
-        <div class="group__title">{{ $t("clientLastName") }}</div>
-        <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            :placeholder="$t('clientLastName')"
-            v-model="lastname"
-          />
+    </div>
+    <div class="add-callback__inner">
+      <form class="delivery-form" @submit.prevent="onProvidersAdd">
+        <div class="add-callback__title text--blue">Информация о клиенте:</div>
+
+        <div class="d-flex justify-content-between">
+          <div class="flex-1" style="margin-right: 25px">
+            <div class="group">
+              <div class="group__title">Фамилия:</div>
+              <div class="group__content">
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="50"
+                  v-model="lastname"
+                  placeholder="Фамилия"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">
+                Имя: <span class="required">*</span>
+              </div>
+              <div class="group__content">
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="50"
+                  v-model="firstname"
+                  placeholder="Имя"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Отчество:</div>
+              <div class="group__content">
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="50"
+                  v-model="middlename"
+                  placeholder="Отчество"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Телефон:</div>
+              <div class="group__content">
+                <phone-mask-input
+                  inputClass="form-control"
+                  v-model="phone"
+                  placeholder="Телефон"
+                  style="width: 100%"
+                />
+              </div>
+            </div>
+            <div class="group">
+              <div class="group__title">Описание:</div>
+              <div class="group__content">
+                <textarea
+                  class="form-textarea"
+                  maxlength="3000"
+                  v-model="message"
+                  placeholder="Описание"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="group">
+              <div class="group__title">
+                Регион: <span class="required">*</span>
+              </div>
+              <div class="group__content">
+                <v-select
+                  :class="{ 'form-control--error': $v.region.$error }"
+                  :options="
+                    regions.map((region) => ({
+                      label: region.title,
+                      value: region,
+                    }))
+                  "
+                  :reduce="(item) => item.value"
+                  v-model="$v.region.$model"
+                />
+              </div>
+            </div>
+
+            <div class="group" v-if="region">
+              <div class="group__title">Категория</div>
+              <div class="group__content">
+                <span
+                  @click="toggleSetCategory = !toggleSetCategory"
+                  style="border-bottom: 1px dashed; cursor: pointer"
+                >
+                  {{ category ? category.categoryName : "Добавить" }}
+                </span>
+              </div>
+              <autocomplete
+                v-if="toggleSetCategory"
+                :search="getCategoriesBySearch"
+                :get-result-value="getResultCaregory"
+                placeholder="Введите категорию..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectCategory(result)">
+                    {{ result.categoryName }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
+
+            <div class="group">
+              <div class="group__title">Ф.И.О. исполнителя</div>
+              <div class="group__content">
+                <span
+                  @click="setExecutor = !setExecutor"
+                  style="border-bottom: 1px dashed; cursor: pointer"
+                >
+                  {{ issuedTo ? transformFIO(issuedTo) : "Добавить" }}
+                </span>
+              </div>
+              <autocomplete
+                v-if="setExecutor"
+                ref="executors"
+                :get-result-value="getExecutorResult"
+                :search="getManagersBySearch"
+                placeholder="Введите Ф.И.О. исполнителя..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectUser(result)">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("clientFirstName") }}</div>
-        <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            :placeholder="$t('clientFirstName')"
-            v-model="firstname"
-          />
-        </div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("clientMiddleName") }}</div>
-        <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            :placeholder="$t('clientMiddleName')"
-            v-model="middlename"
-          />
-        </div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("phone") }}</div>
-        <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            :placeholder="$t('phone')"
-            v-model="phone"
-          />
-        </div>
-      </div>
-      <div class="group group--region">
-        <div class="group__title">{{ $t("region") }}</div>
-        <div class="group__content">
-          <select class="form-select" name="region" v-model="region">
-            <option
-              v-for="(item, index) in regions"
-              :selected="
-                editedItem ? item.value === editedItem.region.value : false
-              "
-              :value="item"
-            >
-              {{ item.title }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("category") }}</div>
-        <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            :placeholder="$t('category')"
-            v-model="category.categoryName"
-          />
-        </div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("description") }}</div>
-        <div class="group__content">
-          <textarea class="form-textarea" :placeholder="$t('description')">
-            {{ message }}
-          </textarea>
-        </div>
-      </div>
-      <div class="group__title text--blue">
-        {{ $t("executor") }}
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("fioExecutor") }}</div>
-        <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            :placeholder="$t('fioExecutor')"
-          />
-        </div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("status") }}</div>
-        <div class="group__content">
-          <select
-            class="form-select"
-            name="status"
-            v-model="status"
-            :disabled="!status"
-          >
-            <option v-for="(item, index) in statusList" :value="item">
-              {{ item }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("orderNumber") }}</div>
-        <div class="group__content"></div>
-      </div>
-      <div class="group">
-        <div class="group__title">{{ $t("comment") }}</div>
-        <div class="group__content">
-          <textarea class="form-textarea" :placeholder="$t('comment')">
-            {{ comment }}
-          </textarea>
-        </div>
-      </div>
-      <v-button red>{{ $t("save") }}</v-button>
-    </form>
+
+        <v-button red>Создать</v-button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import VButton from "@/components/VButton";
 import axios from "@/api/axios";
-import { mapMutations } from "vuex";
+import PhoneMaskInput from "vue-phone-mask-input";
+import { numeric, url, required, email } from "vuelidate/lib/validators";
 
 export default {
   props: {
-    editedItem: {
-      type: Object,
-      required: true,
+    regions: Array,
+    editedItem: Object,
+  },
+  components: { PhoneMaskInput },
+  validations: {
+    region: {
+      required,
+    },
+  },
+  computed: {
+    currentUser: {
+      get: function () {
+        let user = this.getUserRole();
+        return user;
+      },
     },
   },
   data() {
     return {
       fio: "",
+      toggleSetCategory: false,
       currentInput: "",
+      setExecutor: false,
       categories:
         this.editedItem && this.editedItem.categories
           ? this.editedItem.categories
@@ -192,7 +240,6 @@ export default {
           : null,
       statusList: ["отказ", "подтвержденный"],
       users: [],
-      regions: [],
       region:
         this.editedItem && this.editedItem.region
           ? this.editedItem.region
@@ -210,17 +257,69 @@ export default {
       },
     };
   },
-  components: { VButton },
   methods: {
-    ...mapMutations({
-      changeStatus: "change_load_status",
-    }),
-    onProvidersAdd() {
-      if (!this.region) {
-        this.$toast.error("Укажите регион!", "Ошибка");
+    getResultCaregory(result) {
+      return result.categoryName;
+    },
+    selectCategory(category) {
+      this.category = category;
+      this.toggleSetCategory = false;
+    },
+    getCategoriesBySearch(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios({
+          url: `/categories/getcategoriesbysearch/`,
+          data: {
+            title: input,
+            region: this.region._id,
+          },
+          method: "POST",
+        }).then((res) => {
+          console.log(res.data.views);
+          resolve(res.data.views);
+        });
+      });
+    },
+    async getManagersBySearch(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios(`/user/getmanagers/${input}`).then((res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    getExecutorResult() {
+      return "";
+    },
+    selectUser(user) {
+      if (user._id === this.currentUser._id) {
+        this.$toast.error("Вы не можете быть исполнителем!");
+        this.fio = ``;
+        this.users = [];
         return;
       }
-      this.changeStatus(false);
+      if (this.issuedTo === null) {
+        this.issuedTo = user;
+        this.setExecutor = false;
+        this.fio = ``;
+        this.users = [];
+        return;
+      }
+      this.$toast.error("При выбранном отделе исполнитель только один!");
+    },
+    onProvidersAdd() {
+      if (!this.region) {
+        this.$toast.error("Укажите регион!");
+        return;
+      }
+
       let data = {
         callissue: {
           firstname: this.firstname,
@@ -237,121 +336,49 @@ export default {
           comment: this.comment,
         },
       };
-      return;
+
       if (this.editedItem) {
         data.dataId = this.editedItem._id;
         if (!this.orderNumber && this.issuedBy._id !== this.currentUser._id) {
-          this.changeStatus(true);
           return this.$toast.warning("№ заказа обязательно для заполнения!");
         }
         axios({
-          url: "/callcenterissues/update/",
+          url: `/callcenterissues/update/`,
           data: data,
           method: "POST",
         })
-          .then(async (res) => {
-            if (res.data.message === "ORDEREXISTS") {
-              this.changeStatus(true);
+          .then(async (respons) => {
+            if (respons.data.message === "ORDEREXISTS") {
               return this.$toast.warning("№ заказа существует!");
             }
-            const transformedData = {
-              _id: data.dataId,
-              ...data.callissue,
-              category: {
-                category: {
-                  ...data.callissue.category,
-                },
-              },
-              client: {
-                name: data.callissue.firstname,
-                surname: data.callissue.lastname,
-                lastname: data.callissue.middlename,
-              },
-              createdAt: this.editedItem.createdAt,
-              confirmedAt: this.editedItem.confirmedAt,
-            };
-            this.$emit("editForm", transformedData);
 
-            this.$toast.success("Обращение успешно обновлено!");
-            this.$emit("toggleOpen");
-            this.changeStatus(true);
+            this.$toast.success("Обращения успешно обновлен!");
+            this.$emit("toggleEdit", this.editedItem);
+            this.$emit("fetchData");
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-            this.changeStatus(true);
           });
       } else {
         data.callissue.issuedBy = this.currentUser;
         axios({
-          url: process.env.VUE_APP_DEVELOP_URL + `/callcenterissues/post/`,
+          url: `/callcenterissues/post/`,
           data: data,
           method: "POST",
         })
-          .then(async (res) => {
-            const createdData = await res;
-            this.$emit("addCallIssue", {
-              ...data.callissue,
-              _id: createdData.data.data._id,
-              number: createdData.data.data.number,
-              issuedBy: this.currentUser,
-              category: {
-                category: {
-                  ...data.callissue.category,
-                },
-              },
-              client: {
-                name: data.callissue.firstname,
-                surname: data.callissue.lastname,
-                lastname: data.callissue.middlename,
-              },
-              createdAt: createdData.data.data.createdAt,
-            });
+          .then((res) => {
             this.$toast.success("Обращения успешно добавлен!");
-            this.$emit("toggleOpen");
-            this.changeStatus(true);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-            this.changeStatus(true);
           });
       }
     },
   },
-  watch: {
-    currentInput: function () {
-      if (this.region === null) {
-        this.$toast.warning("Укажите регион!", "Ошибка");
-      }
-    },
-    region: async function () {
-      if (this.region !== null) {
-        this.currentInput = "";
-        await axios({
-          url: "/categories/get/",
-          data: {
-            options: {
-              nesting: 0,
-              region: this.region._id,
-            },
-          },
-          method: "POST",
-        }).then(async (res) => {
-          this.category = null;
-          this.categories = res.data.categories;
-        });
-      }
-    },
-  },
   async created() {
-    await axios({
-      url: "/regions/get",
-    }).then(async (res) => {
-      this.regions = res.data.regions;
-    });
-
     if (this.editedItem) {
       await axios({
-        url: "/categories/get/",
+        url: `/categories/get/`,
         data: {
           options: {
             nesting: 0,
@@ -360,48 +387,74 @@ export default {
         },
         method: "POST",
       }).then(async (res) => {
-        this.editedItem.categories = res.data.categories;
-        this.categories = res.data.categories;
-        this.tempViews = res.data.categories;
+        let result = await res;
+        this.editedItem.categories = result.data.categories;
+        this.categories = result.data.categories;
+        this.tempViews = result.data.categories;
       });
     }
   },
-  computed: {
-    currentUser: {
-      get: function () {
-        return this.getUserRole();
-      },
+  watch: {
+    currentInput: function () {
+      if (this.region === null) {
+        this.$toast.warning("Укажите регион!");
+      }
+    },
+    region: async function () {
+      if (this.region !== null) {
+        this.currentInput = "";
+        await axios({
+          url: `/categories/get/`,
+          data: {
+            options: {
+              nesting: 0,
+              region: this.region._id,
+            },
+          },
+          method: "POST",
+        }).then(async (res) => {
+          let result = await res;
+          this.category = null;
+          this.categories = result.data.categories;
+        });
+      }
     },
   },
 };
 </script>
 
 <style lang="scss">
-@import "@/styles/_variables";
+.add-callback {
+  &__title {
+    position: relative;
 
-.callback-edit-form {
-  .group {
-    max-width: 976px;
-
-    select {
-      max-width: 401px;
+    &.text--blue {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
     }
   }
+  &__close {
+    cursor: pointer;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+  }
 
-  form > .group__title {
-    position: relative;
-    padding-top: 10px;
-
-    &::before {
-      display: block;
-      content: "";
-      position: absolute;
-      height: 2px;
-      width: 100%;
-      top: 0;
-      background-color: $color-gray-secondary;
-      border-radius: $border-radius;
+  &__inner {
+    padding: 10px;
+  }
+  .list__columns {
+    grid-template-columns: 1fr !important;
+    .list__column {
+      text-align: left !important;
+      font-size: 16px;
     }
+  }
+  button {
+    width: 230px;
+    margin-top: 10px;
   }
 }
 </style>
