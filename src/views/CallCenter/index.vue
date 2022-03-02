@@ -34,6 +34,8 @@
               </div>
             </div>
 
+            <v-add-call-back :regions="regions" v-if="addCallback" />
+
             <v-spinner v-if="!isLoading" />
             <template v-else-if="dataset.length">
               <div
@@ -76,6 +78,8 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
+import VAddCallBack from "./components/VAddCallBack";
 import VCallBack from "./components/VCallBack";
 import VEditForm from "./components/VEditForm";
 import VCallBackInfo from "./components/VCallBackInfo";
@@ -91,6 +95,7 @@ export default {
   mixins: [dataMixins],
   components: {
     VFilter,
+    VAddCallBack,
     VNotFoundQuery,
     VPagination,
     VSpinner,
@@ -101,6 +106,17 @@ export default {
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
+    addCallback() {
+      return this.$store.state.actions.addCallback;
+    },
+  },
+  created() {
+    axios({
+      url: "/regions/get",
+    }).then(async (res) => {
+      let result = await res;
+      this.regions = result.data.regions;
+    });
   },
   mounted() {
     this.fetchData();
