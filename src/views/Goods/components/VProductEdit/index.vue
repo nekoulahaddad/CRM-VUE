@@ -7,94 +7,142 @@
       <div class="group">
         <div class="group__title">Название товара:</div>
         <div class="group__content">
-          <input class="form-control" type="text" />
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Введите название товара"
+            maxlength="100"
+          />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">Артикул поставщика:</div>
         <div class="group__content">
-          <input class="form-control" type="text" />
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Введите артикул поставщика..."
+            maxlength="50"
+          />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">Цена:</div>
         <div class="group__content">
-          <input class="form-control" type="number" />
+          <input class="form-control" type="number" placeholder="0.00" />
         </div>
       </div>
 
-      <div class="group">
+      <div class="group d-flex">
         <div class="group__title">Оптовая цена:</div>
-        <div class="group__content"></div>
+        <div class="group__content" style="margin-left: 10px">
+          <toggle-button color="#db1f35" />
+        </div>
       </div>
 
       <div class="group">
         <div class="group__title">Клубная цена:</div>
         <div class="group__content">
-          <input class="form-control" type="number" />
+          <input
+            class="form-control"
+            type="number"
+            placeholder="Введите клубную цену..."
+          />
         </div>
       </div>
 
-      <div class="group">
+      <div class="group d-flex">
         <div class="group__title">Скидка:</div>
-        <div class="group__content"></div>
+        <div class="group__content" style="margin-left: 10px">
+          <toggle-button color="#db1f35" />
+        </div>
       </div>
 
       <div class="group">
         <div class="group__title">Цена со скидкой:</div>
         <div class="group__content">
-          <input class="form-control" type="number" />
+          <input class="form-control" type="number" placeholder="0.00" />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">РРЦ:</div>
         <div class="group__content">
-          <input class="form-control" type="number" />
+          <input
+            class="form-control"
+            type="number"
+            placeholder="Введите РРЦ..."
+            maxlength="100"
+          />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">Цена закупки:</div>
         <div class="group__content">
-          <input class="form-control" type="number" />
+          <input
+            class="form-control"
+            type="number"
+            placeholder="Введите цену закупки"
+          />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">Наценка (%):</div>
         <div class="group__content">
-          <input class="form-control" type="number" />
+          <input
+            class="form-control"
+            type="number"
+            placeholder="Введите наценку..."
+          />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">Стоп цена:</div>
         <div class="group__content">
-          <input class="form-control" type="number" />
+          <input
+            class="form-control"
+            type="number"
+            placeholder="Введите цену..."
+          />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">Единица измерения:</div>
         <div class="group__content">
-          <input class="form-control" type="text" />
+          <input
+            class="form-control"
+            type="text"
+            placeholder="за м2"
+            maxlength="50"
+          />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">Кол-во в упаковке:</div>
         <div class="group__content">
-          <input class="form-control" type="number" />
+          <input
+            class="form-control"
+            type="number"
+            placeholder="Введите кол-во в упаковке..."
+          />
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">Описание:</div>
         <div class="group__content">
-          <textarea class="form-textarea" />
+          <textarea
+            class="form-textarea"
+            maxlength="3000"
+            placeholder="Введите описание товара..."
+          />
         </div>
       </div>
 
