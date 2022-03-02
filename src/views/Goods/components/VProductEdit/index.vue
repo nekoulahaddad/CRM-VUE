@@ -237,7 +237,13 @@
               :value="getValueByIndex(index) || ''"
               @change="onChange($event, index)"
             />
-            <img src="@/assets/icons/trash_icon.svg" alt="" />
+            <VueCustomTooltip label="Удалить">
+              <img
+                @click="deleteOption(index)"
+                src="@/assets/icons/trash_icon.svg"
+                alt=""
+              />
+            </VueCustomTooltip>
           </div>
         </div>
         <div class="group__footer">
@@ -799,6 +805,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .product-edit-form {
   &__title {
     &.text--blue {
@@ -820,6 +828,19 @@ export default {
       & + input {
         margin-left: 10px;
       }
+    }
+  }
+  span[role="tooltip"] {
+    height: 24px;
+
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
     }
   }
 }
