@@ -108,7 +108,7 @@
           {{ $t("pages.reports.reportComment") }}
         </div>
         <div class="group__value flex-1 word-break">
-          {{ transformDate(report.comment) }}
+          {{ report.comment }}
         </div>
       </div>
     </div>
