@@ -82,7 +82,7 @@
           <!-- Видимость товара -->
           <VueCustomTooltip
             v-if="item.type !== 'group'"
-            label="Видимость товара"
+            :label="item.visible ? 'Скрыть товар' : 'Показать товар'"
           >
             <img
               alt=""
