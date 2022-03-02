@@ -65,7 +65,12 @@
             <div class="group">
               <div class="group__title">Телефон:</div>
               <div class="group__content">
-                <input type="text" class="form-control" />
+                <phone-mask-input
+                  inputClass="form-control"
+                  v-model="phone"
+                  placeholder="Телефон"
+                  style="width: 100%"
+                />
               </div>
             </div>
             <div class="group">
@@ -98,6 +103,30 @@
                   v-model="$v.region.$model"
                 />
               </div>
+            </div>
+
+            <div class="group" v-if="region">
+              <div class="group__title">Категория</div>
+              <div class="group__content">
+                <span
+                  @click="toggleSetCategory = !toggleSetCategory"
+                  style="border-bottom: 1px dashed; cursor: pointer"
+                >
+                  {{ category ? category.categoryName : "Добавить" }}
+                </span>
+              </div>
+              <autocomplete
+                v-if="toggleSetCategory"
+                :search="getCategoriesBySearch"
+                :get-result-value="getResultCaregory"
+                placeholder="Введите категорию..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectCategory(result)">
+                    {{ result.categoryName }}
+                  </li>
+                </template>
+              </autocomplete>
             </div>
 
             <div class="group">
@@ -135,6 +164,7 @@
 
 <script>
 import axios from "@/api/axios";
+import PhoneMaskInput from "vue-phone-mask-input";
 import { numeric, url, required, email } from "vuelidate/lib/validators";
 
 export default {
@@ -142,6 +172,7 @@ export default {
     regions: Array,
     editedItem: Object,
   },
+  components: { PhoneMaskInput },
   validations: {
     region: {
       required,
@@ -158,6 +189,7 @@ export default {
   data() {
     return {
       fio: "",
+      toggleSetCategory: false,
       currentInput: "",
       setExecutor: false,
       categories:
@@ -226,6 +258,32 @@ export default {
     };
   },
   methods: {
+    getResultCaregory(result) {
+      return result.categoryName;
+    },
+    selectCategory(category) {
+      this.category = category;
+      this.toggleSetCategory = false;
+    },
+    getCategoriesBySearch(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios({
+          url: `/categories/getcategoriesbysearch/`,
+          data: {
+            title: input,
+            region: this.region._id,
+          },
+          method: "POST",
+        }).then((res) => {
+          console.log(res.data.views);
+          resolve(res.data.views);
+        });
+      });
+    },
     async getManagersBySearch(input) {
       if (input.trim().length < 1) {
         return [];
@@ -324,25 +382,7 @@ export default {
           data: data,
           method: "POST",
         })
-          .then(async (res) => {
-            const createdData = await res;
-            this.$emit("addCallIssue", {
-              ...data.callissue,
-              _id: createdData.data.data._id,
-              number: createdData.data.data.number,
-              issuedBy: this.currentUser,
-              category: {
-                category: {
-                  ...data.callissue.category,
-                },
-              },
-              client: {
-                name: data.callissue.firstname,
-                surname: data.callissue.lastname,
-                lastname: data.callissue.middlename,
-              },
-              createdAt: createdData.data.data.createdAt,
-            });
+          .then((res) => {
             this.$toast.success("Обращения успешно добавлен!");
           })
           .catch((err) => {
