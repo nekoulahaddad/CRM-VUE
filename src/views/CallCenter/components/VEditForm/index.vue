@@ -200,7 +200,19 @@
           </div>
         </div>
 
-        <v-button red>Создать</v-button>
+        <v-button v-if="!editedItem" red>Создать</v-button>
+
+        <template v-else>
+          <v-button
+            v-if="
+              editedItem.confirmedAt ||
+              editedItem.issuedBy._id === currentUser._id
+            "
+            red
+          >
+            Сохранить
+          </v-button>
+        </template>
       </form>
     </div>
   </div>
