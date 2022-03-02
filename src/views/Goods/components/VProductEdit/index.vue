@@ -17,6 +17,86 @@
           <input class="form-control" type="text" />
         </div>
       </div>
+
+      <div class="group">
+        <div class="group__title">Цена:</div>
+        <div class="group__content">
+          <input class="form-control" type="number" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Оптовая цена:</div>
+        <div class="group__content"></div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Клубная цена:</div>
+        <div class="group__content">
+          <input class="form-control" type="number" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Скидка:</div>
+        <div class="group__content"></div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Цена со скидкой:</div>
+        <div class="group__content">
+          <input class="form-control" type="number" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">РРЦ:</div>
+        <div class="group__content">
+          <input class="form-control" type="number" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Цена закупки:</div>
+        <div class="group__content">
+          <input class="form-control" type="number" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Наценка (%):</div>
+        <div class="group__content">
+          <input class="form-control" type="number" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Стоп цена:</div>
+        <div class="group__content">
+          <input class="form-control" type="number" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Единица измерения:</div>
+        <div class="group__content">
+          <input class="form-control" type="text" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Кол-во в упаковке:</div>
+        <div class="group__content">
+          <input class="form-control" type="number" />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group__title">Описание:</div>
+        <div class="group__content">
+          <textarea class="form-textarea" />
+        </div>
+      </div>
     </form>
   </div>
 </template>
