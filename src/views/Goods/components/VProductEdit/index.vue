@@ -1,6 +1,6 @@
 <template>
   <div class="list__info list-info product-edit-form">
-    <form @submit.prevent="">
+    <form @submit.prevent="onProductAdd">
       <div class="product-edit-form__title text--blue">
         Редактировать товар:
       </div>
@@ -491,8 +491,8 @@ export default {
       this.isLoading = false;
     },
     deleteImage(image) {
-      this.images = this.images.filter((file) => file.name != image.name);
-      this.tempUrl = this.tempUrl.filter((obj) => obj.name != image.name);
+      this.images = this.images.filter((file) => file.name !== image.name);
+      this.tempUrl = this.tempUrl.filter((obj) => obj.name !== image.name);
     },
     downloadItem(url, filename) {
       axios
@@ -523,18 +523,18 @@ export default {
         }
         indexCurrent++;
       }
-      if (e.target.name == "discount_percent") {
+      if (e.target.name === "discount_percent") {
         this.discount_price = Number.parseFloat(this.cost);
         let delta = this.cost * (this.discount_percent / 100);
         this.discount_price -= delta;
       }
-      if (e.target.name == "discount_price") {
+      if (e.target.name === "discount_price") {
         this.discount_percent = 100;
         this.discount_percent =
           this.discount_percent -
           ((this.discount_price / this.cost) * 100).toFixed(0);
       }
-      if (e.target.name == "margin") {
+      if (e.target.name === "margin") {
         this.cost = Number.parseFloat(this.purchase_cost);
         let delta = this.purchase_cost * (this.margin / 100);
         this.cost += +delta;
@@ -603,7 +603,6 @@ export default {
       }
     },
     onProductAdd() {
-      this.changeStatus(false);
       let productData = new FormData();
       if (this.editedProduct) {
         productData.append("productId", this.editedProduct._id);
@@ -689,7 +688,6 @@ export default {
         );
         if (this.discount_price < this.price) {
           this.$toast.success("Скидка не может быть меньше цены!");
-          this.changeStatus(true);
           return;
         }
       }
@@ -750,20 +748,13 @@ export default {
           data: productData,
           method: "POST",
         })
-          .then(async (res) => {
-            let result = await res;
-            this.$emit(
-              "editProduct",
-              result.data.product,
-              result.data.changeTitle ? result.data.old : false
-            );
-            this.$toast.success("Товар успешно обновлен!");
-            this.$emit("toggleOpen");
-            this.changeStatus(true);
+          .then((res) => {
+            this.$emit("refreshGoods");
+            this.$toast.success("Товар успешно изменен!");
+            this.$emit("toggleEdit", this.editedProduct);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-            this.changeStatus(true);
           });
       } else {
         axios({
@@ -775,17 +766,14 @@ export default {
             let result = await res;
             if (result.data.exist) {
               this.$toast.success("Товар уже существует!");
-              this.changeStatus(true);
             } else {
               this.$emit("addProduct", result.data.product);
               this.$toast.success("Товар успешно добавлен!");
               this.$emit("toggleOpen");
-              this.changeStatus(true);
             }
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-            this.changeStatus(true);
           });
       }
     },

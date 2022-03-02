@@ -288,6 +288,8 @@
                     :region="filtersOptions.region"
                     :edited-product="editedItem"
                     v-if="editedItem._id === item._id"
+                    @toggleEdit="toggleEdit"
+                    @refreshGoods="refreshGoods"
                   />
 
                   <!-- Редактирование группы -->
