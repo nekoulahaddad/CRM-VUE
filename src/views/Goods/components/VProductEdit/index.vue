@@ -467,7 +467,6 @@ export default {
     getResult(result) {
       return "";
     },
-    addChip(result) {},
     async fileUpload(e, clear) {
       this.isLoading = true;
       let fileBuffer = [];
