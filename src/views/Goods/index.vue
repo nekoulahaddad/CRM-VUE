@@ -1044,5 +1044,9 @@ export default {
       width: 1421px;
     }
   }
+  .page__header {
+    max-width: 1837px;
+    padding-right: 20px;
+  }
 }
 </style>
