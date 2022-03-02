@@ -99,6 +99,31 @@
                 />
               </div>
             </div>
+
+            <div class="group">
+              <div class="group__title">Ф.И.О. исполнителя</div>
+              <div class="group__content">
+                <span
+                  @click="setExecutor = !setExecutor"
+                  style="border-bottom: 1px dashed; cursor: pointer"
+                >
+                  {{ issuedTo ? transformFIO(issuedTo) : "Добавить" }}
+                </span>
+              </div>
+              <autocomplete
+                v-if="setExecutor"
+                ref="executors"
+                :get-result-value="getExecutorResult"
+                :search="getManagersBySearch"
+                placeholder="Введите Ф.И.О. исполнителя..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectUser(result)">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
           </div>
         </div>
 
@@ -122,10 +147,19 @@ export default {
       required,
     },
   },
+  computed: {
+    currentUser: {
+      get: function () {
+        let user = this.getUserRole();
+        return user;
+      },
+    },
+  },
   data() {
     return {
       fio: "",
       currentInput: "",
+      setExecutor: false,
       categories:
         this.editedItem && this.editedItem.categories
           ? this.editedItem.categories
@@ -192,9 +226,39 @@ export default {
     };
   },
   methods: {
+    async getManagersBySearch(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios(`/user/getmanagers/${input}`).then((res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    getExecutorResult() {
+      return "";
+    },
+    selectUser(user) {
+      if (user._id === this.currentUser._id) {
+        this.$toast.error("Вы не можете быть исполнителем!");
+        this.fio = ``;
+        this.users = [];
+        return;
+      }
+      if (this.issuedTo === null) {
+        this.issuedTo = user;
+        this.setExecutor = false;
+        this.fio = ``;
+        this.users = [];
+        return;
+      }
+      this.$toast.error("При выбранном отделе исполнитель только один!");
+    },
     onProvidersAdd() {
       if (!this.region) {
-        this.$toast.error("Укажите регион!", "Ошибка");
+        this.$toast.error("Укажите регион!");
         return;
       }
 
@@ -214,6 +278,7 @@ export default {
           comment: this.comment,
         },
       };
+
       if (this.editedItem) {
         data.dataId = this.editedItem._id;
         if (!this.orderNumber && this.issuedBy._id !== this.currentUser._id) {
