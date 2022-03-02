@@ -97,6 +97,16 @@
           <textarea class="form-textarea" />
         </div>
       </div>
+
+      <div class="group">
+        <div class="group__title">Свойства товара:</div>
+        <div class="group__content"></div>
+        <div class="group__footer">
+          <v-button red>Добавить свойство</v-button>
+        </div>
+      </div>
+
+      <v-button red>Сохранить</v-button>
     </form>
   </div>
 </template>
