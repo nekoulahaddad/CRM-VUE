@@ -119,6 +119,7 @@ export default {
     });
   },
   mounted() {
+    this.$store.commit("deactivateAction", "addCallback");
     this.fetchData();
   },
   data() {
