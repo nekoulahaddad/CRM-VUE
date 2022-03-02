@@ -287,7 +287,14 @@
             />
           </div>
           <label class="add-product-photo" for="product-photo">
-            <input type="file" hidden id="product-photo" />
+            <input
+              type="file"
+              hidden
+              id="product-photo"
+              multiple
+              name="imagesTemp"
+              @change="fileUpload($event, false)"
+            />
             <img src="@/assets/icons/add_photo.svg" alt="" />
             <span>Нажмите чтобы выбрать</span>
           </label>
