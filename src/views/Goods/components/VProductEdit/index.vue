@@ -54,7 +54,7 @@
       <div class="group d-flex">
         <div class="group__title">Оптовая цена:</div>
         <div class="group__content" style="margin-left: 10px">
-          <toggle-button color="#db1f35" />
+          <toggle-button color="#db1f35" :sync="true" />
         </div>
       </div>
 

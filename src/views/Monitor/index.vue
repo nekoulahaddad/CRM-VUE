@@ -19,7 +19,7 @@
         }"
       >
         <div class="scroll-horizontal">
-          <v-top-blocks :rev="rev" />
+          <v-top-blocks :rev="rev" :clientsForMonth="clientsForMonth" />
           <div class="d-flex">
             <!-- Заявки за текущей месяц -->
             <v-mail-by-month />
@@ -79,6 +79,7 @@ export default {
       showFilter: true,
       startDate: null,
       endDate: null,
+      clientsForMonth: 0,
       isLoading: false,
       type: "online",
       filtersOptions: {},
@@ -115,6 +116,7 @@ export default {
           this.users = result.users;
           this.clients = result.clients;
           this.tasks = result.tasks;
+          this.clientsForMonth = result.clientsForMonth;
           this.workload = result.workload;
           this.sales = result.sales;
           this.orders = result.orders;

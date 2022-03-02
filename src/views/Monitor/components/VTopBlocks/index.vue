@@ -32,7 +32,7 @@
         <div class="top-block__title">
           Количество новых клиентов за текущий месяц:
         </div>
-        <div class="top-block__value">+52</div>
+        <div class="top-block__value">{{ clientsForMonth }}</div>
       </div>
       <div class="top-block__right">
         <img src="@/assets/icons/doc.svg" alt="" />
@@ -62,6 +62,7 @@
 <script>
 export default {
   props: {
+    clientsForMonth: Number,
     rev: {
       type: Object,
     },
