@@ -1,5 +1,7 @@
 <template>
   <div class="page callbacks-page">
+    <v-delete-callback :deletedItem="deletedItem" @fetchData="fetchData" />
+
     <v-page-header
       :title="$t('pages.callbacks.pageTitle')"
       icon="callbacks_title"
@@ -53,6 +55,7 @@
                   :editedItem="editedItem"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией об обращении -->
@@ -84,6 +87,7 @@
 import axios from "@/api/axios";
 import VAddCallBack from "./components/VAddCallBack";
 import VCallBack from "./components/VCallBack";
+import VDeleteCallback from "./components/VDeleteCallback";
 import VEditForm from "./components/VEditForm";
 import VCallBackInfo from "./components/VCallBackInfo";
 import VFilter from "@/components/VFilter";
@@ -106,6 +110,7 @@ export default {
     VEditForm,
     VCallBackInfo,
     VPageHeader,
+    VDeleteCallback,
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
@@ -150,6 +155,10 @@ export default {
   methods: {
     toggleFilter() {
       this.showFilter = !this.showFilter;
+    },
+    toggleDelete(item) {
+      this.deletedItem = item;
+      this.$modal.show("deleteCallback");
     },
     async fetchData() {
       try {

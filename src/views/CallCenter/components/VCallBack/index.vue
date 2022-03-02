@@ -83,7 +83,11 @@
           />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/trash_icon.svg" alt="" />
+          <img
+            @click="$emit('toggleDelete', item)"
+            src="@/assets/icons/trash_icon.svg"
+            alt=""
+          />
         </div>
       </div>
     </div>
