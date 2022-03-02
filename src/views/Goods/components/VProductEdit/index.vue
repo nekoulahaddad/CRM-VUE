@@ -293,6 +293,24 @@
 
       <div class="group">
         <div class="group__title">Рекомендуемый товар:</div>
+        <div class="group__recomends">
+          <div
+            class="group__recomend"
+            v-for="(chip, index) in recomends"
+            :key="chip.label"
+          >
+            <span>{{ chip.title }}</span>
+            <div>
+              <VueCustomTooltip label="Удалить">
+                <img
+                  alt=""
+                  src="@/assets/icons/trash_icon.svg"
+                  @click="deleteChip(index)"
+                />
+              </VueCustomTooltip>
+            </div>
+          </div>
+        </div>
         <div class="group__content">
           <autocomplete
             style="width: 100%"
@@ -314,6 +332,24 @@
 
       <div class="group">
         <div class="group__title">С этим товаром покупают:</div>
+        <div class="group__recomends">
+          <div
+            class="group__recomend"
+            v-for="(chip, index) in buyed"
+            :key="chip.label"
+          >
+            <span>{{ chip.title }}</span>
+            <div>
+              <VueCustomTooltip label="Удалить">
+                <img
+                  alt=""
+                  src="@/assets/icons/trash_icon.svg"
+                  @click="deleteChipBuyed(index)"
+                />
+              </VueCustomTooltip>
+            </div>
+          </div>
+        </div>
         <div class="group__content">
           <autocomplete
             style="width: 100%"
@@ -849,7 +885,6 @@ export default {
       this.tempChips = [];
       this.currentInputRecomend = "";
       this.currentInputBuyed = "";
-      this.$toast.success(`Товар успешно добавлен в ${msg}!`);
     },
     findChips(search) {
       if (search.trim().length < 1) {
@@ -873,7 +908,7 @@ export default {
       this.buyed.splice(index, 1);
     },
     backspaceDeleteBuyed({ which }) {
-      which == 8 &&
+      which === 8 &&
         this.currentInputBuyed === "" &&
         this.buyed.splice(this.buyed.length - 1);
     },
@@ -953,6 +988,23 @@ export default {
 
     & > * {
       margin-right: 10px;
+      margin-bottom: 10px;
+    }
+  }
+  .group__recomend {
+    height: 40px;
+    border-radius: $border-radius;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-x: hidden;
+    margin-top: 10px;
+    margin-bottom: 5px;
+
+    &:last-child {
       margin-bottom: 10px;
     }
   }
