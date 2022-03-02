@@ -26,25 +26,35 @@
           <div class="flex-1" style="margin-right: 25px">
             <div class="group">
               <div class="group__title">Фамилия:</div>
-              <div class="group__content"></div>
+              <div class="group__content">
+                <input type="text" class="form-control" maxlength="50" />
+              </div>
             </div>
             <div class="group">
               <div class="group__title">
                 Имя: <span class="required">*</span>
               </div>
-              <div class="group__content"></div>
+              <div class="group__content">
+                <input type="text" class="form-control" maxlength="50" />
+              </div>
             </div>
             <div class="group">
               <div class="group__title">Отчество:</div>
-              <div class="group__content"></div>
+              <div class="group__content">
+                <input type="text" class="form-control" maxlength="50" />
+              </div>
             </div>
             <div class="group">
               <div class="group__title">Телефон:</div>
-              <div class="group__content"></div>
+              <div class="group__content">
+                <input type="text" class="form-control" />
+              </div>
             </div>
             <div class="group">
               <div class="group__title">Описание:</div>
-              <div class="group__content"></div>
+              <div class="group__content">
+                <textarea class="form-textarea" maxlength="3000" />
+              </div>
             </div>
           </div>
           <div>
@@ -120,6 +130,7 @@ export default {
   }
   button {
     width: 230px;
+    margin-top: 10px;
   }
 }
 </style>
