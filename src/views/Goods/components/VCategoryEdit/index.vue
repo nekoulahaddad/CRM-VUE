@@ -268,6 +268,20 @@
             />
           </VueCustomTooltip>
         </div>
+        <div class="group__content">
+          <autocomplete
+            :search="getCategoriesBySearch"
+            :get-result-value="getResult"
+            placeholder="Введите категорию..."
+            style="width: 100%"
+          >
+            <template #result="{ result, props }">
+              <li v-bind="props" @click="selectCategory(result)">
+                {{ result.categoryName }}
+              </li>
+            </template>
+          </autocomplete>
+        </div>
       </div>
 
       <v-button red>Сохранить</v-button>
@@ -292,10 +306,35 @@ export default {
   },
   components: { VButton },
   methods: {
+    selectCategory(result) {
+      this.views.push(result);
+    },
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files[0];
       this[e.target.name + "Url"] = URL.createObjectURL(files[0]);
+    },
+    getResult(result) {
+      return "";
+    },
+    getCategoriesBySearch(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios({
+          url: `/categories/getcategoriesbysearch/`,
+          data: {
+            title: input,
+            region: this.region,
+            nesting: this.editedItem.nesting,
+          },
+          method: "POST",
+        }).then((result) => {
+          resolve(result.data.views);
+        });
+      });
     },
     deleteImage(type, e) {
       let fields = {
