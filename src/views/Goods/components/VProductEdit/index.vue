@@ -257,7 +257,7 @@
           </div>
         </div>
         <div class="group__footer">
-          <v-button red>Добавить свойство</v-button>
+          <span class="btn" @click="addOption">Добавить свойство</span>
         </div>
       </div>
 
@@ -995,6 +995,19 @@ export default {
     &:last-child {
       margin-bottom: 10px;
     }
+  }
+  span.btn {
+    width: 230px;
+    height: 37px;
+    background-color: $color-red;
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 700;
+    color: $color-white;
+    cursor: pointer;
   }
 }
 </style>
