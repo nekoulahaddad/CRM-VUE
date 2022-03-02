@@ -261,6 +261,23 @@
         </div>
       </div>
 
+      <div class="group">
+        <div class="group__title">Фотографии товара:</div>
+        <div class="group__content">
+          <div v-if="editedProduct.images || images[0] !== 'Выберите файлы'">
+            <img
+              v-for="item in editedProduct.images"
+              v-if="editedProduct.images && images[0] === 'Выберите файлы'"
+              :src="
+                editedProduct
+                  ? `${serverAddr + editedProduct.path + item}`
+                  : false
+              "
+            />
+          </div>
+        </div>
+      </div>
+
       <v-button red>Сохранить</v-button>
     </form>
   </div>
@@ -290,7 +307,7 @@ export default {
       imagesTemp: [],
       deletedImgs: [],
       options: new Map(),
-      serverAddr: process.env.VUE_APP_DEVELOP_URL,
+      serverAddr: "https://xn--j1ano.com/",
       tempUrl: [],
       isLoading: false,
       length: 0,
