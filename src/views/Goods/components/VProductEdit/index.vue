@@ -811,12 +811,15 @@ export default {
     align-items: center;
 
     & * {
+      margin-bottom: 20px;
       margin-right: 10px;
-      margin-bottom: 10px;
     }
 
     input {
       width: 401px;
+      & + input {
+        margin-left: 10px;
+      }
     }
   }
 }
