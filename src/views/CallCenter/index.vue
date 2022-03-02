@@ -36,7 +36,11 @@
               </div>
             </div>
 
-            <v-add-call-back :regions="regions" v-if="addCallback" />
+            <v-add-call-back
+              :regions="regions"
+              v-if="addCallback"
+              @fetchData="fetchData"
+            />
 
             <v-spinner v-if="!isLoading" />
             <template v-else-if="dataset.length">

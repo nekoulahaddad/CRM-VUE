@@ -383,7 +383,9 @@ export default {
           method: "POST",
         })
           .then((res) => {
-            this.$toast.success("Обращения успешно добавлен!");
+            this.$toast.success("Обращение успешно добавлено!");
+            this.$emit("fetchData");
+            this.$store.commit("toggleAction", { key: "addCallback" });
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
