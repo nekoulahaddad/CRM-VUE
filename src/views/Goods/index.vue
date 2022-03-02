@@ -284,7 +284,10 @@
                   />
 
                   <!-- Редактирование товара -->
-                  <v-product-edit v-if="editedItem._id === item._id" />
+                  <v-product-edit
+                    :edited-product="editedItem"
+                    v-if="editedItem._id === item._id"
+                  />
 
                   <!-- Редактирование группы -->
                   <v-product-group-edit
