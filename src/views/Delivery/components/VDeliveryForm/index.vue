@@ -27,9 +27,11 @@
             <input
               class="form-control"
               type="url"
+              :class="{ 'form-control--error': $v.site.$error }"
               placeholder="Вставьте ссылку на сайт..."
               name="site"
               v-model="site"
+              v-model.trim="$v.site.$model"
               maxlength="100"
             />
           </div>
@@ -309,7 +311,7 @@
 import VButton from "@/components/VButton";
 import { mapMutations } from "vuex";
 import axios from "@/api/axios";
-import { numeric, maxLength, required, email } from "vuelidate/lib/validators";
+import { numeric, url, required, email } from "vuelidate/lib/validators";
 import PhoneMaskInput from "vue-phone-mask-input";
 import Chip from "vue-chip";
 
@@ -336,6 +338,9 @@ export default {
       phone: {
         required,
       },
+    },
+    site: {
+      url,
     },
   },
   components: { VButton, PhoneMaskInput, Chip },
@@ -488,12 +493,6 @@ export default {
     },
     onProvidersAdd() {
       this.$v.$touch();
-
-      console.log(this.$v.name.required);
-      console.log(this.$v.region.required);
-      console.log(this.$v.specialist.name.required);
-      console.log(this.$v.specialist.phone.required);
-      console.log(this.$v.specialist.email.required);
 
       if (this.$v.$invalid) {
         return;
