@@ -46,20 +46,19 @@
             />
           </VueCustomTooltip>
         </div>
-        <div class="group__content">
-          <autocomplete
-            ref="executors"
-            :search="searchByExecutor"
-            :get-result-value="getResultValue"
-            placeholder="Введите название категории..."
-          >
-            <template #result="{ result, props }">
-              <li v-bind="props" @click="selectCategory(result)">
-                {{ result.categoryName }}
-              </li>
-            </template>
-          </autocomplete>
-        </div>
+        <autocomplete
+          style="width: 100%"
+          ref="executors"
+          :search="searchByExecutor"
+          :get-result-value="getResultValue"
+          placeholder="Введите название категории..."
+        >
+          <template #result="{ result, props }">
+            <li v-bind="props" @click="selectCategory(result)">
+              {{ result.categoryName }}
+            </li>
+          </template>
+        </autocomplete>
       </div>
 
       <v-button red>Сохранить</v-button>
@@ -253,7 +252,6 @@ export default {
     position: relative;
   }
   .form-control {
-    width: 976px;
   }
   .group__flex {
     display: flex;
@@ -308,7 +306,6 @@ export default {
   }
 
   .group__find {
-    width: 976px;
     height: 40px;
     border-radius: $border-radius;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -336,7 +333,6 @@ export default {
     }
   }
   .autocomplete-input {
-    width: 976px;
   }
 
   form {
