@@ -285,6 +285,7 @@
 
                   <!-- Редактирование товара -->
                   <v-product-edit
+                    :region="filtersOptions.region"
                     :edited-product="editedItem"
                     v-if="editedItem._id === item._id"
                   />

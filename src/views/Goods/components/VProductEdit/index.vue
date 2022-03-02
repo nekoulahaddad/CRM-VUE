@@ -264,16 +264,6 @@
       <div class="group">
         <div class="group__title">Фотографии товара:</div>
         <div class="group__content photo-wrapper">
-          <img
-            src="https://images.unsplash.com/photo-1645985283720-1d991e55ff1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2075&q=80"
-            alt=""
-            class="product-photo"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1645985283720-1d991e55ff1b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2075&q=80"
-            alt=""
-            class="product-photo"
-          />
           <div v-if="editedProduct.images || images[0] !== 'Выберите файлы'">
             <img
               class="product-photo"
@@ -304,24 +294,42 @@
       <div class="group">
         <div class="group__title">Рекомендуемый товар:</div>
         <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Введите артикул или название..."
-            v-model="currentInputRecomend"
-          />
+          <autocomplete
+            style="width: 100%"
+            :search="findChips"
+            :get-result-value="getResult"
+            placeholder="Введите артикул или название......"
+          >
+            <template #result="{ result, props }">
+              <li
+                v-bind="props"
+                @click="setChip({ chip: result, type: 'recomends' })"
+              >
+                {{ result.title }}
+              </li>
+            </template>
+          </autocomplete>
         </div>
       </div>
 
       <div class="group">
         <div class="group__title">С этим товаром покупают:</div>
         <div class="group__content">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Введите артикул или название..."
-            v-model="currentInputBuyed"
-          />
+          <autocomplete
+            style="width: 100%"
+            :search="findChips"
+            :get-result-value="getResult"
+            placeholder="Введите артикул или название......"
+          >
+            <template #result="{ result, props }">
+              <li
+                v-bind="props"
+                @click="setChip({ chip: result, type: 'buyed' })"
+              >
+                {{ result.title }}
+              </li>
+            </template>
+          </autocomplete>
         </div>
       </div>
 
@@ -420,6 +428,10 @@ export default {
     }
   },
   methods: {
+    getResult(result) {
+      return "";
+    },
+    addChip(result) {},
     async fileUpload(e, clear) {
       this.isLoading = true;
       let fileBuffer = [];
@@ -821,7 +833,7 @@ export default {
       let { chip, type } = chipObj;
       let exist = this[type].some((r) => r.product_id == chip._id);
       let msg =
-        type == "recomends" ? "рекомендуемых" : '"С этим товаром покупают"';
+        type === "recomends" ? "рекомендуемых" : '"С этим товаром покупают"';
       if (exist) {
         this.$toast.error(`Товар уже в ${msg}`, "Ошибка");
         return;
@@ -839,31 +851,22 @@ export default {
       this.currentInputBuyed = "";
       this.$toast.success(`Товар успешно добавлен в ${msg}!`);
     },
-    findChips(type) {
-      this.tempChips = [];
-      let search = "";
-      if (type == "recomends") {
-        search = this.currentInputRecomend;
-        this.currentInputBuyed = "";
-      } else {
-        search = this.currentInputBuyed;
-        this.currentInputRecomend = "";
+    findChips(search) {
+      if (search.trim().length < 1) {
+        return [];
       }
-      axios({
-        url: `/products/getproductbysearch/`,
-        data: {
-          search: search,
-          region: this.region,
-        },
-        method: "POST",
-      }).then(async (res) => {
-        let result = await res;
-        let products = result.data.products;
-        if (!products.length) {
-          this.$toast.error("Товар не найден", "Ошибка");
-          return;
-        }
-        this.tempChips.push(...products);
+
+      return new Promise((resolve) => {
+        axios({
+          url: `/products/getproductbysearch/`,
+          data: {
+            search,
+            region: this.region,
+          },
+          method: "POST",
+        }).then((result) => {
+          resolve(result.data.products);
+        });
       });
     },
     deleteChipBuyed(index) {
