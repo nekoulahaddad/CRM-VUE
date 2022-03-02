@@ -28,6 +28,164 @@
         </div>
       </div>
 
+      <div class="group__flex">
+        <div class="group flex-1">
+          <div class="group__title">Фото категории:</div>
+          <div class="group__content">
+            <div class="group__left">
+              <div class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+              </div>
+            </div>
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <label for="categoryImage">
+                    <input
+                      type="file"
+                      id="categoryImage"
+                      name="categoryImage"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="group flex-1">
+          <div class="group__title">Иконка категории:</div>
+          <div class="group__content">
+            <div class="group__left">
+              <div class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+              </div>
+            </div>
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <label for="categoryIcon">
+                    <input
+                      type="file"
+                      id="categoryIcon"
+                      name="categoryIcon"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="group flex-1">
+          <div class="group__title">Изображение слайдера:</div>
+          <div class="group__content">
+            <div class="group__left">
+              <div class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+              </div>
+            </div>
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <label for="categorySlide">
+                    <input
+                      type="file"
+                      id="categorySlide"
+                      name="categorySlide"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
+                </div>
+                <div class="actions__btn" style="border-color: #db1f35">
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('slide', $event)"
+                    />
+                  </VueCustomTooltip>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="group flex-1">
+          <div class="group__title">Баннер категории:</div>
+          <div class="group__content">
+            <div class="group__left">
+              <div class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+              </div>
+            </div>
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <label for="categoryBanner">
+                    <input
+                      type="file"
+                      id="categoryBanner"
+                      name="categoryBanner"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="group flex-1">
+          <div class="group__title">Банер категории (моб. версия):</div>
+          <div class="group__content">
+            <div class="group__left">
+              <div class="category-edit-form__default-img">
+                <img src="@/assets/icons/goods_default.svg" alt="" />
+              </div>
+            </div>
+
+            <div class="group__right">
+              <div class="group__actions actions">
+                <div class="actions__btn">
+                  <label for="categoryBannerMob">
+                    <input
+                      type="file"
+                      id="categoryBannerMob"
+                      name="categoryBannerMob"
+                      @change="fileUpload($event)"
+                      hidden
+                    />
+                    <VueCustomTooltip label="Выбрать фото">
+                      <img src="@/assets/icons/goods_upload.svg" alt="" />
+                    </VueCustomTooltip>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="group">
         <div class="group__title">Часто ищут:</div>
         <div
