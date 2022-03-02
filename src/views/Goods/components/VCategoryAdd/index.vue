@@ -504,5 +504,16 @@ export default {
     transform: translateY(-50%);
     cursor: pointer;
   }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
+  }
 }
 </style>
