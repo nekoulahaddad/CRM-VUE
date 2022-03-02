@@ -72,6 +72,7 @@ export default {
       info: [],
     };
   },
+  computed: {},
   watch: {
     rev() {},
   },
