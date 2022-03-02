@@ -205,7 +205,7 @@ export default {
 <style lang="scss">
 .callbacks-page {
   .list__columns {
-    grid-template-columns: 30px 128px 120px 120px 120px 120px 120px 120px 120px 120px 160px 1fr;
+    grid-template-columns: 30px 80px 100px 120px 100px 120px 120px 120px 120px 120px 135px 1fr;
   }
   .list__header {
     .list__column {
@@ -217,13 +217,13 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 30px 120px 140px 140px 140px 140px 230px 140px 140px 140px 230px 1fr;
+      grid-template-columns: 30px 100px 120px 140px 140px 140px 230px 140px 140px 140px 230px 1fr;
     }
   }
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 30px 120px 140px 140px 140px 140px 200px 140px 140px 140px 180px 1fr;
+      grid-template-columns: 30px 100px 100px 140px 140px 140px 200px 140px 140px 140px 180px 1fr;
     }
   }
 
