@@ -118,7 +118,7 @@
                     : categorySlideUrl
                 "
                 @click.prevent="
-                  editedItem.slide != 'default.jpeg'
+                  editedItem.slide !== 'default.jpeg'
                     ? downloadItem(
                         serverAddr + editedItem.slidePath + editedItem.slide,
                         editedItem.slide
@@ -211,9 +211,11 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && categoryBanner === 'Выбрать файл'
-                    ? serverAddr + editedItem.bannerPath + editedItem.banner
-                    : categoryBannerUrl
+                  editedItem && categoryBannerMob === 'Выбрать файл'
+                    ? serverAddr +
+                      editedItem.bannerPathMob +
+                      editedItem.bannerMob
+                    : categoryBannerMobUrl
                 "
                 @click.prevent="
                   downloadItem(
