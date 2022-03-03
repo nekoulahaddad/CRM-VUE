@@ -8,6 +8,9 @@
     <!-- Редактирование региона -->
     <v-region-edit />
 
+    <!-- Создание группы товаров -->
+    <v-create-group :items="[]" />
+
     <v-delete-group-product
       :group="deletedGroup"
       :region="filtersOptions.region"
@@ -338,6 +341,7 @@ import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
 import VProductEdit from "./components/VProductEdit";
+import VCreateGroup from "./components/VCreateGroup";
 import VCategoryAdd from "./components/VCategoryAdd";
 import VDeleteGroupProduct from "./components/VDeleteGroupProduct";
 import VRegionEdit from "./components/VRegionEdit";
@@ -371,6 +375,7 @@ export default {
     VSpinner,
     VSearch,
     VCopy,
+    VCreateGroup,
     VRegionEdit,
     VProductGroupEdit,
     VCategoryExport,
@@ -467,6 +472,9 @@ export default {
       region: "region",
       sidebar: "sidebar",
     }),
+    createGroup() {
+      return this.$store.state.actions.createGroup;
+    },
     deleteSelectedItems() {
       return this.$store.state.deleteSelectedItems;
     },
@@ -484,6 +492,11 @@ export default {
     deleteSelectedItems(value) {
       if (value) {
         this.toggleDeleteAll();
+      }
+    },
+    createGroup(value) {
+      if (value) {
+        this.$modal.show("createGroup");
       }
     },
     $route: async function () {

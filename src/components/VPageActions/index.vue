@@ -121,6 +121,19 @@
             <img src="@/assets/icons/region_items.svg" alt="" />
           </a>
         </VueCustomTooltip>
+
+        <VueCustomTooltip
+          label="Создать группу"
+          v-if="$store.getters.selectedItems.length > 1"
+        >
+          <a
+            href=""
+            class="page-actions__button"
+            @click.prevent="$store.commit('setCreateGroup', true)"
+          >
+            <img src="@/assets/icons/create_group.svg" alt="" />
+          </a>
+        </VueCustomTooltip>
       </template>
 
       <!-- Заказы -->
@@ -302,7 +315,7 @@
 
       <VueCustomTooltip
         label="Удалить выбранные"
-        v-if="$store.getters.selectedItems.length"
+        v-if="$store.getters.selectedItems.length > 1"
       >
         <a
           href=""

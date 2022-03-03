@@ -40,6 +40,7 @@ export default new Vuex.Store({
       addDelivery: false,
       addDepartment: false,
       addEvent: false,
+      createGroup: false,
       addOrder: false,
       addPurchase: false,
       addTask: false,
@@ -61,6 +62,9 @@ export default new Vuex.Store({
         state.selectedItems.push(payload);
       }
     },
+    toggleCreateGroup(state, payload) {
+      state.actions[payload.key] = !state.actions[payload.key];
+    },
     toggleDeleteSelectedItems(state, payload) {
       state.deleteSelectedItems = payload;
     },
@@ -78,6 +82,9 @@ export default new Vuex.Store({
       if (state.actions[payload]) {
         state.actions[payload] = false;
       }
+    },
+    setCreateGroup(state, payload) {
+      state.actions.createGroup = payload;
     },
     toggleAction(state, payload) {
       state.actions[payload.key] = !state.actions[payload.key];
