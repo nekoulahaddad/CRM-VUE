@@ -438,7 +438,7 @@ export default {
       itemFilters: [],
       currentInput: "",
       tempViews: [],
-      serverAddr: "https://xn--j1ano.com/",
+      serverAddr: process.env.VUE_APP_DEVELOP_URL,
       remove: [],
     };
   },
