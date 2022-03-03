@@ -4,7 +4,7 @@
       <span class="item__title">{{ item.title }}</span>
       <div class="table__actions">
         <div class="table__icon">
-          <img src="@/assets/icons/trash_icon.svg" alt="" />
+          <img src="@/assets/icons/trash_icon_white.svg" alt="" />
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@ export default {
   border-radius: $border-radius;
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 15px;
   margin-bottom: 20px;
   justify-content: space-between;
   font-size: 14px;
