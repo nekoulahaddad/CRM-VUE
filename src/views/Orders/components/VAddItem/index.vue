@@ -324,14 +324,15 @@
             <div class="group">
               <div class="group__title">Лицо заказа:</div>
               <div class="group__content">
-                <select
-                  class="form-select"
+                <v-select
+                  :options="[
+                    { label: 'Физическое лицо', value: 'physical' },
+                    { label: 'Юридическое лицо', value: 'legal' },
+                  ]"
+                  :recude="(item) => item.value"
                   name="clientType"
                   v-model="orderForm.clientType"
-                >
-                  <option value="physical">Физическое лицо</option>
-                  <option value="legal">Юридическое лицо</option>
-                </select>
+                />
               </div>
             </div>
           </div>
