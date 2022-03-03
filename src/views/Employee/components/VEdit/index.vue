@@ -44,8 +44,6 @@ export default {
   background-color: $color-white;
 
   .group {
-    max-width: 976px;
-
     select {
       max-width: 401px;
     }

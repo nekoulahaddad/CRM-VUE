@@ -445,6 +445,7 @@ export default {
       type: Object,
     },
   },
+  validations: {},
   components: { VAddChild, VButton, PhoneMaskInput },
   data() {
     return {
@@ -742,7 +743,7 @@ export default {
       }
 
       &__edit {
-        width: 219px;
+        width: 230px;
         height: 303px;
 
         img {
