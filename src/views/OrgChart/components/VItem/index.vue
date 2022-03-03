@@ -9,6 +9,7 @@
       </div>
     </div>
     <v-item
+      :line="true"
       :level="level + 1"
       :item="child"
       v-for="(child, index) in item.children"
@@ -21,6 +22,7 @@
 export default {
   name: "VItem",
   props: {
+    line: Boolean,
     item: {
       type: Object,
       required: true,
@@ -35,6 +37,7 @@ export default {
       return {
         item: true,
         department__item: true,
+        "department__item--line": this.line,
         [`department__item--level-${this.level}`]: true,
       };
     },
@@ -60,6 +63,7 @@ export default {
   font-size: 14px;
   font-weight: 700;
   color: $color-white;
+  position: relative;
 
   &--level-1 {
     height: 80px;
@@ -82,6 +86,17 @@ export default {
     height: 48px;
     margin-left: 80px;
     background: linear-gradient(90deg, #ff747a, #033e7d);
+  }
+
+  &--line:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 6px;
+    background-color: $color-black;
+    left: -15px;
   }
 }
 </style>
