@@ -315,18 +315,28 @@
           </template>
         </div>
         <div class="d-flex align-items-center">
-          <VueCustomTooltip
-            label="Создать группу"
-            v-if="$store.getters.selectedItems.length > 1 && name === 'goods'"
-          >
-            <a
-              href=""
-              class="page-actions__button"
-              @click.prevent="$store.commit('setCreateGroup', true)"
+          <template v-if="name === 'goods'">
+            <VueCustomTooltip
+              label="Отменить выбранное"
+              v-if="$store.getters.selectedItems.length > 1"
             >
-              <img src="@/assets/icons/create_group.svg" alt="" />
-            </a>
-          </VueCustomTooltip>
+              <a href="" class="page-actions__button" @click.prevent="">
+                <img src="@/assets/icons/unselect_icon.svg" alt="" />
+              </a>
+            </VueCustomTooltip>
+            <VueCustomTooltip
+              label="Создать группу"
+              v-if="$store.getters.selectedItems.length > 1"
+            >
+              <a
+                href=""
+                class="page-actions__button"
+                @click.prevent="$store.commit('setCreateGroup', true)"
+              >
+                <img src="@/assets/icons/create_group.svg" alt="" />
+              </a>
+            </VueCustomTooltip>
+          </template>
 
           <VueCustomTooltip
             label="Удалить выбранные"
