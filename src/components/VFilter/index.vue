@@ -746,22 +746,24 @@
           <div class="filter__group group">
             <div class="group__title">Статус заказа:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                :value="filterOptions.status ? filterOptions.status : 'all'"
-                @change="selectOptions($event, null, 'status', null)"
-              >
-                <option selected value="all">Все статусы</option>
-                <option value="nocall">Нет связи с клиентом</option>
-                <option value="awaiting">Ждет подтверждения</option>
-                <option value="processing">В работе</option>
-                <option value="completed">Выполненые заказы</option>
-                <option value="delivered">Доставленные заказы</option>
-                <option value="partially delivered">
-                  Частично доставленные
-                </option>
-                <option value="declained">Отмененные заказы</option>
-              </select>
+              <v-select
+                :options="[
+                  { label: 'Все статусы', value: 'all' },
+                  { label: 'Нет связи с клиентом', value: 'nocall' },
+                  { label: 'Ждет подтверждения', value: 'awaiting' },
+                  { label: 'В работе', value: 'processing' },
+                  { label: 'Выполненые заказы', value: 'completed' },
+                  { label: 'Доставленные заказы', value: 'delivered' },
+                  {
+                    label: 'Частично доставленные',
+                    value: 'partially delivered',
+                  },
+                  { label: 'Отмененные заказы', value: 'declained' },
+                ]"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.status"
+                @input="setStatus"
+              />
             </div>
           </div>
           <div class="filter__group group">
