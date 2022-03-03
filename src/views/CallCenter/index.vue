@@ -3,7 +3,6 @@
     <v-delete-callback :deletedItem="deletedItem" @fetchData="fetchData" />
 
     <v-page-header
-      :title="$t('pages.callbacks.pageTitle')"
       icon="callbacks_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

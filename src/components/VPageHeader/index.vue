@@ -34,10 +34,7 @@ export default {
       required: true,
     },
     type: String,
-    title: {
-      type: String,
-      required: true,
-    },
+    title: String,
     filterToggle: {
       type: Boolean,
       default: true,

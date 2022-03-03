@@ -104,7 +104,7 @@
   "menu": {
     "monitor": "Дашборд",
     "education": "Документы",
-    "employee": "Сотрудники",
+    "employee": "Персонал",
     "calendar": "Календарь",
     "tasks": "Задачи",
     "reports": "Отчеты",
@@ -115,7 +115,7 @@
     "seo": "SEO",
     "mango": "Mango",
     "storage": "Снабженец",
-    "delivery": "Поставщики",
+    "delivery": "Партнеры",
     "callbacks": "Обращения",
     "buying": "Закупка",
     "sites": "Кор. cайты"
