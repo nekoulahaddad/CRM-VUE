@@ -1,7 +1,7 @@
 <template>
   <div class="learn">
     <div class="learn__inner">
-      <div class="learn__title">Обучение:</div>
+      <div class="learn__title">Документы:</div>
       <vue-scroll>
         <div class="list">
           <div
