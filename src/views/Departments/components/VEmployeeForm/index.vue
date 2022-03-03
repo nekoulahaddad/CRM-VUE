@@ -73,22 +73,16 @@
     <div class="group">
       <div class="group__title">{{ $t("department") }}</div>
       <div class="group__content">
-        <select
-          class="form-select"
-          :value="infoItem ? infoItem.department.value : department"
-          @change="onChange($event)"
-        >
-          <option
-            v-for="(item, index) in departments"
-            :key="index"
-            :selected="
-              infoItem ? item.value === infoItem.department.value : false
-            "
-            :value="item.value"
-          >
-            {{ item.title }}
-          </option>
-        </select>
+        <v-select
+          :options="
+            departments.map((item) => ({
+              label: item.title,
+              value: item.value,
+            }))
+          "
+          v-model="infoItem ? infoItem.department.value : department"
+          :reduce="(item) => item.value"
+        />
       </div>
     </div>
     <div class="group">

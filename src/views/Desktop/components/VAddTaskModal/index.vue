@@ -76,19 +76,18 @@
           <div class="group">
             <div class="group__title">Отдел:</div>
             <div class="group__content">
-              <select
-                class="form-select"
+              <v-select
+                :options="[
+                  { label: 'Не выбрано', value: null },
+                  ...departments((item) => ({
+                    label: item.title,
+                    value: item._id,
+                  })),
+                ]"
+                :reduce="(item) => item.value"
                 name="targetRegion"
                 v-model="department"
-              >
-                <option :value="null">Не выбрано</option>
-                <option
-                  v-for="department in departments"
-                  :value="department._id"
-                >
-                  {{ department.title }}
-                </option>
-              </select>
+              />
             </div>
           </div>
           <div class="group">

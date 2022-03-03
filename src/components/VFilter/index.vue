@@ -260,20 +260,22 @@
           <div class="filter__group group">
             <div class="group__title">Статусы:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                :value="filterOptions.status ? filterOptions.status : 'all'"
-                @change="selectOptions($event, null, 'status', null)"
-              >
-                <option selected value="all">Все статусы</option>
-                <option value="отказ">Отказ</option>
-                <option value="в обработке">В обработке</option>
-                <option value="подтвержденный">Подтвержденный</option>
-                <option value="в наличии">В наличии</option>
-                <option value="отсутствует у поставщика">
-                  Отсутствует у поставщика
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  { label: 'Все статусы', value: 'all' },
+                  { label: 'Отказ', value: 'отказ' },
+                  { label: 'В обработке', value: 'в обработке' },
+                  { label: 'Подтвержденный', value: 'подтвержденный' },
+                  { label: 'В наличии', value: 'в наличии' },
+                  {
+                    label: 'Отсутствует у поставщика',
+                    value: 'отсутствует у поставщика',
+                  },
+                ]"
+                @input="setStatus"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.status ? filterOptions.status : 'all'"
+              />
             </div>
           </div>
           <div class="filter__actions">
