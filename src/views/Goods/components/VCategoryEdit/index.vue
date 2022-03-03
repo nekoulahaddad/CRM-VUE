@@ -40,9 +40,6 @@
                   )
                 "
               />
-              <div v-else class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
-              </div>
             </div>
             <div class="group__right">
               <div class="group__actions actions">
