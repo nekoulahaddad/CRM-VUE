@@ -274,7 +274,7 @@
                 ]"
                 @input="setStatus"
                 :reduce="(item) => item.value"
-                v-model="filterOptions.status ? filterOptions.status : 'all'"
+                v-model="filterOptions.status"
               />
             </div>
           </div>

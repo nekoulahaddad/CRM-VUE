@@ -80,7 +80,7 @@
               value: item.value,
             }))
           "
-          v-model="infoItem ? infoItem.department.value : department"
+          v-model="dep"
           :reduce="(item) => item.value"
         />
       </div>
@@ -271,6 +271,11 @@ export default {
   props: {
     infoItem: {
       type: Object,
+    },
+  },
+  computed: {
+    dep() {
+      return this.infoItem ? this.infoItem.department.value : this.department;
     },
   },
   components: { VButton, datetime: Datetime },
