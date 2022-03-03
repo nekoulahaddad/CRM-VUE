@@ -23,33 +23,16 @@
     </div>
 
     <div class="page__body d-flex">
-      <div class="departments">
-        <div class="departments__item">
-          <v-department gradient="red" :node="orgTree" />
-        </div>
-        <div class="departments__item">
-          <v-department
-            gradient="purple"
-            :node="item"
-            :show-line="true"
-            v-for="item in orgTree.children"
-          />
-        </div>
-        <div class="departments__item">
-          <v-department
-            :show-line="true"
-            gradient="green"
-            :node="item"
-            v-for="item in levels"
-          />
-        </div>
-        <div class="departments__item">
-          <v-department
-            gradient="blue"
-            :show-line="true"
-            :node="item"
-            v-for="item in subLevels"
-          />
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
+        <div class="departments" v-if="orgTree && orgTree._id">
+          <v-item :level="1" :item="orgTree" />
         </div>
       </div>
     </div>
@@ -57,10 +40,10 @@
 </template>
 
 <script>
-import VDepartment from "./components/VDepartment";
 import axios from "@/api/axios";
 import { mapGetters, mapMutations } from "vuex";
 import VButton from "@/components/VButton";
+import VItem from "./components/VItem";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
@@ -70,14 +53,15 @@ export default {
     VButton,
     VPageHeader,
     VSpinner,
+    VItem,
     VPagination,
-    VDepartment,
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
   },
   data() {
     return {
+      showFilter: false,
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
       pageLoading: true,
       roles: {
@@ -154,22 +138,6 @@ export default {
     this.getData(`/orgtree/getfirst`).then((res) => {
       this.orgTree = res.data.dataTree || {};
       this.currentTreeId = res.data._id;
-
-      for (const item of this.orgTree.children) {
-        if (item.children.length) {
-          this.levels.push(...item.children);
-        } else {
-          this.levels.push(null);
-        }
-
-        for (const subItem of item.children) {
-          if (subItem.children.length) {
-            this.subLevels.push(...subItem.children);
-          } else {
-            this.subLevels.push(null);
-          }
-        }
-      }
     });
     axios.get("/departments/all").then(async (res) => {
       let result = await res;
@@ -184,20 +152,16 @@ export default {
 @import "@/styles/_variables";
 
 .org-chart-page {
-  .list__columns {
-    grid-template-columns: 240px 400px 450px 1fr;
-  }
-  .list__column:last-child {
-    padding-left: 20px;
-  }
-
   .page__right--fluid {
-    .list__columns {
-      grid-template-columns: 300px 450px 450px 1fr;
+    .departments {
+      width: 1704px;
     }
   }
 
   .page__right--full {
+    .departments {
+      width: 1591px;
+    }
     .list__columns {
       grid-template-columns: 300px 450px 450px 1fr;
     }
@@ -233,34 +197,6 @@ export default {
   }
 
   .departments {
-    display: flex;
-    margin-bottom: 30px;
-
-    &__item {
-      position: relative;
-
-      & + * {
-        margin-left: 60px;
-      }
-
-      &::before {
-        position: absolute;
-        display: block;
-        content: "";
-        top: 125px;
-        bottom: 0;
-        left: -34px;
-        width: 8px;
-        background-color: $color-black;
-      }
-    }
-
-    .department__empty,
-    .department {
-      & + * {
-        margin-top: 10px;
-      }
-    }
   }
 }
 </style>
