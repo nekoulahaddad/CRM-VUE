@@ -27,7 +27,6 @@
               <img
                 alt=""
                 class="group__image"
-                v-if="editedItem && categoryImage === 'Выбрать файл'"
                 :src="
                   editedItem && categoryImage === 'Выбрать файл'
                     ? serverAddr + editedItem.path + editedItem.img
