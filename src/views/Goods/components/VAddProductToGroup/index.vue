@@ -6,16 +6,12 @@
         <div class="group__title">Выберите группу:</div>
         <div class="group__content">
           <v-select
-            :options="[
-              {
-                label: 'Группа товаров',
-                value: null,
-              },
-              ...groups.map((item) => ({
+            :options="
+              groups.map((item) => ({
                 label: item.title,
                 value: item._id,
-              })),
-            ]"
+              }))
+            "
             name="role"
             v-model="groupSelected"
             :reduce="(item) => item.value"
