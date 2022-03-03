@@ -59,6 +59,7 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
+        {{ createGroup }}
         <template v-if="isLoading && filtersOptions.region">
           <template v-if="dataset.categories.length">
             <div class="scroll-horizontal">
