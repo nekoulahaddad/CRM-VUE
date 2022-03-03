@@ -102,15 +102,20 @@
       <div class="group" v-if="role === 'superadmin'">
         <div class="group__title">Cтатус</div>
         <div class="group__content">
-          <select class="form-select" name="status" v-model="changeStatus">
-            <option :value="null" selected disabled>Выберите статус</option>
-            <option value="assigned">Назначена</option>
-            <option value="tested">На проверке</option>
-            <option value="completed">Выполненые</option>
-            <option value="under revision>">На доработке</option>
-            <option value="accepted">Принята</option>
-            <option value="not accepted">Не принята</option>
-          </select>
+          <v-select
+            :options="[
+              { label: 'Выберите статус', value: null },
+              { label: 'Назначена', value: 'assigned' },
+              { label: 'На проверке', value: 'tested' },
+              { label: 'Выполнена', value: 'completed' },
+              { label: 'На доработке', value: 'under revision' },
+              { label: 'Принята', value: 'accepted' },
+              { label: 'Не принята', value: 'not accepted' },
+            ]"
+            name="status"
+            v-model="changeStatus"
+            :reduce="(item) => item.value"
+          />
         </div>
         <div class="group__footer" v-if="changeStatus">
           <v-button red @click="changeTaskStatus(task, changeStatus)">
