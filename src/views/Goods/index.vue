@@ -9,7 +9,11 @@
     <v-region-edit />
 
     <!-- Создание группы товаров -->
-    <v-create-group :items="productsForGroup" :region="filtersOptions.region" />
+    <v-create-group
+      :items="productsForGroup"
+      :region="filtersOptions.region"
+      @refreshGoods="refreshGoods"
+    />
 
     <v-delete-group-product
       :group="deletedGroup"

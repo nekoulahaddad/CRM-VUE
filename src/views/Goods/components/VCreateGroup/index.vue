@@ -56,7 +56,7 @@
             <div>
               <v-select
                 :options="
-                  getOptions().map((product) => ({
+                  options.map((product) => ({
                     label: product,
                     value: product,
                   }))
@@ -88,6 +88,7 @@ export default {
     return {
       title: "",
       groupProperties: "",
+      options: [],
     };
   },
   computed: {
@@ -96,6 +97,18 @@ export default {
         return `${this.items.length * 44}px`;
       }
       return "129px";
+    },
+  },
+  watch: {
+    items() {
+      let arr = [];
+      this.items.map((i) => {
+        i.options.map((option) => {
+          arr.push(Object.keys(option) + "");
+        });
+      });
+      arr.push("Размер");
+      this.options = Array.from(new Set(arr));
     },
   },
   methods: {
@@ -129,23 +142,14 @@ export default {
         },
         method: "POST",
       })
-        .then(async () => {
+        .then(() => {
           this.$emit("refreshGoods");
           this.$toast.success("Товары успешно добавлены в группу!");
+          this.cancel();
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
         });
-    },
-    getOptions() {
-      let arr = [];
-      this.items.map((i) => {
-        i.options.map((option) => {
-          arr.push(Object.keys(option) + "");
-        });
-      });
-      arr.push("Размер");
-      return Array.from(new Set(arr));
     },
   },
 };
