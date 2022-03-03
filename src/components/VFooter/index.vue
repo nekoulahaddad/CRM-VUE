@@ -41,6 +41,7 @@ export default {
   &__left {
     display: flex;
     align-items: center;
+    flex: 1;
   }
 
   &__right {

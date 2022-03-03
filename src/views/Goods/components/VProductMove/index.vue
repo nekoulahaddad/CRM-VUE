@@ -85,10 +85,6 @@ export default {
           },
           method: "POST",
         }).then((result) => {
-          if (result.data.views.length < 1) {
-            return [];
-          }
-
           resolve(result.data.views);
         });
       });
@@ -117,6 +113,7 @@ export default {
         })
           .then(() => {
             this.isLoading = false;
+            this.$emit("refreshGoods");
             this.$toast.success(`Товар успешно перенесен!`);
             this.$emit("toggleMoveProduct", this.movedProduct);
           })

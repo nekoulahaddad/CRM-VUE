@@ -34,6 +34,7 @@ export default {
   padding: 7px 9px;
   border: 1px solid transparent;
   margin-right: 69px;
+  min-width: 150px;
 
   &__name {
     margin-left: 5px;

@@ -317,6 +317,7 @@
                     v-if="movedProduct._id === item._id"
                     :movedProduct="movedProduct"
                     :region="filtersOptions.region"
+                    @refreshGoods="refreshGoods"
                     @toggleMoveProduct="toggleMoveProduct"
                   />
 
