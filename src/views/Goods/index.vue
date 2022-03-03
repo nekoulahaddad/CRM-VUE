@@ -9,7 +9,7 @@
     <v-region-edit />
 
     <!-- Создание группы товаров -->
-    <v-create-group :items="[]" />
+    <v-create-group :items="productsForGroup" :region="filtersOptions.region" />
 
     <v-delete-group-product
       :group="deletedGroup"
@@ -59,7 +59,6 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        {{ createGroup }}
         <template v-if="isLoading && filtersOptions.region">
           <template v-if="dataset.categories.length">
             <div class="scroll-horizontal">
@@ -411,6 +410,7 @@ export default {
         region: REGION_MOSCOW_ID,
         nesting: +this.$route.params.nesting - 1 || null,
       },
+      productsForGroup: [],
       deletedGroupProduct: {},
       googleDoc: null,
       category: null,
@@ -490,6 +490,11 @@ export default {
     },
   },
   watch: {
+    selectedItems(v) {
+      this.productsForGroup = this.dataset.products.filter((product) => {
+        return v.includes(product._id);
+      });
+    },
     deleteSelectedItems(value) {
       if (value) {
         this.toggleDeleteAll();
