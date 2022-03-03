@@ -17,9 +17,12 @@
 
     <v-delete-product
       :deletedItem="deletedProduct"
+      :selectedItems="selectedItems"
       :group="deletedGroup"
+      :deleteMany="deleteMany"
       :region="filtersOptions.region"
       @deleteProduct="deleteProduct"
+      @deleteProducts="deleteProducts"
       @clearSelectedProducts="clearSelectedProducts"
     />
 
@@ -390,6 +393,7 @@ export default {
   },
   data() {
     return {
+      deleteMany: false,
       showFilter: false,
       isLoading: false,
       dataset: {
@@ -463,6 +467,12 @@ export default {
       region: "region",
       sidebar: "sidebar",
     }),
+    deleteSelectedItems() {
+      return this.$store.state.deleteSelectedItems;
+    },
+    selectedItems() {
+      return this.$store.getters.selectedItems;
+    },
     importGoods() {
       return this.$store.state.actions.importGoods;
     },
@@ -471,6 +481,11 @@ export default {
     },
   },
   watch: {
+    deleteSelectedItems(value) {
+      if (value) {
+        this.toggleDeleteAll();
+      }
+    },
     $route: async function () {
       this.isLoading = false;
       this.filtersOptions.nesting = +this.$route.params.nesting - 1;
@@ -521,6 +536,10 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleDeleteAll() {
+      this.deleteMany = true;
+      this.$modal.show("deleteGoodsProduct");
+    },
     deleteProductFromGroup(groupId, productId) {
       let dataset = this.dataset.products;
       let index = dataset.findIndex((gr) => gr._id === groupId);
@@ -668,8 +687,7 @@ export default {
       this.changeStatus(true);
     },
     toggleDeleteGroupProduct(group, product) {
-      console.log(group);
-      console.log(product);
+      this.deleteMany = false;
       this.deletedGroup = group;
       this.deletedGroupProduct = product;
       this.$modal.show("deleteGroupProduct");
@@ -682,6 +700,16 @@ export default {
       this.deletedProduct = deletedProduct;
       this.$modal.show("deleteGoodsProduct");
     },
+    deleteProducts(ids) {
+      const result = [];
+      console.log(ids);
+      this.dataset.products.map((product) => {
+        if (!ids.includes(product._id)) {
+          result.push(product);
+        }
+      });
+      this.dataset.products = result;
+    },
     deleteProduct(product) {
       let index = this.dataset.products.findIndex(
         (item) => item._id === product._id
@@ -690,7 +718,6 @@ export default {
       dataset.splice(index, 1);
       this.dataset.products = dataset;
       this.deletedProduct = {};
-      this.changeStatus(true);
     },
     addToGoogleDoc(item) {
       let status = this.googleDoc.sheets.find((s) => s.categoryId == item._id)

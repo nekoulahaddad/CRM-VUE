@@ -1,5 +1,10 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="deleteGoodsProduct">
+  <v-modal
+    :adaptive="true"
+    :maxHeight="175"
+    name="deleteGoodsProduct"
+    @before-close="$store.commit('toggleDeleteSelectedItems', false)"
+  >
     <div class="vm--modal__title">Удаление</div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
@@ -20,6 +25,8 @@ import axios from "@/api/axios";
 
 export default {
   props: {
+    deleteMany: Boolean,
+    selectedItems: Array,
     deletedItem: {
       type: Object,
       default: () => {},
@@ -35,15 +42,11 @@ export default {
   },
   components: { VButton },
   methods: {
-    ...mapMutations({
-      changeStatus: "change_load_status",
-    }),
     cancel() {
       this.$modal.hide("deleteGoodsProduct");
     },
     confirm() {
-      if (this.deletedItem && this.deletedItem._id) {
-        this.changeStatus(false);
+      if (!this.deleteMany) {
         axios({
           url: `/products/delete`,
           data: {
@@ -60,42 +63,31 @@ export default {
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-          })
-          .finally(() => {
-            this.changeStatus(true);
           });
-      }
-      if (
-        this.deletedItem &&
-        !this.deletedItem._id &&
-        this.deletedProducts.length
-      ) {
-        for (let i = 0; i < this.deletedProducts.length; i++) {
-          this.changeStatus(false);
-          const product = this.deletedProducts[i];
+      } else {
+        for (let i = 0; i < this.selectedItems.length; i++) {
+          const product = this.selectedItems[i];
           axios({
             url: `/products/delete`,
             data: {
-              productId: product._id,
+              productId: product,
               region: this.region,
             },
             method: "POST",
           })
-            .then(async (res) => {
-              let result = await res;
-              this.$emit("deleteProduct", result.data.product);
-              this.$toast.success(`Товар ${product.title} успешно удален!`);
-              // this.$emit('toggleOpen')
-              if (i + 1 === this.deletedProducts.length) {
-                this.$emit("clearSelectedProducts");
-                this.$emit("toggleOpen");
+            .then((res) => {
+              const msg =
+                this.selectedItems.length > 1
+                  ? "Товары успешно удалены!"
+                  : "Товар успешно удален!";
+              if (i + 1 === this.selectedItems.length) {
+                this.$toast.success(msg);
+                this.$emit("deleteProducts", this.selectedItems);
+                this.cancel();
               }
             })
             .catch((err) => {
               this.$toast.error(err.response.data.message);
-            })
-            .finally(() => {
-              this.changeStatus(true);
             });
         }
       }

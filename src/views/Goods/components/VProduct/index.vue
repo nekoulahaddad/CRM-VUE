@@ -3,7 +3,11 @@
     class="list__columns list__columns-shadow list__columns-white goods-list-columns"
   >
     <div class="list__column">
-      <input type="checkbox" class="form-checkbox" />
+      <input
+        type="checkbox"
+        class="form-checkbox"
+        @click="$store.commit('selectItem', item._id)"
+      />
     </div>
     <div class="list__column">
       <span :class="{ none: !item.visible }">
