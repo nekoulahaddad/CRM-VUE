@@ -1,5 +1,5 @@
 <template>
-  <div class="department__container">
+  <div :class="containerClasses">
     <div :class="classes">
       <span class="item__title">{{ item.title }}</span>
       <div class="table__actions">
@@ -33,6 +33,12 @@ export default {
     },
   },
   computed: {
+    containerClasses() {
+      return {
+        department__container: true,
+        [`department__container--level-${this.level}`]: true,
+      };
+    },
     classes() {
       return {
         item: true,
@@ -52,6 +58,24 @@ export default {
   cursor: auto !important;
 }
 
+.department__container {
+  position: relative;
+  margin-left: 20px;
+
+  &:before {
+    content: "";
+    position: absolute;
+    height: calc(100% - 25px);
+    width: 6px;
+    top: 5px;
+    background-color: $color-black;
+  }
+
+  &--level-1 {
+    margin-left: 0;
+  }
+}
+
 .department__item {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: $border-radius;
@@ -63,6 +87,7 @@ export default {
   font-size: 14px;
   font-weight: 700;
   color: $color-white;
+  height: 48px;
   position: relative;
 
   &--level-1 {
@@ -71,20 +96,14 @@ export default {
   }
 
   &--level-2 {
-    height: 48px;
-    margin-left: 30px;
     background: linear-gradient(90deg, #ff747a, #6f2b8b);
   }
 
   &--level-3 {
-    height: 48px;
-    margin-left: 60px;
     background: linear-gradient(90deg, #ff747a, #029faf);
   }
 
   &--level-4 {
-    height: 48px;
-    margin-left: 80px;
     background: linear-gradient(90deg, #ff747a, #033e7d);
   }
 
