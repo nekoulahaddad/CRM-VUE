@@ -238,6 +238,11 @@
             <div class="scroll-horizontal">
               <div class="list list-shadow">
                 <div class="list__header" v-if="!dataset.categories.length">
+                  <v-search
+                    @submit="getSearchData"
+                    v-model="good"
+                    placeholder="Поиск по категории, бренду, товару или артикулу"
+                  />
                   <div class="list__title">
                     {{ $t("goods") }}
                   </div>
