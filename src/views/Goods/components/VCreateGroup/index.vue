@@ -17,7 +17,7 @@
         />
       </div>
       <div class="vm--modal__inner">
-        <form>
+        <form @submit.prevent="confirm">
           <div class="group">
             <div class="group__title">Заголовок группы:</div>
             <div>
@@ -56,7 +56,7 @@
             <div>
               <v-select
                 :options="
-                  options.map((product) => ({
+                  products.map((product) => ({
                     label: product,
                     value: product,
                   }))
@@ -68,7 +68,7 @@
           </div>
         </form>
         <div class="vm--modal__buttons">
-          <v-button @click="confirm" red>Создать</v-button>
+          <v-button red>Создать</v-button>
         </div>
       </div>
     </div>
@@ -80,7 +80,10 @@ import axios from "@/api/axios";
 
 export default {
   props: {
-    items: Array,
+    items: {
+      type: Array,
+      default: [],
+    },
     region: String,
     category_id: String,
   },
@@ -88,7 +91,6 @@ export default {
     return {
       title: "",
       groupProperties: "",
-      options: [],
     };
   },
   computed: {
@@ -98,9 +100,7 @@ export default {
       }
       return "129px";
     },
-  },
-  watch: {
-    items() {
+    products() {
       let arr = [];
       this.items.map((i) => {
         i.options.map((option) => {
@@ -108,7 +108,7 @@ export default {
         });
       });
       arr.push("Размер");
-      this.options = Array.from(new Set(arr));
+      return Array.from(new Set(arr));
     },
   },
   methods: {

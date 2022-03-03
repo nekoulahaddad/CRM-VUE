@@ -8,6 +8,13 @@
     <!-- Редактирование региона -->
     <v-region-edit />
 
+    <!-- Перемещение товаров -->
+    <v-products-move
+      :region="filtersOptions.region"
+      :movedProducts="productsForGroup"
+      @refreshGoods="refreshGoods"
+    />
+
     <!-- Создание группы товаров -->
     <v-create-group
       :items="productsForGroup"
@@ -346,6 +353,7 @@ import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
+import VProductsMove from "./components/VProductsMove";
 import VProductEdit from "./components/VProductEdit";
 import VCreateGroup from "./components/VCreateGroup";
 import VCategoryAdd from "./components/VCategoryAdd";
@@ -381,6 +389,7 @@ export default {
     VSpinner,
     VSearch,
     VCopy,
+    VProductsMove,
     VCreateGroup,
     VRegionEdit,
     VProductGroupEdit,
@@ -488,6 +497,9 @@ export default {
     selectedItems() {
       return this.$store.getters.selectedItems;
     },
+    moveProducts() {
+      return this.$store.state.actions.moveProducts;
+    },
     importGoods() {
       return this.$store.state.actions.importGoods;
     },
@@ -496,6 +508,11 @@ export default {
     },
   },
   watch: {
+    moveProducts(value) {
+      if (value) {
+        this.$modal.show("moveProducts");
+      }
+    },
     selectedItems(v) {
       this.productsForGroup = this.dataset.products.filter((product) => {
         return v.includes(product._id);

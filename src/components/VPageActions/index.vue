@@ -340,6 +340,18 @@
                 <img src="@/assets/icons/create_group.svg" alt="" />
               </a>
             </VueCustomTooltip>
+            <VueCustomTooltip
+              label="Переместить товары"
+              v-if="$store.getters.selectedItems.length > 1"
+            >
+              <a
+                href=""
+                class="page-actions__button"
+                @click.prevent="$store.commit('toggleMoveProducts', true)"
+              >
+                <img src="@/assets/icons/move_icon.svg" alt="" />
+              </a>
+            </VueCustomTooltip>
           </template>
 
           <VueCustomTooltip

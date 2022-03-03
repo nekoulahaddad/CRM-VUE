@@ -49,6 +49,7 @@ export default new Vuex.Store({
       createEducationSection: false,
       firedUsers: false,
       importGoods: false,
+      moveProducts: false,
     },
     deleteSelectedItems: false,
   },
@@ -61,6 +62,9 @@ export default new Vuex.Store({
       } else {
         state.selectedItems.push(payload);
       }
+    },
+    toggleMoveProducts(state, payload) {
+      state.actions.moveProducts = payload;
     },
     toggleCreateGroup(state, payload) {
       state.actions[payload.key] = !state.actions[payload.key];
