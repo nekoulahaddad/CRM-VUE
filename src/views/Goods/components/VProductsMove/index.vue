@@ -93,7 +93,6 @@ export default {
     },
     beforeClose() {
       this.$store.commit("toggleMoveProducts", false);
-      this.$store.commit("clearSelectedItems");
     },
     async confirm() {
       if (!this.category._id) {

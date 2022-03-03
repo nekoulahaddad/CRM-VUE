@@ -84,6 +84,7 @@ export default {
                 this.$toast.success(msg);
                 this.$emit("deleteProducts", this.selectedItems);
                 this.cancel();
+                this.$store.commit("clearSelectedItems");
               }
             })
             .catch((err) => {
