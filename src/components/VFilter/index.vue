@@ -188,16 +188,21 @@
           <div class="filter__group group">
             <div class="group__title">Период:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'dates', null)"
-                :value="defaultOptions.dates"
-              >
-                <option selected value="all">Все время</option>
-                <option v-for="item in dates" :value="item.value">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все время',
+                    value: 'all',
+                  },
+                  ...dates.map((item) => ({
+                    label: item.title,
+                    value: item.value,
+                  })),
+                ]"
+                v-model="defaultOptions.dates"
+                :reduce="(item) => item.value"
+                @input="setDate"
+              />
             </div>
           </div>
           <div class="filter__group group">
@@ -699,16 +704,21 @@
           <div class="filter__group group">
             <div class="group__title">Период:</div>
             <div class="group__content">
-              <select
-                class="form-select"
-                @change="selectOptions($event, null, 'dates', null)"
-                :value="defaultOptions.dates"
-              >
-                <option selected value="all">Все время</option>
-                <option v-for="item in dates" :value="item.value">
-                  {{ item.title }}
-                </option>
-              </select>
+              <v-select
+                :options="[
+                  {
+                    label: 'Все время',
+                    value: 'all',
+                  },
+                  ...dates.map((item) => ({
+                    label: item.title,
+                    value: item.value,
+                  })),
+                ]"
+                v-model="defaultOptions.dates"
+                :reduce="(item) => item.value"
+                @input="setDate"
+              />
             </div>
           </div>
           <div class="filter__group group">
