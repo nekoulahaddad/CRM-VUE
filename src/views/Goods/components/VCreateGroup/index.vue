@@ -25,6 +25,7 @@
                 type="text"
                 class="form-control"
                 maxlength="100"
+                v-model="title"
                 placeholder="Введите заголовок группы..."
               />
             </div>
@@ -40,7 +41,11 @@
                 >
                   <span>{{ product.title }}</span>
                   <div>
-                    <img src="@/assets/icons/trash_icon.svg" alt="" />
+                    <img
+                      @click="deleteChip(index)"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                    />
                   </div>
                 </div>
               </vue-scroll>
@@ -77,6 +82,7 @@ export default {
   props: {
     items: Array,
     region: String,
+    category_id: String,
   },
   data() {
     return {
@@ -96,7 +102,41 @@ export default {
     cancel() {
       this.$modal.hide("createGroup");
     },
-    confirm() {},
+    deleteChip(index) {
+      this.items.splice(index, 1);
+    },
+    confirm() {
+      if (!this.title || !this.items.length) {
+        this.$toast.error("Категории или заголовок не заполнены!");
+        return;
+      }
+
+      if (!this.groupProperties) {
+        this.$toast.error("Свойство группы не заполнено!");
+        return;
+      }
+
+      let products = this.items.map((item) => item._id);
+
+      axios({
+        url: `/groups/post`,
+        data: {
+          title: this.title,
+          products,
+          region: this.region,
+          category_id: this.category_id || this.items[0].category_id,
+          groupProperties: this.groupProperties,
+        },
+        method: "POST",
+      })
+        .then(async () => {
+          this.$emit("refreshGoods");
+          this.$toast.success("Товары успешно добавлены в группу!");
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        });
+    },
     getOptions() {
       let arr = [];
       this.items.map((i) => {
