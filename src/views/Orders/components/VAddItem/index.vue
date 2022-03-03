@@ -483,15 +483,16 @@
                 Регион: <span class="required">*</span>
               </div>
               <div class="group__content">
-                <select required class="form-select" v-model="orderForm.region">
-                  <option
-                    v-for="region in regions"
-                    :key="region._id"
-                    :value="region._id"
-                  >
-                    {{ region.title }}
-                  </option>
-                </select>
+                <v-select
+                  :options="
+                    regions.map((region) => ({
+                      label: region.title,
+                      value: region._id,
+                    }))
+                  "
+                  :reduce="(item) => item.value"
+                  v-model="orderForm.region"
+                />
               </div>
             </div>
             <div class="group">
