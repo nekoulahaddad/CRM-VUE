@@ -430,17 +430,18 @@
                 Способ оплаты: <span class="required">*</span>
               </div>
               <div class="group__content">
-                <select
-                  class="form-select"
-                  required
+                <v-select
+                  :options="[
+                    { label: 'Оплата наличными при получении', value: 'cash' },
+                    {
+                      label: 'Оплата банковской картой при получении',
+                      value: 'cartReceiving',
+                    },
+                  ]"
+                  :reduce="(item) => item.value"
                   name="payment__cash"
                   v-model="orderForm.payment"
-                >
-                  <option value="cash">Оплата наличными при получении</option>
-                  <option value="cartReceiving">
-                    Оплата банковской картой при получении
-                  </option>
-                </select>
+                />
               </div>
             </div>
             <div class="group" v-else>
