@@ -3,16 +3,15 @@
     <form @submit.prevent>
       <div class="group">
         <div class="group__title">Ф.И.О:</div>
-        <div class="group__content">
-          <input
-            required
-            type="text"
-            class="form-control"
-            name="newChild.fio"
-            v-model="newChild.fio"
-          />
-        </div>
+        <input
+          required
+          type="text"
+          class="form-control"
+          name="newChild.fio"
+          v-model="newChild.fio"
+        />
       </div>
+
       <div class="group">
         <div class="group__title">Дата рождения:</div>
         <div class="group__content">
@@ -39,6 +38,7 @@
           />
         </div>
       </div>
+
       <div class="add-child__buttons" v-if="addChildForm">
         <v-button @click="$emit('addChild')" red>Добавить</v-button>
         <v-button white @click="$emit('cancel')">Отмена</v-button>
@@ -69,13 +69,10 @@ export default {
 <style lang="scss">
 .add-child {
   margin-bottom: 10px;
+  width: 100%;
 
-  .form-control {
-    width: 976px;
-  }
   .vdatetime-input,
   .form-select {
-    width: 401px;
   }
 
   &__buttons {

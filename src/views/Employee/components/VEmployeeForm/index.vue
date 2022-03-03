@@ -75,6 +75,7 @@
           <div class="group__content">
             <phone-mask-input
               required
+              style="width: 100%"
               name="phone"
               inputClass="form-control"
               :placeholder="$t('phone')"
@@ -83,11 +84,315 @@
             />
           </div>
         </div>
+        <div class="group">
+          <div class="group__title">
+            {{ $t("position") }} <span class="required">*</span>
+          </div>
+          <div class="group__content">
+            <input
+              required
+              type="text"
+              class="form-control"
+              :placeholder="$t('position')"
+              name="position"
+              :value="infoItem ? infoItem.position : position"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("employeeNumber") }}</div>
+          <div class="group__content">
+            <input
+              type="number"
+              class="form-control hide-arrows"
+              name="personal_number"
+              :placeholder="$t('employeeNumber')"
+              :value="infoItem ? infoItem.personal_number : personal_number"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("speciality") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              name="specialty"
+              class="form-control"
+              :placeholder="$t('speciality')"
+              :value="infoItem ? infoItem.specialty : specialty"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group__title group__title--big text--blue">
+          Личная информация:
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("zodiak") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              name="zodiac_sign"
+              class="form-control"
+              :placeholder="$t('zodiak')"
+              :value="infoItem ? infoItem.zodiac_sign : zodiac_sign"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("element") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              name="element"
+              class="form-control"
+              :placeholder="$t('element')"
+              :value="infoItem ? infoItem.element : element"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("chineseYear") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              name="chinese_year"
+              class="form-control"
+              :placeholder="$t('chineseYear')"
+              :value="infoItem ? infoItem.chinese_year : chinese_year"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <!-- Дети -->
+        <div class="group__title group__title--big text--blue">
+          {{ $t("childs") }}
+        </div>
+        <div class="group">
+          <div class="group__content group__childs">
+            <div
+              class="children"
+              v-if="editChildIndex !== index"
+              v-for="(child, index) in children"
+              :key="child._id"
+            >
+              <span>{{ transformChildInfo(child) }}</span>
+
+              <div>
+                <VueCustomTooltip
+                  label="Изменить"
+                  v-if="!addChildForm && !editChildForm"
+                >
+                  <img
+                    alt=""
+                    class="children__write-icon"
+                    src="@/assets/icons/write_icon.svg"
+                    @click="editChild(index)"
+                  />
+                </VueCustomTooltip>
+
+                <VueCustomTooltip
+                  label="Удалить"
+                  v-if="!addChildForm && !editChildForm"
+                >
+                  <img
+                    src="@/assets/icons/trash_icon.svg"
+                    alt=""
+                    @click="removeChild(index)"
+                  />
+                </VueCustomTooltip>
+              </div>
+            </div>
+          </div>
+          <div class="group__footer">
+            <v-add-child
+              :newChild="newChild"
+              :addChildForm="addChildForm"
+              :editChildForm="editChildForm"
+              v-if="addChildForm || editChildForm"
+              @cancel="
+                (addChildForm = false),
+                  (editChildForm = false),
+                  (editChildIndex = null)
+              "
+              @addChild="addChild"
+              @saveChild="saveChild"
+            />
+          </div>
+
+          <v-button
+            red
+            @click="addChildForm = true"
+            v-if="!addChildForm && !editChildForm"
+          >
+            {{ $t("add") }}
+          </v-button>
+        </div>
+      </div>
+
+      <div class="form-top__center">
+        <div class="group__title group__title--big text--blue">
+          {{ $t("pages.employee.employeeAddInfo") }}
+        </div>
+        <div class="group">
+          <div class="group__title">
+            {{ $t("department") }} <span class="required">*</span>
+          </div>
+          <div class="group__content">
+            <select
+              required
+              class="form-select"
+              name="department"
+              :value="infoItem ? infoItem.department.value : department"
+              @change="onChange($event)"
+            >
+              <option selected disabled :value="null">
+                {{ $t("department") }}
+              </option>
+              <option
+                v-for="(item, index) in departments"
+                :key="index"
+                :selected="
+                  infoItem ? item.value === infoItem.department.value : false
+                "
+                :value="item.value"
+              >
+                {{ item.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("subDepartment") }}</div>
+          <div class="group__content">
+            <input
+              type="text"
+              name="sub_department"
+              class="form-control"
+              :placeholder="$t('subDepartment')"
+              :value="infoItem ? infoItem.sub_department : sub_department"
+              @input="onChange($event)"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">
+            {{ $t("role") }} <span class="required">*</span>
+          </div>
+          <div class="group__content">
+            <select
+              required
+              name="role"
+              class="form-select"
+              :value="infoItem ? infoItem.role : role"
+              @change="onChange($event)"
+            >
+              <option disabled selected :value="null">{{ $t("role") }}</option>
+              <option v-for="(role, index) in $t('roles')" :value="index">
+                {{ role }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">{{ $t("education") }}</div>
+          <div class="group__content">
+            <select
+              name="education"
+              class="form-select"
+              :value="infoItem ? infoItem.education : education"
+              @change="onChange($event)"
+            >
+              <option v-for="education in $t('educations')" :value="education">
+                {{ education }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">
+            {{ $t("employmentDate") }} <span class="required">*</span>
+          </div>
+          <div class="group__content">
+            <datetime
+              required
+              v-model="employment_date"
+              input-class="forms__container--input"
+              type="date"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">
+            {{ $t("region") }} <span class="required">*</span>
+          </div>
+          <div class="group__content">
+            <select
+              required
+              name="region"
+              class="form-select"
+              :value="infoItem ? infoItem.region.value : region"
+              @change="onChange($event)"
+            >
+              <option selected disabled :value="null">Выбрать регион</option>
+              <option v-for="(region, index) in regions" :value="region.value">
+                {{ region.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="group">
+          <div class="group__title">
+            {{ $t("birthday") }} <span class="required">*</span>
+          </div>
+          <div class="group__content">
+            <datetime
+              required
+              v-model="date_of_birth"
+              input-class="forms__container--input"
+              type="date"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+            />
+          </div>
+        </div>
+        <!-- Прочее -->
+        <div class="group__title group__title--big text--blue">
+          {{ $t("another") }}
+        </div>
+        <div class="group">
+          <div class="group__title">Редактировать сотрудников:</div>
+          <div class="group__content">
+            <select
+              class="form-select"
+              name="checkbox"
+              v-model="
+                infoItem && infoItem.options
+                  ? infoItem.options.userEditor
+                  : options.userEditor
+              "
+              @change="onChange($event)"
+            >
+              <option selected="selected" value="false">Нет</option>
+              <option value="true">Да</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <div class="form-top__right">
+        <div
+          class="group__title group__title--big text--blue"
+          style="margin-bottom: 10px"
+        >
+          Фото:
+        </div>
+
         <div class="employee-photo">
-          <span class="text text--blue">Фото:</span>
           <div
             :class="{
               'employee-photo__empty':
@@ -120,309 +425,10 @@
         </div>
       </div>
     </div>
-    <div class="group__title group__title--big text--blue">
-      {{ $t("pages.employee.employeeAddInfo") }}
-    </div>
-    <div class="group">
-      <div class="group__title">
-        {{ $t("department") }} <span class="required">*</span>
-      </div>
-      <div class="group__content">
-        <select
-          required
-          class="form-select"
-          name="department"
-          :value="infoItem ? infoItem.department.value : department"
-          @change="onChange($event)"
-        >
-          <option selected disabled :value="null">
-            {{ $t("department") }}
-          </option>
-          <option
-            v-for="(item, index) in departments"
-            :key="index"
-            :selected="
-              infoItem ? item.value === infoItem.department.value : false
-            "
-            :value="item.value"
-          >
-            {{ item.title }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("subDepartment") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          name="sub_department"
-          class="form-control"
-          :placeholder="$t('subDepartment')"
-          :value="infoItem ? infoItem.sub_department : sub_department"
-          @input="onChange($event)"
-        />
-      </div>
-    </div>
 
-    <div class="group">
-      <div class="group__title">
-        {{ $t("position") }} <span class="required">*</span>
-      </div>
-      <div class="group__content">
-        <input
-          required
-          type="text"
-          class="form-control"
-          :placeholder="$t('position')"
-          name="position"
-          :value="infoItem ? infoItem.position : position"
-          @input="onChange($event)"
-        />
-      </div>
+    <div style="margin-top: 10px">
+      <v-button red>{{ $t("save") }}</v-button>
     </div>
-    <div class="group">
-      <div class="group__title">{{ $t("employeeNumber") }}</div>
-      <div class="group__content">
-        <input
-          type="number"
-          class="form-control hide-arrows"
-          name="personal_number"
-          :placeholder="$t('employeeNumber')"
-          :value="infoItem ? infoItem.personal_number : personal_number"
-          @input="onChange($event)"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">
-        {{ $t("role") }} <span class="required">*</span>
-      </div>
-      <div class="group__content">
-        <select
-          required
-          name="role"
-          class="form-select"
-          :value="infoItem ? infoItem.role : role"
-          @change="onChange($event)"
-        >
-          <option disabled selected :value="null">{{ $t("role") }}</option>
-          <option v-for="(role, index) in $t('roles')" :value="index">
-            {{ role }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("education") }}</div>
-      <div class="group__content">
-        <select
-          name="education"
-          class="form-select"
-          :value="infoItem ? infoItem.education : education"
-          @change="onChange($event)"
-        >
-          <option v-for="education in $t('educations')" :value="education">
-            {{ education }}
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div class="group">
-      <div class="group__title">{{ $t("speciality") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          name="specialty"
-          class="form-control"
-          :placeholder="$t('speciality')"
-          :value="infoItem ? infoItem.specialty : specialty"
-          @input="onChange($event)"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">
-        {{ $t("employmentDate") }} <span class="required">*</span>
-      </div>
-      <div class="group__content">
-        <datetime
-          required
-          v-model="employment_date"
-          input-class="forms__container--input"
-          type="date"
-          :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">
-        {{ $t("region") }} <span class="required">*</span>
-      </div>
-      <div class="group__content">
-        <select
-          required
-          name="region"
-          class="form-select"
-          :value="infoItem ? infoItem.region.value : region"
-          @change="onChange($event)"
-        >
-          <option selected disabled :value="null">Выбрать регион</option>
-          <option v-for="(region, index) in regions" :value="region.value">
-            {{ region.title }}
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Личные данные -->
-    <div class="group__title group__title--big text--blue">
-      {{ $t("pages.employee.employeePersonalInfo") }}
-    </div>
-    <div class="group">
-      <div class="group__title">
-        {{ $t("birthday") }} <span class="required">*</span>
-      </div>
-      <div class="group__content">
-        <datetime
-          required
-          v-model="date_of_birth"
-          input-class="forms__container--input"
-          type="date"
-          :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("zodiak") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          name="zodiac_sign"
-          class="form-control"
-          :placeholder="$t('zodiak')"
-          :value="infoItem ? infoItem.zodiac_sign : zodiac_sign"
-          @input="onChange($event)"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("element") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          name="element"
-          class="form-control"
-          :placeholder="$t('element')"
-          :value="infoItem ? infoItem.element : element"
-          @input="onChange($event)"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="group__title">{{ $t("chineseYear") }}</div>
-      <div class="group__content">
-        <input
-          type="text"
-          name="chinese_year"
-          class="form-control"
-          :placeholder="$t('chineseYear')"
-          :value="infoItem ? infoItem.chinese_year : chinese_year"
-          @input="onChange($event)"
-        />
-      </div>
-    </div>
-
-    <!-- Дети -->
-    <div class="group__title group__title--big text--blue">
-      {{ $t("childs") }}
-    </div>
-    <div class="group">
-      <div class="group__content group__childs">
-        <div
-          class="children"
-          v-if="editChildIndex !== index"
-          v-for="(child, index) in children"
-          :key="child._id"
-        >
-          <span>{{ transformChildInfo(child) }}</span>
-
-          <div>
-            <VueCustomTooltip
-              label="Изменить"
-              v-if="!addChildForm && !editChildForm"
-            >
-              <img
-                alt=""
-                class="children__write-icon"
-                src="@/assets/icons/write_icon.svg"
-                @click="editChild(index)"
-              />
-            </VueCustomTooltip>
-
-            <VueCustomTooltip
-              label="Удалить"
-              v-if="!addChildForm && !editChildForm"
-            >
-              <img
-                src="@/assets/icons/trash_icon.svg"
-                alt=""
-                @click="removeChild(index)"
-              />
-            </VueCustomTooltip>
-          </div>
-        </div>
-      </div>
-      <div class="group__footer">
-        <v-add-child
-          :newChild="newChild"
-          :addChildForm="addChildForm"
-          :editChildForm="editChildForm"
-          v-if="addChildForm || editChildForm"
-          @cancel="
-            (addChildForm = false),
-              (editChildForm = false),
-              (editChildIndex = null)
-          "
-          @addChild="addChild"
-          @saveChild="saveChild"
-        />
-      </div>
-
-      <v-button
-        red
-        @click="addChildForm = true"
-        v-if="!addChildForm && !editChildForm"
-      >
-        {{ $t("add") }}
-      </v-button>
-    </div>
-
-    <div class="group__title group__title--big text--blue">
-      {{ $t("another") }}
-    </div>
-
-    <div class="group">
-      <div class="group__title">Редактировать сотрудников:</div>
-      <div class="group__content">
-        <select
-          class="form-select"
-          name="checkbox"
-          v-model="
-            infoItem && infoItem.options
-              ? infoItem.options.userEditor
-              : options.userEditor
-          "
-          @change="onChange($event)"
-        >
-          <option selected="selected" value="false">Нет</option>
-          <option value="true">Да</option>
-        </select>
-      </div>
-    </div>
-
-    <v-button red>{{ $t("save") }}</v-button>
   </form>
 </template>
 
@@ -667,7 +673,6 @@ export default {
     width: 401px;
   }
   .form-control {
-    width: 976px;
   }
   .group__title:not(:first-child) {
     margin-top: 15px;
@@ -691,7 +696,12 @@ export default {
     justify-content: space-between;
 
     &__left {
-      width: 976px;
+      width: 100%;
+      margin-right: 25px;
+    }
+
+    &__center {
+      margin-right: 25px;
     }
 
     &__right {
@@ -717,7 +727,7 @@ export default {
       }
 
       &__empty {
-        width: 219px;
+        width: 230px;
         height: 303px;
         background-color: $color-gray-secondary;
         border-radius: $border-radius;
