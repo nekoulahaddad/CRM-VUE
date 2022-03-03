@@ -490,7 +490,7 @@ export default {
 
 .page-actions {
   display: flex;
-  margin-right: 30px;
+  padding-right: 100px;
 
   &__inner {
     display: flex;
