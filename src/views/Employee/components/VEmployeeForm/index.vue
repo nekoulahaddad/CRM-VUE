@@ -367,19 +367,15 @@
         <div class="group">
           <div class="group__title">Редактировать сотрудников:</div>
           <div class="group__content">
-            <select
-              class="form-select"
+            <v-select
+              :options="[
+                { label: 'Нет', value: 'false' },
+                { label: 'Да', value: 'true' },
+              ]"
+              v-model="editEmployee"
+              :reduce="(item) => item.value"
               name="checkbox"
-              v-model="
-                infoItem && infoItem.options
-                  ? infoItem.options.userEditor
-                  : options.userEditor
-              "
-              @change="onChange($event)"
-            >
-              <option selected="selected" value="false">Нет</option>
-              <option value="true">Да</option>
-            </select>
+            />
           </div>
         </div>
       </div>
@@ -443,6 +439,13 @@ export default {
   props: {
     infoItem: {
       type: Object,
+    },
+  },
+  computed: {
+    editEmployee() {
+      return this.infoItem && this.infoItem.options
+        ? this.infoItem.options.userEditor
+        : this.options.userEditor;
     },
   },
   validations: {},
