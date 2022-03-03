@@ -71,8 +71,11 @@
               <img
                 alt=""
                 class="group__image"
-                v-if="editedItem && categoryIcon === 'Выбрать файл'"
-                :src="serverAddr + editedItem.iconPath + editedItem.icon"
+                :src="
+                  editedItem && categoryIcon === 'Выбрать файл'
+                    ? serverAddr + editedItem.iconPath + editedItem.icon
+                    : categoryIconUrl
+                "
                 @click.prevent="
                   downloadItem(
                     serverAddr + editedItem.iconPath + editedItem.icon,
@@ -80,9 +83,6 @@
                   )
                 "
               />
-              <div v-else class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
-              </div>
             </div>
             <div class="group__right">
               <div class="group__actions actions">
@@ -112,8 +112,11 @@
               <img
                 alt=""
                 class="group__image"
-                v-if="editedItem && categorySlide === 'Выбрать файл'"
-                :src="serverAddr + editedItem.slidePath + editedItem.slide"
+                :src="
+                  editedItem && categorySlide === 'Выбрать файл'
+                    ? serverAddr + editedItem.slidePath + editedItem.slide
+                    : categorySlideUrl
+                "
                 @click.prevent="
                   editedItem.slide != 'default.jpeg'
                     ? downloadItem(
@@ -123,9 +126,6 @@
                     : false
                 "
               />
-              <div v-else class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
-              </div>
             </div>
             <div class="group__right">
               <div class="group__actions actions">
@@ -169,8 +169,11 @@
               <img
                 alt=""
                 class="group__image"
-                v-if="editedItem && categoryBanner === 'Выбрать файл'"
-                :src="serverAddr + editedItem.bannerPath + editedItem.banner"
+                :src="
+                  editedItem && categoryBanner === 'Выбрать файл'
+                    ? serverAddr + editedItem.bannerPath + editedItem.banner
+                    : categoryBannerUrl
+                "
                 @click.prevent="
                   downloadItem(
                     serverAddr + editedItem.bannerPath + editedItem.banner,
@@ -178,9 +181,6 @@
                   )
                 "
               />
-              <div v-else class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
-              </div>
             </div>
             <div class="group__right">
               <div class="group__actions actions">
@@ -210,9 +210,10 @@
               <img
                 alt=""
                 class="group__image"
-                v-if="editedItem && categoryBannerMob === 'Выбрать файл'"
                 :src="
-                  serverAddr + editedItem.bannerPathMob + editedItem.bannerMob
+                  editedItem && categoryBanner === 'Выбрать файл'
+                    ? serverAddr + editedItem.bannerPath + editedItem.banner
+                    : categoryBannerUrl
                 "
                 @click.prevent="
                   downloadItem(
@@ -223,7 +224,7 @@
                   )
                 "
               />
-              <div v-else class="category-edit-form__default-img">
+              <div v-if="false" class="category-edit-form__default-img">
                 <img src="@/assets/icons/goods_default.svg" alt="" />
               </div>
             </div>
