@@ -513,6 +513,20 @@ export default {
     },
   },
   watch: {
+    async region() {
+      try {
+        this.updateGoods(
+          await this.getDataFromPage(
+            `/${this.$route.params.type || "categories"}/get`,
+            this.filtersOptions
+          )
+        );
+      } catch (e) {
+      } finally {
+        this.$scrollTo("body", 300, {});
+        this.isLoading = true;
+      }
+    },
     moveProducts(value) {
       if (value) {
         this.$modal.show("moveProducts");

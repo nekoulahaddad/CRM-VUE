@@ -801,7 +801,7 @@
               <v-select
                 :options="[
                   {
-                    label: 'Все регионы',
+                    label: 'Выберите регион',
                     value: 'all',
                   },
                   ...regions.map((region) => ({
@@ -809,9 +809,9 @@
                     value: region._id,
                   })),
                 ]"
-                @input="setSelected"
-                :reduce="(item) => item.value"
                 v-model="filterOptions.region"
+                @input="setGoodsRegion"
+                :reduce="(item) => item.value"
               />
             </div>
           </div>
@@ -1173,6 +1173,9 @@ export default {
       resetRegion: "reset_region",
       resetParentValue: "reset_parent_value",
     }),
+    setGoodsRegion(value) {
+      this.selectOptions({ target: { value } }, null, "regionButtons", null);
+    },
     setDate(value) {
       this.selectOptions({ target: { value } }, null, "dates", null);
     },
@@ -1468,7 +1471,7 @@ export default {
           break;
         case "regionButtons":
           if (e.target.value != null) {
-            const region = this.regions.find((r) => r._id == e.target.value);
+            const region = this.regions.find((r) => r._id === e.target.value);
             this.filterOptions.region = region._id;
             this.filterOptions.regionValue = region.value;
             this.setRegion(region._id);
