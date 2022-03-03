@@ -28,7 +28,11 @@
                 alt=""
                 class="group__image"
                 v-if="editedItem && categoryImage === 'Выбрать файл'"
-                :src="serverAddr + editedItem.path + editedItem.img"
+                :src="
+                  editedItem && categoryImage === 'Выбрать файл'
+                    ? serverAddr + editedItem.path + editedItem.img
+                    : categoryImageUrl
+                "
                 @click.prevent="
                   downloadItem(
                     serverAddr + editedItem.path + editedItem.img,
