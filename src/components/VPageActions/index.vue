@@ -320,7 +320,11 @@
               label="Отменить выбранное"
               v-if="$store.getters.selectedItems.length > 1"
             >
-              <a href="" class="page-actions__button" @click.prevent="">
+              <a
+                href=""
+                class="page-actions__button"
+                @click.prevent="$store.commit('clearSelectedItems')"
+              >
                 <img src="@/assets/icons/unselect_icon.svg" alt="" />
               </a>
             </VueCustomTooltip>

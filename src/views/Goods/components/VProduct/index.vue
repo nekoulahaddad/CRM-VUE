@@ -6,6 +6,7 @@
       <input
         type="checkbox"
         class="form-checkbox"
+        :checked="checked"
         @click="$store.commit('selectItem', item._id)"
       />
     </div>
@@ -184,6 +185,7 @@ export default {
       type: Object,
       required: true,
     },
+    checked: Boolean,
     editedItem: Object,
     editedGroupItem: Object,
     groupProductItem: Object,

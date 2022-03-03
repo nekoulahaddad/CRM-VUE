@@ -275,6 +275,7 @@
                     :groupItems="groupItems"
                     :editedItem="editedItem"
                     :movedProduct="movedProduct"
+                    :checked="selectedItems.includes(item._id)"
                     @editProduct="editProduct"
                     @toggleEdit="toggleEdit"
                     @toggleMoveProduct="toggleMoveProduct"
