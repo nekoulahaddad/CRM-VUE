@@ -4,7 +4,7 @@
     :minHeight="500"
     :minWidth="976"
     name="moveProducts"
-    @before-close="$store.commit('toggleMoveProducts', false)"
+    @before-close="beforeClose"
   >
     <div class="move-products-modal">
       <div class="vm--modal__title">
@@ -71,7 +71,9 @@ export default {
   data() {
     return {
       currentCategory: {},
-      category: "",
+      category: {
+        _id: null,
+      },
       currentInput: "",
       tempCategories: [],
       title: "",
@@ -89,7 +91,16 @@ export default {
     cancel() {
       this.$modal.hide("moveProducts");
     },
+    beforeClose() {
+      this.$store.commit("toggleMoveProducts", false);
+      this.$store.commit("clearSelectedItems");
+    },
     async confirm() {
+      if (!this.category._id) {
+        this.$toast.error("Вы не выбрали категорию");
+        return;
+      }
+
       for (let i = 0; i < this.movedProducts.length; i++) {
         const product = this.movedProducts[i];
         await axios({

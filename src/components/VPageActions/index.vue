@@ -315,11 +315,10 @@
           </template>
         </div>
         <div class="d-flex align-items-center">
-          <template v-if="name === 'goods'">
-            <VueCustomTooltip
-              label="Отменить выбранное"
-              v-if="$store.getters.selectedItems.length > 1"
-            >
+          <template
+            v-if="name === 'goods' && $store.getters.selectedItems.length > 1"
+          >
+            <VueCustomTooltip label="Отменить выбранное">
               <a
                 href=""
                 class="page-actions__button"
@@ -328,10 +327,7 @@
                 <img src="@/assets/icons/unselect_icon.svg" alt="" />
               </a>
             </VueCustomTooltip>
-            <VueCustomTooltip
-              label="Создать группу"
-              v-if="$store.getters.selectedItems.length > 1"
-            >
+            <VueCustomTooltip label="Создать группу">
               <a
                 href=""
                 class="page-actions__button"
@@ -340,10 +336,7 @@
                 <img src="@/assets/icons/create_group.svg" alt="" />
               </a>
             </VueCustomTooltip>
-            <VueCustomTooltip
-              label="Переместить товары"
-              v-if="$store.getters.selectedItems.length > 1"
-            >
+            <VueCustomTooltip label="Переместить товары">
               <a
                 href=""
                 class="page-actions__button"
