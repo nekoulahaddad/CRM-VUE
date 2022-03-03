@@ -10,6 +10,29 @@
         <div class="item__action">
           <div class="table__actions">
             <div class="table__icon">
+              <!-- Видимость товара -->
+              <VueCustomTooltip
+                :label="product.visible ? 'Скрыть товар' : 'Показать товар'"
+              >
+                <img
+                  alt=""
+                  :src="
+                    product.visible
+                      ? require('@/assets/icons/eye_close.svg')
+                      : require('@/assets/icons/eye.svg')
+                  "
+                  :class="{ none: product.visible }"
+                  @click="
+                    changeProductVisibility(
+                      product._id,
+                      product.visible,
+                      product
+                    )
+                  "
+                />
+              </VueCustomTooltip>
+            </div>
+            <div class="table__icon">
               <img src="@/assets/icons/write_icon.svg" alt="" />
             </div>
             <div class="table__icon">
@@ -27,10 +50,40 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
+
 export default {
   props: {
     group: Object,
     products: Array,
+  },
+  methods: {
+    changeProductVisibility(id, visible, item) {
+      let productData = {
+        region: this.$parent.filtersOptions.region,
+        productId: id,
+        visible: !visible,
+      };
+      axios({
+        url: `/products/updatevisibility/`,
+        data: productData,
+        method: "POST",
+      })
+        .then((res) => {
+          this.item.visible = res.data.product.visible;
+          this.$emit("editProduct", res.data.product, item);
+          this.$toast.success(
+            `Товар ${
+              res.data.product.visible
+                ? "будет отображаться"
+                : "не будет отображаться"
+            }`
+          );
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        });
+    },
   },
 };
 </script>

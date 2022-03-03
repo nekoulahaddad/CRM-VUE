@@ -4,6 +4,7 @@
   >
     <div class="list__column">
       <input
+        v-if="item.type !== 'group'"
         type="checkbox"
         class="form-checkbox"
         :checked="checked"
@@ -198,11 +199,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
-      changeStatus: "change_load_status",
-    }),
     changeGroupVisibility(id, visible) {
-      this.changeStatus(false);
       let groupData = {
         region: this.filtersOptions.region,
         groupId: id,
@@ -227,13 +224,9 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
     changeProductVisibility(id, visible) {
-      this.changeStatus(false);
       let productData = {
         region: this.$parent.filtersOptions.region,
         productId: id,
@@ -258,9 +251,6 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
   },

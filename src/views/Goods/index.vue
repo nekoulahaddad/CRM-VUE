@@ -339,6 +339,7 @@
                     v-if="groupItems._id === item._id"
                     :group="item"
                     :products="item.products"
+                    @editProduct="editProduct"
                     @toggleDeleteGroupProduct="toggleDeleteGroupProduct"
                   />
                 </div>
