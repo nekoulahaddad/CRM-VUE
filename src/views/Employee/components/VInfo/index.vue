@@ -48,7 +48,6 @@
         </div>
       </div>
       <div class="form-top__right">
-        <span class="text text--blue text--bold-700">Фото:</span>
         <div
           :class="{
             'employee-photo__empty':
