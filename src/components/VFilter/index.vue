@@ -229,6 +229,7 @@
             <div class="group__title">Автор:</div>
             <div class="group__content">
               <autocomplete
+                ref="initiator"
                 :search="searchByInitiator"
                 placeholder="Введите автора задачи..."
                 :get-result-value="getResultValue"
@@ -245,6 +246,7 @@
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
               <autocomplete
+                ref="executor"
                 :search="searchByExecutor"
                 placeholder="Введите исполнителя задачи..."
                 :get-result-value="getResultValue"
@@ -1407,6 +1409,8 @@ export default {
       }
       if (this.type === "callCenterIssues" || this.type === "purchase") {
         this.fio = "";
+        this.$refs.initiator.setValue("");
+        this.$refs.executor.setValue("");
         this.filterOptions.region = "all";
         this.filterOptions.status = "all";
         this.filterOptions.executor = null;
