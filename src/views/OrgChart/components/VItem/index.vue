@@ -11,7 +11,7 @@
     </div>
     <v-item
       :line="true"
-      :hLine="child.children.length > 0"
+      :hLine="!!child.children.length"
       :level="level + 1"
       :item="child"
       v-for="(child, index) in item.children"
@@ -75,12 +75,21 @@ export default {
     width: 6px;
     top: 5px;
     height: calc(100% - 26px);
-    left: 0;
+    left: 8px;
     background-color: $color-black;
   }
 
   &--level-1 {
     margin-left: 0;
+  }
+
+  &--level-2,
+  &--level-3,
+  &--level-4 {
+    background-color: $color-white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
   }
 }
 
