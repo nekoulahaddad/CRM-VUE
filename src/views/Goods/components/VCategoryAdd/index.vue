@@ -363,23 +363,8 @@ export default {
             region: this.region,
           },
           method: "POST",
-        }).then(async (res) => {
-          let result = await res;
-          if (!result.data.views.length) {
-            return;
-          }
-          if (result.data.views.length === 1) {
-            if (result.data.views[0].name) {
-              this.$toast.success("Бренд успешно выбран!");
-            } else {
-              this.$toast.success("Категория успешно выбрана!");
-            }
-            this.category = result.data.views[0];
-            this.currentInput = "";
-            return;
-          }
-          resolve(result.data.views);
-          this.tempCategories = result.data.views;
+        }).then((res) => {
+          resolve(res.data.views);
         });
       });
     },

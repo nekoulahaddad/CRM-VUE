@@ -84,15 +84,10 @@
         <div class="group__title">{{ $t("pages.tasks.taskComment") }}</div>
         <div class="group__content">
           <textarea
-            :readonly="
-              !(
-                task.executor &&
-                (userId === task.executor._id ||
-                  userId === task.executor._id[0])
-              )
-            "
+            :readonly="!(task.executor && task.executor._id.includes(userId))"
             class="form-textarea"
             v-model="comment"
+            maxlength="3000"
           >
             {{ comment }}
           </textarea>
