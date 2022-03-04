@@ -79,7 +79,7 @@
               <v-select
                 :options="[
                   { label: 'Не выбрано', value: null },
-                  ...departments((item) => ({
+                  ...departments.map((item) => ({
                     label: item.title,
                     value: item._id,
                   })),
