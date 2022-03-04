@@ -250,6 +250,10 @@ export default {
 
         this.dataset = data.users;
         this.count = data.count;
+
+        if (!this.dataset.length) {
+          this.$router.push({ params: { page: "1" } });
+        }
       } catch (e) {
       } finally {
         this.infoItem = {};
