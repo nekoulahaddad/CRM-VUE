@@ -14,7 +14,6 @@
     <v-send-delivery :editedItem="sendDeliveryItem" @toggleEdit="toggleEdit" />
 
     <v-page-header
-      :title="$t('pages.orders.pageTitle')"
       icon="orders_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

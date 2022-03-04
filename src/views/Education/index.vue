@@ -23,7 +23,6 @@
           <div class="page__icon">
             <img :src="require(`@/assets/icons/education_title.svg`)" alt="" />
           </div>
-          <h1 class="page__title">{{ $t("pages.education.pageTitle") }}</h1>
           <v-filter type="education" />
         </div>
       </div>

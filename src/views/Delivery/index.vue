@@ -14,7 +14,6 @@
           <div class="page__icon">
             <img :src="require(`@/assets/icons/delivery_title.svg`)" alt="" />
           </div>
-          <h1 class="page__title">{{ $t("pages.delivery.pageTitle") }}</h1>
           <div class="page__buttons">
             <v-button red>Поставщики</v-button>
             <v-button white>Карта поставщиков</v-button>

@@ -9,7 +9,6 @@
           <div class="page__icon">
             <img :src="require(`@/assets/icons/employees_title.svg`)" alt="" />
           </div>
-          <h1 class="page__title">{{ $t("pages.employee.pageTitle") }}</h1>
           <v-button
             :red="index === 3"
             :white="index !== 3"

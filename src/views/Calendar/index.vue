@@ -38,11 +38,7 @@
       @updateEvents="updateEvents"
     />
 
-    <v-page-header
-      title="Календарь"
-      icon="calendar_title"
-      :filterToggle="false"
-    />
+    <v-page-header icon="calendar_title" :filterToggle="false" />
     <div class="page__body d-flex">
       <div class="page__left">
         <div class="calendar-container">

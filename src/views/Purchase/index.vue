@@ -3,7 +3,6 @@
     <v-delete-item :deletedItem="deletedItem" @fetchData="fetchData" />
 
     <v-page-header
-      :title="$t('pages.buying.pageTitle')"
       icon="buying_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

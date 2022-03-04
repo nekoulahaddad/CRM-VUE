@@ -18,7 +18,6 @@
 
     <!-- Заголовок страницы -->
     <v-page-header
-      :title="$t('pages.tasks.pageTitle')"
       icon="tasks_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

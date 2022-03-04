@@ -15,7 +15,6 @@
       }"
     />
     <v-page-header
-      :title="$t('pages.mango.pageTitle')"
       icon="mango_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

@@ -1,7 +1,6 @@
 <template>
   <div class="page mail-page">
     <v-page-header
-      :title="$t('pages.mail.pageTitle')"
       icon="mails_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

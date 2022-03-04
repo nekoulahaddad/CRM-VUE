@@ -47,7 +47,6 @@
     />
 
     <v-page-header
-      :title="$t('pages.goods.pageTitle')"
       icon="goods_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

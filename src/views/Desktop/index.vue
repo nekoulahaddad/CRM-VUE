@@ -25,11 +25,7 @@
       @afterSubDelete="afterSubDelete"
     />
 
-    <v-page-header
-      title="Рабочий стол"
-      icon="desktop_title"
-      :filterToggle="false"
-    />
+    <v-page-header icon="desktop_title" :filterToggle="false" />
 
     <div class="page__body d-flex">
       <div class="page__left">

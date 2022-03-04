@@ -1,7 +1,6 @@
 <template>
   <div class="page reports-page">
     <v-page-header
-      :title="$t('pages.reports.pageTitle')"
       icon="reports_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

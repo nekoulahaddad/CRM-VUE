@@ -39,7 +39,7 @@ export default {
       axios({
         url: `/user/delete/`,
         data: {
-          userId: this.ids,
+          userId: this.deletedItem._id,
         },
         method: "DELETE",
       })

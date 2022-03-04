@@ -1,6 +1,10 @@
 <template>
   <div class="page employee-page">
-    <v-delete-item :ids="selectedItems" @refresh="refresh" />
+    <v-delete-item
+      :deleted-item="deletedItem"
+      :ids="selectedItems"
+      @refresh="refresh"
+    />
 
     <div
       class="page__header page-header"
@@ -11,7 +15,6 @@
           <div class="page__icon">
             <img :src="require(`@/assets/icons/employees_title.svg`)" alt="" />
           </div>
-          <h1 class="page__title">{{ $t("pages.employee.pageTitle") }}</h1>
           <div class="page__buttons">
             <v-button
               :red="index === 0"

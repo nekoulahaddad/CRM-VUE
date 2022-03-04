@@ -1,7 +1,6 @@
 <template>
   <div class="page storage-page">
     <v-page-header
-      title="Снабженец"
       icon="storage_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

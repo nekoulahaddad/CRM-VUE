@@ -1,10 +1,6 @@
 <template>
   <div class="page sites-page">
-    <v-page-header
-      :title="$t('pages.sites.pageTitle')"
-      icon="sites_title"
-      :filterToggle="false"
-    />
+    <v-page-header icon="sites_title" :filterToggle="false" />
     <div class="page__body d-flex">
       <div
         class="page__right"

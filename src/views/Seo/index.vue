@@ -1,7 +1,6 @@
 <template>
   <div class="page seo-page">
     <v-page-header
-      :title="$t('pages.seo.pageTitle')"
       icon="seo_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"

@@ -1,7 +1,6 @@
 <template>
   <div class="page clients-page">
     <v-page-header
-      title="Клиенты"
       icon="clients_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"
