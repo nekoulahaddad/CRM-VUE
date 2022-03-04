@@ -91,6 +91,13 @@ export default {
     border-bottom-right-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
   }
+
+  &--level-3 {
+    width: 1540px;
+  }
+  &--level-4 {
+    width: 1510px;
+  }
 }
 
 .department__item {
