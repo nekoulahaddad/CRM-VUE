@@ -24,8 +24,15 @@
           </div>
         </div>
       </div>
-      <div class="vm--modal__content d-flex justify-content-between">
-        <div v-for="(item, index) in region.sales" :key="index">
+      <div
+        class="vm--modal__content d-flex justify-content-between"
+        style="flex-wrap: wrap"
+      >
+        <div
+          v-for="(item, index) in region.sales"
+          :key="index"
+          style="width: 50%"
+        >
           <div class="group__content">
             <img
               v-if="item.img"
@@ -40,6 +47,7 @@
               "
               alt=""
             />
+            <input type="text" class="form-control" />
           </div>
         </div>
         <div>
