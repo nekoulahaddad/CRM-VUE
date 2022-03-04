@@ -426,7 +426,7 @@ export default {
     return {
       categoryName: "",
       categoryImage: "Выбрать файл",
-      categoryImageUrl: require("@/assets/icons/goods_default.svg"),
+      categoryImageUrl: "@/assets/icons/goods_default.svg",
       categoryIcon: "Выбрать файл",
       categoryIconUrl: require("@/assets/icons/goods_default.svg"),
       categorySlide: "Выбрать файл",
