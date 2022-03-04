@@ -136,10 +136,10 @@ export default {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 15px;
+    width: 12px;
     height: 6px;
     background-color: $color-black;
-    left: -15px;
+    left: -12px;
   }
 }
 </style>
