@@ -75,10 +75,10 @@
                 type="text"
                 class="form-control"
                 placeholder="Вставьте ссылку..."
-                name="vLink"
+                name="link"
                 @change="onChange($event)"
-                v-model.trim="$v.vLink.$model"
-                :class="{ 'form-control--error': $v.vLink.$error }"
+                v-model.trim="$v.link.$model"
+                :class="{ 'form-control--error': $v.link.$error }"
                 maxlength="100"
               />
             </div>
@@ -161,7 +161,7 @@ export default {
         required,
       },
     },
-    vLink: {
+    link: {
       url,
       required,
     },
@@ -175,7 +175,7 @@ export default {
       },
       date: new Date().toString(),
       title: "",
-      vLink: "",
+      link: "",
       link: "",
       role: "",
       category: "",

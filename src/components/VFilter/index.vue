@@ -1168,6 +1168,7 @@ export default {
         type: null,
         parent_value: null,
         nesting: null,
+        updatedAt: -1,
       },
       phone: "all",
       phones: [],
