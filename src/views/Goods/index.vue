@@ -1060,6 +1060,10 @@ export default {
     this.$store.commit("deactivateAction", "importGoods");
     this.$store.commit("deactivateAction", "addGoodsCategory");
     try {
+      this.filtersOptions.nesting = +this.$route.params.nesting - 1;
+      this.filtersOptions.parent_value = this.$route.params.parent_value;
+      this.filtersOptions.type = this.$route.params.type;
+
       this.updateGoods(
         await this.getDataFromPage(
           `/${this.$route.params.type || "categories"}/get`,
