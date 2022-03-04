@@ -515,6 +515,15 @@ export default {
   },
   watch: {
     async region() {
+      this.editedItem = {};
+      this.categoryExportItem = {};
+      this.categoryImportItem = {};
+      this.categoryImportItem = {};
+      this.groupProductItem = {};
+      this.managerItem = {};
+      this.dropDown = {};
+      this.copyItem = {};
+
       try {
         this.updateGoods(
           await this.getDataFromPage(
