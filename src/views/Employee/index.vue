@@ -4,7 +4,7 @@
       :deletedItem="deletedItem"
       :selectedItems="selectedItems"
       :deleteMany="deleteMany"
-      @refresh="refresh"
+      @afterDelete="afterDelete"
     />
 
     <div
