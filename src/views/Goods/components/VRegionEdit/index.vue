@@ -1,8 +1,8 @@
 <template>
-  <v-modal :adaptive="true" :minWidth="865" :maxHeight="175" name="regionEdit">
+  <v-modal :adaptive="true" :minWidth="976" :minHeight="475" name="regionEdit">
     <div class="vm--modal__title">
       Редактировать регион
-      <img src="@/assets/icons/close_icon.svg" alt="" />
+      <img @click="cancel" src="@/assets/icons/close_icon.svg" alt="" />
     </div>
     <div class="vm--modal__inner region-edit">
       <div class="vm--modal__content d-flex justify-content-between">
@@ -44,7 +44,9 @@
 export default {
   methods: {
     confirm() {},
-    cancel() {},
+    cancel() {
+      this.$modal.hide("regionEdit");
+    },
   },
 };
 </script>

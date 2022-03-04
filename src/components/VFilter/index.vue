@@ -819,7 +819,11 @@
             <button @click="clearOptions" class="btn btn--red filter__btn">
               Очистить
             </button>
-            <v-button v-if="showEditButton" white>
+            <v-button
+              @click="$modal.show('regionEdit')"
+              v-if="showEditButton"
+              white
+            >
               Редактировать регион
             </v-button>
           </div>
