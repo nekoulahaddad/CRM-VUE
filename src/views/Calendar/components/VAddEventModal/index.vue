@@ -251,10 +251,19 @@ export default {
       return "";
     },
     onEventAdd() {
-      if (this.$moment().valueOf() > new Date(this.selectionEnd).getTime()) {
-        this.$toast.error(
-          "Дата окончания не может быть раньше текущего времени!"
-        );
+      if (
+        this.$moment().format("DD-MM-YYYY") >
+        this.$moment(this.selectionStart).format("DD-MM-YYYY")
+      ) {
+        this.$toast.error("Дата начала не может быть раньше текущего времени!");
+        return;
+      }
+
+      if (
+        this.$moment(this.selectionStart).valueOf() >=
+        this.$moment(this.selectionEnd).valueOf()
+      ) {
+        this.$toast.error("Дата окончания не может быть раньше даты начала!");
         return;
       }
       this.isLoading = false;
