@@ -76,7 +76,18 @@
                       downloadItem(serverAddr + `${document}`, document)
                     "
                   >
-                    Документ {{ index + 1 }}
+                    <span
+                      style="
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                      "
+                    >
+                      {{ document }}
+                    </span>
+                    <div>
+                      <img src="@/assets/icons/download_icon.svg" alt="" />
+                    </div>
                   </div>
                 </vue-scroll>
               </div>
@@ -310,9 +321,9 @@ export default {
     },
     documentsHeight() {
       if (this.documents.length < 3) {
-        return `${this.documents.length * 43}px`;
+        return `${this.documents.length * 50}px`;
       }
-      return "126px";
+      return "151px";
     },
     height() {
       if (this.executors.surname.length < 3) {
@@ -446,6 +457,9 @@ export default {
       );
     },
     task() {
+      this.documents = [];
+      this.sub_tasks = [];
+
       if (this.task._id) {
         this.date = new Date(this.task.deadline_date).toISOString();
         this.title = this.task.title;
@@ -462,9 +476,6 @@ export default {
         this.getSubTasks(this.task._id);
       }
     },
-  },
-  created() {
-    this.sub_tasks = [];
   },
 };
 </script>
@@ -553,13 +564,13 @@ export default {
     }
 
     .group__documents {
-      width: 255px;
+      width: 411px;
     }
     .group__document {
-      width: 236px;
+      width: 390px;
       display: flex;
       justify-content: center;
-      height: 33px;
+      height: 40px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       border-radius: $border-radius;
       align-items: center;
@@ -568,7 +579,6 @@ export default {
       margin-bottom: 10px;
       margin-left: 4px;
       margin-right: 4px;
-      font-weight: 700;
       font-size: 12px;
       cursor: pointer;
 

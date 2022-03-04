@@ -200,9 +200,9 @@ export default {
     },
     documentsHeight() {
       if (this.documents.length < 3) {
-        return `${this.documents.length * 43}px`;
+        return `${this.documents.length * 50}px`;
       }
-      return "126px";
+      return "151px";
     },
   },
   data() {
