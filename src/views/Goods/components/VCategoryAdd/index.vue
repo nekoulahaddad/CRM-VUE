@@ -272,6 +272,7 @@ import axios from "@/api/axios";
 export default {
   props: {
     region: String,
+    editedItem: Object,
   },
   data() {
     return {
