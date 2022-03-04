@@ -70,6 +70,7 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
+        {{ changeOrder }}
         <template v-if="isLoading && filtersOptions.region">
           <template v-if="dataset.categories.length">
             <div class="scroll-horizontal">
@@ -133,6 +134,7 @@
                 <v-category-add
                   v-if="addGoodsCategory"
                   :region="filtersOptions.region"
+                  @refreshGoods="refreshGoods"
                 />
 
                 <!-- Блок импорта -->

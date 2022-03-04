@@ -344,6 +344,7 @@ export default {
           } else {
             this.$emit("refreshGoods");
             this.$toast.success("Категория успешно добавлена!");
+            this.$store.commit("toggleAction", { key: "addGoodsCategory" });
           }
         })
         .catch((err) => {
