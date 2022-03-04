@@ -1,6 +1,19 @@
 <template>
-  <v-modal :adaptive="true" :maxHeight="175" name="deleteEmployee">
-    <div class="vm--modal__title">Удаление</div>
+  <v-modal
+    :adaptive="true"
+    :maxHeight="175"
+    name="deleteEmployee"
+    @before-close="$store.commit('toggleDeleteSelectedItems', false)"
+  >
+    <div class="vm--modal__title">
+      Удаление
+      <img
+        class="close"
+        src="@/assets/icons/close_icon.svg"
+        alt=""
+        @click="cancel"
+      />
+    </div>
     <div class="vm--modal__inner">
       <div class="vm--modal__text">
         Вы точно хотите удалить? Отменить это действие будет невозможно
@@ -39,16 +52,20 @@ export default {
       axios({
         url: `/user/delete/`,
         data: {
-          userId: this.deletedItem._id,
+          userId: this.deleteMany ? this.selectedItems : this.deletedItem._id,
         },
         method: "DELETE",
       })
         .then(async (res) => {
-          let result = await res;
+          this.$emit("refresh");
+          this.$emit("afterDelete");
 
-          this.$emit("refresh", result.data.user._id);
-          this.$toast.success("Сотрудник успешно удален!");
-          this.$emit("toggleOpen");
+          const msg =
+            this.deleteMany && this.selectedItems.length > 1
+              ? "Сотрудники успешно удалены!"
+              : "Сотрудник успешно удален!";
+
+          this.$toast.success(msg);
           this.cancel();
         })
         .catch((err) => {

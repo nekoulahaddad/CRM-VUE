@@ -1,8 +1,9 @@
 <template>
   <div class="page employee-page">
     <v-delete-item
-      :deleted-item="deletedItem"
-      :ids="selectedItems"
+      :deletedItem="deletedItem"
+      :selectedItems="selectedItems"
+      :deleteMany="deleteMany"
       @refresh="refresh"
     />
 
@@ -62,7 +63,7 @@
                   class="list__column"
                 >
                   <input
-                    v-if="i === 10000"
+                    v-if="i === 0"
                     type="checkbox"
                     class="form-checkbox"
                     v-model="selectAll"
@@ -167,6 +168,7 @@ export default {
   },
   data() {
     return {
+      deleteMany: false,
       selectAll: false,
       showFilter: false,
       openEdit: false,
@@ -197,6 +199,9 @@ export default {
         let role = this.getUserRole();
         return role.role;
       },
+    },
+    deleteSelectedItems() {
+      return this.$store.state.deleteSelectedItems;
     },
     selectedItems() {
       const items = this.$store.getters.selectedItems;
@@ -229,6 +234,28 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    async afterDelete() {
+      try {
+        if (this.deleteMany) {
+          this.deleteMany = false;
+          this.$store.commit("clearSelectedItems");
+        }
+
+        this.filtersOptions.page = this.$route.params.page;
+
+        const { data } = await this.getDataFromPage(
+          "/user/get",
+          this.filtersOptions
+        );
+
+        this.dataset = data.users;
+        this.count = data.count;
+      } catch (e) {
+      } finally {
+        this.infoItem = {};
+        this.$scrollTo("body", 300, {});
+      }
+    },
     selectAllItems() {
       this.$store.commit("selectAllItems", {
         ids: this.dataset.map((item) => item._id),
@@ -323,7 +350,12 @@ export default {
       }
     },
     toggleDelete(deletedItem) {
+      this.deleteMany = false;
       this.deletedItem = deletedItem;
+      this.$modal.show("deleteEmployee");
+    },
+    toggleDeleteAll() {
+      this.deleteMany = true;
       this.$modal.show("deleteEmployee");
     },
     getSearchData() {
@@ -378,6 +410,11 @@ export default {
   watch: {
     $route: async function () {
       await this.getData();
+    },
+    deleteSelectedItems(value) {
+      if (value) {
+        this.toggleDeleteAll();
+      }
     },
     filtersOptions: {
       handler: async function () {
