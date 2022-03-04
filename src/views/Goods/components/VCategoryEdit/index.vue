@@ -426,7 +426,7 @@ export default {
     return {
       categoryName: "",
       categoryImage: "Выбрать файл",
-      categoryImageUrl: "@/assets/icons/goods_default.svg",
+      categoryImageUrl: require("@/assets/icons/goods_default.svg"),
       categoryIcon: "Выбрать файл",
       categoryIconUrl: require("@/assets/icons/goods_default.svg"),
       categorySlide: "Выбрать файл",
@@ -441,7 +441,7 @@ export default {
       itemFilters: [],
       currentInput: "",
       tempViews: [],
-      serverAddr: process.env.VUE_APP_DEVELOP_URL,
+      serverAddr: "https://xn--j1ano.com/",
       remove: [],
     };
   },
