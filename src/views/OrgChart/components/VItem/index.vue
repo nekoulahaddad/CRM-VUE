@@ -45,6 +45,7 @@ export default {
       return {
         department__container: true,
         [`department__container--level-${this.level}`]: true,
+        "department__container--has-child": !!this.item.children.length,
       };
     },
     classes() {
@@ -69,6 +70,11 @@ export default {
 .department__container {
   position: relative;
   margin-left: 20px;
+
+  &--has-child {
+    padding-bottom: 2px;
+    margin-bottom: 10px;
+  }
 
   &--line {
     position: absolute;
