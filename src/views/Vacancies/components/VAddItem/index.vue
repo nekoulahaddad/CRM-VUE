@@ -96,10 +96,10 @@
                   type="text"
                   class="form-control"
                   placeholder="Вставьте ссылку..."
-                  name="vLink"
+                  name="link"
                   @change="onChange($event)"
-                  v-model.trim="$v.vLink.$model"
-                  :class="{ 'form-control--error': $v.vLink.$error }"
+                  v-model.trim="$v.link.$model"
+                  :class="{ 'form-control--error': $v.link.$error }"
                   maxlength="100"
                 />
               </div>
@@ -184,7 +184,7 @@ export default {
         required,
       },
     },
-    vLink: {
+    link: {
       url,
       required,
     },
@@ -195,7 +195,7 @@ export default {
       region: "",
       date: new Date().toString(),
       title: "",
-      vLink: "",
+      link: "",
       role: "",
       category: "",
       department: "",
@@ -226,8 +226,8 @@ export default {
 
       let sectionData = {};
       sectionData.description = {};
-      if (this.vLink) {
-        sectionData.link = this.vLink;
+      if (this.link) {
+        sectionData.link = this.link;
       }
       if (this.role) {
         sectionData.role = this.role;
