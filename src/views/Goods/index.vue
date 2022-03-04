@@ -70,172 +70,170 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        {{ changeOrder }}
-        <template v-if="isLoading && filtersOptions.region">
-          <template v-if="dataset.categories.length">
-            <div class="scroll-horizontal">
-              <div class="list list-shadow">
-                <div class="list__header">
-                  <v-search
-                    @submit="getSearchData"
-                    v-model="good"
-                    placeholder="Поиск по категории, бренду, товару или артикулу"
-                  />
+        <div class="scroll-horizontal">
+          <div class="list list-shadow">
+            <div class="list__header" v-if="dataset.categories.length">
+              <v-search
+                @submit="getSearchData"
+                v-model="good"
+                placeholder="Поиск по категории, бренду, товару или артикулу"
+              />
 
-                  <div class="list__title title">
-                    <div class="title__item">
-                      <router-link
-                        :class="{ 'title__item--inactive': current.length }"
-                        :to="`/dashboard/goods/1`"
-                      >
-                        Категории
-                      </router-link>
-                    </div>
-                    <router-link
-                      class="title__item"
-                      v-for="(item, i) in current"
-                      :key="item._id"
-                      :class="{ 'title__item--inactive': current.length > i }"
-                      :to="`/dashboard/goods/${
-                        item.categoryName
-                          ? +item.nesting + 2
-                          : +$route.params.nesting + 1
-                      }/categories/${
-                        item.categoryName ? item._id : item._id
-                      }/1`"
-                    >
-                      {{
-                        item.categoryName
-                          ? item.categoryName || ""
-                          : item.name
-                          ? item.name
-                          : ""
-                      }}
-                    </router-link>
-                  </div>
-                  <div class="list__columns">
-                    <div class="list__column">
-                      <img
-                        v-if="current.length"
-                        src="@/assets/icons/back.svg"
-                        alt=""
-                        @click="$router.go(-1)"
-                      />
-                    </div>
-                    <div
-                      v-for="field in $t('pages.goods.fields.categories')"
-                      class="list__column"
-                    >
-                      {{ field }}
-                    </div>
-                  </div>
+              <div class="list__title title">
+                <div class="title__item">
+                  <router-link
+                    :class="{ 'title__item--inactive': current.length }"
+                    :to="`/dashboard/goods/1`"
+                  >
+                    Категории
+                  </router-link>
                 </div>
+                <router-link
+                  class="title__item"
+                  v-for="(item, i) in current"
+                  :key="item._id"
+                  :class="{ 'title__item--inactive': current.length > i }"
+                  :to="`/dashboard/goods/${
+                    item.categoryName
+                      ? +item.nesting + 2
+                      : +$route.params.nesting + 1
+                  }/categories/${item.categoryName ? item._id : item._id}/1`"
+                >
+                  {{
+                    item.categoryName
+                      ? item.categoryName || ""
+                      : item.name
+                      ? item.name
+                      : ""
+                  }}
+                </router-link>
+              </div>
+              <div class="list__columns">
+                <div class="list__column">
+                  <img
+                    v-if="current.length"
+                    src="@/assets/icons/back.svg"
+                    alt=""
+                    @click="$router.go(-1)"
+                  />
+                </div>
+                <div
+                  v-for="field in $t('pages.goods.fields.categories')"
+                  class="list__column"
+                >
+                  {{ field }}
+                </div>
+              </div>
+            </div>
 
-                <v-category-add
-                  v-if="addGoodsCategory"
+            <!-- Добавление новой категории -->
+            <v-category-add
+              v-if="addGoodsCategory"
+              :region="filtersOptions.region"
+              @refreshGoods="refreshGoods"
+            />
+
+            <!-- Блок импорта -->
+            <v-category-import
+              v-if="importGoods"
+              :region="filtersOptions.region"
+              :category="false"
+            />
+
+            <div v-if="!filtersOptions.region">Выберите регион</div>
+            <v-spinner v-else-if="!isLoading" />
+            <Container
+              v-else-if="dataset.categories.length"
+              @drop="onDrop"
+              drag-handle-selector=".handle"
+              lock-axis="y"
+            >
+              <Draggable
+                :class="{
+                  'smooth-dnd-draggable-wrapper--opened':
+                    editedItem._id === item._id ||
+                    copyItem._id === item._id ||
+                    categoryImportItem._id === item._id ||
+                    managerItem._id === item._id ||
+                    categoryExportItem._id === item._id,
+                }"
+                v-for="item in dataset.categories"
+                :key="item.id"
+              >
+                <v-category
+                  :item="item"
+                  :copyItem="copyItem"
+                  :current="current"
+                  :editedItem="editedItem"
+                  :dropDown="dropDown"
+                  :managerItem="managerItem"
+                  :categoryExportItem="categoryExportItem"
+                  :categoryImportItem="categoryImportItem"
+                  :filtersOptions="filtersOptions"
+                  :categoryVisibleItem="categoryVisibleItem"
+                  @hideDetail="hideDetail"
+                  @toggleCopy="toggleCopy"
+                  @toggleManager="toggleManager"
+                  @changeVisibility="changeCategoryVisibility"
+                  @toggleDeleteCategory="toggleDeleteCategory"
+                  @toggleDropDown="toggleDropDown"
+                  @toggleEdit="toggleEdit"
+                  @addToGoogleDoc="addToGoogleDoc"
+                  @toggleCategoryExport="toggleCategoryExport"
+                  @toggleCategoryImport="toggleCategoryImport"
+                  :show="filtersOptions.nesting > 0 && googleDoc != null"
+                  :opacity="
+                    !(
+                      googleDoc &&
+                      googleDoc.sheets.find((s) => s.categoryId === item._id)
+                    )
+                  "
+                />
+
+                <v-copy
+                  v-if="copyItem._id === item._id"
+                  :category="copyItem"
                   :region="filtersOptions.region"
                   @refreshGoods="refreshGoods"
+                  @toggleCopy="toggleCopy"
+                />
+
+                <v-edit-category
+                  v-if="editedItem._id === item._id"
+                  :editedItem="editedItem"
+                  :region="filtersOptions.region"
+                  @refreshGoods="refreshGoods"
+                  @toggleEdit="toggleEdit"
+                />
+
+                <!-- Блок экспорта -->
+                <v-category-export
+                  v-if="categoryExportItem._id === item._id"
+                  :region="filtersOptions.region"
+                  :category="category"
                 />
 
                 <!-- Блок импорта -->
                 <v-category-import
-                  v-if="importGoods"
+                  v-if="categoryImportItem._id === item._id"
                   :region="filtersOptions.region"
-                  :category="false"
+                  :category="category"
                 />
 
-                <Container
-                  @drop="onDrop"
-                  drag-handle-selector=".handle"
-                  lock-axis="y"
-                >
-                  <Draggable
-                    :class="{
-                      'smooth-dnd-draggable-wrapper--opened':
-                        editedItem._id === item._id ||
-                        copyItem._id === item._id ||
-                        categoryImportItem._id === item._id ||
-                        managerItem._id === item._id ||
-                        categoryExportItem._id === item._id,
-                    }"
-                    v-for="item in dataset.categories"
-                    :key="item.id"
-                  >
-                    <v-category
-                      :item="item"
-                      :copyItem="copyItem"
-                      :current="current"
-                      :editedItem="editedItem"
-                      :dropDown="dropDown"
-                      :managerItem="managerItem"
-                      :categoryExportItem="categoryExportItem"
-                      :categoryImportItem="categoryImportItem"
-                      :filtersOptions="filtersOptions"
-                      :categoryVisibleItem="categoryVisibleItem"
-                      @hideDetail="hideDetail"
-                      @toggleCopy="toggleCopy"
-                      @toggleManager="toggleManager"
-                      @changeVisibility="changeCategoryVisibility"
-                      @toggleDeleteCategory="toggleDeleteCategory"
-                      @toggleDropDown="toggleDropDown"
-                      @toggleEdit="toggleEdit"
-                      @addToGoogleDoc="addToGoogleDoc"
-                      @toggleCategoryExport="toggleCategoryExport"
-                      @toggleCategoryImport="toggleCategoryImport"
-                      :show="filtersOptions.nesting > 0 && googleDoc != null"
-                      :opacity="
-                        !(
-                          googleDoc &&
-                          googleDoc.sheets.find(
-                            (s) => s.categoryId === item._id
-                          )
-                        )
-                      "
-                    />
+                <!-- Менеджер -->
+                <v-category-manager
+                  v-if="managerItem._id === item._id"
+                  :region="filtersOptions.region"
+                  :managerItem="managerItem"
+                  @toggleManager="toggleManager"
+                  @refreshGoods="refreshGoods"
+                />
+              </Draggable>
+            </Container>
+          </div>
+        </div>
 
-                    <v-copy
-                      v-if="copyItem._id === item._id"
-                      :category="copyItem"
-                      :region="filtersOptions.region"
-                      @refreshGoods="refreshGoods"
-                      @toggleCopy="toggleCopy"
-                    />
-
-                    <v-edit-category
-                      v-if="editedItem._id === item._id"
-                      :editedItem="editedItem"
-                      :region="filtersOptions.region"
-                      @refreshGoods="refreshGoods"
-                      @toggleEdit="toggleEdit"
-                    />
-
-                    <!-- Блок экспорта -->
-                    <v-category-export
-                      v-if="categoryExportItem._id === item._id"
-                      :region="filtersOptions.region"
-                      :category="category"
-                    />
-
-                    <!-- Блок импорта -->
-                    <v-category-import
-                      v-if="categoryImportItem._id === item._id"
-                      :region="filtersOptions.region"
-                      :category="category"
-                    />
-
-                    <!-- Менеджер -->
-                    <v-category-manager
-                      v-if="managerItem._id === item._id"
-                      :region="filtersOptions.region"
-                      :managerItem="managerItem"
-                      @toggleManager="toggleManager"
-                      @refreshGoods="refreshGoods"
-                    />
-                  </Draggable>
-                </Container>
-              </div>
-            </div>
-          </template>
+        <template v-if="isLoading && filtersOptions.region">
           <template v-if="dataset.products.length">
             <div class="scroll-horizontal">
               <div class="list list-shadow">
@@ -349,8 +347,6 @@
             </div>
           </template>
         </template>
-        <div v-else-if="!filtersOptions.region">{{ $t("chooseRegion") }}</div>
-        <v-spinner v-else />
       </div>
     </div>
   </div>
@@ -516,7 +512,7 @@ export default {
     },
   },
   watch: {
-    async region() {
+    async region(v) {
       this.editedItem = {};
       this.categoryExportItem = {};
       this.categoryImportItem = {};
@@ -623,6 +619,11 @@ export default {
       this.dataset.products = dataset;
     },
     getSearchData() {
+      if (!this.filtersOptions.region) {
+        this.$toast.error("Выберите регион");
+        return;
+      }
+
       let search = this.good;
 
       if (!search.trim().length) {
@@ -639,6 +640,8 @@ export default {
         categories: [],
         products: [],
       };
+
+      this.isLoading = false;
 
       axios({
         url: `/categories/getfromsearch`,

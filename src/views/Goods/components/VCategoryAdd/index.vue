@@ -280,7 +280,6 @@ export default {
         this.$toast.error("Категория уже в списке", "Ошибка");
         this.tempViews = [];
       } else {
-        this.$toast.success("Категория успешно добавлена!");
         this.views.push(category);
         this.tempViews = [];
         this.currentInput = "";
