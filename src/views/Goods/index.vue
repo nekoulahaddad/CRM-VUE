@@ -6,7 +6,7 @@
     />
 
     <!-- Редактирование региона -->
-    <v-region-edit />
+    <v-region-edit :editedRegionId="filtersOptions.region" />
 
     <!-- Перемещение товаров -->
     <v-products-move
