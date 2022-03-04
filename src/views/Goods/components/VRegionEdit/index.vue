@@ -1,5 +1,5 @@
 <template>
-  <v-modal :adaptive="true" :minWidth="976" :minHeight="475" name="regionEdit">
+  <v-modal :adaptive="true" :minWidth="1070" :minHeight="800" name="regionEdit">
     <div class="vm--modal__title">
       Редактировать регион
       <img @click="cancel" src="@/assets/icons/close_icon.svg" alt="" />
@@ -25,17 +25,29 @@
         </div>
       </div>
       <div class="vm--modal__content d-flex justify-content-between">
-        <div>
-          <div class="group__title">Баннеры для десктоп версии:</div>
-          <div class="group__content"></div>
+        <div v-for="(item, index) in region.sales" :key="index">
+          <div class="group__content">
+            <img
+              v-if="item.img"
+              :src="
+                region
+                  ? `${
+                      serverAddr +
+                      region.path +
+                      (item && item.img ? item.img : item)
+                    }`
+                  : false
+              "
+              alt=""
+            />
+          </div>
         </div>
         <div>
           <div class="group__content"></div>
         </div>
       </div>
       <div class="vm--modal__buttons">
-        <v-button @click="confirm" red>Да</v-button>
-        <v-button @click="cancel" white>Нет</v-button>
+        <v-button @click="confirm" red>Сохранить</v-button>
       </div>
     </div>
   </v-modal>
@@ -115,19 +127,11 @@ export default {
 </script>
 
 <style lang="scss">
-.vm--modal {
-  &__text {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  &__buttons {
-    justify-content: center;
-  }
-
-  .region-edit {
-    .form-select {
-      width: 401px;
-    }
+.region-edit {
+  .vm--modal__buttons {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
   }
 }
 </style>
