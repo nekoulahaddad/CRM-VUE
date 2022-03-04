@@ -111,7 +111,11 @@
                     </VueCustomTooltip>
                   </label>
                 </div>
-                <div class="actions__btn" style="border-color: #db1f35">
+                <div
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                  v-if="editedItem && editedItem.slide !== 'default.jpeg'"
+                >
                   <VueCustomTooltip label="Удалить">
                     <img
                       width="17px"
@@ -256,6 +260,17 @@ export default {
   methods: {
     deleteChip(index) {
       this.views.splice(index, 1);
+    },
+    deleteImage(type, e) {
+      let fields = {
+        img: type,
+        path: type + "Path",
+        category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
+      };
+      this.editedItem[fields.img] = "default.jpeg";
+      this.editedItem[fields.path] = "/uploads/";
+      this[fields.category] = "default";
+      this.remove.push(type);
     },
     onChange(e) {
       this[e.target.name] = e.target.value;
