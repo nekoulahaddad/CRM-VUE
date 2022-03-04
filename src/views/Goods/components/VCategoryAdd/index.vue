@@ -34,7 +34,14 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <img
+                  :src="
+                    editedItem && categoryImage === 'Выбрать файл'
+                      ? serverAddr + editedItem.path + editedItem.img
+                      : categoryImageUrl
+                  "
+                  alt=""
+                />
               </div>
             </div>
             <div class="group__right">
@@ -63,7 +70,14 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <img
+                  :src="
+                    editedItem && categoryIcon === 'Выбрать файл'
+                      ? serverAddr + editedItem.iconPath + editedItem.icon
+                      : categoryIconUrl
+                  "
+                  alt=""
+                />
               </div>
             </div>
             <div class="group__right">
@@ -92,7 +106,14 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <img
+                  :src="
+                    editedItem && categorySlide === 'Выбрать файл'
+                      ? serverAddr + editedItem.slidePath + editedItem.slide
+                      : categorySlideUrl
+                  "
+                  alt=""
+                />
               </div>
             </div>
             <div class="group__right">
@@ -135,7 +156,15 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <img
+                  :src="
+                    editedItem && categoryBanner === 'Выбрать файл'
+                      ? serverAddr + editedItem.bannerPath + editedItem.banner
+                      : categoryBannerUrl
+                  "
+                  alt=""
+                  style="max-width: 200px; max-height: 140px"
+                />
               </div>
             </div>
             <div class="group__right">
@@ -164,7 +193,16 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img src="@/assets/icons/goods_default.svg" alt="" />
+                <img
+                  :src="
+                    editedItem && categoryBannerMob === 'Выбрать файл'
+                      ? serverAddr +
+                        editedItem.bannerPathMob +
+                        editedItem.bannerMob
+                      : categoryBannerMobUrl
+                  "
+                  alt=""
+                />
               </div>
             </div>
 
@@ -444,7 +482,9 @@ export default {
     cursor: pointer;
 
     img {
-      margin-bottom: 10px;
+      max-width: 200px !important;
+      max-height: 140px !important;
+      border-radius: $border-radius;
     }
   }
   .actions {

@@ -510,7 +510,8 @@ export default {
     cursor: pointer;
 
     img {
-      margin-bottom: 10px;
+      max-width: 200px;
+      max-height: 140px;
     }
   }
   .actions {
