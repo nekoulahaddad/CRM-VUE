@@ -5,22 +5,24 @@
     name="deleteEmployee"
     @before-close="$store.commit('toggleDeleteSelectedItems', false)"
   >
-    <div class="vm--modal__title">
-      Удаление
-      <img
-        class="close"
-        src="@/assets/icons/close_icon.svg"
-        alt=""
-        @click="cancel"
-      />
-    </div>
-    <div class="vm--modal__inner">
-      <div class="vm--modal__text">
-        Вы точно хотите удалить? Отменить это действие будет невозможно
+    <div class="delete-employee">
+      <div class="vm--modal__title">
+        Удаление
+        <img
+          class="close"
+          src="@/assets/icons/close_icon.svg"
+          alt=""
+          @click="cancel"
+        />
       </div>
-      <div class="vm--modal__buttons">
-        <v-button @click="confirm" red>Да</v-button>
-        <v-button @click="cancel" white>Нет</v-button>
+      <div class="vm--modal__inner">
+        <div class="vm--modal__text">
+          Вы точно хотите удалить? Отменить это действие будет невозможно
+        </div>
+        <div class="vm--modal__buttons">
+          <v-button @click="confirm" red>Да</v-button>
+          <v-button @click="cancel" white>Нет</v-button>
+        </div>
       </div>
     </div>
   </v-modal>
@@ -77,6 +79,16 @@ export default {
 </script>
 
 <style lang="scss">
+.delete-employee {
+  .vm--modal__title {
+    .close {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 15px;
+    }
+  }
+}
 .vm--modal {
   &__text {
     text-align: center;
