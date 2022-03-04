@@ -124,10 +124,13 @@ table {
   &__actions {
     display: flex;
     justify-content: end;
+    align-items: center;
   }
 
   &__icon {
     position: relative;
+    display: flex;
+    align-items: center;
 
     & * {
       cursor: pointer;

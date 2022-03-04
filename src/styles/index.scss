@@ -315,4 +315,9 @@ ul {
   width: 100%;
 }
 
+span[role="tooltip"] {
+  display: flex;
+  align-items: center;
+}
+
 @import "media";
