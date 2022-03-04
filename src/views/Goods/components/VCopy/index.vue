@@ -52,12 +52,8 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
-      changeStatus: "change_load_status",
-    }),
     onCategoryCopy() {
       this.start = true;
-      this.changeStatus(false);
       let data = {
         region: this.region,
         categoryId: this.category._id,

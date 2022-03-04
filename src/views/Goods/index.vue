@@ -861,11 +861,11 @@ export default {
 
       if (this.copyItem._id === item._id) {
         this.copyItem = {};
+        this.dropDown = {};
       } else {
         this.copyItem = item;
+        this.toggleDropDown(item);
       }
-
-      this.toggleDropDown(item);
     },
     toggleCategoryImport(item) {
       this.copyItem = {};
@@ -1063,6 +1063,10 @@ export default {
     .list__columns {
       grid-template-columns: 50px 750px 100px 1fr;
     }
+  }
+
+  .page__right {
+    margin-bottom: 80px;
   }
 
   .smooth-dnd-draggable-wrapper {
