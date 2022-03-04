@@ -1,7 +1,8 @@
 <template>
   <div :class="containerClasses">
+    <div class="department__container--line" v-if="hLine" />
     <div :class="classes">
-      <span class="item__title">{{ item.title }}</span>
+      <span class="item__title">{{ item.title }} {{ hLine }}</span>
       <div class="table__actions">
         <div class="table__icon">
           <img src="@/assets/icons/trash_icon_white.svg" alt="" />
@@ -10,6 +11,7 @@
     </div>
     <v-item
       :line="true"
+      :hLine="child.children.length > 0"
       :level="level + 1"
       :item="child"
       v-for="(child, index) in item.children"
@@ -23,6 +25,7 @@ export default {
   name: "VItem",
   props: {
     line: Boolean,
+    hLine: Boolean,
     item: {
       type: Object,
       required: true,
@@ -30,6 +33,11 @@ export default {
     level: {
       type: Number,
       required: true,
+    },
+  },
+  methods: {
+    lineHeight(count) {
+      return `100%`;
     },
   },
   computed: {
@@ -62,12 +70,12 @@ export default {
   position: relative;
   margin-left: 20px;
 
-  &:before {
-    content: "";
+  &--line {
     position: absolute;
-    height: calc(100% - 25px);
     width: 6px;
     top: 5px;
+    height: calc(100% - 26px);
+    left: 0;
     background-color: $color-black;
   }
 
