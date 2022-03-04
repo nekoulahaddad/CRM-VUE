@@ -79,7 +79,9 @@
       </div>
     </div>
 
-    <v-button red>{{ $t("Отправить") }}</v-button>
+    <v-button red>
+      {{ editedItem && editedItem._id ? "Сохранить" : "Создать" }}
+    </v-button>
   </form>
 </template>
 
