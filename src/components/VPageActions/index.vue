@@ -92,6 +92,20 @@
               </a>
             </VueCustomTooltip>
 
+            <VueCustomTooltip label="Добавить товар">
+              <a
+                href=""
+                class="page-actions__button"
+                @click.prevent="toggleAction('addProduct')"
+                :class="{
+                  'page-actions__button--active':
+                    $store.state.actions.addProduct,
+                }"
+              >
+                <simple-svg :src="require('@/assets/icons/add_product.svg')" />
+              </a>
+            </VueCustomTooltip>
+
             <VueCustomTooltip label="Импорт Excel">
               <a
                 href=""

@@ -72,7 +72,7 @@
       >
         <div class="scroll-horizontal">
           <div class="list list-shadow">
-            <div class="list__header" v-if="dataset.categories.length">
+            <div class="list__header" v-if="dataset.products.length">
               <v-search
                 @submit="getSearchData"
                 v-model="good"

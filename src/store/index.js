@@ -35,6 +35,7 @@ export default new Vuex.Store({
     selectedItems: [],
     actions: {
       addDbTask: false,
+      addProduct: false,
       addCallback: false,
       addGoodsCategory: false,
       addDelivery: false,
