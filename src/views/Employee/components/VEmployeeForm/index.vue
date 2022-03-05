@@ -182,7 +182,7 @@
             >
               <span>{{ transformChildInfo(child) }}</span>
 
-              <div>
+              <div class="d-flex">
                 <VueCustomTooltip
                   label="Изменить"
                   v-if="!addChildForm && !editChildForm"
@@ -788,7 +788,7 @@ export default {
   }
   .children {
     box-shadow: 0 0 5px rgb(0 0 0 / 20%);
-    height: 33px;
+    height: 40px;
     width: 401px;
     border-radius: $border-radius;
     display: flex;
@@ -797,6 +797,10 @@ export default {
     padding-right: 10px;
     position: relative;
     justify-content: space-between;
+
+    img {
+      cursor: pointer;
+    }
 
     span[role="tooltip"] {
       &:after {

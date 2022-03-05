@@ -187,6 +187,17 @@
         <div class="group__value">{{ employee.chinese_year || "" }}</div>
       </div>
     </div>
+    <div class="list-info__group group">
+      <div class="group__content">
+        <div class="group__item text--bold-700">Дети:</div>
+        <div class="group__value">
+          <div v-if="employee.children && employee.children.length">
+            {{ employee.children && employee.children.length }}
+          </div>
+          <span v-else>Детей нет</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -230,6 +241,9 @@ export default {
       url: require("@/assets/icons/new_avatar.svg"),
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
+  },
+  created() {
+    console.log(this.employee);
   },
 };
 </script>
