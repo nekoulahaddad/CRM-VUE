@@ -231,5 +231,8 @@ export default {
     border: none;
     height: 33px;
   }
+  .vs__dropdown-menu {
+    width: 220px !important;
+  }
 }
 </style>
