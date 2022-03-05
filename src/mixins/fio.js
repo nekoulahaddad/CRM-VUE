@@ -15,7 +15,7 @@ export default {
       return "";
     },
     transformChildInfo(child) {
-      return child && child.fio ? child.fio : "";
+      return child?.fio;
     },
   },
 };
