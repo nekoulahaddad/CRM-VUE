@@ -62,7 +62,7 @@
             v-else
           />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" style="width: 28px">
           <VueCustomTooltip label="Изменить" v-if="item._id !== editedItem._id">
             <img
               @click="$emit('toggleEdit', item)"
