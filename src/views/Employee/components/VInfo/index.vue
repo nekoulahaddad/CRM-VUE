@@ -343,6 +343,10 @@ export default {
     align-items: center;
     padding-left: 10px;
 
+    & + * {
+      margin-top: 10px;
+    }
+
     span {
       width: 380px;
       text-overflow: ellipsis;
