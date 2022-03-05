@@ -324,7 +324,6 @@
             <div class="group">
               <div class="group__title">Лицо заказа:</div>
               <div class="group__content">
-                {{ orderForm.clientType }}
                 <v-select
                   :options="[
                     { label: 'Физическое лицо', value: 'physical' },
