@@ -368,10 +368,12 @@
           <div class="group__content">
             <v-select
               :options="[
-                { label: 'Нет', value: 'false' },
-                { label: 'Да', value: 'true' },
+                { label: 'Нет', value: false },
+                { label: 'Да', value: true },
               ]"
-              v-model="editEmployee"
+              v-model="
+                infoItem && infoItem.options && infoItem.options.userEditor
+              "
               :reduce="(item) => item.value"
               name="checkbox"
             />
@@ -442,9 +444,7 @@ export default {
   },
   computed: {
     editEmployee() {
-      return this.infoItem && this.infoItem.options
-        ? this.infoItem.options.userEditor
-        : this.options.userEditor;
+      return this.infoItem.options.userEditor;
     },
     editRegion() {
       return this.infoItem ? this.infoItem.region.value : this.region;
