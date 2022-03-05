@@ -192,7 +192,13 @@
         <div class="group__item text--bold-700">Дети:</div>
         <div class="group__value">
           <div v-if="employee.children && employee.children.length">
-            {{ employee.children && employee.children.length }}
+            <div
+              class="children"
+              v-for="(child, index) in employee.children"
+              :key="index"
+            >
+              <span>{{ transformChildInfo(child) }}</span>
+            </div>
           </div>
           <span v-else>Детей нет</span>
         </div>
@@ -326,6 +332,22 @@ export default {
     &__right {
       display: flex;
       align-items: end;
+    }
+  }
+  .children {
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    height: 40px;
+    width: 401px;
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+
+    span {
+      width: 380px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 }
