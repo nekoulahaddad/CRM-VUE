@@ -174,49 +174,50 @@
         </div>
         <div class="group">
           <div class="group__content group__childs">
-            <div
-              class="children"
-              v-if="editChildIndex !== index"
-              v-for="(child, index) in children"
-              :key="child._id"
-            >
-              <span class="d-flex align-items-center">
-                <img
-                  alt=""
-                  :src="
-                    child.gender === 'муж'
-                      ? require('@/assets/icons/boy.svg')
-                      : require('@/assets/icons/girl.svg')
-                  "
-                  style="padding-right: 10px; width: 32px"
-                />{{ transformChildInfo(child) }}
-              </span>
-
-              <div class="d-flex">
-                <VueCustomTooltip
-                  label="Изменить"
-                  v-if="!addChildForm && !editChildForm"
-                >
+            <template v-if="editChildIndex !== index">
+              <div
+                class="children"
+                v-for="(child, index) in children"
+                :key="child._id"
+              >
+                <span class="d-flex align-items-center">
                   <img
                     alt=""
-                    class="children__write-icon"
-                    src="@/assets/icons/write_icon.svg"
-                    @click="editChild(index)"
-                  />
-                </VueCustomTooltip>
+                    :src="
+                      child.gender === 'муж'
+                        ? require('@/assets/icons/boy.svg')
+                        : require('@/assets/icons/girl.svg')
+                    "
+                    style="padding-right: 10px; width: 32px"
+                  />{{ transformChildInfo(child) }}
+                </span>
 
-                <VueCustomTooltip
-                  label="Удалить"
-                  v-if="!addChildForm && !editChildForm"
-                >
-                  <img
-                    src="@/assets/icons/trash_icon.svg"
-                    alt=""
-                    @click="removeChild(index)"
-                  />
-                </VueCustomTooltip>
+                <div class="d-flex">
+                  <VueCustomTooltip
+                    label="Изменить"
+                    v-if="!addChildForm && !editChildForm"
+                  >
+                    <img
+                      alt=""
+                      class="children__write-icon"
+                      src="@/assets/icons/write_icon.svg"
+                      @click="editChild(index)"
+                    />
+                  </VueCustomTooltip>
+
+                  <VueCustomTooltip
+                    label="Удалить"
+                    v-if="!addChildForm && !editChildForm"
+                  >
+                    <img
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click="removeChild(index)"
+                    />
+                  </VueCustomTooltip>
+                </div>
               </div>
-            </div>
+            </template>
           </div>
           <div class="group__footer">
             <v-add-child
