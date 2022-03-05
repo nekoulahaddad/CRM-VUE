@@ -60,7 +60,7 @@
             v-else
           />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" style="width: 28px">
           <template
             v-if="
               role === 'superadmin' || role === 'director' || options.userEditor

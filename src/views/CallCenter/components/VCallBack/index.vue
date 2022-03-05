@@ -68,7 +68,7 @@
             v-else
           />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" style="width: 28px">
           <img
             alt=""
             src="@/assets/icons/write_icon.svg"

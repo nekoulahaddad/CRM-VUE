@@ -26,7 +26,7 @@
             @click="$emit('toggleInfo', item)"
           />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" style="width: 28px">
           <VueCustomTooltip v-if="editedItem._id !== item._id" label="Изменить">
             <img
               @click="$emit('toggleEdit', item)"
