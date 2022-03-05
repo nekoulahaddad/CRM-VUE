@@ -315,6 +315,11 @@ ul {
   width: 100%;
 }
 
+.vs__fade-enter-active,
+.vs__fade-leave-active {
+  transition: none;
+}
+
 span[role="tooltip"] {
   display: flex;
   align-items: center;

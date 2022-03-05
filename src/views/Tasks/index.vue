@@ -615,13 +615,13 @@ export default {
   }
 
   .page__right--fluid .sub-tasks .list__columns {
-    grid-template-columns: 130px 180px 160px 370px 160px 180px 180px 100px 1fr !important;
+    grid-template-columns: 130px 180px 160px 370px 160px 180px 50px 180px 1fr !important;
   }
   .page__right--full .sub-tasks .list__columns {
-    grid-template-columns: 130px 180px 169px 250px 180px 180px 130px 100px 1fr !important;
+    grid-template-columns: 130px 180px 169px 250px 180px 180px 50px 130px 1fr !important;
   }
   .page__right--middle .sub-tasks .list__columns {
-    grid-template-columns: 130px 140px 130px 290px 120px 120px 140px 100px 1fr !important;
+    grid-template-columns: 130px 140px 130px 290px 120px 120px 50px 140px 1fr !important;
   }
 
   .sub-tasks {
@@ -632,7 +632,7 @@ export default {
       .list__column:last-child {
         padding-right: 100px;
       }
-      grid-template-columns: 130px 120px 120px 270px 120px 120px 120px 50px 1fr !important;
+      grid-template-columns: 130px 120px 120px 270px 120px 120px 50px 120px 1fr !important;
     }
     .table__actions {
       justify-content: left !important;
