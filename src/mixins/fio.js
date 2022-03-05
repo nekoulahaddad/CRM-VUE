@@ -15,11 +15,7 @@ export default {
       return "";
     },
     transformChildInfo(child) {
-      if (child)
-        return `${child.fio ? child.fio : ""} ${
-          child.gender ? "(" + child.gender[0] + ")" : ""
-        } `;
-      return;
+      return child && child.fio ? child.fio : "";
     },
   },
 };

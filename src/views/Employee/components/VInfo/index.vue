@@ -197,6 +197,16 @@
               v-for="(child, index) in employee.children"
               :key="index"
             >
+              <span style="width: 40px">
+                <img
+                  alt=""
+                  :src="
+                    child.gender === 'муж'
+                      ? require('@/assets/icons/boy.svg')
+                      : require('@/assets/icons/girl.svg')
+                  "
+                />
+              </span>
               <span>{{ transformChildInfo(child) }}</span>
             </div>
           </div>
@@ -345,6 +355,10 @@ export default {
 
     & + * {
       margin-top: 10px;
+    }
+
+    img {
+      width: 24px;
     }
 
     span {
