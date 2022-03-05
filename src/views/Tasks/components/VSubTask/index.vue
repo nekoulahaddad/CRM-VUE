@@ -44,6 +44,7 @@
         <div class="table__icon">
           <VueCustomTooltip v-if="editedItem._id !== task._id" label="Изменить">
             <img
+              style="width: 26px"
               @click="$emit('toggleEdit', task)"
               src="@/assets/icons/write_icon.svg"
               alt=""
@@ -113,8 +114,9 @@ export default {
   }
 
   .table__icon {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
+
     img {
       width: 100%;
       height: 100%;
