@@ -25,6 +25,14 @@
       v-html="task && task.status ? transformStatus(task.status) : task.status"
     />
     <div class="list__column">
+      <div
+        v-if="
+          role === 'director' && task.status.value === 'completed' && !task.mark
+        "
+      ></div>
+      <span>...</span>
+    </div>
+    <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
           <VueCustomTooltip v-if="infoItem._id !== task._id" label="Просмотр">
@@ -96,6 +104,14 @@ export default {
       required: true,
     },
   },
+  computed: {
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
+  },
 };
 </script>
 
@@ -107,10 +123,6 @@ export default {
     font-weight: 700;
     font-size: 16px;
     padding: 10px;
-  }
-
-  .list__columns {
-    grid-template-columns: 30px 140px 140px 380px 120px 120px 120px 1fr;
   }
 
   .table__icon {
