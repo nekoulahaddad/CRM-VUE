@@ -1,6 +1,5 @@
 <template>
   <section class="mail-by-month">
-    <v-spinner v-if="false" />
     <div class="mail-by-month__header">
       <div class="mail-by-month__title">{{ $t("mailByMonth") }}</div>
     </div>
@@ -200,6 +199,10 @@ export default {
     justify-content: center;
     padding-right: 12px;
     flex-direction: column;
+
+    img {
+      width: 40px;
+    }
 
     &__content {
       display: flex;
