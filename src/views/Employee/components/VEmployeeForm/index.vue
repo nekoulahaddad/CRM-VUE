@@ -180,7 +180,17 @@
               v-for="(child, index) in children"
               :key="child._id"
             >
-              <span>{{ transformChildInfo(child) }}</span>
+              <span class="d-flex align-items-center">
+                <img
+                  alt=""
+                  :src="
+                    child.gender === 'муж'
+                      ? require('@/assets/icons/boy.svg')
+                      : require('@/assets/icons/girl.svg')
+                  "
+                  style="padding-right: 10px; width: 32px"
+                />{{ transformChildInfo(child) }}
+              </span>
 
               <div class="d-flex">
                 <VueCustomTooltip
