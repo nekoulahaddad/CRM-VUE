@@ -175,7 +175,6 @@
         <div class="group">
           <div class="group__content group__childs">
             <template v-if="editChildIndex !== index">
-              {{ children }}
               <div
                 class="children"
                 v-for="(child, index) in children"
