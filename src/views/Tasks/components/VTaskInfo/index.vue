@@ -316,7 +316,6 @@ export default {
   span {
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 350px !important;
     white-space: nowrap;
   }
 }

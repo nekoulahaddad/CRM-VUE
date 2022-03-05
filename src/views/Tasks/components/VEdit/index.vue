@@ -52,17 +52,10 @@
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
+                    font-weight: normal;
                   "
                 >
-                  {{
-                    photo.name
-                      ? photo.name.length > 30
-                        ? photo.name.slice(0, -10) +
-                          " ... ." +
-                          photo.type.split("/")[1]
-                        : photo.name
-                      : `Документ ${index + 1}`
-                  }}
+                  {{ photo.name ? photo.name : photo }}
                 </span>
                 <div>
                   <VueCustomTooltip label="Удалить">
@@ -198,7 +191,6 @@ export default {
         });
     },
     downloadItem(url, filename) {
-      alert(url);
       axios
         .get(url, { responseType: "blob" })
         .then((response) => {
