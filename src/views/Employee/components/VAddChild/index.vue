@@ -9,6 +9,7 @@
           class="form-control"
           name="newChild.fio"
           v-model="newChild.fio"
+          maxlength="150"
         />
       </div>
 
