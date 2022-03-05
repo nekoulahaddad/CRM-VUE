@@ -12,7 +12,6 @@
           </div>
 
           <v-select
-            style="width: 100%"
             :options="[
               { label: $t('allManagers'), value: 'all' },
               ...managers.map((item) => ({
@@ -218,6 +217,19 @@ export default {
       font-weight: 700;
       color: $color-red;
     }
+  }
+  .v-select {
+    width: 193.38px;
+  }
+  .v-select * {
+    width: 100%;
+  }
+  .vs__actions {
+    display: none;
+  }
+  .vs__dropdown-toggle {
+    border: none;
+    height: 33px;
   }
 }
 </style>
