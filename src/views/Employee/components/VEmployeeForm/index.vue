@@ -332,18 +332,17 @@
             {{ $t("region") }} <span class="required">*</span>
           </div>
           <div class="group__content">
-            <select
-              required
+            <v-select
+              :options="
+                regions.map((region) => ({
+                  label: region.title,
+                  value: region.value,
+                }))
+              "
+              :reduce="(item) => item.value"
               name="region"
-              class="form-select"
-              :value="infoItem ? infoItem.region.value : region"
-              @change="onChange($event)"
-            >
-              <option selected disabled :value="null">Выбрать регион</option>
-              <option v-for="(region, index) in regions" :value="region.value">
-                {{ region.title }}
-              </option>
-            </select>
+              v-model="editRegion"
+            />
           </div>
         </div>
         <div class="group">
@@ -447,6 +446,9 @@ export default {
         ? this.infoItem.options.userEditor
         : this.options.userEditor;
     },
+    editRegion() {
+      return this.infoItem ? this.infoItem.region.value : this.region;
+    },
   },
   validations: {},
   components: { VAddChild, VButton, PhoneMaskInput },
@@ -519,6 +521,7 @@ export default {
       this.editChildForm = false;
       this.editChildIndex = null;
     },
+
     removeChild(index) {
       this.children.splice(index, 1);
     },

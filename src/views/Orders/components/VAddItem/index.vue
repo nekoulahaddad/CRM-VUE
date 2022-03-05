@@ -466,16 +466,16 @@
                 Способ доставки: <span class="required">*</span>
               </div>
               <div class="group__content">
-                <select
-                  required
-                  class="form-select"
+                <v-select
+                  :options="[
+                    { label: 'Самовывоз', value: 'pickup' },
+                    { label: 'Доставка транспортом', value: 'transport' },
+                    { label: 'Доставка курьером', value: 'courier' },
+                  ]"
                   name="delivery-type__pickup"
                   v-model="orderForm.typeDelivery"
-                >
-                  <option value="pickup">Самовывоз</option>
-                  <option value="transport">Доставка транспортом</option>
-                  <option value="courier">Доставка курьером</option>
-                </select>
+                  :reduce="(item) => item.value"
+                />
               </div>
             </div>
             <div class="group">
