@@ -269,7 +269,7 @@ export default {
     cursor: pointer;
   }
   .edit__inner .vdatetime-input {
-    width: 330px;
+    width: 401px;
   }
   .documents {
     width: 850px;
