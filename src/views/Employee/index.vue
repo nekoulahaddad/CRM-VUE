@@ -240,7 +240,9 @@ export default {
           this.deleteMany = false;
           this.$store.commit("clearSelectedItems");
         } else {
-          this.$store.commit("selectItem", this.deletedItem._id);
+          if (this.selectedItems.includes(this.deletedItem._id)) {
+            this.$store.commit("selectItem", this.deletedItem._id);
+          }
         }
 
         this.filtersOptions.page = this.$route.params.page;

@@ -58,7 +58,7 @@ export default {
         },
         method: "DELETE",
       })
-        .then(async (res) => {
+        .then(() => {
           this.$emit("refresh");
           this.$emit("afterDelete");
 
