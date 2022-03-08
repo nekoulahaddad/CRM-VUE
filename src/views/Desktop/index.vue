@@ -336,10 +336,10 @@ export default {
       this.status = status;
       this.$modal.show("deleteSubTask");
     },
-    afterAdd(e, status) {
+    afterAdd(e, newStatus) {
       if (e.added) {
         const task = e.added.element;
-        this.changeTaskStatus(task, status);
+        this.changeTaskStatus(task, newStatus, task.status.value);
       }
     },
     async fetchCounter() {
@@ -350,6 +350,7 @@ export default {
 
         for (let status in data) {
           this.dataset[status].count = data[status].count;
+          this.dataset[status].tasks = data[status].tasks;
         }
       } catch (e) {}
     },

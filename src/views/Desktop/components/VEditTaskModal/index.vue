@@ -364,8 +364,8 @@ export default {
     cancel() {
       this.$modal.hide("editTask");
     },
-    changeTaskStatus(task, newStatus) {
-      this.$emit("changeTaskStatus", task, newStatus, this.status);
+    changeTaskStatus(task, newStatus, status) {
+      this.$emit("changeTaskStatus", task, newStatus, status);
     },
     deleteTask() {
       this.$emit("toggleDelete", this.task, this.status);
