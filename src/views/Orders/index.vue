@@ -45,6 +45,7 @@
             <div class="list__header">
               <v-search
                 @submit="getSearchData"
+                @input="searchInput"
                 v-model="searchStr"
                 placeholder="Поиск по Ф.И.О. или номеру заказа"
               />
@@ -211,6 +212,7 @@ export default {
   },
   data() {
     return {
+      searched: false,
       deleteMany: false,
       sendDeliveryItem: {},
       showFilter: false,
@@ -343,6 +345,12 @@ export default {
     ...mapActions({
       getOrdersFromPage: "getOrdersFromPage",
     }),
+    searchInput() {
+      if (!this.searchStr.trim().length && this.searched) {
+        this.searched = false;
+        this.fetchData();
+      }
+    },
     selectAllItems() {
       this.$store.commit("selectAllItems", {
         ids: this.orders.map((item) => item._id),
@@ -533,6 +541,7 @@ export default {
         page: +this.$route.params.page,
         filtersOptions: this.filtersOptions,
       });
+      this.searched = true;
       delete this.filtersOptions.search;
       this.isLoading = true;
     },

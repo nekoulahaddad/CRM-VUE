@@ -169,6 +169,7 @@ export default {
   },
   data() {
     return {
+      searched: false,
       deleteMany: false,
       selectAll: false,
       showFilter: false,
@@ -236,7 +237,8 @@ export default {
       changeStatus: "change_load_status",
     }),
     searchInput() {
-      if (!this.user.trim().length) {
+      if (!this.user.trim().length && this.searched) {
+        this.searched = false;
         this.getData();
       }
     },
@@ -394,6 +396,7 @@ export default {
           })
           .finally(() => {
             this.isLoading = true;
+            this.searched = true;
           });
       }
     },
