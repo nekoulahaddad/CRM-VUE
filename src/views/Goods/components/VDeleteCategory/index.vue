@@ -24,6 +24,7 @@ export default {
       type: Object,
       default: () => {},
     },
+    region: String,
   },
   components: { VButton },
   methods: {
@@ -35,7 +36,7 @@ export default {
         url: `/categories/delete`,
         data: {
           categoryId: this.deletedItem._id,
-          region: this.deletedItem.region,
+          region: this.region,
         },
         method: "POST",
       })

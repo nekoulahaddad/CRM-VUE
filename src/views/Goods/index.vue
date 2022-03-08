@@ -2,6 +2,7 @@
   <div class="page goods-page">
     <v-delete-category
       :deletedItem="deletedCategory"
+      :region="filtersOptions.region"
       @deleteCategory="deleteCategory"
     />
 
