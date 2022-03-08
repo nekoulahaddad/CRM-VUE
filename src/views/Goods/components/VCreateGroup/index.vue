@@ -66,10 +66,11 @@
               />
             </div>
           </div>
+
+          <div class="vm--modal__buttons">
+            <v-button red>Создать</v-button>
+          </div>
         </form>
-        <div class="vm--modal__buttons">
-          <v-button red>Создать</v-button>
-        </div>
       </div>
     </div>
   </v-modal>
@@ -119,6 +120,7 @@ export default {
       this.items.splice(index, 1);
     },
     confirm() {
+      alert();
       if (!this.title || !this.items.length) {
         this.$toast.error("Категории или заголовок не заполнены!");
         return;
