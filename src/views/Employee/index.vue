@@ -52,6 +52,7 @@
               <v-search
                 @submit="getSearchData"
                 v-model="user"
+                @input="searchInput"
                 :placeholder="$t('pages.employee.searchPlaceholder')"
               />
               <div class="list__title">
@@ -234,6 +235,11 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    searchInput() {
+      if (!this.user.trim().length) {
+        this.getData();
+      }
+    },
     async afterDelete() {
       try {
         if (this.deleteMany) {
