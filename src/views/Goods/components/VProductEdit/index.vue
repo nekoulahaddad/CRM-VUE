@@ -279,17 +279,23 @@
               />
             </div>
           </template>
-          <img
-            alt=""
-            class="product-photo"
-            v-for="(item, index) in tempUrl"
-            :src="item.url"
-            :title="item.name"
-            @click.prevent="downloadItem(item.url, item.name)"
-            :key="index"
-          />
+          <template v-if="images.length > 0">
+            <img
+              alt=""
+              class="product-photo"
+              v-for="(item, index) in tempUrl"
+              :src="item.url"
+              :title="item.name"
+              @click.prevent="downloadItem(item.url, item.name)"
+              :key="index"
+            />
+          </template>
 
-          <label class="add-product-photo" for="product-photo">
+          <label
+            v-if="images.length < 3"
+            class="add-product-photo"
+            for="product-photo"
+          >
             <input
               type="file"
               hidden
@@ -755,7 +761,7 @@ export default {
       }
       if (this.editedProduct) {
         axios({
-          url: process.env.VUE_APP_DEVELOP_URL + `/products/update/`,
+          url: `/products/update/`,
           data: productData,
           method: "POST",
         })
