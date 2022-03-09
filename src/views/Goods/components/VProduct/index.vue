@@ -103,7 +103,10 @@
           </VueCustomTooltip>
 
           <!-- Видимость группы -->
-          <VueCustomTooltip v-else label="Видимость группы">
+          <VueCustomTooltip
+            v-else
+            :label="item.visible ? 'Скрыть группу' : 'Показать группу'"
+          >
             <img
               alt=""
               :src="
@@ -111,7 +114,7 @@
                   ? require('@/assets/icons/eye_close.svg')
                   : require('@/assets/icons/eye.svg')
               "
-              @click="changeProductVisibility(item._id, item.visible)"
+              @click="changeGroupVisibility(item._id, item.visible)"
             />
           </VueCustomTooltip>
         </div>
@@ -192,6 +195,7 @@ export default {
     groupProductItem: Object,
     groupItems: Object,
     movedProduct: Object,
+    region: String,
   },
   data() {
     return {
@@ -201,7 +205,7 @@ export default {
   methods: {
     changeGroupVisibility(id, visible) {
       let groupData = {
-        region: this.filtersOptions.region,
+        region: this.region,
         groupId: id,
         visible: !visible,
       };
