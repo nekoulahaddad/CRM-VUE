@@ -286,7 +286,6 @@
             {{ $t("role") }} <span class="required">*</span>
           </div>
           <div class="group__content">
-            {{ infoItem }}
             <v-select
               :options="
                 Object.entries($t('roles')).map(([role, key]) => ({
