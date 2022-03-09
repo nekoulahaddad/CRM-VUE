@@ -449,16 +449,18 @@
                 Способ оплаты: <span class="required">*</span>
               </div>
               <div class="group__content">
-                <select
+                <v-select
                   required
-                  class="form-select"
+                  :options="[
+                    {
+                      label: 'Оплата по выставленному счёту',
+                      value: 'bankTransfer',
+                    },
+                  ]"
                   name="payment__cash"
                   v-model="orderForm.payment"
-                >
-                  <option value="bankTransfer">
-                    Оплата по выставленному счёту
-                  </option>
-                </select>
+                  :reduce="(item) => item.value"
+                />
               </div>
             </div>
             <div class="group">

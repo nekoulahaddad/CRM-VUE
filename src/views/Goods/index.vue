@@ -239,6 +239,8 @@
           </div>
         </div>
 
+        <v-product-edit :region="filtersOptions.region" v-if="addProduct" />
+
         <template v-if="isLoading && filtersOptions.region">
           <template v-if="dataset.products.length">
             <div class="scroll-horizontal">
@@ -500,6 +502,9 @@ export default {
       region: "region",
       sidebar: "sidebar",
     }),
+    addProduct() {
+      return this.$store.state.actions.addProduct;
+    },
     createGroup() {
       return this.$store.state.actions.createGroup;
     },

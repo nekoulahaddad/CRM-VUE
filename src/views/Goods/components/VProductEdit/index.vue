@@ -179,8 +179,8 @@
             type="text"
             placeholder="за м2"
             maxlength="50"
-            ame="unit"
-            :value="unit"
+            name="unit"
+            v-model="unit"
             @input="onChange($event)"
           />
         </div>
@@ -389,7 +389,8 @@ export default {
     },
     editedProduct: {
       type: Object,
-      default: () => false,
+      required: false,
+      default: null,
     },
   },
   data() {
@@ -406,21 +407,28 @@ export default {
       tempUrl: [],
       isLoading: false,
       length: 0,
-      discount: this.editedProduct.discount
-        ? this.editedProduct.discount
-        : false,
-      wholesale: this.editedProduct.wholesale
-        ? this.editedProduct.wholesale
-        : false,
-      discount_price: this.editedProduct.discount_price
-        ? this.editedProduct.discount_price
-        : 0,
+      discount:
+        this.editedProduct && this.editedProduct.discount
+          ? this.editedProduct.discount
+          : false,
+      wholesale:
+        this.editedProduct && this.editedProduct.wholesale
+          ? this.editedProduct.wholesale
+          : false,
+      discount_price:
+        this.editedProduct && this.editedProduct.discount_price
+          ? this.editedProduct.discount_price
+          : 0,
       unit: this.editedProduct ? this.editedProduct.unit : "",
       description: this.editedProduct ? this.editedProduct.description : "",
-      recomends: this.editedProduct.recomended
-        ? this.editedProduct.recomended
-        : [],
-      buyed: this.editedProduct.buyed ? this.editedProduct.buyed : [],
+      recomends:
+        this.editedProduct && this.editedProduct.recomended
+          ? this.editedProduct.recomended
+          : [],
+      buyed:
+        this.editedProduct && this.editedProduct.buyed
+          ? this.editedProduct.buyed
+          : [],
       tempChips: [],
       currentInputRecomend: "",
       currentInputBuyed: "",
@@ -744,6 +752,7 @@ export default {
           productData.append("buyed", []);
         }
       }
+
       if (this.editedProduct) {
         axios({
           url: `/products/update/`,
@@ -829,7 +838,7 @@ export default {
         this.recomends.splice(this.recomends.length - 1);
     },
     async downloadImgs() {
-      if (this.editedProduct.images.length) {
+      if (this.editedProduct && this.editedProduct.images.length) {
         let a = 0;
         for (let imgName of this.editedProduct.images) {
           let url = this.serverAddr + this.editedProduct.path + imgName;
