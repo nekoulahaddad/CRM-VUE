@@ -4,7 +4,7 @@ export default {
       if (user)
         return `${user.surname ? user.surname : ""} ${
           user.name ? user.name[0] + "." : ""
-        } ${user.lastname ? user.lastname[0] + "." : ""}`;
+        }${user.lastname ? user.lastname[0] + "." : ""}`;
       return "";
     },
     transformFullFIO(user) {
