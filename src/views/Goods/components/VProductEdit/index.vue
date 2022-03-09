@@ -264,21 +264,6 @@
       <div class="group">
         <div class="group__title">Фотографии товара:</div>
         <div class="group__content photo-wrapper">
-          <template
-            v-if="editedProduct.images || images[0] !== 'Выберите файлы'"
-          >
-            <div v-for="(item, index) in editedProduct.images">
-              <img
-                class="product-photo"
-                :key="index"
-                :src="
-                  editedProduct
-                    ? `${serverAddr + editedProduct.path + item}`
-                    : false
-                "
-              />
-            </div>
-          </template>
           <template v-if="images.length > 0">
             <img
               alt=""
@@ -775,7 +760,7 @@ export default {
           });
       } else {
         axios({
-          url: process.env.VUE_APP_DEVELOP_URL + `/products/post/`,
+          url: `/products/post/`,
           data: productData,
           method: "POST",
         })
@@ -839,12 +824,12 @@ export default {
       this.recomends.splice(index, 1);
     },
     backspaceDelete({ which }) {
-      which == 8 &&
+      which === 8 &&
         this.currentInputRecomend === "" &&
         this.recomends.splice(this.recomends.length - 1);
     },
     async downloadImgs() {
-      if (this.editedProduct.images.length != 0) {
+      if (this.editedProduct.images.length) {
         let a = 0;
         for (let imgName of this.editedProduct.images) {
           let url = this.serverAddr + this.editedProduct.path + imgName;
@@ -866,13 +851,12 @@ export default {
               a++;
             })
             .catch(console.error);
-          console.log(a);
         }
       }
     },
     setChip(chipObj) {
       let { chip, type } = chipObj;
-      let exist = this[type].some((r) => r.product_id == chip._id);
+      let exist = this[type].some((r) => r.product_id === chip._id);
       let msg =
         type === "recomends" ? "рекомендуемых" : '"С этим товаром покупают"';
       if (exist) {

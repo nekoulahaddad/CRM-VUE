@@ -254,27 +254,17 @@
             {{ $t("department") }} <span class="required">*</span>
           </div>
           <div class="group__content">
-            <select
-              required
-              class="form-select"
+            <v-select
+              :options="
+                departments.map((item) => ({
+                  label: item.title,
+                  value: item.value,
+                }))
+              "
               name="department"
-              :value="infoItem ? infoItem.department.value : department"
-              @change="onChange($event)"
-            >
-              <option selected disabled :value="null">
-                {{ $t("department") }}
-              </option>
-              <option
-                v-for="(item, index) in departments"
-                :key="index"
-                :selected="
-                  infoItem ? item.value === infoItem.department.value : false
-                "
-                :value="item.value"
-              >
-                {{ item.title }}
-              </option>
-            </select>
+              v-model="dep"
+              :reduce="(item) => item.value"
+            />
           </div>
         </div>
         <div class="group">
@@ -456,6 +446,9 @@ export default {
   computed: {
     editEmployee() {
       return this.infoItem.options.userEditor;
+    },
+    dep() {
+      return this.infoItem ? this.infoItem.department.value : this.department;
     },
     editRegion() {
       return this.infoItem ? this.infoItem.region.value : this.region;

@@ -125,15 +125,16 @@
     <div class="group">
       <div class="group__title">{{ $t("role") }}</div>
       <div class="group__content">
-        <select
-          class="form-select"
-          :value="infoItem ? infoItem.role : role"
-          @change="onChange($event)"
-        >
-          <option v-for="(role, index) in $t('roles')" :value="index">
-            {{ role }}
-          </option>
-        </select>
+        <v-select
+          :options="
+            $t('roles').map((role, index) => ({
+              label: role,
+              value: index,
+            }))
+          "
+          :reduce="(item) => item.value"
+          v-model="getRole"
+        />
       </div>
     </div>
     <div class="group">
@@ -276,6 +277,9 @@ export default {
   computed: {
     dep() {
       return this.infoItem ? this.infoItem.department.value : this.department;
+    },
+    getRole() {
+      return this.infoItem ? this.infoItem.role : this.role;
     },
   },
   components: { VButton, datetime: Datetime },
