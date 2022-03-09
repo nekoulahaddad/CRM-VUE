@@ -1,5 +1,6 @@
 <template>
   <div class="top-blocks">
+    {{ rev }}
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
         <div class="top-block__title">{{ $t("sales_today") }}</div>
