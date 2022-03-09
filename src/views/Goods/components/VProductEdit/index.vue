@@ -264,18 +264,31 @@
       <div class="group">
         <div class="group__title">Фотографии товара:</div>
         <div class="group__content photo-wrapper">
-          <div v-if="editedProduct.images || images[0] !== 'Выберите файлы'">
-            <img
-              class="product-photo"
-              v-for="item in editedProduct.images"
-              v-if="editedProduct.images && images[0] === 'Выберите файлы'"
-              :src="
-                editedProduct
-                  ? `${serverAddr + editedProduct.path + item}`
-                  : false
-              "
-            />
-          </div>
+          <template
+            v-if="editedProduct.images || images[0] !== 'Выберите файлы'"
+          >
+            <div v-for="(item, index) in editedProduct.images">
+              <img
+                class="product-photo"
+                :key="index"
+                :src="
+                  editedProduct
+                    ? `${serverAddr + editedProduct.path + item}`
+                    : false
+                "
+              />
+            </div>
+          </template>
+          <img
+            alt=""
+            class="product-photo"
+            v-for="(item, index) in tempUrl"
+            :src="item.url"
+            :title="item.name"
+            @click.prevent="downloadItem(item.url, item.name)"
+            :key="index"
+          />
+
           <label class="add-product-photo" for="product-photo">
             <input
               type="file"
@@ -472,7 +485,6 @@ export default {
       let fileBuffer = [];
       Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
       fileBuffer.reverse();
-      console.log(fileBuffer);
       const files = fileBuffer;
       files.sort();
       this[e.target.name] = files;
