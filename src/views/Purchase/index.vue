@@ -159,6 +159,7 @@ export default {
         );
 
         this.dataset = data.dataList;
+        console.log(this.dataset);
         this.count = data.count;
       } catch (e) {
       } finally {

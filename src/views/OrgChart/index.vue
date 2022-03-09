@@ -1,5 +1,5 @@
 <template>
-  <div class="page org-chart-page">
+  <div class="page org-chart-page" v-if="users.length">
     <div
       class="page__header page-header"
       :class="{ 'page-header--collapse': sidebar }"
@@ -134,7 +134,7 @@ export default {
     this.getData(`/user/getuserstree`).then(
       (res) => (this.users = res.data.users)
     );
-    this.getData(`/orgtree/getfirst`).then((res) => {
+    this.getData(`/orgtre/getfirst`).then((res) => {
       this.orgTree = res.data.dataTree || {};
       this.currentTreeId = res.data._id;
     });
