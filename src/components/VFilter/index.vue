@@ -76,17 +76,24 @@
               />
             </div>
           </div>
-          <div class="filter__group group" v-if="role === 'director'">
+          <div
+            class="filter__group group"
+            v-if="role === 'director' || role === 'superadmin'"
+          >
             <div class="group__title">{{ $t("regions") }}</div>
             <div class="group__content">
               <v-select
                 name="targetRegion"
-                :options="
-                  regions.map((region) => ({
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
                     label: region.title,
                     value: region.value,
-                  }))
-                "
+                  })),
+                ]"
                 @input="selectRegion"
                 :reduce="(item) => item.value"
                 v-model="filterOptions.region"
