@@ -5,7 +5,6 @@
         Проданное количество товаров за
         {{ months[new Date().getMonth()] }}:
       </div>
-      {{ sales }}
       <VLineChart
         v-if="Object.keys(sales).length"
         :width="0"
