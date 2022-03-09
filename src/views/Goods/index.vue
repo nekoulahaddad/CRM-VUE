@@ -70,6 +70,15 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
+        <div class="list list__shadow">
+          <div
+            v-if="addProduct"
+            class="list__row list__row--shadow list__row--transparent"
+          >
+            <v-product-add :region="filtersOptions.region" />
+          </div>
+        </div>
+
         <div class="scroll-horizontal">
           <div class="list list-shadow">
             <div
@@ -239,8 +248,6 @@
           </div>
         </div>
 
-        <v-product-edit :region="filtersOptions.region" v-if="addProduct" />
-
         <template v-if="isLoading && filtersOptions.region">
           <template v-if="dataset.products.length">
             <div class="scroll-horizontal">
@@ -368,6 +375,7 @@ import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
 import VProductsMove from "./components/VProductsMove";
+import VProductAdd from "./components/VProductAdd";
 import VProductEdit from "./components/VProductEdit";
 import VCreateGroup from "./components/VCreateGroup";
 import VCategoryAdd from "./components/VCategoryAdd";
@@ -412,6 +420,7 @@ export default {
     VNotFoundQuery,
     VProductEdit,
     Draggable,
+    VProductAdd,
     VGroupDelete,
     VCategoryAdd,
     VPageHeader,
