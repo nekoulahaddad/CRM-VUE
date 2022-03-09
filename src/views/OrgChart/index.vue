@@ -131,10 +131,11 @@ export default {
     },
   },
   created() {
-    this.getData(`/user/getuserstree`).then(
-      (res) => (this.users = res.data.users)
-    );
-    this.getData(`/orgtre/getfirst`).then((res) => {
+    this.getData(`/user/getuserstree`)
+      .then
+      //(res) => (this.users = res.data.users)
+      ();
+    this.getData(`/orgtree/getfirst`).then((res) => {
       this.orgTree = res.data.dataTree || {};
       this.currentTreeId = res.data._id;
     });

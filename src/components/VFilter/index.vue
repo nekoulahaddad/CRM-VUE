@@ -823,7 +823,7 @@
             </button>
             <v-button
               @click="$modal.show('regionEdit')"
-              v-if="showEditButton"
+              v-if="showEditButton && false"
               white
             >
               Редактировать регион
