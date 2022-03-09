@@ -35,8 +35,9 @@
             <!-- Топ продаваемых продуктов -->
             <v-top-products :items="popularItems" />
             <div class="d-flex flex-column">
+              <!-- График -->
               <v-chart :sales="sales" :ordersForMonth="ordersForMonth" />
-              <!-- Обучение -->
+              <!-- Документы -->
               <v-learn />
             </div>
           </div>

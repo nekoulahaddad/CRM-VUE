@@ -83,9 +83,9 @@
                         text-overflow: ellipsis;
                       "
                     >
-                      {{ document }}
+                      {{ document.name || document }}
                     </span>
-                    <div>
+                    <div v-if="!document.name">
                       <img src="@/assets/icons/download_icon.svg" alt="" />
                     </div>
                   </div>
@@ -360,6 +360,7 @@ export default {
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files;
+      console.log(this[e.target.name]);
     },
     cancel() {
       this.$modal.hide("editTask");
@@ -470,6 +471,7 @@ export default {
         this.department = this.task.executor.department[0].title;
 
         if (this.task.documents.length) {
+          console.log(this.task.documents);
           this.documents = this.task.documents;
         }
 
@@ -568,6 +570,7 @@ export default {
     }
     .group__document {
       width: 390px;
+      justify-content: space-between;
       display: flex;
       justify-content: center;
       height: 40px;
