@@ -44,7 +44,7 @@
         <div class="top-block__title">Продажи за текущий месяц:</div>
         <div class="top-block__value">
           {{
-            rev.today
+            rev.month
               ? new Intl.NumberFormat("ru-RU", {
                   style: "currency",
                   currency: "RUB",
