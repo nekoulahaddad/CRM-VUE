@@ -91,8 +91,10 @@
                 <simple-svg :src="require('@/assets/icons/add_category.svg')" />
               </a>
             </VueCustomTooltip>
-
-            <VueCustomTooltip label="Добавить товар">
+            <VueCustomTooltip
+              v-if="$store.state.filterOptions.nesting > 1"
+              label="Добавить товар"
+            >
               <a
                 href=""
                 class="page-actions__button"

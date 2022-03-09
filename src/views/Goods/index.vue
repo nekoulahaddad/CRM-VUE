@@ -1073,6 +1073,7 @@ export default {
     },
   },
   async created() {
+    this.$store.commit("setFilterOptions", this.filtersOptions);
     this.$store.commit("deactivateAction", "importGoods");
     this.$store.commit("deactivateAction", "addGoodsCategory");
     try {
