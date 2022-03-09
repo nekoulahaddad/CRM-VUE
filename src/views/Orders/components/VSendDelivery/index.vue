@@ -63,7 +63,7 @@
       <div class="group">
         <div class="group__title">Описание:</div>
         <div class="group__content">
-          <textarea class="form-textarea" />
+          <textarea v-model="message" class="form-textarea" />
         </div>
       </div>
 
@@ -213,8 +213,8 @@ export default {
           status: this.status,
           category: this.category,
           region: this.editedItem.region,
-          message: this.editedItem.message,
-          comment: this.editedItem.comment,
+          message: this.message,
+          comment: this.comment,
           orderNumber: this.editedItem.orderNumber,
           orderId: this.editedItem.orderId,
           products: this.editedItem
