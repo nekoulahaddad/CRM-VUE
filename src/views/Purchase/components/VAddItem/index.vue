@@ -3,7 +3,7 @@
     class="list__row list__row--shadow list__row--white list__row--opened add-purchase-row"
   >
     <div class="list__columns list__columns--shadow list__columns--white">
-      <div class="list__column list__column--title">
+      <div class="list__column list__column--title add-purchase-row__title">
         Добавить закупку
 
         <img
@@ -39,8 +39,9 @@ export default {
   }
   &__close {
     cursor: pointer;
-    right: 10px;
-    top: 13px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     position: absolute;
   }
 
