@@ -19,6 +19,8 @@
                 value: item._id,
               })),
             ]"
+            :reduce="(item) => item.value"
+            @input="onChange"
           />
         </div>
       </div>
@@ -75,13 +77,13 @@ export default {
     };
   },
   methods: {
-    onChange(e) {
+    onChange(managerId) {
       axios({
-        url: process.env.VUE_APP_DEVELOP_URL + `/stats/getcallbacks/`,
+        url: `/stats/getcallbacks/`,
         data: {
           startDate: this.startDate,
           endDate: this.endDate,
-          managerId: e.target.value,
+          managerId,
         },
         method: "POST",
       }).then(this.updateCallbacks);
