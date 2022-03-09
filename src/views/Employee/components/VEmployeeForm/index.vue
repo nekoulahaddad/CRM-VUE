@@ -263,6 +263,7 @@
               "
               name="department"
               v-model="dep"
+              @input="onChange($event)"
               :reduce="(item) => item.value"
             />
           </div>
@@ -285,18 +286,19 @@
             {{ $t("role") }} <span class="required">*</span>
           </div>
           <div class="group__content">
-            <select
-              required
+            {{ infoItem }}
+            <v-select
+              :options="
+                Object.entries($t('roles')).map(([role, key]) => ({
+                  label: key,
+                  value: role,
+                }))
+              "
               name="role"
-              class="form-select"
-              :value="infoItem ? infoItem.role : role"
-              @change="onChange($event)"
-            >
-              <option disabled selected :value="null">{{ $t("role") }}</option>
-              <option v-for="(role, index) in $t('roles')" :value="index">
-                {{ role }}
-              </option>
-            </select>
+              v-model="infoItem.role"
+              :reduce="(item) => item.value"
+              @input="role = $event"
+            />
           </div>
         </div>
         <div class="group">
@@ -669,7 +671,11 @@ export default {
     axios({
       url: "/departments/all",
     }).then(({ data }) => {
-      this.departments = data;
+      data.map((item) => {
+        if (!this.departments.includes(item)) {
+          this.departments.push(item);
+        }
+      });
     });
   },
 };

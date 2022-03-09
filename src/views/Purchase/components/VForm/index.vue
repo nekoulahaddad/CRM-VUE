@@ -28,17 +28,6 @@
         </div>
 
         <div class="group">
-          <div class="group__title">Категория:</div>
-          <div class="group__content">
-            <input
-              required
-              class="form-control"
-              type="text"
-              placeholder="Введите название категории..."
-            />
-          </div>
-        </div>
-        <div class="group">
           <div class="group__title">Товары:</div>
           <div class="group__content">
             <textarea
@@ -76,6 +65,24 @@
               :reduce="(item) => item.value"
               v-model="region"
             />
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group__title">Категория:</div>
+          <div class="group__content">
+            <autocomplete
+              :disabled="!region"
+              :search="getCategoriesBySearch"
+              :get-result-value="getResultValue"
+              placeholder="Введите название категории..."
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectCategory(result)">
+                  {{ result.categoryName }}
+                </li>
+              </template>
+            </autocomplete>
           </div>
         </div>
       </div>
@@ -164,6 +171,31 @@ export default {
     };
   },
   methods: {
+    selectCategory(category) {
+      this.category = category;
+      this.currentInput = "";
+    },
+    getResultValue(result) {
+      return result.categoryName;
+    },
+    getCategoriesBySearch(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios({
+          url: `/categories/getcategoriesbysearch/`,
+          data: {
+            title: input,
+            region: this.region,
+          },
+          method: "POST",
+        }).then((res) => {
+          resolve(res.data.views);
+        });
+      });
+    },
     onCreate() {
       if (!this.region) {
         this.$toast.error("Укажите регион!", "Ошибка");
@@ -317,6 +349,12 @@ export default {
 
 <style lang="scss">
 .purchase-form {
+  .autocomplete-input {
+    width: 401px;
+    &[disabled] {
+      opacity: 0.7;
+    }
+  }
   .form-control {
   }
   .form-textarea {

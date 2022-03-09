@@ -127,13 +127,14 @@
       <div class="group__content">
         <v-select
           :options="
-            $t('roles').map((role, index) => ({
-              label: role,
-              value: index,
+            Object.entries($t('roles')).map(([role, key]) => ({
+              label: key,
+              value: role,
             }))
           "
+          v-model="infoItem.role"
           :reduce="(item) => item.value"
-          v-model="getRole"
+          @input="onChange($event)"
         />
       </div>
     </div>

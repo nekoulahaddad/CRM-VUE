@@ -151,6 +151,7 @@ export default {
       try {
         this.isLoading = false;
         this.filtersOptions.page = this.$route.params.page;
+        this.filtersOptions.initiator = null;
 
         const { data } = await this.getDataFromPage(
           `/purchase/get`,
