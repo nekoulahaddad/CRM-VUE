@@ -51,7 +51,7 @@ export default {
           url: `/products/delete`,
           data: {
             productId: this.deletedItem._id,
-            region: this.deletedItem.region,
+            region: this.region,
           },
           method: "POST",
         })
