@@ -1085,6 +1085,10 @@ export default {
 @import "@/styles/_variables";
 
 .goods-page {
+  .draggable-item .table__actions img {
+    top: auto !important;
+  }
+
   .list__header {
     .list__columns {
       grid-template-columns: 50px 750px 100px 1fr;
