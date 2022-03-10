@@ -83,7 +83,7 @@
                         text-overflow: ellipsis;
                       "
                     >
-                      {{ document.name || document }}
+                      {{ document.name || document.filename }}
                     </span>
                     <div v-if="!document.name">
                       <img src="@/assets/icons/download_icon.svg" alt="" />
