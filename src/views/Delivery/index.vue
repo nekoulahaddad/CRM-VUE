@@ -14,7 +14,7 @@
           <div class="page__icon">
             <img :src="require(`@/assets/icons/delivery_title.svg`)" alt="" />
           </div>
-          <div class="page__buttons">
+          <div v-if="false" class="page__buttons">
             <v-button red>Поставщики</v-button>
             <v-button white>Карта поставщиков</v-button>
           </div>
