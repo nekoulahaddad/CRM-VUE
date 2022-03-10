@@ -4,7 +4,9 @@
       <div class="d-flex justify-content-between">
         <div style="margin-right: 12px" class="flex-1">
           <div class="group">
-            <div class="group__title">Название товара:</div>
+            <div class="group__title">
+              Название товара: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 class="form-control"
@@ -12,8 +14,11 @@
                 placeholder="Введите название товара"
                 maxlength="100"
                 name="title"
-                :value="title"
                 @input="onChange($event)"
+                v-model.trim="$v.title.$model"
+                :class="{
+                  'form-control--error': $v.title.$error,
+                }"
               />
             </div>
           </div>
@@ -34,7 +39,9 @@
           </div>
 
           <div class="group">
-            <div class="group__title">Цена:</div>
+            <div class="group__title">
+              Цена: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 class="form-control"
@@ -44,7 +51,10 @@
                 required
                 name="cost"
                 step="0.01"
-                :value="cost"
+                v-model="$v.cost.$model"
+                :class="{
+                  'form-control--error': $v.cost.$error,
+                }"
                 @input="onChange($event)"
               />
             </div>
@@ -220,7 +230,9 @@
           </div>
 
           <div class="group">
-            <div class="group__title">Единица измерения:</div>
+            <div class="group__title">
+              Единица измерения: <span class="required">*</span>
+            </div>
             <div class="group__content">
               <input
                 class="form-control"
@@ -228,8 +240,11 @@
                 placeholder="за м2"
                 maxlength="50"
                 name="unit"
-                v-model="unit"
                 @input="onChange($event)"
+                v-model="$v.unit.$model"
+                :class="{
+                  'form-control--error': $v.unit.$error,
+                }"
               />
             </div>
           </div>
@@ -304,6 +319,7 @@
 
 <script>
 import axios from "@/api/axios";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   props: {
@@ -315,6 +331,17 @@ export default {
       type: Object,
       required: false,
       default: null,
+    },
+  },
+  validations: {
+    cost: {
+      required,
+    },
+    title: {
+      required,
+    },
+    unit: {
+      required,
     },
   },
   data() {
