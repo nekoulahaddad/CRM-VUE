@@ -358,6 +358,8 @@
                     @toggleDeleteGroupProduct="toggleDeleteGroupProduct"
                   />
                 </div>
+
+                <v-pagination v-if="dataset.products.length" :count="count" />
               </div>
             </div>
           </template>
@@ -373,6 +375,7 @@ import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
 import VProductMove from "./components/VProductMove";
 import VProductsMove from "./components/VProductsMove";
+import VPagination from "@/components/VPagination";
 import VProductAdd from "./components/VProductAdd";
 import VProductEdit from "./components/VProductEdit";
 import VCreateGroup from "./components/VCreateGroup";
@@ -424,6 +427,7 @@ export default {
     VPageHeader,
     VEditCategory,
     Container,
+    VPagination,
     VCategoryImport,
     VDeleteProduct,
     VProductMove,

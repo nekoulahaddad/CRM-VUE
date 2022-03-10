@@ -18,7 +18,6 @@
             hidden
             type="file"
             id="document-file"
-            accept=".xlsx, .xls"
             name="fileImport"
             @change="fileUpload($event)"
           />
