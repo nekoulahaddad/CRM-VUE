@@ -576,7 +576,14 @@ export default {
         "cost",
         this.cost !== null ? this.cost : this.editedProduct.cost
       );
-      productData.append("club_cost", this.club_cost);
+      if (this.club_cost) {
+        productData.append(
+          "club_cost",
+          this.club_cost !== null
+            ? this.club_cost
+            : this.editedProduct.club_cost
+        );
+      }
       if (this.supplier_article) {
         productData.append(
           "supplier_article",
