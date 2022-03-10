@@ -13,372 +13,303 @@
             />
           </div>
           <form @submit.prevent="onProductAdd">
-            <div class="group">
-              <div class="group__title">Название товара:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Введите название товара"
-                  maxlength="100"
-                  name="title"
-                  :value="title"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Артикул поставщика:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Введите артикул поставщика..."
-                  maxlength="50"
-                  name="supplier_article"
-                  :value="supplier_article"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Цена:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="0.00"
-                  min="0"
-                  required
-                  name="cost"
-                  step="0.01"
-                  :value="cost"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group d-flex">
-              <div class="group__title">Оптовая цена:</div>
-              <div class="group__content" style="margin-left: 10px">
-                <toggle-button
-                  color="#db1f35"
-                  :value="wholesale"
-                  :sync="true"
-                  @change="wholesale = !wholesale"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Клубная цена:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="Введите клубную цену..."
-                  min="0"
-                  name="club_cost"
-                  step="0.01"
-                  :value="club_cost"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group d-flex">
-              <div class="group__title">Скидка:</div>
-              <div class="group__content" style="margin-left: 10px">
-                <toggle-button
-                  color="#db1f35"
-                  :value="discount"
-                  :sync="true"
-                  @change="discount = !discount"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Цена со скидкой:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="0.00"
-                  min="0"
-                  step="0.01"
-                  name="discount_price"
-                  :value="discount_price"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">РРЦ:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="Введите РРЦ..."
-                  min="0"
-                  name="rrp"
-                  step="0.01"
-                  :value="rrp"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Цена закупки:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="Введите цену закупки"
-                  min="0"
-                  name="purchase_cost"
-                  step="0.01"
-                  :value="purchase_cost"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Наценка (%):</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="Введите наценку..."
-                  min="0"
-                  name="margin"
-                  step="0.01"
-                  :value="margin"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Стоп цена:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="Введите цену..."
-                  min="0"
-                  name="stop_cost"
-                  step="0.01"
-                  :value="stop_cost"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Единица измерения:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="за м2"
-                  maxlength="50"
-                  name="unit"
-                  v-model="unit"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Кол-во в упаковке:</div>
-              <div class="group__content">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="Введите кол-во в упаковке..."
-                  min="0"
-                  step="0.01"
-                  name="coef"
-                  :value="coef"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Описание:</div>
-              <div class="group__content">
-                <textarea
-                  class="form-textarea"
-                  maxlength="3000"
-                  placeholder="Введите описание товара..."
-                  name="description"
-                  :value="description"
-                  @input="onChange($event)"
-                />
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">Свойства товара:</div>
-              <div class="group__content flex-column">
-                <div
-                  v-if="length"
-                  v-for="index of length"
-                  :key="index"
-                  class="d-flex property"
-                >
-                  <input
-                    type="text"
-                    placeholder="Свойство"
-                    required
-                    :name="'option' + index"
-                    :value="
-                      getKeyByIndex(index) !== 'new' ? getKeyByIndex(index) : ''
-                    "
-                    @change="
-                      getKeyByIndex(index) !== 'new'
-                        ? onUpdate($event, index)
-                        : onChange($event, index)
-                    "
-                  />
-                  <input
-                    type="text"
-                    placeholder="Значение"
-                    required
-                    :name="'param' + index"
-                    :value="getValueByIndex(index) || ''"
-                    @change="onChange($event, index)"
-                  />
-                  <VueCustomTooltip label="Удалить">
-                    <img
-                      @click="deleteOption(index)"
-                      src="@/assets/icons/trash_icon.svg"
-                      alt=""
+            <div class="d-flex justify-content-between">
+              <div style="margin-right: 12px" class="flex-1">
+                <div class="group">
+                  <div class="group__title">Название товара:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Введите название товара"
+                      maxlength="100"
+                      name="title"
+                      :value="title"
+                      @input="onChange($event)"
                     />
-                  </VueCustomTooltip>
+                  </div>
                 </div>
-              </div>
-              <div class="group__footer">
-                <span class="btn" @click="addOption">Добавить свойство</span>
-              </div>
-            </div>
 
-            <div class="group">
-              <div class="group__title">Фотографии товара:</div>
-              <div class="group__content photo-wrapper">
-                <template v-if="images.length > 0">
-                  <img
-                    alt=""
-                    class="product-photo"
-                    v-for="(item, index) in tempUrl"
-                    :src="item.url"
-                    :title="item.name"
-                    @click.prevent="downloadItem(item.url, item.name)"
-                    :key="index"
-                  />
-                </template>
+                <div class="group">
+                  <div class="group__title">Артикул поставщика:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Введите артикул поставщика..."
+                      maxlength="50"
+                      name="supplier_article"
+                      :value="supplier_article"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
 
-                <label
-                  v-if="images.length < 3"
-                  class="add-product-photo"
-                  for="product-photo"
-                >
-                  <input
-                    type="file"
-                    hidden
-                    id="product-photo"
-                    multiple
-                    name="imagesTemp"
-                    @change="fileUpload($event, false)"
-                  />
-                  <img src="@/assets/icons/add_photo.svg" alt="" />
-                  <span>Нажмите чтобы выбрать</span>
-                </label>
-              </div>
-            </div>
+                <div class="group">
+                  <div class="group__title">Цена:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="0.00"
+                      min="0"
+                      required
+                      name="cost"
+                      step="0.01"
+                      :value="cost"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
 
-            <div class="group">
-              <div class="group__title">Рекомендуемый товар:</div>
-              <div class="group__recomends">
-                <div
-                  class="group__recomend"
-                  v-for="(chip, index) in recomends"
-                  :key="chip.label"
-                >
-                  <span>{{ chip.title }}</span>
-                  <div>
-                    <VueCustomTooltip label="Удалить">
+                <div class="group d-flex">
+                  <div class="group__title">Оптовая цена:</div>
+                  <div class="group__content" style="margin-left: 10px">
+                    <toggle-button
+                      color="#db1f35"
+                      :value="wholesale"
+                      :sync="true"
+                      @change="wholesale = !wholesale"
+                    />
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">Клубная цена:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Введите клубную цену..."
+                      min="0"
+                      name="club_cost"
+                      step="0.01"
+                      :value="club_cost"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="group d-flex">
+                  <div class="group__title">Скидка:</div>
+                  <div class="group__content" style="margin-left: 10px">
+                    <toggle-button
+                      color="#db1f35"
+                      :value="discount"
+                      :sync="true"
+                      @change="discount = !discount"
+                    />
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">Цена со скидкой:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="0.00"
+                      min="0"
+                      step="0.01"
+                      name="discount_price"
+                      :value="discount_price"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">Описание:</div>
+                  <div class="group__content">
+                    <textarea
+                      class="form-textarea"
+                      maxlength="3000"
+                      placeholder="Введите описание товара..."
+                      name="description"
+                      :value="description"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="group" style="margin-top: 10px">
+                  <div class="group__title">Фотографии товара:</div>
+                  <div class="group__content photo-wrapper">
+                    <template v-if="images.length > 0">
                       <img
                         alt=""
-                        src="@/assets/icons/trash_icon.svg"
-                        @click="deleteChip(index)"
+                        class="product-photo"
+                        v-for="(item, index) in tempUrl"
+                        :src="item.url"
+                        :title="item.name"
+                        @click.prevent="downloadItem(item.url, item.name)"
+                        :key="index"
                       />
-                    </VueCustomTooltip>
+                    </template>
+
+                    <label
+                      v-if="images.length < 3"
+                      class="add-product-photo"
+                      for="product-photo"
+                    >
+                      <input
+                        type="file"
+                        hidden
+                        id="product-photo"
+                        multiple
+                        name="imagesTemp"
+                        @change="fileUpload($event, false)"
+                      />
+                      <img src="@/assets/icons/add_photo.svg" alt="" />
+                      <span>Нажмите чтобы выбрать</span>
+                    </label>
                   </div>
                 </div>
               </div>
-              <div class="group__content">
-                <autocomplete
-                  style="width: 100%"
-                  :search="findChips"
-                  :get-result-value="getResult"
-                  placeholder="Введите артикул или название......"
-                >
-                  <template #result="{ result, props }">
-                    <li
-                      v-bind="props"
-                      @click="setChip({ chip: result, type: 'recomends' })"
-                    >
-                      {{ result.title }}
-                    </li>
-                  </template>
-                </autocomplete>
-              </div>
-            </div>
-
-            <div class="group">
-              <div class="group__title">С этим товаром покупают:</div>
-              <div class="group__recomends">
-                <div
-                  class="group__recomend"
-                  v-for="(chip, index) in buyed"
-                  :key="chip.label"
-                >
-                  <span>{{ chip.title }}</span>
-                  <div>
-                    <VueCustomTooltip label="Удалить">
-                      <img
-                        alt=""
-                        src="@/assets/icons/trash_icon.svg"
-                        @click="deleteChipBuyed(index)"
-                      />
-                    </VueCustomTooltip>
+              <div style="margin-left: 12px" class="flex-1">
+                <div class="group">
+                  <div class="group__title">РРЦ:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Введите РРЦ..."
+                      min="0"
+                      name="rrp"
+                      step="0.01"
+                      :value="rrp"
+                      @input="onChange($event)"
+                    />
                   </div>
                 </div>
-              </div>
-              <div class="group__content">
-                <autocomplete
-                  style="width: 100%"
-                  :search="findChips"
-                  :get-result-value="getResult"
-                  placeholder="Введите артикул или название......"
-                >
-                  <template #result="{ result, props }">
-                    <li
-                      v-bind="props"
-                      @click="setChip({ chip: result, type: 'buyed' })"
+
+                <div class="group">
+                  <div class="group__title">Цена закупки:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Введите цену закупки"
+                      min="0"
+                      name="purchase_cost"
+                      step="0.01"
+                      :value="purchase_cost"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">Наценка (%):</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Введите наценку..."
+                      min="0"
+                      name="margin"
+                      step="0.01"
+                      :value="margin"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">Стоп цена:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Введите цену..."
+                      min="0"
+                      name="stop_cost"
+                      step="0.01"
+                      :value="stop_cost"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">Единица измерения:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="за м2"
+                      maxlength="50"
+                      name="unit"
+                      v-model="unit"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">Кол-во в упаковке:</div>
+                  <div class="group__content">
+                    <input
+                      class="form-control"
+                      type="number"
+                      placeholder="Введите кол-во в упаковке..."
+                      min="0"
+                      step="0.01"
+                      name="coef"
+                      :value="coef"
+                      @input="onChange($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">Свойства товара:</div>
+                  <div class="group__content flex-column">
+                    <div
+                      v-if="length"
+                      v-for="index of length"
+                      :key="index"
+                      class="d-flex property"
                     >
-                      {{ result.title }}
-                    </li>
-                  </template>
-                </autocomplete>
+                      <input
+                        type="text"
+                        placeholder="Свойство"
+                        required
+                        :name="'option' + index"
+                        :value="
+                          getKeyByIndex(index) !== 'new'
+                            ? getKeyByIndex(index)
+                            : ''
+                        "
+                        @change="
+                          getKeyByIndex(index) !== 'new'
+                            ? onUpdate($event, index)
+                            : onChange($event, index)
+                        "
+                      />
+                      <input
+                        type="text"
+                        placeholder="Значение"
+                        required
+                        :name="'param' + index"
+                        :value="getValueByIndex(index) || ''"
+                        @change="onChange($event, index)"
+                      />
+                      <VueCustomTooltip label="Удалить">
+                        <img
+                          @click="deleteOption(index)"
+                          src="@/assets/icons/trash_icon.svg"
+                          alt=""
+                        />
+                      </VueCustomTooltip>
+                    </div>
+                  </div>
+                  <div class="group__footer">
+                    <span class="btn" @click="addOption"
+                      >Добавить свойство</span
+                    >
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -713,14 +644,7 @@ export default {
           return;
         }
       }
-      if (this.wholesale) {
-        productData.append(
-          "wholesale",
-          this.wholesale !== null
-            ? this.wholesale
-            : this.editedProduct.wholesale
-        );
-      }
+      productData.append("wholesale", this.wholesale);
       if (this.coef) {
         productData.append(
           "coef",
@@ -969,8 +893,14 @@ export default {
       margin-right: 10px;
     }
 
+    span {
+      position: relative;
+      top: 10px;
+      left: 5px;
+    }
+
     input {
-      width: 401px;
+      min-width: 200px;
       & + input {
         margin-left: 10px;
       }
