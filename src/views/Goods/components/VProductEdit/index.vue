@@ -703,29 +703,10 @@ export default {
           data: productData,
           method: "POST",
         })
-          .then((res) => {
+          .then(() => {
             this.$emit("refreshGoods");
             this.$toast.success("Товар успешно изменен!");
             this.$emit("toggleEdit", this.editedProduct);
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          });
-      } else {
-        axios({
-          url: `/products/post/`,
-          data: productData,
-          method: "POST",
-        })
-          .then(async (res) => {
-            let result = await res;
-            if (result.data.exist) {
-              this.$toast.success("Товар уже существует!");
-            } else {
-              this.$emit("addProduct", result.data.product);
-              this.$toast.success("Товар успешно добавлен!");
-              this.$emit("toggleOpen");
-            }
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
