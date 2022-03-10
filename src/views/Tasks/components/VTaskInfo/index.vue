@@ -35,7 +35,7 @@
               class="documents__item"
               @click.prevent="downloadItem(serverAddr + `${photo}`, photo)"
             >
-              <span>{{ photo }}</span>
+              <span>{{ photo.filename }}</span>
               <img src="@/assets/icons/download_icon.svg" alt="" />
             </div>
           </div>
