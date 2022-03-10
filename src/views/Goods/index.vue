@@ -70,14 +70,8 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <div class="list list__shadow">
-          <div
-            v-if="addProduct"
-            class="list__row list__row--shadow list__row--white"
-          >
-            <v-product-add :region="filtersOptions.region" />
-          </div>
-        </div>
+        <!-- Блок добавления нового продукта -->
+        <v-product-add v-if="addProduct" :region="filtersOptions.region" />
 
         <div class="scroll-horizontal">
           <div class="list list-shadow">
