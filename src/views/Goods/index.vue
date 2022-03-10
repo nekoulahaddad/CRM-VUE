@@ -578,6 +578,12 @@ export default {
       this.filtersOptions.type = this.$route.params.type;
       this.changeOrder = false;
       this.downloadExcelFile = true;
+      this.$store.commit("setAction", { key: "addProduct", value: false });
+      this.$store.commit("setAction", {
+        key: "addGoodsCategory",
+        value: false,
+      });
+
       if (this.$route.params.type !== "search") {
         try {
           this.filtersOptions.page = this.$route.params.page;

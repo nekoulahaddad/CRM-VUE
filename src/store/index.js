@@ -91,6 +91,9 @@ export default new Vuex.Store({
     setCreateGroup(state, payload) {
       state.actions.createGroup = payload;
     },
+    setAction(state, payload) {
+      state.actions[payload.key] = payload.value;
+    },
     toggleAction(state, payload) {
       state.actions[payload.key] = !state.actions[payload.key];
     },
