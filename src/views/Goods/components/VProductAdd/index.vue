@@ -1,7 +1,15 @@
 <template>
-  <div class="list__info list-info product-edit-form">
+  <div class="list__info list-info product-add-form">
+    <div class="product-add-form__title">
+      Создать товар:
+      <img
+        @click="$store.commit('toggleAction', { key: 'addProduct' })"
+        class="close"
+        src="@/assets/icons/close_icon.svg"
+        alt=""
+      />
+    </div>
     <form @submit.prevent="onProductAdd">
-      <div class="product-edit-form__title text--blue">Создать товар:</div>
       <div class="group">
         <div class="group__title">Название товара:</div>
         <div class="group__content">
@@ -916,12 +924,35 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
-.product-edit-form {
+.product-add-form {
+  padding: 0;
+
+  form {
+    padding: 10px;
+  }
+
   &__title {
+    background-color: $color-gray-secondary;
+    padding: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: $border-radius;
+    position: relative;
+
     &.text--blue {
       font-weight: 700;
       font-size: 16px;
       margin-bottom: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
     }
   }
   .property {

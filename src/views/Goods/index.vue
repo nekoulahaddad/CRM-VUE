@@ -73,7 +73,7 @@
         <div class="list list__shadow">
           <div
             v-if="addProduct"
-            class="list__row list__row--shadow list__row--transparent"
+            class="list__row list__row--shadow list__row--white"
           >
             <v-product-add :region="filtersOptions.region" />
           </div>
