@@ -7,6 +7,7 @@
         :key="index"
       >
         <div class="item__title">{{ product.title }}</div>
+        <div class="item__article">{{ product.article }}</div>
         <div class="item__action">
           <div class="table__actions">
             <div class="table__icon">
