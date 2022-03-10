@@ -71,7 +71,11 @@
         }"
       >
         <!-- Блок добавления нового продукта -->
-        <v-product-add v-if="addProduct" :region="filtersOptions.region" />
+        <v-product-add
+          v-if="addProduct"
+          :region="filtersOptions.region"
+          @refreshGoods="refreshGoods"
+        />
 
         <div class="scroll-horizontal">
           <div class="list list-shadow">
