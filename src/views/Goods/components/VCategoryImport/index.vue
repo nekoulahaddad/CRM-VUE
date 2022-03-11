@@ -41,7 +41,10 @@ import VButton from "@/components/VButton";
 import VSpinner from "@/components/VSpinner";
 
 export default {
-  props: ["region", "category"],
+  props: {
+    region: String,
+    category: Object,
+  },
   data() {
     return {
       categoryName: "",
@@ -75,9 +78,15 @@ export default {
       }
       this.start = true;
 
+      const category =
+        this.category && this.category._id
+          ? this.category._id
+          : this.$route.params.type === "categories" &&
+            this.$route.params.parent_value;
+
       let categoryData = new FormData();
       categoryData.append("region", this.region);
-      categoryData.append("category_id", this.category._id);
+      categoryData.append("category_id", category);
       categoryData.append("document", this.fileImport);
 
       this.changeStatus(false);
@@ -98,6 +107,9 @@ export default {
           this.start = false;
         });
     },
+  },
+  created() {
+    console.log(this.$route);
   },
 };
 </script>
