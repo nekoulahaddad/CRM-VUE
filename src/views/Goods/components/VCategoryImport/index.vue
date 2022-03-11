@@ -79,7 +79,7 @@ export default {
       this.start = true;
 
       const category = !this.local
-        ? false
+        ? undefined
         : this.$route.params.type === "categories" &&
           this.$route.params.parent_value;
 
@@ -95,6 +95,7 @@ export default {
       })
         .then(() => {
           this.$toast.success("Товары обновлены!");
+          this.$emit("refreshGoods");
 
           if (this.local) {
             this.$emit("toggleCategoryImport", { _id: category });

@@ -160,6 +160,7 @@
             <v-category-import
               :local="false"
               v-if="importGoods"
+              @refreshGoods="refreshGoods"
               :region="filtersOptions.region"
               @toggleCategoryImport="toggleCategoryImport"
             />
@@ -242,6 +243,7 @@
                   :local="true"
                   v-if="categoryImportItem._id === item._id"
                   :region="filtersOptions.region"
+                  @refreshGoods="refreshGoods"
                   @toggleCategoryImport="toggleCategoryImport"
                 />
 
