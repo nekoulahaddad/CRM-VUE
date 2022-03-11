@@ -160,7 +160,6 @@
             <v-category-import
               v-if="importGoods"
               :region="filtersOptions.region"
-              :category="category"
             />
 
             <div v-if="!filtersOptions.region">Выберите регион</div>
@@ -240,7 +239,6 @@
                 <v-category-import
                   v-if="categoryImportItem._id === item._id"
                   :region="filtersOptions.region"
-                  :category="category"
                 />
 
                 <!-- Менеджер -->
