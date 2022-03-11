@@ -14,12 +14,7 @@
       <div class="group">
         <div class="group__title">Файл:</div>
         <div class="group__document" v-if="fileImport">
-          <span>{{ fileImport.name }}</span>
-          <img
-            alt=""
-            @click="fileImport = null"
-            src="@/assets/icons/trash_icon.svg"
-          />
+          <span class="word-break">{{ fileImport.name }}</span>
         </div>
         <div class="group__content">
           <input
@@ -171,6 +166,13 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 10px;
+
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: normal;
+    }
   }
 }
 </style>
