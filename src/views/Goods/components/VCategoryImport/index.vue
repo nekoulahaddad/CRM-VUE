@@ -13,11 +13,20 @@
 
       <div class="group">
         <div class="group__title">Файл:</div>
+        <div class="group__document" v-if="fileImport">
+          <span>{{ fileImport.name }}</span>
+          <img
+            alt=""
+            @click="fileImport = null"
+            src="@/assets/icons/trash_icon.svg"
+          />
+        </div>
         <div class="group__content">
           <input
             hidden
             type="file"
             id="document-file"
+            accept=".xlsx, .xls"
             name="fileImport"
             @change="fileUpload($event)"
           />
@@ -150,6 +159,18 @@ export default {
     color: $color-black;
     font-size: 16px;
     position: relative;
+  }
+  .group__document {
+    width: 401px;
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 33px;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
   }
 }
 </style>
