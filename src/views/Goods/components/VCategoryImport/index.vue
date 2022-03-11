@@ -43,7 +43,7 @@ import VSpinner from "@/components/VSpinner";
 export default {
   props: {
     region: String,
-    category: Object,
+    local: Boolean,
   },
   data() {
     return {
@@ -99,7 +99,12 @@ export default {
       })
         .then(() => {
           this.$toast.success("Товары обновлены!");
-          this.$store.commit("toggleAction", { key: "importGoods" });
+
+          if (this.local) {
+            this.$emit("toggleCategoryImport", { _id: category });
+          } else {
+            this.$store.commit("toggleAction", { key: "importGoods" });
+          }
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);

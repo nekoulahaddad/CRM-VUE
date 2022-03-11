@@ -158,8 +158,10 @@
 
             <!-- Блок импорта -->
             <v-category-import
+              :local="false"
               v-if="importGoods"
               :region="filtersOptions.region"
+              @toggleCategoryImport="toggleCategoryImport"
             />
 
             <div v-if="!filtersOptions.region">Выберите регион</div>
@@ -237,8 +239,10 @@
 
                 <!-- Блок импорта -->
                 <v-category-import
+                  :local="true"
                   v-if="categoryImportItem._id === item._id"
                   :region="filtersOptions.region"
+                  @toggleCategoryImport="toggleCategoryImport"
                 />
 
                 <!-- Менеджер -->
