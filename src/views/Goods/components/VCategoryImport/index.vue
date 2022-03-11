@@ -78,11 +78,10 @@ export default {
       }
       this.start = true;
 
-      const category =
-        this.$route.params.type === "categories" &&
-        this.$route.params.parent_value
-          ? this.$route.params.parent_value
-          : false;
+      const category = !this.local
+        ? false
+        : this.$route.params.type === "categories" &&
+          this.$route.params.parent_value;
 
       let categoryData = new FormData();
       categoryData.append("region", this.region);
