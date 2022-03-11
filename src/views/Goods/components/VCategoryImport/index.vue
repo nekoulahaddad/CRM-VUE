@@ -79,10 +79,13 @@ export default {
       this.start = true;
 
       const category =
-        this.category && this.category._id
-          ? this.category._id
-          : this.$route.params.type === "categories" &&
-            this.$route.params.parent_value;
+        this.$route.params.type === "categories" &&
+        this.$route.params.parent_value;
+
+      if (!category) {
+        this.$toast.error("Нет категории для импорта товаров!");
+        return;
+      }
 
       let categoryData = new FormData();
       categoryData.append("region", this.region);
