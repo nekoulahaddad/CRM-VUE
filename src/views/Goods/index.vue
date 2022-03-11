@@ -139,6 +139,16 @@
               </div>
             </div>
 
+            <VNotFoundQuery
+              v-if="
+                !dataset.categories.length &&
+                !dataset.products.length &&
+                isLoading
+              "
+            >
+              Данных нет
+            </VNotFoundQuery>
+
             <!-- Добавление новой категории -->
             <v-category-add
               v-if="addGoodsCategory"
@@ -151,7 +161,6 @@
               v-if="importGoods"
               :region="filtersOptions.region"
               :category="category"
-              @toggleCategoryImport="toggleCategoryImport"
             />
 
             <div v-if="!filtersOptions.region">Выберите регион</div>
@@ -232,7 +241,6 @@
                   v-if="categoryImportItem._id === item._id"
                   :region="filtersOptions.region"
                   :category="category"
-                  @toggleCategoryImport="toggleCategoryImport"
                 />
 
                 <!-- Менеджер -->
