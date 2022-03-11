@@ -287,6 +287,24 @@
         </div>
       </div>
 
+      <div
+        class="group"
+        v-if="filters && filters.length"
+        style="margin-top: 20px"
+      >
+        <div class="group__title">Фильтры категории:</div>
+        <div
+          class="group__find"
+          :class="{ 'group__find--disabled': !itemFilters.includes(filter) }"
+          v-for="(filter, index) of filters"
+          :key="index"
+          @click="addFilter(filter)"
+          style="cursor: pointer"
+        >
+          {{ filter }}
+        </div>
+      </div>
+
       <v-button red>Сохранить</v-button>
     </form>
   </div>
@@ -309,6 +327,13 @@ export default {
   },
   components: { VButton },
   methods: {
+    addFilter(filter) {
+      if (!this.itemFilters.includes(filter)) {
+        this.itemFilters.push(filter);
+      } else {
+        this.itemFilters = this.itemFilters.filter((f) => f !== filter);
+      }
+    },
     selectCategory(result) {
       this.views.push(result);
     },
@@ -562,6 +587,10 @@ export default {
       top: 50%;
       right: 10px;
       transform: translateY(-50%);
+    }
+
+    &--disabled {
+      opacity: 0.3;
     }
   }
   span[role="tooltip"] {
