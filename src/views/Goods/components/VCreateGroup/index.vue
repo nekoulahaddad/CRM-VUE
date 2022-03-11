@@ -120,7 +120,6 @@ export default {
       this.items.splice(index, 1);
     },
     confirm() {
-      alert();
       if (!this.title || !this.items.length) {
         this.$toast.error("Категории или заголовок не заполнены!");
         return;
