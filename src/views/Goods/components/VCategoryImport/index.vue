@@ -89,21 +89,19 @@ export default {
       categoryData.append("category_id", category);
       categoryData.append("document", this.fileImport);
 
-      this.changeStatus(false);
       axios({
         url: `/excel/importcategoryproducts/`,
         data: categoryData,
         method: "POST",
       })
-        .then(async (res) => {
+        .then(() => {
           this.$toast.success("Товары обновлены!");
-          this.$emit("toggleCategoryImport", this.category);
+          this.$store.commit("toggleAction", { key: "importGoods" });
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
         })
         .finally(() => {
-          this.changeStatus(true);
           this.start = false;
         });
     },
