@@ -88,6 +88,7 @@ export default {
       })
         .then(async (res) => {
           this.$toast.success("Товары обновлены!");
+          this.$emit("toggleCategoryImport", this.category);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);

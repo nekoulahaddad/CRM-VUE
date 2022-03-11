@@ -150,7 +150,8 @@
             <v-category-import
               v-if="importGoods"
               :region="filtersOptions.region"
-              :category="false"
+              :category="category"
+              @toggleCategoryImport="toggleCategoryImport"
             />
 
             <div v-if="!filtersOptions.region">Выберите регион</div>
@@ -539,7 +540,6 @@ export default {
     async region(v) {
       this.editedItem = {};
       this.categoryExportItem = {};
-      this.categoryImportItem = {};
       this.categoryImportItem = {};
       this.groupProductItem = {};
       this.managerItem = {};
@@ -932,7 +932,6 @@ export default {
       this.copyItem = {};
       this.editedItem = {};
       this.categoryImportItem = {};
-      this.categoryImportItem = {};
       this.groupProductItem = {};
       this.managerItem = {};
 
@@ -948,7 +947,6 @@ export default {
     toggleProductToGroup(item) {
       this.copyItem = {};
       this.categoryExportItem = {};
-      this.categoryImportItem = {};
       this.movedProduct = {};
       this.managerItem = {};
 
@@ -963,7 +961,6 @@ export default {
     toggleEdit(item) {
       this.copyItem = {};
       this.categoryExportItem = {};
-      this.categoryImportItem = {};
       this.categoryImportItem = {};
       this.groupProductItem = {};
       this.movedProduct = {};
