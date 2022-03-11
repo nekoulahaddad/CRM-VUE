@@ -232,6 +232,7 @@
                   v-if="categoryImportItem._id === item._id"
                   :region="filtersOptions.region"
                   :category="category"
+                  @toggleCategoryImport="toggleCategoryImport"
                 />
 
                 <!-- Менеджер -->
