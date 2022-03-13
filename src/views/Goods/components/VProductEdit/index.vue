@@ -312,7 +312,7 @@
         </div>
       </div>
 
-      <v-button red>Создать</v-button>
+      <v-button red>Сохранить</v-button>
     </form>
   </div>
 </template>
