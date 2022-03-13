@@ -13,7 +13,12 @@
             <div class="table__actions">
               <div class="table__icon">
                 <!-- Видимость товара -->
+                <v-spinner
+                  extraSmall
+                  v-if="changeVisible._id === product._id"
+                />
                 <VueCustomTooltip
+                  v-else
                   :label="product.visible ? 'Скрыть товар' : 'Показать товар'"
                 >
                   <img
@@ -77,6 +82,7 @@
 
 <script>
 import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
 import VProductEdit from "../VProductEdit";
 
 export default {
@@ -88,10 +94,18 @@ export default {
   data() {
     return {
       editedItem: {},
+      changeVisible: {},
     };
   },
-  components: { VProductEdit },
+  components: { VProductEdit, VSpinner },
   methods: {
+    toggleVisible(item) {
+      if (this.changeVisible._id === item._id) {
+        this.changeVisible = {};
+      } else {
+        this.changeVisible = item;
+      }
+    },
     toggleEdit(item) {
       if (this.editedItem._id === item._id) {
         this.editedItem = {};
@@ -100,6 +114,7 @@ export default {
       }
     },
     changeProductVisibility(id, visible, item) {
+      this.changeVisible = item;
       let productData = {
         region: this.region,
         productId: id,
@@ -122,6 +137,9 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeVisible = {};
         });
     },
   },
