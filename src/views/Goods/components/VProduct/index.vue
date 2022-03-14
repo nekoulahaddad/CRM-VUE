@@ -116,6 +116,7 @@
                     ? require('@/assets/icons/eye_close.svg')
                     : require('@/assets/icons/eye.svg')
                 "
+                :class="{ none: item.visible }"
                 @click="changeGroupVisibility(item._id, item.visible, item)"
               />
             </VueCustomTooltip>
@@ -192,6 +193,7 @@ export default {
       type: Object,
       required: true,
     },
+    searched: Boolean,
     checked: Boolean,
     editedItem: Object,
     editedGroupItem: Object,
@@ -221,8 +223,14 @@ export default {
         method: "POST",
       })
         .then((result) => {
-          item.visible = result.data.group.visible;
-          this.$emit("refreshGoods");
+          this.item.visible = result.data.group.visible;
+
+          if (this.searched) {
+            this.$emit("getSearchData");
+          } else {
+            this.$emit("refreshGoods");
+          }
+
           this.$toast.success(
             `Группа ${
               result.data.group.visible

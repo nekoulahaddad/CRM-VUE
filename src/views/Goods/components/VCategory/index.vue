@@ -158,6 +158,7 @@ import VSpinner from "@/components/VSpinner";
 
 export default {
   props: {
+    searched: Boolean,
     categoryVisibleItem: Array,
     filtersOptions: Object,
     current: Array,

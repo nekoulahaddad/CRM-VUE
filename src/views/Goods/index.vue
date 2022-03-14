@@ -89,6 +89,7 @@
               <v-search
                 @submit="getSearchData"
                 v-model="good"
+                @input="searchInput"
                 placeholder="Поиск по категории, бренду, товару или артикулу"
               />
 
@@ -268,6 +269,7 @@
                   <v-search
                     @submit="getSearchData"
                     v-model="good"
+                    @input="searchInput"
                     placeholder="Поиск по категории, бренду, товару или артикулу"
                   />
                   <div class="list__title">
@@ -316,6 +318,8 @@
                     :editedItem="editedItem"
                     :movedProduct="movedProduct"
                     :checked="selectedItems.includes(item._id)"
+                    :searched="searched"
+                    @getSearchData="getSearchData"
                     @editProduct="editProduct"
                     @toggleEdit="toggleEdit"
                     @refreshGoods="refreshGoods"
@@ -376,7 +380,10 @@
                   />
                 </div>
 
-                <v-pagination v-if="dataset.products.length" :count="count" />
+                <v-pagination
+                  v-if="dataset.products.length && !searched"
+                  :count="count"
+                />
               </div>
             </div>
           </template>
@@ -455,6 +462,7 @@ export default {
   },
   data() {
     return {
+      searched: false,
       deleteMany: false,
       showFilter: false,
       isLoading: false,
@@ -651,6 +659,12 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    searchInput() {
+      if (!this.good.trim().length && this.searched) {
+        this.searched = false;
+        this.refreshGoods();
+      }
+    },
     toggleDeleteAll() {
       this.deleteMany = true;
       this.$modal.show("deleteGoodsProduct");
@@ -688,6 +702,7 @@ export default {
       };
 
       this.isLoading = false;
+      this.searched = true;
 
       axios({
         url: `/categories/getfromsearch`,
@@ -1033,6 +1048,7 @@ export default {
       );
     },
     async refreshGoods() {
+      this.searched = false;
       let result = await this.getDataFromPage(
         `/categories/get`,
         this.filtersOptions
@@ -1072,8 +1088,9 @@ export default {
         data: categoryData,
         method: "POST",
       })
-        .then(async (res) => {
-          await this.refreshGoods();
+        .then((res) => {
+          this.dataset.categories.find((item) => item._id === id).visible =
+            !visible;
           this.categoryVisibleItem = this.categoryVisibleItem.filter(
             (value) => value !== id
           );
