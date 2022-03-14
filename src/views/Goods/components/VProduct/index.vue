@@ -86,37 +86,40 @@
 
         <div class="table__icon">
           <!-- Видимость товара -->
-          <VueCustomTooltip
-            v-if="item.type !== 'group'"
-            :label="item.visible ? 'Скрыть товар' : 'Показать товар'"
-          >
-            <img
-              alt=""
-              :src="
-                item.visible
-                  ? require('@/assets/icons/eye_close.svg')
-                  : require('@/assets/icons/eye.svg')
-              "
-              :class="{ none: item.visible }"
-              @click="changeProductVisibility(item._id, item.visible)"
-            />
-          </VueCustomTooltip>
+          <v-spinner extraSmall v-if="changeVisible._id === item._id" />
+          <template v-else>
+            <VueCustomTooltip
+              v-if="item.type !== 'group'"
+              :label="item.visible ? 'Скрыть товар' : 'Показать товар'"
+            >
+              <img
+                alt=""
+                :src="
+                  item.visible
+                    ? require('@/assets/icons/eye_close.svg')
+                    : require('@/assets/icons/eye.svg')
+                "
+                :class="{ none: item.visible }"
+                @click="changeProductVisibility(item._id, item.visible, item)"
+              />
+            </VueCustomTooltip>
 
-          <!-- Видимость группы -->
-          <VueCustomTooltip
-            v-else
-            :label="item.visible ? 'Скрыть группу' : 'Показать группу'"
-          >
-            <img
-              alt=""
-              :src="
-                item.visible
-                  ? require('@/assets/icons/eye_close.svg')
-                  : require('@/assets/icons/eye.svg')
-              "
-              @click="changeGroupVisibility(item._id, item.visible)"
-            />
-          </VueCustomTooltip>
+            <!-- Видимость группы -->
+            <VueCustomTooltip
+              v-else
+              :label="item.visible ? 'Скрыть группу' : 'Показать группу'"
+            >
+              <img
+                alt=""
+                :src="
+                  item.visible
+                    ? require('@/assets/icons/eye_close.svg')
+                    : require('@/assets/icons/eye.svg')
+                "
+                @click="changeGroupVisibility(item._id, item.visible, item)"
+              />
+            </VueCustomTooltip>
+          </template>
         </div>
 
         <div class="table__icon">
@@ -181,7 +184,7 @@
 
 <script>
 import axios from "@/api/axios";
-import { mapMutations } from "vuex";
+import VSpinner from "@/components/VSpinner";
 
 export default {
   props: {
@@ -200,10 +203,13 @@ export default {
   data() {
     return {
       cleared: true,
+      changeVisible: {},
     };
   },
+  components: { VSpinner },
   methods: {
-    changeGroupVisibility(id, visible) {
+    changeGroupVisibility(id, visible, item) {
+      this.changeVisible = item;
       let groupData = {
         region: this.region,
         groupId: id,
@@ -214,8 +220,8 @@ export default {
         data: groupData,
         method: "POST",
       })
-        .then(async (res) => {
-          let result = await res;
+        .then((result) => {
+          item.visible = result.data.group.visible;
           this.$emit("refreshGoods");
           this.$toast.success(
             `Группа ${
@@ -228,9 +234,13 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeVisible = {};
         });
     },
-    changeProductVisibility(id, visible) {
+    changeProductVisibility(id, visible, item) {
+      this.changeVisible = item;
       let productData = {
         region: this.$parent.filtersOptions.region,
         productId: id,
@@ -241,8 +251,7 @@ export default {
         data: productData,
         method: "POST",
       })
-        .then(async (res) => {
-          let result = await res;
+        .then((result) => {
           this.item.visible = result.data.product.visible;
           this.$emit("editProduct", result.data.product, this.item);
           this.$toast.success(
@@ -255,6 +264,9 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.changeVisible = {};
         });
     },
   },

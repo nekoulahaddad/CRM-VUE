@@ -7,7 +7,9 @@
         :key="index"
       >
         <div class="sub-products__item item">
-          <div class="item__title">{{ product.title }}</div>
+          <div class="item__title">
+            <span :class="{ none: !product.visible }">{{ product.title }}</span>
+          </div>
           <div class="item__article">{{ product.article }}</div>
           <div class="item__action">
             <div class="table__actions">
@@ -28,7 +30,6 @@
                         ? require('@/assets/icons/eye_close.svg')
                         : require('@/assets/icons/eye.svg')
                     "
-                    :class="{ none: product.visible }"
                     @click="
                       changeProductVisibility(
                         product._id,
@@ -90,6 +91,7 @@ export default {
     group: Object,
     products: Array,
     region: String,
+    visible: Boolean,
   },
   data() {
     return {
@@ -99,13 +101,6 @@ export default {
   },
   components: { VProductEdit, VSpinner },
   methods: {
-    toggleVisible(item) {
-      if (this.changeVisible._id === item._id) {
-        this.changeVisible = {};
-      } else {
-        this.changeVisible = item;
-      }
-    },
     toggleEdit(item) {
       if (this.editedItem._id === item._id) {
         this.editedItem = {};
@@ -177,6 +172,9 @@ export default {
       font-size: 14px;
       font-weight: 700;
     }
+  }
+  .none {
+    opacity: 0.3;
   }
 }
 </style>

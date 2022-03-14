@@ -367,6 +367,7 @@
                   <v-group-products
                     v-if="groupItems._id === item._id"
                     :group="item"
+                    :visible="item.visible"
                     :region="filtersOptions.region"
                     :products="item.products"
                     @refreshGoods="refreshGoods"
