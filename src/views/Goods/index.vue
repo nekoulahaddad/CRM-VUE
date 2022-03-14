@@ -605,6 +605,8 @@ export default {
     },
     $route: async function () {
       this.isLoading = false;
+      this.searched = false;
+      this.good = "";
       this.filtersOptions.nesting = +this.$route.params.nesting - 1;
       this.filtersOptions.parent_value = this.$route.params.parent_value;
       this.filtersOptions.type = this.$route.params.type;
