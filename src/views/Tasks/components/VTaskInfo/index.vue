@@ -1,6 +1,5 @@
 <template>
   <div class="list__info list-info tasks-list-info">
-    {{ task }}
     <div class="group__title text--blue">
       {{ $t("pages.tasks.taskInfo") }}
     </div>
