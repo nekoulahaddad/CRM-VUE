@@ -15,10 +15,8 @@
             <img :src="require(`@/assets/icons/delivery_title.svg`)" alt="" />
           </div>
           <div class="page__buttons">
-            <v-button red>Поставщики</v-button>
-            <v-button @click="goToLink('deliveryMap')" white>
-              Карта поставщиков
-            </v-button>
+            <v-button @click="goToLink('delivery')" white>Поставщики</v-button>
+            <v-button red> Карта поставщиков </v-button>
           </div>
           <v-filter-toggle @toggleFilter="toggleFilter" :active="showFilter" />
         </div>
@@ -37,66 +35,8 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        <div class="scroll-horizontal">
-          <div class="list">
-            <div class="list__header">
-              <v-search
-                @submit="getSearchData"
-                v-model="search"
-                :placeholder="$t('pages.delivery.searchPlaceholder')"
-              />
-              <div class="list__title">
-                {{ $t("pages.delivery.pageTitle") }}
-              </div>
-              <div class="list__columns">
-                <div
-                  v-for="field in $t('pages.delivery.fields')"
-                  class="list__column"
-                >
-                  {{ field }}
-                </div>
-              </div>
-            </div>
-            <!-- Блок для добавления поставщика -->
-            <v-add-item v-if="addDelivery" @fetchData="fetchData" />
-
-            <v-spinner v-if="!isLoading" />
-            <template v-else-if="dataset.length">
-              <div
-                v-for="(item, index) in dataset"
-                :key="item._id"
-                class="list__row list__row--shadow list__row--white"
-                :class="{
-                  'list__row--opened':
-                    infoItem._id === item._id || editedItem._id === item._id,
-                }"
-              >
-                <v-item
-                  :index="index"
-                  :item="item"
-                  :infoItem="infoItem"
-                  :editedItem="editedItem"
-                  @toggleInfo="toggleInfo"
-                  @toggleEdit="toggleEdit"
-                  @toggleDelete="toggleDelete"
-                />
-
-                <!-- Блок с детальной информацией о доставке -->
-                <v-info v-if="infoItem._id === item._id" :item="item" />
-
-                <!-- Блок редактирования информации о доставке -->
-                <v-edit
-                  v-if="editedItem._id === item._id"
-                  :editedItem="editedItem"
-                  :item="item"
-                  @toggleEdit="toggleEdit"
-                  @refresh="fetchData"
-                />
-              </div>
-              <v-pagination :count="count" />
-            </template>
-            <v-not-found-query v-else />
-          </div>
+        <div class="map">
+          <img src="@/assets/icons/delivery_map.svg" alt="" />
         </div>
       </div>
     </div>
@@ -183,7 +123,12 @@ export default {
   },
   methods: {
     goToLink(name) {
-      this.$router.push({ name });
+      this.$router.push({
+        name,
+        params: {
+          page: 1,
+        },
+      });
     },
     toggleFilter() {
       this.showFilter = !this.showFilter;

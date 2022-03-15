@@ -42,6 +42,14 @@ const routes = [
         },
       },
       {
+        path: "delivery/map",
+        name: "deliveryMap",
+        component: () => import("../views/DeliveryMap"),
+        meta: {
+          requiresAuth: true,
+        },
+      },
+      {
         path: "delivery/:page",
         name: "delivery",
         component: () => import("../views/Delivery"),
