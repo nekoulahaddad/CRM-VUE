@@ -249,7 +249,7 @@
             </div>
             <!-- Комментарий -->
             <div class="group">
-              <div class="group__title">Комментарий:</div>
+              <div class="group__title">Комментарий исполнителя:</div>
               <div class="group__content">
                 <textarea
                   class="form-textarea"
