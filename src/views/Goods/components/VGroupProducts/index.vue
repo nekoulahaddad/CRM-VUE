@@ -10,9 +10,11 @@
           <div class="item__title">
             <span :class="{ none: !product.visible }">{{ product.title }}</span>
           </div>
-          <div class="item__article">{{ product.article }}</div>
           <div class="item__action">
             <div class="table__actions">
+              <div class="table__icon">
+                {{ product.article }}
+              </div>
               <div class="table__icon">
                 <!-- Видимость товара -->
                 <v-spinner
