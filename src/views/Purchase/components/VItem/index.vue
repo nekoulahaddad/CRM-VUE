@@ -20,7 +20,7 @@
     <div class="list__column text--blue">
       {{ transformFIO(item.executor) }}
     </div>
-    <div class="list__column">
+    <div class="list__column d-flex justify-center">
       <VueCustomTooltip
         v-if="item.message"
         :multiline="true"
