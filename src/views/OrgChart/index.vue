@@ -1,5 +1,5 @@
 <template>
-  <div class="page org-chart-page" v-if="users.length">
+  <div class="page org-chart-page">
     <div
       class="page__header page-header"
       :class="{ 'page-header--collapse': sidebar }"
@@ -31,7 +31,12 @@
         }"
       >
         <div class="departments" v-if="orgTree && orgTree._id">
-          <v-item :level="1" :item="orgTree" />
+          <v-item
+            @toggleOpened="toggleOpened"
+            :openedItems="openedItems"
+            :level="1"
+            :item="orgTree"
+          />
         </div>
       </div>
     </div>
@@ -60,6 +65,7 @@ export default {
   },
   data() {
     return {
+      openedItems: [],
       showFilter: false,
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
       pageLoading: true,
@@ -107,6 +113,13 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleOpened(id) {
+      if (this.openedItems.includes(id)) {
+        this.openedItems = this.openedItems.filter((value) => value !== id);
+      } else {
+        this.openedItems.push(id);
+      }
+    },
     goToLink(name) {
       this.$router.push({
         name,

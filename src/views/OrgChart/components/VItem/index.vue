@@ -4,19 +4,35 @@
     <div :class="classes">
       <span class="item__title">{{ item.title }} {{ hLine }}</span>
       <div class="table__actions">
+        <div class="table__icon" v-if="item.children.length">
+          <img
+            alt=""
+            v-if="!openedItems.includes(item._id)"
+            @click="$emit('toggleOpened', item._id)"
+            src="@/assets/icons/sub_deps.svg"
+          />
+          <img
+            alt=""
+            v-else
+            @click="$emit('toggleOpened', item._id)"
+            src="@/assets/icons/arrow_top_white_icon.svg"
+          />
+        </div>
         <div class="table__icon">
           <img src="@/assets/icons/trash_icon_white.svg" alt="" />
         </div>
       </div>
     </div>
-    <v-item
-      :line="true"
-      :hLine="!!child.children.length"
-      :level="level + 1"
-      :item="child"
-      v-for="(child, index) in item.children"
-      :key="index"
-    />
+    <template v-if="openedItems.includes(item._id)">
+      <v-item
+        :level="level + 1"
+        :item="child"
+        v-for="(child, index) in item.children"
+        :key="index"
+        :openedItems="openedItems"
+        @toggleOpened="$emit('toggleOpened', child._id)"
+      />
+    </template>
   </div>
 </template>
 
@@ -34,6 +50,7 @@ export default {
       type: Number,
       required: true,
     },
+    openedItems: Array,
   },
   methods: {
     lineHeight(count) {
