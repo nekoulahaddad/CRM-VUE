@@ -1,5 +1,6 @@
 <template>
   <div class="list__info list-info tasks-list-info">
+    {{ task }}
     <div class="group__title text--blue">
       {{ $t("pages.tasks.taskInfo") }}
     </div>
@@ -35,6 +36,7 @@
               class="documents__item"
               @click.prevent="downloadItem(serverAddr + `${photo}`, photo)"
             >
+              {{ photo }}
               <span>{{ photo.filename }}</span>
               <img src="@/assets/icons/download_icon.svg" alt="" />
             </div>
@@ -295,6 +297,9 @@ export default {
         this.$emit("toggleInfo", this.task);
       });
     },
+  },
+  created() {
+    console.log(this.task);
   },
 };
 </script>

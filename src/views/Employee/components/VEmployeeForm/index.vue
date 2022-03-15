@@ -174,7 +174,7 @@
         </div>
         <div class="group">
           <div class="group__content group__childs">
-            <template v-if="editChildIndex !== index">
+            <template>
               <div
                 class="children"
                 v-for="(child, index) in children"
@@ -288,13 +288,13 @@
           <div class="group__content">
             <v-select
               :options="
-                Object.entries($t('roles')).map(([role, key]) => ({
+                Object.entries($t('roles')).map(([r, key]) => ({
                   label: key,
-                  value: role,
+                  value: r,
                 }))
               "
               name="role"
-              v-model="infoItem.role"
+              v-model="infoItem && infoItem.role"
               :reduce="(item) => item.value"
               @input="role = $event"
             />
