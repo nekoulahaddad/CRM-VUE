@@ -54,7 +54,7 @@
           <div class="group__content d-flex">
             <v-button @click="confirm" red>Сохранить</v-button>
             <div style="margin-left: 15px">
-              <v-button redWhite>Обнулить таблицу</v-button>
+              <v-button @click="clear" redWhite>Обнулить таблицу</v-button>
             </div>
           </div>
         </div>
@@ -90,6 +90,25 @@ export default {
           this.$toast.success(result.data.message);
           this.$emit("refreshGoods");
           this.cancel();
+        })
+        .catch(async (err) => {
+          this.$toast.error(err.response.data.message);
+        });
+    },
+    clear() {
+      let data = {
+        region: this.region,
+        spreadsheetId: this.spreadsheetId,
+      };
+      axios({
+        url: p`/googlesheets/unlinksheet/`,
+        data: data,
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.$toast.success(result.data.message);
+          this.$emit("refreshGoods");
         })
         .catch(async (err) => {
           this.$toast.error(err.response.data.message);
