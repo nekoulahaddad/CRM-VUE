@@ -106,6 +106,15 @@ export default {
 
 <style lang="scss">
 .google-table {
+  .vm--modal__title {
+    position: relative;
+    img {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
   .vm--modal__content {
     padding: 20px;
   }
