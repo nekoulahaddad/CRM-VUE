@@ -134,15 +134,22 @@
             <div class="group__title">Фотографии товара:</div>
             <div class="group__content photo-wrapper">
               <template v-if="images.length > 0">
-                <img
-                  alt=""
-                  class="product-photo"
-                  v-for="(item, index) in tempUrl"
-                  :src="item.url"
-                  :title="item.name"
-                  @click.prevent="downloadItem(item.url, item.name)"
-                  :key="index"
-                />
+                <div class="product-photo" v-for="(item, index) in tempUrl">
+                  <img
+                    alt=""
+                    class="product-photo__img"
+                    :src="item.url"
+                    :title="item.name"
+                    @click.prevent="downloadItem(item.url, item.name)"
+                    :key="index"
+                  />
+                  <img
+                    alt=""
+                    class="product-photo__delete-icon"
+                    src="@/assets/icons/trash_icon.svg"
+                    @click="deleteImage(item)"
+                  />
+                </div>
               </template>
 
               <label
@@ -452,8 +459,8 @@ export default {
       this.isLoading = false;
     },
     deleteImage(image) {
-      this.images = this.images.filter((file) => file.name !== image.name);
-      this.tempUrl = this.tempUrl.filter((obj) => obj.name !== image.name);
+      this.images = this.images.filter((file) => file.name != image.name);
+      this.tempUrl = this.tempUrl.filter((obj) => obj.name != image.name);
     },
     downloadItem(url, filename) {
       axios
@@ -887,6 +894,20 @@ export default {
   .product-photo {
     width: 132px;
     height: 132px;
+    position: relative;
+
+    img.product-photo__img {
+      width: 132px;
+      height: 132px;
+    }
+    &__delete-icon {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: #fff;
+      border-radius: $border-radius;
+      padding: 2px;
+    }
   }
   .add-product-photo {
     width: 132px;
