@@ -86,24 +86,73 @@
             <div class="list">
               <div class="list__row list__row--shadow list__row--white">
                 <div class="list__column">1. Суперадмин:</div>
+                <div class="list__column">
+                  <div class="table__action">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="list__row list__row--shadow list__row--white">
                 <div class="list__column">2. Администратор:</div>
+                <div class="list__column">
+                  <div class="table__action">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="list__row list__row--shadow list__row--white">
                 <div class="list__column">3. Менеджер по продажам:</div>
+                <div class="list__column">
+                  <div class="table__action">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="list__row list__row--shadow list__row--white">
                 <div class="list__column">4. Контент - менеджер:</div>
+                <div class="list__column">
+                  <div class="table__action">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="list__row list__row--shadow list__row--white">
                 <div class="list__column">5. SEO:</div>
+                <div class="list__column">
+                  <div class="table__action">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="list__row list__row--shadow list__row--white">
                 <div class="list__column">6. Call - центр:</div>
+                <div class="list__column">
+                  <div class="table__action">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="list__row list__row--shadow list__row--white">
                 <div class="list__column">7. Закупщик:</div>
+                <div class="list__column">
+                  <div class="table__action">
+                    <div class="table__icon">
+                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -222,6 +271,10 @@ export default {
 
   .list {
     width: 740px;
+    &__row {
+      display: flex;
+      justify-content: space-between;
+    }
     &__column {
       padding-left: 15px;
       padding-right: 15px;
