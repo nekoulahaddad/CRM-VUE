@@ -34,7 +34,9 @@
                 width: 100%;
               "
             >
-              {{ getUrl(googleDoc.spreadsheetId) }}
+              <a :href="URL" target="_blank">{{
+                getUrl(googleDoc.spreadsheetId)
+              }}</a>
             </div>
           </div>
         </div>

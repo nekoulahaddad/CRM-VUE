@@ -252,6 +252,7 @@
               <div class="group__title">Комментарий исполнителя:</div>
               <div class="group__content">
                 <textarea
+                  readonly
                   class="form-textarea"
                   v-model="comment"
                   maxlength="1000"
@@ -262,7 +263,12 @@
             <div class="group">
               <div class="group__title">Автор:</div>
               <div class="group__content">
-                <input class="form-control" type="text" v-model="initiator" />
+                <input
+                  readonly
+                  class="form-control"
+                  type="text"
+                  v-model="initiator"
+                />
               </div>
             </div>
             <!-- Дедлайн -->
