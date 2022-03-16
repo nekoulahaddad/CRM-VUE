@@ -44,6 +44,7 @@ export default {
   props: {
     region: String,
     local: Boolean,
+    item: Object,
   },
   data() {
     return {
@@ -80,12 +81,11 @@ export default {
 
       const category = !this.local
         ? undefined
-        : this.$route.params.type === "categories" &&
-          this.$route.params.parent_value;
+        : this.$route.params.type === "categories" && this.item._id;
 
       let categoryData = new FormData();
       categoryData.append("region", this.region);
-      categoryData.append("category_id", category);
+      categoryData.append("category_id", undefined);
       categoryData.append("document", this.fileImport);
 
       axios({
@@ -98,7 +98,9 @@ export default {
           this.$emit("refreshGoods");
 
           if (this.local) {
-            this.$emit("toggleCategoryImport", { _id: category });
+            this.$emit("toggleCategoryImport", {
+              _id: this.$route.params.parent_value,
+            });
           } else {
             this.$store.commit("toggleAction", { key: "importGoods" });
           }
@@ -111,9 +113,7 @@ export default {
         });
     },
   },
-  created() {
-    console.log(this.$route);
-  },
+  created() {},
 };
 </script>
 
