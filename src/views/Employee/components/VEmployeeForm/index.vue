@@ -294,9 +294,8 @@
                 }))
               "
               name="role"
-              v-model="infoItem && infoItem.role"
+              v-model="role"
               :reduce="(item) => item.value"
-              @input="role = $event"
             />
           </div>
         </div>
@@ -659,6 +658,7 @@ export default {
   mounted() {
     if (this.infoItem) {
       this.employment_date = this.infoItem.employment_date;
+      this.role = this.infoItem.role;
       this.date_of_birth = this.infoItem.date_of_birth;
       this.children = this.infoItem.children ? this.infoItem.children : [];
     }
