@@ -341,7 +341,7 @@
               "
               :reduce="(item) => item.value"
               name="region"
-              v-model="editRegion"
+              v-model="region"
             />
           </div>
         </div>
@@ -448,9 +448,6 @@ export default {
     },
     dep() {
       return this.infoItem ? this.infoItem.department.value : this.department;
-    },
-    editRegion() {
-      return this.infoItem ? this.infoItem.region.value : this.region;
     },
   },
   validations: {},
@@ -658,6 +655,7 @@ export default {
     if (this.infoItem) {
       this.employment_date = this.infoItem.employment_date;
       this.role = this.infoItem.role;
+      this.region = this.infoItem.region.value;
       this.department = this.infoItem.department.value;
       this.education = this.infoItem.education;
       this.date_of_birth = this.infoItem.date_of_birth;
