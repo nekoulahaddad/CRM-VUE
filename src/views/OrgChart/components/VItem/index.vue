@@ -15,12 +15,13 @@
               src="@/assets/icons/sub_deps.svg"
             />
           </VueCustomTooltip>
-          <img
-            alt=""
-            v-else
-            @click="$emit('toggleOpened', item._id)"
-            src="@/assets/icons/arrow_top_white_icon.svg"
-          />
+          <VueCustomTooltip v-else label="Скрыть разделы">
+            <img
+              alt=""
+              @click="$emit('toggleOpened', item._id)"
+              src="@/assets/icons/arrow_top_white_icon.svg"
+            />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
           <VueCustomTooltip label="Удалить">
