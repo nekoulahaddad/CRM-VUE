@@ -25,6 +25,7 @@
         v-if="item.message"
         :multiline="true"
         :label="item.message"
+        style="word-wrap: break-word"
       >
         Описание
       </VueCustomTooltip>
