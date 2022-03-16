@@ -273,8 +273,43 @@
                     @input="searchInput"
                     placeholder="Поиск по категории, бренду, товару или артикулу"
                   />
-                  <div class="list__title">
-                    {{ $t("goods") }}
+                  <div class="list__title title">
+                    <template
+                      v-if="!dataset.categories.length && current.length"
+                    >
+                      <div class="title__item">
+                        <router-link
+                          :class="{ 'title__item--inactive': current.length }"
+                          :to="`/dashboard/goods/1`"
+                        >
+                          Категории
+                        </router-link>
+                      </div>
+                      <router-link
+                        class="title__item"
+                        v-for="(item, i) in current"
+                        :key="item._id"
+                        :class="{ 'title__item--inactive': current.length > i }"
+                        :to="`/dashboard/goods/${
+                          item.categoryName
+                            ? +item.nesting + 2
+                            : +$route.params.nesting + 1
+                        }/categories/${
+                          item.categoryName ? item._id : item._id
+                        }/1`"
+                      >
+                        {{
+                          item.categoryName
+                            ? item.categoryName || ""
+                            : item.name
+                            ? item.name
+                            : ""
+                        }}
+                      </router-link>
+                    </template>
+                    <div style="color: #000" v-else class="title__item">
+                      {{ $t("goods") }}
+                    </div>
                   </div>
                   <div class="list__columns">
                     <div

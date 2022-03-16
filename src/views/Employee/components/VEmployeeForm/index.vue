@@ -263,7 +263,6 @@
               "
               name="department"
               v-model="dep"
-              @input="onChange($event)"
               :reduce="(item) => item.value"
             />
           </div>
@@ -671,9 +670,7 @@ export default {
       url: "/departments/all",
     }).then(({ data }) => {
       data.map((item) => {
-        if (!this.departments.includes(item)) {
-          this.departments.push(item);
-        }
+        this.departments.push(item);
       });
     });
   },
