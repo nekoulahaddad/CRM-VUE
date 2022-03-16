@@ -52,7 +52,7 @@
         </div>
         <div class="group">
           <div class="group__content d-flex">
-            <v-button red>Сохранить</v-button>
+            <v-button @click="confirm" red>Сохранить</v-button>
             <div style="margin-left: 15px">
               <v-button redWhite>Обнулить таблицу</v-button>
             </div>
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
+
 export default {
   props: {
     region: String,
@@ -73,7 +75,26 @@ export default {
     cancel() {
       this.$modal.hide("googleTable");
     },
-    confirm() {},
+    confirm() {
+      let data = {
+        region: this.region,
+        spreadsheetId: this.spreadsheetId,
+      };
+      axios({
+        url: `/googlesheets/linksheet/`,
+        data: data,
+        method: "POST",
+      })
+        .then(async (res) => {
+          let result = await res;
+          this.$toast.success(result.data.message);
+          this.$emit("refreshGoods");
+          this.cancel();
+        })
+        .catch(async (err) => {
+          this.$toast.error(err.response.data.message);
+        });
+    },
     getUrl(id) {
       return `https://docs.google.com/spreadsheets/d/${id}`;
     },
