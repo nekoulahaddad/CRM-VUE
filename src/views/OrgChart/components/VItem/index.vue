@@ -24,6 +24,9 @@
           </VueCustomTooltip>
         </div>
         <div class="table__icon">
+          <img src="@/assets/icons/white_dots.svg" alt="" />
+        </div>
+        <div class="table__icon">
           <VueCustomTooltip label="Удалить">
             <img
               @click="$emit('deleteItem', item)"
