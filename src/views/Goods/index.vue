@@ -1124,6 +1124,7 @@ export default {
       this.dataset.categories = res.data.categories;
       this.dataset.products = res.data.products;
       this.googleDoc = res.data.googleDoc;
+      this.$store.commit("setGoogleDoc", res.data.googleDoc);
       this.count = res.data.count;
     },
     onDrop(dropResult) {

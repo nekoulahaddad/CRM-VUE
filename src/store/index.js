@@ -20,6 +20,7 @@ export default new Vuex.Store({
     token: localStorage.getItem("token") || null,
     refresh: localStorage.getItem("refresh") || null,
     orders: [],
+    googleDoc: {},
     ordersCount: 0,
     totalCost: 0,
     totalProfit: 0,
@@ -65,6 +66,9 @@ export default new Vuex.Store({
       } else {
         state.selectedItems.push(payload);
       }
+    },
+    setGoogleDoc(state, payload) {
+      state.googleDoc = payload;
     },
     toggleMoveProducts(state, payload) {
       state.actions.moveProducts = payload;

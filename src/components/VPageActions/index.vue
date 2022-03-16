@@ -331,26 +331,6 @@
           </template>
         </div>
         <div class="d-flex align-items-center">
-          <VueCustomTooltip label="Таблица" v-if="name === 'goods'">
-            <a
-              href=""
-              class="page-actions__button"
-              @click.prevent="toggleAction('googleTable')"
-            >
-              <img src="@/assets/icons/goods_table.svg" alt="" />
-            </a>
-          </VueCustomTooltip>
-
-          <VueCustomTooltip label="Обновить" v-if="name === 'goods'">
-            <a
-              href=""
-              class="page-actions__button"
-              @click.prevent="toggleAction('syncGoogleDoc')"
-            >
-              <img src="@/assets/icons/goods_reload.svg" alt="" />
-            </a>
-          </VueCustomTooltip>
-
           <template
             v-if="name === 'goods' && $store.getters.selectedItems.length > 1"
           >
@@ -395,6 +375,32 @@
               <img src="@/assets/icons/action_trash.svg" alt="" />
             </a>
           </VueCustomTooltip>
+
+          <VueCustomTooltip label="Таблица" v-if="name === 'goods'">
+            <a
+              href=""
+              class="page-actions__button"
+              @click.prevent="toggleAction('googleTable')"
+            >
+              <img src="@/assets/icons/goods_table.svg" alt="" />
+            </a>
+          </VueCustomTooltip>
+
+          <VueCustomTooltip label="Обновить" v-if="name === 'goods'">
+            <a
+              href=""
+              class="page-actions__button"
+              @click.prevent="toggleAction('syncGoogleDoc')"
+            >
+              <img src="@/assets/icons/goods_reload.svg" alt="" />
+            </a>
+          </VueCustomTooltip>
+          <span
+            v-if="$store.state.googleDoc && $store.state.googleDoc.updatedAt"
+            style="font-weight: 600"
+          >
+            {{ "Обновлено " + transformTime($store.state.googleDoc.updatedAt) }}
+          </span>
         </div>
       </div>
     </div>
