@@ -253,7 +253,7 @@
               <div class="group__content">
                 <textarea
                   class="form-textarea"
-                  v-model="initiator_comment"
+                  v-model="comment"
                   maxlength="1000"
                 />
               </div>
@@ -467,11 +467,10 @@ export default {
         this.initiator = this.transformFIO(this.task.initiator);
         this.executors = this.task.executor;
         this.description = this.task.description;
-        this.initiator_comment = this.task.initiator_comment;
+        this.comment = this.task.comment;
         this.department = this.task.executor.department[0].title;
 
         if (this.task.documents.length) {
-          console.log(this.task.documents);
           this.documents = this.task.documents;
         }
 
