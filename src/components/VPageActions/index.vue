@@ -331,6 +331,16 @@
           </template>
         </div>
         <div class="d-flex align-items-center">
+          <VueCustomTooltip label="Таблица" v-if="name === 'goods'">
+            <a
+              href=""
+              class="page-actions__button"
+              @click.prevent="$store.commit('')"
+            >
+              <img src="@/assets/icons/goods_table.svg" alt="" />
+            </a>
+          </VueCustomTooltip>
+
           <template
             v-if="name === 'goods' && $store.getters.selectedItems.length > 1"
           >
