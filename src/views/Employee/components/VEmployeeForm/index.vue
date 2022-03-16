@@ -301,16 +301,16 @@
         <div class="group">
           <div class="group__title">{{ $t("education") }}</div>
           <div class="group__content">
-            <select
-              name="education"
-              class="form-select"
-              :value="infoItem ? infoItem.education : education"
-              @change="onChange($event)"
-            >
-              <option v-for="education in $t('educations')" :value="education">
-                {{ education }}
-              </option>
-            </select>
+            <v-select
+              :options="
+                $t('educations').map((education) => ({
+                  label: education,
+                  value: education,
+                }))
+              "
+              v-model="education"
+              :reduce="(item) => item.value"
+            />
           </div>
         </div>
         <div class="group">
@@ -658,6 +658,7 @@ export default {
     if (this.infoItem) {
       this.employment_date = this.infoItem.employment_date;
       this.role = this.infoItem.role;
+      this.education = this.infoItem.education;
       this.date_of_birth = this.infoItem.date_of_birth;
       this.children = this.infoItem.children ? this.infoItem.children : [];
     }
