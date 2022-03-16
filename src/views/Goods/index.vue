@@ -1,5 +1,11 @@
 <template>
   <div class="page goods-page">
+    <v-google-table
+      :googleDoc="googleDoc"
+      :region="filtersOptions.region"
+      @refreshGoods="refreshGoods"
+    />
+
     <v-delete-category
       :deletedItem="deletedCategory"
       :region="filtersOptions.region"
@@ -433,6 +439,7 @@
 import { Container, Draggable } from "vue-smooth-dnd";
 import VCategory from "./components/VCategory";
 import VGroupProducts from "./components/VGroupProducts";
+import VGoogleTable from "./components/VGoogleTable";
 import VProductMove from "./components/VProductMove";
 import VProductsMove from "./components/VProductsMove";
 import VPagination from "@/components/VPagination";
@@ -473,6 +480,7 @@ export default {
     VSearch,
     VCopy,
     VProductsMove,
+    VGoogleTable,
     VCreateGroup,
     VRegionEdit,
     VProductGroupEdit,
@@ -574,6 +582,9 @@ export default {
       region: "region",
       sidebar: "sidebar",
     }),
+    googleTable() {
+      return this.$store.state.actions.googleTable;
+    },
     syncGoogleDocValue() {
       return this.$store.state.actions.syncGoogleDoc;
     },
@@ -625,6 +636,11 @@ export default {
       } finally {
         this.$scrollTo("body", 300, {});
         this.isLoading = true;
+      }
+    },
+    googleTable(value) {
+      if (value) {
+        this.$modal.show("googleTable");
       }
     },
     moveProducts(value) {

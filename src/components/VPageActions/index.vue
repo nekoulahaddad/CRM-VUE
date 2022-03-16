@@ -335,7 +335,7 @@
             <a
               href=""
               class="page-actions__button"
-              @click.prevent="$store.commit('')"
+              @click.prevent="toggleAction('googleTable')"
             >
               <img src="@/assets/icons/goods_table.svg" alt="" />
             </a>
