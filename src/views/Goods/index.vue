@@ -574,6 +574,9 @@ export default {
       region: "region",
       sidebar: "sidebar",
     }),
+    syncGoogleDocValue() {
+      return this.$store.state.actions.syncGoogleDoc;
+    },
     addProduct() {
       return this.$store.state.actions.addProduct;
     },
@@ -597,6 +600,11 @@ export default {
     },
   },
   watch: {
+    syncGoogleDocValue(value) {
+      if (value) {
+        this.syncGoogleDoc();
+      }
+    },
     async region(v) {
       this.editedItem = {};
       this.categoryExportItem = {};
@@ -703,6 +711,25 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    syncGoogleDoc() {
+      this.isLoading = false;
+
+      axios({
+        url: `/googlesheets/sync/`,
+        data: { region: this.filtersOptions.region },
+        method: "POST",
+      })
+        .then((result) => {
+          this.refreshGoods();
+          this.$toast.success(result.data.message);
+        })
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = true;
+        });
+    },
     searchInput() {
       if (!this.good.trim().length && this.searched) {
         this.searched = false;

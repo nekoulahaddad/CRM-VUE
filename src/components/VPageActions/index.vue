@@ -341,6 +341,16 @@
             </a>
           </VueCustomTooltip>
 
+          <VueCustomTooltip label="Обновить" v-if="name === 'goods'">
+            <a
+              href=""
+              class="page-actions__button"
+              @click.prevent="toggleAction('syncGoogleDoc')"
+            >
+              <img src="@/assets/icons/goods_reload.svg" alt="" />
+            </a>
+          </VueCustomTooltip>
+
           <template
             v-if="name === 'goods' && $store.getters.selectedItems.length > 1"
           >

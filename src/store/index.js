@@ -51,6 +51,7 @@ export default new Vuex.Store({
       firedUsers: false,
       importGoods: false,
       moveProducts: false,
+      syncGoogleDoc: false,
     },
     deleteSelectedItems: false,
   },
