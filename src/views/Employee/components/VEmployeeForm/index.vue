@@ -845,5 +845,8 @@ export default {
   input[type="number"].hide-arrows {
     -moz-appearance: textfield;
   }
+  .vs__selected {
+    width: 90%;
+  }
 }
 </style>
