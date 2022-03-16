@@ -32,10 +32,11 @@
       >
         <div class="departments" v-if="orgTree && orgTree._id">
           <v-item
-            @toggleOpened="toggleOpened"
-            :openedItems="openedItems"
             :level="1"
             :item="orgTree"
+            :openedItems="openedItems"
+            @deleteItem="handleDialog"
+            @toggleOpened="toggleOpened"
           />
         </div>
       </div>
@@ -113,6 +114,18 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    handleDialog(node) {
+      if (node.children.length) {
+        this.$toast.warning(
+          "Там есть дочерние разделы, сначала удалите дочерние разделы, пожалуйста"
+        );
+        return;
+      }
+      return;
+      this.dialog.callback = () => callback(node);
+      this.dialog.header = msg.header;
+      this.dialog.message = msg.message;
+    },
     toggleOpened(id) {
       if (this.openedItems.includes(id)) {
         this.openedItems = this.openedItems.filter((value) => value !== id);

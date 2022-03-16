@@ -5,12 +5,16 @@
       <span class="item__title">{{ item.title }} {{ hLine }}</span>
       <div class="table__actions">
         <div class="table__icon" v-if="item.children.length">
-          <img
-            alt=""
+          <VueCustomTooltip
+            label="Показать разделы"
             v-if="!openedItems.includes(item._id)"
-            @click="$emit('toggleOpened', item._id)"
-            src="@/assets/icons/sub_deps.svg"
-          />
+          >
+            <img
+              alt=""
+              @click="$emit('toggleOpened', item._id)"
+              src="@/assets/icons/sub_deps.svg"
+            />
+          </VueCustomTooltip>
           <img
             alt=""
             v-else
@@ -19,7 +23,13 @@
           />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/trash_icon_white.svg" alt="" />
+          <VueCustomTooltip label="Удалить">
+            <img
+              @click="$emit('deleteItem', item)"
+              src="@/assets/icons/trash_icon_white.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
@@ -87,10 +97,9 @@ export default {
 .department__container {
   position: relative;
   margin-left: 20px;
+  border-radius: $border-radius;
 
   &--has-child {
-    padding-bottom: 2px;
-    margin-bottom: 10px;
   }
 
   &--line {
@@ -129,7 +138,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 15px;
-  margin-bottom: 20px;
   justify-content: space-between;
   font-size: 14px;
   font-weight: 700;
@@ -163,6 +171,9 @@ export default {
     height: 6px;
     background-color: $color-black;
     left: -12px;
+  }
+  .vue-custom-tooltip.is-top:before {
+    display: none;
   }
 }
 </style>
