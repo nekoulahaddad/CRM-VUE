@@ -262,7 +262,7 @@
                 }))
               "
               name="department"
-              v-model="dep"
+              v-model="department"
               :reduce="(item) => item.value"
             />
           </div>
@@ -658,6 +658,7 @@ export default {
     if (this.infoItem) {
       this.employment_date = this.infoItem.employment_date;
       this.role = this.infoItem.role;
+      this.department = this.infoItem.department.value;
       this.education = this.infoItem.education;
       this.date_of_birth = this.infoItem.date_of_birth;
       this.children = this.infoItem.children ? this.infoItem.children : [];
@@ -671,7 +672,9 @@ export default {
       url: "/departments/all",
     }).then(({ data }) => {
       data.map((item) => {
-        this.departments.push(item);
+        if (!this.departments.find((i) => i.value === item.value)) {
+          this.departments.push(item);
+        }
       });
     });
   },
