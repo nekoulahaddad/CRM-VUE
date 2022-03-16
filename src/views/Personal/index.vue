@@ -81,6 +81,32 @@
               </div>
             </div>
           </div>
+          <div class="personal-area__column">
+            <div class="column__title">Иформация о ролях в системе:</div>
+            <div class="list">
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__column">1. Суперадмин:</div>
+              </div>
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__column">2. Администратор:</div>
+              </div>
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__column">3. Менеджер по продажам:</div>
+              </div>
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__column">4. Контент - менеджер:</div>
+              </div>
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__column">5. SEO:</div>
+              </div>
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__column">6. Call - центр:</div>
+              </div>
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__column">7. Закупщик:</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -185,6 +211,30 @@ export default {
 @import "@/styles/_variables";
 
 .personal-area {
+  .column {
+    &__title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .list {
+    width: 740px;
+    &__column {
+      padding-left: 15px;
+      padding-right: 15px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+
+      &:first-child {
+        text-align: left;
+      }
+    }
+  }
+
   &__header {
     background-color: $color-gray-secondary;
     border-top-left-radius: $border-radius;
