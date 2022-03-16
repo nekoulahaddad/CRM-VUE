@@ -618,6 +618,12 @@ export default {
         key: "addGoodsCategory",
         value: false,
       });
+      this.editedItem = {};
+      this.groupItems = {};
+      this.categoryExportItem = {};
+      this.categoryImportItem = {};
+      this.managerItem = {};
+      this.copyItem = {};
 
       if (this.$route.params.type !== "search") {
         try {
