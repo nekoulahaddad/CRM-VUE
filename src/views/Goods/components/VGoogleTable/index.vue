@@ -4,6 +4,7 @@
     :minHeight="360"
     :minWidth="1017"
     name="googleTable"
+    @before-close="beforeClose"
   >
     <div class="google-table">
       <div class="vm--modal__title">
@@ -69,10 +70,17 @@ export default {
     googleDoc: Object,
   },
   methods: {
-    cancel() {},
+    cancel() {
+      this.$modal.hide("googleTable");
+    },
     confirm() {},
     getUrl(id) {
       return `https://docs.google.com/spreadsheets/d/${id}`;
+    },
+    beforeClose() {
+      this.$store.commit("toggleAction", {
+        key: "googleTable",
+      });
     },
   },
   data() {
