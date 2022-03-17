@@ -3,6 +3,7 @@
 @import "variables";
 @import "mixins/index";
 @import "components/index";
+@import "media";
 
 html,
 body,
@@ -333,5 +334,3 @@ span[role="tooltip"] {
 .Vue-Toastification__toast-body {
   font-weight: bold;
 }
-
-@import "media";
