@@ -19,3 +19,9 @@
     overflow-x: scroll;
   }
 }
+
+@media (max-width: 480px) {
+  body {
+    display: none;
+  }
+}
