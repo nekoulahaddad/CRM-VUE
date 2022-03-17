@@ -20,7 +20,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 480px) {
   #app,
   .wrapper {
     display: none !important;
