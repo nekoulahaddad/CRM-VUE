@@ -84,73 +84,468 @@
           <div class="personal-area__column">
             <div class="column__title">Иформация о ролях в системе:</div>
             <div class="list">
+              <!-- 1. Суперадмин -->
               <div class="list__row list__row--shadow list__row--white">
-                <div class="list__column">1. Суперадмин:</div>
-                <div class="list__column">
-                  <div class="table__action">
-                    <div class="table__icon">
-                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                <div class="list__columns">
+                  <div class="list__column">1. Суперадмин:</div>
+                  <div class="list__column">
+                    <div class="table__action">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="list__row list__row--shadow list__row--white">
-                <div class="list__column">2. Администратор:</div>
-                <div class="list__column">
-                  <div class="table__action">
-                    <div class="table__icon">
-                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
-                    </div>
+                <div class="list__info">
+                  <div class="list__item">
+                    <img src="@/assets/icons/monitor.svg" alt="" />
+                    <span>Дашборд</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Документы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/employee.svg" alt="" />
+                    <span>Персонал</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/calendar.svg" alt="" />
+                    <span>Календарь</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/tasks.svg" alt="" />
+                    <span>Задачи</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/reports.svg" alt="" />
+                    <span>Отчёты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/clients.svg" alt="" />
+                    <span>Клиенты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/orders.svg" alt="" />
+                    <span>Заказы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mail.svg" alt="" />
+                    <span>Заявки</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/goods.svg" alt="" />
+                    <span>Товары</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/seo.svg" alt="" />
+                    <span>SEO</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mango.svg" alt="" />
+                    <span>Mango</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/storage.svg" alt="" />
+                    <span>Снабженец</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/delivery.svg" alt="" />
+                    <span>Поставщики</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/callbacks.svg" alt="" />
+                    <span>Обращения</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/buying.svg" alt="" />
+                    <span>Закупка</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/sites.svg" alt="" />
+                    <span>Кор. сайты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Обучение</span>
                   </div>
                 </div>
               </div>
+
+              <!-- 2. Администратор -->
               <div class="list__row list__row--shadow list__row--white">
-                <div class="list__column">3. Менеджер по продажам:</div>
-                <div class="list__column">
-                  <div class="table__action">
-                    <div class="table__icon">
-                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                <div class="list__columns">
+                  <div class="list__column">2. Администратор:</div>
+                  <div class="list__column">
+                    <div class="table__action">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="list__row list__row--shadow list__row--white">
-                <div class="list__column">4. Контент - менеджер:</div>
-                <div class="list__column">
-                  <div class="table__action">
-                    <div class="table__icon">
-                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
-                    </div>
+                <div class="list__info">
+                  <div class="list__item">
+                    <img src="@/assets/icons/monitor.svg" alt="" />
+                    <span>Дашборд</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Документы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/employee.svg" alt="" />
+                    <span>Персонал</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/calendar.svg" alt="" />
+                    <span>Календарь</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/tasks.svg" alt="" />
+                    <span>Задачи</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/reports.svg" alt="" />
+                    <span>Отчёты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/clients.svg" alt="" />
+                    <span>Клиенты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/orders.svg" alt="" />
+                    <span>Заказы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mail.svg" alt="" />
+                    <span>Заявки</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/goods.svg" alt="" />
+                    <span>Товары</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/seo.svg" alt="" />
+                    <span>SEO</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mango.svg" alt="" />
+                    <span>Mango</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/storage.svg" alt="" />
+                    <span>Снабженец</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/delivery.svg" alt="" />
+                    <span>Поставщики</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/callbacks.svg" alt="" />
+                    <span>Обращения</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/buying.svg" alt="" />
+                    <span>Закупка</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/sites.svg" alt="" />
+                    <span>Кор. сайты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Обучение</span>
                   </div>
                 </div>
               </div>
+
+              <!-- 3. Менеджер по продажам -->
               <div class="list__row list__row--shadow list__row--white">
-                <div class="list__column">5. SEO:</div>
-                <div class="list__column">
-                  <div class="table__action">
-                    <div class="table__icon">
-                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                <div class="list__columns">
+                  <div class="list__column">3. Менеджер по продажам:</div>
+                  <div class="list__column">
+                    <div class="table__action">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="list__row list__row--shadow list__row--white">
-                <div class="list__column">6. Call - центр:</div>
-                <div class="list__column">
-                  <div class="table__action">
-                    <div class="table__icon">
-                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
-                    </div>
+                <div class="list__info">
+                  <div class="list__item">
+                    <img src="@/assets/icons/monitor.svg" alt="" />
+                    <span>Дашборд</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Документы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/calendar.svg" alt="" />
+                    <span>Календарь</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/tasks.svg" alt="" />
+                    <span>Задачи</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/reports.svg" alt="" />
+                    <span>Отчёты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/clients.svg" alt="" />
+                    <span>Клиенты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/orders.svg" alt="" />
+                    <span>Заказы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mail.svg" alt="" />
+                    <span>Заявки</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/goods.svg" alt="" />
+                    <span>Товары</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/seo.svg" alt="" />
+                    <span>SEO</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mango.svg" alt="" />
+                    <span>Mango</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/storage.svg" alt="" />
+                    <span>Снабженец</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/delivery.svg" alt="" />
+                    <span>Поставщики</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/callbacks.svg" alt="" />
+                    <span>Обращения</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/buying.svg" alt="" />
+                    <span>Закупка</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Обучение</span>
                   </div>
                 </div>
               </div>
+
+              <!-- 4. Контент - менеджер -->
               <div class="list__row list__row--shadow list__row--white">
-                <div class="list__column">7. Закупщик:</div>
-                <div class="list__column">
-                  <div class="table__action">
-                    <div class="table__icon">
-                      <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                <div class="list__columns">
+                  <div class="list__column">4. Контент - менеджер:</div>
+                  <div class="list__column">
+                    <div class="table__action">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                      </div>
                     </div>
+                  </div>
+                </div>
+                <div class="list__info">
+                  <div class="list__item">
+                    <img src="@/assets/icons/monitor.svg" alt="" />
+                    <span>Дашборд</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Документы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/calendar.svg" alt="" />
+                    <span>Календарь</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/tasks.svg" alt="" />
+                    <span>Задачи</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/reports.svg" alt="" />
+                    <span>Отчёты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/goods.svg" alt="" />
+                    <span>Товары</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Обучение</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5. SEO -->
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__columns">
+                  <div class="list__column">5. SEO:</div>
+                  <div class="list__column">
+                    <div class="table__action">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list__info">
+                  <div class="list__item">
+                    <img src="@/assets/icons/monitor.svg" alt="" />
+                    <span>Дашборд</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Документы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/calendar.svg" alt="" />
+                    <span>Календарь</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/tasks.svg" alt="" />
+                    <span>Задачи</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/reports.svg" alt="" />
+                    <span>Отчёты</span>
+                  </div>
+
+                  <div class="list__item">
+                    <img src="@/assets/icons/seo.svg" alt="" />
+                    <span>SEO</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/sites.svg" alt="" />
+                    <span>Кор. сайты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Обучение</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 6. Call - центр -->
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__columns">
+                  <div class="list__column">6. Call - центр:</div>
+                  <div class="list__column">
+                    <div class="table__action">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list__info">
+                  <div class="list__item">
+                    <img src="@/assets/icons/monitor.svg" alt="" />
+                    <span>Дашборд</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Документы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/employee.svg" alt="" />
+                    <span>Персонал</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/calendar.svg" alt="" />
+                    <span>Календарь</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/orders.svg" alt="" />
+                    <span>Заказы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mail.svg" alt="" />
+                    <span>Заявки</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/goods.svg" alt="" />
+                    <span>Товары</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mango.svg" alt="" />
+                    <span>Mango</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/delivery.svg" alt="" />
+                    <span>Поставщики</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/callbacks.svg" alt="" />
+                    <span>Обращения</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Обучение</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 7. Закупщик -->
+              <div class="list__row list__row--shadow list__row--white">
+                <div class="list__columns">
+                  <div class="list__column">7. Закупщик:</div>
+                  <div class="list__column">
+                    <div class="table__action">
+                      <div class="table__icon">
+                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="list__info">
+                  <div class="list__item">
+                    <img src="@/assets/icons/monitor.svg" alt="" />
+                    <span>Дашборд</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Документы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/calendar.svg" alt="" />
+                    <span>Календарь</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/reports.svg" alt="" />
+                    <span>Отчёты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/clients.svg" alt="" />
+                    <span>Клиенты</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/orders.svg" alt="" />
+                    <span>Заказы</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/mail.svg" alt="" />
+                    <span>Заявки</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/storage.svg" alt="" />
+                    <span>Снабженец</span>
+                  </div>
+                  <div class="list__item">
+                    <img src="@/assets/icons/delivery.svg" alt="" />
+                    <span>Поставщики</span>
+                  </div>
+
+                  <div class="list__item">
+                    <img src="@/assets/icons/education.svg" alt="" />
+                    <span>Обучение</span>
                   </div>
                 </div>
               </div>
@@ -271,13 +666,49 @@ export default {
 
   .list {
     width: 740px;
-    &__row {
+    &__info {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &__item {
+      width: 20%;
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 7px;
+        width: 2px;
+        height: 24px;
+        background-color: $color-red;
+      }
+
+      &:last-child:before,
+      &:nth-child(5n):before {
+        display: none;
+      }
+
+      img {
+        margin-right: 10px;
+        height: 24px;
+      }
+      span {
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+    &__columns {
       display: flex;
       justify-content: space-between;
     }
     &__column {
-      padding-left: 15px;
-      padding-right: 15px;
+      padding-left: 5px;
+      padding-right: 5px;
       height: 42px;
       display: flex;
       align-items: center;
