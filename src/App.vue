@@ -1,5 +1,5 @@
 <template>
-  <div v-if="mobile()" class="mobile-off">
+  <div v-if="mobile" class="mobile-off">
     <div>ЦРМ система доступна только для версии декстоп и планшета.</div>
     <img src="@/assets/icons/mobile_off.svg" alt="" />
   </div>
@@ -11,6 +11,11 @@ import axios from "@/api/axios";
 import isMobile from "is-mobile";
 
 export default {
+  computed: {
+    mobile() {
+      return isMobile();
+    },
+  },
   sockets: {
     connect() {
       if (
@@ -81,7 +86,9 @@ export default {
     },
   },
   created() {
-    console.log(111);
+    window.addEventListener("resize", () => {
+      this.mobile = isMobile();
+    });
   },
 };
 </script>
