@@ -20,8 +20,29 @@
   }
 }
 
+.mobile-off {
+  display: none;
+}
+
 @media (max-width: 480px) {
-  body {
+  .wrapper {
     display: none;
+  }
+  .mobile-off {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+
+    img {
+      max-width: 300px;
+    }
   }
 }
