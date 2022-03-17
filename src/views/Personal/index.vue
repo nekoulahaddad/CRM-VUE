@@ -182,7 +182,7 @@
                     <span>Кор. сайты</span>
                   </div>
                   <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
+                    <img src="@/assets/icons/learn.svg" alt="" />
                     <span>Обучение</span>
                   </div>
                 </div>
@@ -286,7 +286,7 @@
                     <span>Кор. сайты</span>
                   </div>
                   <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
+                    <img src="@/assets/icons/learn.svg" alt="" />
                     <span>Обучение</span>
                   </div>
                 </div>
@@ -469,7 +469,7 @@
                     <span>Кор. сайты</span>
                   </div>
                   <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
+                    <img src="@/assets/icons/learn.svg" alt="" />
                     <span>Обучение</span>
                   </div>
                 </div>
@@ -607,7 +607,7 @@
                   </div>
 
                   <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
+                    <img src="@/assets/icons/learn.svg" alt="" />
                     <span>Обучение</span>
                   </div>
                 </div>
