@@ -335,14 +335,6 @@
                     <span>Задачи</span>
                   </div>
                   <div class="list__item">
-                    <img src="@/assets/icons/reports.svg" alt="" />
-                    <span>Отчёты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/clients.svg" alt="" />
-                    <span>Клиенты</span>
-                  </div>
-                  <div class="list__item">
                     <img src="@/assets/icons/orders.svg" alt="" />
                     <span>Заказы</span>
                   </div>
@@ -355,18 +347,6 @@
                     <span>Товары</span>
                   </div>
                   <div class="list__item">
-                    <img src="@/assets/icons/seo.svg" alt="" />
-                    <span>SEO</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mango.svg" alt="" />
-                    <span>Mango</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/storage.svg" alt="" />
-                    <span>Снабженец</span>
-                  </div>
-                  <div class="list__item">
                     <img src="@/assets/icons/delivery.svg" alt="" />
                     <span>Поставщики</span>
                   </div>
@@ -377,10 +357,6 @@
                   <div class="list__item">
                     <img src="@/assets/icons/buying.svg" alt="" />
                     <span>Закупка</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Обучение</span>
                   </div>
                 </div>
               </div>
@@ -431,16 +407,8 @@
                     <span>Задачи</span>
                   </div>
                   <div class="list__item">
-                    <img src="@/assets/icons/reports.svg" alt="" />
-                    <span>Отчёты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/goods.svg" alt="" />
-                    <span>Товары</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Обучение</span>
+                    <img src="@/assets/icons/sites.svg" alt="" />
+                    <span>Кор. сайты</span>
                   </div>
                 </div>
               </div>
@@ -561,10 +529,6 @@
                     <span>Заявки</span>
                   </div>
                   <div class="list__item">
-                    <img src="@/assets/icons/goods.svg" alt="" />
-                    <span>Товары</span>
-                  </div>
-                  <div class="list__item">
                     <img src="@/assets/icons/mango.svg" alt="" />
                     <span>Mango</span>
                   </div>
@@ -575,10 +539,6 @@
                   <div class="list__item">
                     <img src="@/assets/icons/callbacks.svg" alt="" />
                     <span>Обращения</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Обучение</span>
                   </div>
                 </div>
               </div>
