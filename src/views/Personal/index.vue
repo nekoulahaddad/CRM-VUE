@@ -85,18 +85,30 @@
             <div class="column__title">Иформация о ролях в системе:</div>
             <div class="list">
               <!-- 1. Суперадмин -->
-              <div class="list__row list__row--shadow list__row--white">
+              <div
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': openedRoles.includes('superadmin'),
+                }"
+              >
                 <div class="list__columns">
                   <div class="list__column">1. Суперадмин:</div>
                   <div class="list__column">
                     <div class="table__action">
                       <div class="table__icon">
-                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                        <img
+                          @click="toggleOpenedRole('superadmin')"
+                          src="@/assets/icons/arrow_down_icon.svg"
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="list__info">
+                <div
+                  class="list__info"
+                  v-if="openedRoles.includes('superadmin')"
+                >
                   <div class="list__item">
                     <img src="@/assets/icons/monitor.svg" alt="" />
                     <span>Дашборд</span>
@@ -173,18 +185,30 @@
               </div>
 
               <!-- 2. Администратор -->
-              <div class="list__row list__row--shadow list__row--white">
+              <div
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': openedRoles.includes('administrator'),
+                }"
+              >
                 <div class="list__columns">
                   <div class="list__column">2. Администратор:</div>
                   <div class="list__column">
                     <div class="table__action">
                       <div class="table__icon">
-                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                        <img
+                          @click="toggleOpenedRole('administrator')"
+                          src="@/assets/icons/arrow_down_icon.svg"
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="list__info">
+                <div
+                  class="list__info"
+                  v-if="openedRoles.includes('administrator')"
+                >
                   <div class="list__item">
                     <img src="@/assets/icons/monitor.svg" alt="" />
                     <span>Дашборд</span>
@@ -261,18 +285,27 @@
               </div>
 
               <!-- 3. Менеджер по продажам -->
-              <div class="list__row list__row--shadow list__row--white">
+              <div
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': openedRoles.includes('manager'),
+                }"
+              >
                 <div class="list__columns">
                   <div class="list__column">3. Менеджер по продажам:</div>
                   <div class="list__column">
                     <div class="table__action">
                       <div class="table__icon">
-                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                        <img
+                          @click="toggleOpenedRole('manager')"
+                          src="@/assets/icons/arrow_down_icon.svg"
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="list__info">
+                <div class="list__info" v-if="openedRoles.includes('manager')">
                   <div class="list__item">
                     <img src="@/assets/icons/monitor.svg" alt="" />
                     <span>Дашборд</span>
@@ -341,18 +374,30 @@
               </div>
 
               <!-- 4. Контент - менеджер -->
-              <div class="list__row list__row--shadow list__row--white">
+              <div
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': openedRoles.includes('content-manager'),
+                }"
+              >
                 <div class="list__columns">
                   <div class="list__column">4. Контент - менеджер:</div>
                   <div class="list__column">
                     <div class="table__action">
                       <div class="table__icon">
-                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                        <img
+                          @click="toggleOpenedRole('content-manager')"
+                          src="@/assets/icons/arrow_down_icon.svg"
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="list__info">
+                <div
+                  class="list__info"
+                  v-if="openedRoles.includes('content-manager')"
+                >
                   <div class="list__item">
                     <img src="@/assets/icons/monitor.svg" alt="" />
                     <span>Дашборд</span>
@@ -385,18 +430,27 @@
               </div>
 
               <!-- 5. SEO -->
-              <div class="list__row list__row--shadow list__row--white">
+              <div
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': openedRoles.includes('seo'),
+                }"
+              >
                 <div class="list__columns">
                   <div class="list__column">5. SEO:</div>
                   <div class="list__column">
                     <div class="table__action">
                       <div class="table__icon">
-                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                        <img
+                          @click="toggleOpenedRole('seo')"
+                          src="@/assets/icons/arrow_down_icon.svg"
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="list__info">
+                <div class="list__info" v-if="openedRoles.includes('seo')">
                   <div class="list__item">
                     <img src="@/assets/icons/monitor.svg" alt="" />
                     <span>Дашборд</span>
@@ -434,18 +488,30 @@
               </div>
 
               <!-- 6. Call - центр -->
-              <div class="list__row list__row--shadow list__row--white">
+              <div
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': openedRoles.includes('call-center'),
+                }"
+              >
                 <div class="list__columns">
                   <div class="list__column">6. Call - центр:</div>
                   <div class="list__column">
                     <div class="table__action">
                       <div class="table__icon">
-                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                        <img
+                          @click="toggleOpenedRole('call-center')"
+                          src="@/assets/icons/arrow_down_icon.svg"
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="list__info">
+                <div
+                  class="list__info"
+                  v-if="openedRoles.includes('call-center')"
+                >
                   <div class="list__item">
                     <img src="@/assets/icons/monitor.svg" alt="" />
                     <span>Дашборд</span>
@@ -494,18 +560,27 @@
               </div>
 
               <!-- 7. Закупщик -->
-              <div class="list__row list__row--shadow list__row--white">
+              <div
+                class="list__row list__row--shadow list__row--white"
+                :class="{
+                  'list__row--opened': openedRoles.includes('buying'),
+                }"
+              >
                 <div class="list__columns">
                   <div class="list__column">7. Закупщик:</div>
                   <div class="list__column">
                     <div class="table__action">
                       <div class="table__icon">
-                        <img src="@/assets/icons/arrow_top_icon.svg" alt="" />
+                        <img
+                          @click="toggleOpenedRole('buying')"
+                          src="@/assets/icons/arrow_down_icon.svg"
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="list__info">
+                <div class="list__info" v-if="openedRoles.includes('buying')">
                   <div class="list__item">
                     <img src="@/assets/icons/monitor.svg" alt="" />
                     <span>Дашборд</span>
@@ -574,6 +649,7 @@ export default {
   },
   data() {
     return {
+      openedRoles: [],
       oldPassword: "",
       newPassword: "",
       inner_number:
@@ -586,6 +662,13 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    toggleOpenedRole(role) {
+      if (this.openedRoles.includes(role)) {
+        this.openedRoles = this.openedRoles.filter((item) => item !== role);
+      } else {
+        this.openedRoles.push(role);
+      }
+    },
     onPasswordRemind() {
       this.changeStatus(false);
       axios({
