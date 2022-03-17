@@ -275,11 +275,16 @@
             <div class="group">
               <div class="group__title">Дедлайн:</div>
               <div class="group__content">
-                <datetime
-                  type="datetime"
-                  input-class="forms__container--input"
-                  :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
-                  v-model="date"
+                <input
+                  readonly
+                  type="text"
+                  class="form-control"
+                  v-model="
+                    date &&
+                    new Date(date).toLocaleDateString() +
+                      ' ' +
+                      new Date(date).toLocaleTimeString()
+                  "
                   style="width: 371px"
                 />
               </div>
@@ -308,7 +313,7 @@ export default {
       title: "",
       description: "",
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
-      initiator_comment: "",
+      comment: "",
       documents: [],
       sub_tasks: [],
       executors: {
@@ -430,8 +435,8 @@ export default {
       if (this.description) {
         taskData.append("description", this.description);
       }
-      if (this.initiator_comment) {
-        taskData.append("initiator_comment", this.initiator_comment);
+      if (this.comment) {
+        taskData.append("comment", this.comment);
       }
       if (this.date) {
         taskData.append("deadline_date", this.date);
