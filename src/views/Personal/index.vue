@@ -98,7 +98,11 @@
                       <div class="table__icon">
                         <img
                           @click="toggleOpenedRole('superadmin')"
-                          src="@/assets/icons/arrow_down_icon.svg"
+                          :src="
+                            openedRoles.includes('superadmin')
+                              ? require('@/assets/icons/arrow_top_icon.svg')
+                              : require('@/assets/icons/arrow_down_icon.svg')
+                          "
                           alt=""
                         />
                       </div>
@@ -198,7 +202,11 @@
                       <div class="table__icon">
                         <img
                           @click="toggleOpenedRole('administrator')"
-                          src="@/assets/icons/arrow_down_icon.svg"
+                          :src="
+                            openedRoles.includes('administrator')
+                              ? require('@/assets/icons/arrow_top_icon.svg')
+                              : require('@/assets/icons/arrow_down_icon.svg')
+                          "
                           alt=""
                         />
                       </div>
@@ -298,7 +306,11 @@
                       <div class="table__icon">
                         <img
                           @click="toggleOpenedRole('manager')"
-                          src="@/assets/icons/arrow_down_icon.svg"
+                          :src="
+                            openedRoles.includes('manager')
+                              ? require('@/assets/icons/arrow_top_icon.svg')
+                              : require('@/assets/icons/arrow_down_icon.svg')
+                          "
                           alt=""
                         />
                       </div>
@@ -387,7 +399,11 @@
                       <div class="table__icon">
                         <img
                           @click="toggleOpenedRole('content-manager')"
-                          src="@/assets/icons/arrow_down_icon.svg"
+                          :src="
+                            openedRoles.includes('content-manager')
+                              ? require('@/assets/icons/arrow_top_icon.svg')
+                              : require('@/assets/icons/arrow_down_icon.svg')
+                          "
                           alt=""
                         />
                       </div>
@@ -443,7 +459,11 @@
                       <div class="table__icon">
                         <img
                           @click="toggleOpenedRole('seo')"
-                          src="@/assets/icons/arrow_down_icon.svg"
+                          :src="
+                            openedRoles.includes('seo')
+                              ? require('@/assets/icons/arrow_top_icon.svg')
+                              : require('@/assets/icons/arrow_down_icon.svg')
+                          "
                           alt=""
                         />
                       </div>
@@ -501,7 +521,11 @@
                       <div class="table__icon">
                         <img
                           @click="toggleOpenedRole('call-center')"
-                          src="@/assets/icons/arrow_down_icon.svg"
+                          :src="
+                            openedRoles.includes('call-center')
+                              ? require('@/assets/icons/arrow_top_icon.svg')
+                              : require('@/assets/icons/arrow_down_icon.svg')
+                          "
                           alt=""
                         />
                       </div>
@@ -573,7 +597,11 @@
                       <div class="table__icon">
                         <img
                           @click="toggleOpenedRole('buying')"
-                          src="@/assets/icons/arrow_down_icon.svg"
+                          :src="
+                            openedRoles.includes('buying')
+                              ? require('@/assets/icons/arrow_top_icon.svg')
+                              : require('@/assets/icons/arrow_down_icon.svg')
+                          "
                           alt=""
                         />
                       </div>
