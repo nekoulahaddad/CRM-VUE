@@ -326,4 +326,8 @@ span[role="tooltip"] {
   user-select: none;
 }
 
+.Vue-Toastification__toast-body {
+  font-weight: bold;
+}
+
 @import "media";
