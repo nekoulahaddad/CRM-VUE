@@ -7,6 +7,11 @@
     />
     <div class="page__body">
       <div class="personal-area">
+        <img
+          class="personal-area__bg"
+          src="@/assets/icons/personal_man.svg"
+          alt=""
+        />
         <div class="personal-area__header">
           {{ transformFIO(user) }}, {{ $t("welcome") }}
         </div>
@@ -726,6 +731,16 @@ export default {
 @import "@/styles/_variables";
 
 .personal-area {
+  width: 1591px;
+  position: relative;
+  overflow: hidden;
+
+  &__bg {
+    position: absolute;
+    bottom: -1px;
+    right: -120px;
+  }
+
   .column {
     &__title {
       font-size: 18px;
