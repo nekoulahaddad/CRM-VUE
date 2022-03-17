@@ -23,7 +23,7 @@
 @media (max-width: 320px) {
   #app,
   .wrapper {
-    display: none;
+    display: none !important;
   }
   .mobile-off {
     display: flex;
