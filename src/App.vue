@@ -1,9 +1,14 @@
 <template>
-  <router-view />
+  <div v-if="mobile()" class="mobile-off">
+    <div>ЦРМ система доступна только для версии декстоп и планшета.</div>
+    <img src="@/assets/icons/mobile_off.svg" alt="" />
+  </div>
+  <router-view v-else />
 </template>
 
 <script>
 import axios from "@/api/axios";
+import isMobile from "is-mobile";
 
 export default {
   sockets: {
@@ -41,6 +46,9 @@ export default {
     },
   },
   methods: {
+    mobile() {
+      return isMobile();
+    },
     clearCache() {
       axios
         .get("https://tdcsk.com/api/cache-clear", {
@@ -71,6 +79,9 @@ export default {
         });
       }
     },
+  },
+  created() {
+    console.log(111);
   },
 };
 </script>

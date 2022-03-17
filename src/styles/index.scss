@@ -12,7 +12,25 @@ body,
 }
 
 .mobile-off {
-  display: none;
+  max-width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+
+  div {
+    color: $color-red;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  img {
+    width: 100%;
+  }
 }
 
 body {
