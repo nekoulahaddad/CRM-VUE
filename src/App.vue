@@ -11,10 +11,10 @@ import axios from "@/api/axios";
 import isMobile from "is-mobile";
 
 export default {
-  computed: {
-    mobile() {
-      return isMobile();
-    },
+  data() {
+    return {
+      mobile: isMobile(),
+    };
   },
   sockets: {
     connect() {
@@ -51,9 +51,6 @@ export default {
     },
   },
   methods: {
-    mobile() {
-      return isMobile();
-    },
     clearCache() {
       axios
         .get("https://tdcsk.com/api/cache-clear", {
