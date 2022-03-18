@@ -55,22 +55,6 @@ import "vue-select/dist/vue-select.css";
 moment.tz.guess();
 const token = localStorage.getItem("token");
 
-const socket = io(process.env.VUE_APP_DEVELOP_URL, {
-  query: { token },
-  autoConnect: true,
-  reconnection: true,
-  transports: ["websocket"],
-  maxReconnectionAttempts: Infinity,
-});
-
-socket.on("disconnect", () => {
-  socket.open();
-});
-
-if (token) {
-  Vue.use(VueSocketIOExt, socket, { store });
-}
-
 Vue.config.productionTip = false;
 
 Vue.use(VueCustomTooltip, {
