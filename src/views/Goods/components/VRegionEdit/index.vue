@@ -2,7 +2,12 @@
   <v-modal :adaptive="true" :minWidth="1070" :minHeight="800" name="regionEdit">
     <div class="vm--modal__title">
       Редактировать регион
-      <img @click="cancel" src="@/assets/icons/close_icon.svg" alt="" />
+      <img
+        @click="cancel"
+        class="close"
+        src="@/assets/icons/close_icon.svg"
+        alt=""
+      />
     </div>
     <div class="vm--modal__inner region-edit">
       <div class="vm--modal__content d-flex justify-content-between">
@@ -208,6 +213,16 @@ export default {
 </script>
 
 <style lang="scss">
+.vm--modal__title {
+  position: relative;
+
+  .close {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
 .region-edit {
   .vm--modal__buttons {
     position: absolute;
