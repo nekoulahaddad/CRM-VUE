@@ -324,6 +324,78 @@
                     >
                   </div>
                 </div>
+
+                <div class="group">
+                  <div class="group__title">Рекомендуемый товар:</div>
+                  <div class="group__content">
+                    <autocomplete
+                      class="participants__input"
+                      :search="findChips"
+                      :get-result-value="getResult"
+                      style="width: 100%"
+                      placeholder="Введите артикул или название..."
+                    >
+                      <template #result="{ result, props }">
+                        <li
+                          v-bind="props"
+                          @click="setChip({ ...result, type: 'recomends' })"
+                        >
+                          {{ result.title }}
+                        </li>
+                      </template>
+                    </autocomplete>
+                  </div>
+                  <div class="group__footer flex-column">
+                    <div
+                      class="group__recomend"
+                      v-for="(rec, index) in recomends"
+                      :key="rec._id"
+                    >
+                      <span>{{ rec.title }}</span>
+                      <img
+                        @click="deleteChip(index)"
+                        src="@/assets/icons/trash_icon.svg"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="group">
+                  <div class="group__title">С этим товаром покупают:</div>
+                  <div class="group__content">
+                    <autocomplete
+                      class="participants__input"
+                      :search="findChips"
+                      :get-result-value="getResult"
+                      style="width: 100%"
+                      placeholder="Введите артикул или название..."
+                    >
+                      <template #result="{ result, props }">
+                        <li
+                          v-bind="props"
+                          @click="setChip({ ...result, type: 'buyed' })"
+                        >
+                          {{ result.title }}
+                        </li>
+                      </template>
+                    </autocomplete>
+                  </div>
+                  <div class="group__footer flex-column">
+                    <div
+                      class="group__recomend"
+                      v-for="(rec, index) in buyed"
+                      :key="rec._id"
+                    >
+                      <span>{{ rec.title }}</span>
+                      <img
+                        @click="deleteChipBuyed(index)"
+                        src="@/assets/icons/trash_icon.svg"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -816,21 +888,17 @@ export default {
       }
     },
     setChip(chipObj) {
-      let { chip, type } = chipObj;
-      let exist = this[type].some((r) => r.product_id === chip._id);
+      const { _id, title, type } = chipObj;
+      let exist = this[type].some((r) => r.product_id === _id);
       let msg =
         type === "recomends" ? "рекомендуемых" : '"С этим товаром покупают"';
       if (exist) {
         this.$toast.error(`Товар уже в ${msg}`, "Ошибка");
         return;
       }
-      if (chip._id === this.editedProduct._id) {
-        this.$toast.error(`Нельзя добавить редактируемый товар!`, "Ошибка");
-        return;
-      }
       this[type].push({
-        title: chip.title,
-        product_id: chip._id,
+        title: title,
+        product_id: _id,
       });
       this.tempChips = [];
       this.currentInputRecomend = "";
@@ -982,6 +1050,7 @@ export default {
     overflow-x: hidden;
     margin-top: 10px;
     margin-bottom: 5px;
+    width: 100%;
 
     &:last-child {
       margin-bottom: 10px;
