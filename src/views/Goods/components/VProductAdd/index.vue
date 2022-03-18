@@ -144,16 +144,26 @@
                 <div class="group" style="margin-top: 10px">
                   <div class="group__title">Фотографии товара:</div>
                   <div class="group__content photo-wrapper">
-                    <template v-if="images.length > 0">
-                      <img
-                        alt=""
+                    <template v-if="tempUrl.length > 0">
+                      <div
                         class="product-photo"
                         v-for="(item, index) in tempUrl"
-                        :src="item.url"
-                        :title="item.name"
-                        @click.prevent="downloadItem(item.url, item.name)"
                         :key="index"
-                      />
+                      >
+                        <img
+                          alt=""
+                          :src="item.url"
+                          :title="item.name"
+                          class="product-photo__img"
+                          @click.prevent="downloadItem(item.url, item.name)"
+                        />
+                        <img
+                          alt=""
+                          class="product-photo__delete-icon"
+                          src="@/assets/icons/trash_icon.svg"
+                          @click="deleteImage(item)"
+                        />
+                      </div>
                     </template>
 
                     <label
@@ -944,6 +954,25 @@ export default {
     padding: 10px;
   }
 
+  .product-photo {
+    width: 132px;
+    height: 132px;
+    position: relative;
+
+    img.product-photo__img {
+      width: 132px;
+      height: 132px;
+    }
+    &__delete-icon {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: #fff;
+      border-radius: $border-radius;
+      padding: 2px;
+    }
+  }
+
   &__title {
     background-color: $color-gray-secondary;
     padding: 10px;
@@ -1031,6 +1060,7 @@ export default {
     }
   }
   .photo-wrapper {
+    position: relative;
     flex-wrap: wrap;
 
     & > * {
