@@ -214,6 +214,9 @@ export default {
       });
     },
   },
+  mounted() {
+    this.getRegion();
+  },
 };
 </script>
 
