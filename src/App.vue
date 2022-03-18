@@ -1,6 +1,6 @@
 <template>
   <div v-if="mobile" class="mobile-off">
-    <div>ЦРМ система доступна только для версии декстоп и планшета.</div>
+    <div>ЦРМ система доступна только для версии десктоп и планшета.</div>
     <img src="@/assets/icons/mobile_off.svg" alt="" />
   </div>
   <router-view v-else />
