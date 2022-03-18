@@ -6,12 +6,10 @@ import vuescroll from "vuescroll";
 import vSelect from "vue-select";
 import VCalendar from "v-calendar";
 import VueNumberFormat from "vue-number-format";
-import VueSocketIOExt from "vue-socket.io-extended";
 import VueCustomTooltip from "@adamdehaven/vue-custom-tooltip";
 import Popover from "vue-js-popover";
 import Autocomplete from "@trevoreyre/autocomplete-vue";
 import VueTheMask from "vue-the-mask";
-import io from "socket.io-client";
 import VModal from "vue-js-modal";
 import VueScrollTo from "vue-scrollto";
 import Paginate from "vuejs-paginate";
@@ -25,7 +23,6 @@ import Vuelidate from "vuelidate";
 import { Settings } from "luxon";
 import i18n from "./i18n";
 import VButton from "@/components/VButton";
-import dataMixins from "@/mixins/data";
 import dateMixins from "@/mixins/date";
 import dragMixins from "@/mixins/drag";
 import fioMixins from "@/mixins/fio";
@@ -53,7 +50,6 @@ import "./styles/index.scss";
 import "vue-select/dist/vue-select.css";
 
 moment.tz.guess();
-const token = localStorage.getItem("token");
 
 Vue.config.productionTip = false;
 
@@ -116,7 +112,6 @@ Vue.use(Toast, {
 });
 Vue.component("paginate", Paginate);
 
-//Vue.mixin(dataMixins);
 Vue.mixin(dateMixins);
 Vue.mixin(dragMixins);
 Vue.mixin(deliveryMixins);
