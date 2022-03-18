@@ -115,8 +115,10 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.getRegion();
+  watch: {
+    editedRegionId() {
+      this.getRegion();
+    },
   },
   methods: {
     findDuplicates(array, type) {
