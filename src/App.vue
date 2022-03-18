@@ -16,40 +16,6 @@ export default {
       mobile: isMobile(),
     };
   },
-  sockets: {
-    connect() {
-      if (
-        this.role === "admin" ||
-        this.role === "director" ||
-        this.role === "manager" ||
-        this.role === "superadmin"
-      ) {
-        this.$toast.info(
-          "Вы подключились к cерверу для получения заказов!",
-          "Уведомление"
-        );
-        this.$socket.client.emit("joinRoomOrders", {
-          userId: this.$store.state.id,
-          role: this.role,
-        });
-      }
-      if (
-        this.role === "admin" ||
-        this.role === "director" ||
-        this.role === "manager" ||
-        this.role === "superadmin"
-      ) {
-        this.$toast.info(
-          "Вы подключились к cерверу для получения заявок!",
-          "Уведомление"
-        );
-        this.$socket.client.emit("joinRoomCallbacks", {
-          userId: this.$store.state.id,
-          role: this.role,
-        });
-      }
-    },
-  },
   methods: {
     clearCache() {
       axios
