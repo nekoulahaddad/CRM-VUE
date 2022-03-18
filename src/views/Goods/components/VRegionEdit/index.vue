@@ -30,6 +30,25 @@
         </div>
       </div>
       <div
+        style="
+          color: #003ad2;
+          font-size: 16px;
+          font-weight: 700;
+          margin-top: 15px;
+          border-top: 2px solid #f6f6f6;
+          padding-top: 10px;
+          margin-bottom: 10px;
+        "
+      >
+        Акции региона:
+      </div>
+      <div
+        v-if="region.sales && region.sales.length"
+        style="font-size: 14px; font-weight: 700; margin-bottom: 10px"
+      >
+        Баннеры для десктоп версии:
+      </div>
+      <div
         class="vm--modal__content d-flex justify-content-between"
         style="flex-wrap: wrap; margin-top: 20px"
       >
