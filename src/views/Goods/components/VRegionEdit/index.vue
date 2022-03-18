@@ -8,7 +8,7 @@
       <div class="vm--modal__content d-flex justify-content-between">
         <div>
           <div class="group__title">Валюта:</div>
-          <div class="group__content">
+          <div class="group__content flex-column">
             <v-select
               :options="[
                 { label: 'Рубль', value: '₽' },
@@ -33,7 +33,7 @@
           :key="index"
           style="width: 50%; margin-bottom: 20px"
         >
-          <div class="group__content">
+          <div class="group__content flex-column">
             <img
               v-if="item.img"
               :src="
@@ -57,7 +57,7 @@
           </div>
         </div>
         <div>
-          <div class="group__content"></div>
+          <div class="group__content flex-column"></div>
         </div>
       </div>
       <div class="vm--modal__buttons">
@@ -216,7 +216,8 @@ export default {
   img {
     max-width: 230px;
     width: 100%;
-    border-right: 6px;
+    border-radius: 6px;
+    margin-bottom: 10px;
   }
 }
 </style>
