@@ -32,6 +32,7 @@
           v-for="(item, index) in region.sales"
           :key="index"
           style="width: 50%; margin-bottom: 20px"
+          class="group__wrap"
         >
           <div class="group__content flex-column">
             <img
@@ -212,6 +213,9 @@ export default {
     position: absolute;
     left: 20px;
     bottom: 20px;
+  }
+  .group__wrap:nth-child(odd) {
+    padding-right: 20px;
   }
   img {
     max-width: 230px;
