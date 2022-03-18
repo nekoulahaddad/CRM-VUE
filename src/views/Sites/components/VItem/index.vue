@@ -91,13 +91,25 @@ export default {
       try {
         this.isLoading = false;
         this.downloadExcelGoods = true;
-        await axios({
+        const response = await axios({
           url: `/sites/exportexcel`,
           data: {
             id: id,
           },
           method: "POST",
+          responseType: "blob",
         });
+
+        const link = document.createElement("a");
+        const blob = new Blob([response.data]);
+        let urll = window.URL.createObjectURL(blob);
+        link.href = urll;
+        link.download = response.headers["content-disposition"]
+          .split("filename=")[1]
+          .replaceAll('"', "");
+        link.click();
+        window.URL.revokeObjectURL(urll);
+        URL.revokeObjectURL(link.href);
         this.$toast.success("Начинаю генерировать Excel!");
       } catch (error) {
         this.$toast.error(error.response.data.message);
