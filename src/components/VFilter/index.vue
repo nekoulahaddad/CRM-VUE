@@ -72,6 +72,7 @@
                   }))
                 "
                 :reduce="(item) => item.value"
+                v-model="monitorDep"
                 @input="setMonitor"
               />
             </div>
@@ -1050,6 +1051,7 @@ export default {
   },
   data() {
     return {
+      monitorDep: "Интернет-магазин",
       defaultValue: "",
       executor: "",
       filter: false,

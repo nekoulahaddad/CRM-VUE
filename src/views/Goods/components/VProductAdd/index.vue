@@ -372,7 +372,7 @@ export default {
       imagesTemp: [],
       deletedImgs: [],
       options: new Map(),
-      serverAddr: "https://v2.xn--j1ano.com/",
+      serverAddr: "https://xn--j1ano.com/",
       tempUrl: [],
       isLoading: false,
       length: 0,
