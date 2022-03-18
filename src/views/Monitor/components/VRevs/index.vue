@@ -10,7 +10,9 @@
               <img src="@/assets/icons/bell.svg" alt="" />
             </div>
             <div class="rev__right">
-              <div class="rev__title">{{ item.title }}</div>
+              <div class="rev__title">
+                {{ item.title }}
+              </div>
             </div>
           </div>
           <div class="rev__body rev--row">
@@ -18,8 +20,24 @@
               <div class="rev__line"></div>
             </div>
             <div class="rev__right">
-              {{ vueNumberFormat(item.count) }}
+              <span
+                class="rev-number"
+                :class="{
+                  'rev-number--negative': item.status === 'negative',
+                  'rev-number--positive': item.status === 'positive',
+                }"
+              >
+                {{ vueNumberFormat(item.count) }}
+              </span>
+
               <img
+                v-if="item.status === 'negative'"
+                class="rev__status"
+                src="@/assets/icons/negative.svg"
+                alt=""
+              />
+              <img
+                v-else-if="item.status === 'positive'"
                 class="rev__status"
                 src="@/assets/icons/positive.svg"
                 alt=""
@@ -137,6 +155,16 @@ export default {
 
   &__inner {
     padding: 10px 20px 5px 20px;
+  }
+
+  .rev-number {
+    font-weight: 600;
+    &--positive {
+      color: $color-green;
+    }
+    &--negative {
+      color: $color-red;
+    }
   }
 
   &__title {
