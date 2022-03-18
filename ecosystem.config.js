@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'csk_crm',
       script: 'npm',
-	    args: "run start --prefix /var/www/td-csk-crm-new/server",
+	    args: "run start --prefix /var/www/td-csk-crm/server",
       time: true,
       exec_mode: 'cluster',
       instances: 4,

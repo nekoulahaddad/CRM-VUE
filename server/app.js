@@ -136,11 +136,10 @@ const routerCorporates = require("./routes/corporates");
 const routerCallCenterIssues = require("./routes/callCenterIssues");
 const routerPurchase = require("./routes/purchase");
 const routerOrgTree = require("./routes/orgTree");
-const routerVacancies = require("./routes/vacancies");
-const routerGoogleSheets = require("./routes/googlesheets");
-const routerStaticSites = require("./routes/staticSites");
-const routerSendMail = require("./routes/sendMail");
-const routerFeeds = require("./routes/feeds");
+const routerVacancies = require("./routes/vacancies")
+const routerGoogleSheets = require("./routes/googlesheets")
+const routerStaticSites = require("./routes/staticSites")
+const routerSendMail = require("./routes/sendMail")
 
 
 app.use("/", express.static(path.join(__dirname, "build")));
@@ -194,8 +193,7 @@ app.use("/orgtree", routerOrgTree);
 app.use("/vacancies", routerVacancies);
 app.use("/googlesheets", routerGoogleSheets);
 app.use("/sites", routerStaticSites);
-app.use("/sendmail", routerSendMail);
-app.use("/feeds", routerFeeds);
+app.use("/sendmail", routerSendMail)
 
 events.on('call', async(e) => {
     try {
