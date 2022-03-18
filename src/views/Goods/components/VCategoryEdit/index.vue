@@ -502,10 +502,6 @@ export default {
   }
   .form-control {
   }
-  .group__image {
-    width: 230px;
-    border-radius: $border-radius;
-  }
   .group__flex {
     display: flex;
     margin-bottom: 10px;
