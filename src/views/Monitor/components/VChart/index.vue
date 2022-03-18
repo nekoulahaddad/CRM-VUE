@@ -6,6 +6,7 @@
         {{ months[new Date().getMonth()] }}:
       </div>
       <VLineChart
+        v-if="Object.keys(sales).length"
         :width="0"
         :height="290"
         :labels="dataset.labels"
@@ -131,6 +132,7 @@ export default {
           },
         ],
       };
+      console.log(this.dataset);
     },
   },
   created() {},
