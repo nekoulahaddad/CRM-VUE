@@ -53,6 +53,9 @@
               "
               alt=""
             />
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 10px">
+              URL акции:
+            </div>
             <input
               type="url"
               class="form-control"
