@@ -16,6 +16,7 @@
               v-model="formData.title"
               @change="onChange($event)"
               name="title"
+              maxlength="100"
             />
           </div>
         </div>
@@ -30,6 +31,7 @@
               name="description"
               v-model="formData.description"
               @change="onChange($event)"
+              maxlength="1000"
             />
           </div>
         </div>
