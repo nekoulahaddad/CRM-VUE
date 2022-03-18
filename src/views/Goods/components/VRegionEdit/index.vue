@@ -213,5 +213,10 @@ export default {
     left: 20px;
     bottom: 20px;
   }
+  img {
+    max-width: 230px;
+    width: 100%;
+    border-right: 6px;
+  }
 }
 </style>
