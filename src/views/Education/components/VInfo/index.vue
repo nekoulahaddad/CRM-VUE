@@ -2,8 +2,8 @@
   <div class="list__info list-info education-list-info">
     <div class="group">
       <div class="group__title">Описание:</div>
-      <div class="group__content word-break">
-        {{ infoItem.description }}
+      <div class="group__content">
+        <span class="word-break">{{ infoItem.description }}</span>
       </div>
     </div>
 
