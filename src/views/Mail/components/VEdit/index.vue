@@ -14,7 +14,7 @@
             class="group__value manager"
             @click="changeManager = !changeManager"
           >
-            {{ fio }}
+            {{ fio || "Добавить менеджера" }}
           </div>
         </div>
 
