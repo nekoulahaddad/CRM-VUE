@@ -12,9 +12,13 @@
       />
     </div>
     <div class="list__column">
-      <span :class="{ none: !item.visible }">
+      <a
+        target="_blank"
+        :href="`https://tdcsk.com/products/region/${region}/${item.slug}`"
+        :class="{ none: !item.visible }"
+      >
         {{ item.title }}
-      </span>
+      </a>
     </div>
     <div class="list__column">
       <span v-if="item.type !== 'group'">{{ item.article }}</span>
