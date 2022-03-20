@@ -600,6 +600,7 @@
                     :search="findItemByTitle"
                     :get-result-value="getItemTitle"
                     placeholder="Введите название товара..."
+                    style="width: 100%"
                   >
                     <template #result="{ result, props }">
                       <li v-bind="props" @click="selectedProductItem(result)">
