@@ -50,13 +50,18 @@
                   type="text"
                   v-model="title"
                   maxlength="100"
+                  readonly
                 />
               </div>
             </div>
             <div class="group">
               <div class="group__title">Описание задачи:</div>
               <div class="group__content">
-                <textarea class="form-textarea" v-model="description" />
+                <textarea
+                  class="form-textarea"
+                  v-model="description"
+                  readonly
+                />
               </div>
             </div>
 
