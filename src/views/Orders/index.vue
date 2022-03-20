@@ -607,7 +607,7 @@ export default {
   .page-header {
     max-width: 1837px;
     .filter-toggle {
-      padding-right: 20px;
+      padding-right: 20px !important;
     }
   }
 }
