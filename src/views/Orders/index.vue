@@ -561,7 +561,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .orders-page {
   .list__header .list__column:last-child {
     text-align: right;
