@@ -601,5 +601,11 @@ export default {
   .vs__selected {
     width: 94%;
   }
+  .page-header {
+    max-width: 1837px;
+    .filter-toggle {
+      padding-right: 20px;
+    }
+  }
 }
 </style>
