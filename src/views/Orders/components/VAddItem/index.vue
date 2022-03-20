@@ -1217,5 +1217,8 @@ export default {
     -moz-appearance: textfield;
     width: 100%;
   }
+  .vs__selected {
+    width: 94%;
+  }
 }
 </style>
