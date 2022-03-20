@@ -567,7 +567,7 @@
                 <div class="list__column">
                   {{ (product.cost * product.quantity).toFixed(2) }}
                 </div>
-                <div class="list__column">
+                <div class="list__column d-flex justify-end">
                   <VueCustomTooltip
                     label="Отменить удаление"
                     v-if="deletedItems.includes(product._id)"
