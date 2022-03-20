@@ -594,13 +594,14 @@
               v-if="addFormOpened"
             >
               <div class="list__columns">
-                <div class="list__column">{{ productsList.length + 1 }}</div>
                 <div class="list__column">
+                  {{ 1 + productsList.length + 1 }}
+                </div>
+                <div class="list__column add-good-item">
                   <autocomplete
                     :search="findItemByTitle"
                     :get-result-value="getItemTitle"
                     placeholder="Введите название товара..."
-                    style="width: 100%"
                   >
                     <template #result="{ result, props }">
                       <li v-bind="props" @click="selectedProductItem(result)">
@@ -1220,6 +1221,11 @@ export default {
   }
   .vs__selected {
     width: 94%;
+  }
+  .add-good-item {
+    .autocomplete-input {
+      width: 10%;
+    }
   }
 }
 </style>
