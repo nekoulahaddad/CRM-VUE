@@ -595,7 +595,7 @@
             >
               <div class="list__columns">
                 <div class="list__column">
-                  {{ 1 + productsList.length + 1 }}
+                  {{ orderForm.products.length + 1 }}
                 </div>
                 <div class="list__column add-good-item">
                   <autocomplete
@@ -1224,7 +1224,7 @@ export default {
   }
   .add-good-item {
     .autocomplete-input {
-      width: 10%;
+      width: 100%;
     }
   }
 }
