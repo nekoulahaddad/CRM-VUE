@@ -947,6 +947,7 @@ export default {
       url: "/regions/get",
     }).then(async ({ data }) => {
       this.regions = data.regions;
+      console.log(this.regions);
       for (let r of this.regions) {
         this.regionsPool.push(r._id);
       }
