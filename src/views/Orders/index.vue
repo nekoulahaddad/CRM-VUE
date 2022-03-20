@@ -598,5 +598,8 @@ export default {
       grid-template-columns: 70px 120px 120px 140px 110px 110px 120px 120px 120px 215px 1fr;
     }
   }
+  .vs__selected {
+    width: 94%;
+  }
 }
 </style>

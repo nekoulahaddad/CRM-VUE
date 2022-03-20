@@ -1049,11 +1049,6 @@ export default {
       },
     },
   },
-  watch: {
-    defaultOptions(v) {
-      console.log(v.region);
-    },
-  },
   data() {
     return {
       monitorDep: "Интернет-магазин",
