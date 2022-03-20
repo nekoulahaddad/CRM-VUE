@@ -206,7 +206,7 @@
               <div class="list__column">Кол-во:</div>
               <div class="list__column">Цена за ед.:</div>
               <div class="list__column">Итог:</div>
-              <div class="list__column"></div>
+              <div class="list__column d-flex justify-end"></div>
             </div>
           </div>
           <template>
