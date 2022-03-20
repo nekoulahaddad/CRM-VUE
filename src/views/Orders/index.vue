@@ -606,9 +606,9 @@ export default {
   }
   .page-header {
     max-width: 1837px;
-    .filter-toggle {
-      padding-right: 20px !important;
-    }
+  }
+  .filter-toggle {
+    margin-right: 20px;
   }
 }
 </style>
