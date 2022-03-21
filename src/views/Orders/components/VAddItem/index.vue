@@ -1057,6 +1057,7 @@ export default {
 @import "@/styles/_variables";
 
 .add-order-row .sub-list .list__header {
+  max-width: 1704px;
   height: auto;
   padding-bottom: 10px;
   .list__columns {
