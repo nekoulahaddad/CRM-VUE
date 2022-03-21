@@ -819,7 +819,7 @@
                     value: region._id,
                   })),
                 ]"
-                v-model="filterOptions.region"
+                v-model="currentRegion"
                 @input="setGoodsRegion"
                 :reduce="(item) => item.value"
               />
@@ -1022,6 +1022,14 @@ export default {
     ...mapGetters({
       filterCollapse: "filter",
     }),
+    currentRegion() {
+      try {
+        const { _id } = JSON.parse(localStorage.getItem("region"));
+        this.filterOptions.region = _id;
+      } catch (e) {}
+
+      return this.filterOptions.region;
+    },
     role: {
       get: function () {
         let role = this.getUserRole();
@@ -1190,6 +1198,8 @@ export default {
       resetParentValue: "reset_parent_value",
     }),
     setGoodsRegion(value) {
+      const region = this.regions.find((r) => r._id === value);
+      localStorage.setItem("region", JSON.stringify(region));
       this.selectOptions({ target: { value } }, null, "regionButtons", null);
     },
     setDate(value) {
@@ -1339,6 +1349,7 @@ export default {
         this.activeIndex = 1;
       }
       if (this.type === "goods") {
+        localStorage.removeItem("region");
         this.filterOptions.parent_value = null;
         this.filterOptions.nesting = null;
         this.filterOptions.region = "all";

@@ -1216,6 +1216,11 @@ export default {
       this.filtersOptions.parent_value = this.$route.params.parent_value;
       this.filtersOptions.type = this.$route.params.type;
 
+      try {
+        const { _id } = JSON.parse(localStorage.getItem("region"));
+        this.filtersOptions.region = _id;
+      } catch (e) {}
+
       this.updateGoods(
         await this.getDataFromPage(
           `/${this.$route.params.type || "categories"}/get`,
