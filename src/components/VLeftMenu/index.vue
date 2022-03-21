@@ -2,7 +2,7 @@
   <nav class="sidebar__menu menu" :style="{ height }">
     <vue-scroll>
       <ul class="menu__list">
-        <li class="menu__item" v-for="(item, key) in $t('menu')" :key="key">
+        <li class="menu__item" v-for="(item, key) in getMenuItems()" :key="key">
           <router-link
             class="menu__link"
             active-class="menu__link--active"
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import roles from "../../utils/roles";
+
 export default {
   data() {
     return {
@@ -35,6 +37,12 @@ export default {
       },
       set: function (name) {
         this.el = name;
+      },
+    },
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
       },
     },
   },
@@ -52,8 +60,19 @@ export default {
       const names = ["monitor", "calendar", "sites"];
       return names.includes(key) ? url : `${url}/1`;
     },
+    getMenuItems() {
+      const items = roles[this.role];
+      const result = {};
+
+      for (const item of items) {
+        result[item] = this.$t("menu")[item];
+      }
+
+      return result;
+    },
   },
   mounted() {
+    this.getMenuItems();
     this.height = `calc(${window.innerHeight}px - 220px)`;
 
     window.addEventListener("resize", () => {
