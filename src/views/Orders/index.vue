@@ -311,7 +311,11 @@ export default {
   },
   watch: {
     $route: function () {
-      this.fetchData();
+      if (this.searched) {
+        this.getSearchData();
+      } else {
+        this.fetchData();
+      }
     },
     deleteSelectedItems(value) {
       if (value) {
@@ -536,7 +540,7 @@ export default {
 
       this.isLoading = false;
       this.filtersOptions.search = this.searchStr.trim();
-      this.$router.push(`/dashboard/${this.$route.name}/1`);
+
       await this.getOrdersFromPage({
         page: +this.$route.params.page,
         filtersOptions: this.filtersOptions,

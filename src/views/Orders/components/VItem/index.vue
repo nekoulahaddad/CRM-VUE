@@ -44,7 +44,7 @@
           <VueCustomTooltip :label="getOneCStatus(item.oneC)">
             <img
               :class="{
-                none: !item.oneC.requested,
+                none: item && item.oneC && !item.oneC.requested,
                 req: item.oneC.requested && !item.oneC.accepted,
               }"
               src="@/assets/icons/1c_icon.svg"
