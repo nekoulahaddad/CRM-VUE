@@ -69,7 +69,7 @@
           {{ $t("pages.clients.orderPayed") }}
         </div>
         <div class="group__value">
-          {{ transformDate(order.buyed) }}
+          {{ order.buyed && transformDate(order.buyed) }}
         </div>
       </div>
     </div>
