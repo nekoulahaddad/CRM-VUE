@@ -128,41 +128,52 @@
         </div>
 
         <div class="table__icon">
-          <!-- Изменить товар -->
-          <VueCustomTooltip v-if="item.type !== 'group'" label="Изменить товар">
-            <img
-              alt=""
-              v-if="editedItem._id !== item._id"
-              src="@/assets/icons/write_icon.svg"
-              @click="$emit('toggleEdit', item)"
-            />
-            <img
-              alt=""
-              v-else
-              src="@/assets/icons/arrow_top_icon.svg"
-              @click="$emit('toggleEdit', item)"
-            />
-          </VueCustomTooltip>
-
-          <!-- Изменить группу -->
-          <template v-if="item.type === 'group'">
+          <template v-if="role === 'content'">
+            <!-- Изменить товар -->
             <VueCustomTooltip
-              v-if="editedGroupItem._id !== item._id"
-              label="Изменить группу"
+              v-if="item.type !== 'group'"
+              label="Изменить товар"
             >
               <img
                 alt=""
+                v-if="editedItem._id !== item._id"
                 src="@/assets/icons/write_icon.svg"
-                @click="$emit('toggleEditGroup', item)"
+                @click="$emit('toggleEdit', item)"
+              />
+              <img
+                alt=""
+                v-else
+                src="@/assets/icons/arrow_top_icon.svg"
+                @click="$emit('toggleEdit', item)"
               />
             </VueCustomTooltip>
-            <img
-              alt=""
-              v-else
-              src="@/assets/icons/arrow_top_icon.svg"
-              @click="$emit('toggleEditGroup', item)"
-            />
+
+            <!-- Изменить группу -->
+            <template v-if="item.type === 'group'">
+              <VueCustomTooltip
+                v-if="editedGroupItem._id !== item._id"
+                label="Изменить группу"
+              >
+                <img
+                  alt=""
+                  src="@/assets/icons/write_icon.svg"
+                  @click="$emit('toggleEditGroup', item)"
+                />
+              </VueCustomTooltip>
+              <img
+                alt=""
+                v-else
+                src="@/assets/icons/arrow_top_icon.svg"
+                @click="$emit('toggleEditGroup', item)"
+              />
+            </template>
           </template>
+          <img
+            class="opacity-30"
+            alt=""
+            v-else
+            src="@/assets/icons/write_icon.svg"
+          />
         </div>
 
         <!-- Удалить товар -->
@@ -197,6 +208,7 @@ export default {
       type: Object,
       required: true,
     },
+    role: String,
     searched: Boolean,
     checked: Boolean,
     editedItem: Object,

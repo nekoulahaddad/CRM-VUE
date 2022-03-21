@@ -353,6 +353,7 @@
                 >
                   <v-product
                     :item="item"
+                    :role="role"
                     :editedGroupItem="editedGroupItem"
                     :groupProductItem="groupProductItem"
                     :groupItems="groupItems"
@@ -582,6 +583,12 @@ export default {
       region: "region",
       sidebar: "sidebar",
     }),
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
     googleTable() {
       return this.$store.state.actions.googleTable;
     },
