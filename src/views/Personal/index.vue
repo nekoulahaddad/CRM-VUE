@@ -21,7 +21,7 @@
               {{ $t("systemRole") }}
               <strong>{{ transformRole(user.role) }}</strong>
             </div>
-            <form action="" class="personal-area__form">
+            <form @submit.prevent class="personal-area__form">
               <div class="personal-area__col">
                 <label>Старый пароль:</label>
                 <input
@@ -45,7 +45,7 @@
                 />
               </div>
               <div class="personal-area__buttons">
-                <v-button red>Изменить</v-button>
+                <v-button @click="onPasswordRemind" red>Изменить</v-button>
                 <v-button @click="logout" redWhite>Выйти</v-button>
               </div>
             </form>
@@ -663,7 +663,6 @@ export default {
       }
     },
     onPasswordRemind() {
-      this.changeStatus(false);
       axios({
         url: `/user/remind/`,
         data: {
@@ -678,15 +677,12 @@ export default {
           this.$toast.success("Пароль успешно изменен!");
           this.oldPassword = "";
           this.newPassword = "";
-          this.changeStatus(true);
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-          this.changeStatus(true);
         });
     },
     resetInnerNumber() {
-      this.changeStatus(false);
       axios({
         url: `/user/number/`,
         data: {
