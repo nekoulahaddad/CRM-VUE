@@ -1056,8 +1056,11 @@ export default {
 <style lang="scss">
 @import "@/styles/_variables";
 
-.add-order-row .sub-list .list__header {
+.add-order-row {
   max-width: 1704px;
+}
+
+.add-order-row .sub-list .list__header {
   height: auto;
   padding-bottom: 10px;
   .list__columns {
