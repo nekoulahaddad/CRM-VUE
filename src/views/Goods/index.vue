@@ -394,6 +394,7 @@
 
                   <!-- Редактирование группы -->
                   <v-product-group-edit
+                    :role="role"
                     v-if="editedGroupItem._id === item._id"
                     :group="editedGroupItem"
                     :region="filtersOptions.region"
@@ -414,6 +415,7 @@
                   <v-group-products
                     v-if="groupItems._id === item._id"
                     :group="item"
+                    :role="role"
                     :visible="item.visible"
                     :region="filtersOptions.region"
                     :products="item.products"

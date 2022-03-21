@@ -43,21 +43,29 @@
                 </VueCustomTooltip>
               </div>
               <div class="table__icon" style="min-width: 28px">
-                <VueCustomTooltip
-                  label="Изменить"
-                  v-if="editedItem._id !== product._id"
-                >
+                <template v-if="role === 'content'">
+                  <VueCustomTooltip
+                    label="Изменить"
+                    v-if="editedItem._id !== product._id"
+                  >
+                    <img
+                      alt=""
+                      @click="toggleEdit(product)"
+                      src="@/assets/icons/write_icon.svg"
+                    />
+                  </VueCustomTooltip>
                   <img
                     alt=""
+                    v-else
                     @click="toggleEdit(product)"
-                    src="@/assets/icons/write_icon.svg"
+                    src="@/assets/icons/arrow_top_icon.svg"
                   />
-                </VueCustomTooltip>
+                </template>
                 <img
                   alt=""
                   v-else
-                  @click="toggleEdit(product)"
-                  src="@/assets/icons/arrow_top_icon.svg"
+                  class="opacity-30"
+                  src="@/assets/icons/write_icon.svg"
                 />
               </div>
               <div class="table__icon">
@@ -90,6 +98,7 @@ import VProductEdit from "../VProductEdit";
 
 export default {
   props: {
+    role: String,
     group: Object,
     products: Array,
     region: String,
