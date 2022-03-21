@@ -592,7 +592,7 @@ export default {
       grid-template-columns: 70px 200px 120px 140px 110px 110px 110px 120px 160px 240px 1fr;
     }
     .sub-list {
-      width: 1571px;
+      max-width: 1571px !important;
     }
   }
 
