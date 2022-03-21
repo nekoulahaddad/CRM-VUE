@@ -19,6 +19,7 @@
                 value: item._id,
               })),
             ]"
+            v-model="manager"
             :reduce="(item) => item.value"
             @input="onChange"
           />
@@ -74,6 +75,7 @@ export default {
         require("@/assets/icons/info_not_processed.svg"),
       ],
       managers: [],
+      manager: "all",
     };
   },
   methods: {
