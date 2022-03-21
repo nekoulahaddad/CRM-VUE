@@ -516,7 +516,7 @@
             Товары:
           </div>
 
-          <div class="list sub-list">
+          <div class="sub-list">
             <div class="list__header">
               <div class="list__columns">
                 <div class="list__column">№:</div>
@@ -1230,6 +1230,12 @@ export default {
     .autocomplete-input {
       width: 100%;
     }
+  }
+  .sub-list {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-row-gap: 10px;
+    margin-bottom: 10px;
   }
 }
 </style>
