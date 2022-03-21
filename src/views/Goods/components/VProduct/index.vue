@@ -216,7 +216,6 @@ export default {
     groupProductItem: Object,
     groupItems: Object,
     movedProduct: Object,
-    region: String,
   },
   data() {
     return {
@@ -225,6 +224,15 @@ export default {
     };
   },
   components: { VSpinner },
+  computed: {
+    region() {
+      try {
+        return JSON.parse(localStorage.getItem("region"))._value;
+      } catch (e) {
+        return "moscow";
+      }
+    },
+  },
   methods: {
     changeGroupVisibility(id, visible, item) {
       this.changeVisible = item;
