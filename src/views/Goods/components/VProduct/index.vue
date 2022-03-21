@@ -227,7 +227,7 @@ export default {
   computed: {
     region() {
       try {
-        return JSON.parse(localStorage.getItem("region"))._value;
+        return JSON.parse(localStorage.getItem("region")).value;
       } catch (e) {
         return "moscow";
       }
