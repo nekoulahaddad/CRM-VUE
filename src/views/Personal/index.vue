@@ -186,10 +186,6 @@
                     <img src="@/assets/icons/sites.svg" alt="" />
                     <span>Кор. сайты</span>
                   </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/learn.svg" alt="" />
-                    <span>Обучение</span>
-                  </div>
                 </div>
               </div>
 
@@ -289,10 +285,6 @@
                   <div class="list__item">
                     <img src="@/assets/icons/sites.svg" alt="" />
                     <span>Кор. сайты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/learn.svg" alt="" />
-                    <span>Обучение</span>
                   </div>
                 </div>
               </div>
@@ -473,10 +465,6 @@
                     <img src="@/assets/icons/sites.svg" alt="" />
                     <span>Кор. сайты</span>
                   </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/learn.svg" alt="" />
-                    <span>Обучение</span>
-                  </div>
                 </div>
               </div>
 
@@ -609,11 +597,6 @@
                   <div class="list__item">
                     <img src="@/assets/icons/delivery.svg" alt="" />
                     <span>Поставщики</span>
-                  </div>
-
-                  <div class="list__item">
-                    <img src="@/assets/icons/learn.svg" alt="" />
-                    <span>Обучение</span>
                   </div>
                 </div>
               </div>
