@@ -32,10 +32,10 @@
   .page__right--fluid,
   .page__body--fluid {
     .content {
-      width: 1310px !important;
+      max-width: 1310px !important;
     }
     .scroll-horizontal {
-      width: 1310px !important;
+      max-width: 1310px !important;
     }
   }
   .page__right--fluid {
