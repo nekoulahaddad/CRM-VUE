@@ -3,15 +3,46 @@
     <div class="purchase-form__title text--blue">Информация о закупке:</div>
 
     <div class="d-flex justify-content-between">
-      <div class="flex-1" style="margin-right: 25px">
+      <div class="flex-1 purchase-form__left" style="margin-right: 25px">
         <div class="group">
+          <div class="d-flex">
+            <div class="group__title" style="margin-right: 15px">
+              Ф.И.О. исполнителя:
+            </div>
+            <div>
+              <span
+                @click="addExecutor = !addExecutor"
+                style="border-bottom: 1px dashed; cursor: pointer"
+              >
+                {{ transformFIO(executor) || "Добавить" }}
+              </span>
+            </div>
+          </div>
+
+          <div class="group__content" v-if="addExecutor">
+            <autocomplete
+              class="executor"
+              :search="getBuyersBySearch"
+              :get-result-value="getBuyer"
+              placeholder="Введите Ф.И.О. исполнителя..."
+            >
+              <template #result="{ result, props }">
+                <li v-bind="props" @click="selectUser(result)">
+                  {{ transformFIO(result) }}
+                </li>
+              </template>
+            </autocomplete>
+          </div>
+        </div>
+        <div class="group" v-if="editedItem">
           <div class="group__title">Ф.И.О. автора:</div>
           <div class="group__content">
             <input
-              required
+              readonly
               class="form-control"
               type="text"
               placeholder="Введите Ф.И.О. автора..."
+              :value="transformFIO(initiator)"
             />
           </div>
         </div>
@@ -50,7 +81,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="purchase-form__right">
         <div class="group">
           <div class="group__title">Регионы:</div>
           <div class="group__content">
@@ -103,9 +134,18 @@ export default {
       default: null,
     },
   },
+  computed: {
+    currentUser: {
+      get: function () {
+        let user = this.getUserRole();
+        return user;
+      },
+    },
+  },
   data() {
     return {
       fio: "",
+      addExecutor: false,
       currentInput: "",
       categories:
         this.editedItem && this.editedItem.categories
@@ -171,9 +211,38 @@ export default {
     };
   },
   methods: {
+    getBuyersBySearch(input) {
+      if (input.length < 1) {
+        return [];
+      }
+      return new Promise((resolve) => {
+        axios(`/user/getsearch/${input}`).then(async (res) => {
+          resolve(res.data);
+        });
+      });
+    },
+    selectUser(user) {
+      if (user._id === this.currentUser._id) {
+        this.$toast.error("Вы не можете быть исполнителем!");
+        this.fio = ``;
+        this.users = [];
+        return;
+      }
+      if (this.executor === null) {
+        this.executor = user;
+        this.fio = ``;
+        this.users = [];
+        return;
+      }
+      this.$toast.error("При выбранном отделе исполнитель только один!");
+      return;
+    },
     selectCategory(category) {
       this.category = category;
       this.currentInput = "";
+    },
+    getBuyer(result) {
+      return "";
     },
     getResultValue(result) {
       return result.categoryName;
@@ -349,10 +418,19 @@ export default {
 
 <style lang="scss">
 .purchase-form {
-  .autocomplete-input {
-    width: 401px;
-    &[disabled] {
-      opacity: 0.7;
+  &__left {
+    .executor,
+    .autocomplete,
+    .autocomplete-input {
+      width: 100%;
+    }
+  }
+  &__right {
+    .autocomplete-input {
+      width: 401px;
+      &[disabled] {
+        opacity: 0.7;
+      }
     }
   }
   .form-control {
