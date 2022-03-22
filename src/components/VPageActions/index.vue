@@ -78,7 +78,10 @@
 
           <!-- Товары -->
           <template v-if="name === 'goods'">
-            <VueCustomTooltip label="Добавить категорию">
+            <VueCustomTooltip
+              v-if="$store.state.filterOptions.nesting < 3"
+              label="Добавить категорию"
+            >
               <a
                 href=""
                 class="page-actions__button"
