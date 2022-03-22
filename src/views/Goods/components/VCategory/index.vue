@@ -4,7 +4,7 @@
       <!-- Редактировать категорию -->
       <a
         href=""
-        v-if="editedItem._id !== item._id"
+        v-if="editedItem._id !== item._id && role === 'content'"
         @click.prevent="$emit('toggleEdit', item)"
       >
         Редактировать категорию
@@ -158,6 +158,7 @@ import VSpinner from "@/components/VSpinner";
 
 export default {
   props: {
+    role: String,
     searched: Boolean,
     categoryVisibleItem: Array,
     filtersOptions: Object,
