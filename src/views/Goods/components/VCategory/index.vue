@@ -141,13 +141,19 @@
         />
       </div>
       <div class="table__icon">
-        <VueCustomTooltip label="Удалить">
+        <VueCustomTooltip label="Удалить" v-if="role === 'content'">
           <img
             @click="$emit('toggleDeleteCategory', item)"
             src="@/assets/icons/trash_icon.svg"
             alt=""
           />
         </VueCustomTooltip>
+        <img
+          alt=""
+          v-else
+          class="opacity-30"
+          src="@/assets/icons/trash_icon.svg"
+        />
       </div>
     </div>
   </div>
