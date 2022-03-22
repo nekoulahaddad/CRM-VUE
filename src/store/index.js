@@ -27,6 +27,11 @@ export default new Vuex.Store({
     totalShippedSum: 0,
     totalDelivery: 0,
     callbacks: [],
+    currentRegion: JSON.parse(localStorage.getItem("currentRegion")) || {
+      title: "Москва и М.О",
+      value: "moscow",
+      _id: "5f85ba274a9a5d34e0a45fed",
+    },
     callbacksCount: 0,
     loaded: true,
     region: localStorage.getItem("region") || null,
@@ -58,6 +63,9 @@ export default new Vuex.Store({
     deleteSelectedItems: false,
   },
   mutations: {
+    setCurrentRegion(state, payload) {
+      state.currentRegion = payload;
+    },
     selectItem(state, payload) {
       if (state.selectedItems.includes(payload)) {
         state.selectedItems = state.selectedItems.filter(
@@ -485,5 +493,6 @@ export default new Vuex.Store({
     filterRegion: (state) => state.filterRegion,
     getFilterOptions: (state) => state.filterOptions,
     selectedItems: (state) => state.selectedItems,
+    getCurrentRegion: (state) => state.currentRegion,
   },
 });

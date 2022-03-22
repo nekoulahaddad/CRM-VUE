@@ -14,6 +14,7 @@
         @toggleFilter="$emit('toggleFilter')"
         v-if="filterToggle"
         :active="showFilter"
+        :goods="goods"
       />
     </div>
   </div>
@@ -38,6 +39,10 @@ export default {
     filterToggle: {
       type: Boolean,
       default: true,
+    },
+    goods: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: { ...mapGetters(["sidebar"]) },
