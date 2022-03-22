@@ -1249,8 +1249,7 @@ exports.exportOrders = async (req, res, next) => {
       res.status(200).download(filePath, `Заказы.xlsx`);
     });
   } catch (error) {
-    res.json(error.message);
-    //next(error);
+    next(error);
   }
 };
 

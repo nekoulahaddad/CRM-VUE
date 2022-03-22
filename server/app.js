@@ -135,18 +135,11 @@ const routerCorporates = require("./routes/corporates");
 const routerCallCenterIssues = require("./routes/callCenterIssues");
 const routerPurchase = require("./routes/purchase");
 const routerOrgTree = require("./routes/orgTree");
-<<<<<<< HEAD
-const routerVacancies = require("./routes/vacancies")
-const routerGoogleSheets = require("./routes/googlesheets")
-const routerStaticSites = require("./routes/staticSites")
-const routerSendMail = require("./routes/sendMail")
-
-=======
 const routerVacancies = require("./routes/vacancies");
 const routerGoogleSheets = require("./routes/googlesheets");
 const routerStaticSites = require("./routes/staticSites");
 const routerSendMail = require("./routes/sendMail");
->>>>>>> c2919b8899aa57204aa73f2ba4b3bd48eff925fa
+const routerFeeds = require("./routes/feeds");
 
 app.use("/", express.static(path.join(__dirname, "build")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -203,11 +196,8 @@ app.use("/orgtree", routerOrgTree);
 app.use("/vacancies", routerVacancies);
 app.use("/googlesheets", routerGoogleSheets);
 app.use("/sites", routerStaticSites);
-<<<<<<< HEAD
-app.use("/sendmail", routerSendMail)
-=======
 app.use("/sendmail", routerSendMail);
->>>>>>> c2919b8899aa57204aa73f2ba4b3bd48eff925fa
+app.use("/feeds", routerFeeds);
 
 events.on("call", async (e) => {
   try {
