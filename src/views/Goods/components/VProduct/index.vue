@@ -90,41 +90,53 @@
 
         <div class="table__icon">
           <!-- Видимость товара -->
-          <v-spinner extraSmall v-if="changeVisible._id === item._id" />
-          <template v-else>
-            <VueCustomTooltip
-              v-if="item.type !== 'group'"
-              :label="item.visible ? 'Скрыть товар' : 'Показать товар'"
-            >
-              <img
-                alt=""
-                :src="
-                  item.visible
-                    ? require('@/assets/icons/eye_close.svg')
-                    : require('@/assets/icons/eye.svg')
-                "
-                :class="{ none: item.visible }"
-                @click="changeProductVisibility(item._id, item.visible, item)"
-              />
-            </VueCustomTooltip>
+          <template v-if="role === 'content'">
+            <v-spinner extraSmall v-if="changeVisible._id === item._id" />
+            <template v-else>
+              <VueCustomTooltip
+                v-if="item.type !== 'group'"
+                :label="item.visible ? 'Скрыть товар' : 'Показать товар'"
+              >
+                <img
+                  alt=""
+                  :src="
+                    item.visible
+                      ? require('@/assets/icons/eye_close.svg')
+                      : require('@/assets/icons/eye.svg')
+                  "
+                  :class="{ none: item.visible }"
+                  @click="changeProductVisibility(item._id, item.visible, item)"
+                />
+              </VueCustomTooltip>
 
-            <!-- Видимость группы -->
-            <VueCustomTooltip
-              v-else
-              :label="item.visible ? 'Скрыть группу' : 'Показать группу'"
-            >
-              <img
-                alt=""
-                :src="
-                  item.visible
-                    ? require('@/assets/icons/eye_close.svg')
-                    : require('@/assets/icons/eye.svg')
-                "
-                :class="{ none: item.visible }"
-                @click="changeGroupVisibility(item._id, item.visible, item)"
-              />
-            </VueCustomTooltip>
+              <!-- Видимость группы -->
+              <VueCustomTooltip
+                v-else
+                :label="item.visible ? 'Скрыть группу' : 'Показать группу'"
+              >
+                <img
+                  alt=""
+                  :src="
+                    item.visible
+                      ? require('@/assets/icons/eye_close.svg')
+                      : require('@/assets/icons/eye.svg')
+                  "
+                  :class="{ none: item.visible }"
+                  @click="changeGroupVisibility(item._id, item.visible, item)"
+                />
+              </VueCustomTooltip>
+            </template>
           </template>
+          <img
+            alt=""
+            v-else
+            class="opacity-30"
+            :src="
+              item.visible
+                ? require('@/assets/icons/eye_close.svg')
+                : require('@/assets/icons/eye.svg')
+            "
+          />
         </div>
 
         <div class="table__icon">
@@ -178,20 +190,31 @@
 
         <!-- Удалить товар -->
         <div class="table__icon">
-          <VueCustomTooltip v-if="item.type !== 'group'" label="Удалить товар">
-            <img
-              alt=""
-              src="@/assets/icons/trash_icon.svg"
-              @click="$emit('toggleDeleteProduct', item)"
-            />
-          </VueCustomTooltip>
-          <VueCustomTooltip v-else label="Удалить группу">
-            <img
-              alt=""
-              src="@/assets/icons/trash_icon.svg"
-              @click="$emit('toggleDeleteGroup', item)"
-            />
-          </VueCustomTooltip>
+          <template v-if="role === 'content'">
+            <VueCustomTooltip
+              v-if="item.type !== 'group'"
+              label="Удалить товар"
+            >
+              <img
+                alt=""
+                src="@/assets/icons/trash_icon.svg"
+                @click="$emit('toggleDeleteProduct', item)"
+              />
+            </VueCustomTooltip>
+            <VueCustomTooltip v-else label="Удалить группу">
+              <img
+                alt=""
+                src="@/assets/icons/trash_icon.svg"
+                @click="$emit('toggleDeleteGroup', item)"
+              />
+            </VueCustomTooltip>
+          </template>
+          <img
+            alt=""
+            v-else
+            class="opacity-30"
+            src="@/assets/icons/trash_icon.svg"
+          />
         </div>
       </div>
     </div>

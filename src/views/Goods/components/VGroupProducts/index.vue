@@ -17,30 +17,42 @@
               </div>
               <div class="table__icon">
                 <!-- Видимость товара -->
-                <v-spinner
-                  extraSmall
-                  v-if="changeVisible._id === product._id"
-                />
-                <VueCustomTooltip
-                  v-else
-                  :label="product.visible ? 'Скрыть товар' : 'Показать товар'"
-                >
-                  <img
-                    alt=""
-                    :src="
-                      product.visible
-                        ? require('@/assets/icons/eye_close.svg')
-                        : require('@/assets/icons/eye.svg')
-                    "
-                    @click="
-                      changeProductVisibility(
-                        product._id,
-                        product.visible,
-                        product
-                      )
-                    "
+                <template v-if="role === 'content'">
+                  <v-spinner
+                    extraSmall
+                    v-if="changeVisible._id === product._id"
                   />
-                </VueCustomTooltip>
+                  <VueCustomTooltip
+                    v-else
+                    :label="product.visible ? 'Скрыть товар' : 'Показать товар'"
+                  >
+                    <img
+                      alt=""
+                      :src="
+                        product.visible
+                          ? require('@/assets/icons/eye_close.svg')
+                          : require('@/assets/icons/eye.svg')
+                      "
+                      @click="
+                        changeProductVisibility(
+                          product._id,
+                          product.visible,
+                          product
+                        )
+                      "
+                    />
+                  </VueCustomTooltip>
+                </template>
+                <img
+                  alt=""
+                  v-else
+                  class="opacity-30"
+                  :src="
+                    product.visible
+                      ? require('@/assets/icons/eye_close.svg')
+                      : require('@/assets/icons/eye.svg')
+                  "
+                />
               </div>
               <div class="table__icon" style="min-width: 28px">
                 <template v-if="role === 'content'">
@@ -70,9 +82,16 @@
               </div>
               <div class="table__icon">
                 <img
+                  v-if="role === 'content'"
                   @click="$emit('toggleDeleteGroupProduct', group, product)"
                   src="@/assets/icons/trash_icon.svg"
                   alt=""
+                />
+                <img
+                  alt=""
+                  v-else
+                  class="opacity-30"
+                  src="@/assets/icons/trash_icon.svg"
                 />
               </div>
             </div>
