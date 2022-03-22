@@ -259,6 +259,7 @@
 
                 <!-- Менеджер -->
                 <v-category-manager
+                  :role="role"
                   v-if="managerItem._id === item._id"
                   :region="filtersOptions.region"
                   :managerItem="managerItem"

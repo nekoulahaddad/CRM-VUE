@@ -36,13 +36,14 @@
         <div class="group__value">{{ phone || "" }}</div>
       </div>
 
-      <div class="manager-edit-form__buttons">
+      <div class="manager-edit-form__buttons" v-if="role === 'content'">
         <v-button
           red
           @click="setManager(false)"
           :disabled="!manager || notChanged"
-          >Сохранить</v-button
         >
+          Сохранить
+        </v-button>
         <v-button @click="setManager(true)" :disabled="!manager" white>
           Удалить
         </v-button>
@@ -56,6 +57,7 @@ import axios from "@/api/axios";
 
 export default {
   props: {
+    role: String,
     region: {
       type: String,
       default: () => "",
