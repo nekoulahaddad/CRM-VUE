@@ -133,13 +133,21 @@
             </VueCustomTooltip>
 
             <VueCustomTooltip label="Скачать все товары">
-              <a href="" class="page-actions__button" @click.prevent="">
+              <a
+                href=""
+                class="page-actions__button"
+                @click.prevent="downloadExcel"
+              >
                 <img src="@/assets/icons/all_items.svg" alt="" />
               </a>
             </VueCustomTooltip>
 
             <VueCustomTooltip label="Выгрузить товары данного региона">
-              <a href="" class="page-actions__button" @click.prevent="">
+              <a
+                href=""
+                class="page-actions__button"
+                @click.prevent="getGoodsFromRegion"
+              >
                 <img src="@/assets/icons/region_items.svg" alt="" />
               </a>
             </VueCustomTooltip>
