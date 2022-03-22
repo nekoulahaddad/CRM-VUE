@@ -404,6 +404,10 @@
                     <span>Задачи</span>
                   </div>
                   <div class="list__item">
+                    <img src="@/assets/icons/goods.svg" alt="" />
+                    <span>Товары</span>
+                  </div>
+                  <div class="list__item">
                     <img src="@/assets/icons/sites.svg" alt="" />
                     <span>Кор. сайты</span>
                   </div>
