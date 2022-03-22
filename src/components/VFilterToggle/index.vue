@@ -1,30 +1,51 @@
 <template>
-  <div v-if="active" class="filter-toggle" @click="toggleFilter">
-    <div class="filter-toggle__inner">
-      <div class="filter-toggle__icon">
-        <img src="@/assets/icons/filter.svg" alt="" />
-      </div>
-      <div class="filter-toggle__text">Фильтр</div>
+  <div class="d-flex align-items-center">
+    <div
+      v-if="goods && getCurrentRegion"
+      class="d-flex align-items-center current-region"
+    >
+      <img src="@/assets/icons/location.svg" alt="" />
+      <span>Регион:</span>
+      <span style="font-weight: bold">
+        {{ getCurrentRegion.title }}
+      </span>
     </div>
+    <div v-if="active" class="filter-toggle" @click="toggleFilter">
+      <div class="filter-toggle__inner">
+        <div class="filter-toggle__icon">
+          <img src="@/assets/icons/filter.svg" alt="" />
+        </div>
+        <div class="filter-toggle__text">Фильтр</div>
+      </div>
+    </div>
+    <img
+      v-else
+      src="@/assets/icons/filter_active.svg"
+      @click="toggleFilter"
+      class="filter-toggle"
+      alt=""
+    />
   </div>
-  <img
-    v-else
-    src="@/assets/icons/filter_active.svg"
-    @click="toggleFilter"
-    class="filter-toggle"
-    alt=""
-  />
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: {
     active: Boolean,
+    goods: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     toggleFilter() {
       this.$emit("toggleFilter");
     },
+  },
+  computed: {
+    ...mapGetters(["getCurrentRegion"]),
   },
   watch: {
     active() {
@@ -64,5 +85,17 @@ export default {
 
 img {
   cursor: pointer;
+}
+.current-region {
+  margin-right: 30px;
+  font-size: 16px;
+
+  img {
+    margin-right: 7px;
+  }
+
+  span {
+    margin-right: 10px;
+  }
 }
 </style>

@@ -947,6 +947,7 @@ export default {
       url: "/regions/get",
     }).then(async ({ data }) => {
       this.regions = data.regions;
+      console.log(this.regions);
       for (let r of this.regions) {
         this.regionsPool.push(r._id);
       }
@@ -1022,13 +1023,20 @@ export default {
     ...mapGetters({
       filterCollapse: "filter",
     }),
-    currentRegion() {
-      try {
-        const { _id } = JSON.parse(localStorage.getItem("region"));
-        this.filterOptions.region = _id;
-      } catch (e) {}
+    currentRegion: {
+      get() {
+        try {
+          const { _id } = JSON.parse(localStorage.getItem("currentRegion"));
+          this.filterOptions.region = _id;
+        } catch (e) {}
 
-      return this.filterOptions.region;
+        return this.filterOptions.region;
+      },
+      set(value) {
+        const region = this.regions.find((r) => r._id === value);
+        localStorage.setItem("currentRegion", JSON.stringify(region));
+        this.$store.commit("setCurrentRegion", region);
+      },
     },
     role: {
       get: function () {
@@ -1198,8 +1206,6 @@ export default {
       resetParentValue: "reset_parent_value",
     }),
     setGoodsRegion(value) {
-      const region = this.regions.find((r) => r._id === value);
-      localStorage.setItem("region", JSON.stringify(region));
       this.selectOptions({ target: { value } }, null, "regionButtons", null);
     },
     setDate(value) {
@@ -1349,7 +1355,8 @@ export default {
         this.activeIndex = 1;
       }
       if (this.type === "goods") {
-        localStorage.removeItem("region");
+        localStorage.removeItem("currentRegion");
+        this.$store.commit("setCurrentRegion", null);
         this.filterOptions.parent_value = null;
         this.filterOptions.nesting = null;
         this.filterOptions.region = "all";

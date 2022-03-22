@@ -57,6 +57,7 @@
       icon="goods_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"
+      :goods="true"
     />
 
     <div class="page__body d-flex">
@@ -1208,6 +1209,19 @@ export default {
     },
   },
   async created() {
+    try {
+      const { _id } = JSON.parse(localStorage.getItem("currentRegion"));
+    } catch (e) {
+      localStorage.setItem(
+        "currentRegion",
+        JSON.stringify({
+          title: "Москва и М.О",
+          value: "moscow",
+          _id: "5f85ba274a9a5d34e0a45fed",
+        })
+      );
+    }
+
     this.$store.commit("setFilterOptions", this.filtersOptions);
     this.$store.commit("deactivateAction", "importGoods");
     this.$store.commit("deactivateAction", "addGoodsCategory");
@@ -1217,7 +1231,7 @@ export default {
       this.filtersOptions.type = this.$route.params.type;
 
       try {
-        const { _id } = JSON.parse(localStorage.getItem("region"));
+        const { _id } = JSON.parse(localStorage.getItem("currentRegion"));
         this.filtersOptions.region = _id;
       } catch (e) {}
 

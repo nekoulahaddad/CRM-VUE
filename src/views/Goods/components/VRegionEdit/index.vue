@@ -43,7 +43,7 @@
         Акции региона:
       </div>
       <div
-        v-if="region.sales && region.sales.length"
+        v-if="region && region.sales && region.sales.length"
         style="font-size: 14px; font-weight: 700; margin-bottom: 10px"
       >
         Баннеры для десктоп версии:
@@ -51,6 +51,7 @@
       <div
         class="vm--modal__content d-flex justify-content-between"
         style="flex-wrap: wrap; margin-top: 20px"
+        v-if="region"
       >
         <div
           v-for="(item, index) in region.sales"
