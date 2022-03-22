@@ -79,7 +79,9 @@
           <!-- Товары -->
           <template v-if="name === 'goods'">
             <VueCustomTooltip
-              v-if="$store.state.filterOptions.nesting < 3"
+              v-if="
+                $store.state.filterOptions.nesting < 3 && role === 'content'
+              "
               label="Добавить категорию"
             >
               <a
@@ -95,7 +97,9 @@
               </a>
             </VueCustomTooltip>
             <VueCustomTooltip
-              v-if="$store.state.filterOptions.nesting > 1"
+              v-if="
+                $store.state.filterOptions.nesting > 1 && role === 'content'
+              "
               label="Добавить товар"
             >
               <a
@@ -432,6 +436,12 @@ export default {
   computed: {
     name() {
       return this.$route.name;
+    },
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
     },
   },
   methods: {
