@@ -21,8 +21,9 @@
 }
 
 @media (max-width: 1440px) {
+  .scroll-container,
   .scroll-horizontal {
-    overflow-x: scroll;
+    overflow-x: scroll !important;
   }
   .page-header {
     max-width: 1420px !important;
@@ -36,5 +37,8 @@
     .scroll-horizontal {
       width: 1310px !important;
     }
+  }
+  .page__right--fluid {
+    max-width: 1310px !important;
   }
 }
