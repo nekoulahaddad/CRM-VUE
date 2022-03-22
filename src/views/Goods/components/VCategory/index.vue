@@ -116,29 +116,43 @@
         />
       </div>
       <div class="table__icon">
-        <v-spinner v-if="categoryVisibleItem.includes(item._id)" extraSmall />
-        <VueCustomTooltip
+        <template v-if="role === 'content'">
+          <v-spinner v-if="categoryVisibleItem.includes(item._id)" extraSmall />
+          <VueCustomTooltip
+            v-else
+            :label="item.visible ? 'Скрыть категорию' : 'Показать категорию'"
+          >
+            <img
+              alt=""
+              :src="
+                item.visible
+                  ? require('@/assets/icons/eye_close.svg')
+                  : require('@/assets/icons/eye.svg')
+              "
+              :class="{ none: item.visible }"
+              @click="$emit('changeVisibility', item._id, item.visible)"
+            />
+          </VueCustomTooltip>
+        </template>
+        <img
+          alt=""
           v-else
-          :label="item.visible ? 'Скрыть категорию' : 'Показать категорию'"
-        >
-          <img
-            alt=""
-            :src="
-              item.visible
-                ? require('@/assets/icons/eye_close.svg')
-                : require('@/assets/icons/eye.svg')
-            "
-            :class="{ none: item.visible }"
-            @click="$emit('changeVisibility', item._id, item.visible)"
-          />
-        </VueCustomTooltip>
+          :src="
+            item.visible
+              ? require('@/assets/icons/eye_close.svg')
+              : require('@/assets/icons/eye.svg')
+          "
+          class="opacity-30"
+        />
       </div>
       <div class="table__icon">
         <img
+          v-if="role === 'content'"
           @click="$emit('toggleDropDown', item)"
           src="@/assets/icons/option.svg"
           alt=""
         />
+        <img alt="" v-else class="opacity-30" src="@/assets/icons/option.svg" />
       </div>
       <div class="table__icon">
         <VueCustomTooltip label="Удалить" v-if="role === 'content'">
