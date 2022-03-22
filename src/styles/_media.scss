@@ -19,3 +19,22 @@
     overflow-x: scroll;
   }
 }
+
+@media (max-width: 1440px) {
+  .scroll-horizontal {
+    overflow-x: scroll;
+  }
+  .page-header {
+    max-width: 1420px !important;
+    padding-right: 0 !important;
+  }
+  .page__right--fluid,
+  .page__body--fluid {
+    .content {
+      width: 1310px !important;
+    }
+    .scroll-horizontal {
+      width: 1310px !important;
+    }
+  }
+}
