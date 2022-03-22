@@ -195,6 +195,7 @@
               >
                 <v-category
                   :item="item"
+                  :role="role"
                   :copyItem="copyItem"
                   :current="current"
                   :editedItem="editedItem"
