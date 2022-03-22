@@ -923,8 +923,7 @@ exports.getDataFromSearchQuery = async (req, res, next) => {
                     cSlug: '$results.category.cSlug',
                     link: '$results.category.link',
                     nesting: '$results.category.nesting',
-                    views: '$results.category.views',
-                    visible: '$results.category.visible'
+                    views: '$results.category.views'
                 }
             }
         },

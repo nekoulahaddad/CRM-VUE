@@ -1,24 +1,25 @@
-# csk
+# td-csk-crm
 
-## Project setup
-```
-npm install
-```
+> TD-CSK CRM
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Ручное обновление приложения на production сервере
 
-### Compiles and minifies for production
-```
-npm run build
-```
+```bash
+# Перейти в директорию проекта
+$ cd /var/www/td-csk-crm/
 
-### Lints and fixes files
-```
-npm run lint
-```
+# На сервере стянуть проект в ветку main
+$ git pull origin main
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Установить зависимости в корне проекта 
+$ npm install
+
+# Перейти в директорию server установить зависимости и вернуться в корень проекта 
+$ cd server && npm install && cd ..
+
+# Запустить сборку приложения 
+$ npm run build
+
+# Перезапустить приложения
+$ pm2 reload csk_crm
+```
