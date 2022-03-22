@@ -115,7 +115,7 @@
               </a>
             </VueCustomTooltip>
 
-            <VueCustomTooltip label="Импорт Excel">
+            <VueCustomTooltip label="Импорт Excel" v-if="role === 'content'">
               <a
                 href=""
                 class="page-actions__button"
