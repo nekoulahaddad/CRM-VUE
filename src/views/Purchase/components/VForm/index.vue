@@ -116,6 +116,23 @@
             </autocomplete>
           </div>
         </div>
+
+        <div class="group">
+          <div class="group__title">Статус:</div>
+          <div class="group__content">
+            <v-select
+              name="status"
+              v-model="status"
+              :options="
+                statusList.map((item) => ({
+                  label: item,
+                  value: item,
+                }))
+              "
+              :reduce="(item) => item.value"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
