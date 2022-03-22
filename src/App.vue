@@ -49,10 +49,6 @@ export default {
     },
   },
   created() {
-    axios.get("/excel/tasks").then((e) => {
-      console.log(e);
-    });
-
     window.addEventListener("resize", () => {
       this.mobile = isMobile();
     });
