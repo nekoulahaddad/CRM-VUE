@@ -55,7 +55,7 @@
                     font-weight: normal;
                   "
                 >
-                  {{ photo.name ? photo.name : photo.filename }}
+                  {{ photo.name || photo.filename || photo }}
                 </span>
                 <div>
                   <VueCustomTooltip label="Удалить">
