@@ -75,6 +75,7 @@
                   "
                   alt=""
                 />
+                <img src="@/assets/icons/no_photo.svg" v-else alt="" />
               </div>
               <div>
                 <label class="" for="upload_photo">
