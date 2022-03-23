@@ -143,7 +143,7 @@
               <a
                 href=""
                 class="page-actions__button"
-                @click.prevent="downloadExcel"
+                @click.prevent="downloadGoodsExcel"
               >
                 <img src="@/assets/icons/all_items.svg" alt="" />
               </a>
@@ -468,6 +468,18 @@ export default {
       } finally {
         this.changeStatus(true);
       }
+    },
+    async downloadGoodsExcel() {
+      this.downloadExcelFile = false;
+      axios({
+        url: `/excel/get`,
+        data: {
+          region: this.$store.getters.getFilterOptions,
+        },
+        method: "POST",
+      }).then(async () => {
+        this.$toast.success("Начинаю генерировать Excel!");
+      });
     },
     async getGoodsFromRegion() {
       try {
