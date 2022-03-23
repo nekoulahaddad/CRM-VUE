@@ -15,7 +15,7 @@
             :options="[
               { label: $t('allManagers'), value: 'all' },
               ...managers.map((item) => ({
-                label: transformFIO(item),
+                label: item.title,
                 value: item._id,
               })),
             ]"
@@ -95,7 +95,9 @@ export default {
       this.info[0].count = result.callbacks.all;
       this.info[1].count = result.callbacks.completed;
       this.info[2].count = result.callbacks.declained;
-      this.managers = result.managers;
+      this.managers = result.managers.sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
     },
   },
   mounted() {

@@ -142,9 +142,7 @@ export default {
       required: true,
     },
   },
-  created() {
-    console.log(this.task);
-  },
+  created() {},
 };
 </script>
 

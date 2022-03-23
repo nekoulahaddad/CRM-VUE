@@ -335,7 +335,6 @@ export default {
           `/tasks/get`,
           this.filtersOptions
         );
-        console.log(data.tasks);
 
         this.activeIndex = -1;
         this.dataset = data.tasks;

@@ -258,9 +258,7 @@ export default {
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
   },
-  created() {
-    console.log(this.employee);
-  },
+  created() {},
 };
 </script>
 

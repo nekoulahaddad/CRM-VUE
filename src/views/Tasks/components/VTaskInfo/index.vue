@@ -298,9 +298,7 @@ export default {
       });
     },
   },
-  created() {
-    console.log(this.task);
-  },
+  created() {},
 };
 </script>
 
