@@ -63,7 +63,9 @@
             <div class="d-flex">
               <div style="margin-right: 10px">
                 <img
+                  alt=""
                   v-if="item.img"
+                  class="big-photo"
                   :src="
                     region
                       ? `${
@@ -73,16 +75,21 @@
                         }`
                       : false
                   "
-                  alt=""
                 />
                 <img src="@/assets/icons/no_photo.svg" v-else alt="" />
               </div>
               <div>
-                <label class="" for="upload_photo">
+                <label class="" :for="`upload_photo${index}`">
                   <simple-svg
                     :src="require('@/assets/icons/upload_photo.svg')"
                   />
-                  <input type="file" id="upload_photo" hidden />
+                  <input
+                    type="file"
+                    :name="`salesImage${index}`"
+                    :id="`upload_photo${index}`"
+                    hidden
+                    @input="newfileUpload($event, 'sales', index)"
+                  />
                 </label>
                 <label
                   v-if="item.img || item.href"
@@ -165,6 +172,25 @@ export default {
     },
   },
   methods: {
+    async newfileUpload(e, type, index) {
+      this.isLoading = true;
+      let fileBuffer = [];
+      Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
+      const files = fileBuffer;
+      this[e.target.name] = files;
+      let regionData = new FormData();
+      regionData.append("type", type);
+      regionData.append("sale", this[type + "Image" + index][0]);
+      regionData.append("index", index);
+      regionData.append("region", this.editedRegionId);
+      axios({
+        url: `/regions/newimage/`,
+        data: regionData,
+        method: "POST",
+      }).then(() => {
+        this.getRegion();
+      });
+    },
     async deleteRegionSale(type, index) {
       axios({
         url: `/regions/deletesale/`,
@@ -307,6 +333,11 @@ export default {
     margin-bottom: 10px;
   }
   .group__content {
+    .big-photo {
+      max-width: 230px;
+      max-height: 156px;
+    }
+
     label {
       width: 33px;
       height: 33px;
