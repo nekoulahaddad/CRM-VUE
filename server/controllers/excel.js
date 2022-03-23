@@ -166,6 +166,7 @@ exports.getExcelFromCategories = async (req, res, next) => {
     res.status(200).send({ message: "OK" });
     await generateExcel(req, res, region, categories);
   } catch (error) {
+    return res.json(error);
     next(error);
   }
 };
@@ -1249,7 +1250,6 @@ exports.exportOrders = async (req, res, next) => {
       res.status(200).download(filePath, `Заказы.xlsx`);
     });
   } catch (error) {
-    return res.json(error);
     next(error);
   }
 };
@@ -1624,9 +1624,8 @@ exports.getGoodsFromRegion = async (req, res, next) => {
     // }
 
     console.log("finish excel");
-    res.status(200).download(SEO_PATH, `/Товары_по_${regionTitle}.xlsx`);
+    res.status(200);
   } catch (error) {
-    return res.json(error);
     next(error);
   }
 };
