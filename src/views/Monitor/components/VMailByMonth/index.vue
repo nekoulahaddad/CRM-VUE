@@ -95,6 +95,7 @@ export default {
       this.info[0].count = result.callbacks.all;
       this.info[1].count = result.callbacks.completed;
       this.info[2].count = result.callbacks.declained;
+      console.log(result.managers);
       this.managers = result.managers.sort((a, b) =>
         a.surname > b.surname ? 1 : -1
       );
