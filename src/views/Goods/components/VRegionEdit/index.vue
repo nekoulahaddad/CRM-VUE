@@ -76,10 +76,19 @@
                       : false
                   "
                 />
-                <img src="@/assets/icons/no_photo.svg" v-else alt="" />
+                <label :for="`upload_photo_${index}`" v-else>
+                  <input
+                    type="file"
+                    :name="`salesImage${index}`"
+                    :id="`upload_photo_${index}`"
+                    hidden
+                    @input="newfileUpload($event, 'sales', index)"
+                  />
+                  <img src="@/assets/icons/no_photo.svg" alt="" />
+                </label>
               </div>
               <div>
-                <label class="" :for="`upload_photo${index}`">
+                <label class="label--small label" :for="`upload_photo${index}`">
                   <simple-svg
                     :src="require('@/assets/icons/upload_photo.svg')"
                   />
@@ -93,6 +102,7 @@
                 </label>
                 <label
                   v-if="item.img || item.href"
+                  class="label--small label"
                   @click="deleteRegionSale('sales', index)"
                 >
                   <simple-svg
@@ -338,7 +348,7 @@ export default {
       max-height: 156px;
     }
 
-    label {
+    .label--small {
       width: 33px;
       height: 33px;
       display: flex;
