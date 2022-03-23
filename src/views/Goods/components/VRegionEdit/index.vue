@@ -61,7 +61,7 @@
         >
           <div class="group__content flex-column">
             <div class="d-flex">
-              <div>
+              <div style="margin-right: 10px">
                 <img
                   v-if="item.img"
                   :src="
