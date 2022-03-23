@@ -6,6 +6,7 @@
       <input
         v-if="item.type !== 'group'"
         type="checkbox"
+        :disabled="role !== 'content'"
         class="form-checkbox"
         :checked="checked"
         @click="$store.commit('selectItem', item._id)"
@@ -29,62 +30,85 @@
         <div class="table__icon">
           <!-- Показать товары группы -->
           <template v-if="item.type === 'group'">
-            <VueCustomTooltip
-              v-if="groupItems._id !== item._id"
-              label="Показать товары"
-            >
+            <template v-if="role === 'content'">
+              <VueCustomTooltip
+                v-if="groupItems._id !== item._id"
+                label="Показать товары"
+              >
+                <img
+                  @click="$emit('toggleGroupProducts', item)"
+                  src="@/assets/icons/structure.svg"
+                  alt=""
+                />
+              </VueCustomTooltip>
               <img
-                @click="$emit('toggleGroupProducts', item)"
-                src="@/assets/icons/structure.svg"
                 alt=""
+                v-else
+                @click="$emit('toggleGroupProducts', item)"
+                src="@/assets/icons/arrow_top_icon.svg"
               />
-            </VueCustomTooltip>
+            </template>
             <img
               alt=""
               v-else
-              @click="$emit('toggleGroupProducts', item)"
-              src="@/assets/icons/arrow_top_icon.svg"
+              class="opacity-30"
+              src="@/assets/icons/structure.svg"
             />
           </template>
 
           <!-- Добавить товар в группу -->
           <template v-else>
-            <VueCustomTooltip
-              v-if="groupProductItem._id !== item._id"
-              label="Добавить товар в группу"
-            >
+            <template v-if="role === 'content'">
+              <VueCustomTooltip
+                v-if="groupProductItem._id !== item._id"
+                label="Добавить товар в группу"
+              >
+                <img
+                  @click="$emit('toggleProductToGroup', item)"
+                  src="@/assets/icons/add_to_group.svg"
+                  alt=""
+                />
+              </VueCustomTooltip>
               <img
-                @click="$emit('toggleProductToGroup', item)"
-                src="@/assets/icons/add_to_group.svg"
                 alt=""
-              />
-            </VueCustomTooltip>
-            <img
+                v-else
+                @click="$emit('toggleProductToGroup', item)"
+                src="@/assets/icons/arrow_top_icon.svg"
+              /> </template
+            ><img
               alt=""
               v-else
-              @click="$emit('toggleProductToGroup', item)"
-              src="@/assets/icons/arrow_top_icon.svg"
+              class="opacity-30"
+              src="@/assets/icons/add_to_group.svg"
             />
           </template>
         </div>
 
         <!-- Перемещение товара -->
         <div class="table__icon" v-if="item.type !== 'group'">
-          <VueCustomTooltip
-            v-if="movedProduct._id !== item._id"
-            label="Перемещение товара"
-          >
+          <template v-if="role === 'content'">
+            <VueCustomTooltip
+              v-if="movedProduct._id !== item._id"
+              label="Перемещение товара"
+            >
+              <img
+                alt=""
+                src="@/assets/icons/move_goods.svg"
+                @click="$emit('toggleMoveProduct', item)"
+              />
+            </VueCustomTooltip>
             <img
               alt=""
-              src="@/assets/icons/move_goods.svg"
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
               @click="$emit('toggleMoveProduct', item)"
             />
-          </VueCustomTooltip>
+          </template>
           <img
             alt=""
             v-else
-            src="@/assets/icons/arrow_top_icon.svg"
-            @click="$emit('toggleMoveProduct', item)"
+            class="opacity-30"
+            src="@/assets/icons/move_goods.svg"
           />
         </div>
 

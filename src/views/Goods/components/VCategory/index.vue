@@ -97,22 +97,30 @@
 
       <!-- Менеджер -->
       <div class="table__icon">
-        <VueCustomTooltip
-          v-if="managerItem._id !== item._id"
-          label="Имя менеджера"
-        >
+        <template v-if="role === 'content'">
+          <VueCustomTooltip
+            v-if="managerItem._id !== item._id"
+            label="Имя менеджера"
+          >
+            <img
+              alt=""
+              @click="$emit('toggleManager', item)"
+              src="@/assets/icons/manager.svg"
+              :class="{ none: !item.manager[0] }"
+            />
+          </VueCustomTooltip>
           <img
             alt=""
+            v-else
             @click="$emit('toggleManager', item)"
-            src="@/assets/icons/manager.svg"
-            :class="{ none: !item.manager[0] }"
+            src="@/assets/icons/arrow_top_icon.svg"
           />
-        </VueCustomTooltip>
+        </template>
         <img
           alt=""
           v-else
-          @click="$emit('toggleManager', item)"
-          src="@/assets/icons/arrow_top_icon.svg"
+          class="opacity-30"
+          src="@/assets/icons/manager.svg"
         />
       </div>
       <div class="table__icon">
