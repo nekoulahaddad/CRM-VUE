@@ -84,15 +84,12 @@
                   <input type="file" id="upload_photo" hidden />
                 </label>
                 <label
-                  class=""
-                  for="trash_photo"
                   v-if="item.img || item.href"
                   @click="deleteRegionSale('sales', index)"
                 >
                   <simple-svg
                     :src="require('@/assets/icons/trash_icon_gray.svg')"
                   />
-                  <input type="file" id="trash_photo" hidden />
                 </label>
               </div>
             </div>
