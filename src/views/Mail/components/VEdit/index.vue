@@ -47,12 +47,8 @@
         </div>
         <div class="group">
           <div class="group__title">{{ $t("comment") }}</div>
-          <div class="group__content">
-            <textarea
-              class="form-textarea"
-              :placeholder="$t('comment')"
-              v-model="comment"
-            />
+          <div style="word-break: break-all">
+            {{ comment || "Комментарий отсутствует" }}
           </div>
         </div>
         <div class="group">
