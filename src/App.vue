@@ -9,6 +9,7 @@
 <script>
 import axios from "@/api/axios";
 import isMobile from "is-mobile";
+import LogRocket from 'logrocket';
 
 export default {
   data() {
@@ -47,6 +48,9 @@ export default {
         });
       }
     },
+  },
+  mounted() {
+  LogRocket.init('4z9put/csk');
   },
   created() {
     window.addEventListener("resize", () => {
