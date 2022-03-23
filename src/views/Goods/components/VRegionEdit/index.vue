@@ -60,19 +60,37 @@
           class="group__wrap"
         >
           <div class="group__content flex-column">
-            <img
-              v-if="item.img"
-              :src="
-                region
-                  ? `${
-                      serverAddr +
-                      region.path +
-                      (item && item.img ? item.img : item)
-                    }`
-                  : false
-              "
-              alt=""
-            />
+            <div class="d-flex">
+              <div>
+                <img
+                  v-if="item.img"
+                  :src="
+                    region
+                      ? `${
+                          serverAddr +
+                          region.path +
+                          (item && item.img ? item.img : item)
+                        }`
+                      : false
+                  "
+                  alt=""
+                />
+              </div>
+              <div>
+                <label class="" for="upload_photo">
+                  <simple-svg
+                    :src="require('@/assets/icons/upload_photo.svg')"
+                  />
+                  <input type="file" id="upload_photo" hidden />
+                </label>
+                <label class="" for="trash_photo">
+                  <simple-svg
+                    :src="require('@/assets/icons/trash_icon_gray.svg')"
+                  />
+                  <input type="file" id="trash_photo" hidden />
+                </label>
+              </div>
+            </div>
             <div style="font-weight: 700; font-size: 14px; margin-bottom: 10px">
               URL акции:
             </div>
@@ -241,6 +259,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .vm--modal__title {
   position: relative;
 
@@ -265,6 +285,22 @@ export default {
     width: 100%;
     border-radius: 6px;
     margin-bottom: 10px;
+  }
+  .group__content {
+    label {
+      width: 33px;
+      height: 33px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      border-radius: $border-radius;
+      cursor: pointer;
+
+      & + label {
+        margin-top: 7px;
+      }
+    }
   }
 }
 </style>
