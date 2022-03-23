@@ -454,7 +454,6 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
-    addTask() {},
     async getInfoAboutAllUsers() {
       try {
         this.changeStatus(false);
@@ -465,8 +464,6 @@ export default {
         this.$toast.success("Начинаю генерировать Excel!");
       } catch (error) {
         this.$toast.error(error.response.data.message);
-      } finally {
-        this.changeStatus(true);
       }
     },
     async downloadGoodsExcel() {
@@ -483,7 +480,7 @@ export default {
         const blob = new Blob([response.data]);
         let urll = window.URL.createObjectURL(blob);
         link.href = urll;
-        link.download = `Товары.xls`;
+        link.download = `Товары.xlsx`;
         link.click();
         window.URL.revokeObjectURL(urll);
         URL.revokeObjectURL(link.href);
