@@ -1624,7 +1624,7 @@ exports.getGoodsFromRegion = async (req, res, next) => {
     // }
 
     console.log("finish excel");
-    res.status(200).download(`Товары_по_${regionTitle}.xlsx`);
+    res.status(200).download(SEO_PATH, `/Товары_по_${regionTitle}.xlsx`);
   } catch (error) {
     return res.json(error);
     next(error);
