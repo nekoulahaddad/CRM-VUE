@@ -10,123 +10,209 @@
       />
     </div>
     <div class="vm--modal__inner region-edit">
-      <div class="vm--modal__content d-flex justify-content-between">
-        <div>
-          <div class="group__title">Валюта:</div>
-          <div class="group__content flex-column">
-            <v-select
-              :options="[
-                { label: 'Рубль', value: '₽' },
-                { label: 'Белорусский рубль', value: 'BYN' },
-                { label: 'Тенге', value: '₸' },
-                { label: 'Доллар', value: '$' },
-                { label: 'Киргизский сом', value: 'с' },
-              ]"
-              :reduce="(item) => item.value"
-              v-model="valute"
-              name="valute"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        style="
-          color: #003ad2;
-          font-size: 16px;
-          font-weight: 700;
-          margin-top: 15px;
-          border-top: 2px solid #f6f6f6;
-          padding-top: 10px;
-          margin-bottom: 10px;
-        "
-      >
-        Акции региона:
-      </div>
-      <div
-        v-if="region && region.sales && region.sales.length"
-        style="font-size: 14px; font-weight: 700; margin-bottom: 10px"
-      >
-        Баннеры для десктоп версии:
-      </div>
-      <div
-        class="vm--modal__content d-flex justify-content-between"
-        style="flex-wrap: wrap; margin-top: 20px"
-        v-if="region"
-      >
-        <div
-          v-for="(item, index) in region.sales"
-          :key="index"
-          style="width: 50%; margin-bottom: 20px"
-          class="group__wrap"
-        >
-          <div class="group__content flex-column">
-            <div class="d-flex">
-              <div style="margin-right: 10px">
-                <img
-                  alt=""
-                  v-if="item.img"
-                  class="big-photo"
-                  :src="
-                    region
-                      ? `${
-                          serverAddr +
-                          region.path +
-                          (item && item.img ? item.img : item)
-                        }`
-                      : false
-                  "
+      <vue-scroll>
+        <div style="margin-right: 20px; margin-left: 4px">
+          <div class="vm--modal__content d-flex justify-content-between">
+            <div>
+              <div class="group__title">Валюта:</div>
+              <div class="group__content flex-column">
+                <v-select
+                  :options="[
+                    { label: 'Рубль', value: '₽' },
+                    { label: 'Белорусский рубль', value: 'BYN' },
+                    { label: 'Тенге', value: '₸' },
+                    { label: 'Доллар', value: '$' },
+                    { label: 'Киргизский сом', value: 'с' },
+                  ]"
+                  :reduce="(item) => item.value"
+                  v-model="valute"
+                  name="valute"
                 />
-                <label :for="`upload_photo_${index}`" v-else>
-                  <input
-                    type="file"
-                    :name="`salesImage${index}`"
-                    :id="`upload_photo_${index}`"
-                    hidden
-                    @input="newfileUpload($event, 'sales', index)"
-                  />
-                  <img src="@/assets/icons/no_photo.svg" alt="" />
-                </label>
               </div>
-              <div>
-                <label class="label--small label" :for="`upload_photo${index}`">
-                  <simple-svg
-                    :src="require('@/assets/icons/upload_photo.svg')"
-                  />
-                  <input
-                    type="file"
-                    :name="`salesImage${index}`"
-                    :id="`upload_photo${index}`"
-                    hidden
-                    @input="newfileUpload($event, 'sales', index)"
-                  />
-                </label>
-                <label
-                  v-if="item.img || item.href"
-                  class="label--small label"
-                  @click="deleteRegionSale('sales', index)"
+            </div>
+          </div>
+          <div
+            style="
+              color: #003ad2;
+              font-size: 16px;
+              font-weight: 700;
+              margin-top: 15px;
+              border-top: 2px solid #f6f6f6;
+              padding-top: 10px;
+              margin-bottom: 10px;
+            "
+          >
+            Акции региона:
+          </div>
+          <div
+            v-if="region && region.sales && region.sales.length"
+            style="font-size: 14px; font-weight: 700; margin-bottom: 10px"
+          >
+            Баннеры для десктоп версии:
+          </div>
+          <div
+            class="vm--modal__content d-flex justify-content-between"
+            style="flex-wrap: wrap; margin-top: 20px"
+            v-if="region"
+          >
+            <div
+              v-for="(item, index) in region.sales"
+              :key="index"
+              style="width: 50%; margin-bottom: 20px"
+              class="group__wrap"
+            >
+              <div class="group__content flex-column">
+                <div class="d-flex">
+                  <div style="margin-right: 10px">
+                    <img
+                      alt=""
+                      v-if="item.img"
+                      class="big-photo"
+                      :src="
+                        region
+                          ? `${
+                              serverAddr +
+                              region.path +
+                              (item && item.img ? item.img : item)
+                            }`
+                          : false
+                      "
+                    />
+                    <label :for="`upload_photo_${index}`" v-else>
+                      <input
+                        type="file"
+                        :name="`salesImage${index}`"
+                        :id="`upload_photo_${index}`"
+                        hidden
+                        @input="newfileUpload($event, 'sales', index)"
+                      />
+                      <img src="@/assets/icons/no_photo.svg" alt="" />
+                    </label>
+                  </div>
+                  <div>
+                    <label class="label--small label" :for="'sales' + index">
+                      <simple-svg
+                        :src="require('@/assets/icons/upload_photo.svg')"
+                      />
+                      <input
+                        type="file"
+                        :name="`salesImage${index}`"
+                        :id="'sales' + index"
+                        hidden
+                        @input="newfileUpload($event, 'sales', index)"
+                      />
+                    </label>
+                    <label
+                      v-if="item.img || item.href"
+                      class="label--small label"
+                      @click="deleteRegionSale('sales', index)"
+                    >
+                      <simple-svg
+                        :src="require('@/assets/icons/trash_icon_gray.svg')"
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div
+                  style="font-weight: 700; font-size: 14px; margin-bottom: 10px"
                 >
-                  <simple-svg
-                    :src="require('@/assets/icons/trash_icon_gray.svg')"
-                  />
-                </label>
+                  URL акции:
+                </div>
+                <input
+                  type="url"
+                  class="form-control"
+                  maxlength="200"
+                  placeholder="https://example.com"
+                  v-model="salesHref[index]"
+                />
               </div>
             </div>
-            <div style="font-weight: 700; font-size: 14px; margin-bottom: 10px">
-              URL акции:
+          </div>
+          <div
+            v-if="region && region.msales && region.msales.length"
+            style="font-size: 14px; font-weight: 700; margin-bottom: 10px"
+          >
+            Баннеры для мобильной версии:
+          </div>
+          <div
+            class="vm--modal__content d-flex justify-content-between"
+            style="flex-wrap: wrap; margin-top: 20px"
+          >
+            <div
+              v-for="(item, index) in region.msales"
+              :key="index"
+              style="width: 50%; margin-bottom: 20px"
+              class="group__wrap"
+            >
+              <div class="group__content flex-column">
+                <div class="d-flex">
+                  <div style="margin-right: 10px">
+                    <img
+                      alt=""
+                      v-if="item.img"
+                      class="big-photo"
+                      :src="
+                        region
+                          ? `${
+                              serverAddr +
+                              region.path +
+                              (item && item.img ? item.img : item)
+                            }`
+                          : false
+                      "
+                    />
+                    <label :for="`upload_mphoto_${index}`" v-else>
+                      <input
+                        type="file"
+                        :name="`msalesImage${index}`"
+                        :id="`upload_mphoto_${index}`"
+                        hidden
+                        @input="newfileUpload($event, 'msales', index)"
+                      />
+                      <img src="@/assets/icons/no_photo.svg" alt="" />
+                    </label>
+                  </div>
+                  <div>
+                    <label class="label--small label" :for="'msales' + index">
+                      <simple-svg
+                        :src="require('@/assets/icons/upload_photo.svg')"
+                      />
+                      <input
+                        type="file"
+                        :name="`msalesImage${index}`"
+                        :id="'msales' + index"
+                        hidden
+                        @input="newfileUpload($event, 'msales', index)"
+                      />
+                    </label>
+                    <label
+                      v-if="item.img || item.href"
+                      class="label--small label"
+                      @click="deleteRegionSale('msales', index)"
+                    >
+                      <simple-svg
+                        :src="require('@/assets/icons/trash_icon_gray.svg')"
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div
+                  style="font-weight: 700; font-size: 14px; margin-bottom: 10px"
+                >
+                  URL акции:
+                </div>
+                <input
+                  type="url"
+                  class="form-control"
+                  maxlength="200"
+                  placeholder="https://example.com"
+                  v-model="salesHref[index]"
+                />
+              </div>
             </div>
-            <input
-              type="url"
-              class="form-control"
-              maxlength="200"
-              placeholder="https://example.com"
-              v-model="salesHref[index]"
-            />
           </div>
         </div>
-        <div>
-          <div class="group__content flex-column"></div>
-        </div>
-      </div>
+      </vue-scroll>
       <div class="vm--modal__buttons">
         <v-button @click="confirm" red>Сохранить</v-button>
       </div>
@@ -199,6 +285,7 @@ export default {
         method: "POST",
       }).then(() => {
         this.getRegion();
+        this.$toast.success("Изображение успешно обновлено!");
       });
     },
     async deleteRegionSale(type, index) {
@@ -328,6 +415,8 @@ export default {
   }
 }
 .region-edit {
+  height: 690px;
+
   .vm--modal__buttons {
     position: absolute;
     left: 20px;
