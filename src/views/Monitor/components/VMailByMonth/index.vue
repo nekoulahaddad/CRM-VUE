@@ -96,7 +96,7 @@ export default {
       this.info[1].count = result.callbacks.completed;
       this.info[2].count = result.callbacks.declained;
       this.managers = result.managers.sort((a, b) =>
-        a.title > b.title ? 1 : -1
+        a.surname > b.surname ? 1 : -1
       );
     },
   },
