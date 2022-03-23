@@ -164,7 +164,9 @@ exports.getExcelFromCategories = async (req, res, next) => {
     }
 
     const filePath = await generateExcel(req, res, region, categories);
-    res.status(200).download(filePath, `Товары.xls`);
+    setTimeout(() => {
+      res.status(200).download(filePath, `Сотрудники.xls`);
+    }, 500);
   } catch (error) {
     return res.json(error);
     next(error);
@@ -1847,7 +1849,7 @@ async function generateExcel(req, res, region, categories) {
     }
     const filepath = path.join(REGIONS_PATH, `/${region}.xlsx`);
 
-    wb.write(filepath);
+    await wb.write(filepath);
     return filepath;
     for (let i = 0; i < global.users.length; i++) {
       const user = global.users[i];
