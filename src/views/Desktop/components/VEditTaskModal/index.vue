@@ -19,10 +19,9 @@
       <div class="d-flex justify-content-between vm--modal__inner">
         <div class="vm--modal__left">
           <div class="vm--modal__action table__actions">
-            <div class="table__icon">
+            <div class="table__icon" v-if="role === 'superadmin'">
               <img
                 @click="deleteTask"
-                v-if="role === 'superadmin'"
                 src="@/assets/icons/trash_icon.svg"
                 alt=""
               />
