@@ -163,8 +163,8 @@ exports.getExcelFromCategories = async (req, res, next) => {
       }
     }
 
-    res.status(200).send({ message: "OK" });
-    await generateExcel(req, res, region, categories);
+    const filePath = await generateExcel(req, res, region, categories);
+    res.status(200).download(filePath, `Товары.xls`);
   } catch (error) {
     return res.json(error);
     next(error);
@@ -1845,7 +1845,10 @@ async function generateExcel(req, res, region, categories) {
         ws.column(8).setWidth(70);
       }
     }
-    wb.write(path.join(REGIONS_PATH, `/${region}.xlsx`));
+    const filepath = path.join(REGIONS_PATH, `/${region}.xlsx`);
+
+    wb.write(filepath);
+    return filepath;
     for (let i = 0; i < global.users.length; i++) {
       const user = global.users[i];
       console.log(req.userId);
