@@ -83,7 +83,12 @@
                   />
                   <input type="file" id="upload_photo" hidden />
                 </label>
-                <label class="" for="trash_photo">
+                <label
+                  class=""
+                  for="trash_photo"
+                  v-if="item.img || item.href"
+                  @click="deleteRegionSale('sales', index)"
+                >
                   <simple-svg
                     :src="require('@/assets/icons/trash_icon_gray.svg')"
                   />
@@ -162,6 +167,23 @@ export default {
     },
   },
   methods: {
+    async deleteRegionSale(type, index) {
+      axios({
+        url: `/regions/deletesale/`,
+        data: {
+          index: index,
+          type: type,
+          region: this.region._id,
+        },
+        method: "POST",
+      })
+        .then(async () => {
+          this.$toast.success("Акция успешно удалена!");
+          await this.getRegion();
+          this[type + "Href"][index] = null;
+        })
+        .catch((error) => {});
+    },
     findDuplicates(array, type) {
       let devType = type === "sales" ? "десктоп" : "мобильных";
       let dupes = {};
