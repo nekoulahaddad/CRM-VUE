@@ -477,7 +477,9 @@ export default {
           region: this.$store.getters.getFilterOptions,
         },
         method: "POST",
-      }).then(async () => {
+        responseType: "blob",
+      }).then((response) => {
+        console.log(response);
         this.$toast.success("Начинаю генерировать Excel!");
       });
     },
