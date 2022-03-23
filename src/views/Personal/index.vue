@@ -46,7 +46,7 @@
               </div>
               <div class="personal-area__buttons">
                 <v-button @click="onPasswordRemind" red>Изменить</v-button>
-                <v-button @click="logout" redWhite>Выйти</v-button>
+                <a href="#" @click.prevent="logout" class="logout">Выйти</a>
               </div>
             </form>
           </div>
@@ -714,6 +714,20 @@ export default {
   width: 1591px;
   position: relative;
   overflow: hidden;
+
+  a.logout {
+    width: 230px;
+    height: 37px;
+    color: #db1f35;
+    border: 2px solid #db1f35;
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 700;
+    margin-left: 10px;
+  }
 
   &__bg {
     position: absolute;
