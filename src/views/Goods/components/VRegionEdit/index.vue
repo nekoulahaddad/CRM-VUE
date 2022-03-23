@@ -206,7 +206,7 @@
                   class="form-control"
                   maxlength="200"
                   placeholder="https://example.com"
-                  v-model="salesHref[index]"
+                  v-model="msalesHref[index]"
                 />
               </div>
             </div>
