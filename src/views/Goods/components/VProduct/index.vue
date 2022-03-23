@@ -363,5 +363,9 @@ export default {
   .none {
     opacity: 0.3;
   }
+
+  .form-checkbox[disabled] {
+    opacity: 0.6;
+  }
 }
 </style>

@@ -391,7 +391,10 @@
             </a>
           </VueCustomTooltip>
 
-          <VueCustomTooltip label="Таблица" v-if="name === 'goods'">
+          <VueCustomTooltip
+            label="Таблица"
+            v-if="name === 'goods' && role === 'content'"
+          >
             <a
               href=""
               class="page-actions__button"
@@ -401,7 +404,10 @@
             </a>
           </VueCustomTooltip>
 
-          <VueCustomTooltip label="Обновить" v-if="name === 'goods'">
+          <VueCustomTooltip
+            label="Обновить"
+            v-if="name === 'goods' && role === 'content'"
+          >
             <a
               href=""
               class="page-actions__button"
