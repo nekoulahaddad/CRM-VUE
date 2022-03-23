@@ -479,8 +479,14 @@ export default {
         method: "POST",
         responseType: "blob",
       }).then((response) => {
-        console.log(response);
-        this.$toast.success("Начинаю генерировать Excel!");
+        const link = document.createElement("a");
+        const blob = new Blob([response.data]);
+        let urll = window.URL.createObjectURL(blob);
+        link.href = urll;
+        link.download = `Товары.xls`;
+        link.click();
+        window.URL.revokeObjectURL(urll);
+        URL.revokeObjectURL(link.href);
       });
     },
     async getGoodsFromRegion() {
