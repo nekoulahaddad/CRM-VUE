@@ -95,12 +95,7 @@ export default {
       this.info[0].count = result.callbacks.all;
       this.info[1].count = result.callbacks.completed;
       this.info[2].count = result.callbacks.declained;
-
       this.managers = result.managers;
-      this.managers = this.managers.sort((a, b) =>
-        a.surname > b.surname ? 1 : -1
-      );
-      console.log(this.managers);
     },
   },
   mounted() {
