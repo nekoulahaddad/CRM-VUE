@@ -165,6 +165,7 @@ export default {
       this.item.order && this.item.order.length
         ? this.item.order[0].number
         : "";
+    this.status = this.item.status;
     this.comment = this.item.comment;
     this.fio = `${
       this.item.manager[0].surname
