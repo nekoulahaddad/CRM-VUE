@@ -1602,6 +1602,9 @@ exports.getGoodsFromRegion = async (req, res, next) => {
     await workbook.xlsx.writeFile(
       path.join(SEO_PATH, `/Товары_по_${regionTitle}.xlsx`)
     );
+    return res
+      .status(200)
+      .download(path.join(SEO_PATH, `/Товары_по_${regionTitle}.xlsx`));
 
     // let findUser = false
     for (let i = 0; i < global.users.length; i++) {
