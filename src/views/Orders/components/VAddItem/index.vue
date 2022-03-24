@@ -1008,11 +1008,6 @@ export default {
       this.orderForm.manager = manager;
     },
     async createOrder() {
-      if (!this.orderForm.region) {
-        this.$toast.error("Вы не выбрали регион!");
-        return;
-      }
-
       if (!this.orderForm.payment) {
         this.$toast.error("Вы не выбрали способ оплаты!");
         return;
@@ -1020,6 +1015,11 @@ export default {
 
       if (!this.orderForm.typeDelivery) {
         this.$toast.error("Вы не выбрали способ доставки!");
+        return;
+      }
+
+      if (!this.orderForm.region) {
+        this.$toast.error("Вы не выбрали регион!");
         return;
       }
 

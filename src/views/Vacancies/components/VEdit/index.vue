@@ -176,7 +176,6 @@ export default {
       date: new Date().toString(),
       title: "",
       link: "",
-      link: "",
       role: "",
       category: "",
       department: {
