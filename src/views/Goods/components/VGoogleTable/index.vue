@@ -1,7 +1,7 @@
 <template>
   <v-modal
     :adaptive="true"
-    :minHeight="320"
+    :minHeight="360"
     :minWidth="1017"
     name="googleTable"
     @before-close="beforeClose"
