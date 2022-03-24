@@ -34,7 +34,7 @@
           </autocomplete>
         </div>
 
-        <div class="d-flex">
+        <div class="d-flex" style="margin-bottom: 10px">
           <div class="flex-1">
             <div class="group">
               <div class="group__title">{{ $t("orderNumber") }}</div>
