@@ -1,6 +1,6 @@
 <template>
   <div class="list__info list-info sites-list-info">
-    <form @submit.prevent="onExport">
+    <form @submit.prevent="onImport">
       <div class="group__title text--blue">Импорт товаров:</div>
       <div class="list-info__group group">
         <div class="group__content">
@@ -68,22 +68,20 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
-      changeStatus: "change_load_status",
-    }),
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files[0];
     },
-    onExport() {
+    onImport() {
       if (!this.fileImport) {
         this.$toast.error("Вы не выбрали файл");
         return;
       }
+
       let categoryData = new FormData();
       categoryData.append("id", this.item._id);
       categoryData.append("document", this.fileImport);
-      this.changeStatus(false);
+
       axios({
         url: `/sites/importexcel/`,
         data: categoryData,
@@ -95,9 +93,6 @@ export default {
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
   },
