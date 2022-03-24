@@ -227,7 +227,7 @@ export default {
         this.isFetch = true;
         axios
           .post("/user/resetpass", {
-            login: this.this.forgotLogin,
+            login: this.forgotLogin,
           })
           .then(() => {
             this.$toast.success("Новый пароль отправлен Вам по смс!");
