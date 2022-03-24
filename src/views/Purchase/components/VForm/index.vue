@@ -124,7 +124,7 @@
       </div>
     </div>
 
-    <div class="group" style="margin-top: 10px">
+    <div v-if="false" class="group" style="margin-top: 10px">
       <div class="group__title">Товары:</div>
       <div class="list sub-list" v-if="productsList.length">
         <div class="list__header">
