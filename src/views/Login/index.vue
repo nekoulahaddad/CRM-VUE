@@ -43,10 +43,11 @@
                 </div>
                 <form class="panel-right__form" @submit.prevent="onSubmit">
                   <div class="panel-right__col">
-                    <phone-mask-input
-                      inputClass="input-login"
-                      v-model="login"
-                      @onValidate="onValidate"
+                    <input
+                      type="text"
+                      class="input-login"
+                      v-model="phoneNumber"
+                      maxlength="20"
                       placeholder="Номер телефона"
                     />
                     <img src="@/assets/icons/phone.svg" alt="" />
@@ -99,11 +100,12 @@
             </div>
             <form class="panel-right__form" @submit.prevent="onSubmitForget">
               <div class="panel-right__col">
-                <phone-mask-input
-                  inputClass="input-login"
-                  v-model="forgotLogin"
+                <input
+                  type="text"
+                  class="input-login"
+                  v-model="phoneNumberForgot"
+                  maxlength="20"
                   placeholder="Номер телефона"
-                  @onValidate="onValidate"
                 />
                 <img src="@/assets/icons/phone.svg" alt="" />
               </div>
@@ -153,11 +155,49 @@ export default {
     },
   },
   components: { VButton, PhoneMaskInput },
+  computed: {
+    phoneNumber: {
+      get() {
+        if (this.login.length) {
+          this.login = this.login.replace(/[^0-9\+]/g, "");
+
+          if (!this.login.startsWith("+")) {
+            this.login = `+${this.login}`;
+          }
+
+          if (this.login.startsWith("++")) {
+            this.login = this.login.replace(/^./, "");
+          }
+        }
+        return this.login;
+      },
+      set(v) {
+        this.login = v;
+      },
+    },
+    phoneNumberForgot: {
+      get() {
+        if (this.forgotLogin.length) {
+          this.forgotLogin = this.forgotLogin.replace(/[^0-9\+]/g, "");
+
+          if (!this.forgotLogin.startsWith("+")) {
+            this.forgotLogin = `+${this.forgotLogin}`;
+          }
+
+          if (this.forgotLogin.startsWith("++")) {
+            this.forgotLogin = this.forgotLogin.replace(/^./, "");
+          }
+        }
+        return this.forgotLogin;
+      },
+      set(v) {
+        this.forgotLogin = v;
+      },
+    },
+  },
   methods: {
     onSubmit() {
-      if (!this.isValidNumber) {
-        this.$toast.error("Неверный формат номера телефона");
-      } else if (!this.isPolicy) {
+      if (!this.isPolicy) {
         this.$toast.error(
           "Вы не дали согласие на обработку персональных данных"
         );
@@ -165,7 +205,7 @@ export default {
         this.isFetch = true;
         this.$store
           .dispatch("login", {
-            login: this.getPhoneNumberFormat(this.login),
+            login: this.login,
             password: this.password,
           })
           .then((res) => {
@@ -187,7 +227,7 @@ export default {
         this.isFetch = true;
         axios
           .post("/user/resetpass", {
-            login: this.getPhoneNumberFormat(this.forgotLogin),
+            login: this.this.forgotLogin,
           })
           .then(() => {
             this.$toast.success("Новый пароль отправлен Вам по смс!");
@@ -380,7 +420,7 @@ body {
     align-items: center;
 
     input[type="password"],
-    input[type="tel"] {
+    input[type="text"] {
       width: 100%;
       background: linear-gradient(0deg, #e6eef8, #e6eef8), #cfd8dc;
       border-radius: $border-radius;
