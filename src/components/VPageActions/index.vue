@@ -393,7 +393,7 @@
 
           <VueCustomTooltip
             label="Таблица"
-            v-if="name === 'goods' && role !== 'content'"
+            v-if="name === 'goods' && role === 'content'"
           >
             <a
               href=""
