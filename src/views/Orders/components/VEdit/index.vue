@@ -588,10 +588,7 @@ export default {
     },
     outOfGoods: {
       get() {
-        return (
-          !this.products.length ||
-          this.products.length === this.deletedItems.length
-        );
+        return this.products.length === this.deletedItems.length;
       },
     },
   },
