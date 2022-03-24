@@ -8,8 +8,8 @@
             <div class="column__top">
               <div class="column__icon">
                 <img src="@/assets/icons/clients_all.svg" alt="" />
+                <div class="column__title">Клиенты:</div>
               </div>
-              <div class="column__title">Клиенты:</div>
             </div>
             <div class="column__bottom">
               <div class="column__count">{{ clientCount }}</div>
@@ -21,8 +21,8 @@
             <div class="column__top">
               <div class="column__icon">
                 <img src="@/assets/icons/employee_all.svg" alt="" />
+                <div class="column__title">Сотрудники:</div>
               </div>
-              <div class="column__title">Сотрудники:</div>
             </div>
             <div class="column__bottom">
               <div class="column__count">{{ employeeCount }}</div>
@@ -34,8 +34,8 @@
             <div class="column__top">
               <div class="column__icon">
                 <img src="@/assets/icons/cart_all.svg" alt="" />
+                <div class="column__title">Количество дел:</div>
               </div>
-              <div class="column__title">Количество дел:</div>
             </div>
             <div class="column__bottom">
               <div class="column__count">{{ taskCount }}</div>
@@ -47,8 +47,8 @@
             <div class="column__top">
               <div class="column__icon">
                 <img src="@/assets/icons/settings_small.svg" alt="" />
+                <div class="column__title">Загруженность работников:</div>
               </div>
-              <div class="column__title">Загруженность работников:</div>
             </div>
             <div class="column__bottom">
               <div class="column__count">{{ workload }}%</div>
@@ -141,7 +141,13 @@ export default {
       font-size: 12px;
       font-weight: 600;
       position: relative;
-      top: 3px;
+      top: -5px;
+    }
+
+    &__icon {
+      img {
+        width: 60px;
+      }
     }
   }
 }
