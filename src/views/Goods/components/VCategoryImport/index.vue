@@ -65,9 +65,6 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
-      changeStatus: "change_load_status",
-    }),
     fileUpload(e) {
       const files = e.target.files;
       this[e.target.name] = files[0];
