@@ -475,7 +475,9 @@ export default {
         },
         method: "POST",
         //responseType: "blob",
-      }).then((response) => {});
+      }).then((response) => {
+        console.log(response);
+      });
     },
     async getGoodsFromRegion() {
       try {
