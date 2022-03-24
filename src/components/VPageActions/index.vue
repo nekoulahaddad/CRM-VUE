@@ -474,7 +474,7 @@ export default {
       axios({
         url: `/excel/get`,
         data: {
-          region: this.$store.getters.getFilterOptions,
+          region: this.$store.getters.getFilterOptions.region,
         },
         method: "POST",
         responseType: "blob",
