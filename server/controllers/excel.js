@@ -163,7 +163,7 @@ exports.getExcelFromCategories = async (req, res, next) => {
       }
     }
 
-    await generateExcel(req, res, region, categories);
+    //await generateExcel(req, res, region, categories);
   } catch (error) {
     return res.status(200).json(error);
     next(error);
