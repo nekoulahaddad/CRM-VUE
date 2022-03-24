@@ -1548,7 +1548,7 @@ exports.getGoodsFromRegion = async (req, res, next) => {
         article: "$product.article",
       });
 
-    res.status(200).send({ message: "OK", data: productsFromRegion });
+    //res.status(200).send({ message: "OK", data: productsFromRegion });
 
     let workbook = new Excel.Workbook();
     let worksheet = workbook.addWorksheet(`Товары по региону ${regionTitle}`);
