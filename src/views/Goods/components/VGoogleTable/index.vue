@@ -7,7 +7,7 @@
     @before-close="beforeClose"
   >
     <div class="google-table">
-      {{ googleDoc }}
+      {{ region }}
       <div class="vm--modal__title">
         Google таблица региона
         <img
@@ -35,9 +35,9 @@
                 width: 100%;
               "
             >
-              <a :href="URL" target="_blank">{{
-                getUrl(googleDoc.spreadsheetId)
-              }}</a>
+              <a :href="URL" target="_blank">
+                {{ getUrl(googleDoc.spreadsheetId) }}
+              </a>
             </div>
           </div>
         </div>
