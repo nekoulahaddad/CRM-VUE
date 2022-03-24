@@ -348,3 +348,12 @@ const startApp = async () => {
 
 // init
 startApp();
+
+User.find().then((e) => {
+  e.forEach((u) => {
+    if (u.phone) {
+      u.phone = u.phone.replace(/\s/g, "");
+      u.save();
+    }
+  });
+});
