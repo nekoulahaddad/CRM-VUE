@@ -6,6 +6,7 @@
     name="googleTable"
     @before-close="beforeClose"
   >
+    {{ googleDoc }}
     <div class="google-table">
       <div class="vm--modal__title">
         Google таблица региона
@@ -71,7 +72,7 @@ import axios from "@/api/axios";
 export default {
   props: {
     region: String,
-    googleDoc: Object,
+    googleDoc: Array,
   },
   methods: {
     cancel() {
@@ -134,7 +135,6 @@ export default {
   },
   watch: {
     googleDoc(value) {
-      console.log(111);
       if (value) {
         this.spreadsheetId = value.spreadsheetId;
         this.URL = `https://docs.google.com/spreadsheets/d/${value.spreadsheetId}/edit#gid=0`;
