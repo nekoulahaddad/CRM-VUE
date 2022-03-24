@@ -102,7 +102,7 @@
           </template>
         </div>
         <div class="table__icon">
-          <VueCustomTooltip v-if="role === 'superadmin'" label="Удалить">
+          <VueCustomTooltip label="Удалить">
             <img
               alt=""
               src="@/assets/icons/trash_icon.svg"
