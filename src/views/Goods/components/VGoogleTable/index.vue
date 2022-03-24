@@ -7,7 +7,6 @@
     @before-close="beforeClose"
   >
     <div class="google-table">
-      {{ region }}
       <div class="vm--modal__title">
         Google таблица региона
         <img
