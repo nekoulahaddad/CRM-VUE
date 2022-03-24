@@ -1033,12 +1033,13 @@ export default {
           data: this.orderForm.clientType === "legal" ? lega : physica,
         })
           .then(async (res) => {
+            console.log(res);
             const result = await res;
             this.orderForm.client = result.data.id;
             this.createNewOrder();
           })
           .catch((e) => {
-            this.$toast.error(e.message);
+            this.$toast.error(e.response.data.message);
           });
       }
     },
