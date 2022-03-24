@@ -163,9 +163,9 @@ exports.getExcelFromCategories = async (req, res, next) => {
       }
     }
 
-    //await generateExcel(req, res, region, categories);
+    res.status(200).send({ message: "OK" });
+    await generateExcel(req, res, region, categories);
   } catch (error) {
-    return res.status(200).json(error);
     next(error);
   }
 };
@@ -1845,7 +1845,6 @@ async function generateExcel(req, res, region, categories) {
       }
     }
     wb.write(path.join(REGIONS_PATH, `/${region}.xlsx`));
-    return res.status(200).download(path.join(REGIONS_PATH, `/${region}.xlsx`));
     for (let i = 0; i < global.users.length; i++) {
       const user = global.users[i];
       console.log(req.userId);
