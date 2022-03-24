@@ -134,15 +134,13 @@ export default {
   },
   watch: {
     googleDoc(value) {
+      console.log(111);
       if (value) {
-        alert(1);
         this.spreadsheetId = value.spreadsheetId;
         this.URL = `https://docs.google.com/spreadsheets/d/${value.spreadsheetId}/edit#gid=0`;
         for (let sheet of value.sheets) {
           this.categories.push(sheet.categoryName);
         }
-      } else {
-        alert(0);
       }
     },
   },
