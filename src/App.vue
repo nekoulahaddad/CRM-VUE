@@ -50,7 +50,7 @@ export default {
     },
   },
   mounted() {
-  LogRocket.init('4z9put/csk');
+  LogRocket.init('qiul8x/adnin');
   },
   created() {
     window.addEventListener("resize", () => {
