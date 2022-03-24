@@ -293,16 +293,14 @@ exports.getInfoAboutAllUsers = async (req, res, next) => {
       "utf8",
       function (err) {
         if (err) {
-          console.log("Ошибка при сохранении файла");
+          res.sendStatus(403);
         } else {
-          console.log("Данные сохранены!");
+          const file = path.join(SEO_PATH, `/all_clients.csv`);
+
+          res.status(200).download(file);
         }
       }
     );
-
-    const file = path.join(SEO_PATH, `/all_clients.csv`);
-
-    res.status(200).download(file);
   } catch (error) {
     next(error);
   }
