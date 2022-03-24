@@ -478,7 +478,16 @@ export default {
         },
         method: "POST",
         responseType: "blob",
-      }).then(async (response) => {});
+      }).then(async (response) => {
+        const link = document.createElement("a");
+        const blob = new Blob([response.data]);
+        let urll = window.URL.createObjectURL(blob);
+        link.href = urll;
+        link.download = `Товары.xls`;
+        link.click();
+        window.URL.revokeObjectURL(urll);
+        URL.revokeObjectURL(link.href);
+      });
     },
     async getGoodsFromRegion() {
       try {
@@ -495,7 +504,7 @@ export default {
         const blob = new Blob([response.data]);
         let urll = window.URL.createObjectURL(blob);
         link.href = urll;
-        link.download = `1.xlsx`;
+        link.download = `Товары_региона.xls`;
         link.click();
         window.URL.revokeObjectURL(urll);
         URL.revokeObjectURL(link.href);
