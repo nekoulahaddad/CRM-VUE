@@ -1008,6 +1008,21 @@ export default {
       this.orderForm.manager = manager;
     },
     async createOrder() {
+      if (!this.orderForm.region) {
+        this.$toast.error("Вы не выбрали регион!");
+        return;
+      }
+
+      if (!this.orderForm.payment) {
+        this.$toast.error("Вы не выбрали способ оплаты!");
+        return;
+      }
+
+      if (!this.orderForm.typeDelivery) {
+        this.$toast.error("Вы не выбрали способ доставки!");
+        return;
+      }
+
       if (
         (this.orderForm.clientType === "legal" && !this.isValidLegalNumber) ||
         (this.orderForm.clientType !== "legal" && !this.isValidPhysicalNumber)
@@ -1033,7 +1048,6 @@ export default {
           data: this.orderForm.clientType === "legal" ? lega : physica,
         })
           .then(async (res) => {
-            console.log(res);
             const result = await res;
             this.orderForm.client = result.data.id;
             this.createNewOrder();
