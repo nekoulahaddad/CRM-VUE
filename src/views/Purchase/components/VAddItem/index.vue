@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="add-purchase-row__inner">
-      <VForm />
+      <VForm :filtersOptions="filtersOptions" />
     </div>
   </div>
 </template>
@@ -28,6 +28,9 @@
 import VForm from "../VForm";
 
 export default {
+  props: {
+    filtersOptions: Object,
+  },
   components: { VForm },
 };
 </script>

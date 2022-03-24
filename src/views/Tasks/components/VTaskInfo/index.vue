@@ -57,7 +57,7 @@
         </div>
         <div v-html="transformStatus(task.status)" class="group__value"></div>
       </div>
-      <div class="group__content">
+      <div class="group__content" v-if="task.executor._id.length < 2">
         <div class="group__item text--bold-700">
           {{ $t("pages.tasks.taskMark") }}
         </div>

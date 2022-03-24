@@ -36,7 +36,7 @@
             </div>
 
             <!-- Блок добавления закупки -->
-            <v-add-item v-if="addPurchase" />
+            <v-add-item v-if="addPurchase" :filtersOptions="filtersOptions" />
 
             <v-spinner v-if="!isLoading" />
             <template v-else-if="dataset.length">

@@ -595,7 +595,7 @@
             >
               <div class="list__columns">
                 <div class="list__column">
-                  {{ orderForm.products.length + 1 }}
+                  {{ productsList.length + 1 }}
                 </div>
                 <div class="list__column add-good-item">
                   <autocomplete
