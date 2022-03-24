@@ -456,11 +456,19 @@ export default {
     }),
     async getInfoAboutAllUsers() {
       try {
-        await axios({
+        const response = await axios({
           url: `/seo/getinfoaboutallusers`,
           method: "GET",
+          responseType: "blob",
         });
-        this.$toast.success("Начинаю генерировать Excel!");
+        const link = document.createElement("a");
+        const blob = new Blob([response.data]);
+        let urll = window.URL.createObjectURL(blob);
+        link.href = urll;
+        link.download = `Пользователи.xls`;
+        link.click();
+        window.URL.revokeObjectURL(urll);
+        URL.revokeObjectURL(link.href);
       } catch (error) {
         this.$toast.error(error.response.data.message);
       }
