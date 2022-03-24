@@ -53,7 +53,8 @@
           </div>
         </div>
         <div class="group">
-          <div class="group__content d-flex">
+          <v-spinner v-if="isLoading" />
+          <div v-else class="group__content d-flex">
             <v-button @click="confirm" red>Сохранить</v-button>
             <div style="margin-left: 15px">
               <v-button @click="clear" redWhite>Обнулить таблицу</v-button>
@@ -67,17 +68,23 @@
 
 <script>
 import axios from "@/api/axios";
+import VSpinner from "@/components/VSpinner";
 
 export default {
   props: {
     region: String,
     googleDoc: Object,
   },
+  components: {
+    VSpinner,
+  },
   methods: {
     cancel() {
+      this.isLoading = false;
       this.$modal.hide("googleTable");
     },
     confirm() {
+      this.isLoading = true;
       let data = {
         region: this.region,
         spreadsheetId: this.spreadsheetId,
@@ -95,6 +102,7 @@ export default {
         })
         .catch(async (err) => {
           this.$toast.error(err.response.data.message);
+          this.isLoading = false;
         });
     },
     clear() {
@@ -130,6 +138,7 @@ export default {
       spreadsheetId: "",
       categories: [],
       URL: null,
+      isLoading: false,
     };
   },
   watch: {
