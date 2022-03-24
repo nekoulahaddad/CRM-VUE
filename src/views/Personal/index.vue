@@ -699,9 +699,8 @@ export default {
           userId: this.$store.state.id,
         });
       }
-      this.$toast.success(this.$t("goodbye"));
       this.$store.dispatch("logout");
-      this.$router.push("/");
+      location.href = "/";
     },
   },
 };
