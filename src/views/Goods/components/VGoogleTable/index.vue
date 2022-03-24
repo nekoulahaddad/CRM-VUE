@@ -83,20 +83,19 @@ export default {
       this.isLoading = false;
       this.$modal.hide("googleTable");
     },
-    confirm() {
+    async confirm() {
       this.isLoading = true;
       let data = {
         region: this.region,
         spreadsheetId: this.spreadsheetId,
       };
-      axios({
+      await axios({
         url: `/googlesheets/linksheet/`,
         data: data,
         method: "POST",
       })
-        .then(async (res) => {
-          let result = await res;
-          this.$toast.success(result.data.message);
+        .then((res) => {
+          this.$toast.success(res.data.message);
           this.$emit("refreshGoods");
           this.cancel();
         })
@@ -144,6 +143,7 @@ export default {
   watch: {
     googleDoc: {
       handler(value) {
+        this.isLoading = false;
         if (value) {
           this.spreadsheetId = value.spreadsheetId;
           this.URL = `https://docs.google.com/spreadsheets/d/${value.spreadsheetId}/edit#gid=0`;
