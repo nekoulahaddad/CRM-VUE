@@ -454,10 +454,8 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
-    addTask() {},
     async getInfoAboutAllUsers() {
       try {
-        this.changeStatus(false);
         await axios({
           url: `/seo/getinfoaboutallusers`,
           method: "GET",
@@ -465,8 +463,6 @@ export default {
         this.$toast.success("Начинаю генерировать Excel!");
       } catch (error) {
         this.$toast.error(error.response.data.message);
-      } finally {
-        this.changeStatus(true);
       }
     },
     async downloadGoodsExcel() {
@@ -525,9 +521,6 @@ export default {
         })
         .catch((error) => {
           this.$toast.error(error.response.data.message);
-        })
-        .finally(() => {
-          this.changeStatus(true);
         });
     },
     toggleAction(key) {

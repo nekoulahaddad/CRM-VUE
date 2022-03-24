@@ -1205,6 +1205,7 @@ export default {
       resetParentValue: "reset_parent_value",
     }),
     setGoodsRegion(value) {
+      this.$store.state.filterOptions.region = value;
       this.selectOptions({ target: { value } }, null, "regionButtons", null);
     },
     setDate(value) {
