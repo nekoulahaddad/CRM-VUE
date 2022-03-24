@@ -804,6 +804,10 @@ export default {
       });
     },
     handleDialog(callback, args, data = {}) {
+      if (!this.editedItem.products.length && args.includes("completed")) {
+        this.$toast.error("В заказе нет товаров!");
+        return;
+      }
       this.dialog.data = data;
       this.dialog.callback = callback;
       this.dialog.args = args ? args : false;
