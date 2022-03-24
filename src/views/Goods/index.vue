@@ -77,7 +77,6 @@
           'page__right--full': !showFilter && !sidebar,
         }"
       >
-        {{ googleDoc }}
         <!-- Блок добавления нового продукта -->
         <v-product-add
           v-if="addProduct"
