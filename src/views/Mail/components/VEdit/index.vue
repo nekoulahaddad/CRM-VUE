@@ -34,17 +34,37 @@
           </autocomplete>
         </div>
 
-        <div class="group">
-          <div class="group__title">{{ $t("orderNumber") }}</div>
-          <div class="group__content">
-            <input
-              class="form-control"
-              type="text"
-              :placeholder="$t('orderNumber')"
-              v-model="orderNumber"
-            />
+        <div class="d-flex">
+          <div class="flex-1">
+            <div class="group">
+              <div class="group__title">{{ $t("orderNumber") }}</div>
+              <div class="group__content">
+                <input
+                  class="form-control"
+                  type="text"
+                  :placeholder="$t('orderNumber')"
+                  v-model="orderNumber"
+                />
+              </div>
+            </div>
+          </div>
+          <div style="margin-left: 25px">
+            <div class="group">
+              <div class="group__title">Статус:</div>
+              <div class="group__content">
+                <v-select
+                  :options="[
+                    { label: 'Обработана', value: true },
+                    { label: 'Не обработана', value: false },
+                  ]"
+                  :reduce="(item) => item.value"
+                  v-model="status"
+                />
+              </div>
+            </div>
           </div>
         </div>
+
         <div class="group">
           <div class="group__title">{{ $t("comment") }}</div>
           <div style="word-break: break-all">
@@ -84,6 +104,7 @@ export default {
       orderNumber: null,
       isLoading: false,
       changeManager: false,
+      status: "",
     };
   },
   computed: {
@@ -126,6 +147,7 @@ export default {
         manager: this.manager,
         comment: this.comment,
         orderNumber: this.orderNumber,
+        status: this.status,
       };
       axios({
         url: `/callbacks/update/`,
