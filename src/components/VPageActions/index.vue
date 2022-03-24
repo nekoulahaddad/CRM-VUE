@@ -483,7 +483,7 @@ export default {
         const blob = new Blob([response.data]);
         let urll = window.URL.createObjectURL(blob);
         link.href = urll;
-        link.download = `${prefix}.${type}`;
+        link.download = `1.xls`;
         link.click();
         window.URL.revokeObjectURL(urll);
         URL.revokeObjectURL(link.href);
