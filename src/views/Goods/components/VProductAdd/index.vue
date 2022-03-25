@@ -758,7 +758,9 @@ export default {
           return;
         }
       }
-      productData.append("wholesale", this.wholesale);
+      if (this.wholesale) {
+        productData.append("wholesale", this.wholesale);
+      }
       if (this.coef) {
         productData.append(
           "coef",
