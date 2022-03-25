@@ -184,6 +184,18 @@ export default {
     addDbTask() {
       return this.$store.state.actions.addDbTask;
     },
+    id: {
+      get: function () {
+        let user = this.getUserRole();
+        return user._id;
+      },
+    },
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
   },
   data() {
     return {
@@ -319,6 +331,7 @@ export default {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
           status,
           skip,
+          executor: this.role === "superadmin" ? null : this.id,
         });
         this.isLoading = true;
         this.dataset = data;

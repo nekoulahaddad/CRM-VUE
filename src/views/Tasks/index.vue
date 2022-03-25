@@ -330,6 +330,9 @@ export default {
       try {
         this.isLoading = false;
         this.filtersOptions.page = this.$route.params.page;
+        if (this.role !== "superadmin") {
+          this.filtersOptions.executor = this.id;
+        }
 
         const { data } = await this.getDataFromPage(
           `/tasks/get`,
