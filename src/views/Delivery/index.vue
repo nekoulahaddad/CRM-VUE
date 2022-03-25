@@ -15,8 +15,8 @@
             <img :src="require(`@/assets/icons/delivery_title.svg`)" alt="" />
           </div>
           <div class="page__buttons">
-            <v-button red>Поставщики</v-button>
-            <v-button @click="goToLink('deliveryMap')" white>
+            <v-button v-if="false" red>Партнеры</v-button>
+            <v-button v-if="false" @click="goToLink('deliveryMap')" white>
               Карта поставщиков
             </v-button>
           </div>
@@ -45,9 +45,7 @@
                 v-model="search"
                 :placeholder="$t('pages.delivery.searchPlaceholder')"
               />
-              <div class="list__title">
-                {{ $t("pages.delivery.pageTitle") }}
-              </div>
+              <div class="list__title">Партнеры</div>
               <div class="list__columns">
                 <div
                   v-for="field in $t('pages.delivery.fields')"
