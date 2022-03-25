@@ -129,16 +129,6 @@
               </a>
             </VueCustomTooltip>
 
-            <VueCustomTooltip label="Список всех пользователей">
-              <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="getInfoAboutAllUsers"
-              >
-                <simple-svg :src="require('@/assets/icons/all_users.svg')" />
-              </a>
-            </VueCustomTooltip>
-
             <VueCustomTooltip label="Скачать все товары">
               <a
                 href=""
