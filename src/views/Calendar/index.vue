@@ -62,6 +62,7 @@
       <div class="page__right">
         <v-calendar
           :events="events"
+          :role="role"
           @showEvent="showEvent"
           @showEventList="showEventList"
         />

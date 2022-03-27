@@ -41,6 +41,7 @@ export default {
     events: {
       type: Array,
     },
+    role: String,
   },
   data() {
     return {
@@ -57,10 +58,12 @@ export default {
       if (attributes.length) {
         this.$emit("showEventList", attributes);
       } else {
-        this.$store.commit("toggleAction", {
-          key: "addEvent",
-        });
-        this.$modal.show("addEvent");
+        if (this.role === "superadmin" || role === "director") {
+          this.$store.commit("toggleAction", {
+            key: "addEvent",
+          });
+          this.$modal.show("addEvent");
+        }
       }
     },
   },
