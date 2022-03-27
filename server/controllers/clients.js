@@ -235,12 +235,6 @@ exports.getClients = async (req, res, next) => {
         $facet: {
           clients: [
             {
-              $match: myMatch,
-            },
-            {
-              $sort: mySort,
-            },
-            {
               $lookup: {
                 from: "regions",
                 localField: "region",
