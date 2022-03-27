@@ -245,7 +245,7 @@ export default {
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 30px 100px 100px 140px 140px 140px 200px 140px 140px 140px 180px 1fr;
+      grid-template-columns: 30px 100px 100px 140px 140px 140px 200px 140px 140px 130px 180px 1fr;
     }
   }
 
