@@ -27,7 +27,12 @@
           </template>
 
           <!-- Календарь -->
-          <template v-if="name === 'calendar'">
+          <template
+            v-if="
+              name === 'calendar' &&
+              (role === 'superadmin' || role === 'director')
+            "
+          >
             <VueCustomTooltip label="Создать мероприятие">
               <a
                 href=""
