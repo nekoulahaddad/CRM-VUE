@@ -38,7 +38,7 @@
 
       <div
         class="manager-edit-form__buttons"
-        v-if="role === 'content' || role === 'director'"
+        v-if="role === 'content' || role === 'director' || role === 'manager'"
       >
         <v-button
           red

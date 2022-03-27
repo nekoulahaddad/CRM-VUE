@@ -17,7 +17,13 @@
               </div>
               <div class="table__icon">
                 <!-- Видимость товара -->
-                <template v-if="role === 'content' || role === 'director'">
+                <template
+                  v-if="
+                    role === 'content' ||
+                    role === 'director' ||
+                    role === 'manager'
+                  "
+                >
                   <v-spinner
                     extraSmall
                     v-if="changeVisible._id === product._id"
@@ -55,7 +61,13 @@
                 />
               </div>
               <div class="table__icon" style="min-width: 28px">
-                <template v-if="role === 'content' || role === 'director'">
+                <template
+                  v-if="
+                    role === 'content' ||
+                    role === 'director' ||
+                    role === 'manager'
+                  "
+                >
                   <VueCustomTooltip
                     label="Изменить"
                     v-if="editedItem._id !== product._id"
@@ -82,7 +94,11 @@
               </div>
               <div class="table__icon">
                 <img
-                  v-if="role === 'content' || role === 'director'"
+                  v-if="
+                    role === 'content' ||
+                    role === 'director' ||
+                    role === 'manager'
+                  "
                   @click="$emit('toggleDeleteGroupProduct', group, product)"
                   src="@/assets/icons/trash_icon.svg"
                   alt=""

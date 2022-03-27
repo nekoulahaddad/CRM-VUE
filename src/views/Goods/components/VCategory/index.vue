@@ -6,7 +6,7 @@
         href=""
         v-if="
           editedItem._id !== item._id &&
-          (role === 'content' || role === 'director')
+          (role === 'content' || role === 'director' || role === 'manager')
         "
         @click.prevent="$emit('toggleEdit', item)"
       >
@@ -100,7 +100,9 @@
 
       <!-- Менеджер -->
       <div class="table__icon">
-        <template v-if="role === 'content' || role === 'director'">
+        <template
+          v-if="role === 'content' || role === 'director' || role === 'manager'"
+        >
           <VueCustomTooltip
             v-if="managerItem._id !== item._id"
             label="Имя менеджера"
@@ -127,7 +129,9 @@
         />
       </div>
       <div class="table__icon">
-        <template v-if="role === 'content' || role === 'director'">
+        <template
+          v-if="role === 'content' || role === 'director' || role === 'manager'"
+        >
           <v-spinner v-if="categoryVisibleItem.includes(item._id)" extraSmall />
           <VueCustomTooltip
             v-else
@@ -158,7 +162,7 @@
       </div>
       <div class="table__icon">
         <img
-          v-if="role === 'content' || role === 'director'"
+          v-if="role === 'content' || role === 'director' || role === 'manager'"
           @click="$emit('toggleDropDown', item)"
           src="@/assets/icons/option.svg"
           alt=""
@@ -168,7 +172,7 @@
       <div class="table__icon">
         <VueCustomTooltip
           label="Удалить"
-          v-if="role === 'content' || role === 'director'"
+          v-if="role === 'content' || role === 'director' || role === 'manager'"
         >
           <img
             @click="$emit('toggleDeleteCategory', item)"

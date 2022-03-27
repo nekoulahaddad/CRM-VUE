@@ -30,7 +30,11 @@
         <div class="table__icon">
           <!-- Показать товары группы -->
           <template v-if="item.type === 'group'">
-            <template v-if="role === 'content' || role === 'director'">
+            <template
+              v-if="
+                role === 'content' || role === 'director' || role === 'manager'
+              "
+            >
               <VueCustomTooltip
                 v-if="groupItems._id !== item._id"
                 label="Показать товары"
@@ -58,7 +62,11 @@
 
           <!-- Добавить товар в группу -->
           <template v-else>
-            <template v-if="role === 'content' || role === 'director'">
+            <template
+              v-if="
+                role === 'content' || role === 'director' || role === 'manager'
+              "
+            >
               <VueCustomTooltip
                 v-if="groupProductItem._id !== item._id"
                 label="Добавить товар в группу"
@@ -86,7 +94,11 @@
 
         <!-- Перемещение товара -->
         <div class="table__icon" v-if="item.type !== 'group'">
-          <template v-if="role === 'content' || role === 'director'">
+          <template
+            v-if="
+              role === 'content' || role === 'director' || role === 'manager'
+            "
+          >
             <VueCustomTooltip
               v-if="movedProduct._id !== item._id"
               label="Перемещение товара"
@@ -114,7 +126,11 @@
 
         <div class="table__icon">
           <!-- Видимость товара -->
-          <template v-if="role === 'content' || role === 'director'">
+          <template
+            v-if="
+              role === 'content' || role === 'director' || role === 'manager'
+            "
+          >
             <v-spinner extraSmall v-if="changeVisible._id === item._id" />
             <template v-else>
               <VueCustomTooltip
@@ -164,7 +180,11 @@
         </div>
 
         <div class="table__icon">
-          <template v-if="role === 'content' || role === 'director'">
+          <template
+            v-if="
+              role === 'content' || role === 'director' || role === 'manager'
+            "
+          >
             <!-- Изменить товар -->
             <VueCustomTooltip
               v-if="item.type !== 'group'"
@@ -214,7 +234,11 @@
 
         <!-- Удалить товар -->
         <div class="table__icon">
-          <template v-if="role === 'content' || role === 'director'">
+          <template
+            v-if="
+              role === 'content' || role === 'director' || role === 'manager'
+            "
+          >
             <VueCustomTooltip
               v-if="item.type !== 'group'"
               label="Удалить товар"
