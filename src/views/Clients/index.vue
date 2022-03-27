@@ -30,6 +30,12 @@
         <div class="scroll-horizontal">
           <div class="list list-shadow">
             <div class="list__header">
+              <v-search
+                @submit="getSearchData"
+                v-model="user"
+                @input="searchInput"
+                :placeholder="$t('pages.employee.searchPlaceholder')"
+              />
               <div class="list__title">
                 {{ $t("pages.clients.pageTitle") }}
               </div>
@@ -128,8 +134,10 @@
 </template>
 
 <script>
+import axios from "@/api/axios";
 import VClient from "./components/VClient";
 import VOrder from "./components/VOrder";
+import VSearch from "@/components/VSearch";
 import VDeleteItem from "./components/VDeleteItem";
 import VOrderInfo from "./components/VOrderInfo";
 import VFilter from "@/components/VFilter";
@@ -152,6 +160,7 @@ export default {
     VOrder,
     VDeleteItem,
     VPageHeader,
+    VSearch,
   },
   mounted() {
     this.fetchData();
@@ -161,6 +170,8 @@ export default {
   },
   data() {
     return {
+      user: "",
+      searched: false,
       showFilter: false,
       openFormEdit: false,
       editedItem: {},
@@ -187,6 +198,37 @@ export default {
     };
   },
   methods: {
+    searchInput() {
+      if (!this.user.trim().length && this.searched) {
+        this.searched = false;
+        this.getData();
+      }
+    },
+    getSearchData() {
+      return;
+      if (!this.user.trim().length) {
+        this.getData();
+        return;
+      }
+
+      if (this.user.trim().length < 3) {
+        this.$toast.error("Запрос слишком короткий!");
+      } else {
+        this.isLoading = false;
+
+        axios
+          .get(`/user/getsearchwithoutdirector/${this.user}`)
+          .then(async (res) => {
+            this.dataset = res.data.users;
+            this.count = res.data.count ? res.data.count : 0;
+            this.$forceUpdate();
+          })
+          .finally(() => {
+            this.isLoading = true;
+            this.searched = true;
+          });
+      }
+    },
     refreshDates(startDate, endDate) {
       this.fetchData();
     },
