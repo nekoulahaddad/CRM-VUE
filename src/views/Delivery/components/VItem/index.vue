@@ -38,7 +38,7 @@
           />
         </div>
         <div
-          v-if="role === 'superadmin'"
+          v-if="role === 'superadmin' || role === 'call' || role === 'buyer'"
           class="table__icon"
           style="width: 28px"
         >
@@ -56,7 +56,10 @@
             @click="$emit('toggleEdit', item)"
           />
         </div>
-        <div class="table__icon" v-if="role === 'superadmin'">
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin' || role === 'buyer'"
+        >
           <VueCustomTooltip label="Удалить">
             <img
               alt=""

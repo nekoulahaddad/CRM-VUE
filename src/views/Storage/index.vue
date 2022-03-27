@@ -98,6 +98,7 @@
                 <v-product
                   :key="item._id"
                   :item="item"
+                  :role="role"
                   @toggleEdit="toggleEdit"
                 />
 
@@ -150,6 +151,13 @@ export default {
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+
+        return role.role;
+      },
+    },
   },
   data() {
     return {

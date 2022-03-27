@@ -71,7 +71,7 @@
         <div
           class="table__icon"
           style="width: 28px"
-          v-if="role === 'superadmin'"
+          v-if="role === 'superadmin' || role === 'buyer'"
         >
           <img
             v-if="item.status.value === 'delivered'"
@@ -96,7 +96,10 @@
             @click="$emit('toggleEdit', item)"
           />
         </div>
-        <div class="table__icon" v-if="role === 'superadmin'">
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin' || role === 'buyer'"
+        >
           <VueCustomTooltip label="Удалить">
             <img
               alt=""

@@ -9,7 +9,10 @@
     </div>
     <div class="list__column">
       <div class="table__actions">
-        <div class="table__icon">
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin' || role === 'buyer'"
+        >
           <img
             @click="$emit('toggleEdit', item)"
             src="@/assets/icons/write_icon.svg"
@@ -28,6 +31,7 @@ export default {
       type: Object,
       required: true,
     },
+    role: String,
   },
 };
 </script>

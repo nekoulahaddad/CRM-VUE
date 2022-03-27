@@ -172,7 +172,10 @@
                 <img src="@/assets/icons/download.svg" alt="" v-else />
               </a>
             </VueCustomTooltip>
-            <VueCustomTooltip label="Добавить заказ">
+            <VueCustomTooltip
+              label="Добавить заказ"
+              v-if="role === 'superadmin' || role === 'buyer'"
+            >
               <a
                 href=""
                 class="page-actions__button"

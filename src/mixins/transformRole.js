@@ -12,6 +12,8 @@ export default {
           return `Менеджер по продажам ${
             this.$store.state.number ? `№${this.$store.state.number}` : ""
           }`;
+        case "buyer":
+          return "Закупщик";
         case "admin":
           return "Директор";
         case "worker":

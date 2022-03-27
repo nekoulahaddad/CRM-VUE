@@ -501,7 +501,7 @@
               <div
                 class="list__row list__row--shadow list__row--white"
                 :class="{
-                  'list__row--opened': openedRoles.includes('buying'),
+                  'list__row--opened': openedRoles.includes('buyer'),
                 }"
               >
                 <div class="list__columns">
@@ -510,9 +510,9 @@
                     <div class="table__action">
                       <div class="table__icon">
                         <img
-                          @click="toggleOpenedRole('buying')"
+                          @click="toggleOpenedRole('buyer')"
                           :src="
-                            openedRoles.includes('buying')
+                            openedRoles.includes('buyer')
                               ? require('@/assets/icons/arrow_top_icon.svg')
                               : require('@/assets/icons/arrow_down_icon.svg')
                           "
@@ -522,7 +522,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="list__info" v-if="openedRoles.includes('buying')">
+                <div class="list__info" v-if="openedRoles.includes('buyer')">
                   <div class="list__item">
                     <img src="@/assets/icons/monitor.svg" alt="" />
                     <span>Дашборд</span>
