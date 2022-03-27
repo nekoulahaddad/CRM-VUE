@@ -50,42 +50,6 @@
               </div>
             </form>
           </div>
-          <div v-if="false" class="personal-area__column">
-            <div class="personal-area__settings settings">
-              <div class="settings__title">{{ $t("customDesign") }}</div>
-              <div class="settings__item settings-item">
-                <div class="settings-item__title">
-                  {{ $t("choiсeOfTheme") }}
-                </div>
-                <div class="settings-item__content">
-                  <label class="settings-item__label">
-                    <input
-                      name="theme-color"
-                      value="dark"
-                      class="settings-item__radio"
-                      type="radio"
-                    />
-                    <span>Тёмная тема</span>
-                  </label>
-                  <label class="settings-item__label">
-                    <input
-                      name="theme-color"
-                      class="settings-item__radio"
-                      value="light"
-                      type="radio"
-                    />
-                    <span>Светлая тема</span>
-                  </label>
-                </div>
-                <toggle-button
-                  :value="false"
-                  color="#82C7EB"
-                  :sync="true"
-                  :labels="true"
-                />
-              </div>
-            </div>
-          </div>
           <div class="personal-area__column">
             <div class="column__title">Иформация о ролях в системе:</div>
             <div class="list">
@@ -819,7 +783,7 @@ export default {
   }
 
   &__form {
-    width: 679px;
+    width: 469px;
 
     label {
       font-size: 12px;
