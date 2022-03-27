@@ -40,6 +40,17 @@
             />
           </template>
         </div>
+        <div class="table__icon">
+          <template>
+            <VueCustomTooltip label="Удалить">
+              <img
+                alt=""
+                src="/icons/trash_icon.svg"
+                @click="$emit('toggleDelete', client)"
+              />
+            </VueCustomTooltip>
+          </template>
+        </div>
       </div>
     </div>
   </div>

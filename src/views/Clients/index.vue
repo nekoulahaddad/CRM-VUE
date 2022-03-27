@@ -1,5 +1,7 @@
 <template>
   <div class="page clients-page">
+    <v-delete-item :deletedItem="deletedItem" @afterDelete="fetchData" />
+
     <v-page-header
       icon="clients_title"
       @toggleFilter="toggleFilter"
@@ -75,6 +77,7 @@
                   :client="item"
                   :infoItem="infoItem"
                   @toggleInfo="toggleInfo"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <div
@@ -127,6 +130,7 @@
 <script>
 import VClient from "./components/VClient";
 import VOrder from "./components/VOrder";
+import VDeleteItem from "./components/VDeleteItem";
 import VOrderInfo from "./components/VOrderInfo";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
@@ -146,6 +150,7 @@ export default {
     VClient,
     VOrderInfo,
     VOrder,
+    VDeleteItem,
     VPageHeader,
   },
   mounted() {
@@ -184,6 +189,11 @@ export default {
   methods: {
     refreshDates(startDate, endDate) {
       this.fetchData();
+    },
+    toggleDelete(deletedItem) {
+      this.deleteMany = false;
+      this.deletedItem = deletedItem;
+      this.$modal.show("deleteClient");
     },
     sort(type) {
       switch (type) {
@@ -271,13 +281,13 @@ export default {
 
   .page__right--fluid {
     .list__columns {
-      grid-template-columns: 30px 220px 220px 220px 250px 250px 220px 250px 1fr;
+      grid-template-columns: 30px 220px 220px 220px 250px 200px 220px 250px 1fr;
     }
   }
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 30px 200px 220px 300px 200px 200px 200px 195px 1fr;
+      grid-template-columns: 30px 240px 180px 250px 200px 200px 200px 140px 1fr;
     }
   }
 

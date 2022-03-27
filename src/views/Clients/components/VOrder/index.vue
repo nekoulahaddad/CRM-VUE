@@ -7,7 +7,7 @@
       {{ order.number }}
     </div>
     <div class="list__column text--green">
-      {{ transformDate(order.buyed) }}
+      {{ (order.buyed && transformDate(order.buyed)) || "" }}
     </div>
     <div class="list__column" v-html="transformStatus(order.status)" />
     <div class="list__column">
