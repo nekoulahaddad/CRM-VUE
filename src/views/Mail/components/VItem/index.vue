@@ -66,7 +66,7 @@
           />
         </div>
         <div
-          v-if="role === 'superadmin' || role === 'manager'"
+          v-if="role === 'superadmin' || role === 'manager' || role === 'call'"
           class="table__icon"
           style="width: 28px"
         >
@@ -104,6 +104,7 @@ export default {
       type: Object,
       required: true,
     },
+    role: String,
   },
 };
 </script>
