@@ -7,6 +7,7 @@
         type="checkbox"
         class="form-checkbox"
         :checked="checked"
+        :disabled="role !== 'superadmin'"
         @click="$store.commit('selectItem', employee._id)"
       />
       {{
