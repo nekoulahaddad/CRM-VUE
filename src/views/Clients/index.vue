@@ -34,7 +34,7 @@
                 @submit="getSearchData"
                 v-model="user"
                 @input="searchInput"
-                :placeholder="$t('pages.employee.searchPlaceholder')"
+                placeholder="Поиск по фамилии или телефону"
               />
               <div class="list__title">
                 {{ $t("pages.clients.pageTitle") }}
