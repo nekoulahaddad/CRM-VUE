@@ -69,25 +69,35 @@
           />
         </div>
         <div class="table__icon" style="width: 28px">
-          <img
-            alt=""
-            src="@/assets/icons/write_icon.svg"
-            v-if="item._id !== editedItem._id"
-            @click="$emit('toggleEdit', item)"
-          />
-          <img
-            alt=""
-            src="@/assets/icons/arrow_top_icon.svg"
-            @click="$emit('toggleEdit', item)"
-            v-else
-          />
+          <template v-if="role === 'superadmin'">
+            <VueCustomTooltip
+              label="Изменить"
+              v-if="item._id !== editedItem._id"
+            >
+              <img
+                alt=""
+                src="@/assets/icons/write_icon.svg"
+                @click="$emit('toggleEdit', item)"
+              />
+            </VueCustomTooltip>
+            <img
+              alt=""
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleEdit', item)"
+              v-else
+            />
+          </template>
+          <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <img
-            @click="$emit('toggleDelete', item)"
-            src="@/assets/icons/trash_icon.svg"
-            alt=""
-          />
+          <VueCustomTooltip label="Удалить" v-if="role === 'superadmin'">
+            <img
+              @click="$emit('toggleDelete', item)"
+              src="@/assets/icons/trash_icon.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
+          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>
@@ -109,6 +119,7 @@ export default {
       type: Object,
       required: true,
     },
+    role: String,
   },
 };
 </script>
