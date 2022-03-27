@@ -123,7 +123,7 @@
                   </div>
                 </div>
               </div>
-              <v-pagination :count="count" />
+              <v-pagination :count="countClients" />
             </template>
             <v-not-found-query v-else />
           </div>
