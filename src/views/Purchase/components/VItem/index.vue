@@ -64,35 +64,37 @@
           />
         </div>
         <div class="table__icon" style="width: 28px">
-          <VueCustomTooltip label="Изменить" v-if="item._id !== editedItem._id">
+          <template v-if="role === 'superadmin'">
+            <VueCustomTooltip
+              label="Изменить"
+              v-if="item._id !== editedItem._id"
+            >
+              <img
+                @click="$emit('toggleEdit', item)"
+                src="@/assets/icons/write_icon.svg"
+                alt=""
+              />
+            </VueCustomTooltip>
             <img
-              @click="$emit('toggleEdit', item)"
-              src="@/assets/icons/write_icon.svg"
               alt=""
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleEdit', item)"
+              v-else
             />
-          </VueCustomTooltip>
-          <img
-            alt=""
-            src="@/assets/icons/arrow_top_icon.svg"
-            @click="$emit('toggleEdit', item)"
-            v-else
-          />
+          </template>
+          <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <VueCustomTooltip
-            label="Удалить"
-            v-if="
-              id === item.initiator._id ||
-              role === 'director' ||
-              role === 'superadmin'
-            "
-          >
-            <img
-              @click="$emit('toggleDelete', item)"
-              src="@/assets/icons/trash_icon.svg"
-              alt=""
-            />
-          </VueCustomTooltip>
+          <template v-if="role === 'superadmin'">
+            <VueCustomTooltip label="Удалить" v-if="id === item.initiator._id">
+              <img
+                @click="$emit('toggleDelete', item)"
+                src="@/assets/icons/trash_icon.svg"
+                alt=""
+              />
+            </VueCustomTooltip>
+          </template>
+          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>
@@ -114,6 +116,7 @@ export default {
     editedItem: {
       type: Object,
     },
+    role: String,
   },
   computed: {
     role: {

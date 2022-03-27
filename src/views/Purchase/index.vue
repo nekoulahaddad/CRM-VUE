@@ -53,6 +53,7 @@
                   :item="item"
                   :infoItem="infoItem"
                   :editedItem="editedItem"
+                  :role="role"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @toggleDelete="toggleDelete"
@@ -111,6 +112,12 @@ export default {
     ...mapGetters(["sidebar"]),
     addPurchase() {
       return this.$store.state.actions.addPurchase;
+    },
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
     },
   },
   data() {

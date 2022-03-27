@@ -60,7 +60,7 @@
           </template>
 
           <!-- Закупка -->
-          <template v-if="name === 'buying'">
+          <template v-if="name === 'buying' && role === 'superadmin'">
             <VueCustomTooltip label="Добавить закупку">
               <a
                 href=""
