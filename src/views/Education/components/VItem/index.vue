@@ -8,22 +8,27 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <img
-            alt=""
-            :src="
-              editedItem._id !== item._id
-                ? require('@/assets/icons/write_icon.svg')
-                : require('@/assets/icons/arrow_top_icon.svg')
-            "
-            @click="$emit('toggleEdit', item)"
-          />
+          <VueCustomTooltip label="Изменить">
+            <img
+              alt=""
+              :src="
+                editedItem._id !== item._id
+                  ? require('@/assets/icons/write_icon.svg')
+                  : require('@/assets/icons/arrow_top_icon.svg')
+              "
+              @click="$emit('toggleEdit', item)"
+            />
+          </VueCustomTooltip>
         </div>
         <div class="table__icon">
-          <img
-            @click="$emit('toggleDelete', item)"
-            :src="require('@/assets/icons/trash_icon.svg')"
-            alt=""
-          />
+          <VueCustomTooltip v-if="role === 'superadmin'" label="Удалить">
+            <img
+              @click="$emit('toggleDelete', item)"
+              :src="require('@/assets/icons/trash_icon.svg')"
+              alt=""
+            />
+          </VueCustomTooltip>
+          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>
@@ -33,6 +38,7 @@
 <script>
 export default {
   props: {
+    role: String,
     item: {
       type: Object,
       required: true,
