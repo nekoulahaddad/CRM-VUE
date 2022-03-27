@@ -42,7 +42,7 @@
         </div>
         <div class="table__icon">
           <template>
-            <VueCustomTooltip label="Удалить">
+            <VueCustomTooltip label="Удалить" v-if="false">
               <img
                 alt=""
                 src="/icons/trash_icon.svg"
