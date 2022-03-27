@@ -57,7 +57,6 @@ export default {
     "delivery",
     "callbacks",
     "buying",
-    "sites",
   ],
   manager: [
     "monitor",
