@@ -294,7 +294,7 @@
           </template>
 
           <!-- Поставщики -->
-          <template v-if="name === 'delivery'">
+          <template v-if="name === 'delivery' && role === 'superadmin'">
             <VueCustomTooltip label="Добавить поставщика">
               <a
                 href=""
