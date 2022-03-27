@@ -245,6 +245,7 @@ exports.getClients = async (req, res, next) => {
             {
               $unwind: {
                 path: "$region",
+                preserveNullAndEmptyArrays: true,
               },
             },
             {
