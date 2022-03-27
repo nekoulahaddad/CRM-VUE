@@ -47,6 +47,7 @@
                   :item="item"
                   :infoItem="infoItem"
                   :editedItem="editedItem"
+                  :role="role"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @downloadItem="downloadItem"
@@ -102,6 +103,13 @@ export default {
   },
   computed: {
     ...mapGetters(["sidebar"]),
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+
+        return role.role;
+      },
+    },
   },
   data() {
     return {
