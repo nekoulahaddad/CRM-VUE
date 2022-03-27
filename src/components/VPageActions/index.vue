@@ -264,7 +264,11 @@
           </template>
 
           <!-- Задачи -->
-          <template v-if="name === 'tasks'">
+          <template
+            v-if="
+              name === 'tasks' && (role === 'superadmin' || role === 'director')
+            "
+          >
             <VueCustomTooltip label="Создать задачу">
               <a
                 href=""
