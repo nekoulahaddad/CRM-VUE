@@ -66,7 +66,7 @@
           />
         </div>
         <div
-          v-if="role === 'superadmin'"
+          v-if="role === 'superadmin' || role === 'manager'"
           class="table__icon"
           style="width: 28px"
         >

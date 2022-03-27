@@ -63,38 +63,36 @@
             v-else
           />
         </div>
-        <div class="table__icon" style="width: 28px">
-          <template v-if="role === 'superadmin'">
-            <VueCustomTooltip
-              label="Изменить"
-              v-if="item._id !== editedItem._id"
-            >
-              <img
-                @click="$emit('toggleEdit', item)"
-                src="@/assets/icons/write_icon.svg"
-                alt=""
-              />
-            </VueCustomTooltip>
+        <div
+          v-if="role === 'superadmin' || role === 'manager'"
+          class="table__icon"
+          style="width: 28px"
+        >
+          <VueCustomTooltip label="Изменить" v-if="item._id !== editedItem._id">
             <img
-              alt=""
-              src="@/assets/icons/arrow_top_icon.svg"
               @click="$emit('toggleEdit', item)"
-              v-else
+              src="@/assets/icons/write_icon.svg"
+              alt=""
             />
-          </template>
-          <div class="table__hidden-icon" v-else></div>
+          </VueCustomTooltip>
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleEdit', item)"
+            v-else
+          />
         </div>
-        <div class="table__icon">
-          <template v-if="role === 'superadmin'">
-            <VueCustomTooltip label="Удалить" v-if="id === item.initiator._id">
-              <img
-                @click="$emit('toggleDelete', item)"
-                src="@/assets/icons/trash_icon.svg"
-                alt=""
-              />
-            </VueCustomTooltip>
-          </template>
-          <div class="table__hidden-icon" v-else></div>
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin' || role === 'manager'"
+        >
+          <VueCustomTooltip label="Удалить" v-if="id === item.initiator._id">
+            <img
+              @click="$emit('toggleDelete', item)"
+              src="@/assets/icons/trash_icon.svg"
+              alt=""
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>

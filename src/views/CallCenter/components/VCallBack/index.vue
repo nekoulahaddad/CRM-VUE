@@ -69,7 +69,7 @@
           />
         </div>
         <div
-          v-if="role === 'superadmin'"
+          v-if="role === 'superadmin' || role === 'manager'"
           class="table__icon"
           style="width: 28px"
         >
@@ -87,7 +87,10 @@
             v-else
           />
         </div>
-        <div class="table__icon" v-if="role === 'superadmin'">
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin' || role === 'manager'"
+        >
           <VueCustomTooltip label="Удалить">
             <img
               @click="$emit('toggleDelete', item)"
