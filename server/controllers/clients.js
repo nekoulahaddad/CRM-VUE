@@ -34,36 +34,6 @@ exports.getClients = async (req, res, next) => {
       };
     }
 
-    if (options.search) {
-      if (searchStr.length > 3) {
-        myMatch["phone"] = {
-          $in: [searchStr.join(" ")],
-        };
-      }
-      if (searchStr.length <= 3) {
-        myMatch = {
-          ...myMatch,
-          $or: [
-            {
-              surname: {
-                $in: searchStr,
-              },
-            },
-            {
-              name: {
-                $in: searchStr,
-              },
-            },
-            {
-              lastname: {
-                $in: searchStr,
-              },
-            },
-          ],
-        };
-      }
-    }
-
     if (options.dates !== null || options.dates !== "all") {
       let now = moment().startOf("day").format();
       let today, week, weekAgo, month, monthAgo, year, yearAgo, startOfMonth;
@@ -157,6 +127,36 @@ exports.getClients = async (req, res, next) => {
         },
       ],
     };
+
+    if (options.search) {
+      if (searchStr.length > 3) {
+        myMatch["phone"] = {
+          $in: [searchStr.join(" ")],
+        };
+      }
+      if (searchStr.length <= 3) {
+        myMatch = {
+          ...myMatch,
+          $or: [
+            {
+              surname: {
+                $in: searchStr,
+              },
+            },
+            {
+              name: {
+                $in: searchStr,
+              },
+            },
+            {
+              lastname: {
+                $in: searchStr,
+              },
+            },
+          ],
+        };
+      }
+    }
 
     let clients = await Clients.aggregate([
       {
