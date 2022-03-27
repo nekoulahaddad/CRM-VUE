@@ -348,3 +348,12 @@ const startApp = async () => {
 
 // init
 startApp();
+
+User.find({}).then((e) => {
+  e.forEach((u) => {
+    if (u.phone && u.role === "admin") {
+      u.role = "director";
+      u.save();
+    }
+  });
+});
