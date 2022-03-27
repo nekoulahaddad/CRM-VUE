@@ -49,6 +49,7 @@
                 @click="$emit('toggleDelete', client)"
               />
             </VueCustomTooltip>
+            <div class="table__hidden-icon" v-else></div>
           </template>
         </div>
       </div>
