@@ -147,6 +147,7 @@
                   :item="item"
                   :infoItem="infoItem"
                   :editedItem="editedItem"
+                  :role="role"
                   :checked="selectedItems.includes(item._id)"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"

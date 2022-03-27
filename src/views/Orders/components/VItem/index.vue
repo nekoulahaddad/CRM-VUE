@@ -68,15 +68,7 @@
           />
         </div>
         <div class="table__icon" style="width: 28px">
-          <template
-            v-if="
-              role === 'call' ||
-              role === 'manager' ||
-              role === 'director' ||
-              role === 'admin' ||
-              role === 'superadmin'
-            "
-          >
+          <template v-if="role === 'superadmin'">
             <img
               v-if="item.status.value === 'delivered'"
               style="opacity: 0.2"
@@ -100,6 +92,7 @@
               @click="$emit('toggleEdit', item)"
             />
           </template>
+          <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
           <VueCustomTooltip v-if="role === 'superadmin'" label="Удалить">
