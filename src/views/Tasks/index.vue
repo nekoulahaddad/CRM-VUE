@@ -51,7 +51,9 @@
                     class="form-checkbox"
                     v-model="selectAll"
                     @change="selectAllItems"
-                    :disabled="!isLoading"
+                    :disabled="
+                      !isLoading || role !== 'superadmin' || role !== 'director'
+                    "
                   />
                   №:
                 </div>

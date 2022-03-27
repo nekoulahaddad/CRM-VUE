@@ -5,6 +5,7 @@
         type="checkbox"
         class="form-checkbox"
         :checked="checked"
+        :disabled="role !== 'superadmin' || role !== 'director'"
         @click="$store.commit('selectItem', task._id)"
       />
       {{ index + 1 + ($route.params.page - 1) * 15 }}
@@ -69,43 +70,42 @@
           </template>
           <div class="table__hidden-icon" v-else></div>
         </div>
-        <div class="table__icon">
-          <template v-if="role === 'superadmin' || role === 'director'">
-            <VueCustomTooltip v-if="index !== activeIndex" label="Подзадача">
-              <img
-                alt=""
-                v-if="task.executor._id.length < 2"
-                src="@/assets/icons/document_icon.svg"
-                class="opacity-20"
-              />
-              <img
-                alt=""
-                v-else
-                src="@/assets/icons/document_icon.svg"
-                @click="$emit('getSubTasks', task._id, index)"
-              />
-            </VueCustomTooltip>
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin' || role === 'director'"
+        >
+          <VueCustomTooltip v-if="index !== activeIndex" label="Подзадача">
+            <img
+              alt=""
+              v-if="task.executor._id.length < 2"
+              src="@/assets/icons/document_icon.svg"
+              class="opacity-20"
+            />
             <img
               alt=""
               v-else
-              src="@/assets/icons/arrow_top_icon.svg"
+              src="@/assets/icons/document_icon.svg"
               @click="$emit('getSubTasks', task._id, index)"
             />
-          </template>
-          <div class="table__hidden-icon" v-else></div>
+          </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('getSubTasks', task._id, index)"
+          />
         </div>
-        <div class="table__icon">
-          <VueCustomTooltip
-            v-if="role === 'superadmin' || role === 'director'"
-            label="Удалить"
-          >
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin' || role === 'director'"
+        >
+          <VueCustomTooltip label="Удалить">
             <img
               alt=""
               src="/icons/trash_icon.svg"
               @click="$emit('toggleDelete', task)"
             />
           </VueCustomTooltip>
-          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>

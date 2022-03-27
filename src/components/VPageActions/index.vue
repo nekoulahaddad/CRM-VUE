@@ -10,7 +10,12 @@
           </VueCustomTooltip>
 
           <!-- Рабочий стол -->
-          <template v-if="name === 'desktop'">
+          <template
+            v-if="
+              name === 'desktop' &&
+              (role === 'superadmin' || role === 'director')
+            "
+          >
             <VueCustomTooltip label="Создать задачу">
               <a
                 href=""
