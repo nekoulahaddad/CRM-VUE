@@ -205,10 +205,7 @@ export default {
       }
     },
     getSearchData() {
-      if (this.user.trim().length) {
-        this.filtersOptions.search = this.user.trim();
-        this.fetchData();
-      }
+      this.filtersOptions.search = this.user;
     },
     refreshDates(startDate, endDate) {
       this.fetchData();
