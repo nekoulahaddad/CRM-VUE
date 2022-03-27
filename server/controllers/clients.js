@@ -160,6 +160,18 @@ exports.getClients = async (req, res, next) => {
 
     let clients = await Clients.aggregate([
       {
+        $match: myMatch,
+      },
+      {
+        $sort: mySort,
+      },
+      {
+        $skip: page * 15,
+      },
+      {
+        $limit: 15,
+      },
+      {
         $lookup: {
           from: "orders",
           let: { oid: "$orders" },
@@ -240,12 +252,6 @@ exports.getClients = async (req, res, next) => {
               $unwind: {
                 path: "$region",
               },
-            },
-            {
-              $skip: 15 * page,
-            },
-            {
-              $limit: 15,
             },
             {
               $group: {

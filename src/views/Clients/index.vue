@@ -205,29 +205,8 @@ export default {
       }
     },
     getSearchData() {
-      return;
-      if (!this.user.trim().length) {
-        this.getData();
-        return;
-      }
-
-      if (this.user.trim().length < 3) {
-        this.$toast.error("Запрос слишком короткий!");
-      } else {
-        this.isLoading = false;
-
-        axios
-          .get(`/user/getsearchwithoutdirector/${this.user}`)
-          .then(async (res) => {
-            this.dataset = res.data.users;
-            this.count = res.data.count ? res.data.count : 0;
-            this.$forceUpdate();
-          })
-          .finally(() => {
-            this.isLoading = true;
-            this.searched = true;
-          });
-      }
+      this.filtersOptions.search = this.user.trim();
+      this.fetchData();
     },
     refreshDates(startDate, endDate) {
       this.fetchData();
