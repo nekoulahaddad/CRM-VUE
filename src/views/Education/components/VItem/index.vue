@@ -20,15 +20,14 @@
             />
           </VueCustomTooltip>
         </div>
-        <div class="table__icon">
-          <VueCustomTooltip v-if="role === 'superadmin'" label="Удалить">
+        <div class="table__icon" v-if="role === 'superadmin'">
+          <VueCustomTooltip label="Удалить">
             <img
               @click="$emit('toggleDelete', item)"
               :src="require('@/assets/icons/trash_icon.svg')"
               alt=""
             />
           </VueCustomTooltip>
-          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>

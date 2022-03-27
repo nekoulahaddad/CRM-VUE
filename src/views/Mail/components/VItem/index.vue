@@ -65,26 +65,24 @@
             @click="$emit('toggleInfo', item)"
           />
         </div>
-        <div class="table__icon" style="width: 28px">
-          <template v-if="role === 'superadmin'">
-            <VueCustomTooltip
-              v-if="editedItem._id !== item._id"
-              label="Изменить"
-            >
-              <img
-                alt=""
-                src="@/assets/icons/write_icon.svg"
-                @click="$emit('toggleEdit', item)"
-              />
-            </VueCustomTooltip>
+        <div
+          v-if="role === 'superadmin'"
+          class="table__icon"
+          style="width: 28px"
+        >
+          <VueCustomTooltip v-if="editedItem._id !== item._id" label="Изменить">
             <img
               alt=""
-              v-else
-              src="@/assets/icons/arrow_top_icon.svg"
+              src="@/assets/icons/write_icon.svg"
               @click="$emit('toggleEdit', item)"
             />
-          </template>
-          <div class="table__hidden-icon" v-else></div>
+          </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleEdit', item)"
+          />
         </div>
       </div>
     </div>

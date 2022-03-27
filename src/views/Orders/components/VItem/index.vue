@@ -68,42 +68,42 @@
             @click="$emit('toggleInfo', item)"
           />
         </div>
-        <div class="table__icon" style="width: 28px">
-          <template v-if="role === 'superadmin'">
+        <div
+          class="table__icon"
+          style="width: 28px"
+          v-if="role === 'superadmin'"
+        >
+          <img
+            v-if="item.status.value === 'delivered'"
+            style="opacity: 0.2"
+            src="@/assets/icons/write_icon.svg"
+            alt=""
+          />
+          <VueCustomTooltip
+            v-else-if="editedItem._id !== item._id"
+            label="Изменить"
+          >
             <img
-              v-if="item.status.value === 'delivered'"
-              style="opacity: 0.2"
               src="@/assets/icons/write_icon.svg"
-              alt=""
-            />
-            <VueCustomTooltip
-              v-else-if="editedItem._id !== item._id"
-              label="Изменить"
-            >
-              <img
-                src="@/assets/icons/write_icon.svg"
-                @click="$emit('toggleEdit', item)"
-                alt=""
-              />
-            </VueCustomTooltip>
-            <img
-              alt=""
-              v-else
-              src="@/assets/icons/arrow_top_icon.svg"
               @click="$emit('toggleEdit', item)"
+              alt=""
             />
-          </template>
-          <div class="table__hidden-icon" v-else></div>
+          </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleEdit', item)"
+          />
         </div>
-        <div class="table__icon">
-          <VueCustomTooltip v-if="role === 'superadmin'" label="Удалить">
+        <div class="table__icon" v-if="role === 'superadmin'">
+          <VueCustomTooltip label="Удалить">
             <img
               alt=""
               src="@/assets/icons/trash_icon.svg"
               @click="$emit('toggleDelete', item)"
             />
           </VueCustomTooltip>
-          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>

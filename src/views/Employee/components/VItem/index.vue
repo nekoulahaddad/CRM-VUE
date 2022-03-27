@@ -86,15 +86,14 @@
           </template>
           <div class="table__hidden-icon" v-else></div>
         </div>
-        <div class="table__icon">
-          <VueCustomTooltip v-if="role === 'superadmin'" label="Удалить">
+        <div class="table__icon" v-if="role === 'superadmin'">
+          <VueCustomTooltip label="Удалить">
             <img
               alt=""
               src="@/assets/icons/trash_icon.svg"
               @click="$emit('toggleDelete', employee)"
             />
           </VueCustomTooltip>
-          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>
