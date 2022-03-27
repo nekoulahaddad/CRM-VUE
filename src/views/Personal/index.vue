@@ -189,7 +189,7 @@
                 </div>
               </div>
 
-              <!-- 2. Администратор -->
+              <!-- 2. Директор -->
               <div
                 class="list__row list__row--shadow list__row--white"
                 :class="{
@@ -197,7 +197,7 @@
                 }"
               >
                 <div class="list__columns">
-                  <div class="list__column">2. Администратор:</div>
+                  <div class="list__column">2. Директор:</div>
                   <div class="list__column">
                     <div class="table__action">
                       <div class="table__icon">
@@ -281,10 +281,6 @@
                   <div class="list__item">
                     <img src="@/assets/icons/buying.svg" alt="" />
                     <span>Закупка</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/sites.svg" alt="" />
-                    <span>Кор. сайты</span>
                   </div>
                 </div>
               </div>

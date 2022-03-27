@@ -16,7 +16,6 @@ export default {
     "delivery",
     "callbacks",
     "buying",
-    "sites",
   ],
   buyer: [
     "monitor",
