@@ -193,7 +193,7 @@
               <div
                 class="list__row list__row--shadow list__row--white"
                 :class="{
-                  'list__row--opened': openedRoles.includes('administrator'),
+                  'list__row--opened': openedRoles.includes('director'),
                 }"
               >
                 <div class="list__columns">
