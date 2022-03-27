@@ -6,15 +6,19 @@
     <div class="list__column text--blue">{{ transformName(client) }}</div>
     <div class="list__column">{{ client.email }}</div>
     <div class="list__column">{{ client.phone }}</div>
-    <div class="list__column text--sapphire">{{ client.region.title }}</div>
+    <div class="list__column text--sapphire">
+      {{ client.region && client.region.title }}
+    </div>
     <div class="list__column text--green">
       {{ transformDate(client.createdAt) }}
     </div>
     <div class="list__column">
       {{
-        client.company
-          ? client.balance + " " + client.region.valute.icon
-          : client.total.toFixed(2) + " " + client.region.valute.icon
+        client.region
+          ? client.company
+            ? client.balance + " " + client.region.valute.icon
+            : client.total.toFixed(2) + " " + client.region.valute.icon
+          : ""
       }}
     </div>
     <div class="list__column">{{ client.clubCard }}</div>
