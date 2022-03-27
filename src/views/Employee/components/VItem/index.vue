@@ -62,29 +62,28 @@
           />
         </div>
         <div
-          v-if="role === 'superadmin' || role === 'director'"
+          v-if="
+            (role === 'superadmin' || role === 'director') && options.userEditor
+          "
           class="table__icon"
           style="width: 28px"
         >
-          <template v-if="options.userEditor">
-            <VueCustomTooltip
-              v-if="employee._id !== editedItem._id"
-              label="Изменить"
-            >
-              <img
-                alt=""
-                src="@/assets/icons/write_icon.svg"
-                @click="$emit('toggleEdit', employee)"
-              />
-            </VueCustomTooltip>
+          <VueCustomTooltip
+            v-if="employee._id !== editedItem._id"
+            label="Изменить"
+          >
             <img
               alt=""
-              src="@/assets/icons/arrow_top_icon.svg"
+              src="@/assets/icons/write_icon.svg"
               @click="$emit('toggleEdit', employee)"
-              v-else
             />
-          </template>
-          <div class="table__hidden-icon" v-else></div>
+          </VueCustomTooltip>
+          <img
+            alt=""
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleEdit', employee)"
+            v-else
+          />
         </div>
         <div class="table__icon" v-if="role === 'superadmin'">
           <VueCustomTooltip label="Удалить">
