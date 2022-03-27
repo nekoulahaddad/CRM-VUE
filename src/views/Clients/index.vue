@@ -82,6 +82,7 @@
                   :index="index"
                   :client="item"
                   :infoItem="infoItem"
+                  :role="role"
                   @toggleInfo="toggleInfo"
                   @toggleDelete="toggleDelete"
                 />
@@ -167,6 +168,12 @@ export default {
   },
   computed: {
     ...mapGetters(["sidebar"]),
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
   },
   data() {
     return {

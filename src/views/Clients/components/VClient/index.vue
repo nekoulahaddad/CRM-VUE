@@ -25,7 +25,12 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <template v-if="client.orders.length">
+          <template
+            v-if="
+              client.orders.length &&
+              (role === 'superadmin' || role === 'director')
+            "
+          >
             <VueCustomTooltip
               v-if="infoItem._id !== client._id"
               label="Просмотр"
@@ -43,18 +48,19 @@
               @click="$emit('toggleInfo', client)"
             />
           </template>
+          <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <template>
-            <VueCustomTooltip label="Удалить" v-if="false">
+          <template v-if="role === 'superadmin' || role === 'director'">
+            <VueCustomTooltip label="Удалить">
               <img
                 alt=""
                 src="/icons/trash_icon.svg"
                 @click="$emit('toggleDelete', client)"
               />
             </VueCustomTooltip>
-            <div class="table__hidden-icon" v-else></div>
           </template>
+          <div class="table__hidden-icon" v-else></div>
         </div>
       </div>
     </div>
@@ -74,6 +80,7 @@ export default {
     index: {
       type: Number,
     },
+    role: String,
   },
 };
 </script>
