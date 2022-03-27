@@ -5,19 +5,19 @@ export default {
         case "director":
           return "Директор";
         case "seo":
-          return "SEO - оптимизатор";
+          return "SEO";
         case "content":
           return "Контент - менеджер";
         case "manager":
-          return `Менеджер по работе с клиентами №${
+          return `Менеджер по продажам №${
             this.$store.state.number ? this.$store.state.number : ""
           }`;
         case "admin":
-          return "Руководитель";
+          return "Директор";
         case "worker":
           return "Сотрудник";
         case "call":
-          return "Сотрудник Call - центра";
+          return "Call - центр";
         case "superadmin":
           return "Суперадмин";
         default:
