@@ -17,7 +17,7 @@
               </div>
               <div class="table__icon">
                 <!-- Видимость товара -->
-                <template v-if="role === 'content'">
+                <template v-if="role === 'content' || role === 'director'">
                   <v-spinner
                     extraSmall
                     v-if="changeVisible._id === product._id"
@@ -55,7 +55,7 @@
                 />
               </div>
               <div class="table__icon" style="min-width: 28px">
-                <template v-if="role === 'content'">
+                <template v-if="role === 'content' || role === 'director'">
                   <VueCustomTooltip
                     label="Изменить"
                     v-if="editedItem._id !== product._id"
@@ -82,7 +82,7 @@
               </div>
               <div class="table__icon">
                 <img
-                  v-if="role === 'content'"
+                  v-if="role === 'content' || role === 'director'"
                   @click="$emit('toggleDeleteGroupProduct', group, product)"
                   src="@/assets/icons/trash_icon.svg"
                   alt=""

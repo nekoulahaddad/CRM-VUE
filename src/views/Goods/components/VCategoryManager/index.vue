@@ -36,7 +36,10 @@
         <div class="group__value">{{ phone || "" }}</div>
       </div>
 
-      <div class="manager-edit-form__buttons" v-if="role === 'content'">
+      <div
+        class="manager-edit-form__buttons"
+        v-if="role === 'content' || role === 'director'"
+      >
         <v-button
           red
           @click="setManager(false)"
