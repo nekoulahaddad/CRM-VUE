@@ -19,6 +19,7 @@ export default {
       let getOptions = {
         nesting: options.nesting >= 0 ? options.nesting : null,
         parent_id: options.parent_id || null,
+        search: options.search || null,
         parent_value: options.parent_value || null,
         type: options.type || null,
         department: options.department || null,
