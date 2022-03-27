@@ -201,12 +201,14 @@ export default {
     searchInput() {
       if (!this.user.trim().length && this.searched) {
         this.searched = false;
-        this.getData();
+        this.fetchData();
       }
     },
     getSearchData() {
-      this.filtersOptions.search = this.user.trim();
-      this.fetchData();
+      if (this.user.trim().length) {
+        this.filtersOptions.search = this.user.trim();
+        this.fetchData();
+      }
     },
     refreshDates(startDate, endDate) {
       this.fetchData();
