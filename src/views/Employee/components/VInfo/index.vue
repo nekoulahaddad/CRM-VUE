@@ -224,6 +224,7 @@ export default {
       type: Object,
       required: true,
     },
+    role: String,
   },
   data() {
     return {

@@ -18,7 +18,11 @@
       <div v-else>Документов нет</div>
     </div>
 
-    <v-button @click="addDocument = true" v-if="!addDocument && canChanges" red>
+    <v-button
+      @click="addDocument = true"
+      v-if="!addDocument && canChanges && role === 'superadmin'"
+      red
+    >
       Добавить документ
     </v-button>
     <v-add-document

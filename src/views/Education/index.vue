@@ -65,6 +65,7 @@
                 <!-- Блок с детальной информацией -->
                 <v-info
                   :infoItem="item"
+                  :role="role"
                   v-if="infoItem._id === item._id"
                   @toggleDeleteDocument="toggleDeleteDocument"
                   @refreshEducations="getEducations"

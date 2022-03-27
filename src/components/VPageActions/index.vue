@@ -245,7 +245,7 @@
           </template>
 
           <!-- Обучение -->
-          <template v-if="name === 'education'">
+          <template v-if="name === 'education' && role === 'superadmin'">
             <VueCustomTooltip label="Добавить раздел">
               <a
                 href=""

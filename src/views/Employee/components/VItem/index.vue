@@ -61,12 +61,12 @@
             v-else
           />
         </div>
-        <div class="table__icon" style="width: 28px">
-          <template
-            v-if="
-              role === 'superadmin' || role === 'director' || options.userEditor
-            "
-          >
+        <div
+          v-if="role === 'superadmin' || role === 'director'"
+          class="table__icon"
+          style="width: 28px"
+        >
+          <template v-if="options.userEditor">
             <VueCustomTooltip
               v-if="employee._id !== editedItem._id"
               label="Изменить"
