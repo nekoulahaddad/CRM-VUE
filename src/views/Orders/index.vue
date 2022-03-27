@@ -59,7 +59,7 @@
                     class="form-checkbox"
                     v-model="selectAll"
                     @change="selectAllItems"
-                    :disabled="!isLoading"
+                    :disabled="!isLoading || role !== 'superadmin'"
                   />
                   <span @click="sort('number')">
                     <span>№:</span>

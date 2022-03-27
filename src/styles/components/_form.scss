@@ -88,6 +88,11 @@ input[type="text"],
     right: 0;
     bottom: 0;
   }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: default;
+  }
 }
 
 input[type="number"].hide-arrows::-webkit-outer-spin-button,

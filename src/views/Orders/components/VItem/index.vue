@@ -5,6 +5,7 @@
     <div class="list__column d-flex align-items-center">
       <input
         type="checkbox"
+        :disabled="role !== 'superadmin'"
         class="form-checkbox"
         :checked="checked"
         @click="$store.commit('selectItem', item._id)"
