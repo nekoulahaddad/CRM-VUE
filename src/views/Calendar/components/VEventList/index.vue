@@ -26,7 +26,10 @@
               <div class="list__column">
                 <div class="table__actions">
                   <!-- Копировать -->
-                  <div class="table__icon">
+                  <div
+                    class="table__icon"
+                    v-if="role === 'superadmin' || role === 'director'"
+                  >
                     <VueCustomTooltip label="Копировать">
                       <img
                         alt=""
@@ -47,13 +50,7 @@
                     </VueCustomTooltip>
                   </div>
 
-                  <template
-                    v-if="
-                      role === 'superadmin' ||
-                      (event.customData.initiator &&
-                        event.customData.initiator._id === userId)
-                    "
-                  >
+                  <template v-if="role === 'superadmin' || role === 'director'">
                     <!-- Изменение -->
                     <div class="table__icon">
                       <VueCustomTooltip label="Изменить">
