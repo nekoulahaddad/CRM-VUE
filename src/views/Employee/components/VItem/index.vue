@@ -86,10 +86,7 @@
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
-          <VueCustomTooltip
-            v-if="role === 'superadmin' || role === 'director'"
-            label="Удалить"
-          >
+          <VueCustomTooltip v-if="role === 'superadmin'" label="Удалить">
             <img
               alt=""
               src="@/assets/icons/trash_icon.svg"
