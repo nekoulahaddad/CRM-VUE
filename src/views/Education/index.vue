@@ -240,7 +240,7 @@ export default {
 
       try {
         const response = await axios({
-          url: `/educations/get/?page=${this.$route.params.page}`,
+          url: `/educations/get`,
           params: data,
           method: "GET",
         });
