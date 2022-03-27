@@ -72,9 +72,10 @@
           <!-- Закупка -->
           <template
             v-if="
-              (name === 'buying' && role === 'superadmin') ||
-              role === 'manager' ||
-              role === 'content'
+              name === 'buying' &&
+              (role === 'superadmin' ||
+                role === 'manager' ||
+                role === 'content')
             "
           >
             <VueCustomTooltip label="Добавить закупку">
