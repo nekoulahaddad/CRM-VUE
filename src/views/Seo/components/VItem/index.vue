@@ -19,19 +19,21 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <VueCustomTooltip v-if="!showEdit" label="Изменить">
+          <template v-if="role === 'superadmin'">
+            <VueCustomTooltip v-if="!showEdit" label="Изменить">
+              <img
+                @click="$emit('toggleEdit', 'categories', item)"
+                src="@/assets/icons/write_icon.svg"
+                alt=""
+              />
+            </VueCustomTooltip>
             <img
-              @click="$emit('toggleEdit', 'categories', item)"
-              src="@/assets/icons/write_icon.svg"
               alt=""
+              v-else
+              @click="$emit('toggleEdit', 'categories', item)"
+              src="@/assets/icons/arrow_top_icon.svg"
             />
-          </VueCustomTooltip>
-          <img
-            alt=""
-            v-else
-            @click="$emit('toggleEdit', 'categories', item)"
-            src="@/assets/icons/arrow_top_icon.svg"
-          />
+          </template>
         </div>
       </div>
     </div>
@@ -41,6 +43,7 @@
 <script>
 export default {
   props: {
+    role: String,
     showEdit: Boolean,
     item: {
       type: Object,

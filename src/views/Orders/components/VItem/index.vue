@@ -129,13 +129,7 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  computed: {
-    role: {
-      get: function () {
-        return this.getUserRole().role;
-      },
-    },
+    role: String,
   },
 };
 </script>

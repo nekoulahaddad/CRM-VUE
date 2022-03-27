@@ -95,6 +95,7 @@
                 <v-item
                   :current="current"
                   :item="item"
+                  :role="role"
                   :showEdit="editedItem._id === item._id"
                   @toggleEdit="toggleEdit"
                 />
@@ -168,6 +169,13 @@ export default {
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+
+        return role.role;
+      },
+    },
   },
   data() {
     return {
