@@ -213,6 +213,7 @@ export default {
     },
     getSearchData() {
       this.filtersOptions.search = this.user;
+      this.searched = true;
     },
     refreshDates(startDate, endDate) {
       this.fetchData();
