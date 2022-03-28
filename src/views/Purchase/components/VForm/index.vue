@@ -132,7 +132,7 @@
             <div class="list__column">Название товара:</div>
             <div class="list__column">Артикул:</div>
             <div class="list__column">Количество:</div>
-            <div class="list__column">Итог:</div>
+            <div class="list__column"></div>
           </div>
         </div>
         <div
@@ -714,8 +714,11 @@ export default {
 
     .list__columns {
       background-color: transparent;
+
       .list__column {
         font-size: 13px;
+        display: flex;
+        justify-content: center;
       }
     }
   }
