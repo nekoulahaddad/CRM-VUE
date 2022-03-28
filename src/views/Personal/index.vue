@@ -25,7 +25,7 @@
               <div class="personal-area__col">
                 <label>Старый пароль:</label>
                 <input
-                  type="text"
+                  type="password"
                   required
                   class="form-control"
                   placeholder="Введите старый пароль"
@@ -36,7 +36,7 @@
               <div class="personal-area__col">
                 <label>Новый пароль:</label>
                 <input
-                  type="text"
+                  type="password"
                   required
                   class="form-control"
                   placeholder="Введите новый пароль"
