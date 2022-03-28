@@ -37,9 +37,9 @@ export default {
     "orders",
     "tasks",
     "mail",
-    "mango",
     "delivery",
     "callbacks",
+    "buying",
   ],
   content: [
     "monitor",
