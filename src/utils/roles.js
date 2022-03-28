@@ -39,7 +39,15 @@ export default {
     "delivery",
     "callbacks",
   ],
-  content: ["monitor", "education", "calendar", "goods", "tasks", "sites"],
+  content: [
+    "monitor",
+    "education",
+    "employee",
+    "calendar",
+    "goods",
+    "tasks",
+    "sites",
+  ],
   director: [
     "monitor",
     "education",

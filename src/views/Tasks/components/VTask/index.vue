@@ -72,7 +72,9 @@
         </div>
         <div
           class="table__icon"
-          v-if="role === 'superadmin' || role === 'director'"
+          v-if="
+            role === 'superadmin' || role === 'director' || role === 'content'
+          "
         >
           <VueCustomTooltip v-if="index !== activeIndex" label="Подзадача">
             <img
