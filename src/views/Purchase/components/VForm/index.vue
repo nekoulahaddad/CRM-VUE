@@ -126,7 +126,7 @@
 
     <div class="group" style="margin-top: 10px">
       <div class="group__title">Товары:</div>
-      <div class="list sub-list" v-if="productsList.length">
+      <div class="list sub-list">
         <div class="list__header">
           <div class="list__columns">
             <div class="list__column">Название товара:</div>
@@ -154,6 +154,7 @@
       </div>
 
       <div
+        style="margin-bottom: 10px"
         class="list__row list__row--shadow list__row--white"
         v-if="addProductFormOpened"
       >
@@ -693,8 +694,52 @@ export default {
     font-weight: 700;
     border-radius: $border-radius;
   }
+  .sub-list {
+    .list__header {
+      height: auto;
+      position: relative;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #f6f6f6;
+        border-radius: 5px;
+      }
+    }
+
+    .list__columns {
+      background-color: transparent;
+      .list__column {
+        font-size: 13px;
+      }
+    }
+  }
+  .sub-list .list__columns,
   .sub-list-columns {
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: 700px 220px 220px 1fr !important;
+
+    span[role="tooltip"] + * {
+      margin-left: 20px;
+    }
+  }
+  .form-control[type="number"] {
+    width: 100px;
+  }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
   }
 }
 </style>
