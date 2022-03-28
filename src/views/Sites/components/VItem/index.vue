@@ -60,6 +60,7 @@ import axios from "@/api/axios";
 
 export default {
   props: {
+    role: String,
     index: Number,
     infoItem: {
       type: Object,

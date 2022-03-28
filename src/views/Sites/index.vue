@@ -40,6 +40,7 @@
                 <v-item
                   :index="index"
                   :infoItem="item"
+                  :role="role"
                   :excelImportForm="excelImportForm"
                   @updateSite="updateSite"
                   @toggleImportExcel="toggleImportExcel"

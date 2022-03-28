@@ -44,8 +44,9 @@ export default {
     "education",
     "employee",
     "calendar",
-    "goods",
+    "reports",
     "tasks",
+    "goods",
     "sites",
   ],
   director: [
