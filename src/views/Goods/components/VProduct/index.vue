@@ -27,242 +27,180 @@
     </div>
     <div class="list__column">
       <div class="table__actions">
-        <div class="table__icon">
+        <div
+          class="table__icon"
+          v-if="role === 'content' || role === 'superadmin'"
+        >
           <!-- Показать товары группы -->
           <template v-if="item.type === 'group'">
-            <template
-              v-if="
-                role === 'content' || role === 'director' || role === 'manager'
-              "
+            <VueCustomTooltip
+              v-if="groupItems._id !== item._id"
+              label="Показать товары"
             >
-              <VueCustomTooltip
-                v-if="groupItems._id !== item._id"
-                label="Показать товары"
-              >
-                <img
-                  @click="$emit('toggleGroupProducts', item)"
-                  src="@/assets/icons/structure.svg"
-                  alt=""
-                />
-              </VueCustomTooltip>
               <img
-                alt=""
-                v-else
                 @click="$emit('toggleGroupProducts', item)"
-                src="@/assets/icons/arrow_top_icon.svg"
+                src="@/assets/icons/structure.svg"
+                alt=""
               />
-            </template>
+            </VueCustomTooltip>
             <img
               alt=""
               v-else
-              class="opacity-30"
-              src="@/assets/icons/structure.svg"
+              @click="$emit('toggleGroupProducts', item)"
+              src="@/assets/icons/arrow_top_icon.svg"
             />
           </template>
 
           <!-- Добавить товар в группу -->
           <template v-else>
-            <template
-              v-if="
-                role === 'content' || role === 'director' || role === 'manager'
-              "
+            <VueCustomTooltip
+              v-if="groupProductItem._id !== item._id"
+              label="Добавить товар в группу"
             >
-              <VueCustomTooltip
-                v-if="groupProductItem._id !== item._id"
-                label="Добавить товар в группу"
-              >
-                <img
-                  @click="$emit('toggleProductToGroup', item)"
-                  src="@/assets/icons/add_to_group.svg"
-                  alt=""
-                />
-              </VueCustomTooltip>
               <img
-                alt=""
-                v-else
                 @click="$emit('toggleProductToGroup', item)"
-                src="@/assets/icons/arrow_top_icon.svg"
-              /> </template
-            ><img
+                src="@/assets/icons/add_to_group.svg"
+                alt=""
+              />
+            </VueCustomTooltip>
+            <img
               alt=""
               v-else
-              class="opacity-30"
-              src="@/assets/icons/add_to_group.svg"
+              @click="$emit('toggleProductToGroup', item)"
+              src="@/assets/icons/arrow_top_icon.svg"
             />
           </template>
         </div>
 
         <!-- Перемещение товара -->
-        <div class="table__icon" v-if="item.type !== 'group'">
-          <template
-            v-if="
-              role === 'content' || role === 'director' || role === 'manager'
-            "
+        <div
+          class="table__icon"
+          v-if="
+            item.type !== 'group' &&
+            (role === 'content' || role === 'superadmin')
+          "
+        >
+          <VueCustomTooltip
+            v-if="movedProduct._id !== item._id"
+            label="Перемещение товара"
           >
+            <img
+              alt=""
+              src="@/assets/icons/move_goods.svg"
+              @click="$emit('toggleMoveProduct', item)"
+            />
+          </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            src="@/assets/icons/arrow_top_icon.svg"
+            @click="$emit('toggleMoveProduct', item)"
+          />
+        </div>
+
+        <div
+          class="table__icon"
+          v-if="role === 'content' || role === 'superadmin'"
+        >
+          <!-- Видимость товара -->
+
+          <v-spinner extraSmall v-if="changeVisible._id === item._id" />
+          <template v-else>
             <VueCustomTooltip
-              v-if="movedProduct._id !== item._id"
-              label="Перемещение товара"
+              v-if="item.type !== 'group'"
+              :label="item.visible ? 'Скрыть товар' : 'Показать товар'"
             >
               <img
                 alt=""
-                src="@/assets/icons/move_goods.svg"
-                @click="$emit('toggleMoveProduct', item)"
+                :src="
+                  item.visible
+                    ? require('@/assets/icons/eye_close.svg')
+                    : require('@/assets/icons/eye.svg')
+                "
+                :class="{ none: item.visible }"
+                @click="changeProductVisibility(item._id, item.visible, item)"
+              />
+            </VueCustomTooltip>
+
+            <!-- Видимость группы -->
+            <VueCustomTooltip
+              v-else
+              :label="item.visible ? 'Скрыть группу' : 'Показать группу'"
+            >
+              <img
+                alt=""
+                :src="
+                  item.visible
+                    ? require('@/assets/icons/eye_close.svg')
+                    : require('@/assets/icons/eye.svg')
+                "
+                :class="{ none: item.visible }"
+                @click="changeGroupVisibility(item._id, item.visible, item)"
+              />
+            </VueCustomTooltip>
+          </template>
+        </div>
+
+        <div
+          class="table__icon"
+          v-if="role === 'content' || role === 'superadmin'"
+        >
+          <!-- Изменить товар -->
+          <VueCustomTooltip v-if="item.type !== 'group'" label="Изменить товар">
+            <img
+              alt=""
+              v-if="editedItem._id !== item._id"
+              src="@/assets/icons/write_icon.svg"
+              @click="$emit('toggleEdit', item)"
+            />
+            <img
+              alt=""
+              v-else
+              src="@/assets/icons/arrow_top_icon.svg"
+              @click="$emit('toggleEdit', item)"
+            />
+          </VueCustomTooltip>
+
+          <!-- Изменить группу -->
+          <template v-if="item.type === 'group'">
+            <VueCustomTooltip
+              v-if="editedGroupItem._id !== item._id"
+              label="Изменить группу"
+            >
+              <img
+                alt=""
+                src="@/assets/icons/write_icon.svg"
+                @click="$emit('toggleEditGroup', item)"
               />
             </VueCustomTooltip>
             <img
               alt=""
               v-else
               src="@/assets/icons/arrow_top_icon.svg"
-              @click="$emit('toggleMoveProduct', item)"
+              @click="$emit('toggleEditGroup', item)"
             />
           </template>
-          <img
-            alt=""
-            v-else
-            class="opacity-30"
-            src="@/assets/icons/move_goods.svg"
-          />
-        </div>
-
-        <div class="table__icon">
-          <!-- Видимость товара -->
-          <template
-            v-if="
-              role === 'content' || role === 'director' || role === 'manager'
-            "
-          >
-            <v-spinner extraSmall v-if="changeVisible._id === item._id" />
-            <template v-else>
-              <VueCustomTooltip
-                v-if="item.type !== 'group'"
-                :label="item.visible ? 'Скрыть товар' : 'Показать товар'"
-              >
-                <img
-                  alt=""
-                  :src="
-                    item.visible
-                      ? require('@/assets/icons/eye_close.svg')
-                      : require('@/assets/icons/eye.svg')
-                  "
-                  :class="{ none: item.visible }"
-                  @click="changeProductVisibility(item._id, item.visible, item)"
-                />
-              </VueCustomTooltip>
-
-              <!-- Видимость группы -->
-              <VueCustomTooltip
-                v-else
-                :label="item.visible ? 'Скрыть группу' : 'Показать группу'"
-              >
-                <img
-                  alt=""
-                  :src="
-                    item.visible
-                      ? require('@/assets/icons/eye_close.svg')
-                      : require('@/assets/icons/eye.svg')
-                  "
-                  :class="{ none: item.visible }"
-                  @click="changeGroupVisibility(item._id, item.visible, item)"
-                />
-              </VueCustomTooltip>
-            </template>
-          </template>
-          <img
-            alt=""
-            v-else
-            class="opacity-30"
-            :src="
-              item.visible
-                ? require('@/assets/icons/eye_close.svg')
-                : require('@/assets/icons/eye.svg')
-            "
-          />
-        </div>
-
-        <div class="table__icon">
-          <template
-            v-if="
-              role === 'content' || role === 'director' || role === 'manager'
-            "
-          >
-            <!-- Изменить товар -->
-            <VueCustomTooltip
-              v-if="item.type !== 'group'"
-              label="Изменить товар"
-            >
-              <img
-                alt=""
-                v-if="editedItem._id !== item._id"
-                src="@/assets/icons/write_icon.svg"
-                @click="$emit('toggleEdit', item)"
-              />
-              <img
-                alt=""
-                v-else
-                src="@/assets/icons/arrow_top_icon.svg"
-                @click="$emit('toggleEdit', item)"
-              />
-            </VueCustomTooltip>
-
-            <!-- Изменить группу -->
-            <template v-if="item.type === 'group'">
-              <VueCustomTooltip
-                v-if="editedGroupItem._id !== item._id"
-                label="Изменить группу"
-              >
-                <img
-                  alt=""
-                  src="@/assets/icons/write_icon.svg"
-                  @click="$emit('toggleEditGroup', item)"
-                />
-              </VueCustomTooltip>
-              <img
-                alt=""
-                v-else
-                src="@/assets/icons/arrow_top_icon.svg"
-                @click="$emit('toggleEditGroup', item)"
-              />
-            </template>
-          </template>
-          <img
-            class="opacity-30"
-            alt=""
-            v-else
-            src="@/assets/icons/write_icon.svg"
-          />
         </div>
 
         <!-- Удалить товар -->
-        <div class="table__icon">
-          <template
-            v-if="
-              role === 'content' || role === 'director' || role === 'manager'
-            "
-          >
-            <VueCustomTooltip
-              v-if="item.type !== 'group'"
-              label="Удалить товар"
-            >
-              <img
-                alt=""
-                src="@/assets/icons/trash_icon.svg"
-                @click="$emit('toggleDeleteProduct', item)"
-              />
-            </VueCustomTooltip>
-            <VueCustomTooltip v-else label="Удалить группу">
-              <img
-                alt=""
-                src="@/assets/icons/trash_icon.svg"
-                @click="$emit('toggleDeleteGroup', item)"
-              />
-            </VueCustomTooltip>
-          </template>
-          <img
-            alt=""
-            v-else
-            class="opacity-30"
-            src="@/assets/icons/trash_icon.svg"
-          />
+        <div
+          class="table__icon"
+          v-if="role === 'content' || role === 'superadmin'"
+        >
+          <VueCustomTooltip v-if="item.type !== 'group'" label="Удалить товар">
+            <img
+              alt=""
+              src="@/assets/icons/trash_icon.svg"
+              @click="$emit('toggleDeleteProduct', item)"
+            />
+          </VueCustomTooltip>
+          <VueCustomTooltip v-else label="Удалить группу">
+            <img
+              alt=""
+              src="@/assets/icons/trash_icon.svg"
+              @click="$emit('toggleDeleteGroup', item)"
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>
