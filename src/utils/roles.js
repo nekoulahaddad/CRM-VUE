@@ -89,6 +89,7 @@ export default {
     "tasks",
     "reports",
     "seo",
+    "buying",
     "sites",
   ],
   superadmin: [
