@@ -208,6 +208,7 @@ export default {
     searchInput() {
       if (!this.user.trim().length && this.searched) {
         this.searched = false;
+        this.filtersOptions.search = null;
         this.fetchData();
       }
     },
