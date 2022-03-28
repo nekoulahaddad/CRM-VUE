@@ -11,6 +11,7 @@ const generator = require("generate-password");
 const { SMSRu } = require("node-sms-ru");
 const smsRu = new SMSRu(process.env.SMSRUKEY);
 const moment = require("moment");
+const _ = require("lodash");
 
 exports.getClients = async (req, res, next) => {
   try {
@@ -27,7 +28,10 @@ exports.getClients = async (req, res, next) => {
     const searchStr = options.search ? options.search.split(" ") : null;
     if (searchStr && searchStr.length) {
       for (let i = 0; i < searchStr.length; i++) {
-        searchStr[i].trim();
+        searchStr[i] = new RegExp(
+          "(w|s){0,}" + _.escapeRegExp(searchStr[i].trim()) + "(w|s){0,}",
+          "ui"
+        );
       }
     }
     let myMatch = {};
