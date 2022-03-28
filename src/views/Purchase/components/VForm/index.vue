@@ -129,6 +129,7 @@
       <div class="list sub-list">
         <div class="list__header">
           <div class="list__columns">
+            <div class="list__column">№:</div>
             <div class="list__column">Название товара:</div>
             <div class="list__column">Артикул:</div>
             <div class="list__column">Количество:</div>
@@ -159,6 +160,9 @@
         v-if="addProductFormOpened"
       >
         <div class="list__columns sub-list-columns">
+          <div class="list__column d-flex justify-center">
+            {{ productsList.length + 1 }}
+          </div>
           <div class="list__column add-good-item">
             <autocomplete
               :search="findItemByTitle"
@@ -724,7 +728,11 @@ export default {
   }
   .sub-list .list__columns,
   .sub-list-columns {
-    grid-template-columns: 700px 220px 220px 1fr !important;
+    grid-template-columns: 50px 700px 220px 220px 1fr !important;
+
+    .list__column {
+      font-size: 13px !important;
+    }
 
     span[role="tooltip"] + * {
       margin-left: 20px;
