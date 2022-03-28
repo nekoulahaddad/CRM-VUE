@@ -62,9 +62,7 @@
           />
         </div>
         <div
-          v-if="
-            (role === 'superadmin' || role === 'director') && options.userEditor
-          "
+          v-if="role === 'superadmin' || role === 'director'"
           class="table__icon"
           style="width: 28px"
         >
