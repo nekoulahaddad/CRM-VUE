@@ -134,7 +134,7 @@
             <div class="group__title">Фотографии товара:</div>
             <div class="group__content photo-wrapper">
               <template v-if="images.length > 0">
-                <div class="product-photo" v-for="(item, index) in images">
+                <div class="product-photo" v-for="(item, index) in tempUrl">
                   <img
                     alt=""
                     class="product-photo__img"
