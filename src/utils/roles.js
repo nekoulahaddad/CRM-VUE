@@ -81,7 +81,16 @@ export default {
     "callbacks",
     "buying",
   ],
-  seo: ["monitor", "education", "calendar", "tasks", "reports", "seo", "sites"],
+  seo: [
+    "monitor",
+    "education",
+    "employee",
+    "calendar",
+    "tasks",
+    "reports",
+    "seo",
+    "sites",
+  ],
   superadmin: [
     "monitor",
     "education",

@@ -7,7 +7,7 @@
     </div>
     <div class="list__column">
       <div class="table__actions">
-        <div class="table__icon" v-if="role === 'superadmin'">
+        <div class="table__icon" v-if="role === 'superadmin' || role === 'seo'">
           <VueCustomTooltip v-if="!showEdit" label="Изменить">
             <img
               alt=""

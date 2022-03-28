@@ -76,7 +76,8 @@
             role === 'superadmin' ||
             role === 'director' ||
             role === 'content' ||
-            role === 'manager'
+            role === 'manager' ||
+            role === 'seo'
           "
         >
           <VueCustomTooltip v-if="index !== activeIndex" label="Подзадача">
