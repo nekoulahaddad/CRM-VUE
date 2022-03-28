@@ -80,6 +80,7 @@
                   :item="department"
                   :infoItem="infoItem"
                   :editedItem="editedItem"
+                  :role="role"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @toggleDelete="toggleDelete"

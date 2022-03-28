@@ -80,6 +80,7 @@
                   :showEdit="editedItem._id === department._id"
                   :infoItem="department"
                   :editedItem="department"
+                  :role="role"
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @toggleDelete="toggleDelete"
@@ -133,6 +134,12 @@ export default {
     ...mapGetters({ sidebar: "sidebar" }),
     addVacancy() {
       return this.$store.state.actions.addVacancy;
+    },
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
     },
   },
   data() {

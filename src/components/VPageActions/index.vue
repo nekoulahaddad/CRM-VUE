@@ -198,7 +198,10 @@
 
           <!-- Сотрудники -->
           <template v-if="name === 'employee'">
-            <VueCustomTooltip label="Добавить сотрудника">
+            <VueCustomTooltip
+              label="Добавить сотрудника"
+              v-if="role === 'superadmin'"
+            >
               <a
                 href=""
                 class="page-actions__button"
@@ -322,17 +325,24 @@
 
           <!-- Департаменты -->
           <template v-if="name === 'departments'">
-            <a
-              href=""
-              class="page-actions__button"
-              :class="{
-                'page-actions__button--active':
-                  $store.state.actions.addDepartment,
-              }"
-              @click.prevent="toggleAction('addDepartment')"
+            <VueCustomTooltip
+              label="Добавить отдел"
+              v-if="role === 'superadmin'"
             >
-              <simple-svg :src="require('@/assets/icons/add_department.svg')" />
-            </a>
+              <a
+                href=""
+                class="page-actions__button"
+                :class="{
+                  'page-actions__button--active':
+                    $store.state.actions.addDepartment,
+                }"
+                @click.prevent="toggleAction('addDepartment')"
+              >
+                <simple-svg
+                  :src="require('@/assets/icons/add_department.svg')"
+                />
+              </a>
+            </VueCustomTooltip>
           </template>
 
           <!-- Клиенты -->
@@ -344,7 +354,10 @@
 
           <!-- Вакансии -->
           <template v-if="name === 'vacancies'">
-            <VueCustomTooltip label="Добавить вакансию">
+            <VueCustomTooltip
+              label="Добавить вакансию"
+              v-if="role === 'superadmin'"
+            >
               <a
                 href=""
                 class="page-actions__button"
