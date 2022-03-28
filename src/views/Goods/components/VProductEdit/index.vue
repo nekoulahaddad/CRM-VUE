@@ -134,7 +134,7 @@
             <div class="group__title">Фотографии товара:</div>
             <div class="group__content photo-wrapper">
               <template v-if="images.length > 0">
-                <div class="product-photo" v-for="(item, index) in tempUrl">
+                <div class="product-photo" v-for="(item, index) in images">
                   <img
                     alt=""
                     class="product-photo__img"
@@ -513,9 +513,7 @@ export default {
       this.isLoading = true;
       let fileBuffer = [];
       Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
-      fileBuffer.reverse();
       const files = fileBuffer;
-      files.sort();
       this[e.target.name] = files;
       this.images = clear ? [] : this.images;
       this.tempUrl = clear ? [] : this.tempUrl;
