@@ -45,12 +45,7 @@
             @click="$emit('toggleInfo', client)"
           />
         </div>
-        <div
-          class="table__icon"
-          v-if="
-            role === 'superadmin' || role === 'director' || role === 'buyer'
-          "
-        >
+        <div class="table__icon" v-if="role === 'superadmin'">
           <VueCustomTooltip label="Удалить">
             <img
               alt=""
