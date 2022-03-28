@@ -30,7 +30,7 @@
     <div class="page__body d-flex">
       <div class="page__left">
         <div class="tasks">
-          <div class="tasks__title">Доска поставленных задач</div>
+          <div class="tasks__title">Доска поставленных задач:</div>
           <div class="tasks__lists">
             <v-spinner v-if="!isLoading" />
             <div
@@ -506,7 +506,7 @@ export default {
 
     &__title {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: bold;
       margin-bottom: 10px;
     }
 
