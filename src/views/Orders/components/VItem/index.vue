@@ -71,7 +71,12 @@
         <div
           class="table__icon"
           style="width: 28px"
-          v-if="role === 'superadmin' || role === 'buyer' || role === 'call'"
+          v-if="
+            role === 'superadmin' ||
+            role === 'buyer' ||
+            role === 'call' ||
+            role === 'manager'
+          "
         >
           <img
             v-if="item.status.value === 'delivered'"
