@@ -21,7 +21,7 @@
             src="@/assets/icons/doc_download_icon.svg"
           />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" v-if="role === 'superadmin'">
           <img
             alt=""
             v-if="(role === 'superadmin' || role === 'director') && canChanges"
@@ -48,6 +48,7 @@ export default {
       type: Object,
       required: true,
     },
+    role: String,
   },
   computed: {
     role: {

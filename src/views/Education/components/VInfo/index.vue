@@ -13,6 +13,7 @@
         :documents="infoItem.documents"
         v-if="infoItem.documents.length"
         :infoItem="infoItem"
+        :role="role"
         @deleteDocument="deleteDocument"
       />
       <div v-else>Документов нет</div>
@@ -45,6 +46,7 @@ export default {
       type: Object,
       required: true,
     },
+    role: String,
   },
   components: { VAddDocument, VButton, VDocuments },
   data() {
