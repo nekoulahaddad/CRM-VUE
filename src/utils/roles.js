@@ -20,13 +20,16 @@ export default {
   buyer: [
     "monitor",
     "education",
+    "employee",
     "calendar",
-    "reports",
     "clients",
+    "reports",
     "orders",
     "mail",
     "storage",
     "delivery",
+    "callbacks",
+    "buying",
   ],
   call: [
     "monitor",

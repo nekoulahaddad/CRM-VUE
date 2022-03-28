@@ -78,6 +78,7 @@
             role === 'content' ||
             role === 'manager' ||
             role === 'call' ||
+            role === 'buyer' ||
             role === 'seo'
           "
         >
