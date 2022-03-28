@@ -50,9 +50,16 @@
                     </VueCustomTooltip>
                   </div>
 
-                  <template v-if="role === 'superadmin' || role === 'director'">
+                  <template>
                     <!-- Изменение -->
-                    <div class="table__icon">
+                    <div
+                      class="table__icon"
+                      v-if="
+                        role === 'superadmin' ||
+                        role === 'director' ||
+                        role === 'call'
+                      "
+                    >
                       <VueCustomTooltip label="Изменить">
                         <img
                           alt=""
@@ -63,7 +70,7 @@
                     </div>
 
                     <!-- Удаление -->
-                    <div class="table__icon">
+                    <div class="table__icon" v-if="role === 'superadmin'">
                       <VueCustomTooltip label="Удалить">
                         <img
                           alt=""
