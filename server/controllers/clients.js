@@ -178,7 +178,7 @@ exports.getClients = async (req, res, next) => {
         or[0].$or[1].$and.push({
           name: searchStr[1],
         });
-        or[0].$or[1].$and.push({
+        or[0].$or[2].$and.push({
           lastname: searchStr[1],
         });
       }
