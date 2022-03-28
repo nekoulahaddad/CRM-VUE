@@ -52,7 +52,6 @@ export default {
     padding: 10px;
   }
   .list__columns {
-    grid-template-columns: 1fr !important;
     .list__column {
       text-align: left !important;
       font-size: 16px;

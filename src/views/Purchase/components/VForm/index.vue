@@ -136,7 +136,7 @@
           </div>
         </div>
         <div
-          v-for="(product, index) in productsList"
+          v-for="product in productsList"
           :key="product._id"
           class="list__row list__row--shadow list__row--white"
         >
@@ -157,10 +157,7 @@
         class="list__row list__row--shadow list__row--white"
         v-if="addProductFormOpened"
       >
-        <div class="list__columns">
-          <div class="list__column">
-            {{ productsList.length + 1 }}
-          </div>
+        <div class="list__columns sub-list-columns">
           <div class="list__column add-good-item">
             <autocomplete
               :search="findItemByTitle"
@@ -190,17 +187,6 @@
               type="number"
               v-model="newItem.quantity"
             />
-          </div>
-          <div class="list__column d-flex justify-center">
-            <input
-              type="number"
-              class="form-control no-arrow"
-              min="0.01"
-              v-model="newItem.cost"
-            />
-          </div>
-          <div class="list__column">
-            {{ (newItem.cost * newItem.quantity).toFixed(2) || 0 }}
           </div>
           <div class="list__column d-flex align-items-center justify-end">
             <VueCustomTooltip label="Добавить">
@@ -706,6 +692,9 @@ export default {
     font-size: 17px;
     font-weight: 700;
     border-radius: $border-radius;
+  }
+  .sub-list-columns {
+    grid-template-columns: repeat(4, 1fr) !important;
   }
 }
 </style>

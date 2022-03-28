@@ -97,7 +97,8 @@
           <template v-if="name === 'goods'">
             <VueCustomTooltip
               v-if="
-                $store.state.filterOptions.nesting < 3 && role === 'content'
+                $store.state.filterOptions.nesting < 3 &&
+                (role === 'content' || role === 'superadmin')
               "
               label="Добавить категорию"
             >
@@ -115,7 +116,8 @@
             </VueCustomTooltip>
             <VueCustomTooltip
               v-if="
-                $store.state.filterOptions.nesting > 1 && role === 'content'
+                $store.state.filterOptions.nesting > 1 &&
+                (role === 'content' || role === 'superadmin')
               "
               label="Добавить товар"
             >
@@ -132,7 +134,10 @@
               </a>
             </VueCustomTooltip>
 
-            <VueCustomTooltip label="Импорт Excel" v-if="role === 'content'">
+            <VueCustomTooltip
+              label="Импорт Excel"
+              v-if="role === 'content' || role === 'superadmin'"
+            >
               <a
                 href=""
                 class="page-actions__button"
