@@ -16,6 +16,14 @@ exports.getClients = async (req, res, next) => {
   try {
     const page = +req.query.page - 1;
     const options = req.body.options;
+    let phone = options.search
+      ? options.search
+          .replace(/ /g, "")
+          .replace("+", "")
+          .replace("-", "")
+          .replace("(", "")
+          .replace(")", "")
+      : "";
     const searchStr = options.search ? options.search.split(" ") : null;
     if (searchStr && searchStr.length) {
       for (let i = 0; i < searchStr.length; i++) {
@@ -129,33 +137,56 @@ exports.getClients = async (req, res, next) => {
     };
 
     if (options.search) {
-      if (searchStr.length > 3) {
-        myMatch["phone"] = {
-          $in: [searchStr.join(" ")],
-        };
-      }
-      if (searchStr.length <= 3) {
-        myMatch = {
-          ...myMatch,
+      let or = [
+        {
           $or: [
             {
-              surname: {
-                $in: searchStr,
-              },
+              $and: [
+                {
+                  lastname: searchStr[0],
+                },
+              ],
             },
             {
-              name: {
-                $in: searchStr,
-              },
+              $and: [
+                {
+                  name: searchStr[0],
+                },
+              ],
             },
             {
-              lastname: {
-                $in: searchStr,
-              },
+              $and: [
+                {
+                  surname: searchStr[0],
+                },
+              ],
+            },
+            {
+              phone: phone,
             },
           ],
-        };
+        },
+        {
+          phone: Number.parseInt(options.search),
+        },
+      ];
+
+      if (searchStr.length > 1) {
+        or[0].$or[0].$and.push({
+          surname: searchStr[1],
+        });
+        or[0].$or[1].$and.push({
+          name: searchStr[1],
+        });
+        or[0].$or[1].$and.push({
+          lastname: searchStr[1],
+        });
       }
+
+      myMatch = {
+        ...myMatch,
+        $or: or,
+      };
     }
 
     let clients = await Clients.aggregate([
