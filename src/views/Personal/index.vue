@@ -82,74 +82,7 @@
                   class="list__info"
                   v-if="openedRoles.includes('superadmin')"
                 >
-                  <div class="list__item">
-                    <img src="@/assets/icons/monitor.svg" alt="" />
-                    <span>Дашборд</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Документы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/employee.svg" alt="" />
-                    <span>Персонал</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/calendar.svg" alt="" />
-                    <span>Календарь</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/tasks.svg" alt="" />
-                    <span>Задачи</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/reports.svg" alt="" />
-                    <span>Отчёты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/clients.svg" alt="" />
-                    <span>Клиенты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/orders.svg" alt="" />
-                    <span>Заказы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mail.svg" alt="" />
-                    <span>Заявки</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/goods.svg" alt="" />
-                    <span>Товары</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/seo.svg" alt="" />
-                    <span>SEO</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mango.svg" alt="" />
-                    <span>Mango</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/storage.svg" alt="" />
-                    <span>Снабженец</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/delivery.svg" alt="" />
-                    <span>Поставщики</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/callbacks.svg" alt="" />
-                    <span>Обращения</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/buying.svg" alt="" />
-                    <span>Закупка</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/sites.svg" alt="" />
-                    <span>Кор. сайты</span>
-                  </div>
+                  <img src="@/assets/images/superadmin.jpeg" alt="" />
                 </div>
               </div>
 
@@ -182,70 +115,7 @@
                   class="list__info"
                   v-if="openedRoles.includes('administrator')"
                 >
-                  <div class="list__item">
-                    <img src="@/assets/icons/monitor.svg" alt="" />
-                    <span>Дашборд</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Документы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/employee.svg" alt="" />
-                    <span>Персонал</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/calendar.svg" alt="" />
-                    <span>Календарь</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/tasks.svg" alt="" />
-                    <span>Задачи</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/reports.svg" alt="" />
-                    <span>Отчёты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/clients.svg" alt="" />
-                    <span>Клиенты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/orders.svg" alt="" />
-                    <span>Заказы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mail.svg" alt="" />
-                    <span>Заявки</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/goods.svg" alt="" />
-                    <span>Товары</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/seo.svg" alt="" />
-                    <span>SEO</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mango.svg" alt="" />
-                    <span>Mango</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/storage.svg" alt="" />
-                    <span>Снабженец</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/delivery.svg" alt="" />
-                    <span>Поставщики</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/callbacks.svg" alt="" />
-                    <span>Обращения</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/buying.svg" alt="" />
-                    <span>Закупка</span>
-                  </div>
+                  <img src="@/assets/images/director.jpeg" alt="" />
                 </div>
               </div>
 
@@ -275,46 +145,7 @@
                   </div>
                 </div>
                 <div class="list__info" v-if="openedRoles.includes('manager')">
-                  <div class="list__item">
-                    <img src="@/assets/icons/monitor.svg" alt="" />
-                    <span>Дашборд</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Документы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/calendar.svg" alt="" />
-                    <span>Календарь</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/tasks.svg" alt="" />
-                    <span>Задачи</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/orders.svg" alt="" />
-                    <span>Заказы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mail.svg" alt="" />
-                    <span>Заявки</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/goods.svg" alt="" />
-                    <span>Товары</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/delivery.svg" alt="" />
-                    <span>Поставщики</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/callbacks.svg" alt="" />
-                    <span>Обращения</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/buying.svg" alt="" />
-                    <span>Закупка</span>
-                  </div>
+                  <img src="@/assets/images/manager.jpeg" alt="" />
                 </div>
               </div>
 
@@ -322,7 +153,7 @@
               <div
                 class="list__row list__row--shadow list__row--white"
                 :class="{
-                  'list__row--opened': openedRoles.includes('content-manager'),
+                  'list__row--opened': openedRoles.includes('content'),
                 }"
               >
                 <div class="list__columns">
@@ -331,9 +162,9 @@
                     <div class="table__action">
                       <div class="table__icon">
                         <img
-                          @click="toggleOpenedRole('content-manager')"
+                          @click="toggleOpenedRole('content')"
                           :src="
-                            openedRoles.includes('content-manager')
+                            openedRoles.includes('content')
                               ? require('@/assets/icons/arrow_top_icon.svg')
                               : require('@/assets/icons/arrow_down_icon.svg')
                           "
@@ -343,34 +174,8 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  class="list__info"
-                  v-if="openedRoles.includes('content-manager')"
-                >
-                  <div class="list__item">
-                    <img src="@/assets/icons/monitor.svg" alt="" />
-                    <span>Дашборд</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Документы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/calendar.svg" alt="" />
-                    <span>Календарь</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/tasks.svg" alt="" />
-                    <span>Задачи</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/goods.svg" alt="" />
-                    <span>Товары</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/sites.svg" alt="" />
-                    <span>Кор. сайты</span>
-                  </div>
+                <div class="list__info" v-if="openedRoles.includes('content')">
+                  <img src="@/assets/images/content.jpeg" alt="" />
                 </div>
               </div>
 
@@ -400,35 +205,7 @@
                   </div>
                 </div>
                 <div class="list__info" v-if="openedRoles.includes('seo')">
-                  <div class="list__item">
-                    <img src="@/assets/icons/monitor.svg" alt="" />
-                    <span>Дашборд</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Документы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/calendar.svg" alt="" />
-                    <span>Календарь</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/tasks.svg" alt="" />
-                    <span>Задачи</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/reports.svg" alt="" />
-                    <span>Отчёты</span>
-                  </div>
-
-                  <div class="list__item">
-                    <img src="@/assets/icons/seo.svg" alt="" />
-                    <span>SEO</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/sites.svg" alt="" />
-                    <span>Кор. сайты</span>
-                  </div>
+                  <img src="@/assets/images/seo.jpeg" alt="" />
                 </div>
               </div>
 
@@ -458,42 +235,7 @@
                   </div>
                 </div>
                 <div class="list__info" v-if="openedRoles.includes('call')">
-                  <div class="list__item">
-                    <img src="@/assets/icons/monitor.svg" alt="" />
-                    <span>Дашборд</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Документы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/employee.svg" alt="" />
-                    <span>Персонал</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/calendar.svg" alt="" />
-                    <span>Календарь</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/orders.svg" alt="" />
-                    <span>Заказы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mail.svg" alt="" />
-                    <span>Заявки</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mango.svg" alt="" />
-                    <span>Mango</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/delivery.svg" alt="" />
-                    <span>Поставщики</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/callbacks.svg" alt="" />
-                    <span>Обращения</span>
-                  </div>
+                  <img src="@/assets/images/call.jpeg" alt="" />
                 </div>
               </div>
 
@@ -523,42 +265,7 @@
                   </div>
                 </div>
                 <div class="list__info" v-if="openedRoles.includes('buyer')">
-                  <div class="list__item">
-                    <img src="@/assets/icons/monitor.svg" alt="" />
-                    <span>Дашборд</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/education.svg" alt="" />
-                    <span>Документы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/calendar.svg" alt="" />
-                    <span>Календарь</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/reports.svg" alt="" />
-                    <span>Отчёты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/clients.svg" alt="" />
-                    <span>Клиенты</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/orders.svg" alt="" />
-                    <span>Заказы</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/mail.svg" alt="" />
-                    <span>Заявки</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/storage.svg" alt="" />
-                    <span>Снабженец</span>
-                  </div>
-                  <div class="list__item">
-                    <img src="@/assets/icons/delivery.svg" alt="" />
-                    <span>Поставщики</span>
-                  </div>
+                  <img src="@/assets/images/buyer.jpeg" alt="" />
                 </div>
               </div>
             </div>
@@ -708,6 +415,8 @@ export default {
     &__info {
       display: flex;
       flex-wrap: wrap;
+      padding: 0;
+      box-shadow: 0 0 5px rgb(0 0 0 / 20%);
     }
     &__item {
       width: 20%;
@@ -746,7 +455,6 @@ export default {
       justify-content: space-between;
     }
     &__column {
-      padding-left: 5px;
       padding-right: 5px;
       height: 42px;
       display: flex;
