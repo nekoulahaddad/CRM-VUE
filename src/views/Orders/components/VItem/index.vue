@@ -101,7 +101,10 @@
             @click="$emit('toggleEdit', item)"
           />
         </div>
-        <div class="table__icon" v-if="role === 'superadmin'">
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin' || role === 'call'"
+        >
           <VueCustomTooltip label="Удалить">
             <img
               alt=""
