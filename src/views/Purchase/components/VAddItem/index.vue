@@ -2,7 +2,10 @@
   <div
     class="list__row list__row--shadow list__row--white list__row--opened add-purchase-row"
   >
-    <div class="list__columns list__columns--shadow list__columns--white">
+    <div
+      class="list__columns list__columns--shadow list__columns--white"
+      style="grid-template-columns: 1fr"
+    >
       <div class="list__column list__column--title add-purchase-row__title">
         Добавить закупку
 

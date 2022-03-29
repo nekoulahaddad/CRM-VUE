@@ -132,21 +132,22 @@
             <div class="list__column">№:</div>
             <div class="list__column">Название товара:</div>
             <div class="list__column">Артикул:</div>
-            <div class="list__column">Количество:</div>
-            <div class="list__column"></div>
+            <div class="list__column">Итого:</div>
           </div>
         </div>
         <div
-          v-for="product in productsList"
+          v-for="(product, index) in productsList"
           :key="product._id"
           class="list__row list__row--shadow list__row--white"
         >
           <div class="list__columns">
+            <div class="list__column">
+              {{ index + 1 }}
+            </div>
             <div class="list__column bg bg--blue-light">
               {{ product.title }}
             </div>
             <div class="list__column">{{ product.article }}</div>
-            <div class="list__column">{{ product.quantity }}</div>
             <div class="list__column">
               {{ product.cost }} {{ product.valute ? product.valute : valute }}
             </div>
@@ -185,14 +186,6 @@
               @keyup="findItemByArticle"
             />
           </div>
-          <div class="list__column d-flex justify-center">
-            <input
-              min="1"
-              class="form-control"
-              type="number"
-              v-model="newItem.quantity"
-            />
-          </div>
           <div class="list__column d-flex align-items-center justify-end">
             <VueCustomTooltip label="Добавить">
               <img
@@ -223,6 +216,7 @@
 
 <script>
 import axios from "@/api/axios";
+import { REGION_MOSCOW_ID } from "../../../../constants";
 
 export default {
   props: {
@@ -429,7 +423,7 @@ export default {
           url: `/products/getproductbysearch/`,
           data: {
             search: title,
-            region: this.region,
+            region: this.region || REGION_MOSCOW_ID,
           },
           method: "POST",
         })
@@ -699,6 +693,8 @@ export default {
     border-radius: $border-radius;
   }
   .sub-list {
+    width: 100%;
+
     .list__header {
       height: auto;
       position: relative;
@@ -728,7 +724,7 @@ export default {
   }
   .sub-list .list__columns,
   .sub-list-columns {
-    grid-template-columns: 50px 700px 220px 220px 1fr !important;
+    grid-template-columns: 50px 700px 220px 1fr !important;
 
     .list__column {
       font-size: 13px !important;
