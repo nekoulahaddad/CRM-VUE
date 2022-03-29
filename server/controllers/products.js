@@ -729,11 +729,13 @@ exports.editProduct = async(req, res, next) => {
                 product.images.push(images[i].filename);
             }
             product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
-        } else {
+        } 
+        /*
+        else {
             product.images = []
             await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
         }
-
+        */
         // Если название было изменено
         if (changeTitle) {
             // Ищем похожие товары среди всех регионов
