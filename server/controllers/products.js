@@ -684,6 +684,7 @@ exports.editProduct = async (req, res, next) => {
       product.options = [];
     }
 
+
     if (recomendsProductsIds) {
       if (Array.isArray(recomendsProductsIds) || !recomendsProductsIds.length) {
         let products_ids = [];
@@ -707,6 +708,97 @@ exports.editProduct = async (req, res, next) => {
             title: buyedProductsTitles[i],
             product_id: mongoose.Types.ObjectId(buyedProductsIds[i]),
           });
+
+        // product.updates.push({
+        //     user: mongoose.Types.ObjectId(req.userId),
+        // });
+
+        if (images && images.length > 0) {
+            console.log('images change' );
+            
+            product.images = [];
+            await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
+            await makeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
+            
+            for (let i = 0; i < images.length; i++) {
+                await uploadFilesFromTempToFolder(TEMP_PATH, UPLOADS_PATH, images[i].filename, `catalog/${region}/categories/${product.category_id}/${product._id}`)
+                product.images.push(images[i].filename);
+            }
+            product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
+        } 
+        /*
+        else {
+            product.images = []
+            await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
+        }
+        */
+        // Если название было изменено
+        if (changeTitle) {
+            // Ищем похожие товары среди всех регионов
+            const matchedProducts = await Products.aggregate([{
+                    $project: {
+                        results: {
+                            $filter: {
+                                input: "$regions",
+                                as: "el",
+                                cond: {
+                                    $and: [
+                                        {
+                                            $eq: ["$$el.region", mongoose.Types.ObjectId(region)],
+                                        },
+                                        {
+                                            $eq: ["$$el.product.slug", product.slug],
+                                        },
+                                    ],
+                                },                                
+                            },
+                        },
+                    },
+                },
+                {
+                    $unwind: {
+                        path: "$results",
+                    },
+                },
+                {
+                    $group: {
+                        _id: "$_id",
+                        results: {
+                            $addToSet: "$results.product",
+                        },
+                    },
+                },
+            ]);
+
+            // Если совпадений нет - обнавляем
+            if (!matchedProducts.length) {
+                console.log("NOT MATCHED") 
+
+                const updatedProductDB = await Products.findOneAndUpdate({     
+                    'regions.product._id': mongoose.Types.ObjectId(product._id),           
+                    "regions.region": mongoose.Types.ObjectId(region),
+                }, {
+                    $set: {
+                        "regions.$.product": product,
+                    },
+                })  
+
+            // Если совпадений есть отправляем ошибку клиенту   
+            } else {
+                console.log("MATCHED")              
+                return res.status(400).json({ message: "Товар с таким названием в данном регионе уже существует!" });
+            }
+
+        // Если название не было изменено
+        } else {
+            const updatedProductDB = await Products.findOneAndUpdate({     
+                'regions.product._id': mongoose.Types.ObjectId(product._id),           
+                "regions.region": mongoose.Types.ObjectId(region),
+            }, {
+                $set: {
+                    "regions.$.product": product,
+                },
+            })
         }
         product.buyed = products_ids;
       }

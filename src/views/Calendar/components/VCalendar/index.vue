@@ -58,7 +58,7 @@ export default {
       if (attributes.length) {
         this.$emit("showEventList", attributes);
       } else {
-        if (this.role === "superadmin" || role === "director") {
+        if (this.role === "superadmin" || this.role === "director") {
           this.$store.commit("toggleAction", {
             key: "addEvent",
           });

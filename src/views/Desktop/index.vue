@@ -30,7 +30,7 @@
     <div class="page__body d-flex">
       <div class="page__left">
         <div class="tasks">
-          <div class="tasks__title">Доска поставленных задач</div>
+          <div class="tasks__title">Доска поставленных задач:</div>
           <div class="tasks__lists">
             <v-spinner v-if="!isLoading" />
             <div
@@ -104,7 +104,10 @@
                         </div>
                       </div>
 
-                      <div class="list__actions">
+                      <div
+                        class="list__actions"
+                        v-if="role === 'superadmin' || role === 'director'"
+                      >
                         <img
                           alt=""
                           src="@/assets/icons/dots_icon.svg"
@@ -269,6 +272,7 @@ export default {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
           status: "assigned",
           limit: 1,
+          executor: this.role === "superadmin" ? null : this.id,
         });
         this.dataset["assigned"].tasks.unshift(data.assigned.tasks[0]);
       } catch (e) {}
@@ -291,6 +295,7 @@ export default {
           const { data } = await this.getDataFromPage(`/tasks/desktop`, {
             status: [status],
             skip: this.statuses[status].skip,
+            executor: this.role === "superadmin" ? null : this.id,
           });
 
           this.dataset[status].tasks.push(...data[status].tasks);
@@ -314,6 +319,7 @@ export default {
         try {
           const { data } = await this.getDataFromPage(`/tasks/desktop`, {
             status: [this.status],
+            executor: this.role === "superadmin" ? null : this.id,
           });
 
           this.dataset[status].tasks.push(...data[status].tasks);
@@ -359,6 +365,7 @@ export default {
       try {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
           status: ["accepted", "assigned", "completed", "tested"],
+          executor: this.role === "superadmin" ? null : this.id,
         });
 
         for (let status in data) {
@@ -499,7 +506,7 @@ export default {
 
     &__title {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: bold;
       margin-bottom: 10px;
     }
 

@@ -86,7 +86,12 @@
                 class="list__row list__row--shadow list__row--white"
                 v-for="item in dataset.categories"
               >
-                <v-category :current="current" :key="item._id" :item="item" />
+                <v-category
+                  :current="current"
+                  :key="item._id"
+                  :item="item"
+                  :role="role"
+                />
               </div>
               <div
                 class="list__row list__row--shadow list__row--white"

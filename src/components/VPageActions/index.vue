@@ -72,10 +72,7 @@
           <!-- Закупка -->
           <template
             v-if="
-              name === 'buying' &&
-              (role === 'superadmin' ||
-                role === 'manager' ||
-                role === 'content')
+              name === 'buying' && (role === 'superadmin' || role === 'buyer')
             "
           >
             <VueCustomTooltip label="Добавить закупку">
@@ -97,7 +94,8 @@
           <template v-if="name === 'goods'">
             <VueCustomTooltip
               v-if="
-                $store.state.filterOptions.nesting < 3 && role === 'content'
+                $store.state.filterOptions.nesting < 3 &&
+                (role === 'content' || role === 'superadmin')
               "
               label="Добавить категорию"
             >
@@ -115,7 +113,8 @@
             </VueCustomTooltip>
             <VueCustomTooltip
               v-if="
-                $store.state.filterOptions.nesting > 1 && role === 'content'
+                $store.state.filterOptions.nesting > 1 &&
+                (role === 'content' || role === 'superadmin')
               "
               label="Добавить товар"
             >
@@ -132,7 +131,10 @@
               </a>
             </VueCustomTooltip>
 
-            <VueCustomTooltip label="Импорт Excel" v-if="role === 'content'">
+            <VueCustomTooltip
+              label="Импорт Excel"
+              v-if="role === 'content' || role === 'superadmin'"
+            >
               <a
                 href=""
                 class="page-actions__button"
@@ -208,7 +210,10 @@
 
           <!-- Сотрудники -->
           <template v-if="name === 'employee'">
-            <VueCustomTooltip label="Добавить сотрудника">
+            <VueCustomTooltip
+              label="Добавить сотрудника"
+              v-if="role === 'superadmin'"
+            >
               <a
                 href=""
                 class="page-actions__button"
@@ -332,17 +337,24 @@
 
           <!-- Департаменты -->
           <template v-if="name === 'departments'">
-            <a
-              href=""
-              class="page-actions__button"
-              :class="{
-                'page-actions__button--active':
-                  $store.state.actions.addDepartment,
-              }"
-              @click.prevent="toggleAction('addDepartment')"
+            <VueCustomTooltip
+              label="Добавить отдел"
+              v-if="role === 'superadmin'"
             >
-              <simple-svg :src="require('@/assets/icons/add_department.svg')" />
-            </a>
+              <a
+                href=""
+                class="page-actions__button"
+                :class="{
+                  'page-actions__button--active':
+                    $store.state.actions.addDepartment,
+                }"
+                @click.prevent="toggleAction('addDepartment')"
+              >
+                <simple-svg
+                  :src="require('@/assets/icons/add_department.svg')"
+                />
+              </a>
+            </VueCustomTooltip>
           </template>
 
           <!-- Клиенты -->
@@ -354,7 +366,10 @@
 
           <!-- Вакансии -->
           <template v-if="name === 'vacancies'">
-            <VueCustomTooltip label="Добавить вакансию">
+            <VueCustomTooltip
+              label="Добавить вакансию"
+              v-if="role === 'superadmin'"
+            >
               <a
                 href=""
                 class="page-actions__button"

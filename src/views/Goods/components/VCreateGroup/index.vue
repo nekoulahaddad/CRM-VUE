@@ -105,7 +105,13 @@ export default {
       let arr = [];
       this.items.map((i) => {
         i.options.map((option) => {
-          arr.push(Object.keys(option) + "");
+          if (option) {
+            if (typeof option !== "string") {
+              arr.push(...Object.keys(option));
+            } else {
+              arr.push(Object.keys(option) + "");
+            }
+          }
         });
       });
       arr.push("Размер");

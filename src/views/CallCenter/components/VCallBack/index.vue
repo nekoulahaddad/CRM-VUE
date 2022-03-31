@@ -69,7 +69,7 @@
           />
         </div>
         <div
-          v-if="role === 'superadmin' || role === 'manager' || role === 'call'"
+          v-if="role === 'superadmin' || role === 'call' || role === 'buyer'"
           class="table__icon"
           style="width: 28px"
         >
@@ -89,7 +89,7 @@
         </div>
         <div
           class="table__icon"
-          v-if="role === 'superadmin' || role === 'manager' || role === 'call'"
+          v-if="role === 'superadmin' || role === 'call' || role === 'buyer'"
         >
           <VueCustomTooltip label="Удалить">
             <img

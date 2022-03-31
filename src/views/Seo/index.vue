@@ -117,6 +117,7 @@
               >
                 <v-product
                   :item="item"
+                  :role="role"
                   :showEdit="editedItem._id === item._id"
                   @toggleEdit="toggleEdit"
                 />

@@ -6,7 +6,7 @@
         href=""
         v-if="
           editedItem._id !== item._id &&
-          (role === 'content' || role === 'director' || role === 'manager')
+          (role === 'content' || role === 'manager')
         "
         @click.prevent="$emit('toggleEdit', item)"
       >
@@ -99,93 +99,70 @@
       </div>
 
       <!-- Менеджер -->
-      <div class="table__icon">
-        <template
-          v-if="role === 'content' || role === 'director' || role === 'manager'"
+      <div
+        class="table__icon"
+        v-if="role === 'content' || role === 'superadmin'"
+      >
+        <VueCustomTooltip
+          v-if="managerItem._id !== item._id"
+          label="Имя менеджера"
         >
-          <VueCustomTooltip
-            v-if="managerItem._id !== item._id"
-            label="Имя менеджера"
-          >
-            <img
-              alt=""
-              @click="$emit('toggleManager', item)"
-              src="@/assets/icons/manager.svg"
-              :class="{ none: !item.manager[0] }"
-            />
-          </VueCustomTooltip>
           <img
             alt=""
-            v-else
             @click="$emit('toggleManager', item)"
-            src="@/assets/icons/arrow_top_icon.svg"
+            src="@/assets/icons/manager.svg"
+            :class="{ none: !item.manager[0] }"
           />
-        </template>
+        </VueCustomTooltip>
         <img
           alt=""
           v-else
-          class="opacity-30"
-          src="@/assets/icons/manager.svg"
+          @click="$emit('toggleManager', item)"
+          src="@/assets/icons/arrow_top_icon.svg"
         />
       </div>
-      <div class="table__icon">
-        <template
-          v-if="role === 'content' || role === 'director' || role === 'manager'"
+      <div
+        class="table__icon"
+        v-if="role === 'content' || role === 'superadmin'"
+      >
+        <v-spinner v-if="categoryVisibleItem.includes(item._id)" extraSmall />
+        <VueCustomTooltip
+          v-else
+          :label="item.visible ? 'Скрыть категорию' : 'Показать категорию'"
         >
-          <v-spinner v-if="categoryVisibleItem.includes(item._id)" extraSmall />
-          <VueCustomTooltip
-            v-else
-            :label="item.visible ? 'Скрыть категорию' : 'Показать категорию'"
-          >
-            <img
-              alt=""
-              :src="
-                item.visible
-                  ? require('@/assets/icons/eye_close.svg')
-                  : require('@/assets/icons/eye.svg')
-              "
-              :class="{ none: item.visible }"
-              @click="$emit('changeVisibility', item._id, item.visible)"
-            />
-          </VueCustomTooltip>
-        </template>
-        <img
-          alt=""
-          v-else
-          :src="
-            item.visible
-              ? require('@/assets/icons/eye_close.svg')
-              : require('@/assets/icons/eye.svg')
-          "
-          class="opacity-30"
-        />
+          <img
+            alt=""
+            :src="
+              item.visible
+                ? require('@/assets/icons/eye_close.svg')
+                : require('@/assets/icons/eye.svg')
+            "
+            :class="{ none: item.visible }"
+            @click="$emit('changeVisibility', item._id, item.visible)"
+          />
+        </VueCustomTooltip>
       </div>
-      <div class="table__icon">
+      <div
+        class="table__icon"
+        v-if="role === 'content' || role === 'superadmin'"
+      >
         <img
-          v-if="role === 'content' || role === 'director' || role === 'manager'"
           @click="$emit('toggleDropDown', item)"
           src="@/assets/icons/option.svg"
           alt=""
         />
-        <img alt="" v-else class="opacity-30" src="@/assets/icons/option.svg" />
       </div>
-      <div class="table__icon">
-        <VueCustomTooltip
-          label="Удалить"
-          v-if="role === 'content' || role === 'director' || role === 'manager'"
-        >
+      <div
+        class="table__icon"
+        v-if="role === 'content' || role === 'superadmin'"
+      >
+        <VueCustomTooltip label="Удалить">
           <img
             @click="$emit('toggleDeleteCategory', item)"
             src="@/assets/icons/trash_icon.svg"
             alt=""
           />
         </VueCustomTooltip>
-        <img
-          alt=""
-          v-else
-          class="opacity-30"
-          src="@/assets/icons/trash_icon.svg"
-        />
       </div>
     </div>
   </div>

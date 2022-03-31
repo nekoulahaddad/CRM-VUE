@@ -6,11 +6,8 @@
       <a href="" @click.prevent="$emit('toggleInfo', item)">{{ item.title }}</a>
     </div>
     <div class="list__column">
-      <div class="table__actions">
-        <div
-          class="table__icon"
-          v-if="role === 'superadmin' || role === 'director'"
-        >
+      <div class="table__actions" v-if="role === 'superadmin'">
+        <div class="table__icon">
           <VueCustomTooltip label="Изменить">
             <img
               alt=""

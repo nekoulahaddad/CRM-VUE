@@ -126,13 +126,13 @@
 
     <div class="group" style="margin-top: 10px">
       <div class="group__title">Товары:</div>
-      <div class="list sub-list" v-if="productsList.length">
+      <div class="list sub-list">
         <div class="list__header">
           <div class="list__columns">
+            <div class="list__column">№:</div>
             <div class="list__column">Название товара:</div>
             <div class="list__column">Артикул:</div>
-            <div class="list__column">Количество:</div>
-            <div class="list__column">Итог:</div>
+            <div class="list__column">Итого:</div>
           </div>
         </div>
         <div
@@ -141,11 +141,13 @@
           class="list__row list__row--shadow list__row--white"
         >
           <div class="list__columns">
+            <div class="list__column">
+              {{ index + 1 }}
+            </div>
             <div class="list__column bg bg--blue-light">
               {{ product.title }}
             </div>
             <div class="list__column">{{ product.article }}</div>
-            <div class="list__column">{{ product.quantity }}</div>
             <div class="list__column">
               {{ product.cost }} {{ product.valute ? product.valute : valute }}
             </div>
@@ -154,11 +156,12 @@
       </div>
 
       <div
+        style="margin-bottom: 10px"
         class="list__row list__row--shadow list__row--white"
         v-if="addProductFormOpened"
       >
-        <div class="list__columns">
-          <div class="list__column">
+        <div class="list__columns sub-list-columns">
+          <div class="list__column d-flex justify-center">
             {{ productsList.length + 1 }}
           </div>
           <div class="list__column add-good-item">
@@ -182,25 +185,6 @@
               placeholder="000000"
               @keyup="findItemByArticle"
             />
-          </div>
-          <div class="list__column d-flex justify-center">
-            <input
-              min="1"
-              class="form-control"
-              type="number"
-              v-model="newItem.quantity"
-            />
-          </div>
-          <div class="list__column d-flex justify-center">
-            <input
-              type="number"
-              class="form-control no-arrow"
-              min="0.01"
-              v-model="newItem.cost"
-            />
-          </div>
-          <div class="list__column">
-            {{ (newItem.cost * newItem.quantity).toFixed(2) || 0 }}
           </div>
           <div class="list__column d-flex align-items-center justify-end">
             <VueCustomTooltip label="Добавить">
@@ -232,6 +216,7 @@
 
 <script>
 import axios from "@/api/axios";
+import { REGION_MOSCOW_ID } from "../../../../constants";
 
 export default {
   props: {
@@ -438,7 +423,7 @@ export default {
           url: `/products/getproductbysearch/`,
           data: {
             search: title,
-            region: this.region,
+            region: this.region || REGION_MOSCOW_ID,
           },
           method: "POST",
         })
@@ -706,6 +691,62 @@ export default {
     font-size: 17px;
     font-weight: 700;
     border-radius: $border-radius;
+  }
+  .sub-list {
+    width: 100%;
+
+    .list__header {
+      height: auto;
+      position: relative;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #f6f6f6;
+        border-radius: 5px;
+      }
+    }
+
+    .list__columns {
+      background-color: transparent;
+
+      .list__column {
+        font-size: 13px;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+  .sub-list .list__columns,
+  .sub-list-columns {
+    grid-template-columns: 50px 700px 220px 1fr !important;
+
+    .list__column {
+      font-size: 13px !important;
+    }
+
+    span[role="tooltip"] + * {
+      margin-left: 20px;
+    }
+  }
+  .form-control[type="number"] {
+    width: 100px;
+  }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
   }
 }
 </style>

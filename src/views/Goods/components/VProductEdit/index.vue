@@ -513,9 +513,7 @@ export default {
       this.isLoading = true;
       let fileBuffer = [];
       Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
-      fileBuffer.reverse();
       const files = fileBuffer;
-      files.sort();
       this[e.target.name] = files;
       this.images = clear ? [] : this.images;
       this.tempUrl = clear ? [] : this.tempUrl;

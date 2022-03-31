@@ -26,7 +26,11 @@
             @click="$emit('toggleInfo', item)"
           />
         </div>
-        <div class="table__icon" style="width: 28px">
+        <div
+          class="table__icon"
+          v-if="role === 'superadmin'"
+          style="width: 28px"
+        >
           <VueCustomTooltip v-if="editedItem._id !== item._id" label="Изменить">
             <img
               @click="$emit('toggleEdit', item)"
@@ -41,7 +45,7 @@
             @click="$emit('toggleEdit', item)"
           />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" v-if="role === 'superadmin'">
           <VueCustomTooltip label="Удалить">
             <img
               @click="$emit('toggleDelete', item)"
@@ -67,6 +71,7 @@ export default {
     infoItem: {
       type: Object,
     },
+    role: String,
   },
 };
 </script>
