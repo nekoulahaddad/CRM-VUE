@@ -165,6 +165,16 @@
                 <img src="@/assets/icons/region_items.svg" alt="" />
               </a>
             </VueCustomTooltip>
+
+            <VueCustomTooltip :label="`Скачать фид`">
+              <a
+                href=""
+                class="page-actions__button"
+                @click.prevent="downloadFeed"
+              >
+                <img src="@/assets/icons/download.svg" alt="" />
+              </a>
+            </VueCustomTooltip>
           </template>
 
           <!-- Заказы -->
@@ -596,6 +606,27 @@ export default {
       } catch {
         this.$toast.error("Ошибка при скачивании файла");
       }
+    },
+    async downloadFeed(){
+      axios({
+        url: `/feeds/downloadfeed`,
+        data: {
+          region: this.$store.getters.getFilterOptions.region,
+          category_id: this.$store.getters.getFilterOptions.parent_value,
+          nesting: this.$store.getters.getFilterOptions.nesting,
+        },
+        method: "POST",
+        responseType: "blob",
+      }).then(async (response) => {
+        const link = document.createElement("a");
+        const blob = new Blob([response.data]);
+        let urll = window.URL.createObjectURL(blob);
+        link.href = urll;
+        link.download = `Фид.yml`;
+        link.click();
+        window.URL.revokeObjectURL(urll);
+        URL.revokeObjectURL(link.href);
+      });
     },
     clearCache() {
       axios
