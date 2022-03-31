@@ -6,6 +6,7 @@ const User = require('../models/user')
 const moment = require('moment')
 const { v4: uuidv4 } = require("uuid");
 const _ = require('lodash')
+const calltouch = require('../utils/calltouch')
 
 exports.getOrders = async(req, res, next) => {
     try {
@@ -40,11 +41,11 @@ exports.getOrders = async(req, res, next) => {
                 "$in": [mongoose.Types.ObjectId(options.executor)]
             }
         }
-        if (req.userRole !== 'superadmin' && req.userRole !== 'admin' && req.userRole !== 'director' && req.userRole !== 'call') {
-            myMatch['manager._id'] = {
-                "$in": [mongoose.Types.ObjectId(req.userId)]
-            }
-        }
+        // if (req.userRole !== 'superadmin' && req.userRole !== 'admin' && req.userRole !== 'director' && req.userRole !== 'call') {
+        //     myMatch['manager._id'] = {
+        //         "$in": [mongoose.Types.ObjectId(req.userId)]
+        //     }
+        // }
 
         if (options.client && options.client !== 'all') {
             myMatch['client._id'] = {
@@ -367,6 +368,8 @@ exports.getOrders = async(req, res, next) => {
             delivery: orders ? orders[0].totalDelivery[0] ? orders[0].totalDelivery[0].deliverySum : 0 : 0,
             shippedSum: orders ? orders[0].totalShippedSum[0] ? orders[0].totalShippedSum[0].shippedSum : 0 : 0,
         }
+        // calltouch.sendAllOrders(result.orders)
+        // console.log("🚀 ~ file: orders.js ~ line 370 ~ exports.getOrders=async ~ orders", result)
         console.log("///////////////////////")
         console.log("Orders")        
         console.log("///////////////////////")
@@ -480,7 +483,10 @@ exports.addOrder = async(req, res, next) => {
             acquiringNum: uuidv4()
         }
         const newOrder = await Orders.create(dataOrder)
+        console.log("🚀 ~ file: orders.js ~ line 484 ~ exports.addOrder=async ~ newOrder", newOrder)
         await newOrder.save()
+        // https://api.calltouch.ru/lead-service/v1/api/client-order/create
+
         res.status(201).json({
             message: "ADDED",
             data: newOrder
