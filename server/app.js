@@ -139,6 +139,7 @@ const routerVacancies = require("./routes/vacancies");
 const routerGoogleSheets = require("./routes/googlesheets");
 const routerStaticSites = require("./routes/staticSites");
 const routerSendMail = require("./routes/sendMail");
+const routerFeeds = require("./routes/feeds");
 
 app.use("/", express.static(path.join(__dirname, "build")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -196,6 +197,7 @@ app.use("/vacancies", routerVacancies);
 app.use("/googlesheets", routerGoogleSheets);
 app.use("/sites", routerStaticSites);
 app.use("/sendmail", routerSendMail);
+app.use("/feeds", routerFeeds);
 
 events.on("call", async (e) => {
   try {
