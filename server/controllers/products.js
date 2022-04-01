@@ -809,6 +809,11 @@ exports.editProduct = async(req, res, next) => {
     console.log("///////////////////////")
         console.log("Updating of Product completed")
     console.log("///////////////////////")
+    try {
+      updateFeed(region, product.parent_id)
+    } catch(err) {
+      console(err)
+    }
     res.status(201).json({
         message: "EDITED",
         product: product,
