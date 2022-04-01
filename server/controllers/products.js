@@ -820,10 +820,10 @@ exports.editProduct = async(req, res, next) => {
         changeTitle: changeTitle,
         old: product._id
     });
-} catch (error) {
+  } catch (error) {
         console.log(error)
         next(error);
-    }
+  }
 }
 
 exports.transferProduct = async(req, res, next) => {
