@@ -41,11 +41,11 @@ exports.getOrders = async(req, res, next) => {
                 "$in": [mongoose.Types.ObjectId(options.executor)]
             }
         }
-        // if (req.userRole !== 'superadmin' && req.userRole !== 'admin' && req.userRole !== 'director' && req.userRole !== 'call') {
-        //     myMatch['manager._id'] = {
-        //         "$in": [mongoose.Types.ObjectId(req.userId)]
-        //     }
-        // }
+        if (req.userRole !== 'superadmin' && req.userRole !== 'admin' && req.userRole !== 'director' && req.userRole !== 'call') {
+            myMatch['manager._id'] = {
+                "$in": [mongoose.Types.ObjectId(req.userId)]
+            }
+        }
 
         if (options.client && options.client !== 'all') {
             myMatch['client._id'] = {
