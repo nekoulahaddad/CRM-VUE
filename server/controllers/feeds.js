@@ -60,6 +60,7 @@ exports.downloadFeed = async (req, res, next) => {
         res.status(200).download(filePath, category.categoryName);
       });
     }
+    res.status(500).send({ message: 'Ошибка при скачивании' });
   } catch (error) {
     next(error);
   }
