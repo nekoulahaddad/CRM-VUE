@@ -514,43 +514,233 @@ function endCount() {
 }
 
 exports.editProduct = async(req, res, next) => {
-    try {
-        const {
-            region,
-            productId,
-            title,
-            options,
-            cost,
-            club_cost,
-            discount,
-            wholesale,
-            discount_price,
-            recomendsProductsIds,
-            recomendsProductsTitles,
-            buyedProductsIds,
-            buyedProductsTitles,
-            unit,
-            description,
-            coef,
-            supplier_article,
-            rrp,
-            purchase_cost,
-            margin,
-            discount_percent,
-            stop_cost
-        } = req.body;
+  try {
+    const {
+        region,
+        productId,
+        title,
+        options,
+        cost,
+        club_cost,
+        discount,
+        wholesale,
+        discount_price,
+        recomendsProductsIds,
+        recomendsProductsTitles,
+        buyedProductsIds,
+        buyedProductsTitles,
+        unit,
+        description,
+        coef,
+        supplier_article,
+        rrp,
+        purchase_cost,
+        margin,
+        discount_percent,
+        stop_cost
+    } = req.body;
+    
+
+    console.log("///////////////////////")
+        console.log(`  Run edit Product ${productId} for region ${region}`)
+        console.log(`  by user: user id = ${req.userId}, user role - ${req.userRole}`)
+    console.log("///////////////////////")
+
+    let changeTitle = false
+    const images = req.files;
+    console.log(images.length)
+
+    const updatedProduct = await Products.aggregate([{
+            $project: {
+                results: {
+                    $filter: {
+                        input: "$regions",
+                        as: "el",
+                        cond: {
+                            $and: [
+                                {
+                                    $eq: ["$$el.region", mongoose.Types.ObjectId(region)],
+                                },
+                                {
+                                    $eq: ["$$el.product._id",mongoose.Types.ObjectId(productId)],
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+        },
+        {
+            $unwind: {
+                path: "$results",
+            },
+        },
+        {
+            $unwind: {
+                path: "$results.product",
+            },
+        },
+        {
+            $group: {
+                _id: "$_id",
+                product: {
+                    $addToSet: "$results.product",
+                },
+            },
+        },
+    ]);
+
+    const product = updatedProduct[0].product[0];
+    let oldSlug = product.slug;
+
+    if (title !== undefined && title) {
+        let oldTitle = product.title.toLowerCase()
+        product.title = title;
+        product.slug = translit(_.kebabCase(product.title))
+            .replace(/'/g, "")
+            .toLowerCase();
+
+        if (product.slug !== oldSlug && product.title.toLowerCase() !== oldTitle)
+            changeTitle = true
+    }
+
+    if (cost !== undefined && cost) {
+        product.cost = cost;
+    }
+
+    if (club_cost === null || club_cost === 0) {
+        product.club_cost = null
+    }
+
+    if (club_cost !== undefined && club_cost) {
+        product.club_cost = club_cost;
+    }
+    if (wholesale !== undefined) {
+        product.wholesale = wholesale
+    }
+    if (discount) {
+        product.discount = discount
+        product.discount_price = discount_price
+        if (coef !== 'undefined') {
+            product.discount_full_price = (discount_price * +coef).toFixed(2)
+        }
+    } else {
+        product.discount = false
+        product.discount_price = 0
+    }
+
+    if (supplier_article !== undefined && supplier_article) {
+        product.supplier_article = supplier_article;
+    }
+    if (rrp !== undefined && rrp) {
+        product.rrp = rrp;
+    }
+    if (purchase_cost !== undefined && purchase_cost) {
+        product.purchase_cost = purchase_cost;
+    }
+    if (margin !== undefined && margin) {
+        product.margin = margin;
+    }
+    if (discount_percent !== undefined && discount_percent) {
+        product.discount_percent = discount_percent;
+    }
+    if (stop_cost !== undefined && stop_cost) {
+        product.stop_cost = stop_cost;
+    }
+    if (unit !== undefined && unit) {
+        product.unit = unit;
+    }
+
+    if (coef !== undefined) {
+        product.coef = +coef
+        product.full_cost = (product.cost * +coef).toFixed(2)
+        console.log(product.club_cost, coef)
+        if (product.club_cost) product.full_club_cost = (product.club_cost * +coef).toFixed(2)
+
+    } else {
+        product.coef = 0
+        product.full_cost = 0
+        product.full_club_cost = 0
+    }
+    if (description !== undefined || description === '') {
+        product.description = description;
+    }
+
+    if (options !== undefined) {
+        let formatedOptions = [];
+        let optionsNew = JSON.parse(JSON.stringify(options));
+        for (let key in optionsNew) {
+            let newKey = key.replace(/\./g, '##')
+            formatedOptions.push({
+                [newKey]: optionsNew[key],
+            });
+        }
+        product.options = formatedOptions;
+    } else {
+        product.options = []
+    }
+
+    if (recomendsProductsIds) {
+        if ( Array.isArray(recomendsProductsIds) || !recomendsProductsIds.length ) {
+            let products_ids = [];
+            for (let i = 0; i < recomendsProductsIds.length; i++) {
+                products_ids.push({
+                    title: recomendsProductsTitles[i],
+                    product_id: mongoose.Types.ObjectId(
+                        recomendsProductsIds[i]
+                    ),
+                });
+            }
+            product.recomended = products_ids;
+        }
+    } else {
+        product.recomended = [];
+    }
+
+    if (buyedProductsIds) {
+        if (Array.isArray(buyedProductsIds) || !buyedProductsIds.length) {
+            let products_ids = [];
+            for (let i = 0; i < buyedProductsIds.length; i++) {
+                products_ids.push({
+                    title: buyedProductsTitles[i],
+                    product_id: mongoose.Types.ObjectId(
+                        buyedProductsIds[i]
+                    ),
+                });
+            }
+            product.buyed = products_ids;
+        }
+    } else {
+        product.buyed = [];
+    }
+
+    // product.updates.push({
+    //     user: mongoose.Types.ObjectId(req.userId),
+    // });
+
+    if (images && images.length > 0) {
+        console.log('images change' );
         
-
-        console.log("///////////////////////")
-            console.log(`  Run edit Product ${productId} for region ${region}`)
-            console.log(`  by user: user id = ${req.userId}, user role - ${req.userRole}`)
-        console.log("///////////////////////")
-
-        let changeTitle = false
-        const images = req.files;
-        console.log(images.length)
-
-        const updatedProduct = await Products.aggregate([{
+        product.images = [];
+        await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
+        await makeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
+        
+        for (let i = 0; i < images.length; i++) {
+            await uploadFilesFromTempToFolder(TEMP_PATH, UPLOADS_PATH, images[i].filename, `catalog/${region}/categories/${product.category_id}/${product._id}`)
+            product.images.push(images[i].filename);
+        }
+        product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
+    } 
+    /*
+    else {
+        product.images = []
+        await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
+    }
+    */
+    // Если название было изменено
+    if (changeTitle) {
+        // Ищем похожие товары среди всех регионов
+        const matchedProducts = await Products.aggregate([{
                 $project: {
                     results: {
                         $filter: {
@@ -562,10 +752,10 @@ exports.editProduct = async(req, res, next) => {
                                         $eq: ["$$el.region", mongoose.Types.ObjectId(region)],
                                     },
                                     {
-                                        $eq: ["$$el.product._id",mongoose.Types.ObjectId(productId)],
+                                        $eq: ["$$el.product.slug", product.slug],
                                     },
                                 ],
-                            },
+                            },                                
                         },
                     },
                 },
@@ -576,313 +766,19 @@ exports.editProduct = async(req, res, next) => {
                 },
             },
             {
-                $unwind: {
-                    path: "$results.product",
-                },
-            },
-            {
                 $group: {
                     _id: "$_id",
-                    product: {
+                    results: {
                         $addToSet: "$results.product",
                     },
                 },
             },
         ]);
 
-        const product = updatedProduct[0].product[0];
-        let oldSlug = product.slug;
+        // Если совпадений нет - обнавляем
+        if (!matchedProducts.length) {
+            console.log("NOT MATCHED") 
 
-        if (title !== undefined && title) {
-            let oldTitle = product.title.toLowerCase()
-            product.title = title;
-            product.slug = translit(_.kebabCase(product.title))
-                .replace(/'/g, "")
-                .toLowerCase();
-
-            if (product.slug !== oldSlug && product.title.toLowerCase() !== oldTitle)
-                changeTitle = true
-        }
-
-        if (cost !== undefined && cost) {
-            product.cost = cost;
-        }
-
-        if (club_cost === null || club_cost === 0) {
-            product.club_cost = null
-        }
-
-        if (club_cost !== undefined && club_cost) {
-            product.club_cost = club_cost;
-        }
-        if (wholesale !== undefined) {
-            product.wholesale = wholesale
-        }
-        if (discount) {
-            product.discount = discount
-            product.discount_price = discount_price
-            if (coef !== 'undefined') {
-                product.discount_full_price = (discount_price * +coef).toFixed(2)
-            }
-        } else {
-            product.discount = false
-            product.discount_price = 0
-        }
-
-        if (supplier_article !== undefined && supplier_article) {
-            product.supplier_article = supplier_article;
-        }
-        if (rrp !== undefined && rrp) {
-            product.rrp = rrp;
-        }
-        if (purchase_cost !== undefined && purchase_cost) {
-            product.purchase_cost = purchase_cost;
-        }
-        if (margin !== undefined && margin) {
-            product.margin = margin;
-        }
-        if (discount_percent !== undefined && discount_percent) {
-            product.discount_percent = discount_percent;
-        }
-        if (stop_cost !== undefined && stop_cost) {
-            product.stop_cost = stop_cost;
-        }
-        if (unit !== undefined && unit) {
-            product.unit = unit;
-        }
-
-        if (coef !== undefined) {
-            product.coef = +coef
-            product.full_cost = (product.cost * +coef).toFixed(2)
-            console.log(product.club_cost, coef)
-            if (product.club_cost) product.full_club_cost = (product.club_cost * +coef).toFixed(2)
-
-        } else {
-            product.coef = 0
-            product.full_cost = 0
-            product.full_club_cost = 0
-        }
-        if (description !== undefined || description === '') {
-            product.description = description;
-        }
-
-        if (options !== undefined) {
-            let formatedOptions = [];
-            let optionsNew = JSON.parse(JSON.stringify(options));
-            for (let key in optionsNew) {
-                let newKey = key.replace(/\./g, '##')
-                formatedOptions.push({
-                    [newKey]: optionsNew[key],
-                });
-            }
-            product.options = formatedOptions;
-        } else {
-            product.options = []
-        }
-
-        if (recomendsProductsIds) {
-            if ( Array.isArray(recomendsProductsIds) || !recomendsProductsIds.length ) {
-                let products_ids = [];
-                for (let i = 0; i < recomendsProductsIds.length; i++) {
-                    products_ids.push({
-                        title: recomendsProductsTitles[i],
-                        product_id: mongoose.Types.ObjectId(
-                            recomendsProductsIds[i]
-                        ),
-                    });
-                }
-                product.recomended = products_ids;
-            }
-        } else {
-            product.recomended = [];
-        }
-
-        if (buyedProductsIds) {
-            if (Array.isArray(buyedProductsIds) || !buyedProductsIds.length) {
-                let products_ids = [];
-                for (let i = 0; i < buyedProductsIds.length; i++) {
-                    products_ids.push({
-                        title: buyedProductsTitles[i],
-                        product_id: mongoose.Types.ObjectId(
-                            buyedProductsIds[i]
-                        ),
-                    });
-                }
-                product.buyed = products_ids;
-            }
-        } else {
-          if (images && images.length > 0) {
-            console.log('images change' );
-            
-            product.images = [];
-            await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
-            await makeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
-            
-            for (let i = 0; i < images.length; i++) {
-                await uploadFilesFromTempToFolder(TEMP_PATH, UPLOADS_PATH, images[i].filename, `catalog/${region}/categories/${product.category_id}/${product._id}`)
-                product.images.push(images[i].filename);
-            }
-            product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
-          } 
-          /*
-          else {
-              product.images = []
-              await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
-          }
-          */
-          // Если название было изменено
-          if (changeTitle) {
-              // Ищем похожие товары среди всех регионов
-              const matchedProducts = await Products.aggregate([{
-                      $project: {
-                          results: {
-                              $filter: {
-                                  input: "$regions",
-                                  as: "el",
-                                  cond: {
-                                      $and: [
-                                          {
-                                              $eq: ["$$el.region", mongoose.Types.ObjectId(region)],
-                                          },
-                                          {
-                                              $eq: ["$$el.product.slug", product.slug],
-                                          },
-                                      ],
-                                  },                                
-                              },
-                          },
-                      },
-                  },
-                  {
-                      $unwind: {
-                          path: "$results",
-                      },
-                  },
-                  {
-                      $group: {
-                          _id: "$_id",
-                          results: {
-                              $addToSet: "$results.product",
-                          },
-                      },
-                  },
-              ]);
-
-              // Если совпадений нет - обнавляем
-              if (!matchedProducts.length) {
-                  console.log("NOT MATCHED") 
-
-                  const updatedProductDB = await Products.findOneAndUpdate({     
-                      'regions.product._id': mongoose.Types.ObjectId(product._id),           
-                      "regions.region": mongoose.Types.ObjectId(region),
-                  }, {
-                      $set: {
-                          "regions.$.product": product,
-                      },
-                  })  
-
-              // Если совпадений есть отправляем ошибку клиенту   
-              } else {
-                  console.log("MATCHED")              
-                  return res.status(400).json({ message: "Товар с таким названием в данном регионе уже существует!" });
-              }
-
-          // Если название не было изменено
-          } else {
-              const updatedProductDB = await Products.findOneAndUpdate({     
-                  'regions.product._id': mongoose.Types.ObjectId(product._id),           
-                  "regions.region": mongoose.Types.ObjectId(region),
-              }, {
-                  $set: {
-                      "regions.$.product": product,
-                  },
-              })
-          }
-            product.buyed = [];
-        }
-
-        // product.updates.push({
-        //     user: mongoose.Types.ObjectId(req.userId),
-        // });
-
-        if (images && images.length > 0) {
-            console.log('images change' );
-            
-            product.images = [];
-            await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
-            await makeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
-            
-            for (let i = 0; i < images.length; i++) {
-                await uploadFilesFromTempToFolder(TEMP_PATH, UPLOADS_PATH, images[i].filename, `catalog/${region}/categories/${product.category_id}/${product._id}`)
-                product.images.push(images[i].filename);
-            }
-            product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
-        } 
-        /*
-        else {
-            product.images = []
-            await removeUserDir(UPLOADS_PATH, `/catalog/${region}/categories/${product.category_id.toString()}/${product._id}`);
-        }
-        */
-        // Если название было изменено
-        if (changeTitle) {
-            // Ищем похожие товары среди всех регионов
-            const matchedProducts = await Products.aggregate([{
-                    $project: {
-                        results: {
-                            $filter: {
-                                input: "$regions",
-                                as: "el",
-                                cond: {
-                                    $and: [
-                                        {
-                                            $eq: ["$$el.region", mongoose.Types.ObjectId(region)],
-                                        },
-                                        {
-                                            $eq: ["$$el.product.slug", product.slug],
-                                        },
-                                    ],
-                                },                                
-                            },
-                        },
-                    },
-                },
-                {
-                    $unwind: {
-                        path: "$results",
-                    },
-                },
-                {
-                    $group: {
-                        _id: "$_id",
-                        results: {
-                            $addToSet: "$results.product",
-                        },
-                    },
-                },
-            ]);
-
-            // Если совпадений нет - обнавляем
-            if (!matchedProducts.length) {
-                console.log("NOT MATCHED") 
-
-                const updatedProductDB = await Products.findOneAndUpdate({     
-                    'regions.product._id': mongoose.Types.ObjectId(product._id),           
-                    "regions.region": mongoose.Types.ObjectId(region),
-                }, {
-                    $set: {
-                        "regions.$.product": product,
-                    },
-                })  
-
-            // Если совпадений есть отправляем ошибку клиенту   
-            } else {
-                console.log("MATCHED")              
-                return res.status(400).json({ message: "Товар с таким названием в данном регионе уже существует!" });
-            }
-
-        // Если название не было изменено
-        } else {
             const updatedProductDB = await Products.findOneAndUpdate({     
                 'regions.product._id': mongoose.Types.ObjectId(product._id),           
                 "regions.region": mongoose.Types.ObjectId(region),
@@ -890,26 +786,36 @@ exports.editProduct = async(req, res, next) => {
                 $set: {
                     "regions.$.product": product,
                 },
-            })
+            })  
+
+        // Если совпадений есть отправляем ошибку клиенту   
+        } else {
+            console.log("MATCHED")              
+            return res.status(400).json({ message: "Товар с таким названием в данном регионе уже существует!" });
         }
 
-        console.log("///////////////////////")
-            console.log("Updating of Product completed")
-        console.log("///////////////////////")
+    // Если название не было изменено
+    } else {
+        const updatedProductDB = await Products.findOneAndUpdate({     
+            'regions.product._id': mongoose.Types.ObjectId(product._id),           
+            "regions.region": mongoose.Types.ObjectId(region),
+        }, {
+            $set: {
+                "regions.$.product": product,
+            },
+        })
+    }
 
-        try {
-          updateFeed(region, product.parent_id)
-        } catch(err) {
-          console(err)
-        }
-
-        res.status(201).json({
-            message: "EDITED",
-            product: product,
-            changeTitle: changeTitle,
-            old: product._id
-        });
-    } catch (error) {
+    console.log("///////////////////////")
+        console.log("Updating of Product completed")
+    console.log("///////////////////////")
+    res.status(201).json({
+        message: "EDITED",
+        product: product,
+        changeTitle: changeTitle,
+        old: product._id
+    });
+} catch (error) {
         console.log(error)
         next(error);
     }
