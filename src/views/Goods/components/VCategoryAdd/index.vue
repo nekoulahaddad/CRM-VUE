@@ -34,14 +34,7 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img
-                  :src="
-                    editedItem && categoryImage === 'Выбрать файл'
-                      ? serverAddr + editedItem.path + editedItem.img
-                      : categoryImageUrl
-                  "
-                  alt=""
-                />
+                <img :src="categoryImageUrl" alt="" />
               </div>
             </div>
             <div class="group__right">
@@ -60,6 +53,20 @@
                     </VueCustomTooltip>
                   </label>
                 </div>
+                <div
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                  v-if="categoryImage !== 'Выбрать файл'"
+                >
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('image', $event)"
+                    />
+                  </VueCustomTooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -70,14 +77,7 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img
-                  :src="
-                    editedItem && categoryIcon === 'Выбрать файл'
-                      ? serverAddr + editedItem.iconPath + editedItem.icon
-                      : categoryIconUrl
-                  "
-                  alt=""
-                />
+                <img :src="categoryIconUrl" alt="" />
               </div>
             </div>
             <div class="group__right">
@@ -96,6 +96,20 @@
                     </VueCustomTooltip>
                   </label>
                 </div>
+                <div
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                  v-if="categoryIcon !== 'Выбрать файл'"
+                >
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('icon', $event)"
+                    />
+                  </VueCustomTooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -106,14 +120,7 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img
-                  :src="
-                    editedItem && categorySlide === 'Выбрать файл'
-                      ? serverAddr + editedItem.slidePath + editedItem.slide
-                      : categorySlideUrl
-                  "
-                  alt=""
-                />
+                <img :src="categorySlideUrl" alt="" />
               </div>
             </div>
             <div class="group__right">
@@ -135,7 +142,7 @@
                 <div
                   class="actions__btn"
                   style="border-color: #db1f35"
-                  v-if="editedItem && editedItem.slide !== 'default.jpeg'"
+                  v-if="categorySlide !== 'Выбрать файл'"
                 >
                   <VueCustomTooltip label="Удалить">
                     <img
@@ -157,11 +164,7 @@
             <div class="group__left">
               <div class="category-edit-form__default-img">
                 <img
-                  :src="
-                    editedItem && categoryBanner === 'Выбрать файл'
-                      ? serverAddr + editedItem.bannerPath + editedItem.banner
-                      : categoryBannerUrl
-                  "
+                  :src="categoryBannerUrl"
                   alt=""
                   style="max-width: 200px; max-height: 140px"
                 />
@@ -183,6 +186,20 @@
                     </VueCustomTooltip>
                   </label>
                 </div>
+                <div
+                  v-if="categoryBanner !== 'Выбрать файл'"
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                >
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('banner', $event)"
+                    />
+                  </VueCustomTooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -193,16 +210,7 @@
           <div class="group__content">
             <div class="group__left">
               <div class="category-edit-form__default-img">
-                <img
-                  :src="
-                    editedItem && categoryBannerMob === 'Выбрать файл'
-                      ? serverAddr +
-                        editedItem.bannerPathMob +
-                        editedItem.bannerMob
-                      : categoryBannerMobUrl
-                  "
-                  alt=""
-                />
+                <img :src="categoryBannerMobUrl" alt="" />
               </div>
             </div>
 
@@ -221,6 +229,20 @@
                       <img src="@/assets/icons/goods_upload.svg" alt="" />
                     </VueCustomTooltip>
                   </label>
+                </div>
+                <div
+                  v-if="categoryBannerMob !== 'Выбрать файл'"
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                >
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('bannerMob', $event)"
+                    />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
@@ -306,9 +328,13 @@ export default {
         path: type + "Path",
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
-      this.editedItem[fields.img] = "default.jpeg";
-      this.editedItem[fields.path] = "/uploads/";
-      this[fields.category] = "default";
+      console.log(fields);
+      this[fields.img] = "default.jpeg";
+      this[
+        fields.category + "Url"
+      ] = require("@/assets/icons/goods_default.svg");
+      this[fields.path] = "/uploads/";
+      this[fields.category] = "Выбрать файл";
       this.remove.push(type);
     },
     onChange(e) {

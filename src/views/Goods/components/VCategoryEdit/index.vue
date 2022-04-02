@@ -28,7 +28,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && categoryImage === 'Выбрать файл'
+                  categoryImage === 'Выбрать файл'
                     ? serverAddr + editedItem.path + editedItem.img
                     : categoryImageUrl
                 "
@@ -57,7 +57,10 @@
                   </label>
                 </div>
                 <div
-                  v-if="editedItem && editedItem.img !== 'default.jpeg'"
+                  v-if="
+                    (editedItem && editedItem.img !== 'default.jpeg') ||
+                    categoryImage !== 'Выбрать файл'
+                  "
                   class="actions__btn"
                   style="border-color: #db1f35"
                 >
@@ -508,15 +511,15 @@ export default {
     return {
       categoryName: "",
       categoryImage: "Выбрать файл",
-      categoryImageUrl: require("@/assets/icons/goods_default.svg"),
+      categoryImageUrl: require("@/assets/images/category_default.png"),
       categoryIcon: "Выбрать файл",
-      categoryIconUrl: require("@/assets/icons/goods_default.svg"),
+      categoryIconUrl: require("@/assets/images/category_default.png"),
       categorySlide: "Выбрать файл",
-      categorySlideUrl: require("@/assets/icons/goods_default.svg"),
+      categorySlideUrl: require("@/assets/images/category_default.png"),
       categoryBanner: "Выбрать файл",
-      categoryBannerUrl: require("@/assets/icons/goods_default.svg"),
+      categoryBannerUrl: require("@/assets/images/category_default.png"),
       categoryBannerMob: "Выбрать файл",
-      categoryBannerMobUrl: require("@/assets/icons/goods_default.svg"),
+      categoryBannerMobUrl: require("@/assets/images/category_default.png"),
       views:
         this.editedItem && this.editedItem.views ? this.editedItem.views : [],
       filters: [],
