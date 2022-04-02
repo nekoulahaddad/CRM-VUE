@@ -269,7 +269,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  categoryBanner !== 'Выбрать файл'
+                  categoryBannerMob !== 'Выбрать файл'
                     ? categoryBannerMobUrl
                     : serverAddr +
                       editedItem.bannerPathMob +
