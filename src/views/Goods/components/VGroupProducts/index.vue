@@ -8,7 +8,16 @@
       >
         <div class="sub-products__item item">
           <div class="item__title">
-            <span :class="{ none: !product.visible }">{{ product.title }}</span>
+            <a
+              v-if="product.visible"
+              target="_blank"
+              :href="`https://tdcsk.com/products/region/${regionValue}/${product.slug}`"
+            >
+              {{ product.title }}
+            </a>
+            <span v-else class="none">
+              {{ product.title }}
+            </span>
           </div>
           <div class="item__action">
             <div class="table__actions">
@@ -146,6 +155,15 @@ export default {
       editedItem: {},
       changeVisible: {},
     };
+  },
+  computed: {
+    regionValue() {
+      try {
+        return JSON.parse(localStorage.getItem("region")).value;
+      } catch (e) {
+        return "moscow";
+      }
+    },
   },
   components: { VProductEdit, VSpinner },
   methods: {
