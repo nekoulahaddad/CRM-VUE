@@ -69,7 +69,7 @@
                       width="17px"
                       src="@/assets/icons/trash_icon.svg"
                       alt=""
-                      @click.prevent="deleteImage('img', $event)"
+                      @click.prevent="deleteImage('image', $event)"
                     />
                   </VueCustomTooltip>
                 </div>
@@ -89,7 +89,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && categoryIcon === 'Выбрать файл'
+                  categoryIcon === 'Выбрать файл'
                     ? serverAddr + editedItem.iconPath + editedItem.icon
                     : categoryIconUrl
                 "
@@ -118,7 +118,10 @@
                   </label>
                 </div>
                 <div
-                  v-if="editedItem && editedItem.icon !== 'default.jpeg'"
+                  v-if="
+                    (editedItem && editedItem.icon !== 'default.jpeg') ||
+                    categoryIcon !== 'Выбрать файл'
+                  "
                   class="actions__btn"
                   style="border-color: #db1f35"
                 >
@@ -144,7 +147,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && categorySlide === 'Выбрать файл'
+                  categorySlide === 'Выбрать файл'
                     ? serverAddr + editedItem.slidePath + editedItem.slide
                     : categorySlideUrl
                 "
@@ -175,7 +178,10 @@
                   </label>
                 </div>
                 <div
-                  v-if="editedItem && editedItem.slide !== 'default.jpeg'"
+                  v-if="
+                    (editedItem && editedItem.slide !== 'default.jpeg') ||
+                    categorySlide !== 'Выбрать файл'
+                  "
                   class="actions__btn"
                   style="border-color: #db1f35"
                 >
@@ -201,7 +207,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && categoryBanner === 'Выбрать файл'
+                  categoryBanner === 'Выбрать файл'
                     ? serverAddr + editedItem.bannerPath + editedItem.banner
                     : categoryBannerUrl
                 "
@@ -230,7 +236,10 @@
                   </label>
                 </div>
                 <div
-                  v-if="editedItem && editedItem.banner !== 'default.jpeg'"
+                  v-if="
+                    (editedItem && editedItem.banner !== 'default.jpeg') ||
+                    categoryBanner !== 'Выбрать файл'
+                  "
                   class="actions__btn"
                   style="border-color: #db1f35"
                 >
@@ -256,7 +265,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && categoryBannerMob === 'Выбрать файл'
+                  categoryBannerMob === 'Выбрать файл'
                     ? serverAddr +
                       editedItem.bannerPathMob +
                       editedItem.bannerMob
@@ -293,7 +302,10 @@
                   </label>
                 </div>
                 <div
-                  v-if="editedItem && editedItem.bannerMob !== 'default.jpeg'"
+                  v-if="
+                    (editedItem && editedItem.bannerMob !== 'default.jpeg') ||
+                    categoryBannerMob !== 'Выбрать файл'
+                  "
                   class="actions__btn"
                   style="border-color: #db1f35"
                 >
@@ -429,10 +441,9 @@ export default {
         path: type + "Path",
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
-      console.log(fields);
       this.editedItem[fields.img] = "default.jpeg";
-      this.editedItem[fields.path] = "/uploads/";
-      this[fields.category] = "default";
+      this.editedItem[fields.path] = "/assets/images/";
+      this[fields.category] = "Выбрать файл";
       this.remove.push(type);
     },
     onCategoryAdd() {
