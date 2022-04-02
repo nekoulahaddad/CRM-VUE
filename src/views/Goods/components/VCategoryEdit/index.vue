@@ -442,12 +442,21 @@ export default {
       });
     },
     deleteImage(type, e) {
+      let path;
+
+      if (type === "image") {
+        path = "path";
+      } else if (type === "bannerMob") {
+        path = "bannerPathMob";
+      } else {
+        path = type + "Path";
+      }
+
       let fields = {
+        path,
         img: type === "image" ? "img" : type,
-        path: type === "image" ? "path" : type + "Path",
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
-      console.log(fields);
       this.editedItem[fields.img] = "default.jpeg";
       this.editedItem[fields.path] = "/uploads/";
       this[fields.category] = "Выбрать файл";
