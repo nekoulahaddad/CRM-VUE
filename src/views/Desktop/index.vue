@@ -34,7 +34,7 @@
     <div class="page__body d-flex">
       <!-- Фильтр -->
       <div class="page__left" v-if="showFilter">
-        <v-filter type="tasks" />
+        <v-filter type="desktop" />
       </div>
 
       <div class="page__left">

@@ -479,6 +479,73 @@
           </div>
         </template>
 
+        <!-- Рабочий стол -->
+        <template v-else-if="type === 'desktop'">
+          <div class="filter__group group">
+            <div class="group__title">Регионы:</div>
+            <div class="group__content">
+              <v-select
+                :options="[
+                  {
+                    label: 'Все регионы',
+                    value: 'all',
+                  },
+                  ...regions.map((region) => ({
+                    label: region.title,
+                    value: region.value,
+                  })),
+                ]"
+                @input="setSelected"
+                :reduce="(item) => item.value"
+                v-model="filterOptions.region"
+              />
+            </div>
+          </div>
+
+          <div class="filter__group group">
+            <div class="group__title">Исполнитель:</div>
+            <div class="group__content">
+              <autocomplete
+                ref="executor"
+                :search="searchByExecutor"
+                placeholder="Введите исполнителя задачи..."
+                :get-result-value="getResultValue"
+                @input="autocompleteInput($event, 'executor')"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectUser(result)" v-bind="props">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
+          </div>
+          <!-- Автор -->
+          <div class="filter__group group">
+            <div class="group__title">Автор:</div>
+            <div class="group__content">
+              <autocomplete
+                ref="initiator"
+                :search="searchByInitiator"
+                placeholder="Введите автора задачи..."
+                :getResultValue="getResultValue"
+                @input="autocompleteInput($event, 'initiator')"
+              >
+                <template #result="{ result, props }">
+                  <li @click="selectInitiator(result)" v-bind="props">
+                    {{ transformFIO(result) }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
+          </div>
+          <div class="filter__actions">
+            <button @click="clearOptions" class="btn btn--red filter__btn">
+              Очистить
+            </button>
+          </div>
+        </template>
+
         <!-- Задачи -->
         <template v-else-if="type === 'tasks'">
           <div class="filter__group group">
