@@ -118,6 +118,12 @@ export default {
       return Array.from(new Set(arr));
     },
   },
+  watch: {
+    items() {
+      this.title = "";
+      this.groupProperties = "";
+    },
+  },
   methods: {
     cancel() {
       this.$modal.hide("createGroup");
@@ -153,6 +159,7 @@ export default {
           this.$emit("refreshGoods");
           this.$toast.success("Товары успешно добавлены в группу!");
           this.cancel();
+          this.$store.commit("clearSelectedItems");
         })
         .catch((err) => {
           this.$toast.error(err.response.data.message);
