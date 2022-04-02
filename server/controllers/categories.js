@@ -1495,7 +1495,7 @@ exports.editCategory = async (req, res, next) => {
       );
       category.banner = images.categoryBanner[0].filename;
       category.bannerPath = `/uploads/catalog/${region}/categories/${category._id}/`;
-    } else if (remove.includes("banner")) {
+    } else if (remove.split(",").includes("banner")) {
       category.banner = "default.jpeg";
       category.bannerPath = `/uploads/`;
     }
@@ -1513,7 +1513,7 @@ exports.editCategory = async (req, res, next) => {
       );
       category.bannerMob = images.categoryBannerMob[0].filename;
       category.bannerPathMob = `/uploads/catalog/${region}/categories/${category._id}/`;
-    } else if (remove.includes("bannerMob")) {
+    } else if (remove.split(",").includes("bannerMob")) {
       category.bannerMob = "default.jpeg";
       category.bannerPathMob = `/uploads/`;
     }

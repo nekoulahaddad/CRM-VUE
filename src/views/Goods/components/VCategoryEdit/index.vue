@@ -457,6 +457,7 @@ export default {
         img: type === "image" ? "img" : type,
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
+      console.log(fields);
       this.editedItem[fields.img] = "default.jpeg";
       this.editedItem[fields.path] = "/uploads/";
       this[fields.category] = "Выбрать файл";
