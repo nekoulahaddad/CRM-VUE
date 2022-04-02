@@ -28,7 +28,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  categoryImage === 'Выбрать файл'
+                  editedItem && editedItem.img
                     ? serverAddr + editedItem.path + editedItem.img
                     : categoryImageUrl
                 "
@@ -89,7 +89,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  categoryIcon === 'Выбрать файл'
+                  editedItem && editedItem.icon
                     ? serverAddr + editedItem.iconPath + editedItem.icon
                     : categoryIconUrl
                 "
@@ -147,7 +147,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  categorySlide === 'Выбрать файл'
+                  editedItem && editedItem.slide
                     ? serverAddr + editedItem.slidePath + editedItem.slide
                     : categorySlideUrl
                 "
@@ -179,7 +179,9 @@
                 </div>
                 <div
                   v-if="
-                    (editedItem && editedItem.slide !== 'default.jpeg') ||
+                    (editedItem &&
+                      editedItem.slide &&
+                      editedItem.slide !== 'default.jpeg') ||
                     categorySlide !== 'Выбрать файл'
                   "
                   class="actions__btn"
@@ -207,7 +209,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  categoryBanner === 'Выбрать файл'
+                  editedItem && editedItem.banner
                     ? serverAddr + editedItem.bannerPath + editedItem.banner
                     : categoryBannerUrl
                 "
@@ -237,7 +239,9 @@
                 </div>
                 <div
                   v-if="
-                    (editedItem && editedItem.banner !== 'default.jpeg') ||
+                    (editedItem &&
+                      editedItem.banner &&
+                      editedItem.banner !== 'default.jpeg') ||
                     categoryBanner !== 'Выбрать файл'
                   "
                   class="actions__btn"
@@ -265,7 +269,7 @@
                 alt=""
                 class="group__image"
                 :src="
-                  categoryBannerMob === 'Выбрать файл'
+                  editedItem && editedItem.bannerMob
                     ? serverAddr +
                       editedItem.bannerPathMob +
                       editedItem.bannerMob
@@ -303,7 +307,9 @@
                 </div>
                 <div
                   v-if="
-                    (editedItem && editedItem.bannerMob !== 'default.jpeg') ||
+                    (editedItem &&
+                      editedItem.bannerMob &&
+                      editedItem.bannerMob !== 'default.jpeg') ||
                     categoryBannerMob !== 'Выбрать файл'
                   "
                   class="actions__btn"
@@ -441,9 +447,10 @@ export default {
         path: type + "Path",
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
-      this.editedItem[fields.img] = "default.jpeg";
-      this.editedItem[fields.path] = "/assets/images/";
+      this.editedItem[fields.img] = "";
+      this.editedItem[fields.path] = "";
       this[fields.category] = "Выбрать файл";
+      this[fields.category + "Url"] = "";
       this.remove.push(type);
     },
     onCategoryAdd() {
