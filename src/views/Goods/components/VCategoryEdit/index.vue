@@ -443,12 +443,12 @@ export default {
     },
     deleteImage(type, e) {
       let fields = {
-        img: type,
-        path: type + "Path",
+        img: type === "image" ? "img" : type,
+        path: type === "image" ? "" : type + "Path",
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
       this.editedItem[fields.img] = "default.jpeg";
-      this.editedItem[fields.path] = "/upload/";
+      this.editedItem[fields.path] = "/uploads/";
       this[fields.category] = "Выбрать файл";
       this[fields.category + "Url"] = require("@/assets/images/default.jpeg");
       this.remove.push(type);
