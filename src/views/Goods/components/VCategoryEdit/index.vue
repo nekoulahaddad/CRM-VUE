@@ -28,11 +28,9 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem &&
-                  editedItem.img !== '' &&
-                  categoryImage === 'Выбрать файл'
-                    ? serverAddr + editedItem.path + editedItem.img
-                    : categoryImageUrl
+                  categoryImage !== 'Выбрать файл'
+                    ? categoryImageUrl
+                    : serverAddr + editedItem.path + editedItem.img
                 "
                 @click.prevent="
                   downloadItem(
@@ -91,9 +89,9 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && editedItem.icon
-                    ? serverAddr + editedItem.iconPath + editedItem.icon
-                    : categoryIconUrl
+                  categoryIcon !== 'Выбрать файл'
+                    ? categoryIconUrl
+                    : serverAddr + editedItem.iconPath + editedItem.icon
                 "
                 @click.prevent="
                   downloadItem(
@@ -149,9 +147,9 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && editedItem.slide
-                    ? serverAddr + editedItem.slidePath + editedItem.slide
-                    : categorySlideUrl
+                  categorySlide !== 'Выбрать файл'
+                    ? categorySlideUrl
+                    : serverAddr + editedItem.slidePath + editedItem.slide
                 "
                 @click.prevent="
                   editedItem.slide !== 'default.jpeg'
@@ -211,9 +209,9 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && editedItem.banner
-                    ? serverAddr + editedItem.bannerPath + editedItem.banner
-                    : categoryBannerUrl
+                  categoryBanner !== 'Выбрать файл'
+                    ? categoryBannerUrl
+                    : serverAddr + editedItem.bannerPath + editedItem.banner
                 "
                 @click.prevent="
                   downloadItem(
@@ -271,11 +269,11 @@
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && editedItem.bannerMob
-                    ? serverAddr +
+                  categoryBanner !== 'Выбрать файл'
+                    ? categoryBannerMobUrl
+                    : serverAddr +
                       editedItem.bannerPathMob +
                       editedItem.bannerMob
-                    : categoryBannerMobUrl
                 "
                 @click.prevent="
                   downloadItem(
@@ -449,8 +447,8 @@ export default {
         path: type + "Path",
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
-      this.editedItem[fields.img] = "";
-      this.editedItem[fields.path] = "";
+      this.editedItem[fields.img] = "default.jpeg";
+      this.editedItem[fields.path] = "/upload/";
       this[fields.category] = "Выбрать файл";
       this[fields.category + "Url"] = require("@/assets/images/default.jpeg");
       this.remove.push(type);
