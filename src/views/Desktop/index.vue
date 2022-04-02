@@ -25,9 +25,18 @@
       @afterSubDelete="afterSubDelete"
     />
 
-    <v-page-header icon="desktop_title" :filterToggle="false" />
+    <v-page-header
+      icon="desktop_title"
+      @toggleFilter="toggleFilter"
+      :showFilter="showFilter"
+    />
 
     <div class="page__body d-flex">
+      <!-- Фильтр -->
+      <div class="page__left" v-if="showFilter">
+        <v-filter type="tasks" />
+      </div>
+
       <div class="page__left">
         <div class="tasks">
           <div class="tasks__title">Доска поставленных задач:</div>
@@ -158,6 +167,7 @@
 <script>
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
+import VFilter from "@/components/VFilter";
 import VAddEventModal from "@/views/Calendar/components/VAddEventModal";
 import VAddTaskModal from "./components/VAddTaskModal";
 import VDeleteTask from "./components/VDeleteTask";
@@ -180,6 +190,7 @@ export default {
     VCalendarEvents,
     VAddEventModal,
     VSpinner,
+    VFilter,
     VDeleteTask,
     VDeleteSubTask,
   },
@@ -202,6 +213,7 @@ export default {
   },
   data() {
     return {
+      showFilter: false,
       deletedSubTask: null,
       clickedDay: null,
       skip: {
@@ -209,6 +221,21 @@ export default {
         assigned: 0,
         completed: 0,
         tested: 0,
+      },
+      filtersOptions: {
+        status: "all",
+        dates:
+          this.role === "admin" ||
+          this.role === "worker" ||
+          this.role === "seo" ||
+          this.role === "manager" ||
+          this.role === "content" ||
+          this.role === "superadmin"
+            ? "today"
+            : null,
+        creation_date: -1,
+        deadline_date: null,
+        region: null,
       },
       dataset: {
         accepted: {},
@@ -265,8 +292,20 @@ export default {
         this.$modal.show("addTask");
       }
     },
+    filtersOptions: {
+      handler: function () {
+        this.fetchData({
+          status: ["accepted", "assigned", "completed", "tested"],
+          skip: 0,
+        });
+      },
+      deep: true,
+    },
   },
   methods: {
+    toggleFilter() {
+      this.showFilter = !this.showFilter;
+    },
     async afterAddTask() {
       try {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
@@ -337,6 +376,7 @@ export default {
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
           status,
           skip,
+          region: this.filtersOptions.region,
           executor: this.role === "superadmin" ? null : this.id,
         });
         this.isLoading = true;

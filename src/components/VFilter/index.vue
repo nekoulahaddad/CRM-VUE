@@ -1458,7 +1458,8 @@ export default {
       }
       if (
         this.$route.fullPath !== `/dashboard/${this.$route.name}/1` &&
-        this.$route.fullPath !== "/dashboard/monitor"
+        this.$route.fullPath !== "/dashboard/monitor" &&
+        this.$route.fullPath !== "/dashboard/desktop"
       ) {
         this.$router.push(`/dashboard/${this.$route.name}/1`);
       }
@@ -1525,7 +1526,8 @@ export default {
       this.$parent.filtersOptions = this.filterOptions;
       if (
         this.$route.fullPath !== `/dashboard/${this.$route.name}/1` &&
-        this.$route.fullPath !== "/dashboard/monitor"
+        this.$route.fullPath !== "/dashboard/monitor" &&
+        this.$route.fullPath !== "/dashboard/desktop"
       ) {
         this.$router.push(`/dashboard/${this.$route.name}/1`);
       }
