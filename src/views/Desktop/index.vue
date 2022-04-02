@@ -636,6 +636,7 @@ export default {
   }
 
   .list__items {
+    min-width: 314px;
   }
   .list__title {
     height: 20px;
