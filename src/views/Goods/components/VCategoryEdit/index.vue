@@ -24,11 +24,22 @@
           <div class="group__title">Фото категории:</div>
           <div class="group__content">
             <div class="group__left">
+              <div
+                v-if="
+                  editedItem &&
+                  editedItem.img !== '' &&
+                  categoryImage === 'Выбрать файл'
+                "
+              >
+                11
+              </div>
               <img
                 alt=""
                 class="group__image"
                 :src="
-                  editedItem && editedItem.img
+                  editedItem &&
+                  editedItem.img !== '' &&
+                  categoryImage === 'Выбрать файл'
                     ? serverAddr + editedItem.path + editedItem.img
                     : categoryImageUrl
                 "
