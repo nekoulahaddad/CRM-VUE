@@ -529,7 +529,7 @@ export default {
 .desktop-page {
   .page {
     &__left {
-      width: 1417px;
+      width: 1312px;
     }
 
     &__right {
@@ -565,6 +565,7 @@ export default {
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       height: 900px;
       flex: 1;
+      width: 315px;
 
       &:nth-child(1) .list__title {
         color: $color-black;
@@ -601,7 +602,7 @@ export default {
       background-color: $color-white;
       border-radius: $border-radius;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
-      width: 314px;
+      width: 291px;
       padding: 10px;
       position: relative;
 
