@@ -300,15 +300,15 @@ export default {
     return {
       categoryName: "",
       categoryImage: "Выбрать файл",
-      categoryImageUrl: require("@/assets/icons/goods_default.svg"),
+      categoryImageUrl: require("@/assets/images/default.jpeg"),
       categoryIcon: "Выбрать файл",
-      categoryIconUrl: require("@/assets/icons/goods_default.svg"),
+      categoryIconUrl: require("@/assets/images/default.jpeg"),
       categorySlide: "Выбрать файл",
-      categorySlideUrl: require("@/assets/icons/goods_default.svg"),
+      categorySlideUrl: require("@/assets/images/default.jpeg"),
       categoryBanner: "Выбрать файл",
-      categoryBannerUrl: require("@/assets/icons/goods_default.svg"),
+      categoryBannerUrl: require("@/assets/images/default.jpeg"),
       categoryBannerMob: "Выбрать файл",
-      categoryBannerMobUrl: require("@/assets/icons/goods_default.svg"),
+      categoryBannerMobUrl: require("@/assets/images/default.jpeg"),
       views: [],
       filters: [],
       itemFilters: [],
@@ -328,11 +328,8 @@ export default {
         path: type + "Path",
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
-      console.log(fields);
       this[fields.img] = "default.jpeg";
-      this[
-        fields.category + "Url"
-      ] = require("@/assets/icons/goods_default.svg");
+      this[fields.category + "Url"] = require("@/assets/images/default.jpeg");
       this[fields.path] = "/uploads/";
       this[fields.category] = "Выбрать файл";
       this.remove.push(type);
@@ -496,7 +493,6 @@ export default {
   }
 
   &__default-img {
-    border: 2px solid rgba(0, 0, 0, 0.3);
     width: 200px;
     height: 140px;
     display: flex;
