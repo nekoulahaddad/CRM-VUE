@@ -725,7 +725,7 @@ exports.addCategory = async (req, res, next) => {
           category.img = images.categoryImage[0].filename;
           category.path = `/uploads/catalog/${region}/categories/${category._id}/`;
         } else {
-          category.img = "default.png";
+          category.img = "default.jpeg";
           category.path = "/uploads/";
         }
         if (images.categorySlide) {
@@ -744,7 +744,7 @@ exports.addCategory = async (req, res, next) => {
           category.slide = images.categorySlide[0].filename;
           category.slidePath = `/uploads/catalog/${region}/categories/${category._id}/`;
         } else {
-          category.slide = "default.png";
+          category.slide = "default.jpeg";
           category.slidePath = "/uploads/";
         }
         if (images.categoryBanner) {
@@ -763,7 +763,7 @@ exports.addCategory = async (req, res, next) => {
           category.banner = images.categoryBanner[0].filename;
           category.bannerPath = `/uploads/catalog/${region}/categories/${category._id}/`;
         } else {
-          category.banner = "default.png";
+          category.banner = "default.jpeg";
           category.bannerPath = "/uploads/";
         }
         if (images.categoryIcon) {
@@ -782,7 +782,7 @@ exports.addCategory = async (req, res, next) => {
           category.icon = images.categoryIcon[0].filename;
           category.iconPath = `/uploads/catalog/${region}/categories/${category._id}/`;
         } else {
-          category.icon = "default.png";
+          category.icon = "default.jpeg";
           category.iconPath = "/uploads/";
         }
       }
@@ -870,7 +870,7 @@ exports.addCategory = async (req, res, next) => {
           category.img = images.categoryImage[0].filename;
           category.path = `/uploads/catalog/${region}/categories/${category._id}/`;
         } else {
-          category.img = "default.png";
+          category.img = "default.jpeg";
           category.path = "/uploads/";
         }
         if (images.categorySlide) {
@@ -889,7 +889,7 @@ exports.addCategory = async (req, res, next) => {
           category.slide = images.categorySlide[0].filename;
           category.slidePath = `/uploads/catalog/${region}/categories/${category._id}/`;
         } else {
-          category.slide = "default.png";
+          category.slide = "default.jpeg";
           category.slidePath = "/uploads/";
         }
         if (images.categoryBanner) {
@@ -908,7 +908,7 @@ exports.addCategory = async (req, res, next) => {
           category.banner = images.categoryBanner[0].filename;
           category.bannerPath = `/uploads/catalog/${region}/categories/${category._id}/`;
         } else {
-          category.img = "default.png";
+          category.img = "default.jpeg";
           category.path = "/uploads/";
         }
         if (images.categoryIcon) {
@@ -927,7 +927,7 @@ exports.addCategory = async (req, res, next) => {
           category.icon = images.categoryIcon[0].filename;
           category.iconPath = `/uploads/catalog/${region}/categories/${category._id}/`;
         } else {
-          category.slide = "default.png";
+          category.slide = "default.jpeg";
           category.slidePath = "/uploads/";
         }
       }
@@ -1458,9 +1458,6 @@ exports.editCategory = async (req, res, next) => {
       );
       category.img = images.categoryImage[0].filename;
       category.path = `/uploads/catalog/${region}/categories/${category._id}/`;
-    } else if (remove.includes("img")) {
-      category.img = "default.png";
-      category.path = `/uploads/`;
     }
 
     if (Array.isArray(images.categorySlide)) {
@@ -1478,7 +1475,7 @@ exports.editCategory = async (req, res, next) => {
       category.slide = images.categorySlide[0].filename;
       category.slidePath = `/uploads/catalog/${region}/categories/${category._id}/`;
     } else if (remove.includes("slide")) {
-      category.slide = "default.png";
+      category.slide = "default.jpeg";
       category.slidePath = `/uploads/`;
     }
     if (Array.isArray(images.categoryBanner)) {
@@ -1495,9 +1492,6 @@ exports.editCategory = async (req, res, next) => {
       );
       category.banner = images.categoryBanner[0].filename;
       category.bannerPath = `/uploads/catalog/${region}/categories/${category._id}/`;
-    } else if (remove.includes("banner")) {
-      category.banner = "default.png";
-      category.bannerPath = `/uploads/`;
     }
     if (Array.isArray(images.categoryBannerMob)) {
       // Image
@@ -1513,9 +1507,6 @@ exports.editCategory = async (req, res, next) => {
       );
       category.bannerMob = images.categoryBannerMob[0].filename;
       category.bannerPathMob = `/uploads/catalog/${region}/categories/${category._id}/`;
-    } else if (remove.includes("bannerMob")) {
-      category.bannerMob = "default.png";
-      category.bannerPathMob = `/uploads/`;
     }
     if (Array.isArray(images.categoryIcon)) {
       // Icon
@@ -1531,9 +1522,6 @@ exports.editCategory = async (req, res, next) => {
       );
       category.icon = images.categoryIcon[0].filename;
       category.iconPath = `/uploads/catalog/${region}/categories/${category._id}/`;
-    } else if (remove.includes("icon")) {
-      category.icon = "default.png";
-      category.iconPath = `/uploads/`;
     }
 
     // category.updates.push({
