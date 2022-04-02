@@ -159,7 +159,18 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   document.title = "Система управления взаимоотношениями с клиентами";
-  store.commit("clearSelectedItems");
+
+  if (to.name === "goods") {
+    const fromPage = from.params.page;
+    const toPage = to.params.page;
+
+    if (fromPage && toPage && fromPage === toPage) {
+      store.commit("clearSelectedItems");
+    }
+  } else {
+    store.commit("clearSelectedItems");
+  }
+
   next();
 });
 

@@ -6,7 +6,7 @@
       <input
         v-if="item.type !== 'group'"
         type="checkbox"
-        :disabled="role !== 'content'"
+        :disabled="role !== 'content' && role !== 'superadmin'"
         class="form-checkbox"
         :checked="checked"
         @click="$store.commit('selectItem', item._id)"

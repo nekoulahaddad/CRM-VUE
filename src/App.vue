@@ -9,7 +9,7 @@
 <script>
 import axios from "@/api/axios";
 import isMobile from "is-mobile";
-import LogRocket from 'logrocket';
+import LogRocket from "logrocket";
 
 export default {
   data() {
@@ -50,7 +50,7 @@ export default {
     },
   },
   mounted() {
-  LogRocket.init('qiul8x/adnin');
+    LogRocket.init("qiul8x/adnin");
   },
   created() {
     window.addEventListener("resize", () => {
