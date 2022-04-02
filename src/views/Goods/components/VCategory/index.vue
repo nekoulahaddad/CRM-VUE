@@ -6,7 +6,7 @@
         href=""
         v-if="
           editedItem._id !== item._id &&
-          (role === 'content' || role === 'manager')
+          (role === 'content' || role === 'manager' || role === 'superadmin')
         "
         @click.prevent="$emit('toggleEdit', item)"
       >

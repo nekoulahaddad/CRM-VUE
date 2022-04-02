@@ -56,6 +56,20 @@
                     </VueCustomTooltip>
                   </label>
                 </div>
+                <div
+                  v-if="editedItem && editedItem.img !== 'default.jpeg'"
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                >
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('img', $event)"
+                    />
+                  </VueCustomTooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -99,6 +113,20 @@
                       <img src="@/assets/icons/goods_upload.svg" alt="" />
                     </VueCustomTooltip>
                   </label>
+                </div>
+                <div
+                  v-if="editedItem && editedItem.icon !== 'default.jpeg'"
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                >
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('icon', $event)"
+                    />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
@@ -198,6 +226,20 @@
                     </VueCustomTooltip>
                   </label>
                 </div>
+                <div
+                  v-if="editedItem && editedItem.banner !== 'default.jpeg'"
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                >
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('banner', $event)"
+                    />
+                  </VueCustomTooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -246,6 +288,20 @@
                       <img src="@/assets/icons/goods_upload.svg" alt="" />
                     </VueCustomTooltip>
                   </label>
+                </div>
+                <div
+                  v-if="editedItem && editedItem.bannerMob !== 'default.jpeg'"
+                  class="actions__btn"
+                  style="border-color: #db1f35"
+                >
+                  <VueCustomTooltip label="Удалить">
+                    <img
+                      width="17px"
+                      src="@/assets/icons/trash_icon.svg"
+                      alt=""
+                      @click.prevent="deleteImage('bannerMob', $event)"
+                    />
+                  </VueCustomTooltip>
                 </div>
               </div>
             </div>
@@ -370,6 +426,7 @@ export default {
         path: type + "Path",
         category: "category" + type.charAt(0).toUpperCase() + type.slice(1),
       };
+      console.log(fields);
       this.editedItem[fields.img] = "default.jpeg";
       this.editedItem[fields.path] = "/uploads/";
       this[fields.category] = "default";
