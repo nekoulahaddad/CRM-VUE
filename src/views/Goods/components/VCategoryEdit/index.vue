@@ -24,15 +24,6 @@
           <div class="group__title">Фото категории:</div>
           <div class="group__content">
             <div class="group__left">
-              <div
-                v-if="
-                  editedItem &&
-                  editedItem.img !== '' &&
-                  categoryImage === 'Выбрать файл'
-                "
-              >
-                11
-              </div>
               <img
                 alt=""
                 class="group__image"
