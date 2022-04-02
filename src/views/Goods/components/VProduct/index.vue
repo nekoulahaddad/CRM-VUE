@@ -14,7 +14,7 @@
     </div>
     <div class="list__column">
       <a
-        v-if="item.visible"
+        v-if="item.visible && item.type !== 'group'"
         target="_blank"
         :href="`https://tdcsk.com/products/region/${region}/${item.slug}`"
         :class="{ none: !item.visible }"
