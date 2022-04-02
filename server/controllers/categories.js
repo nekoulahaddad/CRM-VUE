@@ -766,6 +766,25 @@ exports.addCategory = async (req, res, next) => {
           category.banner = "default.jpeg";
           category.bannerPath = "/uploads/";
         }
+        if (images.categoryBannerMob) {
+          // Image
+          category.bannerMob = "";
+          await makeUserDir(
+            UPLOADS_PATH,
+            `/catalog/${region}/categories/${category._id}/`
+          );
+          await uploadFilesFromTempToFolder(
+            TEMP_PATH,
+            UPLOADS_PATH,
+            images.categoryBannerMob[0].filename,
+            `/catalog/${region}/categories/${category._id}/`
+          );
+          category.bannerMob = images.categoryBannerMob[0].filename;
+          category.bannerPathMob = `/uploads/catalog/${region}/categories/${category._id}/`;
+        } else {
+          category.bannerMob = "default.jpeg";
+          category.bannerPathMob = "/uploads/";
+        }
         if (images.categoryIcon) {
           // Icon
           category.icon = "";
