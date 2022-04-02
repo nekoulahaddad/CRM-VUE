@@ -217,6 +217,7 @@ export default {
       type: Object,
       required: true,
     },
+    filtersOptions: Object,
     role: String,
     searched: Boolean,
     checked: Boolean,
@@ -246,7 +247,7 @@ export default {
     changeGroupVisibility(id, visible, item) {
       this.changeVisible = item;
       let groupData = {
-        region: this.region,
+        region: this.filtersOptions.region,
         groupId: id,
         visible: !visible,
       };

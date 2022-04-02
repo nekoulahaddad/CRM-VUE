@@ -19,6 +19,7 @@
                 <!-- Видимость товара -->
                 <template
                   v-if="
+                    role === 'superadmin' ||
                     role === 'content' ||
                     role === 'director' ||
                     role === 'manager'
@@ -95,6 +96,7 @@
               <div class="table__icon">
                 <img
                   v-if="
+                    role === 'superadmin' ||
                     role === 'content' ||
                     role === 'director' ||
                     role === 'manager'

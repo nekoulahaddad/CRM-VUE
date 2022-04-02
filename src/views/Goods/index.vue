@@ -363,6 +363,7 @@
                     :region="filtersOptions.region"
                     :editedItem="editedItem"
                     :movedProduct="movedProduct"
+                    :filtersOptions="filtersOptions"
                     :checked="selectedItems.includes(item._id)"
                     :searched="searched"
                     @getSearchData="getSearchData"
