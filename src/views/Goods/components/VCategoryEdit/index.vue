@@ -450,7 +450,7 @@ export default {
       this.editedItem[fields.img] = "";
       this.editedItem[fields.path] = "";
       this[fields.category] = "Выбрать файл";
-      this[fields.category + "Url"] = "";
+      this[fields.category + "Url"] = require("@/assets/images/default.jpeg");
       this.remove.push(type);
     },
     onCategoryAdd() {
