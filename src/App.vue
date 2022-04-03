@@ -33,6 +33,7 @@ export default {
           console.log(err);
         });
     },
+  },
   mounted() {
     LogRocket.init("qiul8x/adnin");
   },
