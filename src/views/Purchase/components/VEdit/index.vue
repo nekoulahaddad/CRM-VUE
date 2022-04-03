@@ -304,6 +304,9 @@ export default {
       },
     },
   },
+  created() {
+    console.log(this.item);
+  },
 };
 </script>
 

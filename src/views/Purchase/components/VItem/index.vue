@@ -117,12 +117,6 @@ export default {
     role: String,
   },
   computed: {
-    role: {
-      get: function () {
-        let role = this.getUserRole();
-        return role.role;
-      },
-    },
     id: {
       get: function () {
         let user = this.getUserRole();

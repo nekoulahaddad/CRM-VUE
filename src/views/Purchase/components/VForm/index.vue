@@ -347,47 +347,50 @@ export default {
     findOrderByNumber(number) {
       this.productsList = [];
       this.selectedProducts = [];
-      axios({
-        url: `/orders/getByNumber`,
-        params: {
-          orderNumber: number,
-        },
-        method: "GET",
-      })
-        .then(async (result) => {
-          let res = await result;
-          if (res.data?.order && res.data.order._id) {
-            const orderRegionId = res.data.order.region._id;
-            this.orderId = res.data.order._id;
-            this.$toast.success("Заказ найден");
-            this.valute = res.data.order.region.valute.icon;
-            axios({
-              url: `/orders/getproducts`,
-              data: {
-                orderId: this.orderId,
-              },
-              method: "POST",
-            }).then((res) => {
-              this.productsList = res.data;
-            });
-
-            axios({
-              url: `/regions/getbyid/`,
-              data: {
-                regionId: orderRegionId,
-              },
-              method: "POST",
-            }).then((res) => {
-              this.region = res.data.region;
-            });
-          } else {
-            this.$toast.warning("Заказ не найден");
-            this.orderId = null;
-          }
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        axios({
+          url: `/orders/getByNumber`,
+          params: {
+            orderNumber: number,
+          },
+          method: "GET",
         })
-        .catch((err) => {
-          this.$toast.error(err.response.data.message);
-        });
+          .then(async (result) => {
+            let res = await result;
+            if (res.data?.order && res.data.order._id) {
+              const orderRegionId = res.data.order.region._id;
+              this.orderId = res.data.order._id;
+              this.$toast.success("Заказ найден");
+              this.valute = res.data.order.region.valute.icon;
+              axios({
+                url: `/orders/getproducts`,
+                data: {
+                  orderId: this.orderId,
+                },
+                method: "POST",
+              }).then((res) => {
+                this.productsList = res.data;
+              });
+
+              axios({
+                url: `/regions/getbyid/`,
+                data: {
+                  regionId: orderRegionId,
+                },
+                method: "POST",
+              }).then((res) => {
+                this.region = res.data.region;
+              });
+            } else {
+              this.$toast.warning("Заказ не найден");
+              this.orderId = null;
+            }
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
+      }, 500);
     },
     deleteItem(_id) {
       if (this.deletedItems.includes(_id)) {
@@ -507,7 +510,7 @@ export default {
           url: `/products/getproductbysearch/`,
           data: {
             search: title,
-            region: this.region || REGION_MOSCOW_ID,
+            region: this.filtersOptions.region || REGION_MOSCOW_ID,
           },
           method: "POST",
         })
