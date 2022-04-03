@@ -638,10 +638,7 @@ export default {
               createdAt: this.editedItem.createdAt,
               seenAt: seen,
             };
-            this.$emit("editItem", transformedData);
-
             this.$toast.success("Закупка успешно обновлен!");
-            this.$emit("toggleOpen", transformedData);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
@@ -649,7 +646,7 @@ export default {
       } else {
         data.data.initiator = this.currentUser;
         axios({
-          url: process.env.VUE_APP_DEVELOP_URL + `/purchase/post/`,
+          url: `/purchase/post/`,
           data: data,
           method: "POST",
         })
@@ -666,8 +663,7 @@ export default {
               number: createdData.data.data.number,
               createdAt: createdData.data.data.createdAt,
             });
-            this.$toast.success("Закупка успешно добавлен!");
-            this.$emit("toggleOpen", createdData);
+            this.$toast.success("Закупка успешно добавлена!");
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
