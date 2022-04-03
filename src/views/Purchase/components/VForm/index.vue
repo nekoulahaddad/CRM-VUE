@@ -535,6 +535,10 @@ export default {
         this.$toast.error("Выберите регион!", "Ошибка");
         return;
       }
+      if (!this.category) {
+        this.$toast.error("Выберите категорию!", "Ошибка");
+        return;
+      }
       if (!this.orderNumber || !this.orderId) {
         this.$toast.error("Номер заказа отсутствует", "Ошибка");
         return;
