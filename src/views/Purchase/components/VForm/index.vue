@@ -130,26 +130,48 @@
         <div class="list__header">
           <div class="list__columns">
             <div class="list__column">№:</div>
-            <div class="list__column">Название товара:</div>
-            <div class="list__column">Артикул:</div>
-            <div class="list__column">Итого:</div>
+            <div class="list__column justify-center">Название товара:</div>
+            <div class="list__column justify-center">Артикул:</div>
+            <div class="list__column justify-center">Кол-во:</div>
           </div>
         </div>
         <div
           v-for="(product, index) in productsList"
           :key="product._id"
           class="list__row list__row--shadow list__row--white"
+          :class="{
+            'list__row--delete': deletedItems.includes(product._id),
+          }"
         >
           <div class="list__columns">
             <div class="list__column">
               {{ index + 1 }}
             </div>
-            <div class="list__column bg bg--blue-light">
+            <div class="list__column bg bg--blue-light justify-center">
               {{ product.title }}
             </div>
-            <div class="list__column">{{ product.article }}</div>
-            <div class="list__column">
-              {{ product.cost }} {{ product.valute ? product.valute : valute }}
+            <div class="list__column justify-center">{{ product.article }}</div>
+            <div class="list__column justify-center">
+              {{ product.quantity }}
+            </div>
+            <div class="list__column d-flex justify-end">
+              <VueCustomTooltip
+                label="Отменить удаление"
+                v-if="deletedItems.includes(product._id)"
+              >
+                <img
+                  @click="deleteItem(product._id)"
+                  src="@/assets/icons/trash_icon.svg"
+                  alt=""
+                />
+              </VueCustomTooltip>
+              <VueCustomTooltip label="Удалить" v-else>
+                <img
+                  @click="deleteItem(product._id)"
+                  src="@/assets/icons/trash_icon.svg"
+                  alt=""
+                />
+              </VueCustomTooltip>
             </div>
           </div>
         </div>
@@ -184,6 +206,14 @@
               v-model="articleSearch"
               placeholder="000000"
               @keyup="findItemByArticle"
+            />
+          </div>
+          <div class="list__column d-flex justify-center">
+            <input
+              min="1"
+              class="form-control"
+              type="number"
+              v-model="newItem.quantity"
             />
           </div>
           <div class="list__column d-flex align-items-center justify-end">
@@ -243,6 +273,7 @@ export default {
         quantity: 1,
         cost: 0,
       },
+      deletedItems: [],
       articleSearch: null,
       addProductFormOpened: false,
       addExecutor: false,
@@ -311,6 +342,13 @@ export default {
     };
   },
   methods: {
+    deleteItem(_id) {
+      if (this.deletedItems.includes(_id)) {
+        this.deletedItems = this.deletedItems.filter((id) => id !== _id);
+      } else {
+        this.deletedItems.push(_id);
+      }
+    },
     cancelProductSelection() {
       this.addProductFormOpened = false;
       this.selectedProduct = null;
@@ -718,13 +756,12 @@ export default {
       .list__column {
         font-size: 13px;
         display: flex;
-        justify-content: center;
       }
     }
   }
   .sub-list .list__columns,
   .sub-list-columns {
-    grid-template-columns: 50px 700px 220px 1fr !important;
+    grid-template-columns: 50px 700px 220px 100px 1fr !important;
 
     .list__column {
       font-size: 13px !important;
@@ -747,6 +784,9 @@ export default {
     & + * {
       margin-left: 20px;
     }
+  }
+  .list__row--delete {
+    text-decoration: line-through;
   }
 }
 </style>
