@@ -4,7 +4,7 @@
     <form @submit.prevent="onEdit">
       <div class="list-info__group group">
         <div class="d-flex justify-content-between">
-          <div class="flex-1" style="margin-right: 25px">
+          <div class="flex-1 purchase-edit__left" style="margin-right: 25px">
             <div class="group__content">
               <div class="group__item text--bold-700">Автор:</div>
               <div class="group__value">{{ transformFIO(item.initiator) }}</div>
@@ -681,6 +681,17 @@ export default {
     span[role="tooltip"] + * {
       margin-left: 20px;
     }
+  }
+  .add-good-item {
+    .autocomplete-input {
+      width: 100%;
+    }
+  }
+  .form-control[type="number"] {
+    width: 100px;
+  }
+  .list__row--delete {
+    text-decoration: line-through;
   }
 }
 </style>

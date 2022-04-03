@@ -213,6 +213,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .purchase-page {
   .page__header {
     max-width: 1837px;
@@ -241,7 +243,17 @@ export default {
       grid-template-columns: 30px 160px 160px 230px 160px 160px 160px 160px 160px 1fr;
     }
   }
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
 
+    & + * {
+      margin-left: 20px;
+    }
+  }
   .page__right--middle {
     .list__columns {
       grid-template-columns: 30px 120px 160px 230px 160px 160px 139px 160px 120px 1fr;
