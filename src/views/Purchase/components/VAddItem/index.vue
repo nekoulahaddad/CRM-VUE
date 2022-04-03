@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="add-purchase-row__inner">
-      <VForm :filtersOptions="filtersOptions" />
+      <VForm @fetchData="$emit('fetchData')" :filtersOptions="filtersOptions" />
     </div>
   </div>
 </template>

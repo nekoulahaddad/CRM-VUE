@@ -622,22 +622,11 @@ export default {
         }
         data.data.seenAt = seen;
         axios({
-          url: process.env.VUE_APP_DEVELOP_URL + `/purchase/update/`,
+          url: `/purchase/update/`,
           data: data,
           method: "POST",
         })
           .then(async () => {
-            const transformedData = {
-              _id: data.dataId,
-              ...data.data,
-              category: {
-                category: {
-                  ...data.data.category,
-                },
-              },
-              createdAt: this.editedItem.createdAt,
-              seenAt: seen,
-            };
             this.$toast.success("Закупка успешно обновлен!");
           })
           .catch((err) => {
@@ -651,19 +640,9 @@ export default {
           method: "POST",
         })
           .then(async (res) => {
-            const createdData = await res;
-            this.$emit("createItem", {
-              ...data.data,
-              category: {
-                category: {
-                  ...data.data.category,
-                },
-              },
-              _id: createdData.data.data._id,
-              number: createdData.data.data.number,
-              createdAt: createdData.data.data.createdAt,
-            });
+            this.$emit("fetchData");
             this.$toast.success("Закупка успешно добавлена!");
+            this.$store.commit("toggleAction", { key: "addPurchase" });
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
