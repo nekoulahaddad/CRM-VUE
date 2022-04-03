@@ -225,9 +225,9 @@
         </div>
       </div>
 
-      <span class="good-add-btn" @click="addProductFormOpened = true"
-        >Добавить</span
-      >
+      <span class="good-add-btn" @click="addProductFormOpened = true">
+        Добавить
+      </span>
     </div>
 
     <v-button red>Создать</v-button>

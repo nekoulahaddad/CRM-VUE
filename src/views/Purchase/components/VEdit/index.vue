@@ -41,36 +41,6 @@
                 </autocomplete>
               </div>
             </div>
-            <div class="group__content">
-              <div class="group__item text--bold-700">
-                {{ $t("goods") }}
-              </div>
-              <div class="group__value">
-                <div
-                  v-for="product in item.products"
-                  class="group__goods group-goods"
-                >
-                  <div class="group-goods__item">
-                    <div class="group-goods__title">{{ $t("name") }}</div>
-                    <div class="group-goods__value">{{ product.title }}</div>
-                  </div>
-                  <div class="group-goods__item">
-                    <div class="group-goods__title">{{ $t("article") }}</div>
-                    <div class="group-goods__value">{{ product.article }}</div>
-                  </div>
-                  <div class="group-goods__item">
-                    <div class="group-goods__title">{{ $t("quantity") }}</div>
-                    <div class="group-goods__value">{{ product.quantity }}</div>
-                  </div>
-                  <div class="group-goods__item">
-                    <div class="group-goods__title">{{ $t("total") }}</div>
-                    <div class="group-goods__value">
-                      {{ product.cost }} {{ product.valute }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="group">
               <div class="group__title">Описание:</div>
               <div class="group__content">
@@ -149,6 +119,125 @@
           </div>
         </div>
       </div>
+
+      <div class="group" style="margin-top: 10px">
+        <div class="group__title">Товары:</div>
+        <div class="list sub-list">
+          <div class="list__header">
+            <div class="list__columns">
+              <div class="list__column">№:</div>
+              <div class="list__column justify-center">Название товара:</div>
+              <div class="list__column justify-center">Артикул:</div>
+              <div class="list__column justify-center">Кол-во:</div>
+            </div>
+          </div>
+          <div
+            v-for="(product, index) in productsList"
+            :key="product._id"
+            class="list__row list__row--shadow list__row--white"
+            :class="{
+              'list__row--delete': deletedItems.includes(product._id),
+            }"
+          >
+            <div class="list__columns">
+              <div class="list__column">
+                {{ index + 1 }}
+              </div>
+              <div class="list__column bg bg--blue-light justify-center">
+                {{ product.title }}
+              </div>
+              <div class="list__column justify-center">
+                {{ product.article }}
+              </div>
+              <div class="list__column justify-center">
+                {{ product.quantity }}
+              </div>
+              <div class="list__column d-flex justify-end">
+                <VueCustomTooltip
+                  label="Отменить удаление"
+                  v-if="deletedItems.includes(product._id)"
+                >
+                  <img
+                    @click="deleteItem(product._id)"
+                    src="@/assets/icons/trash_icon.svg"
+                    alt=""
+                  />
+                </VueCustomTooltip>
+                <VueCustomTooltip label="Удалить" v-else>
+                  <img
+                    @click="deleteItem(product._id)"
+                    src="@/assets/icons/trash_icon.svg"
+                    alt=""
+                  />
+                </VueCustomTooltip>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="margin-bottom: 10px"
+          class="list__row list__row--shadow list__row--white"
+          v-if="addProductFormOpened"
+        >
+          <div class="list__columns sub-list-columns">
+            <div class="list__column d-flex justify-center">
+              {{ productsList.length + 1 }}
+            </div>
+            <div class="list__column add-good-item">
+              <autocomplete
+                :search="findItemByTitle"
+                :get-result-value="getItemTitle"
+                placeholder="Введите название товара..."
+              >
+                <template #result="{ result, props }">
+                  <li v-bind="props" @click="selectedProductItem(result)">
+                    {{ result.title }}
+                  </li>
+                </template>
+              </autocomplete>
+            </div>
+            <div class="list__column d-flex justify-center">
+              <input
+                class="form-control"
+                type="number"
+                v-model="articleSearch"
+                placeholder="000000"
+                @keyup="findItemByArticle"
+              />
+            </div>
+            <div class="list__column d-flex justify-center">
+              <input
+                min="1"
+                class="form-control"
+                type="number"
+                v-model="newItem.quantity"
+              />
+            </div>
+            <div class="list__column d-flex align-items-center justify-end">
+              <VueCustomTooltip label="Добавить">
+                <img
+                  alt=""
+                  src="@/assets/icons/check_black.svg"
+                  @click="addItemToProducts(newItem)"
+                />
+              </VueCustomTooltip>
+              <VueCustomTooltip label="Удалить">
+                <img
+                  alt=""
+                  src="@/assets/icons/trash_icon.svg"
+                  @click="cancelProductSelection"
+                />
+              </VueCustomTooltip>
+            </div>
+          </div>
+        </div>
+
+        <span class="good-add-btn" @click="addProductFormOpened = true">
+          Добавить
+        </span>
+      </div>
+
       <v-spinner v-if="isLoading" small />
       <v-button v-else red>Сохранить</v-button>
     </form>
@@ -158,6 +247,7 @@
 <script>
 import axios from "@/api/axios";
 import VSpinner from "@/components/VSpinner";
+import { REGION_MOSCOW_ID } from "../../../../constants";
 
 export default {
   props: {
@@ -170,6 +260,9 @@ export default {
   data() {
     return {
       fio: "",
+      deletedItems: [],
+      articleSearch: null,
+      addProductFormOpened: false,
       changeBuyer: false,
       changeCategory: false,
       currentInput: "",
@@ -202,9 +295,145 @@ export default {
       valute: null,
       deliveryDate:
         this.item && this.item.deliveryDate ? this.item.deliveryDate : null,
+      newItem: {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+      },
     };
   },
   methods: {
+    findItemByArticle(article) {
+      const articleNumber = article.target.value;
+      if (!articleNumber) {
+        this.$toast.warning("Артикул продукта не может быть типом строки");
+        return;
+      }
+      if (articleNumber.length >= 4) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          axios({
+            url: `/products/getproductbyarticle/`,
+            data: {
+              article: articleNumber,
+              region: this.region,
+            },
+            method: "POST",
+          })
+            .then(async (result) => {
+              let res = await result;
+              if (res.data.product.length !== 0) {
+                this.selectedProduct = res.data.product;
+                let product = res.data.product;
+                this.newItem.title = product.title;
+                this.newItem.article = product.article;
+                this.newItem._id = product._id;
+                this.newItem.product_id = product._id;
+                this.newItem.club_cost = product.club_cost;
+                this.newItem.cost = product.cost;
+                this.newItem.quantity = 1;
+                this.$toast.success("Продукт, найденный по вашему запросу");
+              } else {
+                this.$toast.warning(
+                  "Товар по артику не найден, пожалуйста введите правильный артикул товара"
+                );
+                this.newItem = {
+                  title: "Введите артикул товара",
+                  quantity: 1,
+                  cost: 0,
+                };
+                this.selectedProduct = null;
+              }
+            })
+            .catch((err) => {
+              this.$toast.error(err.response.data.message);
+            });
+        }, 500);
+      }
+    },
+    addItemToProducts(item) {
+      let product = {
+        full_cost: item.full_cost,
+        club_cost: item.club_cost,
+        cost: item.cost,
+        discount_price: item.discount_price || null,
+        product_id: item.product_id,
+        quantity: item.quantity,
+        article: item.article,
+        title: item.title,
+      };
+
+      if (product.product_id === undefined) {
+        this.$toast.warning(
+          "Товар не найден или указан неверный артикул, пожалуйста, найдите товар по артикулу или удалите товар"
+        );
+        return;
+      }
+      this.productsList.push(product);
+      this.addProductFormOpened = false;
+      this.newItem = {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+        full_cost: 0,
+      };
+      this.selectedProduct = null;
+      this.articleSearch = null;
+    },
+    selectedProductItem(item) {
+      this.articleSearch = item.article;
+      this.newItem.title = item.title;
+      this.newItem.article = item.article;
+      this.newItem._id = item._id;
+      this.newItem.product_id = item._id;
+      this.newItem.club_cost = item.club_cost;
+      this.newItem.full_cost = item.full_cost;
+      this.newItem.cost = item.cost;
+      this.newItem.quantity = 1;
+    },
+    getItemTitle(result) {
+      return result.title;
+    },
+    findItemByTitle(title) {
+      if (title.trim().length < 3) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios({
+          url: `/products/getproductbysearch/`,
+          data: {
+            search: title,
+            region: this.item.region._id,
+          },
+          method: "POST",
+        })
+          .then(async (result) => {
+            let res = await result;
+            resolve(res.data.products);
+          })
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+          });
+      });
+    },
+    deleteItem(_id) {
+      if (this.deletedItems.includes(_id)) {
+        this.deletedItems = this.deletedItems.filter((id) => id !== _id);
+      } else {
+        this.deletedItems.push(_id);
+      }
+    },
+    cancelProductSelection() {
+      this.addProductFormOpened = false;
+      this.selectedProduct = null;
+      this.newItem = {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+      };
+      this.articleSearch = null;
+    },
     selectCategory(category) {
       this.category = category;
       this.changeCategory = false;
@@ -304,10 +533,15 @@ export default {
       },
     },
   },
+  created() {
+    console.log(this.item);
+  },
 };
 </script>
 
 <style lang="scss">
+@import "@/styles/_variables";
+
 .purchase-edit {
   & > .group__title {
     font-size: 16px;
@@ -337,6 +571,61 @@ export default {
   .executor {
     border-bottom: 1px dashed;
     cursor: pointer;
+  }
+  .good-add-btn {
+    width: 230px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    background-color: $color-red;
+    color: $color-white;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 700;
+    border-radius: $border-radius;
+  }
+  .sub-list {
+    width: 100%;
+
+    .list__header {
+      height: auto;
+      position: relative;
+
+      &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #f6f6f6;
+        border-radius: 5px;
+      }
+    }
+
+    .list__columns {
+      background-color: transparent;
+
+      .list__column {
+        font-size: 13px;
+        display: flex;
+      }
+    }
+  }
+  .sub-list .list__columns,
+  .sub-list-columns {
+    grid-template-columns: 50px 700px 220px 100px 1fr !important;
+
+    .list__column {
+      font-size: 13px !important;
+    }
+
+    span[role="tooltip"] + * {
+      margin-left: 20px;
+    }
   }
 }
 </style>
