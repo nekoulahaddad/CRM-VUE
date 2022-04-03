@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/api/axios";
 import isMobile from "is-mobile";
 import LogRocket from "logrocket";
 
@@ -33,36 +33,10 @@ export default {
           console.log(err);
         });
     },
-    beforeReload() {
-      if (
-        this.role === "admin" ||
-        this.role === "director" ||
-        this.role === "manager"
-      ) {
-        this.$toast.info("Вы потеряли соеденение с сервером!", "Уведомление");
-        this.$socket.client.emit("leftRoomOrders", {
-          userId: this.$store.state.id,
-        });
-        this.$socket.client.emit("leftRoomCallbacks", {
-          userId: this.$store.state.id,
-        });
-      }
-    },
-  },
   mounted() {
     LogRocket.init("qiul8x/adnin");
   },
   created() {
-    axios({
-      url: "https://onecapi.xn--j1ano.com/api/v1",
-    })
-      .then((e) => {
-        console.log(e);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
     window.addEventListener("resize", () => {
       this.mobile = isMobile();
     });
