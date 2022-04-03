@@ -610,44 +610,20 @@ export default {
         },
       };
 
-      if (
-        this.editedItem &&
-        !this.editedItem.type &&
-        this.editedItem.type !== "fromOrder"
-      ) {
-        data.dataId = this.editedItem._id;
-        let seen = null;
-        if (this.editedItem.executor._id === this.currentUser._id) {
-          seen = Date.now();
-        }
-        data.data.seenAt = seen;
-        axios({
-          url: `/purchase/update/`,
-          data: data,
-          method: "POST",
+      data.data.initiator = this.currentUser;
+      axios({
+        url: `/purchase/post/`,
+        data: data,
+        method: "POST",
+      })
+        .then(async (res) => {
+          this.$emit("fetchData");
+          this.$toast.success("Закупка успешно добавлена!");
+          this.$store.commit("toggleAction", { key: "addPurchase" });
         })
-          .then(async () => {
-            this.$toast.success("Закупка успешно обновлен!");
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          });
-      } else {
-        data.data.initiator = this.currentUser;
-        axios({
-          url: `/purchase/post/`,
-          data: data,
-          method: "POST",
-        })
-          .then(async (res) => {
-            this.$emit("fetchData");
-            this.$toast.success("Закупка успешно добавлена!");
-            this.$store.commit("toggleAction", { key: "addPurchase" });
-          })
-          .catch((err) => {
-            this.$toast.error(err.response.data.message);
-          });
-      }
+        .catch((err) => {
+          this.$toast.error(err.response.data.message);
+        });
     },
   },
   async created() {
