@@ -52,6 +52,7 @@
               required
               class="form-control"
               type="text"
+              v-model="orderId"
               placeholder="Введите номер заказа..."
             />
           </div>
@@ -432,7 +433,6 @@ export default {
             })
             .catch((err) => {
               this.$toast.error(err.response.data.message);
-              this.changeStatus(true);
             });
         }, 500);
       }
@@ -537,7 +537,7 @@ export default {
         this.$toast.error("Номер заказа отсутствует", "Ошибка");
         return;
       }
-      this.changeStatus(false);
+
       let data = {
         data: {
           initiator: this.initiator,
@@ -588,11 +588,9 @@ export default {
 
             this.$toast.success("Закупка успешно обновлен!");
             this.$emit("toggleOpen", transformedData);
-            this.changeStatus(true);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-            this.changeStatus(true);
           });
       } else {
         data.data.initiator = this.currentUser;
@@ -616,11 +614,9 @@ export default {
             });
             this.$toast.success("Закупка успешно добавлен!");
             this.$emit("toggleOpen", createdData);
-            this.changeStatus(true);
           })
           .catch((err) => {
             this.$toast.error(err.response.data.message);
-            this.changeStatus(true);
           });
       }
     },
