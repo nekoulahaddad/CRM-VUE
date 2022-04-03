@@ -25,11 +25,7 @@
       @afterSubDelete="afterSubDelete"
     />
 
-    <v-page-header
-      icon="desktop_title"
-      @toggleFilter="toggleFilter"
-      :showFilter="showFilter"
-    />
+    <v-page-header icon="desktop_title" :filterToggle="false" />
 
     <div class="page__body d-flex">
       <!-- Фильтр -->
