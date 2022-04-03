@@ -156,25 +156,6 @@
             <div class="list__column justify-center">
               {{ product.quantity }}
             </div>
-            <div class="list__column d-flex justify-end">
-              <VueCustomTooltip
-                label="Отменить удаление"
-                v-if="deletedItems.includes(product._id)"
-              >
-                <img
-                  @click="deleteItem(product._id)"
-                  src="@/assets/icons/trash_icon.svg"
-                  alt=""
-                />
-              </VueCustomTooltip>
-              <VueCustomTooltip label="Удалить" v-else>
-                <img
-                  @click="deleteItem(product._id)"
-                  src="@/assets/icons/trash_icon.svg"
-                  alt=""
-                />
-              </VueCustomTooltip>
-            </div>
           </div>
         </div>
       </div>

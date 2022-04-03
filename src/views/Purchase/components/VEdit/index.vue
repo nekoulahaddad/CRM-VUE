@@ -103,24 +103,6 @@
             </div>
 
             <div class="group">
-              <div class="group__title">Категория:</div>
-              <div class="group__content">
-                <autocomplete
-                  :disabled="!region"
-                  :search="getCategoriesBySearch"
-                  :get-result-value="getResultValue"
-                  placeholder="Введите название категории..."
-                >
-                  <template #result="{ result, props }">
-                    <li v-bind="props" @click="selectCategory(result)">
-                      {{ result.categoryName }}
-                    </li>
-                  </template>
-                </autocomplete>
-              </div>
-            </div>
-
-            <div class="group">
               <div class="group__title">Статус:</div>
               <div class="group__content">
                 <v-select
@@ -183,25 +165,6 @@
               </div>
               <div class="list__column justify-center">
                 {{ product.quantity }}
-              </div>
-              <div class="list__column d-flex justify-end">
-                <VueCustomTooltip
-                  label="Отменить удаление"
-                  v-if="deletedItems.includes(product._id)"
-                >
-                  <img
-                    @click="deleteItem(product._id)"
-                    src="@/assets/icons/trash_icon.svg"
-                    alt=""
-                  />
-                </VueCustomTooltip>
-                <VueCustomTooltip label="Удалить" v-else>
-                  <img
-                    @click="deleteItem(product._id)"
-                    src="@/assets/icons/trash_icon.svg"
-                    alt=""
-                  />
-                </VueCustomTooltip>
               </div>
             </div>
           </div>
