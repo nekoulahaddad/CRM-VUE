@@ -33,18 +33,7 @@
             </autocomplete>
           </div>
         </div>
-        <div class="group" v-if="editedItem">
-          <div class="group__title">Ф.И.О. автора:</div>
-          <div class="group__content">
-            <input
-              readonly
-              class="form-control"
-              type="text"
-              placeholder="Введите Ф.И.О. автора..."
-              :value="transformFIO(initiator)"
-            />
-          </div>
-        </div>
+
         <div class="group">
           <div class="group__title">№ заказа:</div>
           <div class="group__content">
@@ -251,11 +240,6 @@ import { REGION_MOSCOW_ID } from "../../../../constants";
 
 export default {
   props: {
-    editedItem: {
-      type: Object,
-      require: false,
-      default: null,
-    },
     filtersOptions: Object,
   },
   computed: {
@@ -279,34 +263,13 @@ export default {
       addProductFormOpened: false,
       addExecutor: false,
       currentInput: "",
-      categories:
-        this.editedItem && this.editedItem.categories
-          ? this.editedItem.categories
-          : [],
-      category:
-        this.editedItem && this.editedItem.category
-          ? this.editedItem.category.category
-          : null,
-      initiator:
-        this.editedItem && this.editedItem.initiator
-          ? this.editedItem.initiator
-          : null,
-      executor:
-        this.editedItem && this.editedItem.executor
-          ? this.editedItem.executor
-          : null,
-      message:
-        this.editedItem && this.editedItem.message
-          ? this.editedItem.message
-          : "",
-      comment:
-        this.editedItem && this.editedItem.comment
-          ? this.editedItem.comment
-          : "",
-      status:
-        this.editedItem && this.editedItem.status
-          ? this.editedItem.status
-          : null,
+      categories: [],
+      category: null,
+      initiator: null,
+      executor: null,
+      message: "",
+      comment: "",
+      status: null,
       statusList: [
         "отказ",
         "в обработке",
@@ -316,30 +279,15 @@ export default {
       ],
       users: [],
       regions: [],
-      region:
-        this.editedItem && this.editedItem.region
-          ? this.editedItem.region
-          : this.filtersOptions.region,
-      title: this.editedItem ? "Редактировать закупку" : "Добавить закупка",
+      region: this.filtersOptions.region,
+      title: "Добавить закупку",
       isLoadingProductSearch: false,
       selectedProducts: [],
-      productsList:
-        this.editedItem && this.editedItem.products
-          ? this.editedItem.products
-          : [],
-      orderNumber:
-        this.editedItem && this.editedItem.orderNumber
-          ? this.editedItem.orderNumber
-          : null,
-      orderId:
-        this.editedItem && this.editedItem.orderId
-          ? this.editedItem.orderId
-          : null,
+      productsList: [],
+      orderNumber: null,
+      orderId: null,
       valute: null,
-      deliveryDate:
-        this.editedItem && this.editedItem.deliveryDate
-          ? this.editedItem.deliveryDate
-          : null,
+      deliveryDate: null,
     };
   },
   methods: {
@@ -603,9 +551,7 @@ export default {
           comment: this.comment,
           orderNumber: this.orderNumber,
           orderId: this.orderId,
-          products: this.editedItem
-            ? this.editedItem.products
-            : this.selectedProducts,
+          products: this.selectedProducts,
           deliveryDate: this.deliveryDate,
         },
       };
@@ -633,23 +579,6 @@ export default {
       let result = await res;
       this.regions = result.data.regions;
     });
-    if (this.editedItem) {
-      await axios({
-        url: `/categories/get/`,
-        data: {
-          options: {
-            nesting: 0,
-            region: this.region._id,
-          },
-        },
-        method: "POST",
-      }).then(async (res) => {
-        let result = await res;
-        this.editedItem.categories = result.data.categories;
-        this.categories = result.data.categories;
-        this.tempViews = result.data.categories;
-      });
-    }
   },
   watch: {
     currentInput: function () {
