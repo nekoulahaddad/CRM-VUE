@@ -49,7 +49,6 @@
           <div class="group__title">№ заказа:</div>
           <div class="group__content">
             <input
-              required
               class="form-control"
               type="text"
               v-model="orderNumber"
@@ -63,9 +62,9 @@
           <div class="group__title">Описание:</div>
           <div class="group__content">
             <textarea
-              required
               class="form-textarea"
               maxlength="3000"
+              v-model="message"
               placeholder="Введите описание товара..."
             />
           </div>
@@ -380,7 +379,7 @@ export default {
                 },
                 method: "POST",
               }).then((res) => {
-                this.region = res.data.region;
+                this.region = res.data.region._id;
               });
             } else {
               this.$toast.warning("Заказ не найден");
@@ -544,9 +543,11 @@ export default {
         this.executor = user;
         this.fio = ``;
         this.users = [];
+        this.addExecutor = false;
         return;
       }
       this.$toast.error("При выбранном отделе исполнитель только один!");
+      this.addExecutor = false;
       return;
     },
     selectCategory(category) {
@@ -578,11 +579,15 @@ export default {
       });
     },
     onCreate() {
-      if (!this.region) {
-        this.$toast.error("Укажите регион!", "Ошибка");
+      if (!this.executor) {
+        this.$toast.error("Выберите исполнителя!", "Ошибка");
         return;
       }
-      if (!this.orderId) {
+      if (!this.region) {
+        this.$toast.error("Выберите регион!", "Ошибка");
+        return;
+      }
+      if (!this.orderNumber || !this.orderId) {
         this.$toast.error("Номер заказа отсутствует", "Ошибка");
         return;
       }
