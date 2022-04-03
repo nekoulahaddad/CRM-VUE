@@ -567,7 +567,7 @@ export default {
           comment: this.comment,
           orderNumber: this.orderNumber,
           orderId: this.orderId,
-          products: this.selectedProducts,
+          products: this.productsList,
           deliveryDate: this.deliveryDate,
         },
       };
