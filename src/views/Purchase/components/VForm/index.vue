@@ -111,6 +111,18 @@
             />
           </div>
         </div>
+
+        <div class="group">
+          <div class="group__title">Дата поставки:</div>
+          <div class="group__content">
+            <datetime
+              type="datetime"
+              input-class="forms__container--input"
+              :phrases="{ ok: $t('ready'), cancel: $t('cancel') }"
+              v-model="deliveryDate"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
@@ -721,6 +733,9 @@ export default {
   }
   .list__row--delete {
     text-decoration: line-through;
+  }
+  .vdatetime-input {
+    width: 401px;
   }
 }
 </style>

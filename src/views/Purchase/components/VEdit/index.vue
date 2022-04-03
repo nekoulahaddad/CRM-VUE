@@ -14,10 +14,6 @@
               <div class="group__value">{{ item.orderNumber }}</div>
             </div>
             <div class="group__content">
-              <div class="group__item text--bold-700">Регион:</div>
-              <div class="group__value">{{ item.region.title }}</div>
-            </div>
-            <div class="group__content">
               <div class="group__item text--bold-700">Категория:</div>
               <div
                 class="group__value category"
@@ -90,6 +86,41 @@
           </div>
           <div>
             <div class="group">
+              <div class="group__title">Регионы:</div>
+              <div class="group__content">
+                <v-select
+                  name="region"
+                  :options="
+                    regions.map((region) => ({
+                      label: region.title,
+                      value: region._id,
+                    }))
+                  "
+                  :reduce="(item) => item.value"
+                  v-model="item.region._id"
+                />
+              </div>
+            </div>
+
+            <div class="group">
+              <div class="group__title">Категория:</div>
+              <div class="group__content">
+                <autocomplete
+                  :disabled="!region"
+                  :search="getCategoriesBySearch"
+                  :get-result-value="getResultValue"
+                  placeholder="Введите название категории..."
+                >
+                  <template #result="{ result, props }">
+                    <li v-bind="props" @click="selectCategory(result)">
+                      {{ result.categoryName }}
+                    </li>
+                  </template>
+                </autocomplete>
+              </div>
+            </div>
+
+            <div class="group">
               <div class="group__title">Статус:</div>
               <div class="group__content">
                 <v-select
@@ -105,6 +136,7 @@
                 />
               </div>
             </div>
+
             <div class="group">
               <div class="group__title">Дата поставки:</div>
               <div class="group__content">
@@ -275,11 +307,11 @@ export default {
       comment: this.item && this.item.comment ? this.item.comment : "",
       status: this.item && this.item.status ? this.item.status : null,
       statusList: [
-        "Отказ",
-        "В обработке",
-        "Подтвержденный",
-        "В наличии",
-        "Отсутствует у поставщика",
+        "отказ",
+        "в обработке",
+        "подтвержденный",
+        "в наличии",
+        "отсутствует у поставщика",
       ],
       isLoading: false,
       users: [],
@@ -303,6 +335,24 @@ export default {
     };
   },
   methods: {
+    getCategoriesBySearch(input) {
+      if (input.trim().length < 1) {
+        return [];
+      }
+
+      return new Promise((resolve) => {
+        axios({
+          url: `/categories/getcategoriesbysearch/`,
+          data: {
+            title: input,
+            region: this.region,
+          },
+          method: "POST",
+        }).then((res) => {
+          resolve(res.data.views);
+        });
+      });
+    },
     findItemByArticle(article) {
       const articleNumber = article.target.value;
       if (!articleNumber) {
@@ -533,8 +583,13 @@ export default {
       },
     },
   },
-  created() {
-    console.log(this.item);
+  async created() {
+    await axios({
+      url: "/regions/get",
+    }).then(async (res) => {
+      let result = await res;
+      this.regions = result.data.regions;
+    });
   },
 };
 </script>
