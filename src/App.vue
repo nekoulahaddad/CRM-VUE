@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from "@/api/axios";
+import axios from "axios";
 import isMobile from "is-mobile";
 import LogRocket from "logrocket";
 
@@ -53,6 +53,16 @@ export default {
     LogRocket.init("qiul8x/adnin");
   },
   created() {
+    axios({
+      url: "https://onecapi.xn--j1ano.com/api/v1",
+    })
+      .then((e) => {
+        console.log(e);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
     window.addEventListener("resize", () => {
       this.mobile = isMobile();
     });
