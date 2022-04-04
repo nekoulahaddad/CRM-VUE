@@ -551,7 +551,6 @@ export default {
     }
 
     &__right {
-      width: 263px;
       padding-left: 20px;
     }
   }
@@ -672,7 +671,7 @@ export default {
     border: none;
   }
   .vc-pane-container {
-    width: 263px;
+    width: 267px;
   }
   .vc-arrow {
     display: none;
@@ -744,23 +743,27 @@ export default {
     }
   }
 
-  .page__right {
-    max-width: 1327px;
-  }
-
-  .page__right--fluid {
-    width: 1417px;
-  }
-
-  .page__right--full {
-    max-width: 1327px;
-  }
-
-  .page__right--middle {
-    width: 1417px;
-  }
   .filter {
     margin-bottom: 20px;
+  }
+  .page__right {
+    .tasks {
+      width: 1307px;
+    }
+  }
+
+  .page__right--middle,
+  .page__right--fluid {
+    width: 1441px;
+
+    .tasks {
+      width: 1421px;
+    }
+  }
+  .page__right--full {
+    .tasks {
+      width: 1307px;
+    }
   }
 }
 </style>
