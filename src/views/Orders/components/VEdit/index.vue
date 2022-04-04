@@ -525,17 +525,7 @@
             Нет связи с клиентом
           </v-button>
         </template>
-        <v-button
-          red
-          v-if="
-            type === 'edit' &&
-            !editedItem.manager.length &&
-            editedItem.status.value === 'awaiting'
-          "
-          @click="editOrder"
-        >
-          Сохранить
-        </v-button>
+        <v-button red @click="editOrder"> Сохранить </v-button>
       </div>
     </form>
   </div>
