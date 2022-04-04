@@ -10,6 +10,7 @@
 import axios from "@/api/axios";
 import isMobile from "is-mobile";
 import LogRocket from "logrocket";
+import { getRegionById } from "./utils/region";
 
 export default {
   data() {
@@ -40,6 +41,12 @@ export default {
   created() {
     window.addEventListener("resize", () => {
       this.mobile = isMobile();
+    });
+
+    axios({
+      url: "/regions/get",
+    }).then((res) => {
+      this.$store.commit("setRegions", res.data.regions);
     });
   },
 };

@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    regions: [],
     sidebar: !!Cookies.get("sidebar"),
     filter: !!Cookies.get("filter"),
     status: {
@@ -59,11 +60,14 @@ export default new Vuex.Store({
       moveProducts: false,
       syncGoogleDoc: false,
       googleTable: false,
-      downloadFeed: false
+      downloadFeed: false,
     },
     deleteSelectedItems: false,
   },
   mutations: {
+    setRegions(state, payload) {
+      state.regions = payload;
+    },
     setCurrentRegion(state, payload) {
       state.currentRegion = payload;
     },
