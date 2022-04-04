@@ -21,7 +21,7 @@
       >
         {{ item.title }}
       </a>
-      <span class="none" v-else>{{ item.title }}</span>
+      <span :class="{ none: !item.visible }" v-else>{{ item.title }}</span>
     </div>
     <div class="list__column">
       <span v-if="item.type !== 'group'">{{ item.article }}</span>
