@@ -264,18 +264,30 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({
           url: "/categories/get",
-        }).then((res) => {
-          commit("setCategories", res.data.categories);
-        });
+          method: "post",
+          data: {
+            options: {
+              nesting: 0,
+            },
+          },
+        })
+          .then((res) => {
+            commit("setCategories", res.data.categories);
+            return resolve();
+          })
+          .catch(reject);
       });
     },
     getAllRegions({ commit }) {
       return new Promise((resolve, reject) => {
         axios({
           url: "/regions/get",
-        }).then((res) => {
-          commit("setRegions", res.data.regions);
-        });
+        })
+          .then((res) => {
+            commit("setRegions", res.data.regions);
+            return resolve();
+          })
+          .catch(reject);
       });
     },
     toggleSidebar({ commit }) {

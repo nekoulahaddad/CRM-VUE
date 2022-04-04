@@ -10,7 +10,6 @@
 import axios from "@/api/axios";
 import isMobile from "is-mobile";
 import LogRocket from "logrocket";
-import { getCategoryTitleById } from "./utils/category";
 
 export default {
   data() {
@@ -39,12 +38,12 @@ export default {
     LogRocket.init("qiul8x/adnin");
   },
   created() {
-    this.$store.dispatch("getAllCategories");
-    this.$store.dispatch("getAllRegions");
-
     window.addEventListener("resize", () => {
       this.mobile = isMobile();
     });
+
+    // Подгружаем все регионы
+    this.$store.dispatch("getAllRegions");
   },
 };
 </script>
