@@ -810,7 +810,7 @@ exports.editProduct = async(req, res, next) => {
         console.log("Updating of Product completed")
     console.log("///////////////////////")
     try {
-      updateFeed(region, product.parent_id)
+      updateFeed(region, product.parent_id, cb(res.status(500).send({ message: 'Ошибка при сохранении' })))
     } catch(err) {
       console(err)
     }

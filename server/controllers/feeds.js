@@ -17,50 +17,63 @@ exports.downloadFeed = async (req, res, next) => {
     let category = await getCategory(region, category_id);
     let _region = await Regions.findOne({ _id: mongoose.Types.ObjectId(region) });
     let filePath = '';
-    if (nesting > 1) {
-      filePath = path.join('./uploads/feeds', `/${_region.title}_${category._id}.yml`);
-      let cb = (a) => res.status(200).download(a, 'asdfasdf');
-      await updateFeed(region, category_id, cb);
-    }
-    if (nesting === 1) {
-      filePath = path.join('./uploads/feeds', `/${_region.title}_${category._id}.yml`);
-      let categories = await getSubCategories(region, category_id, nesting);
-      let xmlData = await createLargeFeed(
-        region,
-        categories.map((c) => ({ _id: c._id, categoryName: c.categoryName })),
-        date
-      );
-      fs.writeFile(filePath, xmlData, (err) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send({ message: 'Ошибка при сохранении' });
+    switch (nesting) {
+      case 2:
+        {
+          filePath = path.join('./uploads/feeds', `/${_region.title}_${category._id}.yml`);
+          let cb = (a) => res.status(200).download(a);
+          await updateFeed(region, category_id, cb);
         }
-        res.status(200).download(filePath, 'asdfasdf');
-      });
-    }
-    if (nesting === 0) {
-      let categories = await getSubCategories(region, category_id, 0);
-      filePath = path.join('./uploads/feeds', `/${_region.title}_All.yml`);
-      let _categories = await Promise.all(
-        categories.map(async (_c) => {
-          let _t = await getSubCategories(region, _c._id, 1);
-          return _t.map((_tt) => ({ _id: _tt._id, categoryName: _tt.categoryName }));
-        })
-      );
-      let xmlData = await createLargeFeed(
-        region,
-        _categories.flat().map((c) => ({ _id: c._id, categoryName: c.categoryName })),
-        date
-      );
-      fs.writeFile(filePath, xmlData, (err) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send({ message: 'Ошибка при сохранении' });
+        break;
+      case 1:
+        {
+          filePath = path.join('./uploads/feeds', `/${_region.title}_${category._id}.yml`);
+          let categories = await getSubCategories(region, category_id, nesting);
+          let xmlData = await createLargeFeed(
+            region,
+            categories.map((c) => ({ _id: c._id, categoryName: c.categoryName })),
+            date
+          );
+          fs.writeFile(filePath, xmlData, (err) => {
+            if (err) {
+              console.log(err);
+              return res.status(500).send({ message: 'Ошибка при сохранении' });
+            }
+            res.status(200).download(filePath);
+          });
         }
-        res.status(200).download(filePath, category.categoryName);
-      });
+        break;
+      case 0:
+        {
+          let categories = await getSubCategories(region, category_id, 0);
+          filePath = path.join('./uploads/feeds', `/${_region.title}_All.yml`);
+          let _categories = await Promise.all(
+            categories.map(async (_c) => {
+              let _t = await getSubCategories(region, _c._id, 1);
+              return _t.map((_tt) => ({ _id: _tt._id, categoryName: _tt.categoryName }));
+            })
+          );
+          let xmlData = await createLargeFeed(
+            region,
+            _categories.flat().map((c) => ({ _id: c._id, categoryName: c.categoryName })),
+            date
+          );
+          fs.writeFile(filePath, xmlData, (err) => {
+            if (err) {
+              console.log(err);
+              return res.status(500).send({ message: 'Ошибка при сохранении' });
+            }
+            res.status(200).download(filePath);
+          });
+        }
+        break;
+
+      default:
+        {
+          res.status(500).send({ message: 'Ошибка при скачивании' });
+        }
+        break;
     }
-    res.status(500).send({ message: 'Ошибка при скачивании' });
   } catch (error) {
     next(error);
   }
@@ -113,11 +126,12 @@ async function updateFeed(region, category_id, cb) {
                   </yml_catalog>
                   `;
     let filePath = path.join(FEEDS_PATH, `/${_region.title} ${category.categoryName}.yml`);
+    console.log('🚀 ~ file: feeds.js ~ line 117 ~ updateFeed ~ filePath', filePath);
     // let filePath = path.join('./uploads/feeds', `/${_region.title}_${category._id}.yml`); // test
     fs.writeFile(filePath, xmlData, (err) => {
       if (err) {
         console.log(err);
-        return res.status(500).send({ message: 'Ошибка при сохранении' });
+        return cb();
       }
       if (cb) {
         cb(filePath);
