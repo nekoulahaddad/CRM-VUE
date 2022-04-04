@@ -756,6 +756,10 @@ export default {
   .page__right--fluid {
     width: 1441px;
 
+    .list__item {
+      width: 317px;
+    }
+
     .tasks {
       width: 1421px;
     }
