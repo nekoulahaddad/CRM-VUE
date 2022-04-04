@@ -1676,6 +1676,10 @@ async function generateExcel(req, res, region, categories) {
         },
       ]);
 
+      if (Array.isArray(category) && !category.length) {
+        continue;
+      }
+
       category = category[0].category;
 
       let products = await Products.aggregate([
