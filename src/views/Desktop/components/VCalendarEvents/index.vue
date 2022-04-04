@@ -113,7 +113,7 @@ export default {
   &__inner {
     padding-left: 16px;
     padding-right: 10px;
-    height: 320px;
+    height: 273px;
     padding-bottom: 10px;
     max-height: 100%;
   }
