@@ -558,28 +558,72 @@ exports.getTasksForDesktop = async (req, res, next) => {
         mongoose.Types.ObjectId("601bad7c35e4052ee544d78a"),
         mongoose.Types.ObjectId("601bad9e35e4052ee544d78b"),
       ];
-      assigned.count = await Tasks.find(match).countDocuments();
+      if (options.region && options.region !== "all") {
+        assigned.count = (
+          await Tasks.find(match).populate({
+            path: "initiator",
+            populate: {
+              path: "region",
+            },
+          })
+        ).filter((t) => t.initiator.region.value === options.region).length;
+      } else {
+        assigned.count = await Tasks.find(match).countDocuments();
+      }
       assigned.tasks = await Tasks.aggregate()
         .match(match)
         .append(myAggregation(options.skip, options.limit, options.region));
     }
     if (options.status.includes("accepted")) {
       match.status.$in = [mongoose.Types.ObjectId("601bad6935e4052ee544d789")];
-      accepted.count = await Tasks.find(match).countDocuments();
+      if (options.region && options.region !== "all") {
+        accepted.count = (
+          await Tasks.find(match).populate({
+            path: "initiator",
+            populate: {
+              path: "region",
+            },
+          })
+        ).filter((t) => t.initiator.region.value === options.region).length;
+      } else {
+        accepted.count = await Tasks.find(match).countDocuments();
+      }
       accepted.tasks = await Tasks.aggregate()
         .match(match)
         .append(myAggregation(options.skip, options.limit, options.region));
     }
     if (options.status.includes("tested")) {
       match.status.$in = [mongoose.Types.ObjectId("5f7f30d450523015fc320056")];
-      tested.count = await Tasks.find(match).countDocuments();
+      if (options.region && options.region !== "all") {
+        tested.count = (
+          await Tasks.find(match).populate({
+            path: "initiator",
+            populate: {
+              path: "region",
+            },
+          })
+        ).filter((t) => t.initiator.region.value === options.region).length;
+      } else {
+        tested.count = await Tasks.find(match).countDocuments();
+      }
       tested.tasks = await Tasks.aggregate()
         .match(match)
         .append(myAggregation(options.skip, options.limit, options.region));
     }
     if (options.status.includes("completed")) {
       match.status.$in = [mongoose.Types.ObjectId("5f7afd46701805712f1a8e27")];
-      completed.count = await Tasks.find(match).countDocuments();
+      if (options.region && options.region !== "all") {
+        completed.count = (
+          await Tasks.find(match).populate({
+            path: "initiator",
+            populate: {
+              path: "region",
+            },
+          })
+        ).filter((t) => t.initiator.region.value === options.region).length;
+      } else {
+        completed.count = await Tasks.find(match).countDocuments();
+      }
       completed.tasks = await Tasks.aggregate()
         .match(match)
         .append(myAggregation(options.skip, options.limit, options.region));
