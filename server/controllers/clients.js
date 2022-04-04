@@ -128,16 +128,17 @@ exports.getClients = async (req, res, next) => {
 
     myMatch = {
       ...myMatch,
-      $or: [
-        {
-          deleted: {
-            $exists: false,
-          },
-        },
-        {
-          deleted: false,
-        },
-      ],
+      deleted: false,
+      // $or: [
+      //   {
+      //     deleted: {
+      //       $exists: false,
+      //     },
+      //   },
+      //   {
+      //     deleted: false,
+      //   },
+      // ],
     };
 
     if (options.search) {
