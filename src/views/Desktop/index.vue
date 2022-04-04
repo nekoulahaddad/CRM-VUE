@@ -25,143 +25,143 @@
       @afterSubDelete="afterSubDelete"
     />
 
-    <v-page-header icon="desktop_title" :filterToggle="false" />
+    <v-page-header
+      icon="desktop_title"
+      @toggleFilter="toggleFilter"
+      :showFilter="showFilter"
+    />
 
     <div class="page__body d-flex">
       <!-- Фильтр -->
-      <div class="page__left" v-if="showFilter">
-        <v-filter type="desktop" />
+      <div class="page__left">
+        <v-filter type="desktop" v-if="showFilter" />
+        <div class="desktop-calendar">
+          <div class="add-new-event">
+            <a
+              href=""
+              @click.prevent="$modal.show('addEvent')"
+              class="add-new-event__link"
+            >
+              <img src="@/assets/icons/plus.svg" alt="" />
+            </a>
+          </div>
+
+          <vc-calendar @dayclick="dayClicked" :attributes="attrs" />
+          <v-calendar-events :clickedDay="clickedDay" :events="events" />
+        </div>
       </div>
 
-      <div class="scroll-horizontal d-flex">
-        <div
-          class="page__left"
-          :class="{
-            'page__left--fluid': sidebar && !showFilter,
-            'page__left--middle': sidebar && showFilter,
-            'page__left--full': !showFilter && !sidebar,
-          }"
-        >
-          <div class="tasks">
-            <div class="tasks__title">Доска поставленных задач:</div>
-            <div class="tasks__lists">
-              <v-spinner v-if="!isLoading" />
-              <div
-                v-else
-                class="tasks__list list"
-                v-for="(items, status) in dataset"
-              >
-                <div class="list__title text">
-                  {{ statuses[status].title }}: {{ items.count }}
-                </div>
-                <vue-scroll @handle-scroll="handleScroll($event, status)">
-                  <div class="list__items">
-                    <draggable
-                      :list="items.tasks"
-                      group="tasks"
-                      :animation="200"
-                      @change="afterAdd($event, status)"
+      <div
+        class="page__right"
+        :class="{
+          'page__right--fluid': sidebar && !showFilter,
+          'page__right--middle': sidebar && showFilter,
+          'page__right--full': !showFilter && !sidebar,
+        }"
+      >
+        <div class="tasks">
+          <div class="tasks__title">Доска поставленных задач:</div>
+          <div class="tasks__lists">
+            <v-spinner v-if="!isLoading" />
+            <div
+              v-else
+              class="tasks__list list"
+              v-for="(items, status) in dataset"
+            >
+              <div class="list__title text">
+                {{ statuses[status].title }}: {{ items.count }}
+              </div>
+              <vue-scroll @handle-scroll="handleScroll($event, status)">
+                <div class="list__items">
+                  <draggable
+                    :list="items.tasks"
+                    group="tasks"
+                    :animation="200"
+                    @change="afterAdd($event, status)"
+                  >
+                    <div
+                      class="list__item"
+                      v-for="(item, index) in items.tasks"
+                      :key="index"
                     >
-                      <div
-                        class="list__item"
-                        v-for="(item, index) in items.tasks"
-                        :key="index"
+                      <a
+                        href=""
+                        class="list__content text--bold-700"
+                        @click.prevent="editTask(item, status)"
                       >
-                        <a
-                          href=""
-                          class="list__content text--bold-700"
-                          @click.prevent="editTask(item, status)"
-                        >
-                          {{ item.title }}
-                        </a>
+                        {{ item.title }}
+                      </a>
 
-                        <!-- Исполнитель -->
-                        <div class="list__executor" v-if="item.executor">
-                          <div class="list__opacity">
-                            <span>
-                              <img
-                                src="@/assets/icons/employee.svg"
-                                width="15px"
-                                height="15px"
-                                alt=""
-                              />
-                            </span>
-                            <span>Исполнитель:</span>
-                          </div>
-                          <div
-                            class="text text--red text--bold-700"
-                            v-if="item.executor.surname.length === 1"
-                          >
-                            {{ item.executor.surname[0] }}
-                          </div>
-                          <span class="text text--red text--bold-700" v-else>
-                            {{ item.executor.department[0].title }}
+                      <!-- Исполнитель -->
+                      <div class="list__executor" v-if="item.executor">
+                        <div class="list__opacity">
+                          <span>
+                            <img
+                              src="@/assets/icons/employee.svg"
+                              width="15px"
+                              height="15px"
+                              alt=""
+                            />
                           </span>
+                          <span>Исполнитель:</span>
                         </div>
-
-                        <!-- Дата создания -->
-                        <div class="list__date">
-                          <div class="list__opacity">
-                            <span
-                              ><img
-                                src="@/assets/icons/calendar.svg"
-                                alt=""
-                                width="15px"
-                                height="15px"
-                              />
-                            </span>
-                            <span>Дата создания:</span>
-                          </div>
-                          <div class="text text--red text--bold-700">
-                            {{ transformDate(item.creation_date) }}
-                          </div>
-                        </div>
-
                         <div
-                          class="list__actions"
-                          v-if="role === 'superadmin' || role === 'director'"
+                          class="text text--red text--bold-700"
+                          v-if="item.executor.surname.length === 1"
                         >
-                          <img
-                            alt=""
-                            src="@/assets/icons/dots_icon.svg"
-                            @click="toggleContextMenu(item)"
-                          />
+                          {{ item.executor.surname[0] }}
                         </div>
+                        <span class="text text--red text--bold-700" v-else>
+                          {{ item.executor.department[0].title }}
+                        </span>
+                      </div>
 
-                        <!-- Контекстное меню -->
-                        <v-context-menu
-                          :item="item"
-                          type="assigned"
-                          :status="status"
-                          @toggleDelete="toggleDelete"
-                          v-if="showContextMenu._id === item._id"
+                      <!-- Дата создания -->
+                      <div class="list__date">
+                        <div class="list__opacity">
+                          <span
+                            ><img
+                              src="@/assets/icons/calendar.svg"
+                              alt=""
+                              width="15px"
+                              height="15px"
+                            />
+                          </span>
+                          <span>Дата создания:</span>
+                        </div>
+                        <div class="text text--red text--bold-700">
+                          {{ transformDate(item.creation_date) }}
+                        </div>
+                      </div>
+
+                      <div
+                        class="list__actions"
+                        v-if="role === 'superadmin' || role === 'director'"
+                      >
+                        <img
+                          alt=""
+                          src="@/assets/icons/dots_icon.svg"
+                          @click="toggleContextMenu(item)"
                         />
                       </div>
-                    </draggable>
-                    <v-spinner
-                      class="list__spinner"
-                      v-if="!statuses[status].canScroll"
-                    />
-                  </div>
-                </vue-scroll>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="page__right">
-          <div class="desktop-calendar">
-            <div class="add-new-event">
-              <a
-                href=""
-                @click.prevent="$modal.show('addEvent')"
-                class="add-new-event__link"
-              >
-                <img src="@/assets/icons/plus.svg" alt="" />
-              </a>
-            </div>
 
-            <vc-calendar @dayclick="dayClicked" :attributes="attrs" />
-            <v-calendar-events :clickedDay="clickedDay" :events="events" />
+                      <!-- Контекстное меню -->
+                      <v-context-menu
+                        :item="item"
+                        type="assigned"
+                        :status="status"
+                        @toggleDelete="toggleDelete"
+                        v-if="showContextMenu._id === item._id"
+                      />
+                    </div>
+                  </draggable>
+                  <v-spinner
+                    class="list__spinner"
+                    v-if="!statuses[status].canScroll"
+                  />
+                </div>
+              </vue-scroll>
+            </div>
           </div>
         </div>
       </div>
@@ -536,7 +536,7 @@ export default {
 .desktop-page {
   .page {
     &__left {
-      width: 1417px;
+      width: 267px;
     }
 
     &__right {
@@ -653,8 +653,8 @@ export default {
   .desktop-calendar {
     background-color: $color-white;
     border-radius: $border-radius;
-    width: 263px;
-    height: 100%;
+    width: 100%;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
   }
 
   .vc-container {
@@ -733,19 +733,23 @@ export default {
     }
   }
 
-  .page__left {
-    width: 1307px;
+  .page__right {
+    max-width: 1327px;
   }
 
-  .page__left--fluid {
+  .page__right--fluid {
     width: 1417px;
   }
 
-  .page__left--full {
+  .page__right--full {
+    max-width: 1327px;
   }
 
-  .page__left--middle {
+  .page__right--middle {
     width: 1417px;
+  }
+  .filter {
+    margin-bottom: 20px;
   }
 }
 </style>

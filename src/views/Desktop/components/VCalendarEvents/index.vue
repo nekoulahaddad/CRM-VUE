@@ -113,7 +113,9 @@ export default {
   &__inner {
     padding-left: 16px;
     padding-right: 10px;
-    height: 450px;
+    height: 320px;
+    padding-bottom: 10px;
+    max-height: 100%;
   }
 
   &__start-date,
