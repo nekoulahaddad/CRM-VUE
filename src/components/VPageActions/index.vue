@@ -154,7 +154,14 @@
                 class="page-actions__button"
                 @click.prevent="downloadGoodsExcel"
               >
-                <img src="@/assets/icons/all_items.svg" alt="" />
+                <img
+                  :src="
+                    downloadExcelFile
+                      ? require('@/assets/icons/spinner.svg')
+                      : require('@/assets/icons/all_items.svg')
+                  "
+                  alt=""
+                />
               </a>
             </VueCustomTooltip>
 
@@ -476,6 +483,7 @@ export default {
     return {
       active: null,
       downLoad: false,
+      downloadExcelFile: false,
     };
   },
   computed: {
@@ -513,7 +521,10 @@ export default {
       }
     },
     async downloadGoodsExcel() {
-      this.downloadExcelFile = false;
+      if (this.downloadExcelFile) {
+        return;
+      }
+      this.downloadExcelFile = true;
       axios({
         url: `/excel/get`,
         data: {
@@ -521,16 +532,20 @@ export default {
         },
         method: "POST",
         responseType: "blob",
-      }).then(async (response) => {
-        const link = document.createElement("a");
-        const blob = new Blob([response.data]);
-        let urll = window.URL.createObjectURL(blob);
-        link.href = urll;
-        link.download = `Товары.xls`;
-        link.click();
-        window.URL.revokeObjectURL(urll);
-        URL.revokeObjectURL(link.href);
-      });
+      })
+        .then(async (response) => {
+          const link = document.createElement("a");
+          const blob = new Blob([response.data]);
+          let urll = window.URL.createObjectURL(blob);
+          link.href = urll;
+          link.download = `Товары.xls`;
+          link.click();
+          window.URL.revokeObjectURL(urll);
+          URL.revokeObjectURL(link.href);
+        })
+        .finally(() => {
+          this.downloadExcelFile = false;
+        });
     },
     async getGoodsFromRegion() {
       try {
@@ -622,7 +637,7 @@ export default {
         this.$toast.error("Ошибка при скачивании файла");
       }
     },
-    async downloadFeed(){
+    async downloadFeed() {
       axios({
         url: `/feeds/downloadfeed`,
         data: {
