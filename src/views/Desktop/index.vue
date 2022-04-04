@@ -243,6 +243,8 @@ export default {
         creation_date: -1,
         deadline_date: null,
         region: null,
+        executor: null,
+        initiator: null,
       },
       dataset: {
         accepted: {},
@@ -380,11 +382,20 @@ export default {
     },
     async fetchData({ status, skip = 0 }) {
       try {
+        let executor = null;
+
+        if (this.role === "superadmin") {
+          executor = this.filtersOptions.executor;
+        } else {
+          executor = this.id;
+        }
+
         const { data } = await this.getDataFromPage(`/tasks/desktop`, {
           status,
           skip,
+          executor,
           region: this.filtersOptions.region,
-          executor: this.role === "superadmin" ? null : this.id,
+          initiator: this.filtersOptions.initiator,
         });
         this.isLoading = true;
         this.dataset = data;

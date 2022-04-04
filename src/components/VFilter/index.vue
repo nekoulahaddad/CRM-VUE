@@ -502,7 +502,10 @@
             </div>
           </div>
 
-          <div class="filter__group group">
+          <div
+            class="filter__group group"
+            v-if="role === 'superadmin' || role === 'director'"
+          >
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
               <autocomplete
@@ -609,7 +612,10 @@
             </div>
           </div>
 
-          <div class="filter__group group">
+          <div
+            class="filter__group group"
+            v-if="role === 'superadmin' || role === 'director'"
+          >
             <div class="group__title">Исполнитель:</div>
             <div class="group__content">
               <autocomplete
@@ -1367,7 +1373,7 @@ export default {
       });
     },
     clearOptions() {
-      if (this.type === "tasks") {
+      if (this.type === "tasks" || this.type === "desktop") {
         this.$refs.executor.setValue("");
         this.$refs.initiator.setValue("");
         this.fio = "";
