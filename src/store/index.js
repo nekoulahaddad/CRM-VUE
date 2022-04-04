@@ -8,6 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    categories: [],
     regions: [],
     sidebar: !!Cookies.get("sidebar"),
     filter: !!Cookies.get("filter"),
@@ -65,6 +66,9 @@ export default new Vuex.Store({
     deleteSelectedItems: false,
   },
   mutations: {
+    setCategories(state, payload) {
+      state.categories = payload;
+    },
     setRegions(state, payload) {
       state.regions = payload;
     },
@@ -256,6 +260,24 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    getAllCategories({ commit }) {
+      return new Promise((resolve, reject) => {
+        axios({
+          url: "/categories/get",
+        }).then((res) => {
+          commit("setCategories", res.data.categories);
+        });
+      });
+    },
+    getAllRegions({ commit }) {
+      return new Promise((resolve, reject) => {
+        axios({
+          url: "/regions/get",
+        }).then((res) => {
+          commit("setRegions", res.data.regions);
+        });
+      });
+    },
     toggleSidebar({ commit }) {
       commit("toggleSidebar");
     },
