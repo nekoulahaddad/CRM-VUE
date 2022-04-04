@@ -85,7 +85,6 @@ async function updateFeed(region, category_id, cb) {
                     </yml_catalog>
                     `;
     let filePath = path.join(FEEDS_PATH, `/${_region.title} ${category.categoryName}.yml`);
-    console.log('🚀 ~ file: feeds.js ~ line 117 ~ updateFeed ~ filePath', filePath);
     // let filePath = path.join('./uploads/feeds', `/${_region.title}_${category._id}.yml`); // test
     fs.writeFile(filePath, xmlData, (err) => {
       if (err) {
