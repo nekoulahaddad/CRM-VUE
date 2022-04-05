@@ -41,6 +41,7 @@ exports.createSite = async (req, res, next) => {
 
 exports.getSites = async (req, res, next) => {
   // let sites = await staticSites.find({}).lean()
+  let result = [];
   let sites = await staticSites.aggregate().project({
     _id: '$_id',
     url: '$url',
@@ -51,11 +52,21 @@ exports.getSites = async (req, res, next) => {
     folder: '$folder',
     uploadedFile: '$uploadedFile',
     content: '$content',
+    regionId: '$region',
   });
+  await Promise.all(
+    sites.map(async (s) => {
+      let _region = await Region.findOne({ _id: mongoose.Types.ObjectId(s.regionId) })
+      return result.push({
+        ...s,
+        regionTitle: _region.title,
+      });
+    })
+  );
   if (!sites) {
     return res.status(404).send({ message: 'Нет настроенных сайтов' });
   }
-  res.status(200).send({ data: sites });
+  res.status(200).send({ data: result });
 };
 
 const getSubCategoriesIds = async (region, categoryIds) => {
@@ -145,7 +156,7 @@ async function getCategoryProducts(categories, region, articles) {
       unit: '$product.unit',
       coef: '$product.coef',
       description: '$product.description',
-      slug: '$product.slug'
+      slug: '$product.slug',
     });
   for (p of productsFromCategory) {
     let options = [];
@@ -386,7 +397,6 @@ exports.exportPriceExcel = async (req, res, next) => {
   // let filePath = path.join('./', 'templates', `/${site.folder}.xlsx`);
   await workbook.xlsx.writeFile(filePath);
   res.status(200).download(filePath, `${site.folder}.xlsx`);
-
 };
 
 // for (let i = 0; i < global.users.length; i++) {
