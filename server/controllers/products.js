@@ -9,7 +9,8 @@ const { v4: uuidv4 } = require("uuid");
 const { translit } = require("gost-transliteration");
 const fs = require('fs')
 const { PRODUCTS_PATH, TEMP_PATH, UPLOADS_PATH, FEEDS_PATH } = require("../utils/path");
-const {updateFeed} = require('./feeds')
+// const {updateFeed} = require('./feeds')
+const {feeds} = require('../utils/feeds')
 
 const {
     uploadFilesFromTempToFolder,
@@ -810,7 +811,7 @@ exports.editProduct = async(req, res, next) => {
         console.log("Updating of Product completed")
     console.log("///////////////////////")
     try {
-      updateFeed(region, product.parent_id, cb(res.status(500).send({ message: 'Ошибка при сохранении' })))
+      feeds.updateFeed(region, product.parent_id, cb(res.status(500).send({ message: 'Ошибка при сохранении' })))
     } catch(err) {
       console(err)
     }
