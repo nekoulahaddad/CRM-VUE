@@ -799,10 +799,24 @@
                     label: item.title,
                     value: item.value,
                   })),
+                  {
+                    label: 'Другой период',
+                    value: 'another',
+                  },
                 ]"
                 v-model="defaultOptions.dates"
                 :reduce="(item) => item.value"
                 @input="setDate"
+              />
+            </div>
+            <div class="group__footer" v-if="another_period">
+              <date-picker
+                format="DD.MM.YYYY"
+                language="ru"
+                :dateInput="anotherDateInput"
+                :sameDateFormat="sameDateFormat"
+                :calendarDateInput="calendarDateInput"
+                @date-applied="selectPeriodDate"
               />
             </div>
           </div>
@@ -1139,6 +1153,7 @@ export default {
   },
   data() {
     return {
+      another_period: false,
       monitorDep: "Интернет-магазин",
       defaultValue: "",
       executor: "",
@@ -1146,6 +1161,12 @@ export default {
       sameDateFormat: {
         from: "DD.MM.YYYY, HH:mm",
         to: "HH:mm",
+      },
+      anotherDateInput: {
+        inputClass: "grid__container--filters-btn",
+        placeholder: "Выберите период",
+        format: "DD.MM.YYYY",
+        id: "anotherDateInput",
       },
       dateInput: {
         inputClass: "grid__container--filters-btn",
@@ -1282,7 +1303,12 @@ export default {
       this.selectOptions({ target: { value } }, null, "regionButtons", null);
     },
     setDate(value) {
-      this.selectOptions({ target: { value } }, null, "dates", null);
+      if (value === "another") {
+        this.another_period = true;
+      } else {
+        this.another_period = false;
+        this.selectOptions({ target: { value } }, null, "dates", null);
+      }
     },
     setOrder(value) {
       this.selectOptions({ target: { value } }, 0, "orders", null);
@@ -1342,7 +1368,6 @@ export default {
       });
     },
     selectPeriodDate(startDate, endDate) {
-      this.$parent.isLoading = false;
       this.$emit("refreshDates", startDate, endDate, this.regionsPool);
     },
     selectInitiator(user) {
@@ -1373,6 +1398,7 @@ export default {
       });
     },
     clearOptions() {
+      this.another_period = false;
       if (this.type === "tasks" || this.type === "desktop") {
         this.$refs.executor.setValue("");
         this.$refs.initiator.setValue("");

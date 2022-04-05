@@ -324,6 +324,9 @@ export default {
     },
     filtersOptions: {
       handler: async function () {
+        if (this.filtersOptions.dates === "another") {
+          return;
+        }
         await this.$store.commit("setFilterOptions", this.filtersOptions);
         await this.fetchData();
         if (
