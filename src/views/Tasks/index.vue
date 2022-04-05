@@ -28,7 +28,6 @@
       <div class="page__left" v-if="showFilter">
         <v-filter type="tasks" />
       </div>
-
       <!-- Контент -->
       <div
         class="page__right"

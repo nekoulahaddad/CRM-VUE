@@ -175,15 +175,22 @@
               </a>
             </VueCustomTooltip>
 
-            <VueCustomTooltip :label="`Скачать фид`">
-              <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="downloadFeed"
-              >
+            <VMenu>
+              <a href="" class="page-actions__button">
                 <img src="@/assets/icons/download.svg" alt="" />
               </a>
-            </VueCustomTooltip>
+
+              <template #popper>
+                <button @click="downloadFeed">
+                  <img src="@/assets/icons/download-white.svg" alt="" />
+                  <span>Скачать фид</span>
+                </button>
+                <button @click>
+                  <img src="@/assets/icons/copy-link.svg" alt="" />
+                  <span>Скопировать ссылку на фид</span>
+                </button>
+              </template>
+            </VMenu>
           </template>
 
           <!-- Заказы -->

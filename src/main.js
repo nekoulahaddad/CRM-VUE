@@ -3,6 +3,7 @@ import App from "./App.vue";
 import store from "./store";
 import router from "./router";
 import vuescroll from "vuescroll";
+import { Menu } from "floating-vue";
 import vSelect from "vue-select";
 import VCalendar from "v-calendar";
 import VueNumberFormat from "vue-number-format";
@@ -40,6 +41,8 @@ import VueInputDropdown from "vue-input-dropdown";
 import transformRoleMixins from "@/mixins/transformRole";
 import statusMixins from "@/mixins/status";
 import "@trevoreyre/autocomplete-vue/dist/style.css";
+import "floating-vue/dist/style.css";
+
 import "moment/locale/ru";
 Settings.defaultLocale = "RU";
 import "vue-toastification/dist/index.css";
@@ -110,6 +113,7 @@ Vue.use(Toast, {
   position: "bottom-right",
   timeout: 3500,
 });
+Vue.component("VMenu", Menu);
 Vue.component("paginate", Paginate);
 
 Vue.mixin(dateMixins);

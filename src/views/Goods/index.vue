@@ -1348,4 +1348,35 @@ export default {
     padding-right: 20px;
   }
 }
+.v-popper__popper {
+  outline: none;
+}
+.v-popper__inner {
+  background-color: #000 !important;
+
+  button {
+    color: $color-white;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: $border-radius;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    display: block;
+    text-align: left;
+
+    img {
+      margin-right: 7px;
+      width: 17px;
+      position: relative;
+      top: 2px;
+    }
+
+    &:hover {
+      background-color: $color-red;
+      color: $color-white;
+    }
+  }
+}
 </style>
