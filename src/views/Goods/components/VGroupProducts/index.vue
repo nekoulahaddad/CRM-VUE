@@ -73,6 +73,7 @@
               <div class="table__icon" style="min-width: 28px">
                 <template
                   v-if="
+                    role === 'superadmin' ||
                     role === 'content' ||
                     role === 'director' ||
                     role === 'manager'
