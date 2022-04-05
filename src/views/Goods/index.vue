@@ -1351,6 +1351,9 @@ export default {
 .v-popper__popper {
   outline: none;
 }
+.v-popper__arrow-container {
+  display: none;
+}
 .v-popper__inner {
   background-color: #000 !important;
 
