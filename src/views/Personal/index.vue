@@ -21,6 +21,23 @@
               {{ $t("systemRole") }}
               <strong>{{ transformRole(user.role) }}</strong>
             </div>
+            <div
+              class="personal-area__change-role"
+              v-if="user._id === '5fbfa82ecf730701c4f4b48a'"
+            >
+              <label>Сменить роль:</label>
+              <v-select
+                :options="
+                  Object.entries($t('roles')).map(([role, key]) => ({
+                    label: key,
+                    value: role,
+                  }))
+                "
+                :reduce="(item) => item.value"
+                v-model="currentRole"
+              />
+              <v-button @click="changeRole" red>Изменить</v-button>
+            </div>
             <form @submit.prevent class="personal-area__form">
               <div class="personal-area__col">
                 <label>Старый пароль:</label>
@@ -293,6 +310,7 @@ export default {
   },
   data() {
     return {
+      currentRole: null,
       openedRoles: [],
       oldPassword: "",
       newPassword: "",
@@ -306,6 +324,23 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    changeRole() {
+      axios({
+        url: "/user/changerole",
+        data: {
+          role: this.currentRole,
+        },
+        method: "POST",
+      })
+        .then(({ data: { token, refresh } }) => {
+          localStorage.setItem("token", token);
+          localStorage.setItem("refresh", refresh);
+          location.reload();
+        })
+        .catch(() => {
+          this.$toast.error("Не удалось сменить роль");
+        });
+    },
     toggleOpenedRole(role) {
       if (this.openedRoles.includes(role)) {
         this.openedRoles = this.openedRoles.filter((item) => item !== role);
@@ -354,21 +389,12 @@ export default {
         });
     },
     logout() {
-      if (
-        this.role === "admin" ||
-        this.role === "director" ||
-        this.role === "manager"
-      ) {
-        this.$socket.client.emit("leftRoomOrders", {
-          userId: this.$store.state.id,
-        });
-        this.$socket.client.emit("leftRoomCallbacks", {
-          userId: this.$store.state.id,
-        });
-      }
       this.$store.dispatch("logout");
       location.href = "/";
     },
+  },
+  created() {
+    this.currentRole = this.user.role;
   },
 };
 </script>
@@ -590,6 +616,25 @@ export default {
       &:checked {
         border: 6px solid $color-red;
       }
+    }
+  }
+  &__change-role {
+    margin-bottom: 30px;
+
+    label {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .v-select {
+      width: 469px;
+    }
+
+    button {
+      width: 230px;
+      margin-top: 10px;
     }
   }
 }

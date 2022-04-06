@@ -1304,3 +1304,50 @@ exports.getUsersByRole = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.changeRole = async (req, res, next) => {
+  try {
+    const { role } = req.body;
+    let user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.sendStatus(404);
+    }
+
+    let token = generateToken({
+      _id: user._id,
+      login: user.login,
+      name: user.name,
+      surname: user.surname,
+      lastname: user.lastname,
+      role,
+      department: user.department.value,
+      options: user.options,
+      number: user.number ? user.number : null,
+      inner_number: user.inner_number ? user.inner_number : null,
+    });
+
+    let refresh = generateRefreshToken({
+      _id: user._id,
+      name: user.name,
+      surname: user.surname,
+      lastname: user.lastname,
+      options: user.options,
+      role,
+      number: user.number ? user.number : null,
+      inner_number: user.inner_number ? user.inner_number : null,
+    });
+
+    await user.updateOne({
+      token: token,
+      refresh: refresh,
+    });
+
+    return res.status(200).json({
+      token,
+      refresh,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

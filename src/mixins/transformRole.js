@@ -9,9 +9,7 @@ export default {
         case "content":
           return "Контент - менеджер";
         case "manager":
-          return `Менеджер по продажам ${
-            this.$store.state.number ? `№${this.$store.state.number}` : ""
-          }`;
+          return `Менеджер по продажам`;
         case "buyer":
           return "Закупщик";
         case "admin":
