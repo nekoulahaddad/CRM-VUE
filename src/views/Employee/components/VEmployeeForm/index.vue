@@ -414,7 +414,10 @@
           <label for="employee-photo">Выбрать фото</label>
         </div>
         <div
-          v-if="infoItem && infoItem.avatar !== 'Выбрать файл'"
+          v-if="
+            (infoItem && infoItem.avatar !== 'Выбрать файл') ||
+            avatar !== 'Выбрать файл'
+          "
           class="delete-avatar-btn"
         >
           Удалить фото
