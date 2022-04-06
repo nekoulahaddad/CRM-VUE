@@ -383,13 +383,6 @@
 
       <div class="form-top__right">
         <div
-          class="group__title group__title--big text--blue"
-          style="margin-bottom: 10px"
-        >
-          Фото:
-        </div>
-
-        <div
           class="employee-photo"
           :class="{
             'employee-photo__empty':
