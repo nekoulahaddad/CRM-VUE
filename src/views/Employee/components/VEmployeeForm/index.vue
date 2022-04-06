@@ -419,6 +419,7 @@
             avatar !== 'Выбрать файл'
           "
           class="delete-avatar-btn"
+          @click="deleteAvatar"
         >
           Удалить фото
         </div>
@@ -503,6 +504,11 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    deleteAvatar() {
+      this.avatar = "Выбрать файл";
+      this.infoItem.avatar = "Выбрать файл";
+      this.url = require("@/assets/icons/new_avatar.svg");
+    },
     fileUpload(e) {
       const files = e.target.files;
       if (e.target.name === "avatar") {
