@@ -176,7 +176,7 @@
             </VueCustomTooltip>
 
             <VMenu>
-              <a href="" class="page-actions__button">
+              <a class="page-actions__button">
                 <img src="@/assets/icons/download.svg" alt="" />
               </a>
 
@@ -665,7 +665,14 @@ export default {
         URL.revokeObjectURL(link.href);
       });
     },
-    async askALink(){
+    async askALink() {
+      function copyTextToClipboard(text) {
+        if (!navigator.clipboard) {
+          fallbackCopyTextToClipboard(text);
+          return;
+        }
+        navigator.clipboard.writeText(text)
+      }
       axios({
         url: `/feeds/askalink`,
         data: {
@@ -674,15 +681,8 @@ export default {
           nesting: this.$store.getters.getFilterOptions.nesting,
         },
         method: "POST",
-      }).then(async (response) => {
-        const link = document.createElement("a");
-        const blob = new Blob([response.data]);
-        let urll = window.URL.createObjectURL(blob);
-        link.href = urll;
-        link.download = `Фид.yml`;
-        link.click();
-        window.URL.revokeObjectURL(urll);
-        URL.revokeObjectURL(link.href);
+      }).then((response) => {
+        copyTextToClipboard(response.data)
       });
     },
     clearCache() {
