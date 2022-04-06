@@ -23,7 +23,7 @@
             </div>
             <div
               class="personal-area__change-role"
-              v-if="user._id === '5fbfa82ecf730701c4f4b48a'"
+              v-if="user && user._id === '5fbfa82ecf730701c4f4b48a'"
             >
               <label>Сменить роль:</label>
               <v-select
