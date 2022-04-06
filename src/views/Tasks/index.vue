@@ -51,7 +51,8 @@
                     v-model="selectAll"
                     @change="selectAllItems"
                     :disabled="
-                      !isLoading || role !== 'superadmin' || role !== 'director'
+                      !isLoading ||
+                      (role !== 'superadmin' && role !== 'director')
                     "
                   />
                   №:

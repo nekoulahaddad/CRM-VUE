@@ -5,7 +5,7 @@
         type="checkbox"
         class="form-checkbox"
         :checked="checked"
-        :disabled="role !== 'superadmin' || role !== 'director'"
+        :disabled="role !== 'superadmin' && role !== 'director'"
         @click="$store.commit('selectItem', task._id)"
       />
       {{ index + 1 + ($route.params.page - 1) * 15 }}
