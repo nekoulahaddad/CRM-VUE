@@ -185,7 +185,7 @@
                   <img src="@/assets/icons/download-white.svg" alt="" />
                   <span>Скачать фид</span>
                 </button>
-                <button @click>
+                <button @click="askALink">
                   <img src="@/assets/icons/copy-link.svg" alt="" />
                   <span>Скопировать ссылку на фид</span>
                 </button>
@@ -654,6 +654,26 @@ export default {
         },
         method: "POST",
         responseType: "blob",
+      }).then(async (response) => {
+        const link = document.createElement("a");
+        const blob = new Blob([response.data]);
+        let urll = window.URL.createObjectURL(blob);
+        link.href = urll;
+        link.download = `Фид.yml`;
+        link.click();
+        window.URL.revokeObjectURL(urll);
+        URL.revokeObjectURL(link.href);
+      });
+    },
+    async askALink(){
+      axios({
+        url: `/feeds/askalink`,
+        data: {
+          region: this.$store.getters.getFilterOptions.region,
+          category_id: this.$store.getters.getFilterOptions.parent_value,
+          nesting: this.$store.getters.getFilterOptions.nesting,
+        },
+        method: "POST",
       }).then(async (response) => {
         const link = document.createElement("a");
         const blob = new Blob([response.data]);
