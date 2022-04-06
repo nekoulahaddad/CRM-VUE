@@ -28,7 +28,7 @@
               <label>Сменить роль:</label>
               <v-select
                 :options="
-                  Object.entries($t('roles')).map(([role, key]) => ({
+                  Object.entries(roles).map(([role, key]) => ({
                     label: key,
                     value: role,
                   }))
@@ -306,6 +306,19 @@ export default {
       get: function () {
         return this.getUserRole();
       },
+    },
+    roles() {
+      const result = {};
+
+      for (let [role, key] of Object.entries(this.$t("roles"))) {
+        if (role === "worker") {
+          continue;
+        }
+
+        result[role] = key;
+      }
+
+      return result;
     },
   },
   data() {
