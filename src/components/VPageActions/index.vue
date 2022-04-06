@@ -176,7 +176,7 @@
             </VueCustomTooltip>
 
             <VMenu>
-              <a href="" class="page-actions__button">
+              <a class="page-actions__button">
                 <img src="@/assets/icons/download.svg" alt="" />
               </a>
 
@@ -185,7 +185,7 @@
                   <img src="@/assets/icons/download-white.svg" alt="" />
                   <span>Скачать фид</span>
                 </button>
-                <button @click>
+                <button @click="askALink">
                   <img src="@/assets/icons/copy-link.svg" alt="" />
                   <span>Скопировать ссылку на фид</span>
                 </button>
@@ -663,6 +663,26 @@ export default {
         link.click();
         window.URL.revokeObjectURL(urll);
         URL.revokeObjectURL(link.href);
+      });
+    },
+    async askALink() {
+      function copyTextToClipboard(text) {
+        if (!navigator.clipboard) {
+          fallbackCopyTextToClipboard(text);
+          return;
+        }
+        navigator.clipboard.writeText(text)
+      }
+      axios({
+        url: `/feeds/askalink`,
+        data: {
+          region: this.$store.getters.getFilterOptions.region,
+          category_id: this.$store.getters.getFilterOptions.parent_value,
+          nesting: this.$store.getters.getFilterOptions.nesting,
+        },
+        method: "POST",
+      }).then((response) => {
+        copyTextToClipboard(response.data)
       });
     },
     clearCache() {
