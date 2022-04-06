@@ -417,6 +417,7 @@
             name="avatar"
             type="file"
             id="employee-photo"
+            accept="image/*"
           />
           <label for="employee-photo">Выбрать фото</label>
         </div>
