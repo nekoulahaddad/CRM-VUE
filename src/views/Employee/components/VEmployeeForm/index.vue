@@ -389,25 +389,24 @@
           Фото:
         </div>
 
-        <div class="employee-photo">
-          <div
-            :class="{
-              'employee-photo__empty':
-                !infoItem || (infoItem && infoItem.avatar === 'Выбрать файл'),
-              'employee-photo__edit': infoItem && avatar === 'Выбрать файл',
-            }"
-          >
-            <img
-              alt=""
-              :src="
-                infoItem && infoItem.avatar === 'Выбрать файл'
-                  ? url
-                  : infoItem && avatar === 'Выбрать файл'
-                  ? `${serverAddr + infoItem.avatar}`
-                  : url
-              "
-            />
-          </div>
+        <div
+          class="employee-photo"
+          :class="{
+            'employee-photo__empty':
+              !infoItem || (infoItem && infoItem.avatar === 'Выбрать файл'),
+            'employee-photo__edit': infoItem,
+          }"
+        >
+          <img
+            alt=""
+            :src="
+              infoItem && infoItem.avatar === 'Выбрать файл'
+                ? url
+                : infoItem && avatar === 'Выбрать файл'
+                ? `${serverAddr + infoItem.avatar}`
+                : url
+            "
+          />
         </div>
 
         <div class="employee-photo__upload">
