@@ -22,7 +22,7 @@ exports.downloadFeed = async (req, res, next) => {
             `/${_region.title}_${category._id}.yml`
           );
           let cb = (a) => res.status(200).download(a);
-          await updateFeed(region, category_id, cb);
+          await feeds.updateFeed(region, category_id, cb);
         }
         break;
       case 1:
