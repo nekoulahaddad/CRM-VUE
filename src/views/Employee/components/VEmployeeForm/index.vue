@@ -413,6 +413,12 @@
           />
           <label for="employee-photo">Выбрать фото</label>
         </div>
+        <div
+          v-if="infoItem && infoItem.avatar !== 'Выбрать файл'"
+          class="delete-avatar-btn"
+        >
+          Удалить фото
+        </div>
       </div>
     </div>
 
@@ -722,6 +728,7 @@ export default {
       display: flex;
       align-items: end;
       justify-content: end;
+      margin-top: 30px;
 
       span {
         font-weight: 700;
@@ -838,6 +845,21 @@ export default {
   }
   .vs__selected {
     width: 90%;
+  }
+  .delete-avatar-btn {
+    background-color: #fff;
+    color: #db1f35;
+    border: 2px solid #db1f35;
+    border-radius: 5px;
+    width: 230px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
   }
 }
 </style>
