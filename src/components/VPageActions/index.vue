@@ -11,17 +11,17 @@
 
           <!-- Рабочий стол -->
           <template
-            v-if="
+              v-if="
               name === 'desktop' &&
               (role === 'superadmin' || role === 'director')
             "
           >
             <VueCustomTooltip label="Создать задачу">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="toggleAction('addDbTask')"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="toggleAction('addDbTask')"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addDbTask,
                 }"
@@ -33,17 +33,17 @@
 
           <!-- Календарь -->
           <template
-            v-if="
+              v-if="
               name === 'calendar' &&
               (role === 'superadmin' || role === 'director')
             "
           >
             <VueCustomTooltip label="Создать мероприятие">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="toggleAction('addEvent')"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="toggleAction('addEvent')"
+                  :class="{
                   'page-actions__button--active': $store.state.actions.addEvent,
                 }"
               >
@@ -56,10 +56,10 @@
           <template v-if="name === 'callbacks'">
             <VueCustomTooltip label="Создать обращение">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="toggleAction('addCallback')"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="toggleAction('addCallback')"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addCallback,
                 }"
@@ -71,16 +71,16 @@
 
           <!-- Закупка -->
           <template
-            v-if="
+              v-if="
               name === 'buying' && (role === 'superadmin' || role === 'buyer')
             "
           >
             <VueCustomTooltip label="Добавить закупку">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="toggleAction('addPurchase')"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="toggleAction('addPurchase')"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addPurchase,
                 }"
@@ -93,17 +93,17 @@
           <!-- Товары -->
           <template v-if="name === 'goods'">
             <VueCustomTooltip
-              v-if="
+                v-if="
                 $store.state.filterOptions.nesting < 3 &&
                 (role === 'content' || role === 'superadmin')
               "
-              label="Добавить категорию"
+                label="Добавить категорию"
             >
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="toggleAction('addGoodsCategory')"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="toggleAction('addGoodsCategory')"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addGoodsCategory,
                 }"
@@ -112,17 +112,17 @@
               </a>
             </VueCustomTooltip>
             <VueCustomTooltip
-              v-if="
+                v-if="
                 $store.state.filterOptions.nesting > 1 &&
                 (role === 'content' || role === 'superadmin')
               "
-              label="Добавить товар"
+                label="Добавить товар"
             >
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="toggleAction('addProduct')"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="toggleAction('addProduct')"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addProduct,
                 }"
@@ -132,17 +132,17 @@
             </VueCustomTooltip>
 
             <VueCustomTooltip
-              label="Импорт Excel"
-              v-if="role === 'content' || role === 'superadmin'"
+                label="Импорт Excel"
+                v-if="role === 'content' || role === 'superadmin'"
             >
               <a
-                href=""
-                class="page-actions__button"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.importGoods,
                 }"
-                @click.prevent="toggleAction('importGoods')"
+                  @click.prevent="toggleAction('importGoods')"
               >
                 <simple-svg :src="require('@/assets/icons/import_excel.svg')" />
               </a>
@@ -150,26 +150,26 @@
 
             <VueCustomTooltip label="Скачать все товары">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="downloadGoodsExcel"
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="downloadGoodsExcel"
               >
                 <img
-                  :src="
+                    :src="
                     downloadExcelFile
                       ? require('@/assets/icons/spinner.svg')
                       : require('@/assets/icons/all_items.svg')
                   "
-                  alt=""
+                    alt=""
                 />
               </a>
             </VueCustomTooltip>
 
             <VueCustomTooltip label="Выгрузить товары данного региона">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="getGoodsFromRegion"
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="getGoodsFromRegion"
               >
                 <img src="@/assets/icons/region_items.svg" alt="" />
               </a>
@@ -197,25 +197,25 @@
           <template v-if="name === 'orders'">
             <VueCustomTooltip v="else" label="Выгрузить заказы">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="downloadExcel"
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="downloadExcel"
               >
                 <img src="@/assets/icons/spinner.svg" alt="" v-if="downLoad" />
                 <img src="@/assets/icons/download.svg" alt="" v-else />
               </a>
             </VueCustomTooltip>
             <VueCustomTooltip
-              label="Добавить заказ"
-              v-if="role === 'superadmin' || role === 'buyer'"
+                label="Добавить заказ"
+                v-if="role === 'superadmin' || role === 'buyer'"
             >
               <a
-                href=""
-                class="page-actions__button"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  :class="{
                   'page-actions__button--active': $store.state.actions.addOrder,
                 }"
-                @click.prevent="toggleAction('addOrder')"
+                  @click.prevent="toggleAction('addOrder')"
               >
                 <simple-svg :src="require('@/assets/icons/create_order.svg')" />
               </a>
@@ -225,17 +225,17 @@
           <!-- Сотрудники -->
           <template v-if="name === 'employee'">
             <VueCustomTooltip
-              label="Добавить сотрудника"
-              v-if="role === 'superadmin'"
+                label="Добавить сотрудника"
+                v-if="role === 'superadmin'"
             >
               <a
-                href=""
-                class="page-actions__button"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addEmployee,
                 }"
-                @click.prevent="toggleAction('addEmployee')"
+                  @click.prevent="toggleAction('addEmployee')"
               >
                 <simple-svg :src="require('@/assets/icons/add_employee.svg')" />
               </a>
@@ -243,11 +243,11 @@
             <!-- Excel уволенных сотрудников -->
             <VueCustomTooltip label="Excel уволенных сотрудников">
               <a
-                href=""
-                @click.prevent="
+                  href=""
+                  @click.prevent="
                   downloadItem('users', 'xlsx', 'Уволенные_сотрудники')
                 "
-                class="page-actions__button"
+                  class="page-actions__button"
               >
                 <img src="@/assets/icons/fired.svg" alt="" />
               </a>
@@ -256,11 +256,11 @@
             <!-- Excel дней рождений за месяц -->
             <VueCustomTooltip label="Excel дней рождений за месяц">
               <a
-                href=""
-                @click.prevent="
+                  href=""
+                  @click.prevent="
                   downloadItem('birthday', 'xlsx', 'Дни_рождения_сотрудников')
                 "
-                class="page-actions__button"
+                  class="page-actions__button"
               >
                 <img src="@/assets/icons/birthday_cake.svg" alt="" />
               </a>
@@ -269,11 +269,11 @@
             <!-- Excel всех сотрудников -->
             <VueCustomTooltip label="Excel всех сотрудников">
               <a
-                href=""
-                @click.prevent="
+                  href=""
+                  @click.prevent="
                   downloadItem('allusers', 'xlsx', 'Все_сотрудники')
                 "
-                class="page-actions__button"
+                  class="page-actions__button"
               >
                 <img src="@/assets/icons/employees.svg" alt="" />
               </a>
@@ -282,11 +282,11 @@
             <!-- Excel детей сотрудников -->
             <VueCustomTooltip label="Excel детей сотрудников">
               <a
-                href=""
-                @click.prevent="
+                  href=""
+                  @click.prevent="
                   downloadItem('children', 'xlsx', 'Дети_сотрудников')
                 "
-                class="page-actions__button"
+                  class="page-actions__button"
               >
                 <img src="@/assets/icons/baby.svg" alt="" />
               </a>
@@ -297,16 +297,16 @@
           <template v-if="name === 'education' && role === 'superadmin'">
             <VueCustomTooltip label="Добавить раздел">
               <a
-                href=""
-                @click.prevent="toggleAction('createEducationSection')"
-                class="page-actions__button"
-                :class="{
+                  href=""
+                  @click.prevent="toggleAction('createEducationSection')"
+                  class="page-actions__button"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.createEducationSection,
                 }"
               >
                 <simple-svg
-                  :src="require('@/assets/icons/create_education.svg')"
+                    :src="require('@/assets/icons/create_education.svg')"
                 />
               </a>
             </VueCustomTooltip>
@@ -314,18 +314,18 @@
 
           <!-- Задачи -->
           <template
-            v-if="
+              v-if="
               name === 'tasks' && (role === 'superadmin' || role === 'director')
             "
           >
             <VueCustomTooltip label="Создать задачу">
               <a
-                href=""
-                class="page-actions__button"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  :class="{
                   'page-actions__button--active': $store.state.actions.addTask,
                 }"
-                @click.prevent="toggleAction('addTask')"
+                  @click.prevent="toggleAction('addTask')"
               >
                 <simple-svg :src="require('@/assets/icons/add_task.svg')" />
               </a>
@@ -336,13 +336,13 @@
           <template v-if="name === 'delivery' && role === 'superadmin'">
             <VueCustomTooltip label="Добавить поставщика">
               <a
-                href=""
-                class="page-actions__button"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addDelivery,
                 }"
-                @click.prevent="toggleAction('addDelivery')"
+                  @click.prevent="toggleAction('addDelivery')"
               >
                 <simple-svg :src="require('@/assets/icons/add_delivery.svg')" />
               </a>
@@ -352,20 +352,20 @@
           <!-- Департаменты -->
           <template v-if="name === 'departments'">
             <VueCustomTooltip
-              label="Добавить отдел"
-              v-if="role === 'superadmin'"
+                label="Добавить отдел"
+                v-if="role === 'superadmin'"
             >
               <a
-                href=""
-                class="page-actions__button"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addDepartment,
                 }"
-                @click.prevent="toggleAction('addDepartment')"
+                  @click.prevent="toggleAction('addDepartment')"
               >
                 <simple-svg
-                  :src="require('@/assets/icons/add_department.svg')"
+                    :src="require('@/assets/icons/add_department.svg')"
                 />
               </a>
             </VueCustomTooltip>
@@ -381,17 +381,17 @@
           <!-- Вакансии -->
           <template v-if="name === 'vacancies'">
             <VueCustomTooltip
-              label="Добавить вакансию"
-              v-if="role === 'superadmin'"
+                label="Добавить вакансию"
+                v-if="role === 'superadmin'"
             >
               <a
-                href=""
-                class="page-actions__button"
-                :class="{
+                  href=""
+                  class="page-actions__button"
+                  :class="{
                   'page-actions__button--active':
                     $store.state.actions.addVacancy,
                 }"
-                @click.prevent="toggleAction('addVacancy')"
+                  @click.prevent="toggleAction('addVacancy')"
               >
                 <simple-svg :src="require('@/assets/icons/add_vacancy.svg')" />
               </a>
@@ -400,31 +400,31 @@
         </div>
         <div class="d-flex align-items-center">
           <template
-            v-if="name === 'goods' && $store.getters.selectedItems.length > 1"
+              v-if="name === 'goods' && $store.getters.selectedItems.length > 1"
           >
             <VueCustomTooltip label="Отменить выбранное">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="$store.commit('clearSelectedItems')"
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="$store.commit('clearSelectedItems')"
               >
                 <img src="@/assets/icons/unselect_icon.svg" alt="" />
               </a>
             </VueCustomTooltip>
             <VueCustomTooltip label="Создать группу">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="$store.commit('setCreateGroup', true)"
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="$store.commit('setCreateGroup', true)"
               >
                 <img src="@/assets/icons/create_group.svg" alt="" />
               </a>
             </VueCustomTooltip>
             <VueCustomTooltip label="Переместить товары">
               <a
-                href=""
-                class="page-actions__button"
-                @click.prevent="$store.commit('toggleMoveProducts', true)"
+                  href=""
+                  class="page-actions__button"
+                  @click.prevent="$store.commit('toggleMoveProducts', true)"
               >
                 <img src="@/assets/icons/move_icon.svg" alt="" />
               </a>
@@ -432,48 +432,48 @@
           </template>
 
           <VueCustomTooltip
-            label="Удалить выбранные"
-            v-if="$store.getters.selectedItems.length > 1"
+              label="Удалить выбранные"
+              v-if="$store.getters.selectedItems.length > 1"
           >
             <a
-              href=""
-              class="page-actions__button"
-              @click.prevent="$store.commit('toggleDeleteSelectedItems', true)"
+                href=""
+                class="page-actions__button"
+                @click.prevent="$store.commit('toggleDeleteSelectedItems', true)"
             >
               <img src="@/assets/icons/action_trash.svg" alt="" />
             </a>
           </VueCustomTooltip>
 
           <VueCustomTooltip
-            label="Таблица"
-            v-if="
+              label="Таблица"
+              v-if="
               name === 'goods' && (role === 'content' || role === 'superadmin')
             "
           >
             <a
-              href=""
-              class="page-actions__button"
-              @click.prevent="toggleAction('googleTable')"
+                href=""
+                class="page-actions__button"
+                @click.prevent="toggleAction('googleTable')"
             >
               <img src="@/assets/icons/goods_table.svg" alt="" />
             </a>
           </VueCustomTooltip>
 
           <VueCustomTooltip
-            label="Обновить"
-            v-if="name === 'goods' && role === 'content'"
+              label="Обновить"
+              v-if="name === 'goods' && role === 'content'"
           >
             <a
-              href=""
-              class="page-actions__button"
-              @click.prevent="toggleAction('syncGoogleDoc')"
+                href=""
+                class="page-actions__button"
+                @click.prevent="toggleAction('syncGoogleDoc')"
             >
               <img src="@/assets/icons/goods_reload.svg" alt="" />
             </a>
           </VueCustomTooltip>
           <span
-            v-if="$store.state.googleDoc && $store.state.googleDoc.updatedAt"
-            style="font-weight: 600"
+              v-if="$store.state.googleDoc && $store.state.googleDoc.updatedAt"
+              style="font-weight: 600"
           >
             {{ "Обновлено " + transformTime($store.state.googleDoc.updatedAt) }}
           </span>
@@ -542,19 +542,19 @@ export default {
         method: "POST",
         responseType: "blob",
       })
-        .then(async (response) => {
-          const link = document.createElement("a");
-          const blob = new Blob([response.data]);
-          let urll = window.URL.createObjectURL(blob);
-          link.href = urll;
-          link.download = `Товары.xls`;
-          link.click();
-          window.URL.revokeObjectURL(urll);
-          URL.revokeObjectURL(link.href);
-        })
-        .finally(() => {
-          this.downloadExcelFile = false;
-        });
+          .then(async (response) => {
+            const link = document.createElement("a");
+            const blob = new Blob([response.data]);
+            let urll = window.URL.createObjectURL(blob);
+            link.href = urll;
+            link.download = `Товары.xls`;
+            link.click();
+            window.URL.revokeObjectURL(urll);
+            URL.revokeObjectURL(link.href);
+          })
+          .finally(() => {
+            this.downloadExcelFile = false;
+          });
     },
     async getGoodsFromRegion() {
       try {
@@ -587,12 +587,12 @@ export default {
         },
         method: "POST",
       })
-        .then(async (res) => {
-          this.$toast.success(res.data.message);
-        })
-        .catch((error) => {
-          this.$toast.error(error.response.data.message);
-        });
+          .then(async (res) => {
+            this.$toast.success(res.data.message);
+          })
+          .catch((error) => {
+            this.$toast.error(error.response.data.message);
+          });
     },
     toggleAction(key) {
       this.$store.commit("toggleAction", { key });
@@ -629,19 +629,19 @@ export default {
           method: "POST",
           responseType: "blob",
         })
-          .then((response) => {
-            const link = document.createElement("a");
-            const blob = new Blob([response.data]);
-            let urll = window.URL.createObjectURL(blob);
-            link.href = urll;
-            link.download = `Заказы.xlsx`;
-            link.click();
-            window.URL.revokeObjectURL(urll);
-            URL.revokeObjectURL(link.href);
-          })
-          .finally(() => {
-            this.downLoad = false;
-          });
+            .then((response) => {
+              const link = document.createElement("a");
+              const blob = new Blob([response.data]);
+              let urll = window.URL.createObjectURL(blob);
+              link.href = urll;
+              link.download = `Заказы.xlsx`;
+              link.click();
+              window.URL.revokeObjectURL(urll);
+              URL.revokeObjectURL(link.href);
+            })
+            .finally(() => {
+              this.downLoad = false;
+            });
       } catch {
         this.$toast.error("Ошибка при скачивании файла");
       }
@@ -689,18 +689,18 @@ export default {
     },
     clearCache() {
       axios
-        .get("https://tdcsk.com/api/cache-clear", {
-          headers: {
-            Origin: process.env.VUE_APP_DEVELOP_URL,
-            "Access-Control-Allow-Origin": process.env.VUE_APP_DEVELOP_URL,
-          },
-        })
-        .then(() => {
-          this.$toast.success("Кэш успешно очищен!");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          .get("https://tdcsk.com/api/cache-clear", {
+            headers: {
+              Origin: process.env.VUE_APP_DEVELOP_URL,
+              "Access-Control-Allow-Origin": process.env.VUE_APP_DEVELOP_URL,
+            },
+          })
+          .then(() => {
+            this.$toast.success("Кэш успешно очищен!");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     },
   },
 };

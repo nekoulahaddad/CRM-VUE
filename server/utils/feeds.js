@@ -8,8 +8,7 @@ const Products = require('../models/products');
 const Regions = require('../models/regions');
 
 const feedTemplate = {
-  base: (date, _currencyId, categories, offers) => `
-      <?xml version="1.0" encoding="UTF-8"?>
+  base: (date, _currencyId, categories, offers) => `<?xml version="1.0" encoding="UTF-8"?>
       <yml_catalog date="${date}">
         <shop>
           <name>ТД ЦСК</name>
@@ -35,7 +34,7 @@ const feedTemplate = {
         <categoryId>${i}</categoryId>
         <delivery>true</delivery>
       </offer>\n`,
-  categories: (id, name, last) => `<category id="${id}">${name}</category>${!last && '\n'}`,
+  categories: (id, name, last) => `<category id="${id}">${name}</category>${!last ? '\n' : ''}`,
 };
 
 async function updateFeed(region, category_id, cb) {
@@ -49,7 +48,6 @@ async function updateFeed(region, category_id, cb) {
       mongoose.Types.ObjectId(region)
     );
     let offers = ``;
-
     const makeOffers = async () => {
       _products.forEach((item) => {
         let _offer = `<offer id="${item.article}">
@@ -69,7 +67,7 @@ async function updateFeed(region, category_id, cb) {
               <?xml version="1.0" encoding="UTF-8"?>
               <yml_catalog date="${date}">
                 <shop>
-                <name>ТД ЦСК</name>
+                  <name>ТД ЦСК</name>
                     <company>ООО "ТД ЦСК"</company>
                     <url>http://tdcsk.com</url>
                     <currencies>
@@ -110,36 +108,7 @@ async function createLargeFeed(region, categories, date) {
       _feedOffers = _feedOffers + _offer;
     });
   };
-  const feedTemplate = {
-    base: (date, _currencyId, categories, offers) => `
-        <?xml version="1.0" encoding="UTF-8"?>
-        <yml_catalog date="${date}">
-          <shop>
-            <name>ТД ЦСК</name>
-            <company>ООО "ТД ЦСК"</company>
-            <url>http://tdcsk.com</url>
-            <currencies>
-              <currency id="${_currencyId}" rate="1"/>
-            </currencies>
-            <categories>
-            ${categories}
-            </categories>
-            <offers>
-            ${offers}
-            </offers>
-          </shop>
-        </yml_catalog>
-      `,
-    offers: (product, _region, _currencyId, i) => `<offer id="${product.article}">
-          <name>${product.title}</name>
-          <url>https://tdcsk.com/products/region/${_region.value}/${product.slug}</url>
-          <price>${product.cost}</price>
-          <currencyId>${_currencyId}</currencyId>
-          <categoryId>${i}</categoryId>
-          <delivery>true</delivery>
-        </offer>\n`,
-    categories: (id, name, last) => `<category id="${id}">${name}</category>${!last && '\n'}`,
-  };
+  
   await Promise.all(
     categories.map(async (_c, i) => {
       let last = categories.length - 1 === i;
@@ -300,26 +269,26 @@ async function getCategoryProducts(categories, region) {
 }
 
 async function createFullFeed(region) {
-    let categories = await getSubCategories(region);
-    filePath = path.join('./uploads/feeds', `/${_region.title}_All.yml`);
-    let _categories = await Promise.all(
-      categories.map(async (_c) => {
-        let _t = await getSubCategories(region, _c._id, 1);
-        return _t.map((_tt) => ({ _id: _tt._id, categoryName: _tt.categoryName }));
-      })
-    );
-    let xmlData = await createLargeFeed(
-      region,
-      _categories.flat().map((c) => ({ _id: c._id, categoryName: c.categoryName })),
-      date
-    );
-    fs.writeFile(filePath, xmlData, (err) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send({ message: 'Ошибка при сохранении' });
-      }
-      res.status(200).download(filePath);
-    }); 
+  let categories = await getSubCategories(region);
+  filePath = path.join('./uploads/feeds', `/${_region.title}_All.yml`);
+  let _categories = await Promise.all(
+    categories.map(async (_c) => {
+      let _t = await getSubCategories(region, _c._id, 1);
+      return _t.map((_tt) => ({ _id: _tt._id, categoryName: _tt.categoryName }));
+    })
+  );
+  let xmlData = await createLargeFeed(
+    region,
+    _categories.flat().map((c) => ({ _id: c._id, categoryName: c.categoryName })),
+    date
+  );
+  fs.writeFile(filePath, xmlData, (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send({ message: 'Ошибка при сохранении' });
+    }
+    res.status(200).download(filePath);
+  });
 }
 
 exports.feeds = {
