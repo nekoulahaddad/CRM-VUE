@@ -44,4 +44,18 @@
   .page__right--full {
     max-width: 1196px !important;
   }
+  .page__body {
+    width: 100% !important;
+  }
+  .page__buttons .btn {
+    width: 230px !important;
+  }
+  .personal-area {
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
+  .personal-area__bg {
+    right: -224px !important;
+    width: 700px !important;
+  }
 }

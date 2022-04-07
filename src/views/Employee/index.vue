@@ -502,9 +502,14 @@ export default {
       margin-left: 14px;
     }
     button {
-      min-width: 250px !important;
+      width: 250px;
       & + * {
         margin-left: 20px;
+      }
+      @media (max-width: 1440px) {
+        & {
+          max-width: 220px !important;
+        }
       }
     }
   }

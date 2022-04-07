@@ -363,5 +363,15 @@ export default {
       width: 1704px;
     }
   }
+
+  @media (max-width: 1440px) {
+    .page__body {
+      width: 100%;
+      margin-right: 20px;
+    }
+    .page__content {
+      width: 100%;
+    }
+  }
 }
 </style>

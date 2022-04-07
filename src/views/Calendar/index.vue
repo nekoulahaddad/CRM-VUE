@@ -40,32 +40,34 @@
 
     <v-page-header icon="calendar_title" :filterToggle="false" />
     <div class="page__body d-flex">
-      <div class="page__left">
-        <div class="calendar-container">
-          <div class="add-new-event">
-            <a
-              href=""
-              @click.prevent="
-                $store.commit('toggleAction', { key: 'addEvent' }),
-                  $modal.show('addEvent')
-              "
-              class="add-new-event__link"
-            >
-              <img src="@/assets/icons/plus.svg" alt="" />
-            </a>
+      <div class="scroll-horizontal d-flex">
+        <div class="page__left">
+          <div class="calendar-container">
+            <div class="add-new-event">
+              <a
+                href=""
+                @click.prevent="
+                  $store.commit('toggleAction', { key: 'addEvent' }),
+                    $modal.show('addEvent')
+                "
+                class="add-new-event__link"
+              >
+                <img src="@/assets/icons/plus.svg" alt="" />
+              </a>
+            </div>
+            <vc-calendar @dayclick="onDayClick" :attributes="attrs" />
+            <v-calendar-events :events="events" :clickedDay="clickedDay" />
           </div>
-          <vc-calendar @dayclick="onDayClick" :attributes="attrs" />
-          <v-calendar-events :events="events" :clickedDay="clickedDay" />
         </div>
-      </div>
 
-      <div class="page__right">
-        <v-calendar
-          :events="events"
-          :role="role"
-          @showEvent="showEvent"
-          @showEventList="showEventList"
-        />
+        <div class="page__right">
+          <v-calendar
+            :events="events"
+            :role="role"
+            @showEvent="showEvent"
+            @showEventList="showEventList"
+          />
+        </div>
       </div>
     </div>
   </div>
