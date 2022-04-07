@@ -38,7 +38,6 @@ const feedTemplate = {
 };
 
 async function updateFeed(region, category_id, cb) {
-  console.log("🚀 ~ file: feeds.js ~ line 41 ~ updateFeed ~ region, category_id", region, category_id)
   try {
     let date = moment(Date.now()).format();
     let _currencyId = 'RUR';
