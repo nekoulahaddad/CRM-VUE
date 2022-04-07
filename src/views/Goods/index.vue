@@ -961,7 +961,7 @@ export default {
         ? "delete"
         : "add";
       let data = {
-        region: this.region,
+        region: this.filtersOptions.region,
         categoryId: item._id,
         categoryName: item.categoryName,
       };
