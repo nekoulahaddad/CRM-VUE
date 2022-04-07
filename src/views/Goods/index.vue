@@ -947,15 +947,6 @@ export default {
       });
       this.dataset.products = result;
     },
-    deleteProduct(product) {
-      let index = this.dataset.products.findIndex(
-        (item) => item._id === product._id
-      );
-      let dataset = this.dataset.products;
-      dataset.splice(index, 1);
-      this.dataset.products = dataset;
-      this.deletedProduct = {};
-    },
     addToGoogleDoc(item) {
       let status = this.googleDoc.sheets.find((s) => s.categoryId == item._id)
         ? "delete"
@@ -973,7 +964,12 @@ export default {
       })
         .then(async (res) => {
           let result = await res;
-          this.editProduct(result.data.product);
+          this.updateGoods(
+            await this.getDataFromPage(
+              `/${this.$route.params.type || "categories"}/get`,
+              this.filtersOptions
+            )
+          );
           this.$toast.success(result.data.message);
         })
         .catch((err) => {
@@ -982,6 +978,15 @@ export default {
         .finally(() => {
           this.isLoading = true;
         });
+    },
+    deleteProduct(product) {
+      let index = this.dataset.products.findIndex(
+        (item) => item._id === product._id
+      );
+      let dataset = this.dataset.products;
+      dataset.splice(index, 1);
+      this.dataset.products = dataset;
+      this.deletedProduct = {};
     },
     hideDetail() {
       this.copyItem = {};
