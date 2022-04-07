@@ -299,6 +299,10 @@ body {
   background-color: #ecd9db;
   width: 1920px;
   margin: auto;
+
+  @media (max-width: 1440px) {
+    width: 100%;
+  }
 }
 
 .login-page {
@@ -308,6 +312,16 @@ body {
 
   &__left {
     width: 1020px;
+
+    @media (max-width: 1440px) {
+      & {
+        width: 600px;
+
+        img {
+          width: 840px;
+        }
+      }
+    }
   }
 
   &__panel {
