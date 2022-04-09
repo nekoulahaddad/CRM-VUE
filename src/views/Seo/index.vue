@@ -325,7 +325,16 @@ export default {
     try {
       const { _id } = JSON.parse(localStorage.getItem("currentRegion"));
       this.filtersOptions.region = _id;
-    } catch (e) {}
+    } catch (e) {
+      localStorage.setItem(
+        "currentRegion",
+        JSON.stringify({
+          title: "Москва и М.О",
+          value: "moscow",
+          _id: REGION_MOSCOW_ID,
+        })
+      );
+    }
 
     this.fetchData();
   },

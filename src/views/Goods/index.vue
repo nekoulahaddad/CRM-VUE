@@ -1225,7 +1225,7 @@ export default {
         JSON.stringify({
           title: "Москва и М.О",
           value: "moscow",
-          _id: "5f85ba274a9a5d34e0a45fed",
+          _id: REGION_MOSCOW_ID,
         })
       );
     }
