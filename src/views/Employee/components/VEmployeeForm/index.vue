@@ -79,7 +79,7 @@
               name="phone"
               inputClass="form-control"
               :placeholder="$t('phone')"
-              value="infoItem ? infoItem.phone : phone"
+              :value="infoItem ? infoItem.phone : phone"
               @onValidate="onValidate($event)"
             />
           </div>
