@@ -1,5 +1,7 @@
 <template>
   <div class="page mail-page">
+    <v-delete-item :deletedItem="deletedItem" @refresh="getData" />
+
     <v-page-header
       icon="mails_title"
       @toggleFilter="toggleFilter"
@@ -51,6 +53,7 @@
                   @toggleInfo="toggleInfo"
                   @toggleEdit="toggleEdit"
                   @downloadItem="downloadItem"
+                  @toggleDelete="toggleDelete"
                 />
 
                 <!-- Блок с детальной информацией о сотруднике -->
@@ -80,6 +83,7 @@
 import VItem from "./components/VItem";
 import VEdit from "./components/VEdit";
 import VInfo from "./components/VInfo";
+import VDeleteItem from "./components/VDeleteItem";
 import VFilter from "@/components/VFilter";
 import VPageHeader from "@/components/VPageHeader";
 import dataMixins from "@/mixins/data";
@@ -100,6 +104,7 @@ export default {
     VItem,
     VInfo,
     VEdit,
+    VDeleteItem,
   },
   computed: {
     ...mapGetters(["sidebar"]),
@@ -141,6 +146,10 @@ export default {
     this.getData();
   },
   methods: {
+    toggleDelete(deletedItem) {
+      this.deletedItem = deletedItem;
+      this.$modal.show("deleteMail");
+    },
     editCallback() {
       this.getData();
     },
@@ -233,7 +242,7 @@ export default {
   }
 
   .list__columns {
-    grid-template-columns: minmax(50px, 70px) repeat(8, 135px) 1fr;
+    grid-template-columns: 55px repeat(5, 135px) 120px 120px 120px 1fr;
   }
   .list__header {
     .list__column {
@@ -257,7 +266,7 @@ export default {
 
   .page__right--middle {
     .list__columns {
-      grid-template-columns: minmax(50px, 70px) repeat(8, 150px) 1fr;
+      grid-template-columns: 55px repeat(5, 150px) 120px 150px 120px 1fr;
     }
   }
 }
