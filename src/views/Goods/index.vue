@@ -57,7 +57,7 @@
       icon="goods_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"
-      :goods="true"
+      :showCurrentRegion="true"
     />
 
     <div class="page__body d-flex">

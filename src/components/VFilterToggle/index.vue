@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-items-center">
     <div
-      v-if="goods && getCurrentRegion"
+      v-if="showCurrentRegion && getCurrentRegion"
       class="d-flex align-items-center current-region"
     >
       <img src="@/assets/icons/location.svg" alt="" />
@@ -34,7 +34,7 @@ import { mapGetters } from "vuex";
 export default {
   props: {
     active: Boolean,
-    goods: {
+    showCurrentRegion: {
       type: Boolean,
       default: false,
     },
