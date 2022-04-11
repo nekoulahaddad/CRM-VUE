@@ -1,8 +1,15 @@
 <template>
   <div :class="containerClasses">
-    <div class="department__container--line" v-if="hLine" />
+    <div class="department__container--hLine" v-if="level > 1" />
+    <div
+      class="department__container--vLine"
+      v-if="hLine"
+      :style="{
+        top: level === 1 ? '80px' : '48px',
+      }"
+    />
     <div :class="classes">
-      <span class="item__title">{{ item.title }} {{ hLine }}</span>
+      <span class="item__title">{{ item.title }}</span>
       <div class="table__actions">
         <div class="table__icon" v-if="item.children.length">
           <VueCustomTooltip
@@ -41,6 +48,8 @@
       <v-item
         :level="level + 1"
         :item="child"
+        :hLine="child.children.length && openedItems.includes(child._id)"
+        :opened="openedItems.includes(child._id)"
         v-for="(child, index) in item.children"
         :key="index"
         :openedItems="openedItems"
@@ -54,6 +63,10 @@
 export default {
   name: "VItem",
   props: {
+    opened: {
+      type: Boolean,
+      default: false,
+    },
     line: Boolean,
     hLine: Boolean,
     item: {
@@ -77,6 +90,7 @@ export default {
         department__container: true,
         [`department__container--level-${this.level}`]: true,
         "department__container--has-child": !!this.item.children.length,
+        "department__container--opened": this.opened && this.level > 1,
       };
     },
     classes() {
@@ -103,16 +117,31 @@ export default {
   margin-left: 20px;
   border-radius: $border-radius;
 
-  &--has-child {
+  &--hLine {
+    position: absolute;
+    width: 20px;
+    top: 24px;
+    left: -12px;
+    border-radius: 15px;
+    height: 6px;
+    background-color: $color-black;
   }
 
-  &--line {
+  &--vLine {
     position: absolute;
     width: 6px;
-    top: 5px;
-    height: calc(100% - 26px);
     left: 8px;
+    bottom: 24px;
     background-color: $color-black;
+  }
+
+  &--opened {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+
+    .department__container--vLine {
+      bottom: 34px;
+    }
   }
 
   &--level-1 {
@@ -152,18 +181,22 @@ export default {
   &--level-1 {
     height: 80px;
     background: linear-gradient(45deg, #db1f35, #ff747a);
+    margin-bottom: 20px;
   }
 
   &--level-2 {
     background: linear-gradient(90deg, #ff747a, #6f2b8b);
+    margin-bottom: 20px;
   }
 
   &--level-3 {
     background: linear-gradient(90deg, #ff747a, #029faf);
+    margin-bottom: 10px;
   }
 
   &--level-4 {
     background: linear-gradient(90deg, #ff747a, #033e7d);
+    margin-bottom: 10px;
   }
 
   &--line:before {

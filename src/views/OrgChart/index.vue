@@ -34,6 +34,10 @@
           <v-item
             :level="1"
             :item="orgTree"
+            :hLine="
+              orgTree.children.length && openedItems.includes(orgTree._id)
+            "
+            :opened="openedItems.includes(orgTree._id)"
             :openedItems="openedItems"
             @deleteItem="handleDialog"
             @toggleOpened="toggleOpened"
@@ -157,13 +161,10 @@ export default {
     },
   },
   created() {
-    this.getData(`/user/getuserstree`)
-      .then
-      //(res) => (this.users = res.data.users)
-      ();
     this.getData(`/orgtree/getfirst`).then((res) => {
       this.orgTree = res.data.dataTree || {};
       this.currentTreeId = res.data._id;
+      console.log(this.orgTree);
     });
     axios.get("/departments/all").then(async (res) => {
       let result = await res;
