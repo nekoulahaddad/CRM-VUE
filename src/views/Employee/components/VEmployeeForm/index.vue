@@ -574,8 +574,7 @@ export default {
       if (this.email) userData.append("email", this.email);
       if (this.education) userData.append("education", this.education);
       if (this.specialty) userData.append("specialty", this.specialty);
-      if (this.presonal_number)
-        userData.append("presonal_number", this.presonal_number);
+      userData.append("presonal_number", this.presonal_number);
       if (this.phone) userData.append("phone", this.phone);
       if (this.department) userData.append("department", this.department);
       if (this.sub_department)
