@@ -627,7 +627,6 @@ exports.editUser = async (req, res, next) => {
 
     const currentUser = await User.findById(mongoose.Types.ObjectId(userId));
     const dataUser = req.body;
-    console.log(dataUser);
     if (avatar) {
       await makeUserDir(AVATARS_PATH, userId);
       await deleteUserUploadedFile(currentUser.avatar);
@@ -670,6 +669,22 @@ exports.editUser = async (req, res, next) => {
       });
       dataUser.department = mongoose.Types.ObjectId(department._id);
     }
+
+    if (dataUser.presonal_number) {
+      const user = await User.findOne({
+        _id: {
+          $ne: mongoose.Types.ObjectId(userId),
+        },
+        presonal_number: dataUser.presonal_number,
+      });
+
+      if (user) {
+        return res.status(422).json({
+          message: "Сотрудник с таким номером уже есть!",
+        });
+      }
+    }
+
     const newUser = await new User(dataUser);
     console.log(dataUser.options);
     if (dataUser.options) {
@@ -682,9 +697,6 @@ exports.editUser = async (req, res, next) => {
       dataUser.phone.replace(/\s/g, "");
     }
     await currentUser.updateOne(dataUser);
-    console.log("///////////////////////");
-    console.log("Updated User");
-    console.log("///////////////////////");
     res.status(201).json({
       message: "EDITED",
     });
