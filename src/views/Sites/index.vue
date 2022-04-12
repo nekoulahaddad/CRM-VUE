@@ -17,7 +17,7 @@
                 {{ $t("pages.sites.pageTitle") }}
               </div>
               <div class="list__columns">
-                <div class="list__column">Регион</div>
+                <div class="list__column">Регион:</div>
               </div>
             </div>
 
