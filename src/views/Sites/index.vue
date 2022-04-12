@@ -50,14 +50,23 @@
                     </div>
                   </div>
                   <template v-for="(item, index) in item.sites">
-                    <v-item
-                      :index="index"
-                      :infoItem="item"
-                      :role="role"
-                      :excelImportForm="excelImportForm"
-                      @updateSite="updateSite"
-                      @toggleImportExcel="toggleImportExcel"
-                    />
+                    <div
+                      class="list__row list__row--shadow"
+                      style="
+                        margin-left: 10px;
+                        margin-right: 10px;
+                        margin-bottom: 10px;
+                      "
+                    >
+                      <v-item
+                        :index="index"
+                        :infoItem="item"
+                        :role="role"
+                        :excelImportForm="excelImportForm"
+                        @updateSite="updateSite"
+                        @toggleImportExcel="toggleImportExcel"
+                      />
+                    </div>
 
                     <v-import
                       :item="item"
