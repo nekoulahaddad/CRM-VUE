@@ -1,6 +1,6 @@
 <template>
   <div
-    class="list__columns list__columns--shadow set-list__columns list__columns--white"
+    class="list__columns site-list-columns list__columns--shadow set-list__columns"
   >
     <div class="list__column">{{ index + 1 }}</div>
     <div class="list__column bg bg--blue-light">
@@ -8,9 +8,6 @@
     </div>
     <div class="list__column">
       <a :href="infoItem.url" target="_blank">{{ infoItem.url }}</a>
-    </div>
-    <div class="list__column">
-      {{ infoItem.regionTitle }}
     </div>
     <div class="list__column text text--green">
       {{ transformTime(infoItem.updatedAt) }}
@@ -81,14 +78,6 @@ export default {
       item: {},
       status: false,
     };
-  },
-  computed: {
-    role: {
-      get: function () {
-        let role = this.getUserRole();
-        return role.role;
-      },
-    },
   },
   methods: {
     async exportExcel(id) {

@@ -17,12 +17,7 @@
                 {{ $t("pages.sites.pageTitle") }}
               </div>
               <div class="list__columns">
-                <div
-                  v-for="field in $t('pages.sites.fields')"
-                  class="list__column"
-                >
-                  {{ field }}
-                </div>
+                <div class="list__column">Регион</div>
               </div>
             </div>
 
@@ -30,27 +25,47 @@
 
             <template v-else-if="dataset.length">
               <div
-                v-for="(item, index) in dataset"
+                v-for="item in dataset"
                 :key="item._id"
                 class="list__row list__row--shadow list__row--white"
                 :class="{
-                  'list__row--opened': excelImportForm._id === item._id,
+                  'list__row--opened': infoItem._id === item._id,
                 }"
               >
-                <v-item
-                  :index="index"
-                  :infoItem="item"
-                  :role="role"
-                  :excelImportForm="excelImportForm"
-                  @updateSite="updateSite"
-                  @toggleImportExcel="toggleImportExcel"
+                <v-region
+                  :item="item"
+                  :infoItem="infoItem"
+                  @toggleInfo="toggleInfo"
                 />
 
-                <v-import
-                  :item="item"
-                  v-if="excelImportForm._id === item._id"
-                  @toggleImportExcel="toggleImportExcel"
-                />
+                <template v-if="infoItem._id === item._id">
+                  <div
+                    class="list__columns site-list-columns list__columns--shadow set-list__columns"
+                  >
+                    <div
+                      class="list__column"
+                      v-for="field in $t('pages.sites.fields')"
+                    >
+                      {{ field }}
+                    </div>
+                  </div>
+                  <template v-for="(item, index) in item.sites">
+                    <v-item
+                      :index="index"
+                      :infoItem="item"
+                      :role="role"
+                      :excelImportForm="excelImportForm"
+                      @updateSite="updateSite"
+                      @toggleImportExcel="toggleImportExcel"
+                    />
+
+                    <v-import
+                      :item="item"
+                      v-if="excelImportForm._id === item._id"
+                      @toggleImportExcel="toggleImportExcel"
+                    />
+                  </template>
+                </template>
               </div>
             </template>
             <v-not-found-query v-else />
@@ -64,6 +79,7 @@
 <script>
 import VItem from "./components/VItem";
 import VImport from "./components/VImport";
+import VRegion from "./components/VRegion";
 import dataMixins from "@/mixins/data";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
@@ -80,10 +96,12 @@ export default {
     VNotFoundQuery,
     VPagination,
     VItem,
+    VRegion,
     VImport,
   },
   data() {
     return {
+      infoItem: {},
       showFilter: false,
       dataset: [],
       filtersOptions: {},
@@ -103,6 +121,13 @@ export default {
     },
   },
   methods: {
+    toggleInfo(item) {
+      if (this.infoItem._id === item._id) {
+        this.infoItem = {};
+      } else {
+        this.infoItem = item;
+      }
+    },
     toggleImportExcel(item) {
       if (this.excelImportForm._id === item._id) {
         this.excelImportForm = {};
@@ -113,9 +138,26 @@ export default {
     async getSites(result) {
       this.isLoading = false;
       let res = await result;
-      this.dataset = res.data.data;
       this.count = res.data.count;
       this.isLoading = true;
+
+      let data = {};
+
+      res.data.data.map((item) => {
+        if (!data[item.regionId]) {
+          data[item.regionId] = {
+            _id: item.regionId,
+            title: item.regionTitle,
+            sites: [item],
+          };
+        } else {
+          data[item.regionId].sites.push(item);
+        }
+      });
+
+      this.dataset = Object.values(data).sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
     },
     updateSite(id) {
       axios({
@@ -149,8 +191,9 @@ export default {
 
 <style lang="scss">
 .sites-page {
-  .list__columns {
-    grid-template-columns: 50px 450px 350px 350px 100px 1fr;
+  .site-list-columns {
+    grid-template-columns: 50px 700px 350px 100px 1fr;
+    background-color: #fff;
   }
   .list__column {
     &:first-child {
@@ -159,15 +202,23 @@ export default {
   }
 
   .page__right--full {
-    .list__columns {
-      grid-template-columns: 150px 400px 300px 200px 300px 1fr !important;
+    .site-list-columns {
+      grid-template-columns: 50px 700px 400px 300px 1fr !important;
     }
   }
 
   .page__right--fluid {
-    .list__columns {
-      grid-template-columns: 150px 400px 300px 200px 300px 1fr !important;
+    .site-list-columns {
+      grid-template-columns: 50px 700px 400px 400px 1fr !important;
     }
+  }
+
+  .region-list-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .list__row--opened {
+    padding-bottom: 5px;
   }
 }
 </style>
