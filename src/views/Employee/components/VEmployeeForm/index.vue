@@ -106,7 +106,7 @@
             <input
               type="number"
               class="form-control hide-arrows"
-              name="presonal_number"
+              name="number"
               :placeholder="$t('employeeNumber')"
               :value="infoItem ? infoItem.number : number"
               @input="onChange($event)"
