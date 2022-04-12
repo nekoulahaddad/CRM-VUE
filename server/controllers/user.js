@@ -670,12 +670,12 @@ exports.editUser = async (req, res, next) => {
       dataUser.department = mongoose.Types.ObjectId(department._id);
     }
 
-    if (dataUser.presonal_number) {
+    if (dataUser.number) {
       const user = await User.findOne({
         _id: {
           $ne: mongoose.Types.ObjectId(userId),
         },
-        presonal_number: dataUser.presonal_number,
+        number: dataUser.number,
       });
 
       if (user) {
@@ -686,7 +686,6 @@ exports.editUser = async (req, res, next) => {
     }
 
     const newUser = await new User(dataUser);
-    console.log(dataUser.options);
     if (dataUser.options) {
       dataUser.options = JSON.parse(dataUser.options);
     }

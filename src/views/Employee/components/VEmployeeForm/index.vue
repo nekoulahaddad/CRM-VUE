@@ -108,7 +108,7 @@
               class="form-control hide-arrows"
               name="presonal_number"
               :placeholder="$t('employeeNumber')"
-              :value="infoItem ? infoItem.presonal_number : presonal_number"
+              :value="infoItem ? infoItem.number : number"
               @input="onChange($event)"
               onkeydown="return event.keyCode !== 69"
             />
@@ -462,7 +462,7 @@ export default {
       region: null,
       department: null,
       sub_department: null,
-      presonal_number: null,
+      number: null,
       showAddChild: false,
       role: null,
       position: null,
@@ -562,7 +562,7 @@ export default {
       });
     },
     onUserAdd() {
-      if (this.presonal_number && this.presonal_number < 1) {
+      if (this.number && this.number < 1) {
         this.$toast.error("Некорректный номер сотрудника!");
         return;
       }
@@ -574,7 +574,7 @@ export default {
       if (this.email) userData.append("email", this.email);
       if (this.education) userData.append("education", this.education);
       if (this.specialty) userData.append("specialty", this.specialty);
-      userData.append("presonal_number", this.presonal_number);
+      userData.append("number", this.number);
       if (this.phone) userData.append("phone", this.phone);
       if (this.department) userData.append("department", this.department);
       if (this.sub_department)
