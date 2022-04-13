@@ -1,10 +1,15 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const staticSiteSchema = new Schema(
   {
     url: { type: String, required: true },
-    category_id: { type: mongoose.Types.ObjectId, required: false, ref: 'Categories' },
+    category_id: {
+      type: mongoose.Types.ObjectId,
+      required: false,
+      ref: "Categories",
+    },
+    manager: [{ type: mongoose.Types.ObjectId, required: false, ref: "User" }],
     categories: [{ type: mongoose.Types.ObjectId, required: false }],
     categoryName: { type: String, required: true },
     regions: [{ type: mongoose.Types.ObjectId, required: false }],
@@ -34,4 +39,4 @@ const staticSiteSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('staticSite', staticSiteSchema);
+module.exports = mongoose.model("staticSite", staticSiteSchema);

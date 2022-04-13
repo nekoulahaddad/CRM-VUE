@@ -201,7 +201,7 @@ export default {
 <style lang="scss">
 .sites-page {
   .site-list-columns {
-    grid-template-columns: 50px 700px 350px 100px 1fr;
+    grid-template-columns: 50px 500px 350px 200px 100px 1fr;
     background-color: #fff;
   }
   .list__column {
@@ -212,13 +212,13 @@ export default {
 
   .page__right--full {
     .site-list-columns {
-      grid-template-columns: 50px 700px 400px 300px 1fr !important;
+      grid-template-columns: 50px 500px 400px 200px 300px 1fr !important;
     }
   }
 
   .page__right--fluid {
     .site-list-columns {
-      grid-template-columns: 50px 700px 400px 400px 1fr !important;
+      grid-template-columns: 50px 500px 400px 200px 400px 1fr !important;
     }
   }
 

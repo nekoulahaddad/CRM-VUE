@@ -9,6 +9,7 @@
     <div class="list__column">
       <a :href="infoItem.url" target="_blank">{{ infoItem.url }}</a>
     </div>
+    <div class="list__column"></div>
     <div class="list__column text text--green">
       {{ transformTime(infoItem.updatedAt) }}
     </div>
