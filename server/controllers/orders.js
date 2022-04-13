@@ -483,10 +483,14 @@ exports.addOrder = async(req, res, next) => {
             acquiringNum: uuidv4()
         }
         const newOrder = await Orders.create(dataOrder)
-        console.log("🚀 ~ file: orders.js ~ line 484 ~ exports.addOrder=async ~ newOrder", newOrder)
         await newOrder.save()
-        // https://api.calltouch.ru/lead-service/v1/api/client-order/create
-
+        //! CALLTOUCH START * * * * * * * * * * * *
+        try {
+            calltouch.newOrder(newOrder)
+        } catch (err) {
+            console.log("🚀 ~ file: orders.js ~ line 494 ~ exports.addOrder=async ~ error", err)
+        }
+        //! CALLTOUCH END * * * * * * * * * * * * *
         res.status(201).json({
             message: "ADDED",
             data: newOrder
@@ -628,7 +632,13 @@ exports.editOrder = async(req, res, next) => {
             }
         }
         
-
+        //! CALLTOUCH START * * * * * * * * * * * *
+        try {
+            calltouch.updOrder(currentOrder)
+        } catch (err) {
+            console.log("🚀 ~ file: orders.js ~ line 639 ~ exports.editOrder=async ~ err", err)
+        }
+        //! CALLTOUCH END * * * * * * * * * * * * *
         console.log("///////////////////////")
         console.log("Updated Order")
         console.log("///////////////////////")
@@ -662,6 +672,13 @@ exports.deleteOrder = async(req, res, next) => {
                 }
             })
         }
+        //! CALLTOUCH START * * * * * * * * * * * *
+        try {
+            calltouch.delOrder(Array.isArray(req.body.orderId) ? req.body.orderId : [ req.body.orderId ])
+        } catch (err) {
+            console.log("🚀 ~ file: orders.js ~ line 678 ~ exports.deleteOrder ~ err", err)
+        }
+        //! CALLTOUCH END * * * * * * * * * * * * *
         console.log("///////////////////////")
         console.log("Deleted Order")
         console.log("///////////////////////")
