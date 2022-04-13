@@ -13,7 +13,7 @@
       {{
         Array.isArray(infoItem.manager) &&
         infoItem.manager[0] &&
-        transformFIO(infoItem.manager)
+        transformFIO(infoItem.manager[0])
       }}
     </div>
     <div class="list__column text text--green">
