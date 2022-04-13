@@ -9,7 +9,13 @@
     <div class="list__column">
       <a :href="infoItem.url" target="_blank">{{ infoItem.url }}</a>
     </div>
-    <div class="list__column"></div>
+    <div class="list__column">
+      {{
+        Array.isArray(infoItem.manager) &&
+        infoItem.manager[0] &&
+        transformFIO(infoItem.manager)
+      }}
+    </div>
     <div class="list__column text text--green">
       {{ transformTime(infoItem.updatedAt) }}
     </div>
