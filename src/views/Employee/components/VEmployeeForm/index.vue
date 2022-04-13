@@ -562,7 +562,7 @@ export default {
       });
     },
     onUserAdd() {
-      if (this.number && this.number < 1) {
+      if (this.number.length && this.number < 1) {
         this.$toast.error("Некорректный номер сотрудника!");
         return;
       }

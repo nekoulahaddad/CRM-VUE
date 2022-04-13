@@ -670,7 +670,7 @@ exports.editUser = async (req, res, next) => {
       dataUser.department = mongoose.Types.ObjectId(department._id);
     }
 
-    if (dataUser.number) {
+    if (dataUser.number && dataUser.number > 0) {
       const user = await User.findOne({
         _id: {
           $ne: mongoose.Types.ObjectId(userId),
