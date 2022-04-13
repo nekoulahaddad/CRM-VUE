@@ -48,18 +48,26 @@ exports.createSite = async (req, res, next) => {
 exports.getSites = async (req, res, next) => {
   // let sites = await staticSites.find({}).lean()
   let result = [];
-  let sites = await staticSites.aggregate().populate("manager").project({
-    _id: "$_id",
-    url: "$url",
-    categoryName: "$categoryName",
-    categories: "$categories",
-    updatedAt: "$updatedAt",
-    origin: "$origin",
-    folder: "$folder",
-    uploadedFile: "$uploadedFile",
-    content: "$content",
-    regionId: "$region",
-  });
+  let sites = await staticSites
+    .aggregate()
+    .lookup({
+      from: "users",
+      localField: "manager",
+      foreignField: "_id",
+      as: "manager",
+    })
+    .project({
+      _id: "$_id",
+      url: "$url",
+      categoryName: "$categoryName",
+      categories: "$categories",
+      updatedAt: "$updatedAt",
+      origin: "$origin",
+      folder: "$folder",
+      uploadedFile: "$uploadedFile",
+      content: "$content",
+      regionId: "$region",
+    });
   await Promise.all(
     sites.map(async (s) => {
       let _region = await Region.findOne({
