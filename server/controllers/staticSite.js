@@ -67,6 +67,7 @@ exports.getSites = async (req, res, next) => {
       uploadedFile: "$uploadedFile",
       content: "$content",
       regionId: "$region",
+      manager: "$manager",
     });
   await Promise.all(
     sites.map(async (s) => {
