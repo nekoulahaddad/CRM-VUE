@@ -48,7 +48,7 @@ exports.createSite = async (req, res, next) => {
 exports.getSites = async (req, res, next) => {
   // let sites = await staticSites.find({}).lean()
   let result = [];
-  let sites = await staticSites.aggregate().project({
+  let sites = await staticSites.aggregate().populate("manager").project({
     _id: "$_id",
     url: "$url",
     categoryName: "$categoryName",
