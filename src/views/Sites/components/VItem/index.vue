@@ -9,12 +9,18 @@
     <div class="list__column">
       <a :href="infoItem.url" target="_blank">{{ infoItem.url }}</a>
     </div>
-    <div class="list__column">
-      {{
-        Array.isArray(infoItem.manager) &&
-        infoItem.manager[0] &&
-        transformFIO(infoItem.manager[0])
-      }}
+    <div class="list__column list__column-manager">
+      <VueCustomTooltip
+        v-if="infoItem.manager && infoItem.manager[0]"
+        :multiline="true"
+        :label="getManagerInfo(infoItem.manager[0])"
+      >
+        {{
+          Array.isArray(infoItem.manager) &&
+          infoItem.manager[0] &&
+          transformFIO(infoItem.manager[0])
+        }}
+      </VueCustomTooltip>
     </div>
     <div class="list__column text text--green">
       {{ transformTime(infoItem.updatedAt) }}
@@ -87,6 +93,11 @@ export default {
     };
   },
   methods: {
+    getManagerInfo(item) {
+      return `ФИО: ${this.transformFullFIO(item)}\nТелефон: ${
+        item.phone
+      }\nEmail: ${item.email}`;
+    },
     async exportExcel(id) {
       try {
         this.isLoading = false;
@@ -121,3 +132,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.list__column-manager {
+  span {
+    display: block;
+    text-align: center;
+  }
+}
+</style>
