@@ -833,7 +833,7 @@ export default {
                 regionId: result.data[0].region,
               },
             }).then((res) => {
-              this.orderForm.region = res.data.region;
+              this.orderForm.region = res.data.region._id;
             });
           }
         });
