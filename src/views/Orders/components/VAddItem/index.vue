@@ -802,10 +802,18 @@ export default {
       this.isValidLegalNumber = isValidByLibPhoneNumberJs;
     },
     async getClientByPhone(phone) {
+      this.clientForm.isOldUser = false;
+      this.orderForm.client = null;
+      delete this.clientForm.physicalUser._id;
+      delete this.clientForm.legalUser._id;
+
+      if (phone.length < 11) {
+        return;
+      }
+
       try {
-        if (phone.target.value.length < 11) return;
         await axios({
-          url: "/clients/getclientbyphone/" + phone.target.value,
+          url: `/clients/getclientbyphone/${phone}`,
         }).then(async (res) => {
           let result = await res;
           if (result && result.data[0]) {
@@ -826,10 +834,6 @@ export default {
               },
             }).then((res) => {
               this.orderForm.region = res.data.region;
-              this.clientForm.isOldUser = false;
-              this.orderForm.client = null;
-              delete this.clientForm.physicalUser._id;
-              delete this.clientForm.legalUser._id;
             });
           }
         });
