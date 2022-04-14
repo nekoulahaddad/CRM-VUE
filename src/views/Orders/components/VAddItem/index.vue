@@ -568,21 +568,11 @@
                   {{ (product.cost * product.quantity).toFixed(2) }}
                 </div>
                 <div class="list__column d-flex justify-end">
-                  <VueCustomTooltip
-                    label="Отменить удаление"
-                    v-if="deletedItems.includes(product._id)"
-                  >
+                  <VueCustomTooltip label="Удалить">
                     <img
-                      @click="deleteItem(product._id)"
-                      src="@/assets/icons/trash_icon.svg"
                       alt=""
-                    />
-                  </VueCustomTooltip>
-                  <VueCustomTooltip label="Удалить" v-else>
-                    <img
-                      @click="deleteItem(product._id)"
+                      @click="deleteItem(index)"
                       src="@/assets/icons/trash_icon.svg"
-                      alt=""
                     />
                   </VueCustomTooltip>
                 </div>
@@ -879,12 +869,8 @@ export default {
       this.productsList = [];
       this.articleSearch = null;
     },
-    deleteItem(_id) {
-      if (this.deletedItems.includes(_id)) {
-        this.deletedItems = this.deletedItems.filter((id) => id !== _id);
-      } else {
-        this.deletedItems.push(_id);
-      }
+    deleteItem(index) {
+      this.orderForm.products.splice(index, 1);
       this.calculateSum();
     },
     getItemTitle(result) {
