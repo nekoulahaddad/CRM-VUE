@@ -350,10 +350,4 @@ const startApp = async () => {
 
 // init
 startApp();
-
-Clients.find().then((c) => {
-  c.forEach((u) => {
-    u.phone = u.phone.replace(/\s/g, "");
-    u.save();
-  });
 });
