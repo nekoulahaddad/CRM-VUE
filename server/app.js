@@ -353,6 +353,7 @@ startApp();
 
 Clients.find().then((c) => {
   c.forEach((u) => {
-    console.log(u.phone);
+    u.phone = u.phone.replace(/\s/g, "");
+    u.save();
   });
 });
