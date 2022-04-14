@@ -866,10 +866,9 @@ exports.editProduct = async (req, res, next) => {
     }
 
     try {
-      feeds.updateFeed(region, product.parent_id);
-    } catch (err) {
-      console(err);
-    }
+      await feeds.updateFeed(region, product.parent_id);
+    } catch (err) {}
+
     res.status(201).json({
       message: "EDITED",
       product: product,
