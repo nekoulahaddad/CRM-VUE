@@ -492,6 +492,7 @@
                       value: region._id,
                     }))
                   "
+                  @input="setRegion"
                   :reduce="(item) => item.value"
                   v-model="orderForm.region"
                 />
@@ -784,6 +785,16 @@ export default {
     };
   },
   methods: {
+    setRegion() {
+      this.addFormOpened = false;
+      this.orderForm.products = [];
+      this.newItem = {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+        full_cost: 0,
+      };
+    },
     onValidatePhysical({ isValidByLibPhoneNumberJs }) {
       this.isValidPhysicalNumber = isValidByLibPhoneNumberJs;
     },
