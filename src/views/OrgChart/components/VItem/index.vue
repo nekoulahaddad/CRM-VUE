@@ -18,14 +18,14 @@
           >
             <img
               alt=""
-              @click="$emit('toggleOpened', item._id)"
+              @click="toggle(item._id)"
               src="@/assets/icons/sub_deps.svg"
             />
           </VueCustomTooltip>
           <VueCustomTooltip v-else label="Скрыть разделы">
             <img
               alt=""
-              @click="$emit('toggleOpened', item._id)"
+              @click="toggle(item._id)"
               src="@/assets/icons/arrow_top_white_icon.svg"
             />
           </VueCustomTooltip>
@@ -44,16 +44,15 @@
         </div>
       </div>
     </div>
-    <template v-if="openedItems.includes(item._id)">
+    <template v-for="child in item.children">
       <v-item
+        v-if="openedItems.includes(child.parentId)"
         :level="level + 1"
         :item="child"
-        :hLine="child.children.length && openedItems.includes(child._id)"
         :opened="openedItems.includes(child._id)"
-        v-for="(child, index) in item.children"
-        :key="index"
+        :key="child._id"
         :openedItems="openedItems"
-        @toggleOpened="$emit('toggleOpened', child._id)"
+        @toggleOpened="toggle(child._id)"
       />
     </template>
   </div>
@@ -82,6 +81,9 @@ export default {
   methods: {
     lineHeight(count) {
       return `100%`;
+    },
+    toggle(id) {
+      this.$emit("toggleOpened", id);
     },
   },
   computed: {
