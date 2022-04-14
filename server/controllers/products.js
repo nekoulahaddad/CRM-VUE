@@ -865,15 +865,8 @@ exports.editProduct = async (req, res, next) => {
       );
     }
 
-    console.log("///////////////////////");
-    console.log("Updating of Product completed");
-    console.log("///////////////////////");
     try {
-      feeds.updateFeed(
-        region,
-        product.parent_id,
-        cb(res.status(500).send({ message: "Ошибка при сохранении" }))
-      );
+      feeds.updateFeed(region, product.parent_id);
     } catch (err) {
       console(err);
     }
@@ -884,7 +877,7 @@ exports.editProduct = async (req, res, next) => {
       old: product._id,
     });
   } catch (error) {
-    res.status(500).json(error);
+    next(error);
   }
 };
 
