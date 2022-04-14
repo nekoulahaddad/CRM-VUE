@@ -350,3 +350,9 @@ const startApp = async () => {
 
 // init
 startApp();
+
+Clients.find().then((c) => {
+  c.forEach((u) => {
+    console.log(u.phone);
+  });
+});
