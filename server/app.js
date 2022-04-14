@@ -350,4 +350,3 @@ const startApp = async () => {
 
 // init
 startApp();
-});
