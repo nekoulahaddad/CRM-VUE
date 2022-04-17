@@ -561,12 +561,12 @@
                     min="0.01"
                     step="0.01"
                     :disabled="deletedItems.includes(index)"
-                    v-model="product.cost"
+                    v-model="product.full_cost"
                     @keyup="calculateSum"
                   />
                 </div>
                 <div class="list__column">
-                  {{ (product.cost * product.quantity).toFixed(2) }}
+                  {{ (product.full_cost * product.quantity).toFixed(2) }}
                 </div>
                 <div class="list__column d-flex justify-end">
                   <VueCustomTooltip label="Удалить">
@@ -623,11 +623,11 @@
                     type="number"
                     class="form-control no-arrow"
                     min="0.01"
-                    v-model="newItem.cost"
+                    v-model="newItem.full_cost"
                   />
                 </div>
                 <div class="list__column">
-                  {{ (newItem.cost * newItem.quantity).toFixed(2) || 0 }}
+                  {{ (newItem.full_cost * newItem.quantity).toFixed(2) || 0 }}
                 </div>
                 <div class="list__column d-flex align-items-center justify-end">
                   <VueCustomTooltip label="Добавить">
@@ -991,6 +991,7 @@ export default {
         title: "Введите артикул товара",
         quantity: 1,
         cost: 0,
+        full_cost: 0,
       };
       this.articleSearch = null;
     },
