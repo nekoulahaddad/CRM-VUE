@@ -1,7 +1,15 @@
 <template>
   <div :class="containerClasses">
     <div :class="classes">
-      <span class="item__title">{{ item.title }}</span>
+      <span class="item__title">
+        {{ item.title }} ({{
+          getEmployeeCount(item.employees.length, [
+            "сотрудник",
+            "сотрудника",
+            "сотрудников",
+          ])
+        }})
+      </span>
       <div class="table__actions">
         <div class="table__icon" v-if="item.children.length">
           <VueCustomTooltip
@@ -76,6 +84,14 @@ export default {
     },
     toggle(id) {
       this.$emit("toggleOpened", id);
+    },
+    getEmployeeCount(value, words) {
+      value = Math.abs(value) % 100;
+      let num = value % 10;
+      if (value > 10 && value < 20) return value + " " + words[2];
+      if (num > 1 && num < 5) return value + " " + words[1];
+      if (num === 1) return value + " " + words[0];
+      return value + " " + words[2];
     },
   },
   computed: {

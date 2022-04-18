@@ -164,11 +164,6 @@ export default {
     this.getData(`/orgtree/getfirst`).then((res) => {
       this.orgTree = res.data.dataTree || {};
       this.currentTreeId = res.data._id;
-      console.log(this.orgTree);
-    });
-    axios.get("/departments/all").then(async (res) => {
-      let result = await res;
-      this.departments = result.data;
     });
     this.pageLoading = false;
   },
