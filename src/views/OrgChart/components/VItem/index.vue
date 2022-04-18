@@ -12,56 +12,78 @@
       </span>
       <div class="table__actions">
         <!-- Показать отделы -->
-        <div class="table__icon" v-if="item.children.length">
-          <VueCustomTooltip
-            label="Показать отделы"
-            v-if="!departmentItem.includes(item._id)"
-          >
-            <img
-              alt=""
-              @click="$emit('toggleShowDepartment', item)"
-              src="@/assets/icons/sub_deps.svg"
-            />
-          </VueCustomTooltip>
-          <VueCustomTooltip v-else label="Скрыть разделы">
-            <img
-              alt=""
-              @click="$emit('toggleShowDepartment', item)"
-              src="@/assets/icons/arrow_top_white_icon.svg"
-            />
-          </VueCustomTooltip>
+        <div class="table__icon">
+          <template v-if="item.children.length">
+            <VueCustomTooltip
+              label="Показать отделы"
+              v-if="!departmentItem.includes(item._id)"
+            >
+              <img
+                alt=""
+                @click="$emit('toggleShowDepartment', item)"
+                src="@/assets/icons/sub_deps.svg"
+              />
+            </VueCustomTooltip>
+            <VueCustomTooltip v-else label="Скрыть разделы">
+              <img
+                alt=""
+                @click="$emit('toggleShowDepartment', item)"
+                src="@/assets/icons/arrow_top_white_icon.svg"
+              />
+            </VueCustomTooltip>
+          </template>
+          <img
+            alt=""
+            v-else
+            class="opacity-30"
+            src="@/assets/icons/sub_deps.svg"
+          />
         </div>
         <!-- Показать сотрудников -->
-        <div class="table__icon" v-if="item.employees.length">
-          <VueCustomTooltip
-            v-if="!employeeItem.includes(item._id)"
-            label="Показать сотрудников"
-          >
-            <img
-              alt=""
-              @click="$emit('toggleShowEmployees', item)"
-              src="@/assets/icons/manager-white.svg"
-            />
-          </VueCustomTooltip>
-          <VueCustomTooltip v-else label="Скрыть сотрудников">
-            <img
-              alt=""
-              @click="$emit('toggleShowEmployees', item)"
-              src="@/assets/icons/arrow_top_white_icon.svg"
-            />
-          </VueCustomTooltip>
+        <div class="table__icon">
+          <template v-if="item.employees.length">
+            <VueCustomTooltip
+              v-if="!employeeItem.includes(item._id)"
+              label="Показать сотрудников"
+            >
+              <img
+                alt=""
+                @click="$emit('toggleShowEmployees', item)"
+                src="@/assets/icons/manager-white.svg"
+              />
+            </VueCustomTooltip>
+            <VueCustomTooltip v-else label="Скрыть сотрудников">
+              <img
+                alt=""
+                @click="$emit('toggleShowEmployees', item)"
+                src="@/assets/icons/arrow_top_white_icon.svg"
+              />
+            </VueCustomTooltip>
+          </template>
+          <img
+            alt=""
+            v-else
+            class="opacity-30"
+            src="@/assets/icons/manager-white.svg"
+          />
         </div>
         <div class="table__icon">
           <img src="@/assets/icons/white_dots.svg" alt="" />
         </div>
-        <div class="table__icon" v-if="role === 'superadmin'">
-          <VueCustomTooltip label="Удалить">
+        <div class="table__icon">
+          <VueCustomTooltip label="Удалить" v-if="role === 'superadmin'">
             <img
               @click="$emit('deleteItem', item)"
               src="@/assets/icons/trash_icon_white.svg"
               alt=""
             />
           </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            class="opacity-30"
+            src="@/assets/icons/trash_icon_white.svg"
+          />
         </div>
       </div>
     </div>
