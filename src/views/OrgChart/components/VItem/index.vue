@@ -1,13 +1,5 @@
 <template>
   <div :class="containerClasses">
-    <div class="department__container--hLine" v-if="level > 1" />
-    <div
-      class="department__container--vLine"
-      v-if="hLine"
-      :style="{
-        top: level === 1 ? '80px' : '48px',
-      }"
-    />
     <div :class="classes">
       <span class="item__title">{{ item.title }}</span>
       <div class="table__actions">
@@ -44,15 +36,15 @@
         </div>
       </div>
     </div>
-    <template v-for="child in item.children">
+
+    <template v-if="openedItems.includes(item._id) && item.children.length">
       <v-item
-        v-if="openedItems.includes(child.parentId)"
         :level="level + 1"
+        v-for="child in item.children"
         :item="child"
         :opened="openedItems.includes(child._id)"
-        :key="child._id"
         :openedItems="openedItems"
-        @toggleOpened="toggle(child._id)"
+        @toggleOpened="toggle"
       />
     </template>
   </div>
@@ -133,7 +125,6 @@ export default {
     position: absolute;
     width: 6px;
     left: 8px;
-    bottom: 24px;
     background-color: $color-black;
   }
 

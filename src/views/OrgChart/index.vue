@@ -134,10 +134,8 @@ export default {
       if (this.openedItems.includes(id)) {
         this.openedItems = this.openedItems.filter((value) => value !== id);
       } else {
-        alert(id);
         this.openedItems.push(id);
       }
-      console.log(this.openedItems);
     },
     goToLink(name) {
       this.$router.push({
