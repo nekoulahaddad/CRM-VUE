@@ -38,6 +38,10 @@
               orgTree.children.length && openedItems.includes(orgTree._id)
             "
             :role="role"
+            :employeeItem="employeeItem"
+            :departmentItem="departmentItem"
+            @toggleShowEmployees="toggleShowEmployees"
+            @toggleShowDepartment="toggleShowDepartment"
             @deleteItem="handleDialog"
           />
         </div>
@@ -74,6 +78,8 @@ export default {
   },
   data() {
     return {
+      employeeItem: [],
+      departmentItem: [],
       openedItems: [],
       showFilter: false,
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
@@ -139,6 +145,32 @@ export default {
         this.openedItems = this.openedItems.filter((value) => value !== id);
       } else {
         this.openedItems.push(id);
+      }
+    },
+    toggleShowDepartment(item) {
+      this.employeeItem = [];
+
+      if (this.departmentItem.includes(item._id)) {
+        this.departmentItem = this.departmentItem.filter(
+          (value) => value !== item._id
+        );
+      } else {
+        this.departmentItem.push(item._id);
+      }
+    },
+    toggleShowEmployees(item) {
+      if (this.departmentItem.includes(item._id)) {
+        this.departmentItem = this.departmentItem.filter(
+          (value) => value !== item._id
+        );
+      }
+
+      if (this.employeeItem.includes(item._id)) {
+        this.employeeItem = this.employeeItem.filter(
+          (value) => value !== item._id
+        );
+      } else {
+        this.employeeItem.push(item._id);
       }
     },
     goToLink(name) {

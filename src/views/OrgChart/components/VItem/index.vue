@@ -13,34 +13,40 @@
       <div class="table__actions">
         <!-- Показать отделы -->
         <div class="table__icon" v-if="item.children.length">
-          <VueCustomTooltip label="Показать отделы" v-if="!showDepartments">
+          <VueCustomTooltip
+            label="Показать отделы"
+            v-if="!departmentItem.includes(item._id)"
+          >
             <img
               alt=""
-              @click="toggleShowDepartments"
+              @click="$emit('toggleShowDepartment', item)"
               src="@/assets/icons/sub_deps.svg"
             />
           </VueCustomTooltip>
           <VueCustomTooltip v-else label="Скрыть разделы">
             <img
               alt=""
-              @click="toggleShowDepartments"
+              @click="$emit('toggleShowDepartment', item)"
               src="@/assets/icons/arrow_top_white_icon.svg"
             />
           </VueCustomTooltip>
         </div>
         <!-- Показать сотрудников -->
         <div class="table__icon" v-if="item.employees.length">
-          <VueCustomTooltip v-if="!showEmployees" label="Показать сотрудников">
+          <VueCustomTooltip
+            v-if="!employeeItem.includes(item._id)"
+            label="Показать сотрудников"
+          >
             <img
               alt=""
-              @click="toggleShowEmployees"
+              @click="$emit('toggleShowEmployees', item)"
               src="@/assets/icons/manager-white.svg"
             />
           </VueCustomTooltip>
           <VueCustomTooltip v-else label="Скрыть сотрудников">
             <img
               alt=""
-              @click="toggleShowEmployees"
+              @click="$emit('toggleShowEmployees', item)"
               src="@/assets/icons/arrow_top_white_icon.svg"
             />
           </VueCustomTooltip>
@@ -60,39 +66,48 @@
       </div>
     </div>
 
-    <template v-if="item.children.length">
-      <div class="department__container-inner">
-        <template v-if="showDepartments">
-          <v-item
-            :level="level + 1"
-            v-for="child in item.children"
-            :item="child"
-            @toggleOpened="toggle"
-          />
-        </template>
+    <div
+      class="department__container-inner"
+      v-if="
+        departmentItem.includes(item._id) || employeeItem.includes(item._id)
+      "
+    >
+      <template
+        v-if="item.children.length && departmentItem.includes(item._id)"
+      >
+        <v-item
+          :level="level + 1"
+          v-for="child in item.children"
+          :item="child"
+          :role="role"
+          :employeeItem="employeeItem"
+          :departmentItem="departmentItem"
+          @toggleShowEmployees="toggleShowEmployees"
+          @toggleShowDepartment="toggleShowDepartment"
+        />
+      </template>
 
-        <!-- Список сотрудников -->
+      <!-- Список сотрудников -->
+      <div
+        class="list"
+        v-if="item.employees.length && employeeItem.includes(item._id)"
+      >
+        <div class="text text--blue">Сотрудники:</div>
         <div
-          class="list"
-          v-if="item.employees && item.employees.length && showEmployees"
+          v-for="employee in item.employees"
+          :key="employee._id"
+          class="list__row list__row--shadow list__row--white"
         >
-          <div class="text text--blue">Сотрудники:</div>
           <div
-            v-for="employee in item.employees"
-            :key="employee._id"
-            class="list__row list__row--shadow list__row--white"
+            class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
           >
-            <div
-              class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
-            >
-              <div class="list__column">
-                {{ transformFIO(employee) }}
-              </div>
+            <div class="list__column">
+              {{ transformFIO(employee) }}
             </div>
           </div>
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -100,6 +115,8 @@
 export default {
   name: "VItem",
   props: {
+    departmentItem: Array,
+    employeeItem: Array,
     role: String,
     line: Boolean,
     hLine: Boolean,
@@ -112,20 +129,12 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      showEmployees: false,
-      showDepartments: false,
-    };
-  },
   methods: {
-    toggleShowDepartments() {
-      this.showDepartments = !this.showDepartments;
-      this.showEmployees = false;
+    toggleShowDepartment(item) {
+      this.$emit("toggleShowDepartment", item);
     },
-    toggleShowEmployees() {
-      this.showEmployees = !this.showEmployees;
-      this.showDepartments = false;
+    toggleShowEmployees(item) {
+      this.$emit("toggleShowEmployees", item);
     },
     lineHeight(count) {
       return `100%`;
