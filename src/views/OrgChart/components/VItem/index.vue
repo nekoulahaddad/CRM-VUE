@@ -169,10 +169,6 @@ export default {
     }
   }
 
-  &--level-1 {
-    margin-left: 0;
-  }
-
   &--level-1,
   &--level-2,
   &--level-3,
@@ -184,13 +180,13 @@ export default {
   }
 
   &--level-2 {
-    width: 1550px;
+    width: 1570px;
   }
   &--level-3 {
-    width: 1510px;
+    width: 1550px;
   }
   &--level-4 {
-    width: 1470px;
+    width: 1530px;
   }
 
   .text {
@@ -214,26 +210,23 @@ export default {
   color: $color-white;
   height: 48px;
   position: relative;
+  margin-bottom: 10px;
 
   &--level-1 {
     height: 80px;
     background: linear-gradient(45deg, #db1f35, #ff747a);
-    margin-bottom: 15px;
   }
 
   &--level-2 {
     background: linear-gradient(90deg, #ff747a, #6f2b8b);
-    margin-bottom: 15px;
   }
 
   &--level-3 {
     background: linear-gradient(90deg, #ff747a, #029faf);
-    margin-bottom: 15px;
   }
 
   &--level-4 {
     background: linear-gradient(90deg, #ff747a, #033e7d);
-    margin-bottom: 15px;
   }
 
   &--line:before {
@@ -251,6 +244,6 @@ export default {
   }
 }
 .department__container-inner {
-  padding-left: 20px;
+  padding-left: 10px;
 }
 </style>
