@@ -224,6 +224,9 @@ export default {
   .page__right--full {
     .list {
       max-width: 100%;
+      .list__columns {
+        grid-template-columns: 1fr 1fr;
+      }
     }
     .departments {
       width: 1591px;

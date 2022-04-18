@@ -104,6 +104,15 @@
             <div class="list__column">
               {{ transformFIO(employee) }}
             </div>
+            <div class="list__column">
+              <div class="table__actions">
+                <div class="table__icon">
+                  <VueCustomTooltip label="Удалить">
+                    <img alt="" src="@/assets/icons/trash_icon.svg" />
+                  </VueCustomTooltip>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
