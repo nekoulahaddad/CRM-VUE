@@ -48,7 +48,7 @@
         <div class="table__icon">
           <img src="@/assets/icons/white_dots.svg" alt="" />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" v-if="role === 'superadmin'">
           <VueCustomTooltip label="Удалить">
             <img
               @click="$emit('deleteItem', item)"
@@ -100,6 +100,7 @@
 export default {
   name: "VItem",
   props: {
+    role: String,
     line: Boolean,
     hLine: Boolean,
     item: {

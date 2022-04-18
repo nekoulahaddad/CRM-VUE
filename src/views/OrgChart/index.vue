@@ -37,6 +37,7 @@
             :hLine="
               orgTree.children.length && openedItems.includes(orgTree._id)
             "
+            :role="role"
             @deleteItem="handleDialog"
           />
         </div>
@@ -64,6 +65,12 @@ export default {
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
   },
   data() {
     return {
