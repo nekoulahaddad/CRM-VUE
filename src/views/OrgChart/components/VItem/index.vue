@@ -46,14 +46,31 @@
     </div>
 
     <template v-if="openedItems.includes(item._id) && item.children.length">
-      <v-item
-        :level="level + 1"
-        v-for="child in item.children"
-        :item="child"
-        :opened="openedItems.includes(child._id)"
-        :openedItems="openedItems"
-        @toggleOpened="toggle"
-      />
+      <div class="department__container-inner">
+        <v-item
+          :level="level + 1"
+          v-for="child in item.children"
+          :item="child"
+          :opened="openedItems.includes(child._id)"
+          :openedItems="openedItems"
+          @toggleOpened="toggle"
+        />
+
+        <div class="list" v-if="item.employees && item.employees.length">
+          <div class="text text--blue">Сотрудники:</div>
+          <div
+            v-for="(employee, index) in item.employees"
+            :key="employee._id"
+            class="list__row list__row--shadow list__row--white"
+          >
+            <div
+              class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
+            >
+              <div class="list__column list__column--number">123</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -100,7 +117,7 @@ export default {
         department__container: true,
         [`department__container--level-${this.level}`]: true,
         "department__container--has-child": !!this.item.children.length,
-        "department__container--opened": this.opened && this.level > 1,
+        "department__container--opened": this.opened,
       };
     },
     classes() {
@@ -124,7 +141,6 @@ export default {
 
 .department__container {
   position: relative;
-  margin-left: 20px;
   border-radius: $border-radius;
 
   &--hLine {
@@ -157,6 +173,7 @@ export default {
     margin-left: 0;
   }
 
+  &--level-1,
   &--level-2,
   &--level-3,
   &--level-4 {
@@ -166,11 +183,22 @@ export default {
     border-bottom-left-radius: $border-radius;
   }
 
+  &--level-2 {
+    width: 1550px;
+  }
   &--level-3 {
-    width: 1540px;
+    width: 1510px;
   }
   &--level-4 {
-    width: 1510px;
+    width: 1470px;
+  }
+
+  .text {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .text--blue {
+    font-size: 16px;
   }
 }
 
@@ -190,22 +218,22 @@ export default {
   &--level-1 {
     height: 80px;
     background: linear-gradient(45deg, #db1f35, #ff747a);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   &--level-2 {
     background: linear-gradient(90deg, #ff747a, #6f2b8b);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   &--level-3 {
     background: linear-gradient(90deg, #ff747a, #029faf);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
   &--level-4 {
     background: linear-gradient(90deg, #ff747a, #033e7d);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
   &--line:before {
@@ -221,5 +249,8 @@ export default {
   .vue-custom-tooltip.is-top:before {
     display: none;
   }
+}
+.department__container-inner {
+  padding-left: 20px;
 }
 </style>

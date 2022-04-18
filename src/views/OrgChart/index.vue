@@ -174,6 +174,9 @@ export default {
 @import "@/styles/_variables";
 
 .org-chart-page {
+  .list {
+    max-width: 100%;
+  }
   .page__right--fluid {
     .departments {
       width: 1704px;
@@ -181,6 +184,9 @@ export default {
   }
 
   .page__right--full {
+    .list {
+      max-width: 100%;
+    }
     .departments {
       width: 1591px;
     }
