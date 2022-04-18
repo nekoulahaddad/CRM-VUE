@@ -66,7 +66,9 @@
             <div
               class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
             >
-              <div class="list__column list__column--number">123</div>
+              <div class="list__column list__column--number">
+                {{ transformFIO(employee) }}
+              </div>
             </div>
           </div>
         </div>
