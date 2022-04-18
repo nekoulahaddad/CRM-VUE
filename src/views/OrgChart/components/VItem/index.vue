@@ -191,7 +191,8 @@ export default {
 
   .text {
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
   }
   .text--blue {
     font-size: 16px;
