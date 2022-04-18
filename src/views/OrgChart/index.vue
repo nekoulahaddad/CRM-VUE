@@ -176,6 +176,7 @@ export default {
 .org-chart-page {
   .list {
     max-width: 100%;
+    padding-right: 10px;
   }
   .page__right--fluid {
     .departments {
