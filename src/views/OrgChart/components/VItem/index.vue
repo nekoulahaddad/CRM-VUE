@@ -11,21 +11,36 @@
         }})
       </span>
       <div class="table__actions">
+        <!-- Показать отделы -->
         <div class="table__icon" v-if="item.children.length">
-          <VueCustomTooltip
-            label="Показать разделы"
-            v-if="!openedItems.includes(item._id)"
-          >
+          <VueCustomTooltip label="Показать отделы" v-if="!showDepartments">
             <img
               alt=""
-              @click="toggle(item._id)"
+              @click="toggleShowDepartments"
               src="@/assets/icons/sub_deps.svg"
             />
           </VueCustomTooltip>
           <VueCustomTooltip v-else label="Скрыть разделы">
             <img
               alt=""
-              @click="toggle(item._id)"
+              @click="toggleShowDepartments"
+              src="@/assets/icons/arrow_top_white_icon.svg"
+            />
+          </VueCustomTooltip>
+        </div>
+        <!-- Показать сотрудников -->
+        <div class="table__icon" v-if="item.employees.length">
+          <VueCustomTooltip v-if="!showEmployees" label="Показать сотрудников">
+            <img
+              alt=""
+              @click="toggleShowEmployees"
+              src="@/assets/icons/manager-white.svg"
+            />
+          </VueCustomTooltip>
+          <VueCustomTooltip v-else label="Скрыть сотрудников">
+            <img
+              alt=""
+              @click="toggleShowEmployees"
               src="@/assets/icons/arrow_top_white_icon.svg"
             />
           </VueCustomTooltip>
@@ -45,28 +60,32 @@
       </div>
     </div>
 
-    <template v-if="openedItems.includes(item._id) && item.children.length">
+    <template v-if="item.children.length">
       <div class="department__container-inner">
-        <v-item
-          :level="level + 1"
-          v-for="child in item.children"
-          :item="child"
-          :opened="openedItems.includes(child._id)"
-          :openedItems="openedItems"
-          @toggleOpened="toggle"
-        />
+        <template v-if="showDepartments">
+          <v-item
+            :level="level + 1"
+            v-for="child in item.children"
+            :item="child"
+            @toggleOpened="toggle"
+          />
+        </template>
 
-        <div class="list" v-if="item.employees && item.employees.length">
+        <!-- Список сотрудников -->
+        <div
+          class="list"
+          v-if="item.employees && item.employees.length && showEmployees"
+        >
           <div class="text text--blue">Сотрудники:</div>
           <div
-            v-for="(employee, index) in item.employees"
+            v-for="employee in item.employees"
             :key="employee._id"
             class="list__row list__row--shadow list__row--white"
           >
             <div
               class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
             >
-              <div class="list__column list__column--number">
+              <div class="list__column">
                 {{ transformFIO(employee) }}
               </div>
             </div>
@@ -81,10 +100,6 @@
 export default {
   name: "VItem",
   props: {
-    opened: {
-      type: Boolean,
-      default: false,
-    },
     line: Boolean,
     hLine: Boolean,
     item: {
@@ -95,9 +110,22 @@ export default {
       type: Number,
       required: true,
     },
-    openedItems: Array,
+  },
+  data() {
+    return {
+      showEmployees: false,
+      showDepartments: false,
+    };
   },
   methods: {
+    toggleShowDepartments() {
+      this.showDepartments = !this.showDepartments;
+      this.showEmployees = false;
+    },
+    toggleShowEmployees() {
+      this.showEmployees = !this.showEmployees;
+      this.showDepartments = false;
+    },
     lineHeight(count) {
       return `100%`;
     },

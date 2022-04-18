@@ -37,10 +37,7 @@
             :hLine="
               orgTree.children.length && openedItems.includes(orgTree._id)
             "
-            :opened="openedItems.includes(orgTree._id)"
-            :openedItems="openedItems"
             @deleteItem="handleDialog"
-            @toggleOpened="toggleOpened"
           />
         </div>
       </div>
@@ -177,6 +174,7 @@ export default {
   .list {
     max-width: 100%;
     padding-right: 10px;
+    padding-bottom: 10px;
   }
   .page__right--fluid {
     .departments {
