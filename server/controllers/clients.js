@@ -167,12 +167,9 @@ exports.getClients = async (req, res, next) => {
               ],
             },
             {
-              phone: phone,
+              phone: { $regex: phone },
             },
           ],
-        },
-        {
-          phone: Number.parseInt(options.search),
         },
       ];
 

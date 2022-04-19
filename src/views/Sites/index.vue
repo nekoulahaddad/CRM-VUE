@@ -63,15 +63,26 @@
                         :infoItem="item"
                         :role="role"
                         :excelImportForm="excelImportForm"
+                        :managerItem="managerItem"
                         @updateSite="updateSite"
+                        @toggleManager="toggleManager"
                         @toggleImportExcel="toggleImportExcel"
                       />
                     </div>
 
+                    <!-- Блок импорта -->
                     <v-import
                       :item="item"
                       v-if="excelImportForm._id === item._id"
                       @toggleImportExcel="toggleImportExcel"
+                    />
+
+                    <!-- Блок добавления менеджера -->
+                    <v-add-manager
+                      :item="item"
+                      v-if="managerItem._id === item._id"
+                      @refreshData="refreshData"
+                      @toggleManager="toggleManager"
                     />
                   </template>
                 </template>
@@ -88,6 +99,7 @@
 <script>
 import VItem from "./components/VItem";
 import VImport from "./components/VImport";
+import VAddManager from "./components/VAddManager";
 import VRegion from "./components/VRegion";
 import dataMixins from "@/mixins/data";
 import VPageHeader from "@/components/VPageHeader";
@@ -107,10 +119,12 @@ export default {
     VItem,
     VRegion,
     VImport,
+    VAddManager,
   },
   data() {
     return {
       infoItem: {},
+      managerItem: {},
       showFilter: false,
       dataset: [],
       filtersOptions: {},
@@ -138,10 +152,21 @@ export default {
       }
     },
     toggleImportExcel(item) {
+      this.managerItem = {};
+
       if (this.excelImportForm._id === item._id) {
         this.excelImportForm = {};
       } else {
         this.excelImportForm = item;
+      }
+    },
+    toggleManager(item) {
+      this.excelImportForm = {};
+
+      if (this.managerItem._id === item._id) {
+        this.managerItem = {};
+      } else {
+        this.managerItem = item;
       }
     },
     async getSites(result) {

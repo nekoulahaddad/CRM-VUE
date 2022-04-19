@@ -12,6 +12,27 @@ const { uploadFilesFromTempToFolder } = require("../utils/fs");
 const staticSites = require("../models/staticSites");
 const { EXAMPLES } = require("../utils/excel");
 
+exports.addManager = async (req, res, next) => {
+  try {
+    const { siteId, manager } = req.body;
+
+    const site = await staticSites.findOne({ _id: siteId });
+
+    if (!site) {
+      return res.status(404).json({
+        message: "Сайт не найден!",
+      });
+    }
+
+    site.manager = [manager];
+    await site.save();
+
+    return res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.createSite = async (req, res, next) => {
   let { folder, url, category_id, categoryName, categories, content, manager } =
     req.body;

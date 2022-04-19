@@ -750,6 +750,7 @@ exports.authLogin = async (req, res, next) => {
     const login = req.body.login.replace(/\s/g, "");
     const password = req.body.password.trim();
     const user = await User.findOne({
+      deleted: false,
       $or: [
         {
           phone: req.body.login,
