@@ -1,5 +1,6 @@
 <template>
   <div :class="containerClasses">
+    <div class="department__container--hline" v-if="level > 1 && false"></div>
     <div :class="classes">
       <span class="item__title">
         {{ item.title }} ({{
@@ -11,11 +12,11 @@
         }})
       </span>
       <div class="table__actions">
-        <!-- Показать отделы -->
+        <!-- Показать подотделы -->
         <div class="table__icon">
           <template v-if="item.children.length">
             <VueCustomTooltip
-              label="Показать отделы"
+              label="Показать подотделы"
               v-if="!departmentItem.includes(item._id)"
             >
               <img
@@ -89,24 +90,31 @@
     </div>
 
     <div
-      class="department__container-inner"
+      class="department__item-inner"
       v-if="
         departmentItem.includes(item._id) || employeeItem.includes(item._id)
       "
     >
+      <!-- Список подотделов -->
       <template
         v-if="item.children.length && departmentItem.includes(item._id)"
       >
-        <v-item
-          :level="level + 1"
-          v-for="child in item.children"
-          :item="child"
-          :role="role"
-          :employeeItem="employeeItem"
-          :departmentItem="departmentItem"
-          @toggleShowEmployees="toggleShowEmployees"
-          @toggleShowDepartment="toggleShowDepartment"
-        />
+        <template v-for="(child, index) in item.children">
+          <div
+            class="department__container--vline"
+            :style="{ height: `${item.children.length * 58 - 16}px` }"
+            v-if="index === item.children.length - 1 && false"
+          />
+          <v-item
+            :level="level + 1"
+            :item="child"
+            :role="role"
+            :employeeItem="employeeItem"
+            :departmentItem="departmentItem"
+            @toggleShowEmployees="toggleShowEmployees"
+            @toggleShowDepartment="toggleShowDepartment"
+          />
+        </template>
       </template>
 
       <!-- Список сотрудников -->
@@ -211,14 +219,14 @@ export default {
 }
 
 .department__container {
-  position: relative;
   border-radius: $border-radius;
+  position: relative;
 
-  &--hLine {
+  &--hline {
     position: absolute;
     width: 20px;
     top: 24px;
-    left: -12px;
+    left: -8px;
     border-radius: 15px;
     height: 6px;
     background-color: $color-black;
@@ -315,7 +323,17 @@ export default {
     display: none;
   }
 }
-.department__container-inner {
-  padding-left: 10px;
+.department__item-inner {
+  padding-left: 15px;
+  position: relative;
+
+  .department__container--vline {
+    width: 6px;
+    top: -12px;
+    left: 5px;
+    border-radius: $border-radius;
+    background-color: #000;
+    position: absolute;
+  }
 }
 </style>
