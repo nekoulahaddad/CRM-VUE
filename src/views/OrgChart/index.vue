@@ -40,6 +40,8 @@
             :role="role"
             :employeeItem="employeeItem"
             :departmentItem="departmentItem"
+            :users="users"
+            @getData="getData"
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
             @deleteItem="handleDialog"
@@ -128,6 +130,7 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+
     handleDialog(node) {
       if (node.children.length) {
         this.$toast.warning(
@@ -214,6 +217,10 @@ export default {
     max-width: 100%;
     padding-right: 10px;
     padding-bottom: 10px;
+
+    button {
+      margin-top: 5px;
+    }
   }
   .page__right--fluid {
     .departments {

@@ -134,23 +134,18 @@
             <div class="list__column">
               {{ transformFIO(employee) }}
             </div>
-            <div class="list__column">
-              <div class="table__actions">
-                <div class="table__icon">
-                  <VueCustomTooltip label="Удалить">
-                    <img alt="" src="@/assets/icons/trash_icon.svg" />
-                  </VueCustomTooltip>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
+        <v-select :options="users" />
+        <v-button red>Добавить сотрудника</v-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "@/api/axios";
+
 export default {
   name: "VItem",
   props: {
@@ -168,7 +163,31 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      users: [],
+    };
+  },
   methods: {
+    filterSelectUsersList(userType) {
+      this.users = [];
+      this.getData(`/user/getuserstree`, {
+        usersList: this.item[userType],
+      }).then((res) => {
+        this.users = res.data.users;
+      });
+    },
+    async getData(url, params = null) {
+      let result = axios({
+        url: `${url}`,
+        data: params,
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        return result;
+      });
+      return result;
+    },
     toggleShowDepartment(item) {
       this.$emit("toggleShowDepartment", item);
     },
@@ -334,6 +353,9 @@ export default {
     border-radius: $border-radius;
     background-color: #000;
     position: absolute;
+  }
+  button {
+    width: 250px;
   }
 }
 </style>
