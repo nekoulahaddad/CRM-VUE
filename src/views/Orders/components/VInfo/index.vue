@@ -103,6 +103,19 @@
         </div>
       </div>
     </div>
+    <div
+      class="list-info__group group"
+      v-if="infoItem.typeDelivery === 'transport'"
+    >
+      <div class="group__content">
+        <div class="group__item text--bold-700">
+          {{ $t("deliveryAddress") }}
+        </div>
+        <div class="group__value">
+          {{ infoItem.delivery }}
+        </div>
+      </div>
+    </div>
     <div class="list-info__group group">
       <div class="group__content">
         <div class="group__item text--bold-700">
