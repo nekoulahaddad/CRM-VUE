@@ -486,6 +486,7 @@ exports.addOrder = async(req, res, next) => {
         await newOrder.save()
         //! CALLTOUCH START * * * * * * * * * * * *
         try {
+            console.log("🚀 ~ file: orders.js ~ line 490 ~ exports.addOrder=async ~ newOrder", newOrder)
             calltouch.newOrder(newOrder)
         } catch (err) {
             console.log("🚀 ~ file: orders.js ~ line 494 ~ exports.addOrder=async ~ error", err)
