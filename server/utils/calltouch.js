@@ -2,10 +2,16 @@ const mongoose = require('mongoose');
 const axios = require('axios').default;
 const Conditions = require('../models/conditions');
 const Orders = require('../models/orders');
+const qs = require('qs')
+
 
 const CT_CREATE_URL = 'https://api.calltouch.ru/lead-service/v1/api/client-order/create';
 const CT_UPDATE_URL = 'https://api.calltouch.ru/lead-service/v1/api/client-order/update';
 const CT_DELETE_URL = 'https://api.calltouch.ru/lead-service/v1/api/client-order/delete';
+const CT_CALLS_URL =
+  'https://api.calltouch.ru/calls-service/RestAPI/requests/' +
+  process.env.CT_SITEID +
+  '/register/'
 
 const ctAPIOptions = (url, data) => ({
   headers: {
@@ -18,6 +24,17 @@ const ctAPIOptions = (url, data) => ({
   data: JSON.stringify(data),
   url: url,
 });
+
+const ctAPIOptions2 = (url, data) => ({
+  headers: {
+    'Access-Token': `${process.env.CT_ACCESS_TOKEN}`,
+    SiteId: `${process.env.CT_SITEID}`,
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  method: 'post',
+  data: JSON.stringify(data),
+  url: url
+})
 
 async function post(options) {
   await axios(options)
@@ -113,6 +130,17 @@ const calltouch = {
         break;
     }
   },
+  buildFormData: async (props) => {
+    return qs.stringify({
+      fio: `${props.name}`,
+      phoneNumber: `${props.phone}`,
+      email: `${props.email}`,
+      subject: `${props.subject}`,
+      comment: `${props.comment}`,
+      tags: `${props.tag}`,
+      requestUrl: `${props.referer}`
+    })
+  }
 };
 
 module.exports = {
@@ -139,6 +167,12 @@ module.exports = {
     ]);
     return post(ctAPIOptions(CT_DELETE_URL, { orderNumbers: _ordersToDel.map((o) => o.number.toString()) }));
   },
+  sendFormData: async (data) => {
+    return await calltouch
+      .buildFormData(data)
+      .then((res) => post(ctAPIOptions2(CT_CREATE_URL, res)))
+      .catch((err) => console.log(err));
+  }
 };
 
 // const a = {

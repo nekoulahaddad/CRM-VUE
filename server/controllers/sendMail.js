@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+const calltouch = require('../utils/calltouch');
 
 /**
  * req.body = {
@@ -14,6 +15,16 @@ require('dotenv').config();
 
 exports.sendMail = async (req, res, next) => {
   try {
+    calltouch
+      .sendFormData({
+        fio: `${req.body.clientName}`,
+        phoneNumber: `${req.body.clientPhone}`,
+        email: `${req.body.clientEmail}`,
+        subject: `${req.body.body}`,
+        tags: `feedback`,
+        requestUrl: `${req.body?.fromSite}`,
+      })
+      .catch((err) => console.log(err));
     const transporter = nodemailer.createTransport({
       port: parseInt(req.body.EMAIL_PORT || process.env.EMAIL_PORT),
       host: `${req.body.EMAIL_HOST || process.env.EMAIL_HOST}`,
