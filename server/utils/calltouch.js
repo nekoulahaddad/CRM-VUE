@@ -132,13 +132,12 @@ const calltouch = {
   },
   buildFormData: async (props) => {
     return qs.stringify({
-      fio: `${props.name}`,
-      phoneNumber: `${props.phone}`,
-      email: `${props.email}`,
-      subject: `${props.subject}`,
-      comment: `${props.comment}`,
-      tags: `${props.tag}`,
-      requestUrl: `${props.referer}`
+      fio: props.fio,
+      phoneNumber: props.phoneNumber,
+      email: props.email,
+      subject: props.subject,
+      tags: props.tags,
+      requestUrl: props.requestUrl
     })
   }
 };
