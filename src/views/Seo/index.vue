@@ -4,6 +4,7 @@
       icon="seo_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"
+      :showCurrentRegion="true"
     />
     <div class="page__body d-flex">
       <div class="page__left" v-if="showFilter">
@@ -209,6 +210,7 @@ export default {
     },
     filtersOptions: {
       handler: function () {
+        this.editedItem = {};
         if (this.$route.params.type !== "search") {
           this.fetchData();
         }
@@ -320,6 +322,20 @@ export default {
     },
   },
   created() {
+    try {
+      const { _id } = JSON.parse(localStorage.getItem("currentRegion"));
+      this.filtersOptions.region = _id;
+    } catch (e) {
+      localStorage.setItem(
+        "currentRegion",
+        JSON.stringify({
+          title: "Москва и М.О",
+          value: "moscow",
+          _id: REGION_MOSCOW_ID,
+        })
+      );
+    }
+
     this.fetchData();
   },
 };

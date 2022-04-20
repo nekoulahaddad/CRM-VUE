@@ -1,6 +1,6 @@
 <template>
   <div
-    class="list__columns list__columns--shadow set-list__columns list__columns--white"
+    class="list__columns site-list-columns list__columns--shadow set-list__columns"
   >
     <div class="list__column">{{ index + 1 }}</div>
     <div class="list__column bg bg--blue-light">
@@ -9,8 +9,31 @@
     <div class="list__column">
       <a :href="infoItem.url" target="_blank">{{ infoItem.url }}</a>
     </div>
-    <div class="list__column">
-      {{ infoItem.regionTitle }}
+    <div class="list__column d-flex justify-center align-items-center">
+      <div
+        class="list__column-manager"
+        v-if="infoItem.manager && infoItem.manager[0]"
+      >
+        <VueCustomTooltip
+          :multiline="true"
+          :label="getManagerInfo(infoItem.manager[0])"
+        >
+          {{
+            Array.isArray(infoItem.manager) &&
+            infoItem.manager[0] &&
+            transformFIO(infoItem.manager[0])
+          }}
+        </VueCustomTooltip>
+      </div>
+      <div class="tooltip--black">
+        <VueCustomTooltip label="Редактировать менеджера">
+          <img
+            alt=""
+            src="@/assets/icons/manager.svg"
+            @click="$emit('toggleManager', infoItem)"
+          />
+        </VueCustomTooltip>
+      </div>
     </div>
     <div class="list__column text text--green">
       {{ transformTime(infoItem.updatedAt) }}
@@ -20,9 +43,9 @@
         <div class="table__icon">
           <VueCustomTooltip label="Экспорт Excel">
             <img
+              alt=""
               @click="exportExcel(infoItem._id)"
               src="@/assets/icons/export.svg"
-              alt=""
             />
           </VueCustomTooltip>
         </div>
@@ -65,6 +88,9 @@ export default {
   props: {
     role: String,
     index: Number,
+    managerItem: {
+      type: Object,
+    },
     infoItem: {
       type: Object,
       required: true,
@@ -82,15 +108,12 @@ export default {
       status: false,
     };
   },
-  computed: {
-    role: {
-      get: function () {
-        let role = this.getUserRole();
-        return role.role;
-      },
-    },
-  },
   methods: {
+    getManagerInfo(item) {
+      return `ФИО: ${this.transformFullFIO(item)}\nТелефон: ${
+        item.phone
+      }\nEmail: ${item.email}`;
+    },
     async exportExcel(id) {
       try {
         this.isLoading = false;
@@ -125,3 +148,28 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/styles/_variables";
+
+.list__column-manager {
+  margin-right: 10px;
+  span {
+    display: block;
+    text-align: center;
+  }
+}
+.tooltip--black {
+  span[role="tooltip"] {
+    &:after {
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: $border-radius;
+    }
+
+    & + * {
+      margin-left: 20px;
+    }
+  }
+}
+</style>

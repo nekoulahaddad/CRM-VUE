@@ -96,8 +96,6 @@
         </div>
       </div>
     </div>
-    <div class="list__column"></div>
-    <div class="list__column"></div>
   </div>
 </template>
 

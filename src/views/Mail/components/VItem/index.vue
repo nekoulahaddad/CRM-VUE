@@ -19,7 +19,7 @@
       {{ item.manager && item.manager[0] ? transformFIO(item.manager[0]) : "" }}
     </div>
     <div class="list__column">{{ item.order[0] && item.order[0].number }}</div>
-    <div class="list__column">
+    <div class="list__column justify-center d-flex">
       <VueCustomTooltip
         v-if="item.comment"
         :multiline="true"
@@ -41,13 +41,20 @@
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
-          <template v-if="item.zip">
-            <img
-              @click="$emit('downloadItem', item.zipPath + item.zip, item.zip)"
-              src="@/assets/icons/download_icon.svg"
-              alt=""
-            />
-          </template>
+          <VueCustomTooltip
+            v-if="editedItem._id !== item._id"
+            label="Скачать файл"
+          >
+            <template v-if="item.zip">
+              <img
+                @click="
+                  $emit('downloadItem', item.zipPath + item.zip, item.zip)
+                "
+                src="@/assets/icons/download_icon.svg"
+                alt=""
+              />
+            </template>
+          </VueCustomTooltip>
           <div class="table__hidden-icon" v-else></div>
         </div>
         <div class="table__icon">
@@ -88,6 +95,15 @@
             src="@/assets/icons/arrow_top_icon.svg"
             @click="$emit('toggleEdit', item)"
           />
+        </div>
+        <div class="table__icon" v-if="role === 'superadmin'">
+          <VueCustomTooltip label="Удалить">
+            <img
+              alt=""
+              src="/icons/trash_icon.svg"
+              @click="$emit('toggleDelete', item)"
+            />
+          </VueCustomTooltip>
         </div>
       </div>
     </div>

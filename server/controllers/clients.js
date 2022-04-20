@@ -167,12 +167,9 @@ exports.getClients = async (req, res, next) => {
               ],
             },
             {
-              phone: phone,
+              phone: { $regex: phone },
             },
           ],
-        },
-        {
-          phone: Number.parseInt(options.search),
         },
       ];
 
@@ -503,7 +500,7 @@ exports.getClients = async (req, res, next) => {
 exports.addClient = async (req, res, next) => {
   try {
     const phone = req.body.phone;
-    const clients = await Clients.find({ phone: phone });
+    const clients = await Clients.find({ phone: phone, deleted: false });
     if (clients.length) {
       res.status(409).json({
         message: "Клиент с таким номером телефона уже существует!",

@@ -1,59 +1,157 @@
 <template>
   <div :class="containerClasses">
-    <div class="department__container--line" v-if="hLine" />
+    <div class="department__container--hline" v-if="level > 1 && false"></div>
     <div :class="classes">
-      <span class="item__title">{{ item.title }} {{ hLine }}</span>
+      <span class="item__title">
+        {{ item.title }} ({{
+          getEmployeeCount(item.employees.length, [
+            "сотрудник",
+            "сотрудника",
+            "сотрудников",
+          ])
+        }})
+      </span>
       <div class="table__actions">
-        <div class="table__icon" v-if="item.children.length">
-          <VueCustomTooltip
-            label="Показать разделы"
-            v-if="!openedItems.includes(item._id)"
-          >
-            <img
-              alt=""
-              @click="$emit('toggleOpened', item._id)"
-              src="@/assets/icons/sub_deps.svg"
-            />
-          </VueCustomTooltip>
-          <VueCustomTooltip v-else label="Скрыть разделы">
-            <img
-              alt=""
-              @click="$emit('toggleOpened', item._id)"
-              src="@/assets/icons/arrow_top_white_icon.svg"
-            />
-          </VueCustomTooltip>
+        <!-- Показать подотделы -->
+        <div class="table__icon">
+          <template v-if="item.children.length">
+            <VueCustomTooltip
+              label="Показать подотделы"
+              v-if="!departmentItem.includes(item._id)"
+            >
+              <img
+                alt=""
+                @click="$emit('toggleShowDepartment', item)"
+                src="@/assets/icons/sub_deps.svg"
+              />
+            </VueCustomTooltip>
+            <VueCustomTooltip v-else label="Скрыть разделы">
+              <img
+                alt=""
+                @click="$emit('toggleShowDepartment', item)"
+                src="@/assets/icons/arrow_top_white_icon.svg"
+              />
+            </VueCustomTooltip>
+          </template>
+          <img
+            alt=""
+            v-else
+            class="opacity-30"
+            src="@/assets/icons/sub_deps.svg"
+          />
+        </div>
+        <!-- Показать сотрудников -->
+        <div class="table__icon">
+          <template v-if="item.employees.length">
+            <VueCustomTooltip
+              v-if="!employeeItem.includes(item._id)"
+              label="Показать сотрудников"
+            >
+              <img
+                alt=""
+                @click="$emit('toggleShowEmployees', item)"
+                src="@/assets/icons/manager-white.svg"
+              />
+            </VueCustomTooltip>
+            <VueCustomTooltip v-else label="Скрыть сотрудников">
+              <img
+                alt=""
+                @click="$emit('toggleShowEmployees', item)"
+                src="@/assets/icons/arrow_top_white_icon.svg"
+              />
+            </VueCustomTooltip>
+          </template>
+          <img
+            alt=""
+            v-else
+            class="opacity-30"
+            src="@/assets/icons/manager-white.svg"
+          />
         </div>
         <div class="table__icon">
           <img src="@/assets/icons/white_dots.svg" alt="" />
         </div>
         <div class="table__icon">
-          <VueCustomTooltip label="Удалить">
+          <VueCustomTooltip label="Удалить" v-if="role === 'superadmin'">
             <img
               @click="$emit('deleteItem', item)"
               src="@/assets/icons/trash_icon_white.svg"
               alt=""
             />
           </VueCustomTooltip>
+          <img
+            alt=""
+            v-else
+            class="opacity-30"
+            src="@/assets/icons/trash_icon_white.svg"
+          />
         </div>
       </div>
     </div>
-    <template v-if="openedItems.includes(item._id)">
-      <v-item
-        :level="level + 1"
-        :item="child"
-        v-for="(child, index) in item.children"
-        :key="index"
-        :openedItems="openedItems"
-        @toggleOpened="$emit('toggleOpened', child._id)"
-      />
-    </template>
+
+    <div
+      class="department__item-inner"
+      v-if="
+        departmentItem.includes(item._id) || employeeItem.includes(item._id)
+      "
+    >
+      <!-- Список подотделов -->
+      <template
+        v-if="item.children.length && departmentItem.includes(item._id)"
+      >
+        <template v-for="(child, index) in item.children">
+          <div
+            class="department__container--vline"
+            :style="{ height: `${item.children.length * 58 - 16}px` }"
+            v-if="index === item.children.length - 1 && false"
+          />
+          <v-item
+            :level="level + 1"
+            :item="child"
+            :role="role"
+            :employeeItem="employeeItem"
+            :departmentItem="departmentItem"
+            @toggleShowEmployees="toggleShowEmployees"
+            @toggleShowDepartment="toggleShowDepartment"
+          />
+        </template>
+      </template>
+
+      <!-- Список сотрудников -->
+      <div
+        class="list"
+        v-if="item.employees.length && employeeItem.includes(item._id)"
+      >
+        <div class="text text--blue">Сотрудники:</div>
+        <div
+          v-for="employee in item.employees"
+          :key="employee._id"
+          class="list__row list__row--shadow list__row--white"
+        >
+          <div
+            class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
+          >
+            <div class="list__column">
+              {{ transformFIO(employee) }}
+            </div>
+          </div>
+        </div>
+        <v-select :options="users" />
+        <v-button red>Добавить сотрудника</v-button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "@/api/axios";
+
 export default {
   name: "VItem",
   props: {
+    departmentItem: Array,
+    employeeItem: Array,
+    role: String,
     line: Boolean,
     hLine: Boolean,
     item: {
@@ -64,11 +162,51 @@ export default {
       type: Number,
       required: true,
     },
-    openedItems: Array,
+  },
+  data() {
+    return {
+      users: [],
+    };
   },
   methods: {
+    filterSelectUsersList(userType) {
+      this.users = [];
+      this.getData(`/user/getuserstree`, {
+        usersList: this.item[userType],
+      }).then((res) => {
+        this.users = res.data.users;
+      });
+    },
+    async getData(url, params = null) {
+      let result = axios({
+        url: `${url}`,
+        data: params,
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        return result;
+      });
+      return result;
+    },
+    toggleShowDepartment(item) {
+      this.$emit("toggleShowDepartment", item);
+    },
+    toggleShowEmployees(item) {
+      this.$emit("toggleShowEmployees", item);
+    },
     lineHeight(count) {
       return `100%`;
+    },
+    toggle(id) {
+      this.$emit("toggleOpened", id);
+    },
+    getEmployeeCount(value, words) {
+      value = Math.abs(value) % 100;
+      let num = value % 10;
+      if (value > 10 && value < 20) return value + " " + words[2];
+      if (num > 1 && num < 5) return value + " " + words[1];
+      if (num === 1) return value + " " + words[0];
+      return value + " " + words[2];
     },
   },
   computed: {
@@ -77,6 +215,7 @@ export default {
         department__container: true,
         [`department__container--level-${this.level}`]: true,
         "department__container--has-child": !!this.item.children.length,
+        "department__container--opened": this.opened,
       };
     },
     classes() {
@@ -99,26 +238,36 @@ export default {
 }
 
 .department__container {
-  position: relative;
-  margin-left: 20px;
   border-radius: $border-radius;
+  position: relative;
 
-  &--has-child {
+  &--hline {
+    position: absolute;
+    width: 20px;
+    top: 24px;
+    left: -8px;
+    border-radius: 15px;
+    height: 6px;
+    background-color: $color-black;
   }
 
-  &--line {
+  &--vLine {
     position: absolute;
     width: 6px;
-    top: 5px;
-    height: calc(100% - 26px);
     left: 8px;
     background-color: $color-black;
   }
 
-  &--level-1 {
-    margin-left: 0;
+  &--opened {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+
+    .department__container--vLine {
+      bottom: 34px;
+    }
   }
 
+  &--level-1,
   &--level-2,
   &--level-3,
   &--level-4 {
@@ -128,11 +277,23 @@ export default {
     border-bottom-left-radius: $border-radius;
   }
 
+  &--level-2 {
+    width: 1570px;
+  }
   &--level-3 {
-    width: 1540px;
+    width: 1550px;
   }
   &--level-4 {
-    width: 1510px;
+    width: 1530px;
+  }
+
+  .text {
+    font-weight: 700;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  .text--blue {
+    font-size: 16px;
   }
 }
 
@@ -148,6 +309,7 @@ export default {
   color: $color-white;
   height: 48px;
   position: relative;
+  margin-bottom: 10px;
 
   &--level-1 {
     height: 80px;
@@ -178,6 +340,22 @@ export default {
   }
   .vue-custom-tooltip.is-top:before {
     display: none;
+  }
+}
+.department__item-inner {
+  padding-left: 15px;
+  position: relative;
+
+  .department__container--vline {
+    width: 6px;
+    top: -12px;
+    left: 5px;
+    border-radius: $border-radius;
+    background-color: #000;
+    position: absolute;
+  }
+  button {
+    width: 250px;
   }
 }
 </style>

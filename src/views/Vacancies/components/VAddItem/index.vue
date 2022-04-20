@@ -93,13 +93,12 @@
               <div class="group__title">Ссылка:</div>
               <div class="group__content">
                 <input
-                  type="text"
+                  type="url"
                   class="form-control"
                   placeholder="Вставьте ссылку..."
                   name="link"
                   @change="onChange($event)"
-                  v-model.trim="$v.link.$model"
-                  :class="{ 'form-control--error': $v.link.$error }"
+                  v-model="link"
                   maxlength="100"
                 />
               </div>
@@ -183,10 +182,6 @@ export default {
       conditions: {
         required,
       },
-    },
-    link: {
-      url,
-      required,
     },
   },
   data() {

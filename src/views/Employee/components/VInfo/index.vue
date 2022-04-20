@@ -46,6 +46,155 @@
             <div class="group__value">{{ employee.phone || "" }}</div>
           </div>
         </div>
+
+        <!-- Дополнительная информация -->
+        <div class="group__title text--blue">
+          {{ $t("pages.employee.employeeAddInfo") }}
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeDepartment") }}
+            </div>
+            <div class="group__value">
+              {{ employee.department.title || "" }}
+            </div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeSubDepartment") }}
+            </div>
+            <div class="group__value">{{ employee.sub_department || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeePosition") }}
+            </div>
+            <div class="group__value">{{ employee.position || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeePersonalNumber") }}
+            </div>
+            <div class="group__value">
+              {{ parseInt(employee.number) || "" }}
+            </div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeRole") }}
+            </div>
+            <div class="group__value">{{ roles[employee.role] || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeEducation") }}
+            </div>
+            <div class="group__value">{{ employee.education || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeSpeciality") }}
+            </div>
+            <div class="group__value">{{ employee.specialty || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeEmploymentDate") }}
+            </div>
+            <div class="group__value">
+              {{ transformDate(employee.employment_date) }}
+            </div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeRegion") }}
+            </div>
+            <div class="group__value">{{ employee.region.title || "" }}</div>
+          </div>
+        </div>
+
+        <!-- Личная информация -->
+        <div class="group__title text--blue">
+          {{ $t("pages.employee.employeePersonalInfo") }}
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeBirthDay") }}
+            </div>
+            <div class="group__value">
+              {{ transformDate(employee.date_of_birth) }}
+            </div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeZodiak") }}
+            </div>
+            <div class="group__value">{{ employee.zodiac_sign || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeElement") }}
+            </div>
+            <div class="group__value">{{ employee.element || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">
+              {{ $t("pages.employee.employeeChineseYear") }}
+            </div>
+            <div class="group__value">{{ employee.chinese_year || "" }}</div>
+          </div>
+        </div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">Дети:</div>
+            <div class="group__value">
+              <div v-if="employee.children && employee.children.length">
+                <div
+                  class="children"
+                  v-for="(child, index) in employee.children"
+                  :key="index"
+                >
+                  <span style="width: 40px">
+                    <img
+                      alt=""
+                      :src="
+                        child.gender === 'муж'
+                          ? require('@/assets/icons/boy.svg')
+                          : require('@/assets/icons/girl.svg')
+                      "
+                    />
+                  </span>
+                  <span>{{ transformChildInfo(child) }}</span>
+                </div>
+              </div>
+              <span v-else>Детей нет</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="form-top__right">
         <div
@@ -66,151 +215,6 @@
                 : url
             "
           />
-        </div>
-      </div>
-    </div>
-
-    <!-- Дополнительная информация -->
-    <div class="group__title text--blue">
-      {{ $t("pages.employee.employeeAddInfo") }}
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeDepartment") }}
-        </div>
-        <div class="group__value">{{ employee.department.title || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeSubDepartment") }}
-        </div>
-        <div class="group__value">{{ employee.sub_department || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeePosition") }}
-        </div>
-        <div class="group__value">{{ employee.position || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeePersonalNumber") }}
-        </div>
-        <div class="group__value">{{ employee.personal_number || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeRole") }}
-        </div>
-        <div class="group__value">{{ roles[employee.role] || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeEducation") }}
-        </div>
-        <div class="group__value">{{ employee.education || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeSpeciality") }}
-        </div>
-        <div class="group__value">{{ employee.specialty || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeEmploymentDate") }}
-        </div>
-        <div class="group__value">
-          {{ transformDate(employee.employment_date) }}
-        </div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeRegion") }}
-        </div>
-        <div class="group__value">{{ employee.region.title || "" }}</div>
-      </div>
-    </div>
-
-    <!-- Личная информация -->
-    <div class="group__title text--blue">
-      {{ $t("pages.employee.employeePersonalInfo") }}
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeBirthDay") }}
-        </div>
-        <div class="group__value">
-          {{ transformDate(employee.date_of_birth) }}
-        </div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeZodiak") }}
-        </div>
-        <div class="group__value">{{ employee.zodiac_sign || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeElement") }}
-        </div>
-        <div class="group__value">{{ employee.element || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">
-          {{ $t("pages.employee.employeeChineseYear") }}
-        </div>
-        <div class="group__value">{{ employee.chinese_year || "" }}</div>
-      </div>
-    </div>
-    <div class="list-info__group group">
-      <div class="group__content">
-        <div class="group__item text--bold-700">Дети:</div>
-        <div class="group__value">
-          <div v-if="employee.children && employee.children.length">
-            <div
-              class="children"
-              v-for="(child, index) in employee.children"
-              :key="index"
-            >
-              <span style="width: 40px">
-                <img
-                  alt=""
-                  :src="
-                    child.gender === 'муж'
-                      ? require('@/assets/icons/boy.svg')
-                      : require('@/assets/icons/girl.svg')
-                  "
-                />
-              </span>
-              <span>{{ transformChildInfo(child) }}</span>
-            </div>
-          </div>
-          <span v-else>Детей нет</span>
         </div>
       </div>
     </div>
@@ -305,8 +309,8 @@ export default {
     }
 
     &__empty {
-      width: 116px;
-      min-height: 155px !important;
+      width: 230px;
+      height: 303px;
       background-color: $color-gray-secondary;
       border-radius: $border-radius;
       display: flex;
@@ -322,8 +326,8 @@ export default {
     }
 
     &__edit {
-      width: 116px;
-      min-height: 155px !important;
+      width: 230px;
+      height: 303px;
 
       img {
         cursor: auto;
@@ -335,13 +339,6 @@ export default {
 
   .d-flex {
     margin-bottom: 10px;
-  }
-
-  .form-top {
-    &__right {
-      display: flex;
-      align-items: end;
-    }
   }
   .children {
     box-shadow: 0 0 5px rgb(0 0 0 / 20%);

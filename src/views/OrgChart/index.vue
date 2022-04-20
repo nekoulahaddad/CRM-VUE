@@ -34,9 +34,17 @@
           <v-item
             :level="1"
             :item="orgTree"
-            :openedItems="openedItems"
+            :hLine="
+              orgTree.children.length && openedItems.includes(orgTree._id)
+            "
+            :role="role"
+            :employeeItem="employeeItem"
+            :departmentItem="departmentItem"
+            :users="users"
+            @getData="getData"
+            @toggleShowEmployees="toggleShowEmployees"
+            @toggleShowDepartment="toggleShowDepartment"
             @deleteItem="handleDialog"
-            @toggleOpened="toggleOpened"
           />
         </div>
       </div>
@@ -63,9 +71,17 @@ export default {
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
+    role: {
+      get: function () {
+        let role = this.getUserRole();
+        return role.role;
+      },
+    },
   },
   data() {
     return {
+      employeeItem: [],
+      departmentItem: [],
       openedItems: [],
       showFilter: false,
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
@@ -114,6 +130,7 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+
     handleDialog(node) {
       if (node.children.length) {
         this.$toast.warning(
@@ -131,6 +148,32 @@ export default {
         this.openedItems = this.openedItems.filter((value) => value !== id);
       } else {
         this.openedItems.push(id);
+      }
+    },
+    toggleShowDepartment(item) {
+      this.employeeItem = [];
+
+      if (this.departmentItem.includes(item._id)) {
+        this.departmentItem = this.departmentItem.filter(
+          (value) => value !== item._id
+        );
+      } else {
+        this.departmentItem.push(item._id);
+      }
+    },
+    toggleShowEmployees(item) {
+      if (this.departmentItem.includes(item._id)) {
+        this.departmentItem = this.departmentItem.filter(
+          (value) => value !== item._id
+        );
+      }
+
+      if (this.employeeItem.includes(item._id)) {
+        this.employeeItem = this.employeeItem.filter(
+          (value) => value !== item._id
+        );
+      } else {
+        this.employeeItem.push(item._id);
       }
     },
     goToLink(name) {
@@ -157,17 +200,9 @@ export default {
     },
   },
   created() {
-    this.getData(`/user/getuserstree`)
-      .then
-      //(res) => (this.users = res.data.users)
-      ();
     this.getData(`/orgtree/getfirst`).then((res) => {
       this.orgTree = res.data.dataTree || {};
       this.currentTreeId = res.data._id;
-    });
-    axios.get("/departments/all").then(async (res) => {
-      let result = await res;
-      this.departments = result.data;
     });
     this.pageLoading = false;
   },
@@ -178,6 +213,15 @@ export default {
 @import "@/styles/_variables";
 
 .org-chart-page {
+  .list {
+    max-width: 100%;
+    padding-right: 10px;
+    padding-bottom: 10px;
+
+    button {
+      margin-top: 5px;
+    }
+  }
   .page__right--fluid {
     .departments {
       width: 1704px;
@@ -185,6 +229,12 @@ export default {
   }
 
   .page__right--full {
+    .list {
+      max-width: 100%;
+      .list__columns {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
     .departments {
       width: 1591px;
     }

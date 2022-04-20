@@ -896,16 +896,12 @@
             <div class="group__title">Регионы:</div>
             <div class="group__content">
               <v-select
-                :options="[
-                  {
-                    label: 'Выберите регион',
-                    value: 'all',
-                  },
-                  ...regions.map((region) => ({
+                :options="
+                  regions.map((region) => ({
                     label: region.title,
                     value: region._id,
-                  })),
-                ]"
+                  }))
+                "
                 v-model="currentRegion"
                 @input="setGoodsRegion"
                 :reduce="(item) => item.value"

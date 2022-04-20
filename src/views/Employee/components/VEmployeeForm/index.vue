@@ -79,7 +79,7 @@
               name="phone"
               inputClass="form-control"
               :placeholder="$t('phone')"
-              value="infoItem ? infoItem.phone : phone"
+              :value="infoItem ? infoItem.phone : phone"
               @onValidate="onValidate($event)"
             />
           </div>
@@ -106,10 +106,11 @@
             <input
               type="number"
               class="form-control hide-arrows"
-              name="personal_number"
+              name="number"
               :placeholder="$t('employeeNumber')"
-              :value="infoItem ? infoItem.personal_number : personal_number"
+              :value="infoItem ? infoItem.number : number"
               @input="onChange($event)"
+              onkeydown="return event.keyCode !== 69"
             />
           </div>
         </div>
@@ -461,7 +462,7 @@ export default {
       region: null,
       department: null,
       sub_department: null,
-      personal_number: null,
+      number: null,
       showAddChild: false,
       role: null,
       position: null,
@@ -561,7 +562,10 @@ export default {
       });
     },
     onUserAdd() {
-      this.changeStatus(false);
+      if (this.number && this.number < 1) {
+        this.$toast.error("Некорректный номер сотрудника!");
+        return;
+      }
       let userData = new FormData();
       if (this.surname) userData.append("surname", this.surname);
       if (this.name) userData.append("name", this.name);
@@ -570,8 +574,7 @@ export default {
       if (this.email) userData.append("email", this.email);
       if (this.education) userData.append("education", this.education);
       if (this.specialty) userData.append("specialty", this.specialty);
-      if (this.personal_number)
-        userData.append("personal_number", this.personal_number);
+      userData.append("number", this.number);
       if (this.phone) userData.append("phone", this.phone);
       if (this.department) userData.append("department", this.department);
       if (this.sub_department)
@@ -730,7 +733,6 @@ export default {
       display: flex;
       align-items: end;
       justify-content: end;
-      margin-top: 30px;
 
       span {
         font-weight: 700;

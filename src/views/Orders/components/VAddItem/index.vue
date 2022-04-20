@@ -492,6 +492,7 @@
                       value: region._id,
                     }))
                   "
+                  @input="setRegion"
                   :reduce="(item) => item.value"
                   v-model="orderForm.region"
                 />
@@ -560,29 +561,19 @@
                     min="0.01"
                     step="0.01"
                     :disabled="deletedItems.includes(index)"
-                    v-model="product.cost"
+                    v-model="product.full_cost"
                     @keyup="calculateSum"
                   />
                 </div>
                 <div class="list__column">
-                  {{ (product.cost * product.quantity).toFixed(2) }}
+                  {{ (product.full_cost * product.quantity).toFixed(2) }}
                 </div>
                 <div class="list__column d-flex justify-end">
-                  <VueCustomTooltip
-                    label="Отменить удаление"
-                    v-if="deletedItems.includes(product._id)"
-                  >
+                  <VueCustomTooltip label="Удалить">
                     <img
-                      @click="deleteItem(product._id)"
-                      src="@/assets/icons/trash_icon.svg"
                       alt=""
-                    />
-                  </VueCustomTooltip>
-                  <VueCustomTooltip label="Удалить" v-else>
-                    <img
-                      @click="deleteItem(product._id)"
+                      @click="deleteItem(index)"
                       src="@/assets/icons/trash_icon.svg"
-                      alt=""
                     />
                   </VueCustomTooltip>
                 </div>
@@ -632,11 +623,11 @@
                     type="number"
                     class="form-control no-arrow"
                     min="0.01"
-                    v-model="newItem.cost"
+                    v-model="newItem.full_cost"
                   />
                 </div>
                 <div class="list__column">
-                  {{ (newItem.cost * newItem.quantity).toFixed(2) || 0 }}
+                  {{ (newItem.full_cost * newItem.quantity).toFixed(2) || 0 }}
                 </div>
                 <div class="list__column d-flex align-items-center justify-end">
                   <VueCustomTooltip label="Добавить">
@@ -794,6 +785,16 @@ export default {
     };
   },
   methods: {
+    setRegion() {
+      this.addFormOpened = false;
+      this.orderForm.products = [];
+      this.newItem = {
+        title: "Введите артикул товара",
+        quantity: 1,
+        cost: 0,
+        full_cost: 0,
+      };
+    },
     onValidatePhysical({ isValidByLibPhoneNumberJs }) {
       this.isValidPhysicalNumber = isValidByLibPhoneNumberJs;
     },
@@ -801,10 +802,18 @@ export default {
       this.isValidLegalNumber = isValidByLibPhoneNumberJs;
     },
     async getClientByPhone(phone) {
+      this.clientForm.isOldUser = false;
+      this.orderForm.client = null;
+      delete this.clientForm.physicalUser._id;
+      delete this.clientForm.legalUser._id;
+
+      if (phone.length < 11) {
+        return;
+      }
+
       try {
-        if (phone.target.value.length < 11) return;
         await axios({
-          url: "/clients/getclientbyphone/" + phone.target.value,
+          url: `/clients/getclientbyphone/${phone}`,
         }).then(async (res) => {
           let result = await res;
           if (result && result.data[0]) {
@@ -824,11 +833,7 @@ export default {
                 regionId: result.data[0].region,
               },
             }).then((res) => {
-              this.orderForm.region = res.data.region;
-              this.clientForm.isOldUser = false;
-              this.orderForm.client = null;
-              delete this.clientForm.physicalUser._id;
-              delete this.clientForm.legalUser._id;
+              this.orderForm.region = res.data.region._id;
             });
           }
         });
@@ -879,12 +884,8 @@ export default {
       this.productsList = [];
       this.articleSearch = null;
     },
-    deleteItem(_id) {
-      if (this.deletedItems.includes(_id)) {
-        this.deletedItems = this.deletedItems.filter((id) => id !== _id);
-      } else {
-        this.deletedItems.push(_id);
-      }
+    deleteItem(index) {
+      this.orderForm.products.splice(index, 1);
       this.calculateSum();
     },
     getItemTitle(result) {
@@ -990,6 +991,7 @@ export default {
         title: "Введите артикул товара",
         quantity: 1,
         cost: 0,
+        full_cost: 0,
       };
       this.articleSearch = null;
     },

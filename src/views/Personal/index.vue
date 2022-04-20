@@ -647,6 +647,7 @@ export default {
 
     button {
       width: 230px;
+      height: 37px;
       margin-top: 10px;
     }
   }

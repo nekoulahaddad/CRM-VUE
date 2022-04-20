@@ -446,7 +446,9 @@
 
           <VueCustomTooltip
             label="Таблица"
-            v-if="name === 'goods' && role === 'content'"
+            v-if="
+              name === 'goods' && (role === 'content' || role === 'superadmin')
+            "
           >
             <a
               href=""
@@ -459,7 +461,9 @@
 
           <VueCustomTooltip
             label="Обновить"
-            v-if="name === 'goods' && role === 'content'"
+            v-if="
+              name === 'goods' && (role === 'content' || role === 'superadmin')
+            "
           >
             <a
               href=""
@@ -671,7 +675,7 @@ export default {
           fallbackCopyTextToClipboard(text);
           return;
         }
-        navigator.clipboard.writeText(text)
+        navigator.clipboard.writeText(text);
       }
       axios({
         url: `/feeds/askalink`,
@@ -682,7 +686,7 @@ export default {
         },
         method: "POST",
       }).then((response) => {
-        copyTextToClipboard(response.data)
+        copyTextToClipboard(response.data);
       });
     },
     clearCache() {

@@ -14,7 +14,7 @@
         @toggleFilter="$emit('toggleFilter')"
         v-if="filterToggle"
         :active="showFilter"
-        :goods="goods"
+        :showCurrentRegion="showCurrentRegion"
       />
     </div>
   </div>
@@ -40,7 +40,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    goods: {
+    showCurrentRegion: {
       type: Boolean,
       default: false,
     },

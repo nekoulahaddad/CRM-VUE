@@ -57,7 +57,7 @@
       icon="goods_title"
       @toggleFilter="toggleFilter"
       :showFilter="showFilter"
-      :goods="true"
+      :showCurrentRegion="true"
     />
 
     <div class="page__body d-flex">
@@ -947,21 +947,12 @@ export default {
       });
       this.dataset.products = result;
     },
-    deleteProduct(product) {
-      let index = this.dataset.products.findIndex(
-        (item) => item._id === product._id
-      );
-      let dataset = this.dataset.products;
-      dataset.splice(index, 1);
-      this.dataset.products = dataset;
-      this.deletedProduct = {};
-    },
     addToGoogleDoc(item) {
       let status = this.googleDoc.sheets.find((s) => s.categoryId == item._id)
         ? "delete"
         : "add";
       let data = {
-        region: this.region,
+        region: this.filtersOptions.region,
         categoryId: item._id,
         categoryName: item.categoryName,
       };
@@ -973,7 +964,12 @@ export default {
       })
         .then(async (res) => {
           let result = await res;
-          this.editProduct(result.data.product);
+          this.updateGoods(
+            await this.getDataFromPage(
+              `/${this.$route.params.type || "categories"}/get`,
+              this.filtersOptions
+            )
+          );
           this.$toast.success(result.data.message);
         })
         .catch((err) => {
@@ -982,6 +978,15 @@ export default {
         .finally(() => {
           this.isLoading = true;
         });
+    },
+    deleteProduct(product) {
+      let index = this.dataset.products.findIndex(
+        (item) => item._id === product._id
+      );
+      let dataset = this.dataset.products;
+      dataset.splice(index, 1);
+      this.dataset.products = dataset;
+      this.deletedProduct = {};
     },
     hideDetail() {
       this.copyItem = {};
@@ -1220,7 +1225,7 @@ export default {
         JSON.stringify({
           title: "Москва и М.О",
           value: "moscow",
-          _id: "5f85ba274a9a5d34e0a45fed",
+          _id: REGION_MOSCOW_ID,
         })
       );
     }

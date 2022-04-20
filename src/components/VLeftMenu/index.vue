@@ -7,7 +7,7 @@
             class="menu__link"
             active-class="menu__link--active"
             :to="getPageUrl(key)"
-            :class="{ 'menu__link--active': key === el }"
+            :class="setActiveMenu(key, el)"
           >
             <div class="menu__icon">
               <simple-svg :src="getIconUrl(key)" />
@@ -52,6 +52,20 @@ export default {
     },
   },
   methods: {
+    setActiveMenu(key, el) {
+      if (
+        ["vacancies", "departments", "organisation-chart"].includes(
+          this.$route.name
+        ) &&
+        key === "employee"
+      ) {
+        return "menu__link--active";
+      }
+
+      return {
+        "menu__link--active": key === el,
+      };
+    },
     getIconUrl(key) {
       return require(`@/assets/icons/${key}.svg`);
     },
