@@ -451,13 +451,11 @@
         <v-button red @click="editOrder">Сохранить</v-button>
         <template
           v-if="
-            false &&
             type === 'edit' &&
             editedItem.manager.length &&
             editedItem.status.value === 'completed'
           "
         >
-          <v-button red @click="editOrder">Сохранить</v-button>
           <v-button
             redWhite
             :disabled="!selectedProductList.length"

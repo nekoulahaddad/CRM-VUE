@@ -1033,6 +1033,11 @@ export default {
         return;
       }
 
+      if (!this.orderForm.products.length) {
+        this.$toast.error("Вы не добавили ни одного товара в заказ!");
+        return;
+      }
+
       if (this.clientForm.isOldUser) {
         this.createNewOrder();
       } else {
