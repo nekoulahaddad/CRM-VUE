@@ -241,43 +241,43 @@ exports.getUsersDepartment = async (req, res, next) => {
 
 exports.getUsersBySearchWithoutDirector = async (req, res, next) => {
   try {
-    console.log("FIOOOO");
     let myMatch = {};
     let searchStr = req.params.fio.split(" ");
     myMatch["deleted"] = false;
+
     if (searchStr) {
-      if (searchStr.length > 3 || req.params.fio.includes("+")) {
-        myMatch["login"] = {
-          $in: [`+` + searchStr.join(" ").replace(/[^0-9]/g, "")],
-        };
-      }
       if (searchStr.length <= 3 && !req.params.fio.includes("+")) {
         searchStr = searchStr[0].toLowerCase().split("");
         searchStr[0] = searchStr[0].toUpperCase();
-        console.log(searchStr);
         searchStr = searchStr.join("");
-
-        console.log(searchStr);
 
         myMatch = {
           ...myMatch,
-          surname: {
-            $regex: searchStr,
-          },
+          $or: [
+            {
+              surname: {
+                $regex: searchStr,
+              },
+            },
+            {
+              login: {
+                $regex: req.params.fio,
+              },
+            },
+            {
+              phone: {
+                $regex: req.params.fio,
+              },
+            },
+          ],
         };
       }
     }
-
-    console.log(myMatch);
 
     const usersBySearch = await User.find(myMatch)
       .populate("region")
       .populate("department")
       .lean();
-    console.log("///////////////////////");
-    console.log("Users By search");
-    console.log(usersBySearch);
-    console.log("///////////////////////");
     res.status(200).json({ users: usersBySearch });
   } catch (error) {
     next(error);
