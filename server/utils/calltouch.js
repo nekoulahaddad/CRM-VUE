@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
 const axios = require('axios').default;
+const Conditions = require('../models/conditions');
+const Orders = require('../models/orders');
 
 const CT_CREATE_URL = 'https://api.calltouch.ru/lead-service/v1/api/client-order/create';
 const CT_UPDATE_URL = 'https://api.calltouch.ru/lead-service/v1/api/client-order/update';
@@ -6,8 +9,8 @@ const CT_DELETE_URL = 'https://api.calltouch.ru/lead-service/v1/api/client-order
 
 const ctAPIOptions = (url, data) => ({
   headers: {
-    'Access-Token': `${process.env?.CALLTOUCH_ACCESS_TOKEN}`,
-    SiteId: `${process.env?.CALLTOUCH_SITEID}`,
+    'Access-Token': `${process.env?.CT_ACCESS_TOKEN}`,
+    SiteId: `${process.env?.CT_SITEID}`,
     Accept: 'application/json, text/plain, */*',
     'Content-Type': 'application/json',
   },
@@ -15,13 +18,14 @@ const ctAPIOptions = (url, data) => ({
   data: JSON.stringify(data),
   url: url,
 });
+
 async function post(options) {
   await axios(options)
     .then(function (response) {
-      console.log(response.data);
+      console.log(`calltouch success ${response.data.data}`);
     })
     .catch(function (error) {
-      console.log(error.response);
+      console.log('err calltouch', error.response);
     });
   return;
 }
@@ -54,88 +58,66 @@ const calltouch = {
 
     return `${day}-${month}-${year} ${hoars}:${minutes}:${seconds}`;
   },
-  order: (item) => {
-    return {
-      orderNumber: item.number,
-      funnel: '?',
-      status: item.status.value,
-      statusDate: calltouch.date(item.updatedAt),
-      orderDate: calltouch.date(item.created),
-      currency: `rub`,
-      revenue: item.sum,
-      margin: 0,
-      manager: item.manager[0]?.surname + ' ' + item.manager[0]?.name + ' ' + item.manager[0]?.lastname,
-      comment: { text: item.comment || 'без комментария' },
-      products: item.products.map((p) => ({
-        name: p.title,
-        price: p.cost,
-        quantity: p.quantity,
-      })),
-    };
-  },
-  dataSet: (orders) => ({
-    crm: 'csk',
-    orders,
-  }),
-  makeOrders: (orders, flag) => {
-    let _orders = orders.length ? orders : [orders];
+  build: async (data, flag) => {
+    let _data = data.length ? data : [data];    
+    const statuses = await Conditions.find().lean();
     switch (flag) {
       case 'new': {
         return {
-          orderNumber: orders.number,
-          funnel: '?',
-          status: orders.status.value,
-          statusDate: calltouch.date(orders.updatedAt),
-          orderDate: calltouch.date(orders.created),
-          currency: `rub`,
-          revenue: orders.sum,
-          margin: 0,
-          manager:
-            orders.manager[0]?.surname + ' ' + orders.manager[0]?.name + ' ' + orders.manager[0]?.lastname,
-          comment: { text: orders.comment || 'без комментария' },
-          products: orders.products.map((p) => ({
-            name: p.title,
-            price: p.cost,
-            quantity: p.quantity,
-          })),
-        };
-      }
-      case 'upd': {
-        return _orders.map((item) => {
-          return {
-            orderNumber: item.number,
-            funnel: '?',
-            status: item.status.value,
-            statusDate: calltouch.date(item.updatedAt),
-            orderDate: calltouch.date(item.created),
+          crm: 'csk',
+          orders: _data.map((order) => ({
+            matching: [{ type: 'withoutSource' }],
+            orderNumber: order.number,
+            status: statuses.find((item) => item._id.toString() === order.status.toString()).value,
+            statusDate: calltouch.date(order.updatedAt),
+            orderDate: calltouch.date(order.created),
             currency: `rub`,
-            revenue: item.sum,
-            margin: 0,
-            manager: item.manager[0]?.surname + ' ' + item.manager[0]?.name + ' ' + item.manager[0]?.lastname,
-            comment: { text: item.comment || 'без комментария' },
-            products: item.products.map((p) => ({
+            revenue: order.sum,
+            margin: order.profit,
+            manager:
+              order.manager[0]?.surname + ' ' + order.manager[0]?.name + ' ' + order.manager[0]?.lastname,
+            comment: { text: order?.manager_comment || 'нет комментария' },
+            products: order.products.map((p) => ({
               name: p.title,
               price: p.cost,
               quantity: p.quantity,
             })),
-          };
-        });
+          })),
+        };
       }
+      case 'upd': {
+        return {
+          orders: _data.map((order) => ({
+            matching: [{ type: 'withoutSource' }],
+            orderNumber: order.number,
+            status: statuses.find(({ _id }) => _id.toString() === order.status.toString()).value,
+            statusDate: calltouch.date(order.updatedAt),
+            orderDate: calltouch.date(order.created),
+            updateDate: calltouch.date(order.updatedAt),
+            currency: `rub`,
+            revenue: order.sum,
+            margin: order.profit,
+            manager:
+              order.manager[0]?.surname + ' ' + order.manager[0]?.name + ' ' + order.manager[0]?.lastname,
+            comment: { text: order?.manager_comment || 'нет комментария' },
+            products: order.products.map((p) => ({
+              name: p.title,
+              price: p.cost,
+              quantity: p.quantity,
+            })),
+          })),
+        };
+      }
+
       default:
         break;
     }
-  },
-  build: (data, flag) => {
-    return calltouch.dataSet(calltouch.makeOrders(data, flag));
-  },
-  deleteOrders: () => {
-    return;
   },
 };
 
 module.exports = {
   newOrder: async (data) => {
-    return calltouch
+    return await calltouch
       .build(data, 'new')
       .then((res) => post(ctAPIOptions(CT_CREATE_URL, res)))
       .catch((err) => console.log(err));
@@ -146,10 +128,52 @@ module.exports = {
       .then((res) => post(ctAPIOptions(CT_UPDATE_URL, res)))
       .catch((err) => console.log(err));
   },
-  delOrder: (data) => {
-    return post(ctAPIOptions(CT_DELETE_URL, data));
+  delOrder: async (data) => {
+    const _ids = data.map((_id) => mongoose.Types.ObjectId(_id));
+    const _ordersToDel = await Orders.aggregate([
+      {
+        $match: {
+          _id: { $in: _ids },
+        },
+      },
+    ]);
+    return post(ctAPIOptions(CT_DELETE_URL, { orderNumbers: _ordersToDel.map((o) => o.number.toString()) }));
   },
 };
+
+// const a = {
+//   _id: '625d0b07622c101670f80f71',
+//   oneC: [Object],
+//   created: '2022-04-15T20:06:37.000Z',
+//   buyed: null,
+//   sum: 46281,
+//   deliverySum: null,
+//   deliveryRequest: null,
+//   shippedSum: 0,
+//   typeDelivery: 'pickup',
+//   deliver: null,
+//   comment: '',
+//   payment: 'cash',
+//   paymentStatus: null,
+//   manager: [Array],
+//   delivery: null,
+//   acquiringNum: '260cc0b14b10450ba4ab2a718b8dc00b',
+//   products: [],
+//   region: [Object],
+//   status: [Object],
+//   number: 2442,
+//   numberuid: '7841b976-9ecf-40ec-8d69-361db02234ac',
+//   client: [Object],
+//   createdAt: '2022-04-18T06:54:00.049Z',
+//   updatedAt: '2022-04-19T06:32:58.184Z',
+//   __v: 0,
+//   declainReason: 'ЮР.ЛИЦ',
+//   deleted: false,
+//   profit: 0,
+//   manager_comment: 'реал ТДЦ00292725\nюр.лицо',
+//   truePhoneStageOne: '+79037433225',
+//   truePhone: '79037433225'
+// },
 // const calltouchData = {
 //   crm: 'csk',
 //   orders: [],

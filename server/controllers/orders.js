@@ -368,8 +368,7 @@ exports.getOrders = async(req, res, next) => {
             delivery: orders ? orders[0].totalDelivery[0] ? orders[0].totalDelivery[0].deliverySum : 0 : 0,
             shippedSum: orders ? orders[0].totalShippedSum[0] ? orders[0].totalShippedSum[0].shippedSum : 0 : 0,
         }
-        // calltouch.sendAllOrders(result.orders)
-        // console.log("🚀 ~ file: orders.js ~ line 370 ~ exports.getOrders=async ~ orders", result)
+            
         console.log("///////////////////////")
         console.log("Orders")        
         console.log("///////////////////////")
@@ -486,8 +485,7 @@ exports.addOrder = async(req, res, next) => {
         await newOrder.save()
         //! CALLTOUCH START * * * * * * * * * * * *
         try {
-            console.log("🚀 ~ file: orders.js ~ line 490 ~ exports.addOrder=async ~ newOrder", newOrder)
-            calltouch.newOrder(newOrder)
+            calltouch.newOrder(newOrder).catch(err => console.log(err))
         } catch (err) {
             console.log("🚀 ~ file: orders.js ~ line 494 ~ exports.addOrder=async ~ error", err)
         }
@@ -635,7 +633,7 @@ exports.editOrder = async(req, res, next) => {
         
         //! CALLTOUCH START * * * * * * * * * * * *
         try {
-            calltouch.updOrder(currentOrder)
+            calltouch.updOrder(currentOrder).catch(err => console.log(err))
         } catch (err) {
             console.log("🚀 ~ file: orders.js ~ line 639 ~ exports.editOrder=async ~ err", err)
         }
@@ -675,7 +673,7 @@ exports.deleteOrder = async(req, res, next) => {
         }
         //! CALLTOUCH START * * * * * * * * * * * *
         try {
-            calltouch.delOrder(Array.isArray(req.body.orderId) ? req.body.orderId : [ req.body.orderId ])
+            calltouch.delOrder(Array.isArray(req.body.orderId) ? req.body.orderId : [ req.body.orderId ]).catch(err => console.log(err))
         } catch (err) {
             console.log("🚀 ~ file: orders.js ~ line 678 ~ exports.deleteOrder ~ err", err)
         }
