@@ -242,37 +242,34 @@ exports.getUsersDepartment = async (req, res, next) => {
 exports.getUsersBySearchWithoutDirector = async (req, res, next) => {
   try {
     let myMatch = {};
-    let searchStr = req.params.fio.split(" ");
+    let searchStr = req.params.fio;
+
+    if (searchStr.startsWith("+")) {
+      searchStr = searchStr.substring(1);
+    }
+
     myMatch["deleted"] = false;
 
-    if (searchStr) {
-      if (searchStr.length <= 3 && !req.params.fio.includes("+")) {
-        searchStr = searchStr[0].toLowerCase().split("");
-        searchStr[0] = searchStr[0].toUpperCase();
-        searchStr = searchStr.join("");
-
-        myMatch = {
-          ...myMatch,
-          $or: [
-            {
-              surname: {
-                $regex: searchStr,
-              },
-            },
-            {
-              login: {
-                $regex: req.params.fio,
-              },
-            },
-            {
-              phone: {
-                $regex: req.params.fio,
-              },
-            },
-          ],
-        };
-      }
-    }
+    myMatch = {
+      ...myMatch,
+      $or: [
+        {
+          surname: {
+            $regex: searchStr[0].toUpperCase() + searchStr.substring(1),
+          },
+        },
+        {
+          login: {
+            $regex: searchStr,
+          },
+        },
+        {
+          phone: {
+            $regex: searchStr,
+          },
+        },
+      ],
+    };
 
     const usersBySearch = await User.find(myMatch)
       .populate("region")
