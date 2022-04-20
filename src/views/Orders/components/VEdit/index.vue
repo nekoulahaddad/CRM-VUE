@@ -869,6 +869,11 @@ export default {
     editOrder(status) {
       const products = this.updateInfoItemProducts();
 
+      if (!products.length) {
+        this.$toast.error("В заказе нет товаров!");
+        return;
+      }
+
       let order = {
         orderId: this.editedItem._id,
         sum: this.calculatedSum,
