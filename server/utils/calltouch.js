@@ -170,7 +170,7 @@ module.exports = {
   sendFormData: async (data) => {
     return await calltouch
       .buildFormData(data)
-      .then((res) => post(ctAPIOptions2(CT_CREATE_URL, res)))
+      .then((res) => post(ctAPIOptions2(CT_CALLS_URL, res)))
       .catch((err) => console.log(err));
   }
 };
