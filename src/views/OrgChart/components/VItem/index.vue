@@ -109,8 +109,10 @@
             :level="level + 1"
             :item="child"
             :role="role"
+            :users="users"
             :employeeItem="employeeItem"
             :departmentItem="departmentItem"
+            @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
           />
@@ -136,8 +138,21 @@
             </div>
           </div>
         </div>
-        <v-select :options="users" />
-        <v-button red>Добавить сотрудника</v-button>
+        <template v-if="addEmployee">
+          <div class="text" style="font-size: 16px">Выберите сотрудника:</div>
+          <v-select
+            :options="
+              users.map((item) => ({
+                label: this.transformFIO(item),
+                value: item,
+              }))
+            "
+            @input="setUser"
+          />
+        </template>
+        <v-button @click="addEmployee = true" v-if="!addEmployee" red>
+          Добавить сотрудника
+        </v-button>
       </div>
     </div>
   </div>
@@ -162,31 +177,21 @@ export default {
       type: Number,
       required: true,
     },
+    users: Array,
   },
   data() {
     return {
-      users: [],
+      addEmployee: false,
     };
   },
   methods: {
-    filterSelectUsersList(userType) {
-      this.users = [];
-      this.getData(`/user/getuserstree`, {
-        usersList: this.item[userType],
-      }).then((res) => {
-        this.users = res.data.users;
-      });
+    updateBranch() {
+      this.$emit("updateBranch");
+      this.addEmployee = false;
     },
-    async getData(url, params = null) {
-      let result = axios({
-        url: `${url}`,
-        data: params,
-        method: "POST",
-      }).then(async (res) => {
-        let result = await res;
-        return result;
-      });
-      return result;
+    setUser(user) {
+      this.item["employees"].push(user.value);
+      this.updateBranch();
     },
     toggleShowDepartment(item) {
       this.$emit("toggleShowDepartment", item);

@@ -42,6 +42,7 @@
             :departmentItem="departmentItem"
             :users="users"
             @getData="getData"
+            @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
             @deleteItem="handleDialog"
@@ -130,7 +131,25 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
-
+    updateBranch() {
+      return axios({
+        url: `/orgtree/department/update`,
+        data: {
+          dataId: this.currentTreeId,
+          data: this.orgTree,
+        },
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        return result;
+      });
+    },
+    filterSelectUsersList() {
+      this.users = [];
+      this.getData(`/user/getuserstree`).then((res) => {
+        this.users = res.data.users;
+      });
+    },
     handleDialog(node) {
       if (node.children.length) {
         this.$toast.warning(
@@ -204,6 +223,7 @@ export default {
       this.orgTree = res.data.dataTree || {};
       this.currentTreeId = res.data._id;
     });
+    this.filterSelectUsersList();
     this.pageLoading = false;
   },
 };
