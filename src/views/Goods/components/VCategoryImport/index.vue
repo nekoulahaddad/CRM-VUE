@@ -3,7 +3,7 @@
     <div class="category-import__title group__title text--blue">
       Импорт товара:
     </div>
-    <form @submit.prevent="onExport">
+    <form @submit.prevent="onImport">
       <div class="list-info__group group">
         <div class="group__content">
           <div class="group__item text--bold-600">Описание:</div>
@@ -69,7 +69,7 @@ export default {
       const files = e.target.files;
       this[e.target.name] = files[0];
     },
-    onExport() {
+    onImport() {
       if (!this.fileImport) {
         this.$toast.error("Вы не загрузили файл!");
         return;
@@ -79,10 +79,10 @@ export default {
       const category = !this.local
         ? undefined
         : this.$route.params.type === "categories" && this.item._id;
-
+      alert(category.toString());
       let categoryData = new FormData();
       categoryData.append("region", this.region);
-      categoryData.append("category_id", undefined);
+      categoryData.append("category_id", category.toString());
       categoryData.append("document", this.fileImport);
 
       axios({
