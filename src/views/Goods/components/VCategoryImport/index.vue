@@ -79,7 +79,7 @@ export default {
       const category = !this.local
         ? undefined
         : this.$route.params.type === "categories" && this.item._id;
-      alert(category.toString());
+
       let categoryData = new FormData();
       categoryData.append("region", this.region);
       categoryData.append("category_id", category.toString());
