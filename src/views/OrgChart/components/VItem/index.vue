@@ -3,7 +3,6 @@
     <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
       <a @click.prevent href="">Добавить подразделения</a>
       <a @click.prevent href="">Выбор директора</a>
-      <a @click.prevent href="">Добавить сотрудника</a>
       <img
         alt=""
         src="@/assets/icons/close_icon.svg"
@@ -326,7 +325,7 @@ export default {
     z-index: 100;
     width: 249px;
     padding: 11px 14px 10px;
-    height: 87px;
+    height: 64px;
     border-radius: $border-radius;
     background-color: $color-white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
