@@ -1,10 +1,9 @@
 <template>
   <div :class="containerClasses">
     <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
-      <a href="">Добавить подразделения</a>
-      <a href="">Выбор директора</a>
-      <a href="">Добавить сотрудника</a>
-      <a href="">Удалить отдел</a>
+      <a @click.prevent href="">Добавить подразделения</a>
+      <a @click.prevent href="">Выбор директора</a>
+      <a @click.prevent href="">Добавить сотрудника</a>
       <img
         alt=""
         src="@/assets/icons/close_icon.svg"
