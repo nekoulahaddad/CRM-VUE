@@ -179,8 +179,6 @@ export default {
       }
     },
     toggleDropDown(item) {
-      this.dropDown = {};
-
       if (this.dropDown._id === item._id) {
         this.dropDown = {};
       } else {
