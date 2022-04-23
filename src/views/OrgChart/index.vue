@@ -34,6 +34,7 @@
           <v-item
             :level="1"
             :item="orgTree"
+            :dropDown="dropDown"
             :hLine="
               orgTree.children.length && openedItems.includes(orgTree._id)
             "
@@ -46,6 +47,7 @@
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
             @deleteItem="handleDialog"
+            @toggleDropDown="toggleDropDown"
           />
         </div>
       </div>
@@ -82,6 +84,7 @@ export default {
   data() {
     return {
       employeeItem: [],
+      dropDown: {},
       departmentItem: [],
       openedItems: [],
       showFilter: false,
@@ -169,8 +172,16 @@ export default {
         this.openedItems.push(id);
       }
     },
+    toggleDropDown(item) {
+      if (this.dropDown._id === item._id) {
+        this.dropDown = {};
+      } else {
+        this.dropDown = item;
+      }
+    },
     toggleShowDepartment(item) {
       this.employeeItem = [];
+      this.dropDown = {};
 
       if (this.departmentItem.includes(item._id)) {
         this.departmentItem = this.departmentItem.filter(
@@ -181,6 +192,8 @@ export default {
       }
     },
     toggleShowEmployees(item) {
+      this.dropDown = {};
+
       if (this.departmentItem.includes(item._id)) {
         this.departmentItem = this.departmentItem.filter(
           (value) => value !== item._id

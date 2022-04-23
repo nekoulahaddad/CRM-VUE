@@ -1,5 +1,17 @@
 <template>
   <div :class="containerClasses">
+    <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
+      <a href="">Добавить подразделения</a>
+      <a href="">Выбор директора</a>
+      <a href="">Добавить сотрудника</a>
+      <a href="">Удалить отдел</a>
+      <img
+        alt=""
+        src="@/assets/icons/close_icon.svg"
+        class="close"
+        @click="toggleDropDown(item)"
+      />
+    </div>
     <div class="department__container--hline" v-if="level > 1 && false"></div>
     <div :class="classes">
       <span class="item__title">
@@ -69,7 +81,11 @@
           />
         </div>
         <div class="table__icon">
-          <img src="@/assets/icons/white_dots.svg" alt="" />
+          <img
+            alt=""
+            @click="toggleDropDown(item)"
+            src="@/assets/icons/white_dots.svg"
+          />
         </div>
         <div class="table__icon">
           <VueCustomTooltip label="Удалить" v-if="role === 'superadmin'">
@@ -110,11 +126,13 @@
             :item="child"
             :role="role"
             :users="users"
+            :dropDown="dropDown"
             :employeeItem="employeeItem"
             :departmentItem="departmentItem"
             @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
+            @toggleDropDown="toggleDropDown"
           />
         </template>
       </template>
@@ -159,11 +177,10 @@
 </template>
 
 <script>
-import axios from "@/api/axios";
-
 export default {
   name: "VItem",
   props: {
+    dropDown: Object,
     departmentItem: Array,
     employeeItem: Array,
     role: String,
@@ -204,6 +221,9 @@ export default {
     },
     toggle(id) {
       this.$emit("toggleOpened", id);
+    },
+    toggleDropDown(item) {
+      this.$emit("toggleDropDown", item);
     },
     getEmployeeCount(value, words) {
       value = Math.abs(value) % 100;
@@ -299,6 +319,47 @@ export default {
   }
   .text--blue {
     font-size: 16px;
+  }
+  .dropdown {
+    position: absolute;
+    right: 55px;
+    top: 25px;
+    z-index: 100;
+    width: 249px;
+    padding: 11px 14px 10px;
+    height: 102px;
+    border-radius: $border-radius;
+    background-color: $color-white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
+
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+
+    span {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      height: 21px;
+      line-height: 21px;
+      color: rgba(0, 0, 0, 0.3);
+    }
+
+    a {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      cursor: pointer;
+      height: 21px;
+      line-height: 21px;
+
+      &:hover {
+        color: $color-red;
+      }
+    }
   }
 }
 
