@@ -326,15 +326,15 @@ export default {
     z-index: 100;
     width: 249px;
     padding: 11px 14px 10px;
-    height: 102px;
+    height: 87px;
     border-radius: $border-radius;
     background-color: $color-white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.006), 0 4px 4px rgba(0, 0, 0, 0.08);
 
     .close {
       position: absolute;
-      top: 5px;
-      right: 5px;
+      top: 10px;
+      right: 9px;
     }
 
     span {
@@ -350,6 +350,7 @@ export default {
       display: block;
       font-size: 14px;
       font-weight: 500;
+      width: 200px;
       position: relative;
       cursor: pointer;
       height: 21px;
