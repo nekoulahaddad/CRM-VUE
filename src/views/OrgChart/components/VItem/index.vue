@@ -2,7 +2,7 @@
   <div :class="containerClasses">
     <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
       <a @click.prevent href="">Добавить подразделения</a>
-      <a @click.prevent href="">Выбор директора</a>
+      <a @click.prevent="toggleAddDirector(item)" href="">Выбор директора</a>
       <img
         alt=""
         src="@/assets/icons/close_icon.svg"
@@ -106,7 +106,9 @@
     <div
       class="department__item-inner"
       v-if="
-        departmentItem.includes(item._id) || employeeItem.includes(item._id)
+        departmentItem.includes(item._id) ||
+        employeeItem.includes(item._id) ||
+        addDirectorItem.includes(item._id)
       "
     >
       <!-- Список подотделов -->
@@ -127,13 +129,20 @@
             :dropDown="dropDown"
             :employeeItem="employeeItem"
             :departmentItem="departmentItem"
+            :addDirectorItem="addDirectorItem"
             @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
             @toggleDropDown="toggleDropDown"
+            @toggleAddDirector="toggleAddDirector"
           />
         </template>
       </template>
+
+      <!-- Выбор директора -->
+      <div v-if="addDirectorItem.includes(item._id)">
+        <div class="text text--blue">Выбор директора:</div>
+      </div>
 
       <!-- Список сотрудников -->
       <div
@@ -179,6 +188,7 @@ export default {
   name: "VItem",
   props: {
     dropDown: Object,
+    addDirectorItem: Array,
     departmentItem: Array,
     employeeItem: Array,
     role: String,
@@ -219,6 +229,9 @@ export default {
     },
     toggle(id) {
       this.$emit("toggleOpened", id);
+    },
+    toggleAddDirector(item) {
+      this.$emit("toggleAddDirector", item);
     },
     toggleDropDown(item) {
       this.$emit("toggleDropDown", item);

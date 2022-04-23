@@ -41,6 +41,7 @@
             :role="role"
             :employeeItem="employeeItem"
             :departmentItem="departmentItem"
+            :addDirectorItem="addDirectorItem"
             :users="users"
             @getData="getData"
             @updateBranch="updateBranch"
@@ -48,6 +49,7 @@
             @toggleShowDepartment="toggleShowDepartment"
             @deleteItem="handleDialog"
             @toggleDropDown="toggleDropDown"
+            @toggleAddDirector="toggleAddDirector"
           />
         </div>
       </div>
@@ -84,6 +86,7 @@ export default {
   data() {
     return {
       employeeItem: [],
+      addDirectorItem: [],
       dropDown: {},
       departmentItem: [],
       openedItems: [],
@@ -189,6 +192,19 @@ export default {
         );
       } else {
         this.departmentItem.push(item._id);
+      }
+    },
+    toggleAddDirector(item) {
+      this.dropDown = {};
+      this.employeeItem = [];
+      this.departmentItem = [];
+
+      if (this.addDirectorItem.includes(item._id)) {
+        this.addDirectorItem = this.addDirectorItem.filter(
+          (value) => value !== item._id
+        );
+      } else {
+        this.addDirectorItem.push(item._id);
       }
     },
     toggleShowEmployees(item) {
