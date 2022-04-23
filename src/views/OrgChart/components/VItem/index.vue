@@ -1,7 +1,9 @@
 <template>
   <div :class="containerClasses">
     <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
-      <a @click.prevent href="">Добавить подразделения</a>
+      <a @click.prevent="toggleAddDepartment(item)" href="">
+        Добавить подразделения
+      </a>
       <a @click.prevent="toggleAddDirector(item)" href="">Выбор директора</a>
       <img
         alt=""
@@ -108,7 +110,8 @@
       v-if="
         departmentItem.includes(item._id) ||
         employeeItem.includes(item._id) ||
-        addDirectorItem.includes(item._id)
+        addDirectorItem.includes(item._id) ||
+        addDepartmentItem.includes(item._id)
       "
     >
       <!-- Список подотделов -->
@@ -130,11 +133,13 @@
             :employeeItem="employeeItem"
             :departmentItem="departmentItem"
             :addDirectorItem="addDirectorItem"
+            :addDepartmentItem="addDepartmentItem"
             @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
             @toggleDropDown="toggleDropDown"
             @toggleAddDirector="toggleAddDirector"
+            @toggleAddDepartment="toggleAddDepartment"
           />
         </template>
       </template>
@@ -142,6 +147,11 @@
       <!-- Выбор директора -->
       <div v-if="addDirectorItem.includes(item._id)">
         <div class="text text--blue">Выбор директора:</div>
+      </div>
+
+      <!-- Выбор директора -->
+      <div v-if="addDepartmentItem.includes(item._id)">
+        <div class="text text--blue">Добавить подразделение:</div>
       </div>
 
       <!-- Список сотрудников -->
@@ -187,6 +197,7 @@
 export default {
   name: "VItem",
   props: {
+    addDepartmentItem: Array,
     dropDown: Object,
     addDirectorItem: Array,
     departmentItem: Array,
@@ -217,6 +228,9 @@ export default {
     setUser(user) {
       this.item["employees"].push(user.value);
       this.updateBranch();
+    },
+    toggleAddDepartment(item) {
+      this.$emit("toggleAddDepartment", item);
     },
     toggleShowDepartment(item) {
       this.$emit("toggleShowDepartment", item);

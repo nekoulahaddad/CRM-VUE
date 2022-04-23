@@ -43,6 +43,7 @@
             :departmentItem="departmentItem"
             :addDirectorItem="addDirectorItem"
             :users="users"
+            :addDepartmentItem="addDepartmentItem"
             @getData="getData"
             @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
@@ -50,6 +51,7 @@
             @deleteItem="handleDialog"
             @toggleDropDown="toggleDropDown"
             @toggleAddDirector="toggleAddDirector"
+            @toggleAddDepartment="toggleAddDepartment"
           />
         </div>
       </div>
@@ -87,6 +89,7 @@ export default {
     return {
       employeeItem: [],
       addDirectorItem: [],
+      addDepartmentItem: [],
       dropDown: {},
       departmentItem: [],
       openedItems: [],
@@ -176,6 +179,8 @@ export default {
       }
     },
     toggleDropDown(item) {
+      this.dropDown = {};
+
       if (this.dropDown._id === item._id) {
         this.dropDown = {};
       } else {
@@ -185,6 +190,8 @@ export default {
     toggleShowDepartment(item) {
       this.employeeItem = [];
       this.dropDown = {};
+      this.addDepartmentItem = [];
+      this.addDirectorItem = [];
 
       if (this.departmentItem.includes(item._id)) {
         this.departmentItem = this.departmentItem.filter(
@@ -197,7 +204,7 @@ export default {
     toggleAddDirector(item) {
       this.dropDown = {};
       this.employeeItem = [];
-      this.departmentItem = [];
+      this.addDepartmentItem = [];
 
       if (this.addDirectorItem.includes(item._id)) {
         this.addDirectorItem = this.addDirectorItem.filter(
@@ -207,8 +214,23 @@ export default {
         this.addDirectorItem.push(item._id);
       }
     },
+    toggleAddDepartment(item) {
+      this.dropDown = {};
+      this.employeeItem = [];
+      this.addDirectorItem = [];
+
+      if (this.addDepartmentItem.includes(item._id)) {
+        this.addDepartmentItem = this.addDepartmentItem.filter(
+          (value) => value !== item._id
+        );
+      } else {
+        this.addDepartmentItem.push(item._id);
+      }
+    },
     toggleShowEmployees(item) {
       this.dropDown = {};
+      this.addDirectorItem = [];
+      this.addDepartmentItem = [];
 
       if (this.departmentItem.includes(item._id)) {
         this.departmentItem = this.departmentItem.filter(
