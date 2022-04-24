@@ -214,7 +214,9 @@
           </div>
         </div>
         <template v-if="addEmployee">
-          <div class="text" style="font-size: 16px">Выберите сотрудника:</div>
+          <div class="text text--blue" style="font-size: 16px">
+            Выберите сотрудника:
+          </div>
           <v-select
             :options="
               users.map((item) => ({
@@ -224,6 +226,7 @@
             "
             @input="setUser"
           />
+          <v-button @click="addUser" red>Сохранить</v-button>
         </template>
         <v-button @click="addEmployee = true" v-if="!addEmployee" red>
           Добавить сотрудника
@@ -259,6 +262,7 @@ export default {
     return {
       addEmployee: false,
       director: {},
+      user: {},
     };
   },
   methods: {
@@ -266,6 +270,11 @@ export default {
       this.item["directors"].push(this.director.value);
       this.updateBranch();
       this.director = {};
+    },
+    addUser() {
+      this.item["employees"].push(this.user.value);
+      this.updateBranch();
+      this.user = {};
     },
     updateBranch() {
       this.$emit("updateBranch");
@@ -275,8 +284,7 @@ export default {
       this.director = user;
     },
     setUser(user) {
-      this.item["employees"].push(user.value);
-      this.updateBranch();
+      this.user = user;
     },
     toggleAddDepartment(item) {
       this.$emit("toggleAddDepartment", item);
