@@ -24,6 +24,24 @@
         }})
       </span>
       <div class="table__actions">
+        <div class="table__icon" v-if="addDepartmentItem.includes(item._id)">
+          <VueCustomTooltip label="Скрыть добавление подразделения">
+            <img
+              alt=""
+              @click="toggleAddDepartment(item)"
+              src="@/assets/icons/arrow_top_white_icon.svg"
+            />
+          </VueCustomTooltip>
+        </div>
+        <div class="table__icon" v-if="addDirectorItem.includes(item._id)">
+          <VueCustomTooltip label="Скрыть выбор директора">
+            <img
+              alt=""
+              @click="toggleAddDirector(item)"
+              src="@/assets/icons/arrow_top_white_icon.svg"
+            />
+          </VueCustomTooltip>
+        </div>
         <!-- Показать подотделы -->
         <div class="table__icon">
           <template v-if="item.children.length">
