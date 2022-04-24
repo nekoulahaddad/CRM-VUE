@@ -145,11 +145,33 @@
       </template>
 
       <!-- Выбор директора -->
-      <div v-if="addDirectorItem.includes(item._id)">
+      <div class="add-director" v-if="addDirectorItem.includes(item._id)">
         <div class="text text--blue">Выбор директора:</div>
+        <div class="list-info__group group">
+          <div class="group__content">
+            <div class="group__item text--bold-700">Текущий директор:</div>
+            <div class="group__value">
+              {{
+                Array.isArray(item.directors) &&
+                item.directors[0] &&
+                transformFIO(item.directors[0])
+              }}
+            </div>
+          </div>
+        </div>
+        <v-select
+          :options="
+            users.map((item) => ({
+              label: this.transformFIO(item),
+              value: item,
+            }))
+          "
+          @input="setDirector"
+        />
+        <v-button @click="addDirector" red>Сохранить</v-button>
       </div>
 
-      <!-- Выбор директора -->
+      <!-- Добавить подразделение -->
       <div v-if="addDepartmentItem.includes(item._id)">
         <div class="text text--blue">Добавить подразделение:</div>
       </div>
@@ -218,12 +240,21 @@ export default {
   data() {
     return {
       addEmployee: false,
+      director: {},
     };
   },
   methods: {
+    addDirector() {
+      this.item["directors"].push(this.director.value);
+      this.updateBranch();
+      this.director = {};
+    },
     updateBranch() {
       this.$emit("updateBranch");
       this.addEmployee = false;
+    },
+    setDirector(user) {
+      this.director = user;
     },
     setUser(user) {
       this.item["employees"].push(user.value);
@@ -448,6 +479,16 @@ export default {
   }
   button {
     width: 250px;
+  }
+}
+.add-director {
+  padding-bottom: 10px;
+
+  .v-select {
+    margin-top: 10px;
+  }
+  button {
+    margin-top: 10px;
   }
 }
 </style>

@@ -140,6 +140,41 @@ export default {
     ...mapMutations({
       changeStatus: "change_load_status",
     }),
+    addBranchNode() {
+      if (this.orgTree && this.orgTree.children) {
+        this.selectedNode["children"].push({
+          ...this.departmentForm,
+          parentId: this.selectedNode._id,
+          children: [],
+          directors: [],
+          employees: [],
+        });
+        this.updateBranch();
+      } else {
+        this.orgTree = {
+          ...this.departmentForm,
+          parentId: this.selectedNode._id,
+          children: [],
+          directors: [],
+          employees: [],
+        };
+        this.createBranch(this.orgTree).then((res) => {
+          this.currentTreeId = res.data.data._id;
+        });
+      }
+    },
+    createBranch(data) {
+      return axios({
+        url: "/orgtree/department/post",
+        data: {
+          data,
+        },
+        method: "POST",
+      }).then(async (res) => {
+        let result = await res;
+        return result;
+      });
+    },
     updateBranch() {
       return axios({
         url: `/orgtree/department/update`,
