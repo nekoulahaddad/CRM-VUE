@@ -1,6 +1,9 @@
 <template>
   <div :class="containerClasses">
-    <div class="dropdown" v-if="dropDown && item && dropDown._id === item._id">
+    <div
+      class="dropdown"
+      v-if="dropDown && item && dropDown._id && dropDown._id === item._id"
+    >
       <a @click.prevent="toggleAddDepartment(item)" href="">
         Добавить подразделения
       </a>
@@ -132,6 +135,21 @@
         addDepartmentItem.includes(item._id)
       "
     >
+      <!-- Добавить подразделение -->
+      <div class="add-director" v-if="addDepartmentItem.includes(item._id)">
+        <div class="text text--blue">Добавить подразделение:</div>
+        <v-select
+          :options="
+            departments.map((item) => ({
+              label: item.title,
+              value: item._id,
+            }))
+          "
+          @input="setDepartment"
+        />
+        <v-button @click="addDepartment" red>Сохранить</v-button>
+      </div>
+
       <!-- Список подотделов -->
       <template
         v-if="item.children.length && departmentItem.includes(item._id)"
@@ -152,6 +170,7 @@
             :departmentItem="departmentItem"
             :addDirectorItem="addDirectorItem"
             :addDepartmentItem="addDepartmentItem"
+            :departments="departments"
             @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
@@ -187,11 +206,6 @@
           @input="setDirector"
         />
         <v-button @click="addDirector" red>Сохранить</v-button>
-      </div>
-
-      <!-- Добавить подразделение -->
-      <div v-if="addDepartmentItem.includes(item._id)">
-        <div class="text text--blue">Добавить подразделение:</div>
       </div>
 
       <!-- Список сотрудников -->
@@ -242,6 +256,7 @@ export default {
   props: {
     addDepartmentItem: Array,
     dropDown: Object,
+    departments: Array,
     addDirectorItem: Array,
     departmentItem: Array,
     employeeItem: Array,
@@ -261,15 +276,42 @@ export default {
   data() {
     return {
       addEmployee: false,
+      department: {},
       director: {},
       user: {},
     };
   },
   methods: {
-    addDirector() {
+    async addDirector() {
       this.item["directors"].push(this.director.value);
-      this.updateBranch();
-      this.director = {};
+
+      try {
+        this.updateBranch();
+        this.$toast.success("Директор успешно добавлен!");
+        this.toggleAddDirector(this.item);
+        this.director = {};
+      } catch (e) {
+        this.$toast.error("Ошибка добавления директора!");
+      }
+    },
+    async addDepartment() {
+      this.item["children"].push({
+        _id: this.department.value,
+        title: this.department.label,
+        parentId: this.item.value,
+        children: [],
+        directors: [],
+        employees: [],
+      });
+
+      try {
+        await this.updateBranch();
+        this.$toast.success("Подразделение успешно добавлено!");
+        this.toggleAddDepartment(this.item);
+        this.department = {};
+      } catch (e) {
+        this.$toast.error("Ошибка добавления подразделения!");
+      }
     },
     addUser() {
       this.item["employees"].push(this.user.value);
@@ -285,6 +327,9 @@ export default {
     },
     setUser(user) {
       this.user = user;
+    },
+    setDepartment(value) {
+      this.department = value;
     },
     toggleAddDepartment(item) {
       this.$emit("toggleAddDepartment", item);
@@ -516,5 +561,8 @@ export default {
   button {
     margin-top: 10px;
   }
+}
+.vs__selected {
+  width: 90% !important;
 }
 </style>
