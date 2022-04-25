@@ -2,7 +2,13 @@
   <div :class="containerClasses">
     <div
       class="dropdown"
-      v-if="dropDown && item && dropDown._id && dropDown._id === item._id"
+      v-if="
+        dropDown &&
+        item &&
+        dropDown._id &&
+        dropDown._id === item._id &&
+        role === 'superadmin'
+      "
     >
       <a @click.prevent="toggleAddDepartment(item)" href="">
         Добавить подразделения
@@ -101,27 +107,21 @@
             src="@/assets/icons/manager-white.svg"
           />
         </div>
-        <div class="table__icon">
+        <div class="table__icon" v-if="role === 'superadmin'">
           <img
             alt=""
             @click="toggleDropDown(item)"
             src="@/assets/icons/white_dots.svg"
           />
         </div>
-        <div class="table__icon">
-          <VueCustomTooltip label="Удалить" v-if="role === 'superadmin'">
+        <div class="table__icon" v-if="role === 'superadmin'">
+          <VueCustomTooltip label="Удалить">
             <img
               @click="deleteItem(item)"
               src="@/assets/icons/trash_icon_white.svg"
               alt=""
             />
           </VueCustomTooltip>
-          <img
-            alt=""
-            v-else
-            class="opacity-30"
-            src="@/assets/icons/trash_icon_white.svg"
-          />
         </div>
       </div>
     </div>
@@ -244,7 +244,11 @@
           />
           <v-button @click="addUser" red>Сохранить</v-button>
         </template>
-        <v-button @click="addEmployee = true" v-if="!addEmployee" red>
+        <v-button
+          @click="addEmployee = true"
+          v-if="!addEmployee && role === 'superadmin'"
+          red
+        >
           Добавить сотрудника
         </v-button>
       </div>
