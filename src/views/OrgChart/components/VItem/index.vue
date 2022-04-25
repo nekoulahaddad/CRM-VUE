@@ -171,6 +171,7 @@
             :addDirectorItem="addDirectorItem"
             :addDepartmentItem="addDepartmentItem"
             :departments="departments"
+            :orgTree="orgTree"
             @deleteItem="deleteItem"
             @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
@@ -264,6 +265,7 @@ export default {
     role: String,
     line: Boolean,
     hLine: Boolean,
+    orgTree: Object,
     item: {
       type: Object,
       required: true,
@@ -315,7 +317,16 @@ export default {
       }
     },
     addUser() {
-      this.item["employees"].push(this.user.value);
+      const userFind = this.item["employees"].find(
+        (e) => e._id === this.user._id
+      );
+
+      if (userFind) {
+        this.$toast.error("Сотрудник уже присутствует в выбранном отделе!");
+        return;
+      }
+
+      this.item["employees"].push(this.user);
       this.updateBranch();
       this.user = {};
     },
@@ -327,7 +338,7 @@ export default {
       this.director = user;
     },
     setUser(user) {
-      this.user = user;
+      this.user = user.value;
     },
     setDepartment(value) {
       this.department = value;
