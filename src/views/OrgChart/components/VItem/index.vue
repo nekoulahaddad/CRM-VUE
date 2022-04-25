@@ -159,7 +159,9 @@
           "
           @input="setDirector"
         />
-        <v-button @click="addDirector" red>Сохранить</v-button>
+        <v-button @click="addDirector" :disabled="!director._id" red>
+          Сохранить
+        </v-button>
       </div>
 
       <!-- Добавить подразделение -->
@@ -169,12 +171,14 @@
           :options="
             departments.map((item) => ({
               label: item.title,
-              value: item._id,
+              value: item,
             }))
           "
           @input="setDepartment"
         />
-        <v-button @click="addDepartment" red>Сохранить</v-button>
+        <v-button @click="addDepartment" :disabled="!department._id" red>
+          Сохранить
+        </v-button>
       </div>
 
       <!-- Список подотделов -->
@@ -242,7 +246,9 @@
             "
             @input="setUser"
           />
-          <v-button @click="addUser" red>Сохранить</v-button>
+          <v-button @click="addUser" :disabled="!user._id" red>
+            Сохранить
+          </v-button>
         </template>
         <v-button
           @click="addEmployee = true"
@@ -290,22 +296,32 @@ export default {
   },
   methods: {
     async addDirector() {
-      this.item["directors"].push(this.director.value);
+      if (!this.director._id) {
+        this.$toast.error("Вы не выбрали директора!");
+        return;
+      }
+
+      this.item["directors"] = [this.director];
 
       try {
         this.updateBranch();
-        this.$toast.success("Директор успешно добавлен!");
+        this.$toast.success("Директор успешно выбран!");
         this.toggleAddDirector(this.item);
         this.director = {};
       } catch (e) {
-        this.$toast.error("Не удалось добавить директора!");
+        this.$toast.error("Не удалось выбрать директора!");
       }
     },
     async addDepartment() {
+      if (!this.department._id) {
+        this.$toast.error("Вы не выбрали подразделение!");
+        return;
+      }
+
       this.item["children"].push({
-        _id: this.department.value,
-        title: this.department.label,
-        parentId: this.item.value,
+        _id: this.department._id,
+        title: this.department.title,
+        parentId: this.item._id,
         children: [],
         directors: [],
         employees: [],
@@ -345,13 +361,13 @@ export default {
       this.addEmployee = false;
     },
     setDirector(user) {
-      this.director = user;
+      this.director = user.value;
     },
     setUser(user) {
       this.user = user.value;
     },
-    setDepartment(value) {
-      this.department = value;
+    setDepartment(item) {
+      this.department = item.value;
     },
     toggleAddDepartment(item) {
       this.$emit("toggleAddDepartment", item);
