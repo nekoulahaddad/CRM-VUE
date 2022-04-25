@@ -29,9 +29,11 @@ export default {
   components: { VButton },
   methods: {
     cancel() {
-      this.$modal.hide("deleteGoodsCategory");
+      this.$modal.hide("deleteOrg");
     },
-    confirm() {},
+    confirm() {
+      this.$emit("removeBranch");
+    },
   },
 };
 </script>

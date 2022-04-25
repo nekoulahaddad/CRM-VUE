@@ -1,5 +1,7 @@
 <template>
   <div class="page org-chart-page">
+    <v-deleteItem @removeBranch="removeBranch" />
+
     <div
       class="page__header page-header"
       :class="{ 'page-header--collapse': sidebar }"
@@ -65,6 +67,7 @@ import axios from "@/api/axios";
 import { mapGetters, mapMutations } from "vuex";
 import VButton from "@/components/VButton";
 import VItem from "./components/VItem";
+import VDeleteItem from "./components/VDeleteItem";
 import VPageHeader from "@/components/VPageHeader";
 import VSpinner from "@/components/VSpinner";
 import VPagination from "@/components/VPagination";
@@ -76,6 +79,7 @@ export default {
     VSpinner,
     VItem,
     VPagination,
+    VDeleteItem,
   },
   computed: {
     ...mapGetters({ sidebar: "sidebar" }),
@@ -88,6 +92,7 @@ export default {
   },
   data() {
     return {
+      deletedItem: {},
       employeeItem: [],
       addDirectorItem: [],
       addDepartmentItem: [],
@@ -202,10 +207,8 @@ export default {
         );
         return;
       }
-      return;
-      this.dialog.callback = () => callback(node);
-      this.dialog.header = msg.header;
-      this.dialog.message = msg.message;
+      this.deletedItem = node;
+      this.$modal.show("deleteOrg");
     },
     toggleOpened(id) {
       if (this.openedItems.includes(id)) {
@@ -301,6 +304,34 @@ export default {
         return result;
       });
       return result;
+    },
+    async removeBranch() {
+      if (
+        this.orgTree._id === this.deletedItem._id &&
+        !this.orgTree.children.length
+      ) {
+        this.orgTree = {};
+        await this.getData(`/orgtree/department/delete`, {
+          id: this.currentTreeId,
+        });
+        this.$modal.hide("deleteOrg");
+      } else {
+        this.deleteNodeFromTree(this.orgTree, this.deletedItem._id);
+        await this.updateBranch();
+        this.$modal.hide("deleteOrg");
+      }
+    },
+    deleteNodeFromTree(node, nodeId) {
+      if (node.children != null) {
+        for (let i = 0; i < node.children.length; i++) {
+          let filtered = node.children.filter((f) => f._id === nodeId);
+          if (filtered && filtered.length > 0) {
+            node.children = node.children.filter((f) => f._id !== nodeId);
+            return;
+          }
+          this.deleteNodeFromTree(node.children[i], nodeId);
+        }
+      }
     },
   },
   created() {

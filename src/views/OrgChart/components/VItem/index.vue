@@ -111,7 +111,7 @@
         <div class="table__icon">
           <VueCustomTooltip label="Удалить" v-if="role === 'superadmin'">
             <img
-              @click="$emit('deleteItem', item)"
+              @click="deleteItem(item)"
               src="@/assets/icons/trash_icon_white.svg"
               alt=""
             />
@@ -171,6 +171,7 @@
             :addDirectorItem="addDirectorItem"
             :addDepartmentItem="addDepartmentItem"
             :departments="departments"
+            @deleteItem="deleteItem"
             @updateBranch="updateBranch"
             @toggleShowEmployees="toggleShowEmployees"
             @toggleShowDepartment="toggleShowDepartment"
@@ -342,6 +343,9 @@ export default {
     },
     lineHeight(count) {
       return `100%`;
+    },
+    deleteItem(item) {
+      this.$emit("deleteItem", item);
     },
     toggle(id) {
       this.$emit("toggleOpened", id);
