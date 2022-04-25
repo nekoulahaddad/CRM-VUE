@@ -294,7 +294,7 @@ export default {
         this.toggleAddDirector(this.item);
         this.director = {};
       } catch (e) {
-        this.$toast.error("Ошибка добавления директора!");
+        this.$toast.error("Не удалось добавить директора!");
       }
     },
     async addDepartment() {
@@ -313,7 +313,7 @@ export default {
         this.toggleAddDepartment(this.item);
         this.department = {};
       } catch (e) {
-        this.$toast.error("Ошибка добавления подразделения!");
+        this.$toast.error("Не удалось добавить подразделение!");
       }
     },
     addUser() {
@@ -327,8 +327,14 @@ export default {
       }
 
       this.item["employees"].push(this.user);
-      this.updateBranch();
-      this.user = {};
+
+      try {
+        this.updateBranch();
+        this.$toast.success("Сотрудник успешно добавлен!");
+        this.user = {};
+      } catch (e) {
+        this.$toast.error("Не удалось добавить сотрудника!");
+      }
     },
     updateBranch() {
       this.$emit("updateBranch");
