@@ -82,7 +82,10 @@ export default {
 
       let categoryData = new FormData();
       categoryData.append("region", this.region);
-      categoryData.append("category_id", category.toString());
+      categoryData.append(
+        "category_id",
+        category ? category.toString() : category
+      );
       categoryData.append("document", this.fileImport);
 
       axios({
