@@ -19,7 +19,11 @@
         }"
       >
         <div class="scroll-horizontal">
-          <v-top-blocks :rev="rev" :clientsForMonth="clientsForMonth" />
+          <v-top-blocks
+            :rev="rev"
+            :clientsForMonth="clientsForMonth"
+            :ordersForMonth="orders.all"
+          />
           <div class="d-flex">
             <!-- Заявки за текущей месяц -->
             <v-mail-by-month />

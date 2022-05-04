@@ -20,8 +20,8 @@
     </div>
     <div class="top-blocks__item top-block">
       <div class="top-block__left">
-        <div class="top-block__title">Количество посетителей за сегодня:</div>
-        <div class="top-block__value">300</div>
+        <div class="top-block__title">Количество заказов за текущий месяц:</div>
+        <div class="top-block__value">{{ ordersForMonth }}</div>
       </div>
       <div class="top-block__right">
         <img src="@/assets/icons/world.svg" alt="" />
@@ -66,6 +66,7 @@ export default {
     rev: {
       type: Object,
     },
+    ordersForMonth: Number,
   },
   data() {
     return {
