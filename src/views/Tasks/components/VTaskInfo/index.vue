@@ -86,13 +86,18 @@
         <div class="group__title">{{ $t("pages.tasks.taskComment") }}</div>
         <div class="group__content">
           <textarea
-            :readonly="!(task.executor && task.executor._id.includes(userId))"
+            v-if="
+              task.executor &&
+              task.executor._id.includes(userId) &&
+              ['under revision', 'accepted'].includes(task.status.value)
+            "
             class="form-textarea"
             v-model="comment"
             maxlength="3000"
           >
             {{ comment }}
           </textarea>
+          <div class="word-break flex-1" v-else>{{ comment }}</div>
         </div>
       </div>
 
@@ -265,6 +270,7 @@ export default {
       taskData.append("taskId", task._id);
       taskData.append("statusValue", status);
       taskData.append("comment", this.comment);
+      this.task.comment = this.comment;
       if (this.documents[0] !== "Выбрать файлы") {
         for (let i = 0; i < this.documents.length; i++) {
           taskData.append("documents", this.documents[i]);
@@ -298,7 +304,6 @@ export default {
       });
     },
   },
-  created() {},
 };
 </script>
 
