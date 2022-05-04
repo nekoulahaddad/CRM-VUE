@@ -220,6 +220,12 @@
         v-if="item.employees.length && employeeItem.includes(item._id)"
       >
         <div class="text text--blue">Сотрудники:</div>
+        <div class="list__header">
+          <div class="list__columns">
+            <div class="list__column">Ф.И.О:</div>
+            <div class="list__column">Должность:</div>
+          </div>
+        </div>
         <div
           v-for="employee in item.employees"
           :key="employee._id"
@@ -230,6 +236,11 @@
           >
             <div class="list__column">
               {{ transformFIO(employee) }}
+            </div>
+            <div class="list__column">
+              <div class="bg bg--blue-light" v-if="employee.position">
+                {{ employee.position }}
+              </div>
             </div>
           </div>
         </div>

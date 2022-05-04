@@ -361,6 +361,12 @@ export default {
     button {
       margin-top: 5px;
     }
+    &__header {
+      height: auto;
+    }
+    &__column {
+      text-align: left !important;
+    }
   }
   .page__right--fluid {
     .departments {
