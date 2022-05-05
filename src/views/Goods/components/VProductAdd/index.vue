@@ -847,6 +847,11 @@ export default {
           productData.append("images", this.images[i]);
         }
       }
+      if (this.certificates.length) {
+        for (let i = 0; i < this.certificates.length; i++) {
+          productData.append("certificates", this.certificates[i]);
+        }
+      }
       if (this.options) {
         this.options.forEach((value, key) => {
           productData.append(`options[${key}]`, value);
