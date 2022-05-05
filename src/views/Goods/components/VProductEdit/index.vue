@@ -158,10 +158,11 @@
                 for="product-photo"
               >
                 <input
-                  type="file"
                   hidden
-                  id="product-photo"
                   multiple
+                  type="file"
+                  accept="image/*"
+                  id="product-photo"
                   name="imagesTemp"
                   @change="fileUpload($event, false)"
                 />

@@ -172,12 +172,61 @@
                       for="product-photo"
                     >
                       <input
-                        type="file"
-                        hidden
-                        id="product-photo"
                         multiple
+                        hidden
+                        type="file"
+                        accept="image/*"
+                        id="product-photo"
                         name="imagesTemp"
                         @change="fileUpload($event, false)"
+                      />
+                      <img src="@/assets/icons/add_photo.svg" alt="" />
+                      <span>Нажмите чтобы выбрать</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div
+                  class="group"
+                  style="margin-top: 10px; margin-bottom: 15px"
+                >
+                  <div class="group__title">Сертификаты:</div>
+                  <div
+                    class="group__content photo-wrapper"
+                    v-if="certificates.length"
+                  >
+                    <div
+                      class="product-photo"
+                      v-for="(certificate, index) in certificates"
+                    >
+                      <img
+                        alt=""
+                        class="product-photo__img"
+                        :key="index"
+                        :src="certificate.url"
+                      />
+                      <img
+                        alt=""
+                        class="product-photo__delete-icon"
+                        src="@/assets/icons/trash_icon.svg"
+                        @click="deleteCertificate(index)"
+                      />
+                    </div>
+                  </div>
+                  <div class="group__content">
+                    <label
+                      v-if="certificates.length < 6"
+                      class="add-product-photo"
+                      for="certificate"
+                    >
+                      <input
+                        type="file"
+                        hidden
+                        multiple
+                        id="certificate"
+                        name="certificates"
+                        @change="certificateUpload"
+                        accept="image/*"
                       />
                       <img src="@/assets/icons/add_photo.svg" alt="" />
                       <span>Нажмите чтобы выбрать</span>
@@ -451,6 +500,7 @@ export default {
       club_cost: this.editedProduct ? this.editedProduct.club_cost : "",
       coef: this.editedProduct ? this.editedProduct.coef : "",
       images: [],
+      certificates: [],
       imagesTemp: [],
       deletedImgs: [],
       options: new Map(),
@@ -529,6 +579,24 @@ export default {
   methods: {
     getResult(result) {
       return "";
+    },
+    certificateUpload(e) {
+      let fileBuffer = [];
+      Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
+      const files = fileBuffer;
+      for (let i = 0; i < files.length; i++) {
+        this.certificates.push({
+          name: files[i].name,
+          url: URL.createObjectURL(files[i]),
+        });
+      }
+    },
+    deleteCertificate(index) {
+      this.certificates = Array.from(this.certificates).filter((doc, i) => {
+        if (i !== index) {
+          return doc;
+        }
+      });
     },
     async fileUpload(e, clear) {
       this.isLoading = true;

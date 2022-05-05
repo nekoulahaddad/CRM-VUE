@@ -745,6 +745,32 @@ exports.editProduct = async (req, res, next) => {
     //     user: mongoose.Types.ObjectId(req.userId),
     // });
 
+    if (certificates && certificates.length > 0) {
+      product.certificates = [];
+      await removeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${
+          product._id
+        }`
+      );
+      await makeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${
+          product._id
+        }`
+      );
+
+      for (let i = 0; i < certificates.length; i++) {
+        await uploadFilesFromTempToFolder(
+          TEMP_PATH,
+          UPLOADS_PATH,
+          certificates[i].filename,
+          `catalog/${region}/categories/${product.category_id}/${product._id}`
+        );
+        product.certificates.push(certificates[i].filename);
+      }
+    }
+
     if (images && images.length > 0) {
       product.images = [];
       await removeUserDir(
