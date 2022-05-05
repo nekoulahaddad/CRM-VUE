@@ -170,6 +170,51 @@
               </label>
             </div>
           </div>
+
+          <div class="group" style="margin-top: 10px; margin-bottom: 15px">
+            <div class="group__title">Сертификаты:</div>
+            <div
+              class="group__content photo-wrapper"
+              v-if="certificates.length"
+            >
+              <div
+                class="product-photo"
+                v-for="(certificate, index) in certificates"
+              >
+                <img
+                  alt=""
+                  class="product-photo__img"
+                  :key="index"
+                  :src="certificate.url"
+                />
+                <img
+                  alt=""
+                  class="product-photo__delete-icon"
+                  src="@/assets/icons/trash_icon.svg"
+                  @click="deleteCertificate(index)"
+                />
+              </div>
+            </div>
+            <div class="group__content">
+              <label
+                v-if="certificates.length < 6"
+                class="add-product-photo"
+                for="certificate"
+              >
+                <input
+                  type="file"
+                  hidden
+                  multiple
+                  id="certificate"
+                  name="certificates"
+                  @change="certificateUpload"
+                  accept="image/*"
+                />
+                <img src="@/assets/icons/add_photo.svg" alt="" />
+                <span>Нажмите чтобы выбрать</span>
+              </label>
+            </div>
+          </div>
         </div>
         <div style="margin-left: 12px" class="flex-1">
           <div class="group">
@@ -431,6 +476,7 @@ export default {
       coef: this.editedProduct ? this.editedProduct.coef : "",
       images: [],
       imagesTemp: [],
+      certificates: [],
       deletedImgs: [],
       options: new Map(),
       serverAddr: "https://xn--j1ano.com/",
@@ -508,6 +554,24 @@ export default {
   methods: {
     getResult(result) {
       return "";
+    },
+    deleteCertificate(index) {
+      this.certificates = Array.from(this.certificates).filter((doc, i) => {
+        if (i !== index) {
+          return doc;
+        }
+      });
+    },
+    certificateUpload(e) {
+      let fileBuffer = [];
+      Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
+      const files = fileBuffer;
+      for (let i = 0; i < files.length; i++) {
+        this.certificates.push({
+          name: files[i].name,
+          url: URL.createObjectURL(files[i]),
+        });
+      }
     },
     async fileUpload(e, clear) {
       this.isLoading = true;
@@ -746,6 +810,11 @@ export default {
       if (this.images) {
         for (let i = 0; i < this.images.length; i++) {
           productData.append("images", this.images[i]);
+        }
+      }
+      if (this.certificates.length) {
+        for (let i = 0; i < this.certificates.length; i++) {
+          productData.append("certificates", this.certificates[i]);
         }
       }
       if (this.options) {
@@ -1041,6 +1110,41 @@ export default {
     font-weight: 700;
     color: $color-white;
     cursor: pointer;
+  }
+
+  label[for="document-file"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 230px;
+    height: 37px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    background-color: $color-white;
+    border-radius: $border-radius;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  .group__document {
+    width: 401px;
+    display: flex;
+    justify-content: space-between;
+    height: 33px;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    border-radius: $border-radius;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-right: 30px;
+    }
   }
 }
 </style>

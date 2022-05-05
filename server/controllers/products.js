@@ -574,16 +574,8 @@ exports.editProduct = async (req, res, next) => {
       stop_cost,
     } = req.body;
 
-    console.log("///////////////////////");
-    console.log(`  Run edit Product ${productId} for region ${region}`);
-    console.log(
-      `  by user: user id = ${req.userId}, user role - ${req.userRole}`
-    );
-    console.log("///////////////////////");
-
     let changeTitle = false;
-    const images = req.files;
-    console.log(images.length);
+    const { images, certificates } = req.files;
 
     const updatedProduct = await Products.aggregate([
       {
@@ -754,8 +746,6 @@ exports.editProduct = async (req, res, next) => {
     // });
 
     if (images && images.length > 0) {
-      console.log("images change");
-
       product.images = [];
       await removeUserDir(
         UPLOADS_PATH,
