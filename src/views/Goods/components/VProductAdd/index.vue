@@ -188,7 +188,7 @@
 
                 <div
                   class="group"
-                  style="margin-top: 10px; margin-bottom: 15px"
+                  style="margin-top: 10px; margin-bottom: 15px; display: none"
                 >
                   <div class="group__title">Сертификаты:</div>
                   <div

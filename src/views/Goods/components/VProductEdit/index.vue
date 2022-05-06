@@ -172,7 +172,10 @@
             </div>
           </div>
 
-          <div class="group" style="margin-top: 10px; margin-bottom: 15px">
+          <div
+            class="group"
+            style="margin-top: 10px; margin-bottom: 15px; display: none"
+          >
             <div class="group__title">Сертификаты:</div>
             <div
               class="group__content photo-wrapper"
