@@ -375,12 +375,9 @@ const createNewProduct = async (params, images, contentPath) => {
       },
     },
   ]);
-  console.log("??? matched products");
-  console.log(matchedProducts);
 
   // Если совпадений нет - добавляем
   if (!matchedProducts.length) {
-    console.log("NOT MATCHED");
     await makeUserDir(
       UPLOADS_PATH,
       `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
@@ -518,13 +515,10 @@ exports.addProduct = async (req, res, next) => {
   try {
     // Получаем данные
 
-    const images = req.files;
+    const { images, certificates } = req.files;
     const params = req.body;
-    createdProduct = await createNewProduct(params, images, null);
+    const createdProduct = await createNewProduct(params, images, null);
 
-    console.log("///////////////////////");
-    console.log("New Product");
-    console.log("///////////////////////");
     res.status(201).json({
       message: "ADDED",
       exist: false,

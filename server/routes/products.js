@@ -21,7 +21,7 @@ router.post("/provider/update", isAuth, ProductsController.editProductProvider);
 router.post(
   "/post",
   isAuth,
-  upload.any("images"),
+  upload.fields([{ name: "images" }, { name: "certificates" }]),
   ProductsController.addProduct,
   clearCache
 );
