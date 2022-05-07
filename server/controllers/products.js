@@ -739,10 +739,8 @@ exports.editProduct = async (req, res, next) => {
     //     user: mongoose.Types.ObjectId(req.userId),
     // });
 
-    if (
-      (images && images.length > 0) ||
-      (certificates && certificates.length > 0)
-    ) {
+    if (images && images.length > 0) {
+      product.images = [];
       await removeUserDir(
         UPLOADS_PATH,
         `/catalog/${region}/categories/${product.category_id.toString()}/${
@@ -755,10 +753,6 @@ exports.editProduct = async (req, res, next) => {
           product._id
         }`
       );
-    }
-
-    if (images && images.length > 0) {
-      product.images = [];
 
       for (let i = 0; i < images.length; i++) {
         await uploadFilesFromTempToFolder(
@@ -775,12 +769,25 @@ exports.editProduct = async (req, res, next) => {
     if (certificates && certificates.length > 0) {
       product.certificates = [];
 
+      await removeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${
+          product._id
+        }/certificates`
+      );
+      await makeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${
+          product._id
+        }/certificates/`
+      );
+
       for (let i = 0; i < certificates.length; i++) {
         await uploadFilesFromTempToFolder(
           TEMP_PATH,
           UPLOADS_PATH,
           certificates[i].filename,
-          `catalog/${region}/categories/${product.category_id}/${product._id}`
+          `catalog/${region}/categories/${product.category_id}/${product._id}/certificates/`
         );
         product.certificates.push(certificates[i].filename);
       }
