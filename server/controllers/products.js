@@ -525,7 +525,7 @@ exports.addProduct = async (req, res, next) => {
       product: createdProduct,
     });
   } catch (error) {
-    return res.json(error);
+    return res.status(500).json(error);
     next(error);
   }
 };
