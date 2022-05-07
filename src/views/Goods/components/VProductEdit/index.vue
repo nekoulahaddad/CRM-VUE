@@ -172,15 +172,18 @@
             </div>
           </div>
 
-          <div class="group" style="margin-top: 10px; margin-bottom: 15px">
+          <div
+            class="group"
+            style="margin-top: 10px; margin-bottom: 15px; display: none"
+          >
             <div class="group__title">Сертификаты:</div>
             <div
               class="group__content photo-wrapper"
-              v-if="false && certTempUrl.length"
+              v-if="certificates.length"
             >
               <div
                 class="product-photo"
-                v-for="(certificate, index) in certTempUrl"
+                v-for="(certificate, index) in certificates"
               >
                 <img
                   alt=""
@@ -207,7 +210,7 @@
                   hidden
                   multiple
                   id="certificate"
-                  name="certificatesTemp"
+                  name="certificates"
                   @change="certificateUpload"
                   accept="image/*"
                 />
@@ -478,12 +481,10 @@ export default {
       images: [],
       imagesTemp: [],
       certificates: [],
-      certificatesTemp: [],
       deletedImgs: [],
       options: new Map(),
       serverAddr: "https://xn--j1ano.com/",
       tempUrl: [],
-      certTempUrl: [],
       isLoading: false,
       length: 0,
       discount:
@@ -569,12 +570,8 @@ export default {
       let fileBuffer = [];
       Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
       const files = fileBuffer;
-      this[e.target.name] = files;
-      for (let img of this.certificatesTemp) {
-        this.certificates.push(img);
-      }
-      for (let i = 0; i < this[e.target.name].length; i++) {
-        this.certTempUrl.push({
+      for (let i = 0; i < files.length; i++) {
+        this.certificates.push({
           name: files[i].name,
           url: URL.createObjectURL(files[i]),
         });
@@ -814,11 +811,15 @@ export default {
       productData.append("parent_value", this.$route.params.parent_value);
       productData.append("region", this.region);
       productData.append("type", this.$route.params.type);
-      for (let i = 0; i < this.images.length; i++) {
-        productData.append("images", this.images[i]);
+      if (this.images) {
+        for (let i = 0; i < this.images.length; i++) {
+          productData.append("images", this.images[i]);
+        }
       }
-      for (let i = 0; i < this.certificates.length; i++) {
-        productData.append("certificates", this.certificates[i]);
+      if (this.certificates.length) {
+        for (let i = 0; i < this.certificates.length; i++) {
+          productData.append("certificates", this.certificates[i]);
+        }
       }
       if (this.options) {
         this.options.forEach((value, key) => {
@@ -914,7 +915,6 @@ export default {
     async downloadImgs() {
       if (this.editedProduct && this.editedProduct.images.length) {
         let a = 0;
-
         for (let imgName of this.editedProduct.images) {
           let url = this.serverAddr + this.editedProduct.path + imgName;
           await axios
