@@ -794,7 +794,7 @@ export default {
       productData.append("parent_value", this.$route.params.parent_value);
       productData.append("region", this.region);
       productData.append("type", this.$route.params.type);
-      if (this.images) {
+      if (this.images.length) {
         for (let i = 0; i < this.images.length; i++) {
           productData.append("images", this.images[i]);
         }
