@@ -172,18 +172,12 @@
             </div>
           </div>
 
-          <div
-            class="group"
-            style="margin-top: 10px; margin-bottom: 15px; display: none"
-          >
+          <div class="group" style="margin-top: 10px; margin-bottom: 15px">
             <div class="group__title">Сертификаты:</div>
-            <div
-              class="group__content photo-wrapper"
-              v-if="certificates.length"
-            >
+            <div class="group__content photo-wrapper" v-if="certTempUrl.length">
               <div
                 class="product-photo"
-                v-for="(certificate, index) in certificates"
+                v-for="(certificate, index) in certTempUrl"
               >
                 <img
                   alt=""
@@ -210,7 +204,7 @@
                   hidden
                   multiple
                   id="certificate"
-                  name="certificates"
+                  name="certificatesTemp"
                   @change="certificateUpload"
                   accept="image/*"
                 />
@@ -481,10 +475,12 @@ export default {
       images: [],
       imagesTemp: [],
       certificates: [],
+      certificatesTemp: [],
       deletedImgs: [],
       options: new Map(),
       serverAddr: "https://xn--j1ano.com/",
       tempUrl: [],
+      certTempUrl: [],
       isLoading: false,
       length: 0,
       discount:
@@ -570,8 +566,12 @@ export default {
       let fileBuffer = [];
       Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
       const files = fileBuffer;
-      for (let i = 0; i < files.length; i++) {
-        this.certificates.push({
+      this[e.target.name] = files;
+      for (let img of this.certificatesTemp) {
+        this.certificates.push(img);
+      }
+      for (let i = 0; i < this[e.target.name].length; i++) {
+        this.certTempUrl.push({
           name: files[i].name,
           url: URL.createObjectURL(files[i]),
         });
@@ -915,6 +915,29 @@ export default {
     async downloadImgs() {
       if (this.editedProduct && this.editedProduct.images.length) {
         let a = 0;
+        for (let imgName of this.editedProduct.certificates) {
+          let url = this.serverAddr + this.editedProduct.path + imgName;
+          await axios
+            .get(url, { responseType: "blob" })
+            .then((response) => {
+              let blob = new Blob([response.data]);
+              let image = new File(
+                [blob],
+                imgName,
+                { type: "image/jpg" },
+                new Date()
+              );
+              this.certificates.push(image);
+              this.certTempUrl.push({
+                name: imgName,
+                url: URL.createObjectURL(image),
+              });
+              a++;
+            })
+            .catch(console.error);
+        }
+
+        let b = 0;
         for (let imgName of this.editedProduct.images) {
           let url = this.serverAddr + this.editedProduct.path + imgName;
           await axios
@@ -932,7 +955,7 @@ export default {
                 name: imgName,
                 url: URL.createObjectURL(image),
               });
-              a++;
+              b++;
             })
             .catch(console.error);
         }

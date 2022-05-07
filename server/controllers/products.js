@@ -739,8 +739,10 @@ exports.editProduct = async (req, res, next) => {
     //     user: mongoose.Types.ObjectId(req.userId),
     // });
 
-    if (images && images.length > 0) {
-      product.images = [];
+    if (
+      (images && images.length > 0) ||
+      (certificates && certificates.length > 0)
+    ) {
       await removeUserDir(
         UPLOADS_PATH,
         `/catalog/${region}/categories/${product.category_id.toString()}/${
@@ -753,6 +755,10 @@ exports.editProduct = async (req, res, next) => {
           product._id
         }`
       );
+    }
+
+    if (images && images.length > 0) {
+      product.images = [];
 
       for (let i = 0; i < images.length; i++) {
         await uploadFilesFromTempToFolder(
