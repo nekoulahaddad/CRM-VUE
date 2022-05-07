@@ -811,15 +811,11 @@ export default {
       productData.append("parent_value", this.$route.params.parent_value);
       productData.append("region", this.region);
       productData.append("type", this.$route.params.type);
-      if (this.images.length) {
-        for (let i = 0; i < this.images.length; i++) {
-          productData.append("images", this.images[i]);
-        }
+      for (let i = 0; i < this.images.length; i++) {
+        productData.append("images", this.images[i]);
       }
-      if (this.certificates.length) {
-        for (let i = 0; i < this.certificates.length; i++) {
-          productData.append("certificates", this.certificates[i]);
-        }
+      for (let i = 0; i < this.certificates.length; i++) {
+        productData.append("certificates", this.certificates[i]);
       }
       if (this.options) {
         this.options.forEach((value, key) => {
