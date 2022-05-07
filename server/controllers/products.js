@@ -525,6 +525,7 @@ exports.addProduct = async (req, res, next) => {
       product: createdProduct,
     });
   } catch (error) {
+    return res.json(error);
     next(error);
   }
 };
@@ -887,7 +888,6 @@ exports.editProduct = async (req, res, next) => {
       old: product._id,
     });
   } catch (error) {
-    return res.json(error);
     next(error);
   }
 };
