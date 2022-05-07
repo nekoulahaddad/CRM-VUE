@@ -914,29 +914,7 @@ export default {
     async downloadImgs() {
       if (this.editedProduct && this.editedProduct.images.length) {
         let a = 0;
-        for (let imgName of this.editedProduct.certificates) {
-          let url = this.serverAddr + this.editedProduct.path + imgName;
-          await axios
-            .get(url, { responseType: "blob" })
-            .then((response) => {
-              let blob = new Blob([response.data]);
-              let image = new File(
-                [blob],
-                imgName,
-                { type: "image/jpg" },
-                new Date()
-              );
-              this.certificates.push(image);
-              this.certTempUrl.push({
-                name: imgName,
-                url: URL.createObjectURL(image),
-              });
-              a++;
-            })
-            .catch(console.error);
-        }
 
-        let b = 0;
         for (let imgName of this.editedProduct.images) {
           let url = this.serverAddr + this.editedProduct.path + imgName;
           await axios
@@ -954,7 +932,7 @@ export default {
                 name: imgName,
                 url: URL.createObjectURL(image),
               });
-              b++;
+              a++;
             })
             .catch(console.error);
         }
