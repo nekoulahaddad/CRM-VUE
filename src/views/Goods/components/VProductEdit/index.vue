@@ -174,7 +174,10 @@
 
           <div class="group" style="margin-top: 10px; margin-bottom: 15px">
             <div class="group__title">Сертификаты:</div>
-            <div class="group__content photo-wrapper" v-if="certTempUrl.length">
+            <div
+              class="group__content photo-wrapper"
+              v-if="false && certTempUrl.length"
+            >
               <div
                 class="product-photo"
                 v-for="(certificate, index) in certTempUrl"
