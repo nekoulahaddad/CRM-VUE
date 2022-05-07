@@ -383,25 +383,27 @@ const createNewProduct = async (params, images, contentPath) => {
       `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
     );
 
-    for (let i = 0; i < images.length; i++) {
-      if (contentPath) {
-        await copyFilesFromTempToFolder(
-          tempPath,
-          UPLOADS_PATH,
-          images[i].filename,
-          `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
-        );
-        product.images.push(images[i].filename);
-      } else {
-        await uploadFilesFromTempToFolder(
-          tempPath,
-          UPLOADS_PATH,
-          images[i].filename,
-          `/catalog/${region}/categories/${
-            product.category_id
-          }/${product._id.toString()}`
-        );
-        product.images.push(images[i].filename);
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        if (contentPath) {
+          await copyFilesFromTempToFolder(
+            tempPath,
+            UPLOADS_PATH,
+            images[i].filename,
+            `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
+          );
+          product.images.push(images[i].filename);
+        } else {
+          await uploadFilesFromTempToFolder(
+            tempPath,
+            UPLOADS_PATH,
+            images[i].filename,
+            `/catalog/${region}/categories/${
+              product.category_id
+            }/${product._id.toString()}`
+          );
+          product.images.push(images[i].filename);
+        }
       }
     }
     product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
