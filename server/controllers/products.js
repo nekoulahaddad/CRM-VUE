@@ -471,31 +471,31 @@ const createNewProduct = async (params, images, contentPath) => {
       UPLOADS_PATH,
       `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
     );
-    for (let i = 0; i < images.length; i++) {
-      if (contentPath) {
-        await copyFilesFromTempToFolder(
-          tempPath,
-          UPLOADS_PATH,
-          images[i].filename,
-          `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
-        );
-        product.images.push(images[i].filename);
-      } else {
-        await uploadFilesFromTempToFolder(
-          tempPath,
-          UPLOADS_PATH,
-          images[i].filename,
-          `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
-        );
-        product.images.push(images[i].filename);
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        if (contentPath) {
+          await copyFilesFromTempToFolder(
+            tempPath,
+            UPLOADS_PATH,
+            images[i].filename,
+            `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
+          );
+          product.images.push(images[i].filename);
+        } else {
+          await uploadFilesFromTempToFolder(
+            tempPath,
+            UPLOADS_PATH,
+            images[i].filename,
+            `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
+          );
+          product.images.push(images[i].filename);
+        }
       }
     }
     product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
     // Обновляем товар
-    console.log(matchedProducts);
     product.article = matchedProducts[0].results[0].article;
     product._id = mongoose.Types.ObjectId(matchedProducts[0].results[0]._id);
-    console.log(product);
     const updatedProducts = await Products.updateOne(
       {
         _id: mongoose.Types.ObjectId(matchedProducts[0]._id),
