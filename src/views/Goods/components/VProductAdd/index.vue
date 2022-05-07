@@ -185,54 +185,6 @@
                     </label>
                   </div>
                 </div>
-
-                <div
-                  class="group"
-                  style="margin-top: 10px; margin-bottom: 15px; display: none"
-                >
-                  <div class="group__title">Сертификаты:</div>
-                  <div
-                    class="group__content photo-wrapper"
-                    v-if="certificates.length"
-                  >
-                    <div
-                      class="product-photo"
-                      v-for="(certificate, index) in certificates"
-                    >
-                      <img
-                        alt=""
-                        class="product-photo__img"
-                        :key="index"
-                        :src="certificate.url"
-                      />
-                      <img
-                        alt=""
-                        class="product-photo__delete-icon"
-                        src="@/assets/icons/trash_icon.svg"
-                        @click="deleteCertificate(index)"
-                      />
-                    </div>
-                  </div>
-                  <div class="group__content">
-                    <label
-                      v-if="certificates.length < 6"
-                      class="add-product-photo"
-                      for="certificate"
-                    >
-                      <input
-                        type="file"
-                        hidden
-                        multiple
-                        id="certificate"
-                        name="certificates"
-                        @change="certificateUpload"
-                        accept="image/*"
-                      />
-                      <img src="@/assets/icons/add_photo.svg" alt="" />
-                      <span>Нажмите чтобы выбрать</span>
-                    </label>
-                  </div>
-                </div>
               </div>
               <div style="margin-left: 12px" class="flex-1">
                 <div class="group">
@@ -847,11 +799,6 @@ export default {
           productData.append("images", this.images[i]);
         }
       }
-      if (this.certificates.length) {
-        for (let i = 0; i < this.certificates.length; i++) {
-          productData.append("certificates", this.certificates[i]);
-        }
-      }
       if (this.options) {
         this.options.forEach((value, key) => {
           productData.append(`options[${key}]`, value);
@@ -864,7 +811,7 @@ export default {
             productData.append(`recomendsProductsTitles[]`, item.title);
           });
         } else {
-          //productData.append("recomends", []);
+          productData.append("recomends", []);
         }
       }
       if (this.buyed) {
@@ -874,7 +821,7 @@ export default {
             productData.append(`buyedProductsTitles[]`, item.title);
           });
         } else {
-          //productData.append("buyed", []);
+          productData.append("buyed", []);
         }
       }
 
