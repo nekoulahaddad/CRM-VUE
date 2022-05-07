@@ -887,6 +887,7 @@ exports.editProduct = async (req, res, next) => {
       old: product._id,
     });
   } catch (error) {
+    return res.json(error);
     next(error);
   }
 };
