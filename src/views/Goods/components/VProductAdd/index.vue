@@ -864,7 +864,7 @@ export default {
             productData.append(`recomendsProductsTitles[]`, item.title);
           });
         } else {
-          productData.append("recomends", []);
+          //productData.append("recomends", []);
         }
       }
       if (this.buyed) {
@@ -874,7 +874,7 @@ export default {
             productData.append(`buyedProductsTitles[]`, item.title);
           });
         } else {
-          productData.append("buyed", []);
+          //productData.append("buyed", []);
         }
       }
 
