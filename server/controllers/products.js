@@ -349,6 +349,7 @@ const createNewProduct = async (
   // Находим родительскую категорию
   product.category_id = mongoose.Types.ObjectId(parent_value);
   product.images = [];
+  product.certificates = [];
 
   // Ищем похожие товары среди всех регионов
   const matchedProducts = await Products.aggregate([
