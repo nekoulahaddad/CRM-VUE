@@ -184,7 +184,11 @@ exports.createProduct = async (params, images, contentPath) => {
   return createNewProduct(params, images, contentPath);
 };
 
-const createNewProduct = async (params, images, contentPath) => {
+const createNewProduct = async (
+  params,
+  { images, certificates },
+  contentPath
+) => {
   tempPath = contentPath ? contentPath : TEMP_PATH;
   const {
     region,
@@ -406,6 +410,24 @@ const createNewProduct = async (params, images, contentPath) => {
         }
       }
     }
+
+    if (certificates) {
+      await makeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}/certificates/`
+      );
+
+      for (let i = 0; i < certificates.length; i++) {
+        await uploadFilesFromTempToFolder(
+          tempPath,
+          UPLOADS_PATH,
+          certificates[i].filename,
+          `/catalog/${region}/categories/${
+            product.category_id
+          }/${product._id.toString()}/certificates/`
+        );
+      }
+    }
     product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
     // Создаем категорию
     product.visible = true;
@@ -519,7 +541,11 @@ exports.addProduct = async (req, res, next) => {
 
     const { images, certificates } = req.files;
     const params = req.body;
-    const createdProduct = await createNewProduct(params, images, null);
+    const createdProduct = await createNewProduct(
+      params,
+      { images, certificates },
+      null
+    );
 
     res.status(201).json({
       message: "ADDED",
