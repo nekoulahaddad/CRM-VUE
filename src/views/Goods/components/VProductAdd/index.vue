@@ -185,6 +185,50 @@
                     </label>
                   </div>
                 </div>
+
+                <div class="group" style="margin-top: 10px">
+                  <div class="group__title">Сертификаты:</div>
+                  <div class="group__content photo-wrapper">
+                    <template v-if="certTempUrl.length > 0">
+                      <div
+                        class="product-photo"
+                        v-for="(item, index) in certTempUrl"
+                        :key="index"
+                      >
+                        <img
+                          alt=""
+                          :src="item.url"
+                          :title="item.name"
+                          class="product-photo__img"
+                        />
+                        <img
+                          alt=""
+                          class="product-photo__delete-icon"
+                          src="@/assets/icons/trash_icon.svg"
+                          @click="deleteCertificate(item)"
+                        />
+                      </div>
+                    </template>
+
+                    <label
+                      v-if="certificates.length < 3"
+                      class="add-product-photo"
+                      for="certificate"
+                    >
+                      <input
+                        multiple
+                        hidden
+                        type="file"
+                        accept="image/*"
+                        id="certificate"
+                        name="certificatesTemp"
+                        @change="certificateUpload($event, false)"
+                      />
+                      <img src="@/assets/icons/add_photo.svg" alt="" />
+                      <span>Нажмите чтобы выбрать</span>
+                    </label>
+                  </div>
+                </div>
               </div>
               <div style="margin-left: 12px" class="flex-1">
                 <div class="group">
@@ -454,10 +498,12 @@ export default {
       images: [],
       certificates: [],
       imagesTemp: [],
+      certificatesTemp: [],
       deletedImgs: [],
       options: new Map(),
       serverAddr: "https://xn--j1ano.com/",
       tempUrl: [],
+      certTempUrl: [],
       isLoading: false,
       length: 0,
       discount:
@@ -532,25 +578,32 @@ export default {
     getResult(result) {
       return "";
     },
-    certificateUpload(e) {
+    certificateUpload(e, clear = false) {
       let fileBuffer = [];
       Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
       const files = fileBuffer;
-      for (let i = 0; i < files.length; i++) {
-        this.certificates.push({
+      this[e.target.name] = files;
+      this.certificates = clear ? [] : this.certificates;
+      this.certTempUrl = clear ? [] : this.certTempUrl;
+      for (let img of this.certificatesTemp) {
+        this.certificates.push(img);
+      }
+      for (let i = 0; i < this[e.target.name].length; i++) {
+        this.certTempUrl.push({
           name: files[i].name,
           url: URL.createObjectURL(files[i]),
         });
       }
     },
-    deleteCertificate(index) {
-      this.certificates = Array.from(this.certificates).filter((doc, i) => {
-        if (i !== index) {
-          return doc;
-        }
-      });
+    deleteCertificate(image) {
+      this.certificates = this.certificates.filter(
+        (file) => file.name !== image.name
+      );
+      this.certTempUrl = this.certTempUrl.filter(
+        (obj) => obj.name !== image.name
+      );
     },
-    async fileUpload(e, clear) {
+    async fileUpload(e, clear = false) {
       this.isLoading = true;
       let fileBuffer = [];
       Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
@@ -797,6 +850,11 @@ export default {
       if (this.images.length) {
         for (let i = 0; i < this.images.length; i++) {
           productData.append("images", this.images[i]);
+        }
+      }
+      if (this.certificates.length) {
+        for (let i = 0; i < this.certificates.length; i++) {
+          productData.append("certificates", this.certificates[i]);
         }
       }
       if (this.options) {
