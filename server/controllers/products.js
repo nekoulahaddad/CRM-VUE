@@ -793,18 +793,18 @@ exports.editProduct = async (req, res, next) => {
 
     if (images && images.length > 0) {
       product.images = [];
-      // await removeUserDir(
-      //   UPLOADS_PATH,
-      //   `/catalog/${region}/categories/${product.category_id.toString()}/${
-      //     product._id
-      //   }`
-      // );
-      // await makeUserDir(
-      //   UPLOADS_PATH,
-      //   `/catalog/${region}/categories/${product.category_id.toString()}/${
-      //     product._id
-      //   }`
-      // );
+      await removeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${
+          product._id
+        }`
+      );
+      await makeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${
+          product._id
+        }`
+      );
 
       for (let i = 0; i < images.length; i++) {
         await uploadFilesFromTempToFolder(
