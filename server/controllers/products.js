@@ -427,7 +427,7 @@ const createNewProduct = async (
             product.category_id
           }/${product._id.toString()}/certificates/`
         );
-        product.certificates.push(images[i].filename);
+        product.certificates.push(certificates[i].filename);
       }
     }
     product.path = `/uploads/catalog/${region}/categories/${product.category_id}/${product._id}/`;
