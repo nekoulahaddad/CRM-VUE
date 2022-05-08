@@ -1,6 +1,6 @@
 <template>
   <div class="list__info list-info product-edit-form">
-    <form @submit.prevent="onProductAdd">
+    <form @submit.prevent="onProductEdit">
       <div class="d-flex justify-content-between">
         <div style="margin-right: 12px" class="flex-1">
           <div class="group">
@@ -713,7 +713,7 @@ export default {
         indexCurrent++;
       }
     },
-    onProductAdd() {
+    onProductEdit() {
       let productData = new FormData();
       if (this.editedProduct) {
         productData.append("productId", this.editedProduct._id);
@@ -938,6 +938,34 @@ export default {
                 url: URL.createObjectURL(image),
               });
               a++;
+            })
+            .catch(console.error);
+        }
+      }
+
+      if (this.editedProduct && this.editedProduct.certificates.length) {
+        let a = 0;
+        for (let imgName of this.editedProduct.certificates) {
+          let url =
+            this.serverAddr +
+            this.editedProduct.path +
+            "/certificates/" +
+            imgName;
+          await axios
+            .get(url, { responseType: "blob" })
+            .then((response) => {
+              let blob = new Blob([response.data]);
+              let image = new File(
+                [blob],
+                imgName,
+                { type: "image/jpg" },
+                new Date()
+              );
+              this.certificates.push(image);
+              this.certTempUrl.push({
+                name: imgName,
+                url: URL.createObjectURL(image),
+              });
             })
             .catch(console.error);
         }
