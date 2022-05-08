@@ -172,47 +172,43 @@
             </div>
           </div>
 
-          <div
-            class="group"
-            style="margin-top: 10px; margin-bottom: 15px; display: none"
-          >
+          <div class="group" style="margin-top: 10px">
             <div class="group__title">Сертификаты:</div>
-            <div
-              class="group__content photo-wrapper"
-              v-if="certificates.length"
-            >
-              <div
-                class="product-photo"
-                v-for="(certificate, index) in certificates"
-              >
-                <img
-                  alt=""
-                  class="product-photo__img"
+            <div class="group__content photo-wrapper">
+              <template v-if="certTempUrl.length > 0">
+                <div
+                  class="product-photo"
+                  v-for="(item, index) in certTempUrl"
                   :key="index"
-                  :src="certificate.url"
-                />
-                <img
-                  alt=""
-                  class="product-photo__delete-icon"
-                  src="@/assets/icons/trash_icon.svg"
-                  @click="deleteCertificate(index)"
-                />
-              </div>
-            </div>
-            <div class="group__content">
+                >
+                  <img
+                    alt=""
+                    :src="item.url"
+                    :title="item.name"
+                    class="product-photo__img"
+                  />
+                  <img
+                    alt=""
+                    class="product-photo__delete-icon"
+                    src="@/assets/icons/trash_icon.svg"
+                    @click="deleteCertificate(item)"
+                  />
+                </div>
+              </template>
+
               <label
-                v-if="certificates.length < 6"
+                v-if="certificates.length < 3"
                 class="add-product-photo"
                 for="certificate"
               >
                 <input
-                  type="file"
-                  hidden
                   multiple
-                  id="certificate"
-                  name="certificates"
-                  @change="certificateUpload"
+                  hidden
+                  type="file"
                   accept="image/*"
+                  id="certificate"
+                  name="certificatesTemp"
+                  @change="certificateUpload($event, false)"
                 />
                 <img src="@/assets/icons/add_photo.svg" alt="" />
                 <span>Нажмите чтобы выбрать</span>
@@ -480,8 +476,10 @@ export default {
       coef: this.editedProduct ? this.editedProduct.coef : "",
       images: [],
       imagesTemp: [],
+      certTempUrl: [],
       certificates: [],
       deletedImgs: [],
+      certificatesTemp: [],
       options: new Map(),
       serverAddr: "https://xn--j1ano.com/",
       tempUrl: [],
@@ -559,19 +557,26 @@ export default {
     getResult(result) {
       return "";
     },
-    deleteCertificate(index) {
-      this.certificates = Array.from(this.certificates).filter((doc, i) => {
-        if (i !== index) {
-          return doc;
-        }
-      });
+    deleteCertificate(image) {
+      this.certificates = this.certificates.filter(
+        (file) => file.name !== image.name
+      );
+      this.certTempUrl = this.certTempUrl.filter(
+        (obj) => obj.name !== image.name
+      );
     },
-    certificateUpload(e) {
+    certificateUpload(e, clear = false) {
       let fileBuffer = [];
       Array.prototype.push.apply(fileBuffer, e.target.files); // <-- here
       const files = fileBuffer;
-      for (let i = 0; i < files.length; i++) {
-        this.certificates.push({
+      this[e.target.name] = files;
+      this.certificates = clear ? [] : this.certificates;
+      this.certTempUrl = clear ? [] : this.certTempUrl;
+      for (let img of this.certificatesTemp) {
+        this.certificates.push(img);
+      }
+      for (let i = 0; i < this[e.target.name].length; i++) {
+        this.certTempUrl.push({
           name: files[i].name,
           url: URL.createObjectURL(files[i]),
         });
@@ -811,7 +816,7 @@ export default {
       productData.append("parent_value", this.$route.params.parent_value);
       productData.append("region", this.region);
       productData.append("type", this.$route.params.type);
-      if (this.images) {
+      if (this.images.length) {
         for (let i = 0; i < this.images.length; i++) {
           productData.append("images", this.images[i]);
         }
