@@ -847,12 +847,12 @@ export default {
       productData.append("parent_value", this.$route.params.parent_value);
       productData.append("region", this.region);
       productData.append("type", this.$route.params.type);
-      if (this.images.length) {
+      if (this.images) {
         for (let i = 0; i < this.images.length; i++) {
           productData.append("images", this.images[i]);
         }
       }
-      if (this.certificates.length) {
+      if (this.certificates) {
         for (let i = 0; i < this.certificates.length; i++) {
           productData.append("certificates", this.certificates[i]);
         }
