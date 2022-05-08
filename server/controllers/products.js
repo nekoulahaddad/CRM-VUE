@@ -444,9 +444,7 @@ const createNewProduct = async (
     });
 
     await newProduct.save();
-    console.log(newProduct);
   } else {
-    console.log("MATCHED");
     // Иначе у нас есть совпадения - добавляем в эту категорию регион
     let currentProduct = await Products.aggregate([
       {
@@ -513,6 +511,28 @@ const createNewProduct = async (
             `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}`
           );
           product.images.push(images[i].filename);
+        }
+      }
+    }
+
+    if (certificates) {
+      for (let i = 0; i < certificates.length; i++) {
+        if (contentPath) {
+          await copyFilesFromTempToFolder(
+            tempPath,
+            UPLOADS_PATH,
+            certificates[i].filename,
+            `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}/certificates/`
+          );
+          product.certificates.push(certificates[i].filename);
+        } else {
+          await uploadFilesFromTempToFolder(
+            tempPath,
+            UPLOADS_PATH,
+            certificates[i].filename,
+            `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}/certificates/`
+          );
+          product.certificates.push(certificates[i].filename);
         }
       }
     }
