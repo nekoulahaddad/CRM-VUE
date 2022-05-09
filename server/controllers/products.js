@@ -821,10 +821,14 @@ exports.editProduct = async (req, res, next) => {
     if (certificates && certificates.length > 0) {
       product.certificates = [];
 
-      // await makeUserDir(
-      //   UPLOADS_PATH,
-      //   `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}/certificates/`
-      // );
+      await removeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}/certificates/`
+      );
+      await makeUserDir(
+        UPLOADS_PATH,
+        `/catalog/${region}/categories/${product.category_id.toString()}/${product._id.toString()}/certificates/`
+      );
 
       for (let i = 0; i < certificates.length; i++) {
         await uploadFilesFromTempToFolder(
