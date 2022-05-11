@@ -109,6 +109,12 @@ export default {
         return role.role;
       },
     },
+    id: {
+      get: function () {
+        let user = this.getUserRole();
+        return user._id;
+      },
+    },
   },
   watch: {
     $route: function () {
@@ -135,6 +141,10 @@ export default {
       try {
         this.isLoading = false;
         this.filtersOptions.page = this.$route.params.page;
+
+        if (this.role !== "superadmin" && this.role !== "director") {
+          this.filtersOptions.executor = this.id;
+        }
 
         const { data } = await this.getDataFromPage(
           "/reports/get",
