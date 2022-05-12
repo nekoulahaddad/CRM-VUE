@@ -28,7 +28,10 @@
           class="table__icon"
           v-if="
             client.orders.length &&
-            (role === 'superadmin' || role === 'director' || role === 'buyer')
+            (role === 'superadmin' ||
+              role === 'director' ||
+              role === 'buyer' ||
+              role === 'manager')
           "
         >
           <VueCustomTooltip v-if="infoItem._id !== client._id" label="Просмотр">
