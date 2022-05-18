@@ -104,16 +104,22 @@ export default {
 
       this.start = true;
 
-      axios
-        .post("/educations/upload/", documentData, {
-          maxContentLength: Infinity,
-          maxBodyLength: Infinity,
-          onUploadProgress: (progressEvent) => {
-            this.uploadProgress = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-          },
-        })
+      axios({
+        url: "/educations/upload/",
+        data: documentData,
+        method: "post",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          ...documentData.getHeaders(),
+        },
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity,
+        onUploadProgress: (progressEvent) => {
+          this.uploadProgress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+        },
+      })
         .then(() => {
           this.$emit("success");
           this.$toast.success("Документ успешно загружен!");
