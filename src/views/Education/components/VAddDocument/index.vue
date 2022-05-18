@@ -43,9 +43,7 @@
         <v-button v-if="!start" red>Сохранить</v-button>
         <div v-else class="d-flex align-items-center">
           <v-spinner small />
-          <span style="margin-left: 10px; color: #db1f35">
-            {{ uploadProgress }}%
-          </span>
+          <span class="upload-progress"> {{ uploadProgress }}% </span>
         </div>
       </div>
     </form>
@@ -110,6 +108,7 @@ export default {
 
       axios
         .post("/educations/upload/", documentData, {
+          timeout: 180000,
           onUploadProgress: (progressEvent) => {
             this.uploadProgress = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
@@ -210,6 +209,12 @@ export default {
       white-space: nowrap;
       padding-right: 30px;
     }
+  }
+  .upload-progress {
+    margin-left: 12px;
+    color: #db1f35;
+    font-size: 16px;
+    font-weight: 500;
   }
 }
 </style>
