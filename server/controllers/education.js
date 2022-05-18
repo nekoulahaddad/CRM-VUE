@@ -136,11 +136,14 @@ exports.uploadDocument = async (req, res, next) => {
       });
     }
 
-    await currentEducation.updateOne(currentEducation);
-
+    const updateEducation = await currentEducation.updateOne(currentEducation);
+    console.log("///////////////////////");
+    console.log("Updated Education");
+    // console.log(updateEducation)
+    console.log("///////////////////////");
     res.status(204).json({ message: "EDITED" });
   } catch (error) {
-    return res.status(500).json(error);
+    next(error);
   }
 };
 
