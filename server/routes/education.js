@@ -11,7 +11,7 @@ router.post("/post", isAuth, EducationController.addEducation);
 router.post("/update", isAuth, EducationController.editEducation);
 router.post(
   "/upload",
-  uploadDocument.single("document"),
+  uploadDocument.fields([{ name: "document" }]),
   isAuth,
   EducationController.uploadDocument
 );
