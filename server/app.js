@@ -51,7 +51,7 @@ const allowedOrigins = [
 ];
 
 const limiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
+  windowMs: 60 * 1000000, // 1 minute
   max: 1000, // limit each IP to 100 requests per windowMs
   message: "Попробуйте позже!",
 });
@@ -87,7 +87,6 @@ app.use(cors(corsOptionsDeligate));
 app.use(logger.requestLog);
 app.use(express.json({ limit: "200mb" }));
 app.use(express.urlencoded({ extended: true, limit: "200mb" }));
-app.use(express.json());
 app.use(limiter);
 app.disable("view cache");
 app.set("etag", false);
