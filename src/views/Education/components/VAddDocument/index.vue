@@ -110,7 +110,7 @@ export default {
 
       axios
         .post("/educations/upload/", documentData, {
-          onUploadProgress: function (progressEvent) {
+          onUploadProgress: (progressEvent) => {
             this.uploadProgress = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
@@ -121,7 +121,7 @@ export default {
           this.$toast.success("Документ успешно загружен!");
         })
         .catch((err) => {
-          this.start = false;
+          //this.start = false;
           this.$toast.error(err.response.data.message);
         });
     },
