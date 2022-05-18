@@ -6,7 +6,7 @@ const EducationController = require("../controllers/education");
 const isAuth = require("../middleware/isAuth");
 
 const uploadDocument = require("../middleware/multer");
-const upload = uploadDocument().single("document");
+const upload = uploadDocument.single("document");
 
 router.get("/get", isAuth, EducationController.getEducations);
 router.post("/post", isAuth, EducationController.addEducation);
