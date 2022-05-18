@@ -339,7 +339,8 @@ const startApp = async () => {
       });
     });
 
-    server.keepAliveTimeout = 1000000;
+    server.keepAliveTimeout = 10000000;
+    server.timeout = 50000000;
 
     server.listen(port);
 
