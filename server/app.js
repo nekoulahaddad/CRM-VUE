@@ -339,6 +339,8 @@ const startApp = async () => {
       });
     });
 
+    server.keepAliveTimeout = 1000000;
+
     server.listen(port);
 
     console.log("Successfully started at port:" + port);
