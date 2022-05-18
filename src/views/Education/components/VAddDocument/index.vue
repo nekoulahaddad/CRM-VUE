@@ -110,7 +110,6 @@ export default {
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
-          ...documentData.getHeaders(),
         },
         maxContentLength: Infinity,
         maxBodyLength: Infinity,
