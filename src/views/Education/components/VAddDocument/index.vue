@@ -41,7 +41,12 @@
       </div>
       <div class="group__actions">
         <v-button v-if="!start" red>Сохранить</v-button>
-        <v-spinner small v-else />
+        <div v-else class="d-flex align-items-center">
+          <v-spinner small />
+          <span style="margin-left: 10px; color: #db1f35">
+            {{ uploadProgress }}%
+          </span>
+        </div>
       </div>
     </form>
   </div>
@@ -65,6 +70,7 @@ export default {
       start: false,
       documents: [],
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
+      uploadProgress: 0,
     };
   },
   methods: {
@@ -105,10 +111,9 @@ export default {
       axios
         .post("/educations/upload/", documentData, {
           onUploadProgress: function (progressEvent) {
-            var percentCompleted = Math.round(
+            this.uploadProgress = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
-            console.log(percentCompleted);
           },
         })
         .then(() => {
