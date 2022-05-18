@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
+import {} from "/";
 
 const EducationController = require("../controllers/education");
 const isAuth = require("../middleware/isAuth");
 
 const uploadDocument = require("../middleware/multer");
-const upload = multer().single("document");
+const upload = uploadDocument().single("document");
 
 router.get("/get", isAuth, EducationController.getEducations);
 router.post("/post", isAuth, EducationController.addEducation);
