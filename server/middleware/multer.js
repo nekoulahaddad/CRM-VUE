@@ -47,7 +47,7 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 const uploadDocument = multer({
   storage: storage,
   filter: docFilter,
-  limits: { fileSize: 10000000 },
+  limits: { fileSize: 10000000000 },
 });
 module.exports = upload;
 module.exports = uploadDocument;
