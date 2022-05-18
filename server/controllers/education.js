@@ -140,7 +140,7 @@ exports.uploadDocument = async (req, res, next) => {
 
     res.status(204).json({ message: "EDITED" });
   } catch (error) {
-    next(error);
+    return res.status(500).json(error);
   }
 };
 
