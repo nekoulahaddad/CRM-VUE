@@ -102,11 +102,15 @@ export default {
 
       this.start = true;
 
-      axios({
-        url: "/educations/upload/",
-        data: documentData,
-        method: "POST",
-      })
+      axios
+        .post("/educations/upload/", documentData, {
+          onUploadProgress: function (progressEvent) {
+            var percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            console.log(percentCompleted);
+          },
+        })
         .then(() => {
           this.$emit("success");
           this.$toast.success("Документ успешно загружен!");
