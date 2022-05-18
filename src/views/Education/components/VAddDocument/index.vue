@@ -90,10 +90,8 @@ export default {
       });
     },
     onDocumentAdd() {
-      this.changeStatus(false);
       let documentData = new FormData();
       documentData.append("educationId", this.education._id);
-      //documentData.append("title", this.title);
 
       if (this.documents.length) {
         for (let i = 0; i < this.documents.length; i++) {
@@ -108,7 +106,8 @@ export default {
 
       axios
         .post("/educations/upload/", documentData, {
-          timeout: 180000,
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity,
           onUploadProgress: (progressEvent) => {
             this.uploadProgress = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
