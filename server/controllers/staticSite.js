@@ -352,8 +352,8 @@ exports.importPriceExcel = async (req, res, next) => {
   }
 
   await uploadFilesFromTempToFolder(TEMP_PATH, STATIC_SITES_PATH + '/uploaded', file.filename, '');
+  
   if (!site.node) {
-
     const command = `npm --prefix /var/www/static_sites/${site.folder} run export`;
     exec(command, async (error, stdout, stderr) => {
       if (error !== null) {
