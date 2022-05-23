@@ -35,6 +35,7 @@ const staticSiteSchema = new Schema(
         text: { type: String, required: false },
       },
     },
+    node: { type: String, required: false }
   },
   { timestamps: true }
 );
