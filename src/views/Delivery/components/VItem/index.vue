@@ -20,6 +20,9 @@
     <div class="list__column text--sapphire">
       {{ item.office_address }}
     </div>
+    <div class="list__column text--sapphire">
+      {{ item.region.title }}
+    </div>
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
