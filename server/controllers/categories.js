@@ -340,7 +340,7 @@ exports.getCategories = async (req, res, next) => {
         path: "region",
         model: "Regions",
         select: "_id title value",
-      });
+		});
     let categoriesList =
       categories && categories[0] ? categories[0].categories : [];
     let productsList = products && products[0] ? products[0].products : [];

@@ -415,7 +415,7 @@ exports.getTasks = async (req, res, next) => {
 
     console.log("///////////////////////");
     console.log("Tasks");
-    // console.log(result)
+   //  console.log(result)
     console.log("///////////////////////");
     res.status(201).json(result);
   } catch (error) {

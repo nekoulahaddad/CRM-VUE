@@ -381,8 +381,6 @@ const transferImages = async() => {
     }
 }
 
-
-
 const deleteTestRegionCategoriesAndProducts = async() => {
     try {
         let region = '5fec6d02797ee552f4a9fe1f'

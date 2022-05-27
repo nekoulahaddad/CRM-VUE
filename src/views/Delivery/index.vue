@@ -49,6 +49,7 @@
               <div class="list__columns">
                 <div
                   v-for="field in $t('pages.delivery.fields')"
+						:key="field"
                   class="list__column"
                 >
                   {{ field }}
@@ -302,7 +303,7 @@ export default {
 <style lang="scss">
 .delivery-page {
   .list__columns {
-    grid-template-columns: 30px 318px 220px 160px 140px 260px 1fr;
+    grid-template-columns: 30px 318px 220px 130px 140px 200px 100px 1fr;
   }
   .list__column {
     &:first-child {
@@ -318,7 +319,7 @@ export default {
 
   .page__right--full {
     .list__columns {
-      grid-template-columns: 30px 350px 350px 200px 180px 300px 1fr;
+      grid-template-columns: 30px 350px 350px 130px 180px 200px 100px 1fr;
     }
   }
 
