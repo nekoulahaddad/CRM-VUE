@@ -256,7 +256,7 @@ exports.getReports = async(req, res, next) => {
         }
         console.log("///////////////////////")
         console.log("Reports")
-        console.log(result)
+      //   console.log(result)
         console.log("///////////////////////")
         res.status(200).json(result)
     } catch (error) {

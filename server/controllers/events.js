@@ -16,7 +16,7 @@ exports.getEvents = async(req, res, next) => {
         }).lean()
         console.log("///////////////////////")
         console.log("Events")
-        console.log(events)
+      //   console.log(events)
         console.log("///////////////////////")
         res.status(200).json(events)
     } catch (error) {
