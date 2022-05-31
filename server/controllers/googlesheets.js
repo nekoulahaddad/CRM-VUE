@@ -10,9 +10,108 @@ const moment = require('moment')
 const { G_DOCS_PRODUCTS_PATH, ROOT } = require('../utils/path')
 const { makeUserDir, removeUserDir, deleteUserUploadedFile } = require('../utils/fs')
 
+
+const addSheet = async (region, categoryId, categoryName) => {
+
+	let products = await setHeaderRows(region)
+	const productsFromRegion = await getProductsFromRegion(region, [categoryId])
+	for (p of productsFromRegion) {
+		let values = []
+		values.push(p.article, p.title, p.cost, p.club_cost, p.category[0].category.categoryName, p.coef)
+		products.push(values)
+	}
+
+	writeJson(products, region, categoryId)
+
+	const existedDoc = await gDocProducts.findOne({ region })
+	if (existedDoc.sheets.some(sheet => sheet.categoryId === categoryId)) {
+		return "Категория уже существует в документе";
+	}
+	const request = {
+		"spreadsheetId": existedDoc.spreadsheetId,
+		"resource": {
+			"requests": [
+				{
+					"addSheet": {
+						"properties": {
+							"title": categoryName
+						},
+					}
+				}]
+		}
+	}
+
+	const auth = new google.auth.GoogleAuth({
+		keyFile: path.join(ROOT, process.env.GOOGLE_API),
+		scopes: "https://www.googleapis.com/auth/spreadsheets"
+	})
+	const client = await auth.getClient()
+	const googleSheets = google.sheets({ version: "v4", auth: client })
+
+
+	await googleSheets.spreadsheets.batchUpdate(request)
+	const metaData = await googleSheets.spreadsheets.get({
+		auth,
+		spreadsheetId: existedDoc.spreadsheetId
+	})
+	const sheetId = (metaData.data.sheets.filter(sheet => sheet.properties.title === categoryName))[0].properties.sheetId
+
+	await googleSheets.spreadsheets.values.update({
+		auth,
+		spreadsheetId: existedDoc.spreadsheetId,
+		range: `${categoryName}!A1`,
+		valueInputOption: "USER_ENTERED",
+		resource: {
+			values: products
+		}
+	})
+		.then(async () => {
+			await updateHeader(existedDoc.spreadsheetId, sheetId)
+			let sheet = {
+				sheetId: sheetId,
+				categoryName: categoryName,
+				categoryId: categoryId
+			}
+			await gDocProducts.updateOne({ region },
+				{
+					$addToSet: { "sheets": sheet }
+				})
+		})
+
+	return "Все прошло успешно";
+}
+
+// заполнение google таблицы данными из базы данных
+const fillProductDataInGoogleTable = async (categoriesData, region) => {
+	console.log('========== fillProductDataInGoogleTable ===========');
+	try {
+
+		for (let i = 0; i < categoriesData.length; i++) {
+			const { _id, categoryName } = categoriesData[i]
+			const res = await addSheet(region, _id, categoryName)
+			if (res == 'Все прошло успешно') console.log(`Таблица "${categoryName}" - готова!`);
+			else {
+				return {
+					status: "mistake",
+					msg: `Не удалось загрузить таблицу - ${categoryName}`
+				}
+			}
+		}
+
+	} catch (error) {
+		console.log(`func fillProductDataInGoogleTable ${error}`);
+		return {
+			status: "error",
+			msg: `Не удалось загрузить таблицы возникла ошибка`
+		}
+	}
+
+}
+
 exports.linkDocToRegion = async (req, res, next) => {
 	try {
-		const { region, spreadsheetId } = req.body
+		const { region, spreadsheetId, categoriesData } = req.body
+
 		const auth = new google.auth.GoogleAuth({
 			keyFile: path.join(ROOT, process.env.GOOGLE_API),
 			scopes: "https://www.googleapis.com/auth/spreadsheets"
@@ -48,10 +147,21 @@ exports.linkDocToRegion = async (req, res, next) => {
 		await newRegionSheet.save()
 		await makeUserDir(G_DOCS_PRODUCTS_PATH, `${region}`)
 
-		res.send({
-			message: "Документ добавлен",
-			data: newRegionSheet
-		})
+		const resFill = await fillProductDataInGoogleTable(categoriesData, region)
+
+		if (resFill?.status === 'error' || resFill?.status === 'mistake') {
+			res.send({
+				message: "Документ добавлен. Не удалось загрузить данные в google таблицу",
+				data: newRegionSheet
+			})
+		} else {
+			res.send({
+				message: "Документ добавлен. Данные добавлены в google таблицу",
+				data: newRegionSheet
+			})
+		}
+
+
 	} catch (error) {
 		console.log('linkDocToRegion ' + error);
 	}

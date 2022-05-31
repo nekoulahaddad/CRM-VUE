@@ -54,6 +54,10 @@
         </div>
         <div class="group">
           <v-spinner v-if="isLoading" />
+          <h5 v-if="isLoading">
+            Загрузка может занять некоторое время, данные переносяться в google
+            таблицу
+          </h5>
           <div v-else class="group__content d-flex">
             <v-button @click="confirm" red>Сохранить</v-button>
             <div style="margin-left: 15px">
@@ -85,10 +89,19 @@ export default {
     },
     async confirm() {
       this.isLoading = true;
+
+      await this.$store
+        .dispatch("getAllCategories", this.region)
+        .then((categories) => {
+          this.categories = categories;
+        });
+
       let data = {
         region: this.region,
         spreadsheetId: this.spreadsheetId,
+        categoriesData: this.categories,
       };
+		
       await axios({
         url: `/googlesheets/linksheet/`,
         data: data,

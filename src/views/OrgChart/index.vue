@@ -15,6 +15,7 @@
             :red="index === 3"
             :white="index !== 3"
             v-for="(item, index) in $t('pages.employee.buttons')"
+            :key="item + index"
             @click="goToLink(item.url)"
           >
             {{ item.value }}
@@ -378,7 +379,7 @@ export default {
     .list {
       max-width: 100%;
       .list__columns {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 0.1fr;
       }
     }
     .departments {
@@ -416,9 +417,6 @@ export default {
       width: 250px;
       margin-left: 20px;
     }
-  }
-
-  .departments {
   }
 }
 </style>
