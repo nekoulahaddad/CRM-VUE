@@ -21,6 +21,7 @@
               :red="index === 0"
               :white="index !== 0"
               v-for="(item, index) in $t('pages.employee.buttons')"
+				  :key="item+index"
               @click="goToLink(item.url)"
             >
               {{ item.value }}
@@ -61,6 +62,7 @@
               <div class="list__columns">
                 <div
                   v-for="(field, i) in $t('pages.employee.fields')"
+						:key="field+i"
                   class="list__column"
                 >
                   <input

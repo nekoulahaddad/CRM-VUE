@@ -190,6 +190,7 @@
             class="department__container--vline"
             :style="{ height: `${item.children.length * 58 - 16}px` }"
             v-if="index === item.children.length - 1 && false"
+				:key="index"
           />
           <v-item
             :level="level + 1"
@@ -223,16 +224,21 @@
         <div class="list__header">
           <div class="list__columns">
             <div class="list__column">Ф.И.О:</div>
-            <div class="list__column">Должность:</div>
+            <div class="list__column d-flex justify-center">Должность:</div>
           </div>
         </div>
         <div
           v-for="employee in item.employees"
           :key="employee._id"
           class="list__row list__row--shadow list__row--white"
+          :class="{ 'list__row--opened': employee._id === infoEmployee.id }"
         >
           <div
-            class="list__columns list__body list__columns--shadow order-list-columns list__columns--white"
+            class="
+              list__columns list__body list__columns--shadow
+              order-list-columns
+              list__columns--white
+            "
           >
             <div class="list__column">
               {{ transformFIO(employee) }}
@@ -242,8 +248,46 @@
                 {{ employee.position }}
               </div>
             </div>
+
+            <div class="list__column">
+              <div
+                :style="{ overflow: 'visible' }"
+                class="bg"
+                v-if="employee.position"
+              >
+                <div class="list__column">
+                  <div class="table__actions">
+                    <div class="table__icon">
+                      <VueCustomTooltip
+                        v-if="employee._id !== infoEmployee.id"
+                        label="Просмотр"
+                        background="blue"
+                      >
+                        <img
+                          alt=""
+                          src="@/assets/icons/info_icon.svg"
+                          @click="setVisibleInfoEmployee(true, employee._id)"
+                        />
+                      </VueCustomTooltip>
+                      <img
+                        alt=""
+                        src="@/assets/icons/arrow_top_icon.svg"
+                        @click="setVisibleInfoEmployee(false, null)"
+                        v-else
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <v-info
+            v-if="infoEmployee.visible && employee._id === infoEmployee.id"
+            :role="role"
+            :employee="employee"
+          />
         </div>
+
         <template v-if="addEmployee">
           <div class="text text--blue" style="font-size: 16px">
             Выберите сотрудника:
@@ -274,8 +318,11 @@
 </template>
 
 <script>
+import VInfo from "../VInfo/VInfo.vue";
+
 export default {
-  name: "VItem",
+  name: "v-item",
+  components: { VInfo },
   props: {
     addDepartmentItem: Array,
     dropDown: Object,
@@ -300,6 +347,10 @@ export default {
   data() {
     return {
       addEmployee: false,
+      infoEmployee: {
+        visible: false,
+        id: null,
+      },
       department: {},
       director: {},
       user: {},
@@ -346,6 +397,12 @@ export default {
       } catch (e) {
         this.$toast.error("Не удалось добавить подразделение!");
       }
+    },
+    setVisibleInfoEmployee(bool, id) {
+      this.infoEmployee = {
+        visible: bool,
+        id,
+      };
     },
     addUser() {
       const userFind = this.item["employees"].find(

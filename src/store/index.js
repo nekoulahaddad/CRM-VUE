@@ -260,20 +260,21 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getAllCategories({ commit }) {
+    getAllCategories({ commit }, region = '') {
       return new Promise((resolve, reject) => {
         axios({
           url: "/categories/get",
           method: "post",
           data: {
             options: {
-              nesting: 0,
+					nesting: 0,
+					region
             },
           },
         })
-          .then((res) => {
+			  .then((res) => {
             commit("setCategories", res.data.categories);
-            return resolve();
+				  return resolve(res.data.categories);
           })
           .catch(reject);
       });

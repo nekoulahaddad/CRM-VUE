@@ -140,6 +140,7 @@
                 </div>
                 <div
                   v-for="field in $t('pages.goods.fields.categories')"
+						:key="field"
                   class="list__column"
                 >
                   {{ field }}
@@ -323,6 +324,7 @@
                   <div class="list__columns">
                     <div
                       v-for="field in $t('pages.goods.fields.products')"
+							 :key="field"
                       class="list__column"
                     >
                       {{ field }}
@@ -342,7 +344,7 @@
                   </div>
                 </div>
                 <div
-                  v-for="(item, index) in dataset.products"
+                  v-for="(item) in dataset.products"
                   :key="item._id"
                   class="list__row list__row--group list__row--shadow list__row--white"
                   :class="{

@@ -18,6 +18,7 @@
           <v-button
             :red="index === 2"
             :white="index !== 2"
+				:key="item+index"
             v-for="(item, index) in $t('pages.employee.buttons')"
             @click="goToLink(item.url)"
           >
@@ -54,6 +55,7 @@
               <div class="list__columns">
                 <div
                   v-for="field in $t('pages.departments.fields')"
+						:key="field"
                   class="list__column"
                 >
                   {{ field }}

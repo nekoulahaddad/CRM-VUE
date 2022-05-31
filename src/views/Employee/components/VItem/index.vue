@@ -41,6 +41,7 @@
     <div class="list__column text text--green">
       {{ transformTime(employee.updatedAt) }}
     </div>
+    <!-- Информация о сотруднике -->
     <div class="list__column">
       <div class="table__actions">
         <div class="table__icon">
