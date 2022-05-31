@@ -54,6 +54,7 @@
                 v-model="$v.cost.$model"
                 :class="{
                   'form-control--error': $v.cost.$error,
+                  'bg--warning-light': exceedsPrice,
                 }"
                 @input="onChange($event)"
               />
@@ -237,14 +238,17 @@
             <div class="group__title">Цена закупки:</div>
             <div class="group__content">
               <input
+                :class="{
+                  'bg--warning-light': exceedsPrice,
+                }"
                 class="form-control"
                 type="number"
                 placeholder="Введите цену закупки"
                 min="0"
                 name="purchase_cost"
                 step="0.01"
-                :value="purchase_cost"
-                @input="onChange($event)"
+					 :value="purchase_cost"
+              	@input="onChange($event)"
               />
             </div>
           </div>
@@ -470,6 +474,7 @@ export default {
   },
   data() {
     return {
+      exceedsPrice: false,
       title: this.editedProduct ? this.editedProduct.title : "",
       cost: this.editedProduct ? this.editedProduct.cost : "",
       club_cost: this.editedProduct ? this.editedProduct.club_cost : "",
@@ -763,6 +768,8 @@ export default {
             ? this.purchase_cost
             : this.editedProduct.purchase_cost
         );
+      } else {
+        productData.append("purchase_cost", 0);
       }
       if (this.margin) {
         productData.append(
@@ -849,6 +856,16 @@ export default {
           });
         } else {
           productData.append("buyed", []);
+        }
+      }
+
+      // Если purchase_cost > const return warning
+      if (this.cost && this.purchase_cost) {
+        if (+this.purchase_cost > +this.cost) {
+          this.exceedsPrice = true;
+          return this.$toast.warning(
+            `"Цена закупки" не может быть больше "Цена"`
+          );
         }
       }
 
@@ -1017,6 +1034,18 @@ export default {
       which === 8 &&
         this.currentInputBuyed === "" &&
         this.buyed.splice(this.buyed.length - 1);
+    },
+  },
+  watch: {
+    purchase_cost() {
+      if (this.cost >= this.purchase_cost) {
+        this.exceedsPrice = false;
+      }
+    },
+    cost() {
+      if (this.cost >= this.purchase_cost) {
+        this.exceedsPrice = false;
+      }
     },
   },
 };

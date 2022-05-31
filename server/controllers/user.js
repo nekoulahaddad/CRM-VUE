@@ -23,7 +23,7 @@ const generatingNumberEmployee = (id, numberOfСharacters = 4) => {
 	const arr = []
 	if (arr.includes(id))
 		console.log('====== При генерации employee.number получились два одинаковых значения ======')
-	
+
 	arr.push(id)
 	id = md5(id).replace(/[a-zа-яё]/gi, '') + (id).toString().replace(/[a-zа-яё]/gi, '')
 	return id = id.slice(0, numberOfСharacters)
@@ -615,7 +615,9 @@ exports.resetPassword = async (req, res, next) => {
 			from: "TD-CSK-SHOP",
 			msg: `Новый пароль для входа: ${password}`,
 		});
-		console.log(password);
+		console.log(`sendResult =`);
+		console.log(sendResult);
+		console.log(`generatePassword = ${password}`);
 		res.status(201).json({
 			message: "EDITED",
 		});
