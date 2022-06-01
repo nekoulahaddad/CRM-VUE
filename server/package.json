@@ -18,7 +18,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "archiver": "^5.2.0",
+        "archiver": "^5.3.1",
         "axios": "^0.21.0",
         "bcrypt": "^5.0.0",
         "body": "^5.1.0",
@@ -46,6 +46,7 @@
         "lodash": "^4.17.20",
         "lodash.kebabcase": "^4.1.1",
         "mango-vpbx": "^1.6.4",
+        "md5": "^2.3.0",
         "method-override": "^3.0.0",
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.33",

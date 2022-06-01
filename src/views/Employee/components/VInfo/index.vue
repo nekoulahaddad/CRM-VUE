@@ -83,7 +83,7 @@
               {{ $t("pages.employee.employeePersonalNumber") }}
             </div>
             <div class="group__value">
-              {{ parseInt(employee.number) || "" }}
+              {{ employee.number === "null" ? '' : employee.number}}
             </div>
           </div>
         </div>
