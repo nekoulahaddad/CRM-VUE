@@ -222,6 +222,9 @@ ul {
     background-color: $color-green-light;
     color: $color-green;
   }
+  &--warning-light {
+	background-color: #ffc107;
+  }
 }
 
 .vue-custom-tooltip[role="tooltip"] {
