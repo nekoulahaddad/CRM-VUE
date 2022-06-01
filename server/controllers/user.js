@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const path = require("path");
-const md5 = require('md5')
 const User = require("../models/user");
 const Tasks = require("../models/tasks");
 const Reports = require("../models/reports");
@@ -18,16 +17,6 @@ const { TEMP_PATH, AVATARS_PATH, PASSPORTS_PATH } = require("../utils/path");
 const generator = require("generate-password");
 const { SMSRu } = require("node-sms-ru");
 const smsRu = new SMSRu(process.env.SMSRUKEY);
-
-const generatingNumberEmployee = (id, numberOfСharacters = 4) => {
-	const arr = []
-	if (arr.includes(id))
-		console.log('====== При генерации employee.number получились два одинаковых значения ======')
-
-	arr.push(id)
-	id = md5(id).replace(/[a-zа-яё]/gi, '') + (id).toString().replace(/[a-zа-яё]/gi, '')
-	return id = id.slice(0, numberOfСharacters)
-}
 
 exports.getUsers = async (req, res, next) => {
 	try {
@@ -165,7 +154,7 @@ exports.getUsers = async (req, res, next) => {
 			},
 		]);
 		let result = {
-			users: users[0] ? users[0].result.map(user => ({ ...user, number: generatingNumberEmployee(user._id) })) : [],
+			users: users[0] ? users[0].result : [],
 			count: users[0] ? users[0].count.count : 0,
 		};
 		console.log("///////////////////////");
@@ -1186,7 +1175,7 @@ exports.getUsersTreeList = async (req, res, next) => {
 				},
 			},
 		]);
-
+		
 		let result = {
 			users: users[0] ? users[0].result : [],
 			count: users[0] ? users[0].count.count : 0,

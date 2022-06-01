@@ -83,7 +83,7 @@
               {{ $t("pages.employee.employeePersonalNumber") }}
             </div>
             <div class="group__value">
-              {{ employee.number === "null" ? '' : employee.number}}
+              {{ parseInt(employee.number) || generatingNumber(employee._id)}}
             </div>
           </div>
         </div>
@@ -222,6 +222,7 @@
 </template>
 
 <script>
+import {generatingNumberEmployee} from '@/utils/generatingNumberEmployee.js'
 export default {
   name: "v-info",
   props: {
@@ -265,6 +266,11 @@ export default {
     };
   },
   created() {},
+   methods: {
+	  generatingNumber(id){
+		 return generatingNumberEmployee(id)
+	  }
+  }
 };
 </script>
 

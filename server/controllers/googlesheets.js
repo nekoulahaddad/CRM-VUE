@@ -17,7 +17,7 @@ const addSheet = async (region, categoryId, categoryName) => {
 	const productsFromRegion = await getProductsFromRegion(region, [categoryId])
 	for (p of productsFromRegion) {
 		let values = []
-		values.push(p.article, p.title, p.cost, p.club_cost, p.category[0].category.categoryName, p.coef)
+		values.push(p?.article, p?.title, p?.cost, p?.club_cost, p?.category[0]?.category.categoryName, p?.coef)
 		products.push(values)
 	}
 

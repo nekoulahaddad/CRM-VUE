@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const Departments = require('../models/departments')
 const User = require("../models/user");
 const _ = require('lodash')
-const { translit } = require('gost-transliteration')
+const { translit } = require('gost-transliteration');
 
 exports.getDepartmentsAll = async(req, res, next) => {
     let departments = await Departments.find({}).lean()
-    departments = departments && departments.length ? departments : []
-    res.status(200).send(departments)
+	departments = departments && departments.length ? departments : []
+	res.status(200).send(departments)
 }
 
 exports.getDepartments = async(req, res, next) => {
