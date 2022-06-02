@@ -129,6 +129,7 @@
                   }}
                 </router-link>
               </div>
+				  
               <div class="list__columns">
                 <div class="list__column">
                   <img

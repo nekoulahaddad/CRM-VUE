@@ -211,6 +211,21 @@ export default {
           .then((res) => {
             if (res.status === 200) {
               this.$router.push({ name: "desktop" });
+              axios
+                .get("https://tdcsk.com/api/cache-clear", {
+                  headers: {
+                    Origin: process.env.VUE_APP_DEVELOP_URL,
+                    "Access-Control-Allow-Origin":
+                      process.env.VUE_APP_DEVELOP_URL,
+                  },
+                })
+                .then(() => {
+                  this.$toast.success("Кэш успешно очищен!");
+                })
+                .catch((err) => {
+                  console.log(err);
+						this.$toast.error("Не удалось очистить кэш");
+                });
             }
           })
           .catch(() => {
