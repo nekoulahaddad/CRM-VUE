@@ -76,7 +76,6 @@
             role === 'superadmin' ||
             role === 'director' ||
             role === 'content' ||
-            role === 'manager' ||
             role === 'call' ||
             role === 'buyer' ||
             role === 'seo'

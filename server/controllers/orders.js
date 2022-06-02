@@ -13,7 +13,6 @@ exports.getOrders = async(req, res, next) => {
         const page = +req.query.page - 1
         const options = req.body.options
         let phone = options.search ? options.search.replace(/ /g, '').replace('+', '').replace('-', '').replace('(', '').replace(')', '') : ""
-        console.log(phone, typeof phone)
         const searchStr = options.search ? options.search.split(' ') : []
         if (searchStr && searchStr.length) {
             for (let i = 0; i < searchStr.length; i++) {
@@ -40,8 +39,10 @@ exports.getOrders = async(req, res, next) => {
             myMatch['manager._id'] = {
                 "$in": [mongoose.Types.ObjectId(options.executor)]
             }
-        }
-        if (req.userRole !== 'superadmin' && req.userRole !== 'admin' && req.userRole !== 'director' && req.userRole !== 'call') {
+		 }
+
+		 console.log('---------- ' + req.userRole + ' ------------');
+		 if (req.userRole !== 'manager' && req.userRole !== 'superadmin' && req.userRole !== 'admin' && req.userRole !== 'director' && req.userRole !== 'call' && req.userRole !== 'content') {
             myMatch['manager._id'] = {
                 "$in": [mongoose.Types.ObjectId(req.userId)]
             }

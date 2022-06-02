@@ -343,8 +343,10 @@ export default {
   },
   mounted() {
     this.$store.commit("deactivateAction", "addOrder");
-    this.filtersOptions.executor =
-      this.role === "manager" ? this.$store.state._id : null;
+
+   //  this.filtersOptions.executor =
+   //    this.role === "manager" ? this.$store.state._id : null;
+
     this.fetchData();
     this.$store.commit("setFilterOptions", this.filtersOptions);
   },

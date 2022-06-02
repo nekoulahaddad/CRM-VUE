@@ -16,7 +16,13 @@ const { generateToken, generateRefreshToken } = require("../utils/jwt");
 const { TEMP_PATH, AVATARS_PATH, PASSPORTS_PATH } = require("../utils/path");
 const generator = require("generate-password");
 const { SMSRu } = require("node-sms-ru");
+const md5 = require("md5");
 const smsRu = new SMSRu(process.env.SMSRUKEY);
+
+const generatingNumberEmployee = (id, numberOfСharacters = 4) => {
+	id = md5(id).replace(/[a-zа-яё]/gi, '') + (id).toString().replace(/[a-zа-яё]/gi, '')
+	return id = id.slice(0, numberOfСharacters)
+}
 
 exports.getUsers = async (req, res, next) => {
 	try {
@@ -548,13 +554,18 @@ exports.addUser = async (req, res, next) => {
 			},
 		]);
 
+		const id = addedUser[0]["_id"].toString()
+		const generateId = generatingNumberEmployee(id)
+		
+		await User.findByIdAndUpdate(addedUser[0]["_id"], { $set: { number: generateId } })
+		
 		const sendResult = await smsRu.sendSms({
 			to: newUser.phone,
 			from: "TD-CSK-SHOP",
 			msg: `Логин: ${newUser.phone}\r\nПароль для входа: ${password}\r\nЦРМ система цск.com`,
 		});
 
-		console.log(addedUser);
+
 		res.status(201).json({
 			message: "ADDED",
 			user: addedUser[0],
@@ -1175,7 +1186,7 @@ exports.getUsersTreeList = async (req, res, next) => {
 				},
 			},
 		]);
-		
+
 		let result = {
 			users: users[0] ? users[0].result : [],
 			count: users[0] ? users[0].count.count : 0,

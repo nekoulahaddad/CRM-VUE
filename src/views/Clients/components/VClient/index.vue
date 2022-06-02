@@ -31,7 +31,8 @@
             (role === 'superadmin' ||
               role === 'director' ||
               role === 'buyer' ||
-              role === 'manager')
+              role === 'manager') ||
+				  role === 'call'
           "
         >
           <VueCustomTooltip v-if="infoItem._id !== client._id" label="Просмотр">

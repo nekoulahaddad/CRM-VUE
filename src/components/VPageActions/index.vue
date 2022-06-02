@@ -35,7 +35,7 @@
           <template
             v-if="
               name === 'calendar' &&
-              (role === 'superadmin' || role === 'director')
+              (role === 'superadmin' || role === 'director' || role === 'call')
             "
           >
             <VueCustomTooltip label="Создать мероприятие">
@@ -207,7 +207,7 @@
             </VueCustomTooltip>
             <VueCustomTooltip
               label="Добавить заказ"
-              v-if="role === 'superadmin' || role === 'buyer'"
+              v-if="role === 'superadmin' || role === 'buyer' || role === 'manager'"
             >
               <a
                 href=""

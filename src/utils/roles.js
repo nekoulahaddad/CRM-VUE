@@ -49,10 +49,11 @@ export default {
     "education",
     "employee",
     "calendar",
-    "reports",
+	 "reports",
+	 "orders",
     "tasks",
     "goods",
-    "sites",
+	 "sites",
   ],
   director: [
     "monitor",
