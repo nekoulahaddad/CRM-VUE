@@ -252,13 +252,13 @@ export default {
     },
     onEventAdd() {
       if (
-        this.$moment().format("DD-MM-YYYY") >
-        this.$moment(this.selectionStart).format("DD-MM-YYYY")
+        new Date(this.$moment()["_d"]) >
+        new Date(this.$moment(this.selectionStart)["_d"])
       ) {
         this.$toast.error("Дата начала не может быть раньше текущего времени!");
         return;
       }
-
+		
       if (
         this.$moment(this.selectionStart).valueOf() >=
         this.$moment(this.selectionEnd).valueOf()
