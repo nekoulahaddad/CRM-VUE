@@ -74,7 +74,8 @@
           v-if="
             role === 'superadmin' ||
             role === 'buyer' ||
-            role === 'call'
+            role === 'call' || 
+				role === 'manager'
           "
         >
           <img
