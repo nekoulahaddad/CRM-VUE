@@ -45,5 +45,17 @@ router.post(
   ProductsController.editProductVisibility,
   clearCache
 );
+router.post(
+	"/updateRecommended",
+	isAuth,
+	ProductsController.editProductRecommended,
+	clearCache
+)
+router.post(
+	"/updateBuyed",
+	isAuth,
+	ProductsController.editProductBuyed,
+	clearCache
+)
 
 module.exports = router;

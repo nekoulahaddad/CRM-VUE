@@ -247,8 +247,8 @@
                 min="0"
                 name="purchase_cost"
                 step="0.01"
-					 :value="purchase_cost"
-              	@input="onChange($event)"
+                :value="purchase_cost"
+                @input="onChange($event)"
               />
             </div>
           </div>
@@ -386,20 +386,33 @@
                 </template>
               </autocomplete>
             </div>
-            <div class="group__footer flex-column">
-              <div
+            <Container
+              @drop="onDropRecommended"
+              drag-handle-selector=".handle"
+              lock-axis="y"
+            >
+              <Draggable
                 class="group__recomend"
                 v-for="(rec, index) in recomends"
-                :key="rec._id"
+                :key="rec.id"
               >
-                <span>{{ rec.title }}</span>
+                <div class="d-flex align-items-center">
+                  <img
+                    class="next handle left move"
+                    src="@/assets/icons/move.svg"
+                    alt=""
+                    :style="{ paddingLeft: '15px' }"
+                  />
+                  <span>{{ rec.title }}</span>
+                </div>
                 <img
                   @click="deleteChip(index)"
                   src="@/assets/icons/trash_icon.svg"
                   alt=""
+                  :style="{ paddingRight: '15px' }"
                 />
-              </div>
-            </div>
+              </Draggable>
+            </Container>
           </div>
 
           <div class="group">
@@ -422,20 +435,31 @@
                 </template>
               </autocomplete>
             </div>
-            <div class="group__footer flex-column">
-              <div
-                class="group__recomend"
-                v-for="(rec, index) in buyed"
-                :key="rec._id"
-              >
-                <span>{{ rec.title }}</span>
-                <img
-                  @click="deleteChipBuyed(index)"
-                  src="@/assets/icons/trash_icon.svg"
-                  alt=""
-                />
-              </div>
-            </div>
+            <Container
+              @drop="onDropBuyed"
+              drag-handle-selector=".handle"
+              lock-axis="y">
+                <Draggable
+                  class="group__recomend"
+                  v-for="(rec, index) in buyed"
+                  :key="rec._id"
+                >
+                  <div class="d-flex align-items-center">
+                    <img
+                      class="next handle left move"
+                      src="@/assets/icons/move.svg"
+                      alt=""
+                      :style="{ paddingLeft: '15px' }"
+                    />
+                    <span>{{ rec.title }}</span>
+                  </div>
+                  <img
+                    @click="deleteChipBuyed(index)"
+                    src="@/assets/icons/trash_icon.svg"
+                    alt=""
+                  />
+                </Draggable>
+            </Container>
           </div>
         </div>
       </div>
@@ -448,8 +472,11 @@
 <script>
 import axios from "@/api/axios";
 import { required } from "vuelidate/lib/validators";
+import { Container, Draggable } from "vue-smooth-dnd";
+import dataMixins from "@/mixins/data";
 
 export default {
+  mixins: [dataMixins],
   props: {
     region: {
       type: String,
@@ -460,6 +487,10 @@ export default {
       required: false,
       default: null,
     },
+  },
+  components: {
+    Container,
+    Draggable,
   },
   validations: {
     cost: {
@@ -559,6 +590,54 @@ export default {
     }
   },
   methods: {
+    onDropRecommended(dropResult) {
+      const recomends = this.applyDrag(this.recomends, dropResult);
+      axios({
+        url: `/products/updateRecommended/`,
+        data: {
+          productId: this.editedProduct["_id"],
+          recomendedList: recomends,
+          region: this.region,
+        },
+        method: "POST",
+      })
+        .then((res) => {
+          if (res?.data?.message === "UPDATE") {
+            this.recomends = res?.data?.recomendedList;
+            this.$toast.success("Список рекомендуемых товаров обновлен!");
+          } else if (res?.data?.message === "NOT FOUND") {
+            this.$toast.error(
+              "Не удалось обновить список рекомендуемых товаров!"
+            );
+          }
+        })
+        .catch((error) => {
+          this.$toast.error("Какие-то проблемы, попробуйте в другой раз!");
+        });
+    },
+    onDropBuyed(dropResult) {
+      const buyed = this.applyDrag(this.buyed, dropResult);
+      axios({
+        url: `/products/updateBuyed/`,
+        data: {
+          productId: this.editedProduct["_id"],
+          buyedList: buyed,
+          region: this.region,
+        },
+        method: "POST",
+      })
+        .then((res) => {
+          if (res?.data?.message === "UPDATE") {
+            this.buyed = res?.data?.buyedList;
+            this.$toast.success("Список покупаемых товаров обновлен!");
+          } else if (res?.data?.message === "NOT FOUND") {
+            this.$toast.error("Не удалось обновить список покупаемых товаров!");
+          }
+        })
+        .catch((error) => {
+          this.$toast.error("Какие-то проблемы, попробуйте в другой раз!");
+        });
+    },
     getResult(result) {
       return "";
     },
@@ -1147,14 +1226,14 @@ export default {
     }
   }
   .group__recomend {
-    height: 40px;
+    height: 40px !important;
     border-radius: $border-radius;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    display: flex;
+    display: flex !important;
     align-items: center;
-    justify-content: space-between;
-    padding-left: 10px;
-    padding-right: 10px;
+    justify-content: space-between !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
     overflow-x: hidden;
     margin-top: 10px;
     margin-bottom: 5px;
