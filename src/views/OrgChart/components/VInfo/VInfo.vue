@@ -83,7 +83,7 @@
               {{ $t("pages.employee.employeePersonalNumber") }}
             </div>
             <div class="group__value">
-              {{ parseInt(employee.number) || generatingNumber(employee._id) }}
+              {{ parseInt(employee.number) || 'Отсутствует' }}
             </div>
           </div>
         </div>
@@ -222,7 +222,6 @@
 </template>
 
 <script>
-import {generatingNumberEmployee} from '@/utils/generatingNumberEmployee.js'
 export default {
   name: "v-info",
   props: {
@@ -265,12 +264,7 @@ export default {
       serverAddr: process.env.VUE_APP_DEVELOP_URL,
     };
   },
-  created() {},
-  methods: {
-	  generatingNumber(id){
-		 return generatingNumberEmployee(id)
-	  }
-  }
+  created() {}
 };
 </script>
 

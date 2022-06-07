@@ -1,4 +1,3 @@
-const md5 = require("md5");
 const mongoose = require("mongoose");
 const path = require("path");
 const moment = require("moment");
@@ -12,7 +11,6 @@ const {
 const Categories = require("../models/categories");
 const Products = require("../models/products");
 const Users = require("../models/user");
-const Test = require("../models/test");
 const Clients = require("../models/clients");
 const Tasks = require("../models/tasks");
 const Regions = require("../models/regions");
@@ -26,9 +24,16 @@ const fs = require("fs");
 const { create } = require("xmlbuilder2");
 const { sum } = require("lodash");
 
-const generatingNumberEmployee = (id, numberOfСharacters = 4) => {
-	id = md5(id).replace(/[a-zа-яё]/gi, '') + (id).toString().replace(/[a-zа-яё]/gi, '')
-	return id = id.slice(0, numberOfСharacters)
+const generatingNumberEmployee = (i, numberOfСharacters = 4) => {
+	let number = `${i}`
+	if (`${number}`.length < 4) {
+		while (`${number}`.length < numberOfСharacters) {
+			number = '0' + number
+		}
+		return number
+	} else {
+		return number
+	}
 }
 
 exports.getTasks = async (req, res) => {
@@ -382,20 +387,20 @@ exports.getExcelFromChildren = async (req, res, next) => {
 
 exports.getExcelFromDeletedUsers = async (req, res, next) => {
 	try {
-		// Добавление поля number с уникальным значением на основе _id юзера
+		// Добавление поля number с уникальным значением на основе index
 		// const users = await Users.find()
 		// let count = 0
 		// const arr = []
-		//  users.forEach(async (user, i) => {
+		// users.forEach(async (user, i) => {
 		// 	const id = user._id.toString()
-		// 	const generateId = generatingNumberEmployee(id) 
-		// 	const res = await Users.findByIdAndUpdate(id, { $set: { "number": generateId } })
+		// 	const generateNumber = generatingNumberEmployee(i)
+		// 	const res = await Users.findByIdAndUpdate(id, { $set: { "number": generateNumber } })
 		// 	count++
 		// 	if (count % 100 === 0) console.log(count);
-		// 	if (arr.includes(generateId)) console.log(`Одинаковый id = ${generateId}`);
-		// 	arr.push(generateId)
+		// 	if (arr.includes(generateNumber)) console.log(`Одинаковый id = ${generateNumber}`);
+		// 	arr.push(generateNumber)
 		// })
-		
+
 		// return
 
 		let deletedUsers = await Users.find({ deleted: true });
