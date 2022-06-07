@@ -16,12 +16,18 @@ const { generateToken, generateRefreshToken } = require("../utils/jwt");
 const { TEMP_PATH, AVATARS_PATH, PASSPORTS_PATH } = require("../utils/path");
 const generator = require("generate-password");
 const { SMSRu } = require("node-sms-ru");
-const md5 = require("md5");
 const smsRu = new SMSRu(process.env.SMSRUKEY);
 
-const generatingNumberEmployee = (id, numberOfСharacters = 4) => {
-	id = md5(id).replace(/[a-zа-яё]/gi, '') + (id).toString().replace(/[a-zа-яё]/gi, '')
-	return id = id.slice(0, numberOfСharacters)
+const generatingNumberEmployee = (i, numberOfСharacters = 4) => {
+	let number = `${i}`
+	if (`${number}`.length < 4) {
+		while (`${number}`.length < numberOfСharacters) {
+			number = '0' + number
+		}
+		return number
+	} else {
+		return number
+	}
 }
 
 exports.getUsers = async (req, res, next) => {
@@ -422,7 +428,12 @@ exports.addUser = async (req, res, next) => {
 			value: dataUser.department,
 		}).lean();
 		dataUser.department = mongoose.Types.ObjectId(department._id);
-		const newUser = await new User(dataUser);
+
+		const count = await User.find().count() + 1
+		const generateNumber = generatingNumberEmployee(count)
+
+		const newUser = await new User({ ...dataUser, number: generateNumber });
+
 		req.userId = newUser._id;
 		if (avatar) {
 			await makeUserDir(AVATARS_PATH, newUser._id);
@@ -553,11 +564,6 @@ exports.addUser = async (req, res, next) => {
 				},
 			},
 		]);
-
-		const id = addedUser[0]["_id"].toString()
-		const generateId = generatingNumberEmployee(id)
-		
-		await User.findByIdAndUpdate(addedUser[0]["_id"], { $set: { number: generateId } })
 		
 		const sendResult = await smsRu.sendSms({
 			to: newUser.phone,

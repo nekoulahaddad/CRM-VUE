@@ -250,6 +250,16 @@ export default {
     getResultValue(result) {
       return "";
     },
+    getDaysArray(start, end) {
+      for (
+        var arr = [], dt = new Date(start);
+        dt <= new Date(end);
+        dt.setDate(dt.getDate() + 1)
+      ) {
+        arr.push(new Date(dt));
+      }
+      return arr;
+    },
     onEventAdd() {
       if (
         new Date(this.$moment()["_d"]) >
@@ -258,7 +268,7 @@ export default {
         this.$toast.error("Дата начала не может быть раньше текущего времени!");
         return;
       }
-		
+
       if (
         this.$moment(this.selectionStart).valueOf() >=
         this.$moment(this.selectionEnd).valueOf()
@@ -276,24 +286,40 @@ export default {
         participants: this.participants,
         initiator: this.userId,
       };
-      axios({
-        url: `/events/post/`,
-        data: event,
-        method: "POST",
-      })
-        .then(() => {
-          this.$emit("updateEvents");
-          this.$toast.success("Мероприятие успешно добавлено!");
-          this.closeModal();
-          this.cancel();
-          this.reset();
+      const eventsArray = this.getDaysArray(this.start, this.end).map((el) => ({
+        ...event,
+        startDate: el,
+      }));
+
+      eventsArray.forEach((event, i) => {
+			const data = {
+				...event
+			}
+			if(i > 0 && i < eventsArray.length - 1){
+				data.identical = 'between'
+			}else if(i === 0){
+					data.identical = 'start'
+			}else{
+					data.identical = 'end'
+			}
+			
+        axios({
+          url: `/events/post/`,
+          data,
+          method: "POST",
         })
-        .catch((err) => {
-          this.$toast.error(err.response.data.message);
-        })
-        .finally(() => {
-          this.isLoading = true;
-        });
+          .catch((err) => {
+            this.$toast.error(err.response.data.message);
+            return;
+          });
+      });
+
+      this.$emit("updateEvents");
+      this.$toast.success("Мероприятие успешно добавлено!");
+      this.isLoading = true;
+      this.closeModal();
+      this.cancel();
+      this.reset();
     },
   },
 };

@@ -107,8 +107,9 @@
               type="number"
               class="form-control hide-arrows"
               name="number"
-              :placeholder="$t('employeeNumber')"
-              :value="infoItem ? infoItem.number : number"
+              placeholder="Генерируется автоматически"
+              :value="infoItem ? infoItem.number : ''"
+				  disabled
               @input="onChange($event)"
               onkeydown="return event.keyCode !== 69"
             />
